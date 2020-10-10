@@ -1,14 +1,25 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Switch, Route, BrowserRouter, Redirect} from 'react-router-dom';
+import NavbarComponent from '../components/navbar';
 import LoginPageComponent from '../pages/LoginPage';
 import {ReduxState} from '../utilities/types';
+
+interface DashboardWrapperComponentProps {
+    children: React.ReactChild;
+}
+function DashboardWrapperComponent(props: DashboardWrapperComponentProps) {
+    return (
+        <main>
+            <NavbarComponent>{props.children}</NavbarComponent>
+        </main>
+    );
+}
 
 interface RouterComponentProps {
     fetching: boolean;
     loggedIn: boolean;
 }
-
 function RouterComponent(props: RouterComponentProps) {
     let RedirectComponent: React.ReactChild = props.fetching ? (
         <h3>Loading</h3>
@@ -31,9 +42,23 @@ function RouterComponent(props: RouterComponentProps) {
                     <Route exact path='/'>
                         <div>Index</div>
                     </Route>
-                    <Route exact path='/profile'>
+                    <Route path='(/configs|/results|/account)'>
                         {!props.loggedIn && RedirectComponent}
-                        {props.loggedIn && <div>Profile</div>}
+                        {props.loggedIn && (
+                            <DashboardWrapperComponent>
+                                <Switch>
+                                    <Route exact path='/configs'>
+                                        <div>Configs</div>
+                                    </Route>
+                                    <Route exact path='/results'>
+                                        <div>Results</div>
+                                    </Route>
+                                    <Route exact path='/account'>
+                                        <div>Account</div>
+                                    </Route>
+                                </Switch>
+                            </DashboardWrapperComponent>
+                        )}
                     </Route>
                     <Route exact path='/login'>
                         {LoginComponent}

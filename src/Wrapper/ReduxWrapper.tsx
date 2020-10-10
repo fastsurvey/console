@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import {ReduxAction, ReduxState} from '../utilities/types';
-import {logOut} from '../utilities/reduxActions';
+import {logIn} from '../utilities/reduxActions';
 
 function storeReducer(
     state = {
@@ -46,9 +46,9 @@ export function ReduxWrapper(props: ReduxWrapperProps) {
     if (!fetching) {
         setFetching(true);
         setTimeout(() => {
-            // store.dispatch(logIn('abcde'));
-            store.dispatch(logOut());
-        }, 1000);
+            store.dispatch(logIn('abcde'));
+            // store.dispatch(logOut());
+        }, 0);
     }
 
     return <Provider store={store}>{props.children}</Provider>;

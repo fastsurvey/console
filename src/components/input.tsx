@@ -12,7 +12,7 @@ function InputComponent(props: InputComponentProps) {
     return (
         <input
             placeholder={
-                props.placeholder != undefined ? props.placeholder : ''
+                props.placeholder !== undefined ? props.placeholder : ''
             }
             value={props.value}
             onChange={(e) => props.onChange(e.target.value)}
@@ -21,9 +21,9 @@ function InputComponent(props: InputComponentProps) {
                 'drop-shadow md:shadow border-0 rounded w-full h-12 ' +
                 'py-2 pl-3 pr-10 md:pr-12 text-gray-700 ' +
                 'focus:outline-none focus:shadow-outline ' +
-                (props.className != undefined ? props.className : '')
+                (props.className !== undefined ? props.className : '')
             }
-            type={props.type != undefined ? props.type : 'text'}
+            type={props.type !== undefined ? props.type : 'text'}
         />
     );
 }
