@@ -1,11 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
+import ReduxWrapper from './Wrapper/ReduxWrapper';
 import Router from './Wrapper/Router';
 
 ReactDOM.render(
     <React.StrictMode>
-        <Router />
+        <ReduxWrapper>
+            <Router />
+        </ReduxWrapper>
     </React.StrictMode>,
     document.getElementById('root')
 );
