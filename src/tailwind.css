@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.no-selection {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Quicksand', sans-serif;
+    @apply text-gray-900;
+}
+
+.font-weight-300 {
+    font-weight: 300;
+}
+
+.font-weight-400 {
+    font-weight: 400;
+}
+
+.font-weight-500 {
+    font-weight: 500;
+}
+
+.font-weight-600 {
+    font-weight: 600;
+}
+
+.font-weight-700 {
+    font-weight: 700;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    @apply font-weight-600;
+    @apply w-full;
+    @apply block;
+}
+
+p {
+    @apply text-lg;
+}
+
+h1 {
+    @apply text-5xl;
+    @apply mb-3;
+}
+
+h2 {
+    @apply text-4xl;
+    @apply mb-3;
+}
+
+h3 {
+    @apply text-3xl;
+    @apply mb-2;
+}
+
+h4 {
+    @apply text-2xl;
+    @apply mb-2;
+}
+
+h5 {
+    @apply text-xl;
+    @apply mb-1;
+}
+
+h6 {
+    @apply text-lg;
+    @apply mb-1;
+}

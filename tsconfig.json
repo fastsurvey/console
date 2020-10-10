@@ -21,7 +21,7 @@
     "downlevelIteration": true
   },
   "include": [
-    "src"
+    "src", "tailwind.config.js"
   ],
   "exclude": [
     "node_modules",
