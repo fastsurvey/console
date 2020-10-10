@@ -4,9 +4,13 @@ export interface ReduxState {
     accessToken: string;
 }
 
-export type ReduxAction = LogInAction;
+export type ReduxAction = LogInAction | LogOutAction;
 
 export interface LogInAction {
     type: 'LOG_IN';
     accessToken: string;
+}
+
+export interface LogOutAction {
+    type: 'LOG_OUT';
 }

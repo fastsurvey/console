@@ -1,7 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Switch, Route, BrowserRouter, Redirect } from 'react-router-dom';
-import { ReduxState } from '../utilities/types';
+import {connect} from 'react-redux';
+import {Switch, Route, BrowserRouter, Redirect} from 'react-router-dom';
+import LoginPageComponent from '../pages/LoginPage';
+import {ReduxState} from '../utilities/types';
 
 interface RouterComponentProps {
     fetching: boolean;
@@ -20,7 +21,7 @@ function RouterComponent(props: RouterComponentProps) {
     ) : props.loggedIn ? (
         <Redirect to='/profile' />
     ) : (
-        <h1>Login</h1>
+        <LoginPageComponent />
     );
 
     return (

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import { ReduxAction, ReduxState } from '../utilities/types';
-import { logIn } from '../utilities/reduxActions';
+import React, {useState} from 'react';
+import {createStore} from 'redux';
+import {Provider} from 'react-redux';
+import {ReduxAction, ReduxState} from '../utilities/types';
+import {logOut} from '../utilities/reduxActions';
 
 function storeReducer(
     state = {
@@ -10,7 +10,7 @@ function storeReducer(
         loggedIn: false,
         accessToken: '',
     },
-    action: ReduxAction
+    action: ReduxAction,
 ) {
     const newState: ReduxState = {
         fetching: state.fetching,
@@ -23,6 +23,11 @@ function storeReducer(
             newState.fetching = false;
             newState.loggedIn = true;
             newState.accessToken = action.accessToken;
+            break;
+        case 'LOG_OUT':
+            newState.fetching = false;
+            newState.loggedIn = false;
+            newState.accessToken = '';
             break;
         default:
             break;
@@ -41,7 +46,8 @@ export function ReduxWrapper(props: ReduxWrapperProps) {
     if (!fetching) {
         setFetching(true);
         setTimeout(() => {
-            store.dispatch(logIn('abcde'));
+            // store.dispatch(logIn('abcde'));
+            store.dispatch(logOut());
         }, 1000);
     }
 
