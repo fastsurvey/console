@@ -1,3 +1,4 @@
+// prettier-ignore
 module.exports = {
     purge: {
         enabled: false,
@@ -23,6 +24,7 @@ module.exports = {
                 '90vh': '90vh',
                 '100vh': '100vh',
                 '10vw': '10vw',
+                '15vw': '15vw',
                 '20vw': '20vw',
                 '30vw': '30vw',
                 '40vw': '40vw',
@@ -32,6 +34,16 @@ module.exports = {
                 '80vw': '80vw',
                 '90vw': '90vw',
                 '100vw': '100vw',
+
+                '56': '14rem',
+                '58': '14.5rem',
+                '60': '15rem',
+                '62': '15.5rem',
+                '64': '16rem',
+                '66': '16.5rem',
+                '68': '17rem',
+                '70': '17.5rem',
+                '72': '18rem',
             },
         },
     },
