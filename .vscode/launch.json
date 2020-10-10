@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        {
+            "command": "npm run start-development",
+            "name": "start development",
+            "request": "launch",
+            "type": "node-terminal"
+        }, {
+            "command": "npm run start-production",
+            "name": "start prodcution",
+            "request": "launch",
+            "type": "node-terminal"
+        }
+    ]
+}

@@ -16,10 +16,12 @@
     "typescript": "~3.7.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start-development": "react-scripts start",
+    "start-production": "node app.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build:tailwind": "tailwind build src/tailwind.css -o src/tailwind.out.css",
+    "deploy": "tailwind build src/tailwind.css -o src/tailwind.out.css && npm run build && gcloud app deploy"
   },
   "eslintConfig": {
     "extends": "react-app"
