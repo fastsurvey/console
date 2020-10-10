@@ -4,6 +4,9 @@ export interface ReduxState {
     accessToken: string;
 }
 
-export interface ReduxAction {
-    type: string;
+export type ReduxAction = LogInAction;
+
+export interface LogInAction {
+    type: 'LOG_IN';
+    accessToken: string;
 }
