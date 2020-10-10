@@ -2,13 +2,28 @@ import React from 'react';
 import {Link, useLocation} from 'react-router-dom';
 import {isAssertionExpression} from 'typescript';
 import {ICONS} from '../assets/icons/icons';
+import FastSurveyIcon from '../assets/branding/rocket-light.svg';
+
+function LogoComponent() {
+    return (
+        <div
+            className={
+                'w-58 mx-3 flex flex-row items-center justify-start mb-4 font-weight-600 p-2'
+            }
+        >
+            <div className={'h-12 w-12 mr-3'}>
+                <img src={FastSurveyIcon} />
+            </div>
+            <div className={'text-white text-2xl'}>FastSurvey</div>
+        </div>
+    );
+}
 
 interface NavbarLinkComponentProps {
     text: string;
     to: string;
     icon: React.ReactChild;
 }
-
 function NavbarLinkComponent(props: NavbarLinkComponentProps) {
     const active = useLocation().pathname === props.to;
 
@@ -40,6 +55,7 @@ function NavbarComponent(props: NavbarComponentProps) {
                     'fixed left top w-64 pt-4 pb-1 h-100vh bg-gray-900 flex flex-col'
                 }
             >
+                <LogoComponent />
                 <NavbarLinkComponent
                     text='Configs'
                     to='/configs'
