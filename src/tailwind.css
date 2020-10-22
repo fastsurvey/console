@@ -91,3 +91,7 @@ svg {
     @apply items-center;
     @apply justify-center;
 }
+
+.text-magenta {
+    color: #FD0948;
+}
