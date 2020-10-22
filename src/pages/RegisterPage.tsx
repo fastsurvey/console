@@ -43,7 +43,9 @@ function RegisterPageComponent(props: RegisterPageComponentProps) {
                 type='password'
                 hint={{
                     text: 'passwords have to match',
-                    fulfilled: password === passwordConfirmation,
+                    fulfilled:
+                        password.length >= 8 &&
+                        password === passwordConfirmation,
                 }}
             />
             <ButtonRowComponent center className={'pt-2'}>

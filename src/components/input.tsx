@@ -36,6 +36,14 @@ function InputComponent(props: InputComponentProps) {
             {props.hint && (
                 <div
                     className={
+                        'absolute top-0 right-0 w-2 h-2 mt-5 mr-2 rounded-full ' +
+                        (props.hint.fulfilled ? 'bg-green-500' : 'bg-magenta')
+                    }
+                />
+            )}
+            {props.hint && (
+                <div
+                    className={
                         'relative z-50 w-full px-1 leading-6 ' +
                         'overflow-hidden font-weight-600 ' +
                         (props.hint.fulfilled
