@@ -6,14 +6,15 @@ interface InputComponentProps {
     type?: string;
     placeholder?: string;
     className?: string;
+    required?: boolean;
 }
 
 function InputComponent(props: InputComponentProps) {
+    const placeholder =
+        props.placeholder !== undefined ? props.placeholder : '';
     return (
         <input
-            placeholder={
-                props.placeholder !== undefined ? props.placeholder : ''
-            }
+            placeholder={placeholder}
             value={props.value}
             onChange={(e) => props.onChange(e.target.value)}
             className={

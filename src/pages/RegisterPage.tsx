@@ -5,11 +5,12 @@ import ButtonRowComponent from '../components/buttonRow';
 import LoginImage from '../assets/images/secure.svg';
 import {Link} from 'react-router-dom';
 
-interface LoginPageComponentProps {}
+interface RegisterPageComponentProps {}
 
-function LoginPageComponent(props: LoginPageComponentProps) {
+function RegisterPageComponent(props: RegisterPageComponentProps) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
     return (
         <main
@@ -32,29 +33,39 @@ function LoginPageComponent(props: LoginPageComponentProps) {
                 }
             >
                 <div className={'w-20vw'}>
-                    <h2 className='mb-4 text-center'>Login</h2>
+                    <h2 className='mb-4 text-center'>Register</h2>
                     <InputComponent
+                        required
                         placeholder='email'
                         value={email}
                         onChange={setEmail}
                         className={'mb-2'}
                     />
                     <InputComponent
+                        required
                         placeholder='password'
                         value={password}
                         onChange={setPassword}
                         type='password'
                         className={'mb-2'}
                     />
+                    <InputComponent
+                        required
+                        placeholder='confirm password'
+                        value={passwordConfirmation}
+                        onChange={setPasswordConfirmation}
+                        type='password'
+                        className={'mb-2'}
+                    />
                     <ButtonRowComponent center className={'pt-2'}>
-                        <ButtonComponent text='Login' disabled />
+                        <ButtonComponent text='Register' disabled />
                     </ButtonRowComponent>
                     <div
                         className={
                             'w-full text-center pt-4 text-gray-500 font-weight-500'
                         }
                     >
-                        <Link to='/register'>Don't have an account yet?</Link>
+                        <Link to='/login'>Already have an account?</Link>
                     </div>
                 </div>
             </div>
@@ -62,4 +73,4 @@ function LoginPageComponent(props: LoginPageComponentProps) {
     );
 }
 
-export default LoginPageComponent;
+export default RegisterPageComponent;

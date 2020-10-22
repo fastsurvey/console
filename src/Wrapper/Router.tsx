@@ -4,6 +4,7 @@ import {Switch, Route, BrowserRouter, Redirect} from 'react-router-dom';
 import NavbarComponent from '../components/navbar';
 import LoginPageComponent from '../pages/LoginPage';
 import {ReduxState} from '../utilities/types';
+import RegisterPageComponent from '../pages/RegisterPage';
 
 interface DashboardWrapperComponentProps {
     children: React.ReactChild;
@@ -48,6 +49,9 @@ function RouterComponent(props: RouterComponentProps) {
                     </Route>
                     <Route exact path='/login'>
                         <LoginPageComponent />
+                    </Route>
+                    <Route exact path='/register'>
+                        <RegisterPageComponent />
                     </Route>
                     <Route>
                         <div>404</div>
