@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
-import ReduxWrapper from './Wrapper/ReduxWrapper';
-import Router from './Wrapper/Router';
+import ReduxWrapper from './wrapper/ReduxWrapper';
+import Router from './wrapper/Router';
 import './tailwind.out.css';
 
 ReactDOM.render(

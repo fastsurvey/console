@@ -1,5 +1,5 @@
 export interface ReduxState {
-    fetching: boolean;
+    loggingIn: boolean;
     loggedIn: boolean;
     accessToken: string;
 }

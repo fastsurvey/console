@@ -17,38 +17,21 @@ function DashboardWrapperComponent(props: DashboardWrapperComponentProps) {
 }
 
 interface RouterComponentProps {
-    fetching: boolean;
+    loggingIn: boolean;
     loggedIn: boolean;
 }
 function RouterComponent(props: RouterComponentProps) {
-    let RedirectComponent: React.ReactChild = props.fetching ? (
-        <h3>Loading</h3>
-    ) : (
-        <Redirect to='/login' />
-    );
-
-    let LoginComponent: React.ReactChild = props.fetching ? (
-        <h3>Loading</h3>
-    ) : props.loggedIn ? (
-        <Redirect to='/profile' />
-    ) : (
-        <LoginPageComponent />
-    );
-
     return (
         <BrowserRouter>
             <Route>
                 <Switch>
-                    <Route exact path='/'>
-                        <div>Index</div>
-                    </Route>
-                    <Route path='(/configs|/results|/account)'>
-                        {!props.loggedIn && RedirectComponent}
-                        {props.loggedIn && (
+                    <Route path='(/configurations|/results|/account)'>
+                        {props.loggingIn && <h3>Loading ...</h3>}
+                        {!props.loggingIn && props.loggedIn && (
                             <DashboardWrapperComponent>
                                 <Switch>
-                                    <Route exact path='/configs'>
-                                        <div>Configs</div>
+                                    <Route exact path='/configurations'>
+                                        <div>Configurations</div>
                                     </Route>
                                     <Route exact path='/results'>
                                         <div>Results</div>
@@ -59,9 +42,12 @@ function RouterComponent(props: RouterComponentProps) {
                                 </Switch>
                             </DashboardWrapperComponent>
                         )}
+                        {!props.loggingIn && !props.loggedIn && (
+                            <Redirect to='/login' />
+                        )}
                     </Route>
                     <Route exact path='/login'>
-                        {LoginComponent}
+                        <LoginPageComponent />
                     </Route>
                     <Route>
                         <div>404</div>
@@ -73,7 +59,7 @@ function RouterComponent(props: RouterComponentProps) {
 }
 
 const mapStateToProps = (state: ReduxState) => ({
-    fetching: state.fetching,
+    loggingIn: state.loggingIn,
     loggedIn: state.loggedIn,
 });
 const mapDispatchToProps = (dispatch: any) => ({});

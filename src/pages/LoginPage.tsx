@@ -12,7 +12,7 @@ function LoginPageComponent(props: LoginPageComponentProps) {
     return (
         <main
             className={
-                'flex flex-col items-center justify-center w-100vw h-100vh'
+                'flex flex-row items-center justify-center w-100vw h-100vh'
             }
         >
             <div className={'w-20vw'}>
@@ -28,7 +28,7 @@ function LoginPageComponent(props: LoginPageComponentProps) {
                     value={password}
                     onChange={setPassword}
                     type='password'
-                    className={'mb-4'}
+                    className={'mb-2'}
                 />
                 <ButtonRowComponent center>
                     <ButtonComponent text='Login' />

@@ -1,6 +1,5 @@
 import React from 'react';
 import {Link, useLocation} from 'react-router-dom';
-import {isAssertionExpression} from 'typescript';
 import {ICONS} from '../assets/icons/icons';
 import FastSurveyIcon from '../assets/branding/rocket-light.svg';
 
@@ -12,7 +11,7 @@ function LogoComponent() {
             }
         >
             <div className={'h-12 w-12 mr-3'}>
-                <img src={FastSurveyIcon} />
+                <img src={FastSurveyIcon} alt='FastSurvey' />
             </div>
             <div className={'text-white text-2xl'}>FastSurvey</div>
         </div>
@@ -58,7 +57,7 @@ function NavbarComponent(props: NavbarComponentProps) {
                 <LogoComponent />
                 <NavbarLinkComponent
                     text='Configs'
-                    to='/configs'
+                    to='/configurations'
                     icon={ICONS.vote}
                 />
                 <NavbarLinkComponent
