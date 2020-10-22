@@ -11,15 +11,18 @@ function RegisterPageComponent(props: RegisterPageComponentProps) {
     const [password, setPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
+    function disabled() {
+        return password.length < 8 || password !== passwordConfirmation;
+    }
+
     return (
         <React.Fragment>
-            <h2 className='mb-4 text-center'>Register</h2>
+            <h2 className='mb-4 text-center no-selection'>Register</h2>
             <InputComponent
                 required
                 placeholder='email'
                 value={email}
                 onChange={setEmail}
-                className={'mb-2'}
             />
             <InputComponent
                 required
@@ -27,7 +30,10 @@ function RegisterPageComponent(props: RegisterPageComponentProps) {
                 value={password}
                 onChange={setPassword}
                 type='password'
-                className={'mb-2'}
+                hint={{
+                    text: '> 7 characters',
+                    fulfilled: password.length >= 8,
+                }}
             />
             <InputComponent
                 required
@@ -35,14 +41,17 @@ function RegisterPageComponent(props: RegisterPageComponentProps) {
                 value={passwordConfirmation}
                 onChange={setPasswordConfirmation}
                 type='password'
-                className={'mb-2'}
+                hint={{
+                    text: 'passwords have to match',
+                    fulfilled: password === passwordConfirmation,
+                }}
             />
             <ButtonRowComponent center className={'pt-2'}>
-                <ButtonComponent text='Register' disabled />
+                <ButtonComponent text='Register' disabled={disabled()} />
             </ButtonRowComponent>
             <div
                 className={
-                    'w-full text-center pt-4 text-gray-500 font-weight-500'
+                    'w-full text-center pt-4 text-gray-500 font-weight-500 no-selection'
                 }
             >
                 <Link to='/login'>Already have an account?</Link>

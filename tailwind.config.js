@@ -12,6 +12,9 @@ module.exports = {
     },
     theme: {
         extend: {
+            transitionProperty: {
+                'height': 'height'
+            },
             spacing: {
                 '10vh': '10vh',
                 '15vh': '15vh',
