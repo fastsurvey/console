@@ -5,6 +5,7 @@ import NavbarComponent from '../components/navbar';
 import LoginPageComponent from '../pages/LoginPage';
 import {ReduxState} from '../utilities/types';
 import RegisterPageComponent from '../pages/RegisterPage';
+import FormPageWrapperComponent from '../pages/FormPageWrapper';
 
 interface DashboardWrapperComponentProps {
     children: React.ReactChild;
@@ -47,11 +48,23 @@ function RouterComponent(props: RouterComponentProps) {
                             <Redirect to='/login' />
                         )}
                     </Route>
-                    <Route exact path='/login'>
-                        <LoginPageComponent />
-                    </Route>
-                    <Route exact path='/register'>
-                        <RegisterPageComponent />
+                    <Route path='(/login|/register)'>
+                        {props.loggingIn && <h3>Loading ...</h3>}
+                        {!props.loggingIn && !props.loggedIn && (
+                            <FormPageWrapperComponent>
+                                <Switch>
+                                    <Route exact path='/login'>
+                                        <LoginPageComponent />
+                                    </Route>
+                                    <Route exact path='/register'>
+                                        <RegisterPageComponent />
+                                    </Route>
+                                </Switch>
+                            </FormPageWrapperComponent>
+                        )}
+                        {!props.loggingIn && props.loggedIn && (
+                            <Redirect to='/configurations' />
+                        )}
                     </Route>
                     <Route>
                         <div>404</div>

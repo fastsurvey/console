@@ -85,3 +85,9 @@ svg {
     height: 100%;
     width: 100%;
 }
+
+.center-content {
+    @apply flex;
+    @apply items-center;
+    @apply justify-center;
+}
