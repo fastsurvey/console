@@ -17,12 +17,12 @@ export const logOutAction = (): LogOutAction => ({
     type: 'LOG_OUT',
 });
 
-export const openMessageAction = (content: string): OpenMessageAction => ({
+export const openMessageAction = (text: string): OpenMessageAction => ({
     type: 'OPEN_MESSAGE',
-    content,
+    text,
 });
 
-export const closeMessageAction = (index: number): CloseMessageAction => ({
+export const closeMessageAction = (text: string): CloseMessageAction => ({
     type: 'CLOSE_MESSAGE',
-    index,
+    text,
 });

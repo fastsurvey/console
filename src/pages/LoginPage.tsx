@@ -6,17 +6,21 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {AUTH_BACKEND_URL} from '../constants';
 import {connect} from 'react-redux';
-import {JWT, Account, ReduxState} from '../utilities/types';
-import {logInAction} from '../utilities/reduxActions';
+import {JWT, Account, ReduxState, Message} from '../utilities/types';
+import {logInAction, openMessageAction} from '../utilities/reduxActions';
 
 interface LoginPageComponentProps {
+    messages: Message[];
     loggingIn: boolean;
     logIn(jwt: JWT, account: Account): void;
+    openMessage(content: string): void;
 }
 
 function LoginPageComponent(props: LoginPageComponentProps) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    console.log({messages: props.messages});
 
     function handleLogin() {
         if (!disabled()) {
@@ -29,14 +33,14 @@ function LoginPageComponent(props: LoginPageComponentProps) {
                     props.logIn(response.data.jwt, response.data.account);
                 })
                 .catch((error) => {
-                    let errorMessage: string;
                     if (error?.response?.status === 401) {
-                        errorMessage = 'Invalid credentials';
+                        props.openMessage('Invalid credentials');
                     } else {
                         // Invalid password formats will be catched by frontend
-                        errorMessage = 'Server error. Please try again later';
+                        props.openMessage(
+                            'Server error. Please try again later',
+                        );
                     }
-                    console.log(errorMessage);
                 });
         }
     }
@@ -78,9 +82,11 @@ function LoginPageComponent(props: LoginPageComponentProps) {
 }
 
 const mapStateToProps = (state: ReduxState) => ({
+    messages: state.messages,
     loggingIn: state.loggingIn,
 });
 const mapDispatchToProps = (dispatch: any) => ({
     logIn: (jwt: JWT, account: Account) => dispatch(logInAction(jwt, account)),
+    openMessage: (content: string) => dispatch(openMessageAction(content)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPageComponent);

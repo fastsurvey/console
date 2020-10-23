@@ -2,7 +2,7 @@ import React from 'react';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import {ReduxAction, ReduxState} from '../utilities/types';
-import MessageQueue from '../components/messageQueue';
+import MessageQueueComponent from '../components/messageQueue';
 
 function storeReducer(
     state = {
@@ -10,7 +10,7 @@ function storeReducer(
         loggedIn: false,
         jwt: undefined,
         account: undefined,
-        messages: [{content: 'Hello'}, {content: 'Bammmm'}],
+        messages: [],
     },
     action: ReduxAction,
 ) {
@@ -35,6 +35,16 @@ function storeReducer(
             newState.jwt = undefined;
             newState.account = undefined;
             break;
+        case 'OPEN_MESSAGE':
+            if (!newState.messages.includes(action.text)) {
+                newState.messages = [action.text].concat(newState.messages);
+            }
+            break;
+        case 'CLOSE_MESSAGE':
+            newState.messages = [...newState.messages].filter((text) => {
+                return text != action.text;
+            });
+            break;
         default:
             break;
     }
@@ -51,7 +61,7 @@ interface ReduxWrapperProps {
 export function ReduxWrapper(props: ReduxWrapperProps) {
     return (
         <Provider store={store}>
-            <MessageQueue />
+            <MessageQueueComponent />
             {props.children}
         </Provider>
     );

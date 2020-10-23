@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {ICONS} from '../assets/icons/icons';
 
 interface MessageComponentProps {
-    content: string | React.ReactNode;
+    text: string;
     close(): void;
 }
 
@@ -40,7 +40,7 @@ function MessageComponent(props: MessageComponentProps) {
                 ' transition-all duration-300'
             }
         >
-            <div className='text-lg'>{props.content}</div>
+            <div className='text-lg'>{props.text}</div>
             <div className='flex-grow' />
             <div className='cursor-pointer' onClick={handleClose}>
                 {ICONS.close}
@@ -51,16 +51,18 @@ function MessageComponent(props: MessageComponentProps) {
 
 interface MessageQueueComponentProps {
     messages: Message[];
-    closeMessage(index: number): void;
+    closeMessage(content: string): void;
 }
 
 function MessageQueueComponent(props: MessageQueueComponentProps) {
+    console.log({messages2: props.messages});
     return (
         <div className='fixed bottom-0 w-30vw mx-35vw'>
             {props.messages.map((message: Message, index: number) => (
                 <MessageComponent
-                    content={message.content}
-                    close={() => props.closeMessage(index)}
+                    key={message}
+                    text={message}
+                    close={() => props.closeMessage(message)}
                 />
             ))}
         </div>
@@ -71,7 +73,7 @@ const mapStateToProps = (state: ReduxState) => ({
     messages: state.messages,
 });
 const mapDispatchToProps = (dispatch: any) => ({
-    closeMessage: (index: number) => dispatch(closeMessageAction(index)),
+    closeMessage: (text: string) => dispatch(closeMessageAction(text)),
 });
 export default connect(
     mapStateToProps,
