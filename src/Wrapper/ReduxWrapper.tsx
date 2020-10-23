@@ -10,7 +10,7 @@ function storeReducer(
         loggedIn: false,
         jwt: undefined,
         account: undefined,
-        messages: [{content: 'Hello'}, {content: <h3>Bammmm</h3>}],
+        messages: [{content: 'Hello'}, {content: 'Bammmm'}],
     },
     action: ReduxAction,
 ) {

@@ -18,7 +18,7 @@ export interface Account {
 }
 
 export interface Message {
-    content: string | React.ReactNode;
+    content: string;
 }
 
 export type ReduxAction =
@@ -39,7 +39,7 @@ export interface LogOutAction {
 
 export interface OpenMessageAction {
     type: 'OPEN_MESSAGE';
-    content: string | React.ReactNode;
+    content: string;
 }
 
 export interface CloseMessageAction {

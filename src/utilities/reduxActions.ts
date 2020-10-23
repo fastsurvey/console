@@ -17,9 +17,7 @@ export const logOutAction = (): LogOutAction => ({
     type: 'LOG_OUT',
 });
 
-export const openMessageAction = (
-    content: string | React.ReactNode,
-): OpenMessageAction => ({
+export const openMessageAction = (content: string): OpenMessageAction => ({
     type: 'OPEN_MESSAGE',
     content,
 });
