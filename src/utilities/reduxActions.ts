@@ -1,8 +1,8 @@
-import {LogOutAction, LogInAction} from './types';
+import {LogOutAction, LogInAction, JWT} from './types';
 
-export const logIn = (accessToken: string): LogInAction => ({
+export const logIn = (jwt: JWT): LogInAction => ({
     type: 'LOG_IN',
-    accessToken,
+    jwt,
 });
 
 export const logOut = (): LogOutAction => ({
