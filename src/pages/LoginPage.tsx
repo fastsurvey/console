@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {AUTH_BACKEND_URL} from '../constants';
 import {connect} from 'react-redux';
-import {JWT, Account, ReduxState, Message} from '../utilities/types';
+import {JWT, Account, ReduxState} from '../utilities/types';
 import {
     logInAction,
     openMessageAction,

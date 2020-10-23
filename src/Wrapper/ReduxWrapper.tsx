@@ -3,6 +3,7 @@ import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import {ReduxAction, ReduxState} from '../utilities/types';
 import MessageQueueComponent from '../components/messageQueue';
+import Cookies from 'js-cookie';
 
 function storeReducer(
     state = {
@@ -28,6 +29,7 @@ function storeReducer(
             newState.loggedIn = true;
             newState.jwt = action.jwt;
             newState.account = action.account;
+            Cookies.set('jwt', JSON.stringify(action.jwt), {expires: 7});
             break;
         case 'LOG_OUT':
             newState.loggingIn = false;
@@ -42,7 +44,7 @@ function storeReducer(
             break;
         case 'CLOSE_MESSAGE':
             newState.messages = [...newState.messages].filter((text) => {
-                return text != action.text;
+                return text !== action.text;
             });
             break;
         case 'CLOSE_ALL_MESSAGES':
@@ -62,6 +64,7 @@ interface ReduxWrapperProps {
     children: React.ReactChild;
 }
 export function ReduxWrapper(props: ReduxWrapperProps) {
+    // TODO: Try logging in from cookie
     return (
         <Provider store={store}>
             <MessageQueueComponent />

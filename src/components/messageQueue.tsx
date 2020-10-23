@@ -18,7 +18,7 @@ function MessageComponent(props: MessageComponentProps) {
         if (size === 'h-0 py-0' && !toBeClosed) {
             setSize('h-12 py-2');
         }
-    });
+    }, [size, toBeClosed]);
 
     function handleClose() {
         setToBeClosed(true);
