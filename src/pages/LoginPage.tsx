@@ -3,12 +3,28 @@ import InputComponent from '../components/input';
 import ButtonComponent from '../components/button';
 import ButtonRowComponent from '../components/buttonRow';
 import {Link} from 'react-router-dom';
+import axios from 'axios';
+import {AUTH_BACKEND_URL} from '../constants';
 
 interface LoginPageComponentProps {}
 
 function LoginPageComponent(props: LoginPageComponentProps) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    function handleLogin() {
+        let formData = new FormData();
+        formData.append('email', email);
+        formData.append('password', password);
+        axios
+            .post(AUTH_BACKEND_URL + '/login', formData)
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                console.log(error.message);
+            });
+    }
 
     function disabled() {
         return email.length < 5 || password.length < 8;
@@ -29,7 +45,11 @@ function LoginPageComponent(props: LoginPageComponentProps) {
                 type='password'
             />
             <ButtonRowComponent center className={'pt-2'}>
-                <ButtonComponent text='Login' disabled={disabled()} />
+                <ButtonComponent
+                    onClick={handleLogin}
+                    text='Login'
+                    disabled={disabled()}
+                />
             </ButtonRowComponent>
             <div
                 className={
