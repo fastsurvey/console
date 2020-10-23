@@ -3,13 +3,45 @@ import InputComponent from '../components/input';
 import ButtonComponent from '../components/button';
 import ButtonRowComponent from '../components/buttonRow';
 import {Link} from 'react-router-dom';
+import axios from 'axios';
+import {AUTH_BACKEND_URL} from '../constants';
+import {ReduxState, JWT, Account} from '../utilities/types';
+import {logIn} from '../utilities/reduxActions';
+import {connect} from 'react-redux';
 
-interface RegisterPageComponentProps {}
+interface RegisterPageComponentProps {
+    loggingIn: boolean;
+    logIn(jwt: JWT, account: Account): void;
+}
 
 function RegisterPageComponent(props: RegisterPageComponentProps) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
+
+    function handleRegistration() {
+        if (!disabled()) {
+            let formData = new FormData();
+            formData.append('email', email);
+            formData.append('password', password);
+            axios
+                .post(AUTH_BACKEND_URL + '/register', formData)
+                .then((response) => {
+                    props.logIn(response.data.jwt, response.data.account);
+                })
+                .catch((error) => {
+                    let errorMessage: string;
+                    const detail = error?.response?.data?.detail;
+                    if (detail === 'email already taken') {
+                        errorMessage = 'Email ' + email + ' is already taken';
+                    } else {
+                        // Invalid password formats will be catched by frontend
+                        errorMessage = 'Server error. Please try again later';
+                    }
+                    console.log(errorMessage);
+                });
+        }
+    }
 
     function disabled() {
         return password.length < 8 || password !== passwordConfirmation;
@@ -49,7 +81,11 @@ function RegisterPageComponent(props: RegisterPageComponentProps) {
                 }}
             />
             <ButtonRowComponent center className={'pt-2'}>
-                <ButtonComponent text='Register' disabled={disabled()} />
+                <ButtonComponent
+                    onClick={handleRegistration}
+                    text='Register'
+                    disabled={disabled()}
+                />
             </ButtonRowComponent>
             <div
                 className={
@@ -62,4 +98,13 @@ function RegisterPageComponent(props: RegisterPageComponentProps) {
     );
 }
 
-export default RegisterPageComponent;
+const mapStateToProps = (state: ReduxState) => ({
+    loggingIn: state.loggingIn,
+});
+const mapDispatchToProps = (dispatch: any) => ({
+    logIn: (jwt: JWT, account: Account) => dispatch(logIn(jwt, account)),
+});
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(RegisterPageComponent);

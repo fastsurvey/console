@@ -8,6 +8,7 @@ function storeReducer(
         loggingIn: false,
         loggedIn: false,
         jwt: undefined,
+        account: undefined,
     },
     action: ReduxAction,
 ) {
@@ -15,6 +16,7 @@ function storeReducer(
         loggingIn: state.loggingIn,
         loggedIn: state.loggedIn,
         jwt: state.jwt,
+        account: state.account,
     };
 
     switch (action.type) {
@@ -22,11 +24,13 @@ function storeReducer(
             newState.loggingIn = false;
             newState.loggedIn = true;
             newState.jwt = action.jwt;
+            newState.account = action.account;
             break;
         case 'LOG_OUT':
             newState.loggingIn = false;
             newState.loggedIn = false;
             newState.jwt = undefined;
+            newState.account = undefined;
             break;
         default:
             break;
