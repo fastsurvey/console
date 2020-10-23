@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
-import {ReduxAction, ReduxState} from '../utilities/types';
+import {ReduxAction, ReduxState, JWT, Account} from '../utilities/types';
 import MessageQueueComponent from '../components/messageQueue';
 import Cookies from 'js-cookie';
 import {logInAction, logOutAction} from '../utilities/reduxActions';
 import {AUTH_BACKEND_URL} from '../constants';
 import axios from 'axios';
+import {authPostRequest} from '../utilities/axiosClients';
 
 function storeReducer(
     state = {
@@ -69,6 +70,14 @@ interface ReduxWrapperProps {
 export function ReduxWrapper(props: ReduxWrapperProps) {
     const [cookieLogin, setCookieLogin] = useState(false);
 
+    function logIn(jwt: JWT, account: Account) {
+        store.dispatch(logInAction(jwt, account));
+    }
+
+    function logOut() {
+        store.dispatch(logOutAction());
+    }
+
     useEffect(() => {
         const jwt_cookie = Cookies.get('jwt');
 
@@ -76,53 +85,38 @@ export function ReduxWrapper(props: ReduxWrapperProps) {
             setCookieLogin(true);
             if (jwt_cookie !== undefined) {
                 const jwt = JSON.parse(jwt_cookie);
-                if (
-                    jwt.access_token === undefined ||
-                    jwt.refresh_token === undefined
-                ) {
-                    store.dispatch(logOutAction());
+                if ([jwt.access_token, jwt.refresh_token].includes(undefined)) {
+                    logOut();
                 } else {
-                    // 1. Try to validate access_token
-                    let formData1 = new FormData();
-                    formData1.append('access_token', jwt.access_token);
-                    axios
-                        .post(AUTH_BACKEND_URL + '/login/access', formData1)
-                        .then((response) => {
-                            store.dispatch(
-                                logInAction(jwt, response.data.account),
-                            );
+                    setTimeout(() => {
+                        // 1. Try to validate access_token
+                        authPostRequest('/login/access', {
+                            access_token: jwt.access_token,
                         })
-                        .catch((error) => {
-                            if (error.response.status === 401) {
-                                // 2. Try to validate refresh_token
-                                let formData2 = new FormData();
-                                formData2.append(
-                                    'refresh_token',
-                                    jwt.refresh_token,
-                                );
-                                axios
-                                    .post(
-                                        AUTH_BACKEND_URL + '/login/refresh',
-                                        formData2,
-                                    )
-                                    .then((response) => {
-                                        store.dispatch(
-                                            logInAction(
+                            .then((response) =>
+                                logIn(jwt, response.data.account),
+                            )
+                            .catch((error) => {
+                                if (error.response.status === 401) {
+                                    // 2. Try to validate refresh_token
+                                    authPostRequest('/login/refresh', {
+                                        refresh_token: jwt.refresh_token,
+                                    })
+                                        .then((response) => {
+                                            logIn(
                                                 response.data.jwt,
                                                 response.data.account,
-                                            ),
-                                        );
-                                    })
-                                    .catch(() => {
-                                        store.dispatch(logOutAction());
-                                    });
-                            } else {
-                                store.dispatch(logOutAction());
-                            }
-                        });
+                                            );
+                                        })
+                                        .catch(() => logOut());
+                                } else {
+                                    logOut();
+                                }
+                            });
+                    }, 1000);
                 }
             } else {
-                store.dispatch(logOutAction());
+                logOut();
             }
         }
     }, [cookieLogin]);
