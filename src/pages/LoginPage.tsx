@@ -7,20 +7,22 @@ import axios from 'axios';
 import {AUTH_BACKEND_URL} from '../constants';
 import {connect} from 'react-redux';
 import {JWT, Account, ReduxState, Message} from '../utilities/types';
-import {logInAction, openMessageAction} from '../utilities/reduxActions';
+import {
+    logInAction,
+    openMessageAction,
+    closeAllMessagesAction,
+} from '../utilities/reduxActions';
 
 interface LoginPageComponentProps {
-    messages: Message[];
     loggingIn: boolean;
     logIn(jwt: JWT, account: Account): void;
     openMessage(content: string): void;
+    closeAllMessages(): void;
 }
 
 function LoginPageComponent(props: LoginPageComponentProps) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
-    console.log({messages: props.messages});
 
     function handleLogin() {
         if (!disabled()) {
@@ -30,6 +32,7 @@ function LoginPageComponent(props: LoginPageComponentProps) {
             axios
                 .post(AUTH_BACKEND_URL + '/login', formData)
                 .then((response) => {
+                    props.closeAllMessages();
                     props.logIn(response.data.jwt, response.data.account);
                 })
                 .catch((error) => {
@@ -55,12 +58,18 @@ function LoginPageComponent(props: LoginPageComponentProps) {
             <InputComponent
                 placeholder='email'
                 value={email}
-                onChange={setEmail}
+                onChange={(newValue) => {
+                    props.closeAllMessages();
+                    setEmail(newValue);
+                }}
             />
             <InputComponent
                 placeholder='password'
                 value={password}
-                onChange={setPassword}
+                onChange={(newValue) => {
+                    props.closeAllMessages();
+                    setPassword(newValue);
+                }}
                 type='password'
             />
             <ButtonRowComponent center className={'pt-2'}>
@@ -82,11 +91,11 @@ function LoginPageComponent(props: LoginPageComponentProps) {
 }
 
 const mapStateToProps = (state: ReduxState) => ({
-    messages: state.messages,
     loggingIn: state.loggingIn,
 });
 const mapDispatchToProps = (dispatch: any) => ({
     logIn: (jwt: JWT, account: Account) => dispatch(logInAction(jwt, account)),
     openMessage: (content: string) => dispatch(openMessageAction(content)),
+    closeAllMessages: () => dispatch(closeAllMessagesAction()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPageComponent);

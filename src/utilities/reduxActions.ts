@@ -5,6 +5,7 @@ import {
     Account,
     OpenMessageAction,
     CloseMessageAction,
+    CloseAllMessagesAction,
 } from './types';
 
 export const logInAction = (jwt: JWT, account: Account): LogInAction => ({
@@ -25,4 +26,8 @@ export const openMessageAction = (text: string): OpenMessageAction => ({
 export const closeMessageAction = (text: string): CloseMessageAction => ({
     type: 'CLOSE_MESSAGE',
     text,
+});
+
+export const closeAllMessagesAction = (): CloseAllMessagesAction => ({
+    type: 'CLOSE_ALL_MESSAGES',
 });

@@ -6,12 +6,18 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {AUTH_BACKEND_URL} from '../constants';
 import {ReduxState, JWT, Account} from '../utilities/types';
-import {logInAction} from '../utilities/reduxActions';
+import {
+    closeAllMessagesAction,
+    logInAction,
+    openMessageAction,
+} from '../utilities/reduxActions';
 import {connect} from 'react-redux';
 
 interface RegisterPageComponentProps {
     loggingIn: boolean;
     logIn(jwt: JWT, account: Account): void;
+    openMessage(content: string): void;
+    closeAllMessages(): void;
 }
 
 function RegisterPageComponent(props: RegisterPageComponentProps) {
@@ -27,18 +33,21 @@ function RegisterPageComponent(props: RegisterPageComponentProps) {
             axios
                 .post(AUTH_BACKEND_URL + '/register', formData)
                 .then((response) => {
+                    props.closeAllMessages();
                     props.logIn(response.data.jwt, response.data.account);
                 })
                 .catch((error) => {
-                    let errorMessage: string;
                     const detail = error?.response?.data?.detail;
                     if (detail === 'email already taken') {
-                        errorMessage = 'Email ' + email + ' is already taken';
+                        props.openMessage(
+                            'Email ' + email + ' is already taken',
+                        );
                     } else {
                         // Invalid password formats will be catched by frontend
-                        errorMessage = 'Server error. Please try again later';
+                        props.openMessage(
+                            'Server error. Please try again later',
+                        );
                     }
-                    console.log(errorMessage);
                 });
         }
     }
@@ -54,13 +63,19 @@ function RegisterPageComponent(props: RegisterPageComponentProps) {
                 required
                 placeholder='email'
                 value={email}
-                onChange={setEmail}
+                onChange={(newValue) => {
+                    props.closeAllMessages();
+                    setEmail(newValue);
+                }}
             />
             <InputComponent
                 required
                 placeholder='password'
                 value={password}
-                onChange={setPassword}
+                onChange={(newValue) => {
+                    props.closeAllMessages();
+                    setPassword(newValue);
+                }}
                 type='password'
                 hint={{
                     text: '> 7 characters',
@@ -71,7 +86,10 @@ function RegisterPageComponent(props: RegisterPageComponentProps) {
                 required
                 placeholder='confirm password'
                 value={passwordConfirmation}
-                onChange={setPasswordConfirmation}
+                onChange={(newValue) => {
+                    props.closeAllMessages();
+                    setPasswordConfirmation(newValue);
+                }}
                 type='password'
                 hint={{
                     text: 'passwords have to match',
@@ -103,6 +121,8 @@ const mapStateToProps = (state: ReduxState) => ({
 });
 const mapDispatchToProps = (dispatch: any) => ({
     logIn: (jwt: JWT, account: Account) => dispatch(logInAction(jwt, account)),
+    openMessage: (content: string) => dispatch(openMessageAction(content)),
+    closeAllMessages: () => dispatch(closeAllMessagesAction()),
 });
 export default connect(
     mapStateToProps,

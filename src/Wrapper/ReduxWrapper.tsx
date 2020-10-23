@@ -45,6 +45,9 @@ function storeReducer(
                 return text != action.text;
             });
             break;
+        case 'CLOSE_ALL_MESSAGES':
+            newState.messages = [];
+            break;
         default:
             break;
     }

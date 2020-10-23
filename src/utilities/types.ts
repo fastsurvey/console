@@ -23,7 +23,8 @@ export type ReduxAction =
     | LogInAction
     | LogOutAction
     | OpenMessageAction
-    | CloseMessageAction;
+    | CloseMessageAction
+    | CloseAllMessagesAction;
 
 export interface LogInAction {
     type: 'LOG_IN';
@@ -43,4 +44,8 @@ export interface OpenMessageAction {
 export interface CloseMessageAction {
     type: 'CLOSE_MESSAGE';
     text: string;
+}
+
+export interface CloseAllMessagesAction {
+    type: 'CLOSE_ALL_MESSAGES';
 }
