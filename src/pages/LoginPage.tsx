@@ -30,7 +30,7 @@ function LoginPageComponent(props: LoginPageComponentProps) {
             formData.append('email', email);
             formData.append('password', password);
             axios
-                .post(AUTH_BACKEND_URL + '/login', formData)
+                .post(AUTH_BACKEND_URL + '/login/form', formData)
                 .then((response) => {
                     props.closeAllMessages();
                     props.logIn(response.data.jwt, response.data.account);
