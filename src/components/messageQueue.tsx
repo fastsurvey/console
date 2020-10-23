@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {closeMessageAction} from '../utilities/reduxActions';
 import {ReduxState, Message} from '../utilities/types';
 import {connect} from 'react-redux';
+import {ICONS} from '../assets/icons/icons';
 
 interface MessageComponentProps {
     content: string | React.ReactNode;
@@ -15,7 +16,7 @@ function MessageComponent(props: MessageComponentProps) {
 
     useEffect(() => {
         if (size === 'h-0 py-0' && !toBeClosed) {
-            setSize('h-16 py-2');
+            setSize('h-12 py-2');
         }
     });
 
@@ -31,15 +32,19 @@ function MessageComponent(props: MessageComponentProps) {
     return (
         <div
             className={
-                'overflow-hidden px-2 m-2 bg-gray-200 rounded shadow ' +
+                'flex flex-row items-center text-gray-800 font-weight-600 ' +
+                'overflow-hidden px-2 m-2 bg-gray-100 rounded shadow ' +
                 size +
                 ' ' +
                 delay +
                 ' transition-all duration-300'
             }
         >
-            {props.content}
-            <div onClick={handleClose}>Close</div>
+            <div className='text-lg'>{props.content}</div>
+            <div className='flex-grow' />
+            <div className='cursor-pointer' onClick={handleClose}>
+                {ICONS.close}
+            </div>
         </div>
     );
 }
@@ -51,7 +56,7 @@ interface MessageQueueComponentProps {
 
 function MessageQueueComponent(props: MessageQueueComponentProps) {
     return (
-        <div className='fixed bottom-0 right-0 w-128'>
+        <div className='fixed bottom-0 w-30vw mx-35vw'>
             {props.messages.map((message: Message, index: number) => (
                 <MessageComponent
                     content={message.content}
