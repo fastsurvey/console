@@ -9,6 +9,7 @@ function storeReducer(
         loggedIn: false,
         jwt: undefined,
         account: undefined,
+        messages: [],
     },
     action: ReduxAction,
 ) {
@@ -17,6 +18,7 @@ function storeReducer(
         loggedIn: state.loggedIn,
         jwt: state.jwt,
         account: state.account,
+        messages: state.messages,
     };
 
     switch (action.type) {

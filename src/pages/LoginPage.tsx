@@ -7,7 +7,7 @@ import axios from 'axios';
 import {AUTH_BACKEND_URL} from '../constants';
 import {connect} from 'react-redux';
 import {JWT, Account, ReduxState} from '../utilities/types';
-import {logIn} from '../utilities/reduxActions';
+import {logInAction} from '../utilities/reduxActions';
 
 interface LoginPageComponentProps {
     loggingIn: boolean;
@@ -81,6 +81,6 @@ const mapStateToProps = (state: ReduxState) => ({
     loggingIn: state.loggingIn,
 });
 const mapDispatchToProps = (dispatch: any) => ({
-    logIn: (jwt: JWT, account: Account) => dispatch(logIn(jwt, account)),
+    logIn: (jwt: JWT, account: Account) => dispatch(logInAction(jwt, account)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPageComponent);

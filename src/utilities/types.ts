@@ -3,9 +3,30 @@ export interface ReduxState {
     loggedIn: boolean;
     jwt: undefined | JWT;
     account: undefined | Account;
+    messages: Message[];
 }
 
-export type ReduxAction = LogInAction | LogOutAction;
+export interface JWT {
+    accessToken: string;
+    refreshToken: string;
+    bearer: string;
+}
+
+export interface Account {
+    email: string;
+    email_verified: boolean;
+}
+
+export interface Message {
+    open: boolean;
+    content: string | React.ReactNode;
+}
+
+export type ReduxAction =
+    | LogInAction
+    | LogOutAction
+    | OpenMessageAction
+    | CloseMessageAction;
 
 export interface LogInAction {
     type: 'LOG_IN';
@@ -16,13 +37,13 @@ export interface LogInAction {
 export interface LogOutAction {
     type: 'LOG_OUT';
 }
-export interface JWT {
-    accessToken: string;
-    refreshToken: string;
-    bearer: string;
+
+export interface OpenMessageAction {
+    type: 'OPEN_MESSAGE';
+    content: string | React.ReactNode;
 }
 
-export interface Account {
-    email: string;
-    email_verified: boolean;
+export interface CloseMessageAction {
+    type: 'CLOSE_MESSAGE';
+    index: number;
 }
