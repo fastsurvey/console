@@ -7,6 +7,7 @@ import LoginPageComponent from '../pages/LoginPage';
 import {ReduxState, Account} from '../utilities/types';
 import RegisterPageComponent from '../pages/RegisterPage';
 import FormPageWrapperComponent from '../pages/FormPageWrapper';
+import Loader from '../components/loader';
 
 interface DashboardWrapperComponentProps {
     children: React.ReactChild;
@@ -36,7 +37,7 @@ function RouterComponent(props: RouterComponentProps) {
             <Route>
                 <Switch>
                     <Route path='(/configurations|/results|/account)'>
-                        {props.loggingIn && <h3>Loading ...</h3>}
+                        {props.loggingIn && <Loader />}
                         {!props.loggingIn && props.loggedIn && (
                             <React.Fragment>
                                 {verifyWall && <Redirect to='/verify' />}
@@ -65,7 +66,7 @@ function RouterComponent(props: RouterComponentProps) {
                         Please verify your account first!
                     </Route>
                     <Route path='(/login|/register)'>
-                        {props.loggingIn && <h3>Loading ...</h3>}
+                        {props.loggingIn && <Loader />}
                         {!props.loggingIn && !props.loggedIn && (
                             <FormPageWrapperComponent>
                                 <Switch>
