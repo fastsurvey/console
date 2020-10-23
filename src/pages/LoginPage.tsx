@@ -5,25 +5,40 @@ import ButtonRowComponent from '../components/buttonRow';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {AUTH_BACKEND_URL} from '../constants';
+import {connect} from 'react-redux';
+import {JWT, Account, ReduxState} from '../utilities/types';
+import {logIn} from '../utilities/reduxActions';
 
-interface LoginPageComponentProps {}
+interface LoginPageComponentProps {
+    loggingIn: boolean;
+    logIn(jwt: JWT, account: Account): void;
+}
 
 function LoginPageComponent(props: LoginPageComponentProps) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     function handleLogin() {
-        let formData = new FormData();
-        formData.append('email', email);
-        formData.append('password', password);
-        axios
-            .post(AUTH_BACKEND_URL + '/login', formData)
-            .then((response) => {
-                console.log(response);
-            })
-            .catch((error) => {
-                console.log(error.message);
-            });
+        if (!disabled()) {
+            let formData = new FormData();
+            formData.append('email', email);
+            formData.append('password', password);
+            axios
+                .post(AUTH_BACKEND_URL + '/login', formData)
+                .then((response) => {
+                    props.logIn(response.data.jwt, response.data.account);
+                })
+                .catch((error) => {
+                    let errorMessage: string;
+                    if (error?.response?.status === 401) {
+                        errorMessage = 'Invalid credentials';
+                    } else {
+                        // Invalid password formats will be catched by frontend
+                        errorMessage = 'Server error. Please try again later';
+                    }
+                    console.log(errorMessage);
+                });
+        }
     }
 
     function disabled() {
@@ -62,4 +77,10 @@ function LoginPageComponent(props: LoginPageComponentProps) {
     );
 }
 
-export default LoginPageComponent;
+const mapStateToProps = (state: ReduxState) => ({
+    loggingIn: state.loggingIn,
+});
+const mapDispatchToProps = (dispatch: any) => ({
+    logIn: (jwt: JWT, account: Account) => dispatch(logIn(jwt, account)),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPageComponent);
