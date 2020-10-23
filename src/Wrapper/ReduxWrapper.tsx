@@ -2,6 +2,7 @@ import React from 'react';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import {ReduxAction, ReduxState} from '../utilities/types';
+import MessageQueue from '../components/messageQueue';
 
 function storeReducer(
     state = {
@@ -9,7 +10,7 @@ function storeReducer(
         loggedIn: false,
         jwt: undefined,
         account: undefined,
-        messages: [],
+        messages: [{content: 'Hello'}, {content: <h3>Bammmm</h3>}],
     },
     action: ReduxAction,
 ) {
@@ -48,7 +49,12 @@ interface ReduxWrapperProps {
     children: React.ReactChild;
 }
 export function ReduxWrapper(props: ReduxWrapperProps) {
-    return <Provider store={store}>{props.children}</Provider>;
+    return (
+        <Provider store={store}>
+            <MessageQueue />
+            {props.children}
+        </Provider>
+    );
 }
 
 export default ReduxWrapper;

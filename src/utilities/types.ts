@@ -18,7 +18,6 @@ export interface Account {
 }
 
 export interface Message {
-    open: boolean;
     content: string | React.ReactNode;
 }
 
