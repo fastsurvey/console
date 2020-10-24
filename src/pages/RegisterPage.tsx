@@ -12,6 +12,7 @@ import {
     openMessageAction,
 } from '../utilities/reduxActions';
 import {connect} from 'react-redux';
+import {authPostRequest} from '../utilities/axiosClients';
 
 interface RegisterPageComponentProps {
     loggingIn: boolean;
@@ -27,11 +28,7 @@ function RegisterPageComponent(props: RegisterPageComponentProps) {
 
     function handleRegistration() {
         if (!disabled()) {
-            let formData = new FormData();
-            formData.append('email', email);
-            formData.append('password', password);
-            axios
-                .post(AUTH_BACKEND_URL + '/register', formData)
+            authPostRequest('/register', {email, password})
                 .then((response) => {
                     props.closeAllMessages();
                     props.logIn(response.data.jwt, response.data.account);

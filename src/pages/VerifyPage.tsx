@@ -7,6 +7,7 @@ import axios from 'axios';
 import {AUTH_BACKEND_URL} from '../constants';
 import {connect} from 'react-redux';
 import {JWT, Account, ReduxState} from '../utilities/types';
+import {authPostRequest} from '../utilities/axiosClients';
 import {
     logInAction,
     openMessageAction,
@@ -29,11 +30,7 @@ function LoginPageComponent(props: LoginPageComponentProps) {
 
     function handleVerify() {
         if (!disabled() && email_token !== null) {
-            let formData = new FormData();
-            formData.append('password', password);
-            formData.append('email_token', email_token);
-            axios
-                .post(AUTH_BACKEND_URL + '/verify', formData)
+            authPostRequest('/verify', {password, email_token})
                 .then((response) => {
                     props.closeAllMessages();
                     // new jwt and account since the accout payload has been updated

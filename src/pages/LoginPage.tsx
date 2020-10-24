@@ -7,6 +7,7 @@ import axios from 'axios';
 import {AUTH_BACKEND_URL} from '../constants';
 import {connect} from 'react-redux';
 import {JWT, Account, ReduxState} from '../utilities/types';
+import {authPostRequest} from '../utilities/axiosClients';
 import {
     logInAction,
     openMessageAction,
@@ -26,11 +27,7 @@ function LoginPageComponent(props: LoginPageComponentProps) {
 
     function handleLogin() {
         if (!disabled()) {
-            let formData = new FormData();
-            formData.append('email', email);
-            formData.append('password', password);
-            axios
-                .post(AUTH_BACKEND_URL + '/login/form', formData)
+            authPostRequest('/login/form', {email, password})
                 .then((response) => {
                     props.closeAllMessages();
                     props.logIn(response.data.jwt, response.data.account);
