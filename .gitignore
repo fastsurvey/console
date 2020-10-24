@@ -1,4 +1,5 @@
 
+.vscode
 tailwind.out.css
 
 # Created by https://www.toptal.com/developers/gitignore/api/node,vscode,react,git,macos,linux,yarn

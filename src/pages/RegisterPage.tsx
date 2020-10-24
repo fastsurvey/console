@@ -3,32 +3,76 @@ import InputComponent from '../components/input';
 import ButtonComponent from '../components/button';
 import ButtonRowComponent from '../components/buttonRow';
 import {Link} from 'react-router-dom';
+import axios from 'axios';
+import {AUTH_BACKEND_URL} from '../constants';
+import {ReduxState, JWT, Account} from '../utilities/types';
+import {
+    closeAllMessagesAction,
+    logInAction,
+    openMessageAction,
+} from '../utilities/reduxActions';
+import {connect} from 'react-redux';
+import {authPostRequest} from '../utilities/axiosClients';
 
-interface RegisterPageComponentProps {}
+interface RegisterPageComponentProps {
+    loggingIn: boolean;
+    logIn(jwt: JWT, account: Account): void;
+    openMessage(content: string): void;
+    closeAllMessages(): void;
+}
 
 function RegisterPageComponent(props: RegisterPageComponentProps) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
+    function handleRegistration() {
+        if (!disabled()) {
+            authPostRequest('/register', {email, password})
+                .then((response) => {
+                    props.closeAllMessages();
+                    props.logIn(response.data.jwt, response.data.account);
+                })
+                .catch((error) => {
+                    const detail = error?.response?.data?.detail;
+                    if (detail === 'email already taken') {
+                        props.openMessage(
+                            'Email ' + email + ' is already taken',
+                        );
+                    } else {
+                        // Invalid password formats will be catched by frontend
+                        props.openMessage(
+                            'Server error. Please try again later',
+                        );
+                    }
+                });
+        }
+    }
+
     function disabled() {
         return password.length < 8 || password !== passwordConfirmation;
     }
 
     return (
-        <React.Fragment>
-            <h2 className='mb-4 text-center no-selection'>Register</h2>
+        <div className='w-20vw'>
+            <h3 className='mb-4 text-center no-selection'>Register</h3>
             <InputComponent
                 required
                 placeholder='email'
                 value={email}
-                onChange={setEmail}
+                onChange={(newValue) => {
+                    props.closeAllMessages();
+                    setEmail(newValue);
+                }}
             />
             <InputComponent
                 required
                 placeholder='password'
                 value={password}
-                onChange={setPassword}
+                onChange={(newValue) => {
+                    props.closeAllMessages();
+                    setPassword(newValue);
+                }}
                 type='password'
                 hint={{
                     text: '> 7 characters',
@@ -39,7 +83,10 @@ function RegisterPageComponent(props: RegisterPageComponentProps) {
                 required
                 placeholder='confirm password'
                 value={passwordConfirmation}
-                onChange={setPasswordConfirmation}
+                onChange={(newValue) => {
+                    props.closeAllMessages();
+                    setPasswordConfirmation(newValue);
+                }}
                 type='password'
                 hint={{
                     text: 'passwords have to match',
@@ -49,7 +96,11 @@ function RegisterPageComponent(props: RegisterPageComponentProps) {
                 }}
             />
             <ButtonRowComponent center className={'pt-2'}>
-                <ButtonComponent text='Register' disabled={disabled()} />
+                <ButtonComponent
+                    onClick={handleRegistration}
+                    text='Register'
+                    disabled={disabled()}
+                />
             </ButtonRowComponent>
             <div
                 className={
@@ -58,8 +109,19 @@ function RegisterPageComponent(props: RegisterPageComponentProps) {
             >
                 <Link to='/login'>Already have an account?</Link>
             </div>
-        </React.Fragment>
+        </div>
     );
 }
 
-export default RegisterPageComponent;
+const mapStateToProps = (state: ReduxState) => ({
+    loggingIn: state.loggingIn,
+});
+const mapDispatchToProps = (dispatch: any) => ({
+    logIn: (jwt: JWT, account: Account) => dispatch(logInAction(jwt, account)),
+    openMessage: (content: string) => dispatch(openMessageAction(content)),
+    closeAllMessages: () => dispatch(closeAllMessagesAction()),
+});
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(RegisterPageComponent);

@@ -1,10 +1,33 @@
-import {LogOutAction, LogInAction} from './types';
+import {
+    LogOutAction,
+    LogInAction,
+    JWT,
+    Account,
+    OpenMessageAction,
+    CloseMessageAction,
+    CloseAllMessagesAction,
+} from './types';
 
-export const logIn = (accessToken: string): LogInAction => ({
+export const logInAction = (jwt: JWT, account: Account): LogInAction => ({
     type: 'LOG_IN',
-    accessToken,
+    jwt,
+    account,
 });
 
-export const logOut = (): LogOutAction => ({
+export const logOutAction = (): LogOutAction => ({
     type: 'LOG_OUT',
+});
+
+export const openMessageAction = (text: string): OpenMessageAction => ({
+    type: 'OPEN_MESSAGE',
+    text,
+});
+
+export const closeMessageAction = (text: string): CloseMessageAction => ({
+    type: 'CLOSE_MESSAGE',
+    text,
+});
+
+export const closeAllMessagesAction = (): CloseAllMessagesAction => ({
+    type: 'CLOSE_ALL_MESSAGES',
 });
