@@ -29,7 +29,7 @@ function VerifyWallComponent(props: VerifyWallComponentProps) {
                     'w-full text-center pt-4 text-gray-500 font-weight-500 no-selection'
                 }
             >
-                <Link to='/register'>
+                <Link to='/register' onClick={props.logOut}>
                     Wrong email address? Just register again.
                 </Link>
             </div>
