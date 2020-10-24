@@ -44,9 +44,12 @@ export async function generateValidOAuthToken(
     throw Error;
 }
 
-// frkn Auth0 is everywhere - library does not work
+// Libraries 'node-jsonwebtoken' and 'node-jose' do not work
+// https://github.com/auth0/node-jsonwebtoken/issues/668
 // I'll postpone this - but it would be way more elegant
 // I mean that is the whole point of jwt isn't it!?
+
+// eslint-disable-next-line
 function decodeToken(token: string, publicKey: string) {
     return jwt.verify(token, publicKey, {algorithms: ['RS256']});
 }

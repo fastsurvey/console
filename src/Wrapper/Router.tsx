@@ -37,7 +37,6 @@ function RouterComponent(props: RouterComponentProps) {
             <Route>
                 <Switch>
                     <Route path='(/configurations|/results|/account)'>
-                        {props.loggingIn && <Loader />}
                         {!props.loggingIn && props.loggedIn && (
                             <React.Fragment>
                                 {verifyWall && <Redirect to='/verify' />}
@@ -66,7 +65,6 @@ function RouterComponent(props: RouterComponentProps) {
                         Please verify your account first!
                     </Route>
                     <Route path='(/login|/register)'>
-                        {props.loggingIn && <Loader />}
                         {!props.loggingIn && !props.loggedIn && (
                             <FormPageWrapperComponent>
                                 <Switch>
