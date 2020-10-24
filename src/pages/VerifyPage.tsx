@@ -5,43 +5,39 @@ import ButtonRowComponent from '../components/buttonRow';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {AUTH_BACKEND_URL} from '../constants';
-import {ReduxState, JWT, Account} from '../utilities/types';
+import {connect} from 'react-redux';
+import {JWT, Account, ReduxState} from '../utilities/types';
 import {
-    closeAllMessagesAction,
     logInAction,
     openMessageAction,
+    closeAllMessagesAction,
 } from '../utilities/reduxActions';
-import {connect} from 'react-redux';
 
-interface RegisterPageComponentProps {
+interface LoginPageComponentProps {
     loggingIn: boolean;
     logIn(jwt: JWT, account: Account): void;
     openMessage(content: string): void;
     closeAllMessages(): void;
 }
 
-function RegisterPageComponent(props: RegisterPageComponentProps) {
+function LoginPageComponent(props: LoginPageComponentProps) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
-    function handleRegistration() {
+    function handleLogin() {
         if (!disabled()) {
             let formData = new FormData();
             formData.append('email', email);
             formData.append('password', password);
             axios
-                .post(AUTH_BACKEND_URL + '/register', formData)
+                .post(AUTH_BACKEND_URL + '/login/form', formData)
                 .then((response) => {
                     props.closeAllMessages();
                     props.logIn(response.data.jwt, response.data.account);
                 })
                 .catch((error) => {
-                    const detail = error?.response?.data?.detail;
-                    if (detail === 'email already taken') {
-                        props.openMessage(
-                            'Email ' + email + ' is already taken',
-                        );
+                    if (error?.response?.status === 401) {
+                        props.openMessage('Invalid credentials');
                     } else {
                         // Invalid password formats will be catched by frontend
                         props.openMessage(
@@ -53,14 +49,13 @@ function RegisterPageComponent(props: RegisterPageComponentProps) {
     }
 
     function disabled() {
-        return password.length < 8 || password !== passwordConfirmation;
+        return email.length < 5 || password.length < 8;
     }
 
     return (
-        <div className='w-20vw'>
-            <h3 className='mb-4 text-center no-selection'>Register</h3>
+        <React.Fragment>
+            <h2 className='mb-4 text-center no-selection'>Verify</h2>
             <InputComponent
-                required
                 placeholder='email'
                 value={email}
                 onChange={(newValue) => {
@@ -69,7 +64,6 @@ function RegisterPageComponent(props: RegisterPageComponentProps) {
                 }}
             />
             <InputComponent
-                required
                 placeholder='password'
                 value={password}
                 onChange={(newValue) => {
@@ -77,31 +71,11 @@ function RegisterPageComponent(props: RegisterPageComponentProps) {
                     setPassword(newValue);
                 }}
                 type='password'
-                hint={{
-                    text: '> 7 characters',
-                    fulfilled: password.length >= 8,
-                }}
-            />
-            <InputComponent
-                required
-                placeholder='confirm password'
-                value={passwordConfirmation}
-                onChange={(newValue) => {
-                    props.closeAllMessages();
-                    setPasswordConfirmation(newValue);
-                }}
-                type='password'
-                hint={{
-                    text: 'passwords have to match',
-                    fulfilled:
-                        password.length >= 8 &&
-                        password === passwordConfirmation,
-                }}
             />
             <ButtonRowComponent center className={'pt-2'}>
                 <ButtonComponent
-                    onClick={handleRegistration}
-                    text='Register'
+                    onClick={handleLogin}
+                    text='Login'
                     disabled={disabled()}
                 />
             </ButtonRowComponent>
@@ -110,9 +84,9 @@ function RegisterPageComponent(props: RegisterPageComponentProps) {
                     'w-full text-center pt-4 text-gray-500 font-weight-500 no-selection'
                 }
             >
-                <Link to='/login'>Already have an account?</Link>
+                <Link to='/register'>Don't have an account yet?</Link>
             </div>
-        </div>
+        </React.Fragment>
     );
 }
 
@@ -124,7 +98,4 @@ const mapDispatchToProps = (dispatch: any) => ({
     openMessage: (content: string) => dispatch(openMessageAction(content)),
     closeAllMessages: () => dispatch(closeAllMessagesAction()),
 });
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(RegisterPageComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPageComponent);

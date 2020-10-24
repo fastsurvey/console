@@ -3,11 +3,18 @@ import assert from 'assert';
 import {connect} from 'react-redux';
 import {Switch, Route, BrowserRouter, Redirect} from 'react-router-dom';
 import NavbarComponent from '../components/navbar';
-import LoginPageComponent from '../pages/LoginPage';
+
 import {ReduxState, Account} from '../utilities/types';
+
+import LoginPageComponent from '../pages/LoginPage';
 import RegisterPageComponent from '../pages/RegisterPage';
+import VerifyPageComponent from '../pages/VerifyPage';
+
+import VerifyWallComponent from '../pages/VerifyWall';
+
 import FormPageWrapperComponent from '../pages/FormPageWrapper';
-import Loader from '../components/loader';
+import LoginImage from '../assets/images/secure.svg';
+import VerifyImage from '../assets/images/letter.svg';
 
 interface DashboardWrapperComponentProps {
     children: React.ReactChild;
@@ -39,7 +46,13 @@ function RouterComponent(props: RouterComponentProps) {
                     <Route path='(/configurations|/results|/account)'>
                         {!props.loggingIn && props.loggedIn && (
                             <React.Fragment>
-                                {verifyWall && <Redirect to='/verify' />}
+                                {verifyWall && (
+                                    <FormPageWrapperComponent
+                                        image={VerifyImage}
+                                    >
+                                        <VerifyWallComponent />
+                                    </FormPageWrapperComponent>
+                                )}
                                 {!verifyWall && (
                                     <DashboardWrapperComponent>
                                         <Switch>
@@ -61,12 +74,9 @@ function RouterComponent(props: RouterComponentProps) {
                             <Redirect to='/login' />
                         )}
                     </Route>
-                    <Route exact path='/verify'>
-                        Please verify your account first!
-                    </Route>
                     <Route path='(/login|/register)'>
                         {!props.loggingIn && !props.loggedIn && (
-                            <FormPageWrapperComponent>
+                            <FormPageWrapperComponent image={LoginImage}>
                                 <Switch>
                                     <Route exact path='/login'>
                                         <LoginPageComponent />
@@ -80,6 +90,11 @@ function RouterComponent(props: RouterComponentProps) {
                         {!props.loggingIn && props.loggedIn && (
                             <Redirect to='/configurations' />
                         )}
+                    </Route>
+                    <Route path='(/verify)'>
+                        <FormPageWrapperComponent image={VerifyImage}>
+                            <VerifyPageComponent />
+                        </FormPageWrapperComponent>
                     </Route>
                     <Route>
                         <div>404</div>

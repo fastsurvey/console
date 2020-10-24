@@ -53,8 +53,8 @@ function LoginPageComponent(props: LoginPageComponentProps) {
     }
 
     return (
-        <React.Fragment>
-            <h2 className='mb-4 text-center no-selection'>Login</h2>
+        <div className='w-20vw'>
+            <h3 className='mb-4 text-center no-selection'>Login</h3>
             <InputComponent
                 placeholder='email'
                 value={email}
@@ -86,7 +86,7 @@ function LoginPageComponent(props: LoginPageComponentProps) {
             >
                 <Link to='/register'>Don't have an account yet?</Link>
             </div>
-        </React.Fragment>
+        </div>
     );
 }
 

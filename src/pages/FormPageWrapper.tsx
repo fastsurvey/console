@@ -1,5 +1,4 @@
 import React from 'react';
-import LoginImage from '../assets/images/secure.svg';
 import FastSurveyIcon from '../assets/branding/rocket.svg';
 
 function LogoComponent() {
@@ -21,6 +20,7 @@ function LogoComponent() {
 
 interface FormPageWrapperComponentProps {
     children: React.ReactNode;
+    image: string;
 }
 
 function FormPageWrapperComponent(props: FormPageWrapperComponentProps) {
@@ -33,11 +33,11 @@ function FormPageWrapperComponent(props: FormPageWrapperComponentProps) {
                 <div className='flex-row center-content w-100vw'>
                     <div className='center-content w-35vw'>
                         <div className='w-25vw no-selection'>
-                            <img src={LoginImage} alt='Fast Surveys' />
+                            <img src={props.image} alt='Fast Surveys' />
                         </div>
                     </div>
-                    <div className='center-content w-35vw'>
-                        <div className='w-20vw'>{props.children}</div>
+                    <div className='flex-col center-content w-35vw'>
+                        {props.children}
                     </div>
                 </div>
             </main>
