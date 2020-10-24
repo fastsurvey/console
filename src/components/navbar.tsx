@@ -80,7 +80,7 @@ function NavbarComponent(props: NavbarComponentProps) {
         <React.Fragment>
             <div
                 className={
-                    'fixed left top w-64 pt-4 pb-1 h-100vh bg-gray-900 flex flex-col'
+                    'fixed left-0 top-0 w-64 pt-4 pb-1 h-100vh bg-gray-900 flex flex-col'
                 }
             >
                 <LogoComponent />

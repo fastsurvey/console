@@ -2,6 +2,7 @@ import React from 'react';
 import '../styles/loader.scss';
 import {ReduxState} from '../utilities/types';
 import {connect} from 'react-redux';
+import LogoBanner from './logoBanner';
 
 interface LoaderProps {
     loggingIn: boolean;
@@ -18,6 +19,7 @@ function Loader(props: LoaderProps) {
                     : 'opacity-0 pointer-events-none')
             }
         >
+            <LogoBanner slim />
             <div
                 className={
                     'transition-opacity duration-100 delay-1000 ' +
