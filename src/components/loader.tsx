@@ -12,7 +12,7 @@ function Loader(props: LoaderProps) {
         <div
             className={
                 'fixed z-50 bg-white w-100vw h-100vh center-content ' +
-                'transition-opacity duration-500 delay-700 ' +
+                'transition-opacity duration-500 delay-1000 ' +
                 (props.loggingIn
                     ? 'opacity-100'
                     : 'opacity-0 pointer-events-none')
@@ -20,11 +20,21 @@ function Loader(props: LoaderProps) {
         >
             <div
                 className={
-                    'transition-opacity duration-0 delay-700 ' +
+                    'transition-opacity duration-100 delay-1000 ' +
                     (props.loggingIn ? 'opacity-100' : 'opacity-0')
                 }
             >
-                <div className='lds-ripple'>
+                <div className='lds-spinner'>
+                    <div />
+                    <div />
+                    <div />
+                    <div />
+                    <div />
+                    <div />
+                    <div />
+                    <div />
+                    <div />
+                    <div />
                     <div />
                     <div />
                 </div>
