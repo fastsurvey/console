@@ -1,38 +1,52 @@
 import jwt from 'jsonwebtoken';
 import assert from 'assert';
 import Cookies from 'js-cookie';
-import {AUTH_BACKEND_URL} from '../constants';
-import axios from 'axios';
 import {JWT, Account} from './types';
+import {authPostRequest} from './axiosClients';
 
 export async function generateValidOAuthToken(
     logIn: (jwt: JWT, account: Account) => void,
 ) {
     const jwt_cookie = Cookies.get('jwt');
     assert(jwt_cookie !== undefined, 'JWT-Auto-Login: Cookie not found');
-    const jwt_json = JSON.parse(jwt_cookie);
+    const current_jwt = JSON.parse(jwt_cookie);
     assert(
-        jwt_json.access_token !== undefined,
+        current_jwt.access_token !== undefined,
         'JWT-Auto-Login: access_token not found',
     );
     assert(
-        jwt_json.refresh_token !== undefined,
+        current_jwt.refresh_token !== undefined,
         'JWT-Auto-Login: refresh_token not found',
     );
 
-    // fetch publicKey
-    const response = await axios.get(AUTH_BACKEND_URL);
-    const publicKey = response?.data?.public_key;
-    assert(publicKey !== undefined);
-    console.log(publicKey);
+    try {
+        const accessResponse = await authPostRequest('/login/access', {
+            access_token: current_jwt.access_token,
+        });
+        const account = accessResponse?.data?.account;
+        assert(account !== undefined);
+        logIn(current_jwt, account);
+        return;
+    } catch {}
 
-    const accessPayload = decodeToken(jwt_json.access_token, publicKey);
-    console.log(accessPayload);
+    try {
+        const refreshResponse = await authPostRequest('/login/refresh', {
+            refresh_token: current_jwt.refresh_token,
+        });
+        const new_jwt = refreshResponse?.data?.jwt;
+        const account = refreshResponse?.data?.account;
+        assert(jwt !== undefined);
+        assert(account !== undefined);
+        logIn(new_jwt, account);
+        return;
+    } catch {}
 
-    logIn(jwt_json, {email: 'dd', email_verified: false});
+    throw Error;
 }
 
 // frkn Auth0 is everywhere - library does not work
+// I'll postpone this - but it would be way more elegant
+// I mean that is the whole point of jwt isn't it!?
 function decodeToken(token: string, publicKey: string) {
     return jwt.verify(token, publicKey, {algorithms: ['RS256']});
 }

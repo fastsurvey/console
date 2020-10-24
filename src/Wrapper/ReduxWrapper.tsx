@@ -38,7 +38,7 @@ function storeReducer(
             newState.loggedIn = false;
             newState.jwt = undefined;
             newState.account = undefined;
-            // Cookies.remove('jwt');
+            Cookies.remove('jwt');
             break;
         case 'OPEN_MESSAGE':
             if (!newState.messages.includes(action.text)) {
@@ -76,12 +76,8 @@ export function ReduxWrapper(props: ReduxWrapperProps) {
     useEffect(() => {
         async function loginFromCookie() {
             try {
-                console.log('starting log in');
                 await generateValidOAuthToken(logIn);
-                console.log('ending log in');
-            } catch (e) {
-                console.log(e);
-                console.log('log out');
+            } catch {
                 store.dispatch(logOutAction());
             }
         }
