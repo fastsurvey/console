@@ -1,22 +1,5 @@
 import React from 'react';
-import FastSurveyIcon from '../assets/branding/rocket.svg';
-
-function LogoComponent() {
-    return (
-        <div
-            className={
-                'mx-3 flex flex-row items-center justify-start mb-4 font-weight-600 p-2'
-            }
-        >
-            <div className={'h-12 w-12 mr-3 no-selection'}>
-                <img src={FastSurveyIcon} alt='FastSurvey' />
-            </div>
-            <div className={'text-gray-700 text-2xl no-selection'}>
-                FastSurvey <span className='text-magenta'>Admin Panel</span>
-            </div>
-        </div>
-    );
-}
+import LogoBanner from '../components/logoBanner';
 
 interface FormPageWrapperComponentProps {
     children: React.ReactNode;
@@ -26,9 +9,7 @@ interface FormPageWrapperComponentProps {
 function FormPageWrapperComponent(props: FormPageWrapperComponentProps) {
     return (
         <React.Fragment>
-            <div className='fixed pt-4 pb-1 left top'>
-                <LogoComponent />
-            </div>
+            <LogoBanner />
             <main className='flex-col center-content w-100vw h-100vh'>
                 <div className='flex-row center-content w-100vw'>
                     <div className='center-content w-35vw'>
