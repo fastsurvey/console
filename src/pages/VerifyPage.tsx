@@ -21,23 +21,28 @@ interface LoginPageComponentProps {
 }
 
 function LoginPageComponent(props: LoginPageComponentProps) {
-    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [success, setSuccess] = useState(false);
 
-    function handleLogin() {
-        if (!disabled()) {
+    const queryParams = new URLSearchParams(window.location.search);
+    let email_token = queryParams.get('email_token');
+
+    function handleVerify() {
+        if (!disabled() && email_token !== null) {
             let formData = new FormData();
-            formData.append('email', email);
             formData.append('password', password);
+            formData.append('email_token', email_token);
             axios
-                .post(AUTH_BACKEND_URL + '/login/form', formData)
+                .post(AUTH_BACKEND_URL + '/verify', formData)
                 .then((response) => {
                     props.closeAllMessages();
+                    // new jwt and account since the accout payload has been updated
                     props.logIn(response.data.jwt, response.data.account);
+                    setSuccess(true);
                 })
                 .catch((error) => {
                     if (error?.response?.status === 401) {
-                        props.openMessage('Invalid credentials');
+                        props.openMessage('Invalid password or wrong link');
                     } else {
                         // Invalid password formats will be catched by frontend
                         props.openMessage(
@@ -49,44 +54,59 @@ function LoginPageComponent(props: LoginPageComponentProps) {
     }
 
     function disabled() {
-        return email.length < 5 || password.length < 8;
+        return password.length < 8;
     }
 
     return (
-        <React.Fragment>
-            <h2 className='mb-4 text-center no-selection'>Verify</h2>
-            <InputComponent
-                placeholder='email'
-                value={email}
-                onChange={(newValue) => {
-                    props.closeAllMessages();
-                    setEmail(newValue);
-                }}
-            />
-            <InputComponent
-                placeholder='password'
-                value={password}
-                onChange={(newValue) => {
-                    props.closeAllMessages();
-                    setPassword(newValue);
-                }}
-                type='password'
-            />
-            <ButtonRowComponent center className={'pt-2'}>
-                <ButtonComponent
-                    onClick={handleLogin}
-                    text='Login'
-                    disabled={disabled()}
-                />
-            </ButtonRowComponent>
-            <div
-                className={
-                    'w-full text-center pt-4 text-gray-500 font-weight-500 no-selection'
-                }
-            >
-                <Link to='/register'>Don't have an account yet?</Link>
-            </div>
-        </React.Fragment>
+        <div className='w-20vw'>
+            {!success && (
+                <React.Fragment>
+                    <h3 className='mb-4 text-center no-selection'>
+                        Verify your email
+                    </h3>
+                    {email_token !== null && (
+                        <React.Fragment>
+                            <InputComponent
+                                placeholder='password'
+                                value={password}
+                                onChange={(newValue) => {
+                                    props.closeAllMessages();
+                                    setPassword(newValue);
+                                }}
+                                type='password'
+                            />
+                            <ButtonRowComponent center className={'pt-2'}>
+                                <ButtonComponent
+                                    onClick={handleVerify}
+                                    text='Verify'
+                                    disabled={disabled()}
+                                />
+                            </ButtonRowComponent>
+                        </React.Fragment>
+                    )}
+                    {email_token === null && (
+                        <p>
+                            Sorry, we couldn't find any email token in the url.
+                            Please use exactly the link we've sent to you.
+                        </p>
+                    )}
+                </React.Fragment>
+            )}
+            {success && (
+                <React.Fragment>
+                    <h3 className='mb-4 text-center no-selection'>Success!</h3>
+                    <ButtonRowComponent center className={'pt-2'}>
+                        <Link to='/configurations'>
+                            <ButtonComponent
+                                onClick={handleVerify}
+                                text='Continue to Admin Panel'
+                                disabled={disabled()}
+                            />
+                        </Link>
+                    </ButtonRowComponent>
+                </React.Fragment>
+            )}
+        </div>
     );
 }
 
