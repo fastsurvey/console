@@ -5,9 +5,7 @@ import {ReduxAction, ReduxState, JWT, Account} from '../utilities/types';
 import MessageQueueComponent from '../components/messageQueue';
 import Cookies from 'js-cookie';
 import {logInAction, logOutAction} from '../utilities/reduxActions';
-import {AUTH_BACKEND_URL} from '../constants';
-import axios from 'axios';
-import {authPostRequest} from '../utilities/axiosClients';
+import {generateValidOAuthToken} from '../utilities/jwtEncryption';
 
 function storeReducer(
     state = {
@@ -40,6 +38,7 @@ function storeReducer(
             newState.loggedIn = false;
             newState.jwt = undefined;
             newState.account = undefined;
+            // Cookies.remove('jwt');
             break;
         case 'OPEN_MESSAGE':
             if (!newState.messages.includes(action.text)) {
@@ -74,50 +73,22 @@ export function ReduxWrapper(props: ReduxWrapperProps) {
         store.dispatch(logInAction(jwt, account));
     }
 
-    function logOut() {
-        store.dispatch(logOutAction());
-    }
-
     useEffect(() => {
-        const jwt_cookie = Cookies.get('jwt');
+        async function loginFromCookie() {
+            try {
+                console.log('starting log in');
+                await generateValidOAuthToken(logIn);
+                console.log('ending log in');
+            } catch (e) {
+                console.log(e);
+                console.log('log out');
+                store.dispatch(logOutAction());
+            }
+        }
 
         if (!cookieLogin) {
             setCookieLogin(true);
-            if (jwt_cookie !== undefined) {
-                const jwt = JSON.parse(jwt_cookie);
-                if ([jwt.access_token, jwt.refresh_token].includes(undefined)) {
-                    logOut();
-                } else {
-                    setTimeout(() => {
-                        // 1. Try to validate access_token
-                        authPostRequest('/login/access', {
-                            access_token: jwt.access_token,
-                        })
-                            .then((response) =>
-                                logIn(jwt, response.data.account),
-                            )
-                            .catch((error) => {
-                                if (error.response.status === 401) {
-                                    // 2. Try to validate refresh_token
-                                    authPostRequest('/login/refresh', {
-                                        refresh_token: jwt.refresh_token,
-                                    })
-                                        .then((response) => {
-                                            logIn(
-                                                response.data.jwt,
-                                                response.data.account,
-                                            );
-                                        })
-                                        .catch(() => logOut());
-                                } else {
-                                    logOut();
-                                }
-                            });
-                    }, 1000);
-                }
-            } else {
-                logOut();
-            }
+            loginFromCookie();
         }
     }, [cookieLogin]);
 

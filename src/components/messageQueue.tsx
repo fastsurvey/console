@@ -55,7 +55,6 @@ interface MessageQueueComponentProps {
 }
 
 function MessageQueueComponent(props: MessageQueueComponentProps) {
-    console.log({messages2: props.messages});
     return (
         <div className='fixed bottom-0 w-30vw mx-35vw'>
             {props.messages.map((message: Message, index: number) => (
