@@ -15,6 +15,7 @@ import VerifyWallComponent from '../pages/VerifyWall';
 import FormPageWrapperComponent from '../pages/FormPageWrapper';
 import LoginImage from '../assets/images/secure.svg';
 import VerifyImage from '../assets/images/letter.svg';
+import NotFoundPage from '../pages/NotFoundPage';
 
 interface DashboardWrapperComponentProps {
     children: React.ReactChild;
@@ -97,7 +98,7 @@ function RouterComponent(props: RouterComponentProps) {
                         </FormPageWrapperComponent>
                     </Route>
                     <Route>
-                        <div>404</div>
+                        <NotFoundPage />
                     </Route>
                 </Switch>
             </Route>
