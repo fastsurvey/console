@@ -1,14 +1,14 @@
 import React from 'react';
 import '../styles/loader.scss';
-import {ReduxState} from '../utilities/types';
+import {ReduxState} from '../../utilities/types';
 import {connect} from 'react-redux';
-import LogoBanner from './logoBanner';
+import LogoBanner from '../logoBanner';
 
-interface LoaderProps {
+interface LoaderOverlayProps {
     loggingIn: boolean;
 }
 
-function Loader(props: LoaderProps) {
+function LoaderOverlay(props: LoaderOverlayProps) {
     return (
         <div
             className={
@@ -49,4 +49,4 @@ const mapStateToProps = (state: ReduxState) => ({
     loggingIn: state.loggingIn,
 });
 const mapDispatchToProps = (dispatch: any) => ({});
-export default connect(mapStateToProps, mapDispatchToProps)(Loader);
+export default connect(mapStateToProps, mapDispatchToProps)(LoaderOverlay);

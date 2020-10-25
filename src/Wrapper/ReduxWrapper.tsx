@@ -6,7 +6,7 @@ import MessageQueue from '../components/messages/MessageQueue';
 import Cookies from 'js-cookie';
 import {logInAction, logOutAction} from '../utilities/reduxActions';
 import {generateValidOAuthToken} from '../utilities/jwtEncryption';
-import Loader from '../components/loader';
+import LoaderOverlay from '../components/overlays/LoaderOverlay';
 
 function storeReducer(
     state = {
@@ -91,7 +91,7 @@ export function ReduxWrapper(props: ReduxWrapperProps) {
 
     return (
         <Provider store={store}>
-            <Loader />
+            <LoaderOverlay />
             <MessageQueue />
             {props.children}
         </Provider>
