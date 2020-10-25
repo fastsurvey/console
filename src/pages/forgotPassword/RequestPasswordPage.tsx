@@ -5,6 +5,7 @@ import ButtonRowComponent from '../../components/buttonRow';
 import {connect} from 'react-redux';
 import {ReduxState, JWT, Account} from '../../utilities/types';
 import {authPostRequest} from '../../utilities/axiosClients';
+import {Link} from 'react-router-dom';
 import {
     openMessageAction,
     closeAllMessagesAction,
@@ -66,6 +67,13 @@ function RequestPasswordPage(props: RequestPasswordPageProps) {
                             disabled={disabled()}
                         />
                     </ButtonRowComponent>
+                    <div
+                        className={
+                            'w-full text-center pt-4 text-gray-500 font-weight-500 no-selection'
+                        }
+                    >
+                        <Link to='/login'>Log in instead?</Link>
+                    </div>
                 </React.Fragment>
             )}
             {success && (
