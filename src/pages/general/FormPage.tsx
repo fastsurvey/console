@@ -1,12 +1,12 @@
 import React from 'react';
-import LogoBanner from '../components/logoBanner';
+import LogoBanner from '../../components/logoBanner';
 
-interface FormPageWrapperComponentProps {
+interface FormPageProps {
     children: React.ReactNode;
     image: string;
 }
 
-function FormPageWrapperComponent(props: FormPageWrapperComponentProps) {
+function FormPage(props: FormPageProps) {
     return (
         <React.Fragment>
             <LogoBanner />
@@ -26,4 +26,4 @@ function FormPageWrapperComponent(props: FormPageWrapperComponentProps) {
     );
 }
 
-export default FormPageWrapperComponent;
+export default FormPage;

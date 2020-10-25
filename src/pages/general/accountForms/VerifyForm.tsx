@@ -1,43 +1,43 @@
 import React, {useState} from 'react';
-import InputComponent from '../../components/input';
-import ButtonComponent from '../../components/button';
-import ButtonRowComponent from '../../components/buttonRow';
-import {connect} from 'react-redux';
-import {ReduxState, JWT, Account} from '../../utilities/types';
-import {authPostRequest} from '../../utilities/axiosClients';
-import {logInAction} from '../../utilities/reduxActions';
+import InputComponent from '../../../components/input';
+import ButtonComponent from '../../../components/button';
+import ButtonRowComponent from '../../../components/buttonRow';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {JWT, Account, ReduxState} from '../../../utilities/types';
+import {authPostRequest} from '../../../utilities/axiosClients';
 import {
+    logInAction,
     openMessageAction,
     closeAllMessagesAction,
-} from '../../utilities/reduxActions';
+} from '../../../utilities/reduxActions';
 
-interface SetPasswordPageProps {
+interface VerifyFormProps {
     loggingIn: boolean;
     logIn(jwt: JWT, account: Account): void;
     openMessage(content: string): void;
     closeAllMessages(): void;
 }
 
-function SetPasswordPage(props: SetPasswordPageProps) {
+function VerifyForm(props: VerifyFormProps) {
     const [password, setPassword] = useState('');
-    const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const [success, setSuccess] = useState(false);
 
     const queryParams = new URLSearchParams(window.location.search);
-    let password_token = queryParams.get('token');
+    let email_token = queryParams.get('token');
 
-    function handleSubmit() {
-        if (!disabled() && password_token !== null) {
-            authPostRequest('/set-new-password', {password, password_token})
+    function handleVerify() {
+        if (!disabled() && email_token !== null) {
+            authPostRequest('/verify', {password, email_token})
                 .then((response) => {
                     props.closeAllMessages();
+                    // new jwt and account since the accout payload has been updated
                     props.logIn(response.data.jwt, response.data.account);
                     setSuccess(true);
                 })
                 .catch((error) => {
                     if (error?.response?.status === 401) {
-                        props.openMessage('Invalid link');
+                        props.openMessage('Invalid password or wrong link');
                     } else {
                         // Invalid password formats will be catched by frontend
                         props.openMessage(
@@ -49,7 +49,7 @@ function SetPasswordPage(props: SetPasswordPageProps) {
     }
 
     function disabled() {
-        return password.length < 8 || password !== passwordConfirmation;
+        return password.length < 8;
     }
 
     return (
@@ -57,9 +57,9 @@ function SetPasswordPage(props: SetPasswordPageProps) {
             {!success && (
                 <React.Fragment>
                     <h3 className='mb-4 text-center no-selection'>
-                        Set Password
+                        Verify your email
                     </h3>
-                    {password_token !== null && (
+                    {email_token !== null && (
                         <React.Fragment>
                             <InputComponent
                                 placeholder='password'
@@ -69,39 +69,20 @@ function SetPasswordPage(props: SetPasswordPageProps) {
                                     setPassword(newValue);
                                 }}
                                 type='password'
-                                hint={{
-                                    text: '> 7 characters',
-                                    fulfilled: password.length > 7,
-                                }}
-                            />
-                            <InputComponent
-                                placeholder='confirm password'
-                                value={passwordConfirmation}
-                                onChange={(newValue) => {
-                                    props.closeAllMessages();
-                                    setPasswordConfirmation(newValue);
-                                }}
-                                type='password'
-                                hint={{
-                                    text: 'passwords have to match',
-                                    fulfilled:
-                                        password.length > 7 &&
-                                        password === passwordConfirmation,
-                                }}
                             />
                             <ButtonRowComponent center className={'pt-2'}>
                                 <ButtonComponent
-                                    onClick={handleSubmit}
-                                    text='Set Password'
+                                    onClick={handleVerify}
+                                    text='Verify'
                                     disabled={disabled()}
                                 />
                             </ButtonRowComponent>
                         </React.Fragment>
                     )}
-                    {password_token === null && (
+                    {email_token === null && (
                         <p>
-                            Sorry, we couldn't find any password token in the
-                            url. Please use exactly the link we've sent to you.
+                            Sorry, we couldn't find any email token in the url.
+                            Please use exactly the link we've sent to you.
                         </p>
                     )}
                 </React.Fragment>
@@ -111,7 +92,11 @@ function SetPasswordPage(props: SetPasswordPageProps) {
                     <h3 className='mb-4 text-center no-selection'>Success!</h3>
                     <ButtonRowComponent center className={'pt-2'}>
                         <Link to='/configurations'>
-                            <ButtonComponent text='Continue to Admin Panel' />
+                            <ButtonComponent
+                                onClick={handleVerify}
+                                text='Continue to Admin Panel'
+                                disabled={disabled()}
+                            />
                         </Link>
                     </ButtonRowComponent>
                 </React.Fragment>
@@ -128,4 +113,4 @@ const mapDispatchToProps = (dispatch: any) => ({
     openMessage: (content: string) => dispatch(openMessageAction(content)),
     closeAllMessages: () => dispatch(closeAllMessagesAction()),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(SetPasswordPage);
+export default connect(mapStateToProps, mapDispatchToProps)(VerifyForm);

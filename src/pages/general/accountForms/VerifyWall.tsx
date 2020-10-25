@@ -1,25 +1,25 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {Account, ReduxState} from '../utilities/types';
+import {Account, ReduxState} from '../../../utilities/types';
 import {
     logOutAction,
     openMessageAction,
     closeAllMessagesAction,
-} from '../utilities/reduxActions';
+} from '../../../utilities/reduxActions';
 import assert from 'assert';
-import ButtonRowComponent from '../components/buttonRow';
-import ButtonComponent from '../components/button';
-import {authPostRequest} from '../utilities/axiosClients';
+import ButtonRowComponent from '../../../components/buttonRow';
+import ButtonComponent from '../../../components/button';
+import {authPostRequest} from '../../../utilities/axiosClients';
 
-interface VerifyWallComponentProps {
+interface VerifyWallProps {
     account: undefined | Account;
     logOut(): void;
     openMessage(content: string): void;
     closeAllMessages(): void;
 }
 
-function VerifyWallComponent(props: VerifyWallComponentProps) {
+function VerifyWall(props: VerifyWallProps) {
     const email = props.account?.email;
     assert(email !== undefined);
 
@@ -79,7 +79,4 @@ const mapDispatchToProps = (dispatch: any) => ({
     openMessage: (content: string) => dispatch(openMessageAction(content)),
     closeAllMessages: () => dispatch(closeAllMessagesAction()),
 });
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(VerifyWallComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(VerifyWall);

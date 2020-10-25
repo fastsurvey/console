@@ -1,22 +1,22 @@
 import React, {useState} from 'react';
-import InputComponent from '../../components/input';
-import ButtonComponent from '../../components/button';
-import ButtonRowComponent from '../../components/buttonRow';
+import InputComponent from '../../../components/input';
+import ButtonComponent from '../../../components/button';
+import ButtonRowComponent from '../../../components/buttonRow';
 import {connect} from 'react-redux';
-import {ReduxState} from '../../utilities/types';
-import {authPostRequest} from '../../utilities/axiosClients';
+import {ReduxState} from '../../../utilities/types';
+import {authPostRequest} from '../../../utilities/axiosClients';
 import {Link} from 'react-router-dom';
 import {
     openMessageAction,
     closeAllMessagesAction,
-} from '../../utilities/reduxActions';
+} from '../../../utilities/reduxActions';
 
-interface RequestPasswordPageProps {
+interface RequestPasswordFormProps {
     openMessage(content: string): void;
     closeAllMessages(): void;
 }
 
-function RequestPasswordPage(props: RequestPasswordPageProps) {
+function RequestPasswordForm(props: RequestPasswordFormProps) {
     const [email, setEmail] = useState('');
     const [success, setSuccess] = useState(false);
 
@@ -110,4 +110,4 @@ const mapDispatchToProps = (dispatch: any) => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps,
-)(RequestPasswordPage);
+)(RequestPasswordForm);
