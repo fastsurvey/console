@@ -16,6 +16,7 @@ import FormPageWrapperComponent from '../pages/FormPageWrapper';
 import LoginImage from '../assets/images/secure.svg';
 import VerifyImage from '../assets/images/letter.svg';
 import NotFoundPage from '../pages/NotFoundPage';
+import SetPasswordPage from '../pages/forgotPassword/SetPasswordPage';
 
 interface DashboardWrapperComponentProps {
     children: React.ReactChild;
@@ -95,6 +96,18 @@ function RouterComponent(props: RouterComponentProps) {
                     <Route path='(/verify)'>
                         <FormPageWrapperComponent image={VerifyImage}>
                             <VerifyPageComponent />
+                        </FormPageWrapperComponent>
+                    </Route>
+                    <Route path='(/request-password|/set-password)'>
+                        <FormPageWrapperComponent image={LoginImage}>
+                            <Switch>
+                                <Route exact path='/request-password'>
+                                    request password
+                                </Route>
+                                <Route exact path='/set-password'>
+                                    <SetPasswordPage />
+                                </Route>
+                            </Switch>
                         </FormPageWrapperComponent>
                     </Route>
                     <Route>

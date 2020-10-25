@@ -3,8 +3,6 @@ import InputComponent from '../components/input';
 import ButtonComponent from '../components/button';
 import ButtonRowComponent from '../components/buttonRow';
 import {Link} from 'react-router-dom';
-import axios from 'axios';
-import {AUTH_BACKEND_URL} from '../constants';
 import {ReduxState, JWT, Account} from '../utilities/types';
 import {
     closeAllMessagesAction,
