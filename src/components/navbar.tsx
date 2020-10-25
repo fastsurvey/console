@@ -24,7 +24,7 @@ function LogoComponent() {
 interface NavbarLinkComponentProps {
     text: string;
     to: string;
-    icon: React.ReactChild;
+    icon: React.ReactNode;
 }
 function NavbarLinkComponent(props: NavbarLinkComponentProps) {
     const active = useLocation().pathname === props.to;
@@ -73,7 +73,7 @@ const LogoutButton = connect(
 )(LogoutButtonComponent);
 
 interface NavbarComponentProps {
-    children: React.ReactChild;
+    children: React.ReactNode;
 }
 function NavbarComponent(props: NavbarComponentProps) {
     return (

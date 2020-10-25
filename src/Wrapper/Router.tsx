@@ -2,7 +2,6 @@ import React from 'react';
 import assert from 'assert';
 import {connect} from 'react-redux';
 import {Switch, Route, BrowserRouter, Redirect} from 'react-router-dom';
-import NavbarComponent from '../components/navbar';
 
 import {ReduxState, Account} from '../utilities/types';
 
@@ -14,20 +13,10 @@ import VerifyForm from '../pages/general/accountForms/VerifyForm';
 import VerifyWall from '../pages/general/accountForms/VerifyWall';
 import FormPage from '../pages/general/FormPage';
 import NotFoundPage from '../pages/general/NotFoundPage';
+import DashBoardPage from '../pages/dashboard/DashboardPage';
 
 import LoginImage from '../assets/images/secure.svg';
 import VerifyImage from '../assets/images/letter.svg';
-
-interface DashboardWrapperComponentProps {
-    children: React.ReactChild;
-}
-function DashboardWrapperComponent(props: DashboardWrapperComponentProps) {
-    return (
-        <main>
-            <NavbarComponent>{props.children}</NavbarComponent>
-        </main>
-    );
-}
 
 interface RouterComponentProps {
     loggingIn: boolean;
@@ -54,7 +43,7 @@ function RouterComponent(props: RouterComponentProps) {
                                     </FormPage>
                                 )}
                                 {!verifyWall && (
-                                    <DashboardWrapperComponent>
+                                    <DashBoardPage>
                                         <Switch>
                                             <Route exact path='/configurations'>
                                                 <div>Configurations</div>
@@ -66,7 +55,7 @@ function RouterComponent(props: RouterComponentProps) {
                                                 <div>Account</div>
                                             </Route>
                                         </Switch>
-                                    </DashboardWrapperComponent>
+                                    </DashBoardPage>
                                 )}
                             </React.Fragment>
                         )}
