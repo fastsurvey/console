@@ -3,8 +3,6 @@ import InputComponent from '../components/input';
 import ButtonComponent from '../components/button';
 import ButtonRowComponent from '../components/buttonRow';
 import {Link} from 'react-router-dom';
-import axios from 'axios';
-import {AUTH_BACKEND_URL} from '../constants';
 import {connect} from 'react-redux';
 import {JWT, Account, ReduxState} from '../utilities/types';
 import {authPostRequest} from '../utilities/axiosClients';
@@ -82,6 +80,13 @@ function LoginPageComponent(props: LoginPageComponentProps) {
                 }
             >
                 <Link to='/register'>Don't have an account yet?</Link>
+            </div>
+            <div
+                className={
+                    'w-full text-center pt-2 text-gray-500 font-weight-500 no-selection'
+                }
+            >
+                <Link to='/request-password'>Forgot your password?</Link>
             </div>
         </div>
     );

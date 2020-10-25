@@ -3,8 +3,6 @@ import InputComponent from '../components/input';
 import ButtonComponent from '../components/button';
 import ButtonRowComponent from '../components/buttonRow';
 import {Link} from 'react-router-dom';
-import axios from 'axios';
-import {AUTH_BACKEND_URL} from '../constants';
 import {ReduxState, JWT, Account} from '../utilities/types';
 import {
     closeAllMessagesAction,
@@ -76,7 +74,7 @@ function RegisterPageComponent(props: RegisterPageComponentProps) {
                 type='password'
                 hint={{
                     text: '> 7 characters',
-                    fulfilled: password.length >= 8,
+                    fulfilled: password.length > 7,
                 }}
             />
             <InputComponent
@@ -91,7 +89,7 @@ function RegisterPageComponent(props: RegisterPageComponentProps) {
                 hint={{
                     text: 'passwords have to match',
                     fulfilled:
-                        password.length >= 8 &&
+                        password.length > 7 &&
                         password === passwordConfirmation,
                 }}
             />
