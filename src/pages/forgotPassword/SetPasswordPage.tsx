@@ -25,7 +25,7 @@ function SetPasswordPage(props: SetPasswordPageProps) {
     const [success, setSuccess] = useState(false);
 
     const queryParams = new URLSearchParams(window.location.search);
-    let password_token = queryParams.get('password_token');
+    let password_token = queryParams.get('token');
 
     function handleSubmit() {
         if (!disabled() && password_token !== null) {
@@ -57,7 +57,7 @@ function SetPasswordPage(props: SetPasswordPageProps) {
             {!success && (
                 <React.Fragment>
                     <h3 className='mb-4 text-center no-selection'>
-                        Set your new password
+                        Set Password
                     </h3>
                     {password_token !== null && (
                         <React.Fragment>
@@ -69,6 +69,10 @@ function SetPasswordPage(props: SetPasswordPageProps) {
                                     setPassword(newValue);
                                 }}
                                 type='password'
+                                hint={{
+                                    text: '> 7 characters',
+                                    fulfilled: password.length > 7,
+                                }}
                             />
                             <InputComponent
                                 placeholder='confirm password'
@@ -78,6 +82,12 @@ function SetPasswordPage(props: SetPasswordPageProps) {
                                     setPasswordConfirmation(newValue);
                                 }}
                                 type='password'
+                                hint={{
+                                    text: 'passwords have to match',
+                                    fulfilled:
+                                        password.length > 7 &&
+                                        password === passwordConfirmation,
+                                }}
                             />
                             <ButtonRowComponent center className={'pt-2'}>
                                 <ButtonComponent

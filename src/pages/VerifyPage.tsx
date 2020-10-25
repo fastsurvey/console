@@ -24,7 +24,7 @@ function LoginPageComponent(props: LoginPageComponentProps) {
     const [success, setSuccess] = useState(false);
 
     const queryParams = new URLSearchParams(window.location.search);
-    let email_token = queryParams.get('email_token');
+    let email_token = queryParams.get('token');
 
     function handleVerify() {
         if (!disabled() && email_token !== null) {

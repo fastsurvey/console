@@ -74,7 +74,7 @@ function RegisterPageComponent(props: RegisterPageComponentProps) {
                 type='password'
                 hint={{
                     text: '> 7 characters',
-                    fulfilled: password.length >= 8,
+                    fulfilled: password.length > 7,
                 }}
             />
             <InputComponent
@@ -89,7 +89,7 @@ function RegisterPageComponent(props: RegisterPageComponentProps) {
                 hint={{
                     text: 'passwords have to match',
                     fulfilled:
-                        password.length >= 8 &&
+                        password.length > 7 &&
                         password === passwordConfirmation,
                 }}
             />
