@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import InputComponent from '../../../components/input';
+import TextInput from '../../../components/formFields/TextInput';
 import Button from '../../../components/buttons/Button';
 import ButtonRow from '../../../components/buttons/ButtonRow';
 import {Link} from 'react-router-dom';
@@ -54,7 +54,7 @@ function RegisterForm(props: RegisterFormProps) {
     return (
         <div className='w-20vw'>
             <h3 className='mb-4 text-center no-selection'>Register</h3>
-            <InputComponent
+            <TextInput
                 required
                 placeholder='email'
                 value={email}
@@ -63,7 +63,7 @@ function RegisterForm(props: RegisterFormProps) {
                     setEmail(newValue);
                 }}
             />
-            <InputComponent
+            <TextInput
                 required
                 placeholder='password'
                 value={password}
@@ -77,7 +77,7 @@ function RegisterForm(props: RegisterFormProps) {
                     fulfilled: password.length > 7,
                 }}
             />
-            <InputComponent
+            <TextInput
                 required
                 placeholder='confirm password'
                 value={passwordConfirmation}

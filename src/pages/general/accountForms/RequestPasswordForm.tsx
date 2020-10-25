@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import InputComponent from '../../../components/input';
+import InputComponent from '../../../components/formFields/TextInput';
 import Button from '../../../components/buttons/Button';
 import ButtonRow from '../../../components/buttons/ButtonRow';
 import {connect} from 'react-redux';

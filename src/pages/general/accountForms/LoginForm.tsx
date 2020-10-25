@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import InputComponent from '../../../components/input';
+import TextInput from '../../../components/formFields/TextInput';
 import Button from '../../../components/buttons/Button';
 import ButtonRow from '../../../components/buttons/ButtonRow';
 import {Link} from 'react-router-dom';
@@ -50,7 +50,7 @@ function LoginForm(props: LoginFormProps) {
     return (
         <div className='w-20vw'>
             <h3 className='mb-4 text-center no-selection'>Login</h3>
-            <InputComponent
+            <TextInput
                 placeholder='email'
                 value={email}
                 onChange={(newValue) => {
@@ -58,7 +58,7 @@ function LoginForm(props: LoginFormProps) {
                     setEmail(newValue);
                 }}
             />
-            <InputComponent
+            <TextInput
                 placeholder='password'
                 value={password}
                 onChange={(newValue) => {

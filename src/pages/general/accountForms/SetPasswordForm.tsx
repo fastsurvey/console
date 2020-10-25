@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import InputComponent from '../../../components/input';
+import TextInput from '../../../components/formFields/TextInput';
 import Button from '../../../components/buttons/Button';
 import ButtonRow from '../../../components/buttons/ButtonRow';
 import {connect} from 'react-redux';
@@ -61,7 +61,7 @@ function SetPasswordForm(props: SetPasswordFormProps) {
                     </h3>
                     {password_token !== null && (
                         <React.Fragment>
-                            <InputComponent
+                            <TextInput
                                 placeholder='password'
                                 value={password}
                                 onChange={(newValue) => {
@@ -74,7 +74,7 @@ function SetPasswordForm(props: SetPasswordFormProps) {
                                     fulfilled: password.length > 7,
                                 }}
                             />
-                            <InputComponent
+                            <TextInput
                                 placeholder='confirm password'
                                 value={passwordConfirmation}
                                 onChange={(newValue) => {

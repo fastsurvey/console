@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import InputComponent from '../../../components/input';
+import TextInput from '../../../components/formFields/TextInput';
 import Button from '../../../components/buttons/Button';
 import ButtonRow from '../../../components/buttons/ButtonRow';
 import {Link} from 'react-router-dom';
@@ -61,7 +61,7 @@ function VerifyForm(props: VerifyFormProps) {
                     </h3>
                     {email_token !== null && (
                         <React.Fragment>
-                            <InputComponent
+                            <TextInput
                                 placeholder='password'
                                 value={password}
                                 onChange={(newValue) => {
