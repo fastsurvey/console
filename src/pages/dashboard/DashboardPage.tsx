@@ -7,7 +7,10 @@ interface DashBoardPageProps {
 function DashBoardPage(props: DashBoardPageProps) {
     return (
         <main>
-            <NavbarComponent>{props.children}</NavbarComponent>
+            <NavbarComponent />
+            <main className={'relative admin-content bg-red-500'}>
+                {props.children}
+            </main>
         </main>
     );
 }

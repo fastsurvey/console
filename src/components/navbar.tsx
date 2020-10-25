@@ -72,10 +72,7 @@ const LogoutButton = connect(
     mapDispatchToProps,
 )(LogoutButtonComponent);
 
-interface NavbarComponentProps {
-    children: React.ReactNode;
-}
-function NavbarComponent(props: NavbarComponentProps) {
+function NavbarComponent() {
     return (
         <React.Fragment>
             <div
@@ -102,7 +99,6 @@ function NavbarComponent(props: NavbarComponentProps) {
                 <div className={'self-stretch flex-grow'} />
                 <LogoutButton />
             </div>
-            <div className={'relative ml-64'}>{props.children}</div>
         </React.Fragment>
     );
 }
