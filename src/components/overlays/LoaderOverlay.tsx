@@ -1,8 +1,8 @@
 import React from 'react';
-import '../styles/loader.scss';
+import '../../styles/loader.scss';
 import {ReduxState} from '../../utilities/types';
 import {connect} from 'react-redux';
-import LogoBanner from '../logoBanner';
+import LogoBanner from '../logos/LogoBanner';
 
 interface LoaderOverlayProps {
     loggingIn: boolean;

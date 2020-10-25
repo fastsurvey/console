@@ -1,6 +1,6 @@
 import React from 'react';
 import EmptyImage from '../../assets/images/empty.svg';
-import LogoBanner from '../../components/logoBanner';
+import LogoBanner from '../../components/logos/LogoBanner';
 
 function NotFoundPage() {
     return (

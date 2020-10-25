@@ -1,5 +1,5 @@
 import React from 'react';
-import LogoBanner from '../../components/logoBanner';
+import LogoBanner from '../../components/logos/LogoBanner';
 
 interface FormPageProps {
     children: React.ReactNode;

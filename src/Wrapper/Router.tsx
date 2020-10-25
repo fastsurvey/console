@@ -18,12 +18,12 @@ import DashBoardPage from '../pages/dashboard/DashboardPage';
 import LoginImage from '../assets/images/secure.svg';
 import VerifyImage from '../assets/images/letter.svg';
 
-interface RouterComponentProps {
+interface RouterProps {
     loggingIn: boolean;
     loggedIn: boolean;
     account: undefined | Account;
 }
-function RouterComponent(props: RouterComponentProps) {
+function Router(props: RouterProps) {
     let verifyWall = false;
     if (props.loggedIn) {
         assert(props.account !== undefined);
@@ -112,4 +112,4 @@ const mapStateToProps = (state: ReduxState) => ({
     account: state.account,
 });
 const mapDispatchToProps = (dispatch: any) => ({});
-export default connect(mapStateToProps, mapDispatchToProps)(RouterComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(Router);
