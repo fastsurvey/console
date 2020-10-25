@@ -1,25 +1,25 @@
 import React, {useState} from 'react';
-import InputComponent from '../../components/input';
-import ButtonComponent from '../../components/button';
-import ButtonRowComponent from '../../components/buttonRow';
+import TextInput from '../../../components/formFields/TextInput';
+import Button from '../../../components/buttons/Button';
+import ButtonRow from '../../../components/buttons/ButtonRow';
 import {connect} from 'react-redux';
-import {ReduxState, JWT, Account} from '../../utilities/types';
-import {authPostRequest} from '../../utilities/axiosClients';
-import {logInAction} from '../../utilities/reduxActions';
+import {ReduxState, JWT, Account} from '../../../utilities/types';
+import {authPostRequest} from '../../../utilities/axiosClients';
+import {logInAction} from '../../../utilities/reduxActions';
 import {Link} from 'react-router-dom';
 import {
     openMessageAction,
     closeAllMessagesAction,
-} from '../../utilities/reduxActions';
+} from '../../../utilities/reduxActions';
 
-interface SetPasswordPageProps {
+interface SetPasswordFormProps {
     loggingIn: boolean;
     logIn(jwt: JWT, account: Account): void;
     openMessage(content: string): void;
     closeAllMessages(): void;
 }
 
-function SetPasswordPage(props: SetPasswordPageProps) {
+function SetPasswordForm(props: SetPasswordFormProps) {
     const [password, setPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const [success, setSuccess] = useState(false);
@@ -61,7 +61,7 @@ function SetPasswordPage(props: SetPasswordPageProps) {
                     </h3>
                     {password_token !== null && (
                         <React.Fragment>
-                            <InputComponent
+                            <TextInput
                                 placeholder='password'
                                 value={password}
                                 onChange={(newValue) => {
@@ -74,7 +74,7 @@ function SetPasswordPage(props: SetPasswordPageProps) {
                                     fulfilled: password.length > 7,
                                 }}
                             />
-                            <InputComponent
+                            <TextInput
                                 placeholder='confirm password'
                                 value={passwordConfirmation}
                                 onChange={(newValue) => {
@@ -89,13 +89,13 @@ function SetPasswordPage(props: SetPasswordPageProps) {
                                         password === passwordConfirmation,
                                 }}
                             />
-                            <ButtonRowComponent center className={'pt-2'}>
-                                <ButtonComponent
+                            <ButtonRow center className={'pt-2'}>
+                                <Button
                                     onClick={handleSubmit}
                                     text='Set Password'
                                     disabled={disabled()}
                                 />
-                            </ButtonRowComponent>
+                            </ButtonRow>
                         </React.Fragment>
                     )}
                     {password_token === null && (
@@ -109,11 +109,11 @@ function SetPasswordPage(props: SetPasswordPageProps) {
             {success && (
                 <React.Fragment>
                     <h3 className='mb-4 text-center no-selection'>Success!</h3>
-                    <ButtonRowComponent center className={'pt-2'}>
+                    <ButtonRow center className={'pt-2'}>
                         <Link to='/configurations'>
-                            <ButtonComponent text='Continue to Admin Panel' />
+                            <Button text='Continue to Admin Panel' />
                         </Link>
-                    </ButtonRowComponent>
+                    </ButtonRow>
                 </React.Fragment>
             )}
         </div>
@@ -128,4 +128,4 @@ const mapDispatchToProps = (dispatch: any) => ({
     openMessage: (content: string) => dispatch(openMessageAction(content)),
     closeAllMessages: () => dispatch(closeAllMessagesAction()),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(SetPasswordPage);
+export default connect(mapStateToProps, mapDispatchToProps)(SetPasswordForm);

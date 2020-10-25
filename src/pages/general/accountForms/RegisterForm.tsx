@@ -1,25 +1,25 @@
 import React, {useState} from 'react';
-import InputComponent from '../components/input';
-import ButtonComponent from '../components/button';
-import ButtonRowComponent from '../components/buttonRow';
+import TextInput from '../../../components/formFields/TextInput';
+import Button from '../../../components/buttons/Button';
+import ButtonRow from '../../../components/buttons/ButtonRow';
 import {Link} from 'react-router-dom';
-import {ReduxState, JWT, Account} from '../utilities/types';
+import {ReduxState, JWT, Account} from '../../../utilities/types';
 import {
     closeAllMessagesAction,
     logInAction,
     openMessageAction,
-} from '../utilities/reduxActions';
+} from '../../../utilities/reduxActions';
 import {connect} from 'react-redux';
-import {authPostRequest} from '../utilities/axiosClients';
+import {authPostRequest} from '../../../utilities/axiosClients';
 
-interface RegisterPageComponentProps {
+interface RegisterFormProps {
     loggingIn: boolean;
     logIn(jwt: JWT, account: Account): void;
     openMessage(content: string): void;
     closeAllMessages(): void;
 }
 
-function RegisterPageComponent(props: RegisterPageComponentProps) {
+function RegisterForm(props: RegisterFormProps) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
@@ -54,7 +54,7 @@ function RegisterPageComponent(props: RegisterPageComponentProps) {
     return (
         <div className='w-20vw'>
             <h3 className='mb-4 text-center no-selection'>Register</h3>
-            <InputComponent
+            <TextInput
                 required
                 placeholder='email'
                 value={email}
@@ -63,7 +63,7 @@ function RegisterPageComponent(props: RegisterPageComponentProps) {
                     setEmail(newValue);
                 }}
             />
-            <InputComponent
+            <TextInput
                 required
                 placeholder='password'
                 value={password}
@@ -77,7 +77,7 @@ function RegisterPageComponent(props: RegisterPageComponentProps) {
                     fulfilled: password.length > 7,
                 }}
             />
-            <InputComponent
+            <TextInput
                 required
                 placeholder='confirm password'
                 value={passwordConfirmation}
@@ -93,13 +93,13 @@ function RegisterPageComponent(props: RegisterPageComponentProps) {
                         password === passwordConfirmation,
                 }}
             />
-            <ButtonRowComponent center className={'pt-2'}>
-                <ButtonComponent
+            <ButtonRow center className={'pt-2'}>
+                <Button
                     onClick={handleRegistration}
                     text='Register'
                     disabled={disabled()}
                 />
-            </ButtonRowComponent>
+            </ButtonRow>
             <div
                 className={
                     'w-full text-center pt-4 text-gray-500 font-weight-500 no-selection'
@@ -119,7 +119,4 @@ const mapDispatchToProps = (dispatch: any) => ({
     openMessage: (content: string) => dispatch(openMessageAction(content)),
     closeAllMessages: () => dispatch(closeAllMessagesAction()),
 });
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(RegisterPageComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);

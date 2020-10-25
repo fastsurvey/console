@@ -1,22 +1,22 @@
 import React, {useState} from 'react';
-import InputComponent from '../../components/input';
-import ButtonComponent from '../../components/button';
-import ButtonRowComponent from '../../components/buttonRow';
+import InputComponent from '../../../components/formFields/TextInput';
+import Button from '../../../components/buttons/Button';
+import ButtonRow from '../../../components/buttons/ButtonRow';
 import {connect} from 'react-redux';
-import {ReduxState} from '../../utilities/types';
-import {authPostRequest} from '../../utilities/axiosClients';
+import {ReduxState} from '../../../utilities/types';
+import {authPostRequest} from '../../../utilities/axiosClients';
 import {Link} from 'react-router-dom';
 import {
     openMessageAction,
     closeAllMessagesAction,
-} from '../../utilities/reduxActions';
+} from '../../../utilities/reduxActions';
 
-interface RequestPasswordPageProps {
+interface RequestPasswordFormProps {
     openMessage(content: string): void;
     closeAllMessages(): void;
 }
 
-function RequestPasswordPage(props: RequestPasswordPageProps) {
+function RequestPasswordForm(props: RequestPasswordFormProps) {
     const [email, setEmail] = useState('');
     const [success, setSuccess] = useState(false);
 
@@ -60,13 +60,13 @@ function RequestPasswordPage(props: RequestPasswordPageProps) {
                             setEmail(newValue);
                         }}
                     />
-                    <ButtonRowComponent center className={'pt-2'}>
-                        <ButtonComponent
+                    <ButtonRow center className={'pt-2'}>
+                        <Button
                             onClick={handleSubmit}
                             text='Request new password'
                             disabled={disabled()}
                         />
-                    </ButtonRowComponent>
+                    </ButtonRow>
                     <div
                         className={
                             'w-full text-center pt-4 text-gray-500 font-weight-500 no-selection'
@@ -110,4 +110,4 @@ const mapDispatchToProps = (dispatch: any) => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps,
-)(RequestPasswordPage);
+)(RequestPasswordForm);

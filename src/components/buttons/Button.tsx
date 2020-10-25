@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface ButtonComponentProps {
+interface ButtonProps {
     text: string;
     onClick?(): void;
     invisible?: boolean;
@@ -8,7 +8,7 @@ interface ButtonComponentProps {
     disabled?: boolean;
 }
 
-function ButtonComponent(props: ButtonComponentProps) {
+function Button(props: ButtonProps) {
     const className = props.className === undefined ? '' : props.className;
 
     const reactivityClass =
@@ -44,4 +44,4 @@ function ButtonComponent(props: ButtonComponentProps) {
     );
 }
 
-export default ButtonComponent;
+export default Button;

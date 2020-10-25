@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-interface InputComponentProps {
+interface TextInputProps {
     value: string;
     onChange(newValue: string): void;
     type?: string;
@@ -10,7 +10,7 @@ interface InputComponentProps {
     hint?: {text: string; fulfilled: boolean};
 }
 
-function InputComponent(props: InputComponentProps) {
+function TextInput(props: TextInputProps) {
     const placeholder =
         props.placeholder !== undefined ? props.placeholder : '';
 
@@ -60,4 +60,4 @@ function InputComponent(props: InputComponentProps) {
     );
 }
 
-export default InputComponent;
+export default TextInput;

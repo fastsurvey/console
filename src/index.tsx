@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 import ReduxWrapper from './wrapper/ReduxWrapper';
 import Router from './wrapper/Router';
-import './tailwind.out.css';
+import './styles/tailwind.out.css';
 
 ReactDOM.render(
     <React.StrictMode>

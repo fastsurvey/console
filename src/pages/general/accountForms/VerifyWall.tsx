@@ -1,25 +1,25 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {Account, ReduxState} from '../utilities/types';
+import {Account, ReduxState} from '../../../utilities/types';
 import {
     logOutAction,
     openMessageAction,
     closeAllMessagesAction,
-} from '../utilities/reduxActions';
+} from '../../../utilities/reduxActions';
 import assert from 'assert';
-import ButtonRowComponent from '../components/buttonRow';
-import ButtonComponent from '../components/button';
-import {authPostRequest} from '../utilities/axiosClients';
+import Button from '../../../components/buttons/Button';
+import ButtonRow from '../../../components/buttons/ButtonRow';
+import {authPostRequest} from '../../../utilities/axiosClients';
 
-interface VerifyWallComponentProps {
+interface VerifyWallProps {
     account: undefined | Account;
     logOut(): void;
     openMessage(content: string): void;
     closeAllMessages(): void;
 }
 
-function VerifyWallComponent(props: VerifyWallComponentProps) {
+function VerifyWall(props: VerifyWallProps) {
     const email = props.account?.email;
     assert(email !== undefined);
 
@@ -51,13 +51,13 @@ function VerifyWallComponent(props: VerifyWallComponentProps) {
                 email we've just sent to:
             </p>
             <p className='text-center font-weight-600'>{email}</p>
-            <ButtonRowComponent center className={'pt-4'}>
-                <ButtonComponent
+            <ButtonRow center className={'pt-4'}>
+                <Button
                     onClick={handleResend}
                     text='Resend verification email'
                     disabled={!resendPossible}
                 />
-            </ButtonRowComponent>
+            </ButtonRow>
             <div
                 className={
                     'w-full text-center pt-4 text-gray-500 font-weight-500 no-selection'
@@ -79,7 +79,4 @@ const mapDispatchToProps = (dispatch: any) => ({
     openMessage: (content: string) => dispatch(openMessageAction(content)),
     closeAllMessages: () => dispatch(closeAllMessagesAction()),
 });
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(VerifyWallComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(VerifyWall);

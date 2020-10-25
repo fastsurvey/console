@@ -2,40 +2,28 @@ import React from 'react';
 import assert from 'assert';
 import {connect} from 'react-redux';
 import {Switch, Route, BrowserRouter, Redirect} from 'react-router-dom';
-import NavbarComponent from '../components/navbar';
 
 import {ReduxState, Account} from '../utilities/types';
 
-import LoginPageComponent from '../pages/LoginPage';
-import RegisterPageComponent from '../pages/RegisterPage';
-import VerifyPageComponent from '../pages/VerifyPage';
+import LoginForm from '../pages/general/accountForms/LoginForm';
+import RegisterForm from '../pages/general/accountForms/RegisterForm';
+import RequestPasswordForm from '../pages/general/accountForms/RequestPasswordForm';
+import SetPasswordForm from '../pages/general/accountForms/SetPasswordForm';
+import VerifyForm from '../pages/general/accountForms/VerifyForm';
+import VerifyWall from '../pages/general/accountForms/VerifyWall';
+import FormPage from '../pages/general/FormPage';
+import NotFoundPage from '../pages/general/NotFoundPage';
+import DashBoardPage from '../pages/dashboard/DashboardPage';
 
-import VerifyWallComponent from '../pages/VerifyWall';
-
-import FormPageWrapperComponent from '../pages/FormPageWrapper';
 import LoginImage from '../assets/images/secure.svg';
 import VerifyImage from '../assets/images/letter.svg';
-import NotFoundPage from '../pages/NotFoundPage';
-import SetPasswordPage from '../pages/forgotPassword/SetPasswordPage';
-import RequestPasswordPage from '../pages/forgotPassword/RequestPasswordPage';
 
-interface DashboardWrapperComponentProps {
-    children: React.ReactChild;
-}
-function DashboardWrapperComponent(props: DashboardWrapperComponentProps) {
-    return (
-        <main>
-            <NavbarComponent>{props.children}</NavbarComponent>
-        </main>
-    );
-}
-
-interface RouterComponentProps {
+interface RouterProps {
     loggingIn: boolean;
     loggedIn: boolean;
     account: undefined | Account;
 }
-function RouterComponent(props: RouterComponentProps) {
+function Router(props: RouterProps) {
     let verifyWall = false;
     if (props.loggedIn) {
         assert(props.account !== undefined);
@@ -50,14 +38,12 @@ function RouterComponent(props: RouterComponentProps) {
                         {!props.loggingIn && props.loggedIn && (
                             <React.Fragment>
                                 {verifyWall && (
-                                    <FormPageWrapperComponent
-                                        image={VerifyImage}
-                                    >
-                                        <VerifyWallComponent />
-                                    </FormPageWrapperComponent>
+                                    <FormPage image={VerifyImage}>
+                                        <VerifyWall />
+                                    </FormPage>
                                 )}
                                 {!verifyWall && (
-                                    <DashboardWrapperComponent>
+                                    <DashBoardPage>
                                         <Switch>
                                             <Route exact path='/configurations'>
                                                 <div>Configurations</div>
@@ -69,7 +55,7 @@ function RouterComponent(props: RouterComponentProps) {
                                                 <div>Account</div>
                                             </Route>
                                         </Switch>
-                                    </DashboardWrapperComponent>
+                                    </DashBoardPage>
                                 )}
                             </React.Fragment>
                         )}
@@ -79,37 +65,37 @@ function RouterComponent(props: RouterComponentProps) {
                     </Route>
                     <Route path='(/login|/register)'>
                         {!props.loggingIn && !props.loggedIn && (
-                            <FormPageWrapperComponent image={LoginImage}>
+                            <FormPage image={LoginImage}>
                                 <Switch>
                                     <Route exact path='/login'>
-                                        <LoginPageComponent />
+                                        <LoginForm />
                                     </Route>
                                     <Route exact path='/register'>
-                                        <RegisterPageComponent />
+                                        <RegisterForm />
                                     </Route>
                                 </Switch>
-                            </FormPageWrapperComponent>
+                            </FormPage>
                         )}
                         {!props.loggingIn && props.loggedIn && (
                             <Redirect to='/configurations' />
                         )}
                     </Route>
                     <Route path='(/verify)'>
-                        <FormPageWrapperComponent image={VerifyImage}>
-                            <VerifyPageComponent />
-                        </FormPageWrapperComponent>
+                        <FormPage image={VerifyImage}>
+                            <VerifyForm />
+                        </FormPage>
                     </Route>
                     <Route path='(/request-password|/set-password)'>
-                        <FormPageWrapperComponent image={LoginImage}>
+                        <FormPage image={LoginImage}>
                             <Switch>
                                 <Route exact path='/request-password'>
-                                    <RequestPasswordPage />
+                                    <RequestPasswordForm />
                                 </Route>
                                 <Route exact path='/set-password'>
-                                    <SetPasswordPage />
+                                    <SetPasswordForm />
                                 </Route>
                             </Switch>
-                        </FormPageWrapperComponent>
+                        </FormPage>
                     </Route>
                     <Route>
                         <NotFoundPage />
@@ -126,4 +112,4 @@ const mapStateToProps = (state: ReduxState) => ({
     account: state.account,
 });
 const mapDispatchToProps = (dispatch: any) => ({});
-export default connect(mapStateToProps, mapDispatchToProps)(RouterComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(Router);
