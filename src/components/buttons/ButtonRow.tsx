@@ -1,12 +1,12 @@
 import React, {ReactNode} from 'react';
 
-interface ButtonRowComponentProps {
+interface ButtonRowProps {
     children: ReactNode;
     center?: boolean;
     className?: string;
 }
 
-function ButtonRowComponent(props: ButtonRowComponentProps) {
+function ButtonRow(props: ButtonRowProps) {
     return (
         <div
             className={
@@ -21,4 +21,4 @@ function ButtonRowComponent(props: ButtonRowComponentProps) {
     );
 }
 
-export default ButtonRowComponent;
+export default ButtonRow;

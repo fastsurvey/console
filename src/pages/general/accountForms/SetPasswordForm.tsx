@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import InputComponent from '../../../components/input';
-import ButtonComponent from '../../../components/button';
-import ButtonRowComponent from '../../../components/buttonRow';
+import Button from '../../../components/buttons/Button';
+import ButtonRow from '../../../components/buttons/ButtonRow';
 import {connect} from 'react-redux';
 import {ReduxState, JWT, Account} from '../../../utilities/types';
 import {authPostRequest} from '../../../utilities/axiosClients';
@@ -89,13 +89,13 @@ function SetPasswordForm(props: SetPasswordFormProps) {
                                         password === passwordConfirmation,
                                 }}
                             />
-                            <ButtonRowComponent center className={'pt-2'}>
-                                <ButtonComponent
+                            <ButtonRow center className={'pt-2'}>
+                                <Button
                                     onClick={handleSubmit}
                                     text='Set Password'
                                     disabled={disabled()}
                                 />
-                            </ButtonRowComponent>
+                            </ButtonRow>
                         </React.Fragment>
                     )}
                     {password_token === null && (
@@ -109,11 +109,11 @@ function SetPasswordForm(props: SetPasswordFormProps) {
             {success && (
                 <React.Fragment>
                     <h3 className='mb-4 text-center no-selection'>Success!</h3>
-                    <ButtonRowComponent center className={'pt-2'}>
+                    <ButtonRow center className={'pt-2'}>
                         <Link to='/configurations'>
-                            <ButtonComponent text='Continue to Admin Panel' />
+                            <Button text='Continue to Admin Panel' />
                         </Link>
-                    </ButtonRowComponent>
+                    </ButtonRow>
                 </React.Fragment>
             )}
         </div>

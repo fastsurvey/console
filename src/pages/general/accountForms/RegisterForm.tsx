@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import InputComponent from '../../../components/input';
-import ButtonComponent from '../../../components/button';
-import ButtonRowComponent from '../../../components/buttonRow';
+import Button from '../../../components/buttons/Button';
+import ButtonRow from '../../../components/buttons/ButtonRow';
 import {Link} from 'react-router-dom';
 import {ReduxState, JWT, Account} from '../../../utilities/types';
 import {
@@ -93,13 +93,13 @@ function RegisterForm(props: RegisterFormProps) {
                         password === passwordConfirmation,
                 }}
             />
-            <ButtonRowComponent center className={'pt-2'}>
-                <ButtonComponent
+            <ButtonRow center className={'pt-2'}>
+                <Button
                     onClick={handleRegistration}
                     text='Register'
                     disabled={disabled()}
                 />
-            </ButtonRowComponent>
+            </ButtonRow>
             <div
                 className={
                     'w-full text-center pt-4 text-gray-500 font-weight-500 no-selection'

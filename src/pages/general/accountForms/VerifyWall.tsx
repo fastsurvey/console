@@ -8,8 +8,8 @@ import {
     closeAllMessagesAction,
 } from '../../../utilities/reduxActions';
 import assert from 'assert';
-import ButtonRowComponent from '../../../components/buttonRow';
-import ButtonComponent from '../../../components/button';
+import Button from '../../../components/buttons/Button';
+import ButtonRow from '../../../components/buttons/ButtonRow';
 import {authPostRequest} from '../../../utilities/axiosClients';
 
 interface VerifyWallProps {
@@ -51,13 +51,13 @@ function VerifyWall(props: VerifyWallProps) {
                 email we've just sent to:
             </p>
             <p className='text-center font-weight-600'>{email}</p>
-            <ButtonRowComponent center className={'pt-4'}>
-                <ButtonComponent
+            <ButtonRow center className={'pt-4'}>
+                <Button
                     onClick={handleResend}
                     text='Resend verification email'
                     disabled={!resendPossible}
                 />
-            </ButtonRowComponent>
+            </ButtonRow>
             <div
                 className={
                     'w-full text-center pt-4 text-gray-500 font-weight-500 no-selection'
