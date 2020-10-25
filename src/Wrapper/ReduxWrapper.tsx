@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import {ReduxAction, ReduxState, JWT, Account} from '../utilities/types';
-import MessageQueueComponent from '../components/messageQueue';
+import MessageQueue from '../components/messages/MessageQueue';
 import Cookies from 'js-cookie';
 import {logInAction, logOutAction} from '../utilities/reduxActions';
 import {generateValidOAuthToken} from '../utilities/jwtEncryption';
@@ -92,7 +92,7 @@ export function ReduxWrapper(props: ReduxWrapperProps) {
     return (
         <Provider store={store}>
             <Loader />
-            <MessageQueueComponent />
+            <MessageQueue />
             {props.children}
         </Provider>
     );
