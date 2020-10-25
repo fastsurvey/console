@@ -3,7 +3,7 @@ import InputComponent from '../../components/input';
 import ButtonComponent from '../../components/button';
 import ButtonRowComponent from '../../components/buttonRow';
 import {connect} from 'react-redux';
-import {ReduxState, JWT, Account} from '../../utilities/types';
+import {ReduxState} from '../../utilities/types';
 import {authPostRequest} from '../../utilities/axiosClients';
 import {Link} from 'react-router-dom';
 import {
