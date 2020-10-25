@@ -1,17 +1,17 @@
 import React from 'react';
-import NavbarComponent from '../../components/navbar';
+import Navbar from '../../components/navbar/Navbar';
 
 interface DashBoardPageProps {
     children: React.ReactNode;
 }
 function DashBoardPage(props: DashBoardPageProps) {
     return (
-        <main>
-            <NavbarComponent />
-            <main className={'relative admin-content bg-red-500'}>
-                {props.children}
-            </main>
-        </main>
+        <React.Fragment>
+            <header>
+                <Navbar />
+            </header>
+            <main className={'relative admin-content'}>{props.children}</main>
+        </React.Fragment>
     );
 }
 
