@@ -11,7 +11,7 @@ interface MessageQueueProps {
 
 function MessageQueue(props: MessageQueueProps) {
     return (
-        <div className='fixed bottom-0 w-30vw mx-35vw'>
+        <div className='fixed bottom-0 z-30 mx-0 w-100vw md:mx-20vw md:w-60vw xl:w-30vw xl:mx-35vw'>
             {props.messages.map((message: Message, index: number) => (
                 <MessageComponent
                     key={message}
