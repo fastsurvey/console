@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {Account, ReduxState} from '../../../utilities/types';
 import {
@@ -11,6 +10,7 @@ import assert from 'assert';
 import Button from '../../../components/buttons/Button';
 import ButtonRow from '../../../components/buttons/ButtonRow';
 import {authPostRequest} from '../../../utilities/axiosClients';
+import TextLink from '../../../components/links/TextLink';
 
 interface VerifyWallProps {
     account: undefined | Account;
@@ -58,15 +58,9 @@ function VerifyWall(props: VerifyWallProps) {
                     disabled={!resendPossible}
                 />
             </ButtonRow>
-            <div
-                className={
-                    'w-full text-center pt-4 text-gray-500 font-weight-500 no-selection'
-                }
-            >
-                <Link to='/register' onClick={props.logOut}>
-                    Wrong email address? Just register again.
-                </Link>
-            </div>
+            <TextLink to='/register' onClick={props.logOut} className='pt-4'>
+                Wrong email address? Just register again.
+            </TextLink>
         </div>
     );
 }

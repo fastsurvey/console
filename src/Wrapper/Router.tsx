@@ -34,6 +34,9 @@ function Router(props: RouterProps) {
         <BrowserRouter>
             <Route>
                 <Switch>
+                    <Route exact strict path='/'>
+                        <Redirect to='/login' />
+                    </Route>
                     <Route path='(/configurations|/results|/account)'>
                         {!props.loggingIn && props.loggedIn && (
                             <React.Fragment>
@@ -80,7 +83,7 @@ function Router(props: RouterProps) {
                             <Redirect to='/configurations' />
                         )}
                     </Route>
-                    <Route path='(/verify)'>
+                    <Route path='/verify'>
                         <FormPage image={VerifyImage}>
                             <VerifyForm />
                         </FormPage>

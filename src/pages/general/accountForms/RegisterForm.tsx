@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import TextInput from '../../../components/formFields/TextInput';
 import Button from '../../../components/buttons/Button';
 import ButtonRow from '../../../components/buttons/ButtonRow';
-import {Link} from 'react-router-dom';
 import {ReduxState, JWT, Account} from '../../../utilities/types';
 import {
     closeAllMessagesAction,
@@ -11,6 +10,7 @@ import {
 } from '../../../utilities/reduxActions';
 import {connect} from 'react-redux';
 import {authPostRequest} from '../../../utilities/axiosClients';
+import TextLink from '../../../components/links/TextLink';
 
 interface RegisterFormProps {
     loggingIn: boolean;
@@ -100,13 +100,9 @@ function RegisterForm(props: RegisterFormProps) {
                     disabled={disabled()}
                 />
             </ButtonRow>
-            <div
-                className={
-                    'w-full text-center pt-4 text-gray-500 font-weight-500 no-selection'
-                }
-            >
-                <Link to='/login'>Already have an account?</Link>
-            </div>
+            <TextLink to='/login' className='pt-4'>
+                Already have an account?
+            </TextLink>
         </div>
     );
 }

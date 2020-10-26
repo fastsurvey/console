@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import {ReduxState} from '../../../utilities/types';
 import {authPostRequest} from '../../../utilities/axiosClients';
 import {Link} from 'react-router-dom';
+import TextLink from '../../../components/links/TextLink';
 import {
     openMessageAction,
     closeAllMessagesAction,
@@ -67,13 +68,9 @@ function RequestPasswordForm(props: RequestPasswordFormProps) {
                             disabled={disabled()}
                         />
                     </ButtonRow>
-                    <div
-                        className={
-                            'w-full text-center pt-4 text-gray-500 font-weight-500 no-selection'
-                        }
-                    >
-                        <Link to='/login'>Log in instead?</Link>
-                    </div>
+                    <TextLink to='/login' className='pt-4'>
+                        Log in instead?
+                    </TextLink>
                 </React.Fragment>
             )}
             {success && (
@@ -84,18 +81,15 @@ function RequestPasswordForm(props: RequestPasswordFormProps) {
                         email we've just sent to:
                     </p>
                     <p className='text-center font-weight-600'>{email}</p>
-                    <div
+                    <TextLink
                         onClick={() => {
                             setEmail('');
                             setSuccess(false);
                         }}
-                        className={
-                            'w-full text-center pt-4 text-gray-500 font-weight-500 ' +
-                            'no-selection cursor-pointer'
-                        }
+                        className='pt-4'
                     >
                         Wrong email address?
-                    </div>
+                    </TextLink>
                 </React.Fragment>
             )}
         </div>

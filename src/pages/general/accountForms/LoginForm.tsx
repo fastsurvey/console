@@ -2,10 +2,10 @@ import React, {useState} from 'react';
 import TextInput from '../../../components/formFields/TextInput';
 import Button from '../../../components/buttons/Button';
 import ButtonRow from '../../../components/buttons/ButtonRow';
-import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {JWT, Account, ReduxState} from '../../../utilities/types';
 import {authPostRequest} from '../../../utilities/axiosClients';
+import TextLink from '../../../components/links/TextLink';
 import {
     logInAction,
     openMessageAction,
@@ -74,20 +74,12 @@ function LoginForm(props: LoginFormProps) {
                     disabled={disabled()}
                 />
             </ButtonRow>
-            <div
-                className={
-                    'w-full text-center pt-4 text-gray-500 font-weight-500 no-selection'
-                }
-            >
-                <Link to='/register'>Don't have an account yet?</Link>
-            </div>
-            <div
-                className={
-                    'w-full text-center pt-2 text-gray-500 font-weight-500 no-selection'
-                }
-            >
-                <Link to='/request-password'>Forgot your password?</Link>
-            </div>
+            <TextLink to='/register' className='pt-4'>
+                Don't have an account yet?
+            </TextLink>
+            <TextLink to='/request-password' className='pt-2'>
+                Forgot your password?
+            </TextLink>
         </div>
     );
 }
