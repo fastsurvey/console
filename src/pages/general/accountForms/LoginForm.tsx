@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
 import TextInput from '../../../components/formFields/TextInput';
-import Button from '../../../components/buttons/Button';
-import ButtonRow from '../../../components/buttons/ButtonRow';
 import {connect} from 'react-redux';
 import {JWT, Account, ReduxState} from '../../../utilities/types';
 import {authPostRequest} from '../../../utilities/axiosClients';
 import TextLink from '../../../components/links/TextLink';
+import ButtonLink from '../../../components/links/ButtonLink';
 import {
     logInAction,
     openMessageAction,
@@ -70,14 +69,14 @@ function LoginForm(props: LoginFormProps) {
                 }}
                 type='password'
             />
-            <ButtonRow center className={'pt-2'}>
-                <Button
-                    onClick={handleLogin}
-                    text='Login'
-                    disabled={disabled()}
-                    spinning={submitting}
-                />
-            </ButtonRow>
+            <ButtonLink
+                className='pt-2'
+                onClick={handleLogin}
+                disabled={disabled()}
+                spinning={submitting}
+            >
+                Login
+            </ButtonLink>
             <TextLink to='/register' className='pt-4'>
                 Don't have an account yet?
             </TextLink>

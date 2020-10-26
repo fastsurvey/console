@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
 import TextInput from '../../../components/formFields/TextInput';
-import Button from '../../../components/buttons/Button';
-import ButtonRow from '../../../components/buttons/ButtonRow';
 import {ReduxState, JWT, Account} from '../../../utilities/types';
 import {
     closeAllMessagesAction,
@@ -11,6 +9,7 @@ import {
 import {connect} from 'react-redux';
 import {authPostRequest} from '../../../utilities/axiosClients';
 import TextLink from '../../../components/links/TextLink';
+import ButtonLink from '../../../components/links/ButtonLink';
 
 interface RegisterFormProps {
     logIn(jwt: JWT, account: Account): void;
@@ -97,14 +96,14 @@ function RegisterForm(props: RegisterFormProps) {
                         password === passwordConfirmation,
                 }}
             />
-            <ButtonRow center className={'pt-2'}>
-                <Button
-                    onClick={handleRegistration}
-                    text='Register'
-                    disabled={disabled()}
-                    spinning={submitting}
-                />
-            </ButtonRow>
+            <ButtonLink
+                className='pt-2'
+                onClick={handleRegistration}
+                disabled={disabled()}
+                spinning={submitting}
+            >
+                Register
+            </ButtonLink>
             <TextLink to='/login' className='pt-4'>
                 Already have an account?
             </TextLink>

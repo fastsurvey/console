@@ -1,12 +1,10 @@
 import React, {useState} from 'react';
 import TextInput from '../../../components/formFields/TextInput';
-import Button from '../../../components/buttons/Button';
-import ButtonRow from '../../../components/buttons/ButtonRow';
 import {connect} from 'react-redux';
 import {ReduxState, JWT, Account} from '../../../utilities/types';
 import {authPostRequest} from '../../../utilities/axiosClients';
 import {logInAction} from '../../../utilities/reduxActions';
-import {Link} from 'react-router-dom';
+import ButtonLink from '../../../components/links/ButtonLink';
 import {
     openMessageAction,
     closeAllMessagesAction,
@@ -93,14 +91,14 @@ function SetPasswordForm(props: SetPasswordFormProps) {
                                         password === passwordConfirmation,
                                 }}
                             />
-                            <ButtonRow center className={'pt-2'}>
-                                <Button
-                                    onClick={handleSubmit}
-                                    text='Set Password'
-                                    disabled={disabled()}
-                                    spinning={submitting}
-                                />
-                            </ButtonRow>
+                            <ButtonLink
+                                className='pt-2'
+                                onClick={handleSubmit}
+                                disabled={disabled()}
+                                spinning={submitting}
+                            >
+                                Set Password
+                            </ButtonLink>
                         </React.Fragment>
                     )}
                     {password_token === null && (
@@ -114,11 +112,9 @@ function SetPasswordForm(props: SetPasswordFormProps) {
             {success && (
                 <React.Fragment>
                     <h3 className='mb-4 text-center no-selection'>Success!</h3>
-                    <ButtonRow center className={'pt-2'}>
-                        <Link to='/configurations'>
-                            <Button text='Continue to Admin Panel' />
-                        </Link>
-                    </ButtonRow>
+                    <ButtonLink to='/configurations'>
+                        Continue to Admin Panel
+                    </ButtonLink>
                 </React.Fragment>
             )}
         </div>

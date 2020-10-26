@@ -1,8 +1,5 @@
 import React, {useState} from 'react';
 import TextInput from '../../../components/formFields/TextInput';
-import Button from '../../../components/buttons/Button';
-import ButtonRow from '../../../components/buttons/ButtonRow';
-import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {JWT, Account, ReduxState} from '../../../utilities/types';
 import {authPostRequest} from '../../../utilities/axiosClients';
@@ -11,6 +8,7 @@ import {
     openMessageAction,
     closeAllMessagesAction,
 } from '../../../utilities/reduxActions';
+import ButtonLink from '../../../components/links/ButtonLink';
 
 interface VerifyFormProps {
     logIn(jwt: JWT, account: Account): void;
@@ -74,14 +72,14 @@ function VerifyForm(props: VerifyFormProps) {
                                 }}
                                 type='password'
                             />
-                            <ButtonRow center className={'pt-2'}>
-                                <Button
-                                    onClick={handleVerify}
-                                    text='Verify'
-                                    disabled={disabled()}
-                                    spinning={submitting}
-                                />
-                            </ButtonRow>
+                            <ButtonLink
+                                className='pt-2'
+                                onClick={handleVerify}
+                                disabled={disabled()}
+                                spinning={submitting}
+                            >
+                                Verify
+                            </ButtonLink>
                         </React.Fragment>
                     )}
                     {email_token === null && (
@@ -95,11 +93,9 @@ function VerifyForm(props: VerifyFormProps) {
             {success && (
                 <React.Fragment>
                     <h3 className='mb-4 text-center no-selection'>Success!</h3>
-                    <ButtonRow center className={'pt-2'}>
-                        <Link to='/configurations'>
-                            <Button text='Continue to Admin Panel' />
-                        </Link>
-                    </ButtonRow>
+                    <ButtonLink to='/configurations'>
+                        Continue to Admin Panel
+                    </ButtonLink>
                 </React.Fragment>
             )}
         </div>

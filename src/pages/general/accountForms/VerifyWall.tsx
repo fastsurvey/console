@@ -7,10 +7,9 @@ import {
     closeAllMessagesAction,
 } from '../../../utilities/reduxActions';
 import assert from 'assert';
-import Button from '../../../components/buttons/Button';
-import ButtonRow from '../../../components/buttons/ButtonRow';
 import {authPostRequest} from '../../../utilities/axiosClients';
 import TextLink from '../../../components/links/TextLink';
+import ButtonLink from '../../../components/links/ButtonLink';
 
 interface VerifyWallProps {
     account: undefined | Account;
@@ -55,14 +54,14 @@ function VerifyWall(props: VerifyWallProps) {
                 email we've just sent to:
             </p>
             <p className='text-center font-weight-600'>{email}</p>
-            <ButtonRow center className={'pt-4'}>
-                <Button
-                    onClick={handleResend}
-                    text='Resend verification email'
-                    disabled={!resendPossible}
-                    spinning={submitting}
-                />
-            </ButtonRow>
+            <ButtonLink
+                className='pt-4'
+                onClick={handleResend}
+                disabled={!resendPossible}
+                spinning={submitting}
+            >
+                Resend verification email
+            </ButtonLink>
             <TextLink to='/register' onClick={props.logOut} className='pt-4'>
                 Wrong email address? Just register again.
             </TextLink>

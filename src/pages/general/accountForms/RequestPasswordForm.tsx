@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
 import InputComponent from '../../../components/formFields/TextInput';
-import Button from '../../../components/buttons/Button';
-import ButtonRow from '../../../components/buttons/ButtonRow';
 import {connect} from 'react-redux';
 import {ReduxState} from '../../../utilities/types';
 import {authPostRequest} from '../../../utilities/axiosClients';
 import TextLink from '../../../components/links/TextLink';
+import ButtonLink from '../../../components/links/ButtonLink';
 import {
     openMessageAction,
     closeAllMessagesAction,
@@ -65,14 +64,14 @@ function RequestPasswordForm(props: RequestPasswordFormProps) {
                             setEmail(newValue);
                         }}
                     />
-                    <ButtonRow center className={'pt-2'}>
-                        <Button
-                            onClick={handleSubmit}
-                            text='Request new password'
-                            disabled={disabled()}
-                            spinning={submitting}
-                        />
-                    </ButtonRow>
+                    <ButtonLink
+                        className='pt-2'
+                        onClick={handleSubmit}
+                        disabled={disabled()}
+                        spinning={submitting}
+                    >
+                        Request new password
+                    </ButtonLink>
                     <TextLink to='/login' className='pt-4'>
                         Log in instead?
                     </TextLink>
