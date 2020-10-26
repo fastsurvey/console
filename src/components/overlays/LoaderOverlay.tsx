@@ -11,6 +11,7 @@ interface LoaderOverlayProps {
 function LoaderOverlay(props: LoaderOverlayProps) {
     return (
         <div
+            id='LoaderOverlay'
             className={
                 'fixed z-50 bg-white w-100vw h-100vh center-content ' +
                 'transition-opacity duration-500 delay-1000 ' +

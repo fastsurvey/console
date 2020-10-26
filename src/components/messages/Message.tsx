@@ -30,7 +30,7 @@ function Message(props: MessageProps) {
         <div
             className={
                 'flex flex-row items-center text-gray-800 font-weight-600 ' +
-                'overflow-hidden px-2 m-2 bg-gray-100 rounded shadow ' +
+                'overflow-hidden pl-3 pr-1 m-2 bg-gray-100 rounded shadow ' +
                 size +
                 ' ' +
                 delay +
@@ -39,7 +39,7 @@ function Message(props: MessageProps) {
         >
             <div className='text-lg'>{props.text}</div>
             <div className='flex-grow' />
-            <div className='cursor-pointer' onClick={handleClose}>
+            <div className='w-10 h-10 p-1 cursor-pointer' onClick={handleClose}>
                 {ICONS.close}
             </div>
         </div>

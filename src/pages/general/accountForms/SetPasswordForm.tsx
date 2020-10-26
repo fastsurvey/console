@@ -1,19 +1,16 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import TextInput from '../../../components/formFields/TextInput';
-import Button from '../../../components/buttons/Button';
-import ButtonRow from '../../../components/buttons/ButtonRow';
 import {connect} from 'react-redux';
 import {ReduxState, JWT, Account} from '../../../utilities/types';
 import {authPostRequest} from '../../../utilities/axiosClients';
 import {logInAction} from '../../../utilities/reduxActions';
-import {Link} from 'react-router-dom';
+import ButtonLink from '../../../components/links/ButtonLink';
 import {
     openMessageAction,
     closeAllMessagesAction,
 } from '../../../utilities/reduxActions';
 
 interface SetPasswordFormProps {
-    loggingIn: boolean;
     logIn(jwt: JWT, account: Account): void;
     openMessage(content: string): void;
     closeAllMessages(): void;
@@ -24,18 +21,30 @@ function SetPasswordForm(props: SetPasswordFormProps) {
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const [success, setSuccess] = useState(false);
 
+    const [submitting, setSubmitting] = useState(false);
+
     const queryParams = new URLSearchParams(window.location.search);
     let password_token = queryParams.get('token');
 
+    const input2 = useRef(null);
+    function focusInput2() {
+        // @ts-ignore
+        input2.current?.focus();
+    }
+
     function handleSubmit() {
+        // @ts-ignore
+        input2.current?.blur();
         if (!disabled() && password_token !== null) {
+            setSubmitting(true);
             authPostRequest('/set-new-password', {password, password_token})
                 .then((response) => {
-                    props.closeAllMessages();
+                    setSubmitting(false);
                     props.logIn(response.data.jwt, response.data.account);
                     setSuccess(true);
                 })
                 .catch((error) => {
+                    setSubmitting(false);
                     if (error?.response?.status === 401) {
                         props.openMessage('Invalid link');
                     } else {
@@ -53,14 +62,14 @@ function SetPasswordForm(props: SetPasswordFormProps) {
     }
 
     return (
-        <div className='w-20vw'>
+        <div className='w-full'>
             {!success && (
                 <React.Fragment>
                     <h3 className='mb-4 text-center no-selection'>
                         Set Password
                     </h3>
                     {password_token !== null && (
-                        <React.Fragment>
+                        <form>
                             <TextInput
                                 placeholder='password'
                                 value={password}
@@ -73,6 +82,8 @@ function SetPasswordForm(props: SetPasswordFormProps) {
                                     text: '> 7 characters',
                                     fulfilled: password.length > 7,
                                 }}
+                                autoComplete='new-password'
+                                onEnter={focusInput2}
                             />
                             <TextInput
                                 placeholder='confirm password'
@@ -88,18 +99,22 @@ function SetPasswordForm(props: SetPasswordFormProps) {
                                         password.length > 7 &&
                                         password === passwordConfirmation,
                                 }}
+                                autoComplete='new-password'
+                                ref={input2}
+                                onEnter={handleSubmit}
                             />
-                            <ButtonRow center className={'pt-2'}>
-                                <Button
-                                    onClick={handleSubmit}
-                                    text='Set Password'
-                                    disabled={disabled()}
-                                />
-                            </ButtonRow>
-                        </React.Fragment>
+                            <ButtonLink
+                                className='pt-2'
+                                onClick={handleSubmit}
+                                disabled={disabled()}
+                                spinning={submitting}
+                            >
+                                Set Password
+                            </ButtonLink>
+                        </form>
                     )}
                     {password_token === null && (
-                        <p>
+                        <p className='text-center'>
                             Sorry, we couldn't find any password token in the
                             url. Please use exactly the link we've sent to you.
                         </p>
@@ -108,21 +123,17 @@ function SetPasswordForm(props: SetPasswordFormProps) {
             )}
             {success && (
                 <React.Fragment>
-                    <h3 className='mb-4 text-center no-selection'>Success!</h3>
-                    <ButtonRow center className={'pt-2'}>
-                        <Link to='/configurations'>
-                            <Button text='Continue to Admin Panel' />
-                        </Link>
-                    </ButtonRow>
+                    <h2 className='mb-4 text-center no-selection'>Success!</h2>
+                    <ButtonLink to='/configurations'>
+                        Continue to Admin Panel
+                    </ButtonLink>
                 </React.Fragment>
             )}
         </div>
     );
 }
 
-const mapStateToProps = (state: ReduxState) => ({
-    loggingIn: state.loggingIn,
-});
+const mapStateToProps = (state: ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
     logIn: (jwt: JWT, account: Account) => dispatch(logInAction(jwt, account)),
     openMessage: (content: string) => dispatch(openMessageAction(content)),

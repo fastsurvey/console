@@ -8,17 +8,31 @@ interface TextInputProps {
     className?: string;
     required?: boolean;
     hint?: {text: string; fulfilled: boolean};
+    autoComplete?: string;
+    onEnter?(): void;
 }
 
-function TextInput(props: TextInputProps) {
+const TextInput = React.forwardRef((props: TextInputProps, ref: any) => {
     const placeholder =
         props.placeholder !== undefined ? props.placeholder : '';
 
     const [focused, setFocus] = useState(false);
 
+    function handleKeyDown(e: any) {
+        if (e.key === 'Enter') {
+            if (props.onEnter !== undefined) {
+                props.onEnter();
+            }
+        } else if (e.key === 'Escape') {
+            e.target.blur();
+        }
+    }
+
     return (
         <div className='relative mb-2'>
             <input
+                ref={ref}
+                onKeyDown={handleKeyDown}
                 placeholder={placeholder}
                 value={props.value}
                 onChange={(e) => props.onChange(e.target.value)}
@@ -26,12 +40,15 @@ function TextInput(props: TextInputProps) {
                 onBlur={() => setFocus(false)}
                 className={
                     'font-weight-500 text-lg md:no-selection ' +
-                    'drop-shadow md:shadow border-0 rounded w-full h-12 ' +
+                    'shadow border-0 rounded w-full h-12 ' +
                     'py-2 pl-3 pr-10 md:pr-12 text-gray-700 ' +
                     'focus:outline-none focus:shadow-outline ' +
                     (props.className !== undefined ? props.className : '')
                 }
                 type={props.type !== undefined ? props.type : 'text'}
+                autoComplete={
+                    props.autoComplete !== undefined ? props.autoComplete : ''
+                }
             />
             {props.hint && (
                 <div
@@ -58,6 +75,6 @@ function TextInput(props: TextInputProps) {
             )}
         </div>
     );
-}
+});
 
 export default TextInput;

@@ -1,8 +1,5 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import TextInput from '../../../components/formFields/TextInput';
-import Button from '../../../components/buttons/Button';
-import ButtonRow from '../../../components/buttons/ButtonRow';
-import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {JWT, Account, ReduxState} from '../../../utilities/types';
 import {authPostRequest} from '../../../utilities/axiosClients';
@@ -11,9 +8,9 @@ import {
     openMessageAction,
     closeAllMessagesAction,
 } from '../../../utilities/reduxActions';
+import ButtonLink from '../../../components/links/ButtonLink';
 
 interface VerifyFormProps {
-    loggingIn: boolean;
     logIn(jwt: JWT, account: Account): void;
     openMessage(content: string): void;
     closeAllMessages(): void;
@@ -23,19 +20,28 @@ function VerifyForm(props: VerifyFormProps) {
     const [password, setPassword] = useState('');
     const [success, setSuccess] = useState(false);
 
+    const [submitting, setSubmitting] = useState(false);
+
     const queryParams = new URLSearchParams(window.location.search);
     let email_token = queryParams.get('token');
 
+    const input1 = useRef(null);
+
     function handleVerify() {
+        // @ts-ignore
+        input1.current?.blur();
         if (!disabled() && email_token !== null) {
+            setSubmitting(true);
             authPostRequest('/verify', {password, email_token})
                 .then((response) => {
-                    props.closeAllMessages();
-                    // new jwt and account since the accout payload has been updated
+                    setTimeout(() => {
+                        setSuccess(true);
+                        setSubmitting(false);
+                    }, 50);
                     props.logIn(response.data.jwt, response.data.account);
-                    setSuccess(true);
                 })
                 .catch((error) => {
+                    setSubmitting(false);
                     if (error?.response?.status === 401) {
                         props.openMessage('Invalid password or wrong link');
                     } else {
@@ -53,14 +59,14 @@ function VerifyForm(props: VerifyFormProps) {
     }
 
     return (
-        <div className='w-20vw'>
+        <div className='w-full'>
             {!success && (
                 <React.Fragment>
-                    <h3 className='mb-4 text-center no-selection'>
+                    <h2 className='mb-4 text-center no-selection'>
                         Verify your email
-                    </h3>
+                    </h2>
                     {email_token !== null && (
-                        <React.Fragment>
+                        <form>
                             <TextInput
                                 placeholder='password'
                                 value={password}
@@ -69,18 +75,22 @@ function VerifyForm(props: VerifyFormProps) {
                                     setPassword(newValue);
                                 }}
                                 type='password'
+                                autoComplete='current-password'
+                                ref={input1}
+                                onEnter={handleVerify}
                             />
-                            <ButtonRow center className={'pt-2'}>
-                                <Button
-                                    onClick={handleVerify}
-                                    text='Verify'
-                                    disabled={disabled()}
-                                />
-                            </ButtonRow>
-                        </React.Fragment>
+                            <ButtonLink
+                                className='pt-2'
+                                onClick={handleVerify}
+                                disabled={disabled()}
+                                spinning={submitting}
+                            >
+                                Verify
+                            </ButtonLink>
+                        </form>
                     )}
                     {email_token === null && (
-                        <p>
+                        <p className='text-center'>
                             Sorry, we couldn't find any email token in the url.
                             Please use exactly the link we've sent to you.
                         </p>
@@ -89,25 +99,17 @@ function VerifyForm(props: VerifyFormProps) {
             )}
             {success && (
                 <React.Fragment>
-                    <h3 className='mb-4 text-center no-selection'>Success!</h3>
-                    <ButtonRow center className={'pt-2'}>
-                        <Link to='/configurations'>
-                            <Button
-                                onClick={handleVerify}
-                                text='Continue to Admin Panel'
-                                disabled={disabled()}
-                            />
-                        </Link>
-                    </ButtonRow>
+                    <h2 className='mb-4 text-center no-selection'>Success!</h2>
+                    <ButtonLink to='configurations'>
+                        Continue to Admin Panel
+                    </ButtonLink>
                 </React.Fragment>
             )}
         </div>
     );
 }
 
-const mapStateToProps = (state: ReduxState) => ({
-    loggingIn: state.loggingIn,
-});
+const mapStateToProps = (state: ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
     logIn: (jwt: JWT, account: Account) => dispatch(logInAction(jwt, account)),
     openMessage: (content: string) => dispatch(openMessageAction(content)),

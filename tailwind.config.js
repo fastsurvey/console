@@ -1,7 +1,7 @@
 // prettier-ignore
 module.exports = {
     purge: {
-        enabled: false,
+        enabled: true,
         content: [
             './src/**/*.js',
             './src/**/*.jsx',
@@ -13,9 +13,11 @@ module.exports = {
     theme: {
         extend: {
             transitionProperty: {
-                'height': 'height'
+                'height': 'height',
+                'width': 'width'
             },
             spacing: {
+                '5vh': '5vh',
                 '10vh': '10vh',
                 '15vh': '15vh',
                 '20vh': '20vh',
@@ -30,6 +32,7 @@ module.exports = {
                 '80vh': '80vh',
                 '90vh': '90vh',
                 '100vh': '100vh',
+                '5vw': '5vw',
                 '10vw': '10vw',
                 '15vw': '15vw',
                 '20vw': '20vw',
@@ -61,6 +64,9 @@ module.exports = {
                 '130': '32.5rem',
                 '132': '33.0rem',
             },
+            inset: {
+                '1/2': '50%',
+            }
         },
     },
 };

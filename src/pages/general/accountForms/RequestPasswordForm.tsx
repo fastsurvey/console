@@ -1,12 +1,10 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import InputComponent from '../../../components/formFields/TextInput';
-import Button from '../../../components/buttons/Button';
-import ButtonRow from '../../../components/buttons/ButtonRow';
 import {connect} from 'react-redux';
 import {ReduxState} from '../../../utilities/types';
 import {authPostRequest} from '../../../utilities/axiosClients';
-import {Link} from 'react-router-dom';
 import TextLink from '../../../components/links/TextLink';
+import ButtonLink from '../../../components/links/ButtonLink';
 import {
     openMessageAction,
     closeAllMessagesAction,
@@ -21,14 +19,22 @@ function RequestPasswordForm(props: RequestPasswordFormProps) {
     const [email, setEmail] = useState('');
     const [success, setSuccess] = useState(false);
 
+    const [submitting, setSubmitting] = useState(false);
+
+    const input1 = useRef(null);
+
     function handleSubmit() {
+        // @ts-ignore
+        input1.current?.blur();
         if (!disabled()) {
+            setSubmitting(true);
             authPostRequest('/request-new-password', {email})
                 .then(() => {
-                    props.closeAllMessages();
+                    setSubmitting(false);
                     setSuccess(true);
                 })
                 .catch((error) => {
+                    setSubmitting(false);
                     if (error?.response?.status === 400) {
                         props.openMessage('Invalid email address');
                     } else {
@@ -46,28 +52,34 @@ function RequestPasswordForm(props: RequestPasswordFormProps) {
     }
 
     return (
-        <div className='w-20vw'>
+        <div className='w-full'>
             {!success && (
                 <React.Fragment>
-                    <h3 className='mb-4 text-center no-selection'>
+                    <h2 className='mb-4 text-center no-selection'>
                         Forgot your password?
-                    </h3>
+                    </h2>
 
-                    <InputComponent
-                        placeholder='email'
-                        value={email}
-                        onChange={(newValue) => {
-                            props.closeAllMessages();
-                            setEmail(newValue);
-                        }}
-                    />
-                    <ButtonRow center className={'pt-2'}>
-                        <Button
-                            onClick={handleSubmit}
-                            text='Request new password'
-                            disabled={disabled()}
+                    <form>
+                        <InputComponent
+                            placeholder='email'
+                            value={email}
+                            onChange={(newValue) => {
+                                props.closeAllMessages();
+                                setEmail(newValue);
+                            }}
+                            autoComplete='username'
+                            ref={input1}
+                            onEnter={handleSubmit}
                         />
-                    </ButtonRow>
+                        <ButtonLink
+                            className='pt-2'
+                            onClick={handleSubmit}
+                            disabled={disabled()}
+                            spinning={submitting}
+                        >
+                            Request new password
+                        </ButtonLink>
+                    </form>
                     <TextLink to='/login' className='pt-4'>
                         Log in instead?
                     </TextLink>
@@ -75,7 +87,7 @@ function RequestPasswordForm(props: RequestPasswordFormProps) {
             )}
             {success && (
                 <React.Fragment>
-                    <h3 className='mb-4 text-center no-selection'>Success!</h3>
+                    <h2 className='mb-4 text-center no-selection'>Success!</h2>
                     <p className='mb-4 text-center'>
                         Please set your new password by clicking the link in the
                         email we've just sent to:

@@ -2,11 +2,9 @@ import React, {useState, useEffect} from 'react';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import {ReduxAction, ReduxState, JWT, Account} from '../utilities/types';
-import MessageQueue from '../components/messages/MessageQueue';
 import Cookies from 'js-cookie';
 import {logInAction, logOutAction} from '../utilities/reduxActions';
 import {generateValidOAuthToken} from '../utilities/jwtEncryption';
-import LoaderOverlay from '../components/overlays/LoaderOverlay';
 
 function storeReducer(
     state = {
@@ -15,6 +13,7 @@ function storeReducer(
         jwt: undefined,
         account: undefined,
         messages: [],
+        modalOpen: false,
     },
     action: ReduxAction,
 ) {
@@ -24,6 +23,7 @@ function storeReducer(
         jwt: state.jwt,
         account: state.account,
         messages: state.messages,
+        modalOpen: state.modalOpen,
     };
 
     switch (action.type) {
@@ -53,6 +53,12 @@ function storeReducer(
             break;
         case 'CLOSE_ALL_MESSAGES':
             newState.messages = [];
+            break;
+        case 'OPEN_MODAL':
+            newState.modalOpen = true;
+            break;
+        case 'CLOSE_MODAL':
+            newState.modalOpen = false;
             break;
         default:
             break;
@@ -89,13 +95,7 @@ export function ReduxWrapper(props: ReduxWrapperProps) {
         }
     }, [cookieLogin]);
 
-    return (
-        <Provider store={store}>
-            <LoaderOverlay />
-            <MessageQueue />
-            {props.children}
-        </Provider>
-    );
+    return <Provider store={store}>{props.children}</Provider>;
 }
 
 export default ReduxWrapper;
