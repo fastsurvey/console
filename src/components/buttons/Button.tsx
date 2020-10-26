@@ -30,7 +30,7 @@ function Button(props: ButtonProps) {
             className={
                 'no-selection relative inline-block rounded ' +
                 'h-10 px-6 py-1 leading-8 font-weight-600 ' +
-                'text-lg transition duration-200 ' +
+                'text-lg transition duration-200 outline-none ' +
                 className +
                 ' ' +
                 reactivityClass +
