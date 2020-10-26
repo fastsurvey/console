@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import TextInput from '../../../components/formFields/TextInput';
 import {connect} from 'react-redux';
 import {JWT, Account, ReduxState} from '../../../utilities/types';
@@ -22,7 +22,15 @@ function LoginForm(props: LoginFormProps) {
     const [password, setPassword] = useState('');
     const [submitting, setSubmitting] = useState(false);
 
+    const input2 = useRef(null);
+    function focusInput2() {
+        // @ts-ignore
+        input2.current?.focus();
+    }
+
     function handleLogin() {
+        // @ts-ignore
+        input2.current?.blur();
         if (!disabled()) {
             setSubmitting(true);
             authPostRequest('/login/form', {email, password})
@@ -51,31 +59,38 @@ function LoginForm(props: LoginFormProps) {
     return (
         <div className='w-full'>
             <h2 className='mb-4 text-center no-selection'>Login</h2>
-            <TextInput
-                placeholder='email'
-                value={email}
-                onChange={(newValue) => {
-                    props.closeAllMessages();
-                    setEmail(newValue);
-                }}
-            />
-            <TextInput
-                placeholder='password'
-                value={password}
-                onChange={(newValue) => {
-                    props.closeAllMessages();
-                    setPassword(newValue);
-                }}
-                type='password'
-            />
-            <ButtonLink
-                className='pt-2'
-                onClick={handleLogin}
-                disabled={disabled()}
-                spinning={submitting}
-            >
-                Login
-            </ButtonLink>
+            <form>
+                <TextInput
+                    placeholder='email'
+                    value={email}
+                    onChange={(newValue) => {
+                        props.closeAllMessages();
+                        setEmail(newValue);
+                    }}
+                    autoComplete='email username'
+                    onEnter={focusInput2}
+                />
+                <TextInput
+                    placeholder='password'
+                    value={password}
+                    onChange={(newValue) => {
+                        props.closeAllMessages();
+                        setPassword(newValue);
+                    }}
+                    type='password'
+                    autoComplete='current-password'
+                    ref={input2}
+                    onEnter={handleLogin}
+                />
+                <ButtonLink
+                    className='pt-2'
+                    onClick={handleLogin}
+                    disabled={disabled()}
+                    spinning={submitting}
+                >
+                    Login
+                </ButtonLink>
+            </form>
             <TextLink to='/register' className='pt-4'>
                 Don't have an account yet?
             </TextLink>

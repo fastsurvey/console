@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import TextInput from '../../../components/formFields/TextInput';
 import {connect} from 'react-redux';
 import {ReduxState, JWT, Account} from '../../../utilities/types';
@@ -26,7 +26,15 @@ function SetPasswordForm(props: SetPasswordFormProps) {
     const queryParams = new URLSearchParams(window.location.search);
     let password_token = queryParams.get('token');
 
+    const input2 = useRef(null);
+    function focusInput2() {
+        // @ts-ignore
+        input2.current?.focus();
+    }
+
     function handleSubmit() {
+        // @ts-ignore
+        input2.current?.blur();
         if (!disabled() && password_token !== null) {
             setSubmitting(true);
             authPostRequest('/set-new-password', {password, password_token})
@@ -61,7 +69,7 @@ function SetPasswordForm(props: SetPasswordFormProps) {
                         Set Password
                     </h3>
                     {password_token !== null && (
-                        <React.Fragment>
+                        <form>
                             <TextInput
                                 placeholder='password'
                                 value={password}
@@ -74,6 +82,8 @@ function SetPasswordForm(props: SetPasswordFormProps) {
                                     text: '> 7 characters',
                                     fulfilled: password.length > 7,
                                 }}
+                                autoComplete='new-password'
+                                onEnter={focusInput2}
                             />
                             <TextInput
                                 placeholder='confirm password'
@@ -89,6 +99,9 @@ function SetPasswordForm(props: SetPasswordFormProps) {
                                         password.length > 7 &&
                                         password === passwordConfirmation,
                                 }}
+                                autoComplete='new-password'
+                                ref={input2}
+                                onEnter={handleSubmit}
                             />
                             <ButtonLink
                                 className='pt-2'
@@ -98,7 +111,7 @@ function SetPasswordForm(props: SetPasswordFormProps) {
                             >
                                 Set Password
                             </ButtonLink>
-                        </React.Fragment>
+                        </form>
                     )}
                     {password_token === null && (
                         <p className='text-center'>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import TextInput from '../../../components/formFields/TextInput';
 import {connect} from 'react-redux';
 import {JWT, Account, ReduxState} from '../../../utilities/types';
@@ -25,7 +25,11 @@ function VerifyForm(props: VerifyFormProps) {
     const queryParams = new URLSearchParams(window.location.search);
     let email_token = queryParams.get('token');
 
+    const input1 = useRef(null);
+
     function handleVerify() {
+        // @ts-ignore
+        input1.current?.blur();
         if (!disabled() && email_token !== null) {
             setSubmitting(true);
             authPostRequest('/verify', {password, email_token})
@@ -62,7 +66,7 @@ function VerifyForm(props: VerifyFormProps) {
                         Verify your email
                     </h2>
                     {email_token !== null && (
-                        <React.Fragment>
+                        <form>
                             <TextInput
                                 placeholder='password'
                                 value={password}
@@ -71,6 +75,9 @@ function VerifyForm(props: VerifyFormProps) {
                                     setPassword(newValue);
                                 }}
                                 type='password'
+                                autoComplete='current-password'
+                                ref={input1}
+                                onEnter={handleVerify}
                             />
                             <ButtonLink
                                 className='pt-2'
@@ -80,7 +87,7 @@ function VerifyForm(props: VerifyFormProps) {
                             >
                                 Verify
                             </ButtonLink>
-                        </React.Fragment>
+                        </form>
                     )}
                     {email_token === null && (
                         <p className='text-center'>

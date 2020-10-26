@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import InputComponent from '../../../components/formFields/TextInput';
 import {connect} from 'react-redux';
 import {ReduxState} from '../../../utilities/types';
@@ -21,7 +21,11 @@ function RequestPasswordForm(props: RequestPasswordFormProps) {
 
     const [submitting, setSubmitting] = useState(false);
 
+    const input1 = useRef(null);
+
     function handleSubmit() {
+        // @ts-ignore
+        input1.current?.blur();
         if (!disabled()) {
             setSubmitting(true);
             authPostRequest('/request-new-password', {email})
@@ -55,22 +59,27 @@ function RequestPasswordForm(props: RequestPasswordFormProps) {
                         Forgot your password?
                     </h2>
 
-                    <InputComponent
-                        placeholder='email'
-                        value={email}
-                        onChange={(newValue) => {
-                            props.closeAllMessages();
-                            setEmail(newValue);
-                        }}
-                    />
-                    <ButtonLink
-                        className='pt-2'
-                        onClick={handleSubmit}
-                        disabled={disabled()}
-                        spinning={submitting}
-                    >
-                        Request new password
-                    </ButtonLink>
+                    <form>
+                        <InputComponent
+                            placeholder='email'
+                            value={email}
+                            onChange={(newValue) => {
+                                props.closeAllMessages();
+                                setEmail(newValue);
+                            }}
+                            autoComplete='username'
+                            ref={input1}
+                            onEnter={handleSubmit}
+                        />
+                        <ButtonLink
+                            className='pt-2'
+                            onClick={handleSubmit}
+                            disabled={disabled()}
+                            spinning={submitting}
+                        >
+                            Request new password
+                        </ButtonLink>
+                    </form>
                     <TextLink to='/login' className='pt-4'>
                         Log in instead?
                     </TextLink>
