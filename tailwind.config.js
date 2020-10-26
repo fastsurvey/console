@@ -1,7 +1,7 @@
 // prettier-ignore
 module.exports = {
     purge: {
-        enabled: true,
+        enabled: false,
         content: [
             './src/**/*.js',
             './src/**/*.jsx',
@@ -16,6 +16,7 @@ module.exports = {
                 'height': 'height'
             },
             spacing: {
+                '5vh': '5vh',
                 '10vh': '10vh',
                 '15vh': '15vh',
                 '20vh': '20vh',
@@ -30,6 +31,7 @@ module.exports = {
                 '80vh': '80vh',
                 '90vh': '90vh',
                 '100vh': '100vh',
+                '5vw': '5vw',
                 '10vw': '10vw',
                 '15vw': '15vw',
                 '20vw': '20vw',

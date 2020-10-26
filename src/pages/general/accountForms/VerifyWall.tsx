@@ -26,29 +26,33 @@ function VerifyWall(props: VerifyWallProps) {
     const [submitting, setSubmitting] = useState(false);
 
     function handleResend() {
-        setSubmitting(true);
-        authPostRequest('/resend-verification', {email})
-            .then(() => {
-                setSubmitting(false);
-                props.closeAllMessages();
-                setResendPossible(false);
-            })
-            .catch((error) => {
-                setSubmitting(false);
-                if (error?.response?.status === 400) {
-                    props.openMessage('Invalid email address');
-                } else {
-                    // Invalid password formats will be catched by frontend
-                    props.openMessage('Server error. Please try again later');
-                }
-            });
+        if (resendPossible) {
+            setSubmitting(true);
+            authPostRequest('/resend-verification', {email})
+                .then(() => {
+                    setSubmitting(false);
+                    props.closeAllMessages();
+                    setResendPossible(false);
+                })
+                .catch((error) => {
+                    setSubmitting(false);
+                    if (error?.response?.status === 400) {
+                        props.openMessage('Invalid email address');
+                    } else {
+                        // Invalid password formats will be catched by frontend
+                        props.openMessage(
+                            'Server error. Please try again later',
+                        );
+                    }
+                });
+        }
     }
 
     return (
-        <div className='w-25vw'>
-            <h3 className='mb-4 text-center no-selection'>
+        <div className='w-full'>
+            <h2 className='mb-4 text-center no-selection'>
                 Verify your email first!
-            </h3>
+            </h2>
             <p className='mb-4 text-center'>
                 Please verify your email address by clicking the link in the
                 email we've just sent to:

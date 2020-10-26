@@ -4,6 +4,7 @@ import * as serviceWorker from './serviceWorker';
 import ReduxWrapper from './wrapper/ReduxWrapper';
 import Router from './wrapper/Router';
 import './styles/tailwind.out.css';
+import './styles/compatibilityFixes.css';
 
 ReactDOM.render(
     <React.StrictMode>

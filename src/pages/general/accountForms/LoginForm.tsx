@@ -50,8 +50,8 @@ function LoginForm(props: LoginFormProps) {
     }
 
     return (
-        <div className='w-20vw'>
-            <h3 className='mb-4 text-center no-selection'>Login</h3>
+        <div className='w-full'>
+            <h2 className='mb-4 text-center no-selection'>Login</h2>
             <TextInput
                 placeholder='email'
                 value={email}

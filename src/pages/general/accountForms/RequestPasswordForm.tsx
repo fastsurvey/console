@@ -49,12 +49,12 @@ function RequestPasswordForm(props: RequestPasswordFormProps) {
     }
 
     return (
-        <div className='w-20vw'>
+        <div className='w-full'>
             {!success && (
                 <React.Fragment>
-                    <h3 className='mb-4 text-center no-selection'>
+                    <h2 className='mb-4 text-center no-selection'>
                         Forgot your password?
-                    </h3>
+                    </h2>
 
                     <InputComponent
                         placeholder='email'
@@ -79,7 +79,7 @@ function RequestPasswordForm(props: RequestPasswordFormProps) {
             )}
             {success && (
                 <React.Fragment>
-                    <h3 className='mb-4 text-center no-selection'>Success!</h3>
+                    <h2 className='mb-4 text-center no-selection'>Success!</h2>
                     <p className='mb-4 text-center'>
                         Please set your new password by clicking the link in the
                         email we've just sent to:

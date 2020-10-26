@@ -55,7 +55,7 @@ function SetPasswordForm(props: SetPasswordFormProps) {
     }
 
     return (
-        <div className='w-20vw'>
+        <div className='w-full'>
             {!success && (
                 <React.Fragment>
                     <h3 className='mb-4 text-center no-selection'>
@@ -102,7 +102,7 @@ function SetPasswordForm(props: SetPasswordFormProps) {
                         </React.Fragment>
                     )}
                     {password_token === null && (
-                        <p>
+                        <p className='text-center'>
                             Sorry, we couldn't find any password token in the
                             url. Please use exactly the link we've sent to you.
                         </p>
@@ -111,7 +111,7 @@ function SetPasswordForm(props: SetPasswordFormProps) {
             )}
             {success && (
                 <React.Fragment>
-                    <h3 className='mb-4 text-center no-selection'>Success!</h3>
+                    <h2 className='mb-4 text-center no-selection'>Success!</h2>
                     <ButtonLink to='/configurations'>
                         Continue to Admin Panel
                     </ButtonLink>

@@ -7,7 +7,7 @@ interface LogoBannerProps {
 }
 function LogoBanner(props: LogoBannerProps) {
     return (
-        <div className='fixed top-0 left-0 mt-6 ml-5'>
+        <div className='fixed top-0 left-0 z-40 mt-6 ml-5'>
             <Link to='/'>
                 <div
                     className={
@@ -21,7 +21,9 @@ function LogoBanner(props: LogoBannerProps) {
                     <div className={'text-gray-700 text-2xl no-selection'}>
                         FastSurvey{' '}
                         {!props.slim && (
-                            <span className='text-magenta'>Admin Panel</span>
+                            <span className='hidden text-magenta md:inline'>
+                                Admin Panel
+                            </span>
                         )}
                     </div>
                 </div>

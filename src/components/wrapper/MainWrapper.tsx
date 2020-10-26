@@ -9,13 +9,11 @@ interface MainWrapperProps {
 function MainWrapper(props: MainWrapperProps) {
     return (
         <React.Fragment>
-            <header>
+            <header className='z-40'>
                 <LogoBanner />
             </header>
-            <main className='flex-col center-content w-100vw h-100vh'>
-                <div
-                    className={props.flexDirection + ' center-content w-100vw'}
-                >
+            <main className='fixed z-0 flex-col h-100vh w-100vw center-content'>
+                <div className={props.flexDirection + ' py-24 center-content'}>
                     {props.children}
                 </div>
             </main>

@@ -55,8 +55,8 @@ function RegisterForm(props: RegisterFormProps) {
     }
 
     return (
-        <div className='w-20vw'>
-            <h3 className='mb-4 text-center no-selection'>Register</h3>
+        <div className='w-full'>
+            <h2 className='mb-4 text-center no-selection'>Register</h2>
             <TextInput
                 required
                 placeholder='email'
