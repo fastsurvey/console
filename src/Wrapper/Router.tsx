@@ -46,13 +46,13 @@ function Router(props: RouterProps) {
                                     <DashBoardPage>
                                         <Switch>
                                             <Route exact path='/configurations'>
-                                                <div>Configurations</div>
+                                                <h3>Configurations</h3>
                                             </Route>
                                             <Route exact path='/results'>
-                                                <div>Results</div>
+                                                <h3>Results</h3>
                                             </Route>
                                             <Route exact path='/account'>
-                                                <div>Account</div>
+                                                <h3>Account</h3>
                                             </Route>
                                         </Switch>
                                     </DashBoardPage>

@@ -1,8 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import MobileNavbar from '../../components/navbar/MobileNavbar';
-import Navbar from '../../components/navbar/Navbar';
+import Navbar from '../../components/navbar/RegularNavbar';
 import {ReduxState} from '../../utilities/types';
+import './DashboardPage.scss';
 
 interface DashBoardPageProps {
     children: React.ReactNode;
@@ -19,15 +20,21 @@ function DashBoardPage(props: DashBoardPageProps) {
                     <MobileNavbar />
                 </div>
             </header>
-            <main
-                className={
-                    'relative admin-content ' +
-                    (props.modalOpen
-                        ? 'overflow-y-hidden'
-                        : 'overflow-y-scroll')
-                }
-            >
-                {props.children}
+            <main>
+                <div id='RegularContent' className={'hidden lg:block'}>
+                    {props.children}
+                </div>
+                <div
+                    id='MobileContent'
+                    className={
+                        'block lg:hidden ' +
+                        (props.modalOpen
+                            ? 'overflow-y-hidden'
+                            : 'overflow-y-scroll')
+                    }
+                >
+                    {props.children}
+                </div>
             </main>
         </React.Fragment>
     );
