@@ -2,11 +2,9 @@ import React, {useState, useEffect} from 'react';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import {ReduxAction, ReduxState, JWT, Account} from '../utilities/types';
-import MessageQueue from '../components/messages/MessageQueue';
 import Cookies from 'js-cookie';
 import {logInAction, logOutAction} from '../utilities/reduxActions';
 import {generateValidOAuthToken} from '../utilities/jwtEncryption';
-import LoaderOverlay from '../components/overlays/LoaderOverlay';
 
 function storeReducer(
     state = {
@@ -89,13 +87,7 @@ export function ReduxWrapper(props: ReduxWrapperProps) {
         }
     }, [cookieLogin]);
 
-    return (
-        <Provider store={store}>
-            <LoaderOverlay />
-            <MessageQueue />
-            {props.children}
-        </Provider>
-    );
+    return <Provider store={store}>{props.children}</Provider>;
 }
 
 export default ReduxWrapper;

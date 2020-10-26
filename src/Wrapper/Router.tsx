@@ -17,6 +17,8 @@ import DashBoardPage from '../pages/dashboard/DashboardPage';
 
 import LoginImage from '../assets/images/secure.svg';
 import VerifyImage from '../assets/images/letter.svg';
+import LoaderOverlay from '../components/overlays/LoaderOverlay';
+import MessageQueue from '../components/messages/MessageQueue';
 
 interface RouterProps {
     loggingIn: boolean;
@@ -32,6 +34,8 @@ function Router(props: RouterProps) {
 
     return (
         <BrowserRouter>
+            <LoaderOverlay />
+            <MessageQueue />
             <Route>
                 <Switch>
                     <Route exact strict path='/'>
