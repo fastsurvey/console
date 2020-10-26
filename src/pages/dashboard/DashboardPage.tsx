@@ -1,9 +1,12 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import MobileNavbar from '../../components/navbar/MobileNavbar';
 import Navbar from '../../components/navbar/Navbar';
+import {ReduxState} from '../../utilities/types';
 
 interface DashBoardPageProps {
     children: React.ReactNode;
+    modalOpen: boolean;
 }
 function DashBoardPage(props: DashBoardPageProps) {
     return (
@@ -16,9 +19,22 @@ function DashBoardPage(props: DashBoardPageProps) {
                     <MobileNavbar />
                 </div>
             </header>
-            <main className={'relative admin-content'}>{props.children}</main>
+            <main
+                className={
+                    'relative admin-content ' +
+                    (props.modalOpen
+                        ? 'overflow-y-hidden'
+                        : 'overflow-y-scroll')
+                }
+            >
+                {props.children}
+            </main>
         </React.Fragment>
     );
 }
 
-export default DashBoardPage;
+const mapStateToProps = (state: ReduxState) => ({
+    modalOpen: state.modalOpen,
+});
+const mapDispatchToProps = (dispatch: any) => ({});
+export default connect(mapStateToProps, mapDispatchToProps)(DashBoardPage);

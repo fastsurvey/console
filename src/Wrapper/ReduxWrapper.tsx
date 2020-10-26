@@ -13,6 +13,7 @@ function storeReducer(
         jwt: undefined,
         account: undefined,
         messages: [],
+        modalOpen: false,
     },
     action: ReduxAction,
 ) {
@@ -22,6 +23,7 @@ function storeReducer(
         jwt: state.jwt,
         account: state.account,
         messages: state.messages,
+        modalOpen: state.modalOpen,
     };
 
     switch (action.type) {
@@ -51,6 +53,12 @@ function storeReducer(
             break;
         case 'CLOSE_ALL_MESSAGES':
             newState.messages = [];
+            break;
+        case 'OPEN_MODAL':
+            newState.modalOpen = true;
+            break;
+        case 'CLOSE_MODAL':
+            newState.modalOpen = false;
             break;
         default:
             break;

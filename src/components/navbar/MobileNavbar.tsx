@@ -2,7 +2,11 @@ import React, {useState} from 'react';
 import {Link, useLocation} from 'react-router-dom';
 import {ICONS} from '../../assets/icons/icons';
 import FastSurveyIcon from '../../assets/branding/rocket-light.svg';
-import {logOutAction} from '../../utilities/reduxActions';
+import {
+    closeModalAction,
+    logOutAction,
+    openModalAction,
+} from '../../utilities/reduxActions';
 import {connect} from 'react-redux';
 import {ReduxState} from '../../utilities/types';
 import NavbarButton from './NavbarButton';
@@ -23,29 +27,36 @@ function LogoComponent() {
 }
 
 interface MobileNavbarProps {
+    modalOpen: boolean;
     logOut(): void;
+    openModal(): void;
+    closeModal(): void;
 }
 function MobileNavbar(props: MobileNavbarProps) {
     const location = useLocation();
 
-    const [visible, setVisible] = useState(false);
+    setTimeout(() => {
+        props.openModal();
+    }, 1500);
 
     return (
         <React.Fragment>
             <div
-                onClick={() => setVisible(false)}
+                onClick={props.closeModal}
                 className={
-                    'fixed z-40 w-full h-full ' +
+                    'fixed z-40 w-full h-full overflow-y-hidden ' +
                     'bg-gray-900 transition-opacity duration-300 ' +
-                    (visible ? 'opacity-50' : 'opacity-0')
+                    (props.modalOpen
+                        ? 'opacity-50 pointer-events-auto'
+                        : 'opacity-0 pointer-events-none')
                 }
-            ></div>
+            />
             <div
                 className={
                     'fixed shadow z-50 left-0 top-0 pt-4 pb-1 h-full ' +
                     'bg-gray-900 flex flex-col transition-width ' +
                     'duration-300 overflow-hidden ' +
-                    (visible ? 'w-64' : 'w-0')
+                    (props.modalOpen ? 'w-64' : 'w-0')
                 }
             >
                 <LogoComponent />
@@ -82,8 +93,12 @@ function MobileNavbar(props: MobileNavbarProps) {
     );
 }
 
-const mapStateToProps = (state: ReduxState) => ({});
+const mapStateToProps = (state: ReduxState) => ({
+    modalOpen: state.modalOpen,
+});
 const mapDispatchToProps = (dispatch: any) => ({
     logOut: () => dispatch(logOutAction()),
+    openModal: () => dispatch(openModalAction()),
+    closeModal: () => dispatch(closeModalAction()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(MobileNavbar);

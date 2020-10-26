@@ -4,6 +4,7 @@ export interface ReduxState {
     jwt: undefined | JWT;
     account: undefined | Account;
     messages: Message[];
+    modalOpen: boolean;
 }
 
 export interface JWT {
@@ -24,7 +25,9 @@ export type ReduxAction =
     | LogOutAction
     | OpenMessageAction
     | CloseMessageAction
-    | CloseAllMessagesAction;
+    | CloseAllMessagesAction
+    | OpenModalAction
+    | CloseModalAction;
 
 export interface LogInAction {
     type: 'LOG_IN';
@@ -48,4 +51,12 @@ export interface CloseMessageAction {
 
 export interface CloseAllMessagesAction {
     type: 'CLOSE_ALL_MESSAGES';
+}
+
+export interface OpenModalAction {
+    type: 'OPEN_MODAL';
+}
+
+export interface CloseModalAction {
+    type: 'CLOSE_MODAL';
 }
