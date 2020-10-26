@@ -27,7 +27,6 @@ function LoginForm(props: LoginFormProps) {
             setSubmitting(true);
             authPostRequest('/login/form', {email, password})
                 .then((response) => {
-                    props.closeAllMessages();
                     setSubmitting(false);
                     props.logIn(response.data.jwt, response.data.account);
                 })

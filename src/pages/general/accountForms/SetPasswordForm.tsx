@@ -32,7 +32,6 @@ function SetPasswordForm(props: SetPasswordFormProps) {
             authPostRequest('/set-new-password', {password, password_token})
                 .then((response) => {
                     setSubmitting(false);
-                    props.closeAllMessages();
                     props.logIn(response.data.jwt, response.data.account);
                     setSuccess(true);
                 })

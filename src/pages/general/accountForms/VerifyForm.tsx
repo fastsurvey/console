@@ -31,7 +31,6 @@ function VerifyForm(props: VerifyFormProps) {
             authPostRequest('/verify', {password, email_token})
                 .then((response) => {
                     setSubmitting(false);
-                    props.closeAllMessages();
                     // new jwt and account since the accout payload has been updated
                     props.logIn(response.data.jwt, response.data.account);
                     setSuccess(true);

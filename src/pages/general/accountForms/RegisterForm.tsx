@@ -30,7 +30,6 @@ function RegisterForm(props: RegisterFormProps) {
             authPostRequest('/register', {email, password})
                 .then((response) => {
                     setSubmitting(false);
-                    props.closeAllMessages();
                     props.logIn(response.data.jwt, response.data.account);
                 })
                 .catch((error) => {

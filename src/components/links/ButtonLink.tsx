@@ -3,6 +3,9 @@ import {Link} from 'react-router-dom';
 import assert from 'assert';
 import Button from '../buttons/Button';
 import ButtonRow from '../buttons/ButtonRow';
+import {closeAllMessagesAction} from '../../utilities/reduxActions';
+import {connect} from 'react-redux';
+import {ReduxState} from '../../utilities/types';
 
 interface ButtonLinkProps {
     children: string;
@@ -11,6 +14,7 @@ interface ButtonLinkProps {
     className?: string;
     disabled?: boolean;
     spinning?: boolean;
+    closeAllMessages(): void;
 }
 
 function ButtonLink(props: ButtonLinkProps) {
@@ -29,19 +33,37 @@ function ButtonLink(props: ButtonLinkProps) {
             center
             className={props.className !== undefined ? props.className : ''}
         >
-            {props.to !== undefined && props.onClick === undefined && (
-                <Link to={props.to}>{button}</Link>
-            )}
-            {props.to !== undefined && props.onClick !== undefined && (
-                <Link to={props.to} onClick={props.onClick}>
+            {props.to !== undefined && (
+                <Link
+                    to={props.to}
+                    onClick={() => {
+                        props.closeAllMessages();
+                        if (props.onClick !== undefined) {
+                            props.onClick();
+                        }
+                    }}
+                >
                     {button}
                 </Link>
             )}
-            {props.to === undefined && props.onClick !== undefined && (
-                <div onClick={props.onClick}>{button}</div>
+            {props.to === undefined && (
+                <div
+                    onClick={() => {
+                        props.closeAllMessages();
+                        if (props.onClick !== undefined) {
+                            props.onClick();
+                        }
+                    }}
+                >
+                    {button}
+                </div>
             )}
         </ButtonRow>
     );
 }
 
-export default ButtonLink;
+const mapStateToProps = (state: ReduxState) => ({});
+const mapDispatchToProps = (dispatch: any) => ({
+    closeAllMessages: () => dispatch(closeAllMessagesAction()),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(ButtonLink);

@@ -31,7 +31,6 @@ function VerifyWall(props: VerifyWallProps) {
             authPostRequest('/resend-verification', {email})
                 .then(() => {
                     setSubmitting(false);
-                    props.closeAllMessages();
                     setResendPossible(false);
                 })
                 .catch((error) => {

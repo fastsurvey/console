@@ -27,7 +27,6 @@ function RequestPasswordForm(props: RequestPasswordFormProps) {
             authPostRequest('/request-new-password', {email})
                 .then(() => {
                     setSubmitting(false);
-                    props.closeAllMessages();
                     setSuccess(true);
                 })
                 .catch((error) => {
