@@ -1,4 +1,3 @@
-import jwt from 'jsonwebtoken';
 import assert from 'assert';
 import Cookies from 'js-cookie';
 import {JWT, Account} from './types';
@@ -35,7 +34,7 @@ export async function generateValidOAuthToken(
         });
         const new_jwt = refreshResponse?.data?.jwt;
         const account = refreshResponse?.data?.account;
-        assert(jwt !== undefined);
+        assert(new_jwt !== undefined);
         assert(account !== undefined);
         logIn(new_jwt, account);
         return;
@@ -48,8 +47,3 @@ export async function generateValidOAuthToken(
 // https://github.com/auth0/node-jsonwebtoken/issues/668
 // I'll postpone this - but it would be way more elegant
 // I mean that is the whole point of jwt isn't it!?
-
-// eslint-disable-next-line
-function decodeToken(token: string, publicKey: string) {
-    return jwt.verify(token, publicKey, {algorithms: ['RS256']});
-}
