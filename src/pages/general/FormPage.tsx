@@ -1,5 +1,5 @@
 import React from 'react';
-import LogoBanner from '../../components/logos/LogoBanner';
+import MainWrapper from '../../components/wrapper/MainWrapper';
 
 interface FormPageProps {
     children: React.ReactNode;
@@ -8,21 +8,16 @@ interface FormPageProps {
 
 function FormPage(props: FormPageProps) {
     return (
-        <React.Fragment>
-            <LogoBanner />
-            <main className='flex-col center-content w-100vw h-100vh'>
-                <div className='flex-row center-content w-100vw'>
-                    <div className='center-content w-35vw'>
-                        <div className='w-25vw no-selection'>
-                            <img src={props.image} alt='Fast Surveys' />
-                        </div>
-                    </div>
-                    <div className='flex-col center-content w-35vw'>
-                        {props.children}
-                    </div>
+        <MainWrapper flexDirection='flex-row'>
+            <div className='center-content w-35vw'>
+                <div className='w-25vw no-selection'>
+                    <img src={props.image} alt='Fast Surveys' />
                 </div>
-            </main>
-        </React.Fragment>
+            </div>
+            <div className='flex-col center-content w-35vw'>
+                {props.children}
+            </div>
+        </MainWrapper>
     );
 }
 
