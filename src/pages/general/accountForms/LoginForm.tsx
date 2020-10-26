@@ -21,19 +21,19 @@ interface LoginFormProps {
 function LoginForm(props: LoginFormProps) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [loggingIn, setLoggingIn] = useState(false);
+    const [submitting, setSubmitting] = useState(false);
 
     function handleLogin() {
         if (!disabled()) {
-            setLoggingIn(true);
+            setSubmitting(true);
             authPostRequest('/login/form', {email, password})
                 .then((response) => {
                     props.closeAllMessages();
-                    setLoggingIn(false);
+                    setSubmitting(false);
                     props.logIn(response.data.jwt, response.data.account);
                 })
                 .catch((error) => {
-                    setLoggingIn(false);
+                    setSubmitting(false);
                     if (error?.response?.status === 401) {
                         props.openMessage('Invalid credentials');
                     } else {
@@ -75,7 +75,7 @@ function LoginForm(props: LoginFormProps) {
                     onClick={handleLogin}
                     text='Login'
                     disabled={disabled()}
-                    spinning={loggingIn}
+                    spinning={submitting}
                 />
             </ButtonRow>
             <TextLink to='/register' className='pt-4'>

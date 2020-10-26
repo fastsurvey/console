@@ -24,14 +24,18 @@ function VerifyWall(props: VerifyWallProps) {
     assert(email !== undefined);
 
     const [resendPossible, setResendPossible] = useState(true);
+    const [submitting, setSubmitting] = useState(false);
 
     function handleResend() {
+        setSubmitting(true);
         authPostRequest('/resend-verification', {email})
             .then(() => {
+                setSubmitting(false);
                 props.closeAllMessages();
                 setResendPossible(false);
             })
             .catch((error) => {
+                setSubmitting(false);
                 if (error?.response?.status === 400) {
                     props.openMessage('Invalid email address');
                 } else {
@@ -56,6 +60,7 @@ function VerifyWall(props: VerifyWallProps) {
                     onClick={handleResend}
                     text='Resend verification email'
                     disabled={!resendPossible}
+                    spinning={submitting}
                 />
             </ButtonRow>
             <TextLink to='/register' onClick={props.logOut} className='pt-4'>

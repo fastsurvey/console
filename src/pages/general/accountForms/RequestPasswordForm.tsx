@@ -20,14 +20,19 @@ function RequestPasswordForm(props: RequestPasswordFormProps) {
     const [email, setEmail] = useState('');
     const [success, setSuccess] = useState(false);
 
+    const [submitting, setSubmitting] = useState(false);
+
     function handleSubmit() {
         if (!disabled()) {
+            setSubmitting(true);
             authPostRequest('/request-new-password', {email})
                 .then(() => {
+                    setSubmitting(false);
                     props.closeAllMessages();
                     setSuccess(true);
                 })
                 .catch((error) => {
+                    setSubmitting(false);
                     if (error?.response?.status === 400) {
                         props.openMessage('Invalid email address');
                     } else {
@@ -65,6 +70,7 @@ function RequestPasswordForm(props: RequestPasswordFormProps) {
                             onClick={handleSubmit}
                             text='Request new password'
                             disabled={disabled()}
+                            spinning={submitting}
                         />
                     </ButtonRow>
                     <TextLink to='/login' className='pt-4'>

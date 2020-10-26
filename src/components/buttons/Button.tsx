@@ -13,15 +13,16 @@ function Button(props: ButtonProps) {
     const className = props.className === undefined ? '' : props.className;
 
     const reactivityClass =
-        props.invisible || props.disabled
+        props.invisible || props.disabled || props.spinning
             ? 'cursor-default pointer-events-none'
             : 'cursor-pointer';
 
     const visibilityClass = props.invisible ? 'opacity-0' : '';
 
-    const disabledClass = props.disabled
-        ? 'text-gray-500 bg-gray-200'
-        : 'shadow text-gray-900 bg-gray-100';
+    const disabledClass =
+        props.disabled || props.spinning
+            ? 'text-gray-500 bg-gray-200'
+            : 'shadow text-gray-900 bg-gray-100';
 
     return (
         <div
@@ -29,7 +30,7 @@ function Button(props: ButtonProps) {
             className={
                 'no-selection relative inline-block rounded ' +
                 'h-10 px-6 py-1 leading-8 font-weight-600 ' +
-                'text-lg ' +
+                'text-lg transition duration-200 ' +
                 className +
                 ' ' +
                 reactivityClass +
@@ -38,7 +39,11 @@ function Button(props: ButtonProps) {
                 ' ' +
                 disabledClass
             }
-            onClick={props.onClick !== undefined ? props.onClick : () => {}}
+            onClick={
+                props.onClick !== undefined && !props.disabled
+                    ? props.onClick
+                    : () => {}
+            }
         >
             <div
                 className={

@@ -13,7 +13,6 @@ import {
 } from '../../../utilities/reduxActions';
 
 interface SetPasswordFormProps {
-    loggingIn: boolean;
     logIn(jwt: JWT, account: Account): void;
     openMessage(content: string): void;
     closeAllMessages(): void;
@@ -24,18 +23,23 @@ function SetPasswordForm(props: SetPasswordFormProps) {
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const [success, setSuccess] = useState(false);
 
+    const [submitting, setSubmitting] = useState(false);
+
     const queryParams = new URLSearchParams(window.location.search);
     let password_token = queryParams.get('token');
 
     function handleSubmit() {
         if (!disabled() && password_token !== null) {
+            setSubmitting(true);
             authPostRequest('/set-new-password', {password, password_token})
                 .then((response) => {
+                    setSubmitting(false);
                     props.closeAllMessages();
                     props.logIn(response.data.jwt, response.data.account);
                     setSuccess(true);
                 })
                 .catch((error) => {
+                    setSubmitting(false);
                     if (error?.response?.status === 401) {
                         props.openMessage('Invalid link');
                     } else {
@@ -94,6 +98,7 @@ function SetPasswordForm(props: SetPasswordFormProps) {
                                     onClick={handleSubmit}
                                     text='Set Password'
                                     disabled={disabled()}
+                                    spinning={submitting}
                                 />
                             </ButtonRow>
                         </React.Fragment>
@@ -120,9 +125,7 @@ function SetPasswordForm(props: SetPasswordFormProps) {
     );
 }
 
-const mapStateToProps = (state: ReduxState) => ({
-    loggingIn: state.loggingIn,
-});
+const mapStateToProps = (state: ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
     logIn: (jwt: JWT, account: Account) => dispatch(logInAction(jwt, account)),
     openMessage: (content: string) => dispatch(openMessageAction(content)),

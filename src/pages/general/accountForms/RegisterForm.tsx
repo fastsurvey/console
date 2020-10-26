@@ -13,7 +13,6 @@ import {authPostRequest} from '../../../utilities/axiosClients';
 import TextLink from '../../../components/links/TextLink';
 
 interface RegisterFormProps {
-    loggingIn: boolean;
     logIn(jwt: JWT, account: Account): void;
     openMessage(content: string): void;
     closeAllMessages(): void;
@@ -24,14 +23,19 @@ function RegisterForm(props: RegisterFormProps) {
     const [password, setPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
+    const [submitting, setSubmitting] = useState(false);
+
     function handleRegistration() {
         if (!disabled()) {
+            setSubmitting(true);
             authPostRequest('/register', {email, password})
                 .then((response) => {
+                    setSubmitting(false);
                     props.closeAllMessages();
                     props.logIn(response.data.jwt, response.data.account);
                 })
                 .catch((error) => {
+                    setSubmitting(false);
                     const detail = error?.response?.data?.detail;
                     if (detail === 'email already taken') {
                         props.openMessage(
@@ -98,6 +102,7 @@ function RegisterForm(props: RegisterFormProps) {
                     onClick={handleRegistration}
                     text='Register'
                     disabled={disabled()}
+                    spinning={submitting}
                 />
             </ButtonRow>
             <TextLink to='/login' className='pt-4'>
@@ -107,9 +112,7 @@ function RegisterForm(props: RegisterFormProps) {
     );
 }
 
-const mapStateToProps = (state: ReduxState) => ({
-    loggingIn: state.loggingIn,
-});
+const mapStateToProps = (state: ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
     logIn: (jwt: JWT, account: Account) => dispatch(logInAction(jwt, account)),
     openMessage: (content: string) => dispatch(openMessageAction(content)),

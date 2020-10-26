@@ -13,7 +13,6 @@ import {
 } from '../../../utilities/reduxActions';
 
 interface VerifyFormProps {
-    loggingIn: boolean;
     logIn(jwt: JWT, account: Account): void;
     openMessage(content: string): void;
     closeAllMessages(): void;
@@ -23,19 +22,24 @@ function VerifyForm(props: VerifyFormProps) {
     const [password, setPassword] = useState('');
     const [success, setSuccess] = useState(false);
 
+    const [submitting, setSubmitting] = useState(false);
+
     const queryParams = new URLSearchParams(window.location.search);
     let email_token = queryParams.get('token');
 
     function handleVerify() {
         if (!disabled() && email_token !== null) {
+            setSubmitting(true);
             authPostRequest('/verify', {password, email_token})
                 .then((response) => {
+                    setSubmitting(false);
                     props.closeAllMessages();
                     // new jwt and account since the accout payload has been updated
                     props.logIn(response.data.jwt, response.data.account);
                     setSuccess(true);
                 })
                 .catch((error) => {
+                    setSubmitting(false);
                     if (error?.response?.status === 401) {
                         props.openMessage('Invalid password or wrong link');
                     } else {
@@ -75,6 +79,7 @@ function VerifyForm(props: VerifyFormProps) {
                                     onClick={handleVerify}
                                     text='Verify'
                                     disabled={disabled()}
+                                    spinning={submitting}
                                 />
                             </ButtonRow>
                         </React.Fragment>
@@ -92,11 +97,7 @@ function VerifyForm(props: VerifyFormProps) {
                     <h3 className='mb-4 text-center no-selection'>Success!</h3>
                     <ButtonRow center className={'pt-2'}>
                         <Link to='/configurations'>
-                            <Button
-                                onClick={handleVerify}
-                                text='Continue to Admin Panel'
-                                disabled={disabled()}
-                            />
+                            <Button text='Continue to Admin Panel' />
                         </Link>
                     </ButtonRow>
                 </React.Fragment>
@@ -105,9 +106,7 @@ function VerifyForm(props: VerifyFormProps) {
     );
 }
 
-const mapStateToProps = (state: ReduxState) => ({
-    loggingIn: state.loggingIn,
-});
+const mapStateToProps = (state: ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
     logIn: (jwt: JWT, account: Account) => dispatch(logInAction(jwt, account)),
     openMessage: (content: string) => dispatch(openMessageAction(content)),
