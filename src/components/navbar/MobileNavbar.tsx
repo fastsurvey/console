@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Link, useLocation} from 'react-router-dom';
 import {ICONS} from '../../assets/icons/icons';
 import FastSurveyIcon from '../../assets/branding/rocket-light.svg';
@@ -35,10 +35,6 @@ interface MobileNavbarProps {
 function MobileNavbar(props: MobileNavbarProps) {
     const location = useLocation();
 
-    setTimeout(() => {
-        props.openModal();
-    }, 1500);
-
     return (
         <React.Fragment>
             <div
@@ -47,10 +43,31 @@ function MobileNavbar(props: MobileNavbarProps) {
                     'fixed z-40 w-full h-full overflow-y-hidden ' +
                     'bg-gray-900 transition-opacity duration-300 ' +
                     (props.modalOpen
-                        ? 'opacity-50 pointer-events-auto'
+                        ? 'opacity-75 pointer-events-auto'
                         : 'opacity-0 pointer-events-none')
                 }
             />
+            <div
+                onClick={props.closeModal}
+                className={
+                    'fixed top-0 right-0 z-40 w-16 h-16 p-3 m-1 ' +
+                    'transition-opacity duration-300 text-white ' +
+                    (props.modalOpen
+                        ? 'opacity-100 pointer-events-auto'
+                        : 'opacity-0 pointer-events-none')
+                }
+            >
+                {ICONS.close}
+            </div>
+            <div
+                onClick={props.openModal}
+                className={
+                    'fixed top-0 left-0 z-30 w-16 h-16 p-3 m-1 ' +
+                    'text-gray-900 pointer-events-auto'
+                }
+            >
+                {ICONS.menu}
+            </div>
             <div
                 className={
                     'fixed shadow z-50 left-0 top-0 pt-4 pb-1 h-full ' +
