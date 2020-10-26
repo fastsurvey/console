@@ -1,7 +1,6 @@
 import React from 'react';
-import {Link, useLocation} from 'react-router-dom';
+
 import {ICONS} from '../../assets/icons/icons';
-import FastSurveyIcon from '../../assets/branding/rocket-light.svg';
 import {
     closeModalAction,
     logOutAction,
@@ -9,22 +8,7 @@ import {
 } from '../../utilities/reduxActions';
 import {connect} from 'react-redux';
 import {ReduxState} from '../../utilities/types';
-import NavbarButton from './NavbarButton';
-
-function LogoComponent() {
-    return (
-        <div
-            className={
-                'w-58 mx-3 flex flex-row items-center justify-start mb-4 font-weight-600 p-2'
-            }
-        >
-            <div className={'h-12 w-12 mr-3'}>
-                <img src={FastSurveyIcon} alt='FastSurvey' />
-            </div>
-            <div className={'text-white text-2xl'}>FastSurvey</div>
-        </div>
-    );
-}
+import NavbarContent from './components/NavbarContent';
 
 interface MobileNavbarProps {
     modalOpen: boolean;
@@ -33,8 +17,6 @@ interface MobileNavbarProps {
     closeModal(): void;
 }
 function MobileNavbar(props: MobileNavbarProps) {
-    const location = useLocation();
-
     return (
         <React.Fragment>
             <div
@@ -76,35 +58,10 @@ function MobileNavbar(props: MobileNavbarProps) {
                     (props.modalOpen ? 'w-64' : 'w-0')
                 }
             >
-                <LogoComponent />
-
-                <Link to='/configurations'>
-                    <NavbarButton
-                        text='Configs'
-                        icon={ICONS.vote}
-                        active={location.pathname === '/configurations'}
-                    />
-                </Link>
-                <Link to='/results'>
-                    <NavbarButton
-                        text='Results'
-                        icon={ICONS.charts}
-                        active={location.pathname === '/results'}
-                    />
-                </Link>
-                <Link to='/account'>
-                    <NavbarButton
-                        text='Account'
-                        icon={ICONS.account}
-                        active={location.pathname === '/account'}
-                    />
-                </Link>
-
-                <div className={'self-stretch flex-grow'} />
-
-                <div onClick={props.logOut}>
-                    <NavbarButton text='Logout' icon={ICONS.logout} />
-                </div>
+                <NavbarContent
+                    closeModal={props.closeModal}
+                    logOut={props.logOut}
+                />
             </div>
         </React.Fragment>
     );

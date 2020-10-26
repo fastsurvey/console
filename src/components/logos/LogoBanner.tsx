@@ -7,7 +7,7 @@ interface LogoBannerProps {
 }
 function LogoBanner(props: LogoBannerProps) {
     return (
-        <div className='fixed top-0 left-0 z-40 mt-6 ml-5'>
+        <div className='fixed top-0 left-0 z-40 p-2 m-1 md:ml-5 md:p-0 md:mt-6'>
             <Link to='/'>
                 <div
                     className={
@@ -22,7 +22,7 @@ function LogoBanner(props: LogoBannerProps) {
                         FastSurvey{' '}
                         {!props.slim && (
                             <span className='hidden text-magenta md:inline'>
-                                Admin Panel
+                                Admin Dashboard
                             </span>
                         )}
                     </div>
