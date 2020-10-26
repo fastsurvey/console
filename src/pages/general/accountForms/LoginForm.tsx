@@ -13,7 +13,6 @@ import {
 } from '../../../utilities/reduxActions';
 
 interface LoginFormProps {
-    loggingIn: boolean;
     logIn(jwt: JWT, account: Account): void;
     openMessage(content: string): void;
     closeAllMessages(): void;
@@ -22,15 +21,19 @@ interface LoginFormProps {
 function LoginForm(props: LoginFormProps) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loggingIn, setLoggingIn] = useState(false);
 
     function handleLogin() {
         if (!disabled()) {
+            setLoggingIn(true);
             authPostRequest('/login/form', {email, password})
                 .then((response) => {
                     props.closeAllMessages();
+                    setLoggingIn(false);
                     props.logIn(response.data.jwt, response.data.account);
                 })
                 .catch((error) => {
+                    setLoggingIn(false);
                     if (error?.response?.status === 401) {
                         props.openMessage('Invalid credentials');
                     } else {
@@ -72,6 +75,7 @@ function LoginForm(props: LoginFormProps) {
                     onClick={handleLogin}
                     text='Login'
                     disabled={disabled()}
+                    spinning={loggingIn}
                 />
             </ButtonRow>
             <TextLink to='/register' className='pt-4'>
@@ -84,9 +88,7 @@ function LoginForm(props: LoginFormProps) {
     );
 }
 
-const mapStateToProps = (state: ReduxState) => ({
-    loggingIn: state.loggingIn,
-});
+const mapStateToProps = (state: ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
     logIn: (jwt: JWT, account: Account) => dispatch(logInAction(jwt, account)),
     openMessage: (content: string) => dispatch(openMessageAction(content)),

@@ -6,6 +6,7 @@ interface ButtonProps {
     invisible?: boolean;
     className?: string;
     disabled?: boolean;
+    spinning?: boolean;
 }
 
 function Button(props: ButtonProps) {
@@ -39,7 +40,44 @@ function Button(props: ButtonProps) {
             }
             onClick={props.onClick !== undefined ? props.onClick : () => {}}
         >
-            {props.text}
+            <div
+                className={
+                    'transition-opacity duration-200 ' +
+                    (props.spinning ? 'opacity-0' : 'opacity-100')
+                }
+            >
+                {props.text}
+            </div>
+            <div
+                className={
+                    'pointer-events-none transition-opacity duration-200 ' +
+                    (props.spinning ? 'opacity-100' : 'opacity-0')
+                }
+            >
+                <div
+                    className={
+                        'absolute top-1/2 right-1/2 h-10 w-10 ' +
+                        'transform translate-x-1/2 -translate-y-1/2'
+                    }
+                >
+                    <div className='origin-top-left transform scale-50'>
+                        <div className='lds-spinner'>
+                            <div />
+                            <div />
+                            <div />
+                            <div />
+                            <div />
+                            <div />
+                            <div />
+                            <div />
+                            <div />
+                            <div />
+                            <div />
+                            <div />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }

@@ -5,7 +5,6 @@ import ButtonRow from '../../../components/buttons/ButtonRow';
 import {connect} from 'react-redux';
 import {ReduxState} from '../../../utilities/types';
 import {authPostRequest} from '../../../utilities/axiosClients';
-import {Link} from 'react-router-dom';
 import TextLink from '../../../components/links/TextLink';
 import {
     openMessageAction,
