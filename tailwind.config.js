@@ -13,7 +13,8 @@ module.exports = {
     theme: {
         extend: {
             transitionProperty: {
-                'height': 'height'
+                'height': 'height',
+                'width': 'width'
             },
             spacing: {
                 '5vh': '5vh',

@@ -30,10 +30,11 @@ function VerifyForm(props: VerifyFormProps) {
             setSubmitting(true);
             authPostRequest('/verify', {password, email_token})
                 .then((response) => {
-                    setSubmitting(false);
-                    // new jwt and account since the accout payload has been updated
+                    setTimeout(() => {
+                        setSuccess(true);
+                        setSubmitting(false);
+                    }, 50);
                     props.logIn(response.data.jwt, response.data.account);
-                    setSuccess(true);
                 })
                 .catch((error) => {
                     setSubmitting(false);
@@ -92,7 +93,7 @@ function VerifyForm(props: VerifyFormProps) {
             {success && (
                 <React.Fragment>
                     <h2 className='mb-4 text-center no-selection'>Success!</h2>
-                    <ButtonLink to='/configurations'>
+                    <ButtonLink to='configurations'>
                         Continue to Admin Panel
                     </ButtonLink>
                 </React.Fragment>

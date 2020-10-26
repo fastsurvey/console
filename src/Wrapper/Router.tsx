@@ -1,5 +1,4 @@
 import React from 'react';
-import assert from 'assert';
 import {connect} from 'react-redux';
 import {Switch, Route, BrowserRouter, Redirect} from 'react-router-dom';
 
@@ -26,12 +25,6 @@ interface RouterProps {
     account: undefined | Account;
 }
 function Router(props: RouterProps) {
-    let verifyWall = false;
-    if (props.loggedIn) {
-        assert(props.account !== undefined);
-        verifyWall = !props.account.email_verified;
-    }
-
     return (
         <BrowserRouter>
             <LoaderOverlay />
@@ -44,12 +37,12 @@ function Router(props: RouterProps) {
                     <Route path='(/configurations|/results|/account)'>
                         {!props.loggingIn && props.loggedIn && (
                             <React.Fragment>
-                                {verifyWall && (
+                                {props.account?.email_verified !== true && (
                                     <FormPage image={VerifyImage}>
                                         <VerifyWall />
                                     </FormPage>
                                 )}
-                                {!verifyWall && (
+                                {props.account?.email_verified && (
                                     <DashBoardPage>
                                         <Switch>
                                             <Route exact path='/configurations'>

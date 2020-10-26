@@ -39,10 +39,7 @@ function Message(props: MessageProps) {
         >
             <div className='text-lg'>{props.text}</div>
             <div className='flex-grow' />
-            <div
-                className='w-10 h-10 p-1 cursor-pointer xl:w-12 xl:h-12'
-                onClick={handleClose}
-            >
+            <div className='w-10 h-10 p-1 cursor-pointer' onClick={handleClose}>
                 {ICONS.close}
             </div>
         </div>
