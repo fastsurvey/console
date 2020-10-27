@@ -1,9 +1,9 @@
 FROM node:12
 
 COPY package.json package.json
-COPY package-lock.json package-lock.json
+COPY yarn.lock yarn.lock
 
-RUN npm install --only=production
+RUN yarn install --production=true
 
 COPY server.js server.js
 COPY build build
