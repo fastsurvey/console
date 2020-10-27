@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
 import TextInput from '../../../components/formFields/TextInput';
 import {connect} from 'react-redux';
-import {JWT, Account, ReduxState} from '../../../utilities/types';
+import {Account, ReduxState, OAuth2Token} from '../../../utilities/types';
 import {authPostRequest} from '../../../utilities/axiosClients';
 import TextLink from '../../../components/links/TextLink';
 import ButtonLink from '../../../components/links/ButtonLink';
@@ -12,7 +12,7 @@ import {
 } from '../../../utilities/reduxActions';
 
 interface LoginFormProps {
-    logIn(jwt: JWT, account: Account): void;
+    logIn(oauth2_token: OAuth2Token, account: Account): void;
     openMessage(content: string): void;
     closeAllMessages(): void;
 }
@@ -36,7 +36,10 @@ function LoginForm(props: LoginFormProps) {
             authPostRequest('/login/form', {email, password})
                 .then((response) => {
                     setSubmitting(false);
-                    props.logIn(response.data.jwt, response.data.account);
+                    props.logIn(
+                        response.data.oauth2_token,
+                        response.data.account,
+                    );
                 })
                 .catch((error) => {
                     setSubmitting(false);
@@ -103,7 +106,8 @@ function LoginForm(props: LoginFormProps) {
 
 const mapStateToProps = (state: ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
-    logIn: (jwt: JWT, account: Account) => dispatch(logInAction(jwt, account)),
+    logIn: (oauth2_token: OAuth2Token, account: Account) =>
+        dispatch(logInAction(oauth2_token, account)),
     openMessage: (content: string) => dispatch(openMessageAction(content)),
     closeAllMessages: () => dispatch(closeAllMessagesAction()),
 });

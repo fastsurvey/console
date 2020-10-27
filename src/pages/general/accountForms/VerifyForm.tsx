@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
 import TextInput from '../../../components/formFields/TextInput';
 import {connect} from 'react-redux';
-import {JWT, Account, ReduxState} from '../../../utilities/types';
+import {OAuth2Token, Account, ReduxState} from '../../../utilities/types';
 import {authPostRequest} from '../../../utilities/axiosClients';
 import {
     logInAction,
@@ -11,7 +11,7 @@ import {
 import ButtonLink from '../../../components/links/ButtonLink';
 
 interface VerifyFormProps {
-    logIn(jwt: JWT, account: Account): void;
+    logIn(oauth2_token: OAuth2Token, account: Account): void;
     openMessage(content: string): void;
     closeAllMessages(): void;
 }
@@ -38,7 +38,10 @@ function VerifyForm(props: VerifyFormProps) {
                         setSuccess(true);
                         setSubmitting(false);
                     }, 50);
-                    props.logIn(response.data.jwt, response.data.account);
+                    props.logIn(
+                        response.data.oauth2_token,
+                        response.data.account,
+                    );
                 })
                 .catch((error) => {
                     setSubmitting(false);
@@ -111,7 +114,8 @@ function VerifyForm(props: VerifyFormProps) {
 
 const mapStateToProps = (state: ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
-    logIn: (jwt: JWT, account: Account) => dispatch(logInAction(jwt, account)),
+    logIn: (oauth2_token: OAuth2Token, account: Account) =>
+        dispatch(logInAction(oauth2_token, account)),
     openMessage: (content: string) => dispatch(openMessageAction(content)),
     closeAllMessages: () => dispatch(closeAllMessagesAction()),
 });

@@ -1,7 +1,7 @@
 import {
     LogOutAction,
     LogInAction,
-    JWT,
+    OAuth2Token,
     Account,
     OpenMessageAction,
     CloseMessageAction,
@@ -10,9 +10,12 @@ import {
     CloseModalAction,
 } from './types';
 
-export const logInAction = (jwt: JWT, account: Account): LogInAction => ({
+export const logInAction = (
+    oauth2_token: OAuth2Token,
+    account: Account,
+): LogInAction => ({
     type: 'LOG_IN',
-    jwt,
+    oauth2_token,
     account,
 });
 

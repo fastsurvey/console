@@ -1,13 +1,13 @@
 export interface ReduxState {
     loggingIn: boolean;
     loggedIn: boolean;
-    jwt: undefined | JWT;
+    oauth2_token: undefined | OAuth2Token;
     account: undefined | Account;
     messages: Message[];
     modalOpen: boolean;
 }
 
-export interface JWT {
+export interface OAuth2Token {
     accessToken: string;
     refreshToken: string;
     bearer: string;
@@ -31,7 +31,7 @@ export type ReduxAction =
 
 export interface LogInAction {
     type: 'LOG_IN';
-    jwt: JWT;
+    oauth2_token: OAuth2Token;
     account: Account;
 }
 

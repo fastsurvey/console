@@ -1,7 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
-import {ReduxAction, ReduxState, JWT, Account} from '../utilities/types';
+import {
+    ReduxAction,
+    ReduxState,
+    Account,
+    OAuth2Token,
+} from '../utilities/types';
 import Cookies from 'js-cookie';
 import {logInAction, logOutAction} from '../utilities/reduxActions';
 import {generateValidOAuthToken} from '../utilities/jwtEncryption';
@@ -10,7 +15,7 @@ function storeReducer(
     state = {
         loggingIn: true,
         loggedIn: false,
-        jwt: undefined,
+        oauth2_token: undefined,
         account: undefined,
         messages: [],
         modalOpen: false,
@@ -20,7 +25,7 @@ function storeReducer(
     const newState: ReduxState = {
         loggingIn: state.loggingIn,
         loggedIn: state.loggedIn,
-        jwt: state.jwt,
+        oauth2_token: state.oauth2_token,
         account: state.account,
         messages: state.messages,
         modalOpen: state.modalOpen,
@@ -30,16 +35,18 @@ function storeReducer(
         case 'LOG_IN':
             newState.loggingIn = false;
             newState.loggedIn = true;
-            newState.jwt = action.jwt;
+            newState.oauth2_token = action.oauth2_token;
             newState.account = action.account;
-            Cookies.set('jwt', JSON.stringify(action.jwt), {expires: 7});
+            Cookies.set('oauth2_token', JSON.stringify(action.oauth2_token), {
+                expires: 7,
+            });
             break;
         case 'LOG_OUT':
             newState.loggingIn = false;
             newState.loggedIn = false;
-            newState.jwt = undefined;
+            newState.oauth2_token = undefined;
             newState.account = undefined;
-            Cookies.remove('jwt');
+            Cookies.remove('oauth2_token');
             break;
         case 'OPEN_MESSAGE':
             if (!newState.messages.includes(action.text)) {
@@ -76,8 +83,8 @@ interface ReduxWrapperProps {
 export function ReduxWrapper(props: ReduxWrapperProps) {
     const [cookieLogin, setCookieLogin] = useState(false);
 
-    function logIn(jwt: JWT, account: Account) {
-        store.dispatch(logInAction(jwt, account));
+    function logIn(oauth2_token: OAuth2Token, account: Account) {
+        store.dispatch(logInAction(oauth2_token, account));
     }
 
     useEffect(() => {
