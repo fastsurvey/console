@@ -1,6 +1,6 @@
 import React, {useRef, useState} from 'react';
 import TextInput from '../../../components/formFields/TextInput';
-import {ReduxState, JWT, Account} from '../../../utilities/types';
+import {ReduxState, OAuth2Token, Account} from '../../../utilities/types';
 import {
     closeAllMessagesAction,
     logInAction,
@@ -12,7 +12,7 @@ import TextLink from '../../../components/links/TextLink';
 import ButtonLink from '../../../components/links/ButtonLink';
 
 interface RegisterFormProps {
-    logIn(jwt: JWT, account: Account): void;
+    logIn(oauth2_token: OAuth2Token, account: Account): void;
     openMessage(content: string): void;
     closeAllMessages(): void;
 }
@@ -43,7 +43,10 @@ function RegisterForm(props: RegisterFormProps) {
             authPostRequest('/register', {email, password})
                 .then((response) => {
                     setSubmitting(false);
-                    props.logIn(response.data.jwt, response.data.account);
+                    props.logIn(
+                        response.data.oauth2_token,
+                        response.data.account,
+                    );
                 })
                 .catch((error) => {
                     setSubmitting(false);
@@ -137,7 +140,8 @@ function RegisterForm(props: RegisterFormProps) {
 
 const mapStateToProps = (state: ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
-    logIn: (jwt: JWT, account: Account) => dispatch(logInAction(jwt, account)),
+    logIn: (oauth2_token: OAuth2Token, account: Account) =>
+        dispatch(logInAction(oauth2_token, account)),
     openMessage: (content: string) => dispatch(openMessageAction(content)),
     closeAllMessages: () => dispatch(closeAllMessagesAction()),
 });
