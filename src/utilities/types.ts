@@ -5,11 +5,12 @@ export interface ReduxState {
     account: undefined | Account;
     messages: Message[];
     modalOpen: boolean;
+    configs: undefined | SurveyConfig[];
 }
 
 export interface OAuth2Token {
-    accessToken: string;
-    refreshToken: string;
+    access_token: string;
+    refresh_token: string;
     bearer: string;
 }
 

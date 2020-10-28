@@ -18,6 +18,7 @@ import LoginImage from '../assets/images/secure.svg';
 import VerifyImage from '../assets/images/letter.svg';
 import LoaderOverlay from '../components/overlays/LoaderOverlay';
 import MessageQueue from '../components/messages/MessageQueue';
+import ConfigList from '../pages/dashboard/editor/ConfigList';
 
 interface RouterProps {
     loggingIn: boolean;
@@ -46,7 +47,7 @@ function Router(props: RouterProps) {
                                     <DashBoardPage>
                                         <Switch>
                                             <Route exact path='/configurations'>
-                                                <h3>Configurations</h3>
+                                                <ConfigList />
                                             </Route>
                                             <Route exact path='/results'>
                                                 <h3>Results</h3>

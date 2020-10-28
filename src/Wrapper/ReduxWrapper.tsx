@@ -19,6 +19,7 @@ function storeReducer(
         account: undefined,
         messages: [],
         modalOpen: false,
+        configs: undefined,
     },
     action: ReduxAction,
 ) {
@@ -29,6 +30,7 @@ function storeReducer(
         account: state.account,
         messages: state.messages,
         modalOpen: state.modalOpen,
+        configs: state.configs,
     };
 
     switch (action.type) {
