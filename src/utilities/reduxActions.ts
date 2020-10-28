@@ -1,3 +1,4 @@
+import {AddConfigsAction, SurveyConfig} from './types';
 import {
     LogOutAction,
     LogInAction,
@@ -43,4 +44,11 @@ export const openModalAction = (): OpenModalAction => ({
 
 export const closeModalAction = (): CloseModalAction => ({
     type: 'CLOSE_MODAL',
+});
+
+export const addConfigsAction = (
+    configs: SurveyConfig[],
+): AddConfigsAction => ({
+    type: 'ADD_CONFIGS',
+    configs,
 });

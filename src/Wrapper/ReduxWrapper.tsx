@@ -8,8 +8,14 @@ import {
     OAuth2Token,
 } from '../utilities/types';
 import Cookies from 'js-cookie';
-import {logInAction, logOutAction} from '../utilities/reduxActions';
+import {
+    addConfigsAction,
+    logInAction,
+    logOutAction,
+} from '../utilities/reduxActions';
 import {generateValidOAuthToken} from '../utilities/jwtEncryption';
+import {fetchSurveys} from '../utilities/surveyCommunication';
+import {SurveyConfig} from '../utilities/types';
 
 function storeReducer(
     state = {
@@ -69,6 +75,9 @@ function storeReducer(
         case 'CLOSE_MODAL':
             newState.modalOpen = false;
             break;
+        case 'ADD_CONFIGS':
+            newState.configs = action.configs;
+            break;
         default:
             break;
     }
@@ -85,8 +94,11 @@ interface ReduxWrapperProps {
 export function ReduxWrapper(props: ReduxWrapperProps) {
     const [cookieLogin, setCookieLogin] = useState(false);
 
-    function logIn(oauth2_token: OAuth2Token, account: Account) {
+    async function logIn(oauth2_token: OAuth2Token, account: Account) {
         store.dispatch(logInAction(oauth2_token, account));
+        await fetchSurveys(oauth2_token, (configs: SurveyConfig[]) => {
+            store.dispatch(addConfigsAction(configs));
+        });
     }
 
     useEffect(() => {
