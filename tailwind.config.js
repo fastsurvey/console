@@ -1,7 +1,7 @@
 // prettier-ignore
 module.exports = {
     purge: {
-        enabled: true,
+        enabled: false,
         content: [
             './src/**/*.js',
             './src/**/*.jsx',

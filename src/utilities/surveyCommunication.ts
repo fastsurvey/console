@@ -8,7 +8,7 @@ export async function fetchSurveys(
     // TODO: Username in account
     surveyGetRequest('/fastsurvey', oauth2_token)
         .then((response) => {
-            addConfigs(response.data);
+            addConfigs(response.data.configs);
         })
         .catch(() => {
             // TODO: If 401 -> refresh token
