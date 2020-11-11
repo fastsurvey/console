@@ -54,6 +54,7 @@ function Router(props: RouterProps) {
                                                 exact
                                                 path='/configuration/:survey_name'
                                             >
+                                                <ConfigList />
                                                 <ConfigEditor />
                                             </Route>
                                             <Route exact path='/results'>

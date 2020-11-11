@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import ButtonLink from '../../../components/links/ButtonLink';
 import {ReduxState, SurveyConfig} from '../../../utilities/types';
 import ConfigPreviewPanel from './ConfigPreviewPanel';
-import assert from 'assert';
 
 interface ConfigListProps {
     configs: undefined | SurveyConfig[];
@@ -24,7 +23,7 @@ function ConfigList(props: ConfigListProps) {
     return (
         <div
             className={
-                'flex flex-col w-80 p-2 h-screen bg-gray-300 ' +
+                'fixed flex flex-col w-80 p-2 h-screen bg-gray-300 ' +
                 'border-r-4 border-gray-500 ' +
                 'overflow-y-scroll overflow-x-hidden'
             }
