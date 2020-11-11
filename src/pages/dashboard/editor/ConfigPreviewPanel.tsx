@@ -8,7 +8,7 @@ interface ConfigPreviewPanelProps {
 
 function ConfigPreviewPanel(props: ConfigPreviewPanelProps) {
     return (
-        <div className='p-2 my-2 bg-white rounded shadow w-50vw'>
+        <div className='w-full p-2 my-2 bg-white rounded shadow'>
             <h5>{props.config.title}</h5>
             <p>{props.config.survey_name}</p>
         </div>

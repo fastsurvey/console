@@ -19,7 +19,7 @@ function NavbarContent(props: NavbarContentProps) {
                 <NavbarButton
                     text='Configs'
                     icon={ICONS.vote}
-                    active={location.pathname === '/configurations'}
+                    active={location.pathname.startsWith('/configuration')}
                 />
             </Link>
             <Link to='/results' onClick={props.closeModal}>

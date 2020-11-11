@@ -14,7 +14,7 @@ function LoaderOverlay(props: LoaderOverlayProps) {
             id='LoaderOverlay'
             className={
                 'fixed z-50 bg-white w-100vw h-100vh center-content ' +
-                'transition-opacity duration-500 delay-1000 ' +
+                'transition-opacity duration-500 delay-0 ' +
                 (props.loggingIn
                     ? 'opacity-100'
                     : 'opacity-0 pointer-events-none')
