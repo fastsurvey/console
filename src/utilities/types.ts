@@ -71,13 +71,14 @@ export interface AddConfigsAction {
 // --------------------------------------------------------
 
 export interface SurveyConfig {
-    admin_name: 'fastsurvey';
-    description: '';
-    end: 2000000000;
-    mode: 0;
-    start: 1000000000;
-    survey_name: 'radio';
-    title: 'Radio Test';
+    admin_name: string;
+    survey_name: string;
+    start: number;
+    end: number;
+    mode: 0 | 1 | 2;
+    draft: boolean;
+    title: string;
+    description: string;
     fields: SurveyField[];
 }
 
