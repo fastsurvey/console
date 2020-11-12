@@ -104,14 +104,33 @@ function GeneralConfig(props: GeneralConfigProps) {
                 />
             </div>
             <div className='flex flex-row items-start w-full'>
-                <div className='w-20 mr-2'>
+                <div className='h-12 text-xl leading-12 font-weight-600'>
+                    Date:
+                </div>
+                <div className='w-20 mx-2'>
                     <DropDown value={3} onChange={() => {}} options={DAYS} />
                 </div>
-                <div className='mr-2 w-42'>
+                <div className='h-12 text-xl leading-12 font-weight-600'>.</div>
+                <div className='mx-2 w-42'>
                     <DropDown value={3} onChange={() => {}} options={MONTHS} />
                 </div>
-                <div className='mr-8 w-28'>
+                <div className='h-12 text-xl leading-12 font-weight-600'>.</div>
+                <div className='ml-2 mr-10 w-28'>
                     <DropDown value={123} onChange={() => {}} options={YEARS} />
+                </div>
+                <div className='h-12 text-xl leading-12 font-weight-600'>
+                    Time:
+                </div>
+                <div className='w-20 mx-2'>
+                    <DropDown value={16} onChange={() => {}} options={HOURS} />
+                </div>
+                <div className='h-12 text-xl leading-12 font-weight-600'>:</div>
+                <div className='w-20 ml-2'>
+                    <DropDown
+                        value={20}
+                        onChange={() => {}}
+                        options={MINUTES}
+                    />
                 </div>
             </div>
         </div>
