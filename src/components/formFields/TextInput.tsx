@@ -46,9 +46,9 @@ const TextInput = React.forwardRef((props: TextInputProps, ref: any) => {
                 onFocus={() => setFocus(true)}
                 onBlur={() => setFocus(false)}
                 className={
-                    'font-weight-500 text-lg md:no-selection ' +
+                    'font-weight-500 text-lg  text-gray-800 no-selection ' +
                     'border-0 rounded w-full h-12 ' +
-                    'py-2 pl-3 pr-10 md:pr-12 text-gray-700 ' +
+                    'py-2 pl-3 pr-10 md:pr-12 ' +
                     (props.flat
                         ? 'shadow-outline-gray bg-white transition duration-150 '
                         : 'shadow ') +

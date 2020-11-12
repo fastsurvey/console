@@ -132,7 +132,7 @@ function DateSelector() {
                     hideChevron
                 />
             </div>
-            <div className='h-12 text-xl leading-12 font-weight-600'>.</div>
+            {DateSeparator('.')}
             <div className='mx-2 w-36'>
                 <DropDown
                     value={10}
@@ -141,7 +141,7 @@ function DateSelector() {
                     hideChevron
                 />
             </div>
-            <div className='h-12 text-xl leading-12 font-weight-600'>.</div>
+            {DateSeparator('.')}
             <div className='ml-2 mr-8 w-22'>
                 <DropDown
                     value={123}
@@ -158,7 +158,7 @@ function DateSelector() {
                     hideChevron
                 />
             </div>
-            <div className='h-12 text-xl leading-12 font-weight-600'>:</div>
+            {DateSeparator(':')}
             <div className='ml-2 w-14'>
                 <DropDown
                     value={20}
@@ -170,3 +170,9 @@ function DateSelector() {
         </React.Fragment>
     );
 }
+
+const DateSeparator = (char: string) => (
+    <div className='h-12 text-lg text-gray-800 leading-12 font-weight-700'>
+        {char}
+    </div>
+);

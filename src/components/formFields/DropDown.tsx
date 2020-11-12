@@ -12,6 +12,7 @@ interface DropDownProps {
 
 const DropDown = React.forwardRef((props: DropDownProps, ref: any) => {
     const [isOpen, setOpen] = useState(false);
+    const [zIndex, setZIndex] = useState('z-10');
 
     function handleKeyDown(e: any) {
         if (['Escape', 'Enter'].includes(e.key)) {
@@ -22,31 +23,35 @@ const DropDown = React.forwardRef((props: DropDownProps, ref: any) => {
     function close() {
         document.removeEventListener('click', close);
         setOpen(false);
+        setTimeout(() => setZIndex('z-10'), 200);
     }
 
     function open() {
         if (!isOpen) {
             document.addEventListener('click', close);
             setOpen(true);
+            setZIndex('z-20');
         }
     }
 
     return (
         <div
             className={
-                'relative w-full overflow-visible rounded h-12 no-selection ' +
-                (props.className ? props.className : '')
+                'relative w-full overflow-visible rounded h-12 ' +
+                'font-weight-500 text-lg text-gray-800 no-selection ' +
+                (props.className ? props.className : '') +
+                zIndex
             }
         >
             <div
                 className={
                     'flex flex-col shadow-outline-gray bg-white rounded ' +
-                    (props.hideChevron ? 'text-center ' : '')
+                    (props.hideChevron ? 'text-center ' : ' ')
                 }
             >
                 <div
                     className={
-                        'z-20 h-12 px-3 py-2 text-xl font-weight-600 ' +
+                        'h-12 px-3 py-2 leading-8 ' +
                         'w-full flex flex-row cursor-pointer ' +
                         'transition-colors duration-200 ' +
                         (isOpen ? 'bg-gray-300 ' : 'bg-transparent ')
@@ -74,7 +79,7 @@ const DropDown = React.forwardRef((props: DropDownProps, ref: any) => {
                 </div>
                 <div
                     className={
-                        'z-10 w-full flex flex-col ' +
+                        'w-full flex flex-col ' +
                         'transition-size duration-200 rounded-b ' +
                         (isOpen ? 'max-h-64 ' : 'max-h-0 ') +
                         'overflow-y-scroll'
@@ -83,12 +88,12 @@ const DropDown = React.forwardRef((props: DropDownProps, ref: any) => {
                     {props.options.map((option, index) => (
                         <div
                             className={
-                                'relative w-full h-12 px-3 py-2 text-xl ' +
+                                'relative w-full h-12 px-3 py-2 ' +
                                 'leading-8 cursor-pointer ' +
                                 'hover:bg-gray-100 ' +
                                 (option.value === props.value
-                                    ? 'font-weight-600 '
-                                    : 'font-weight-400 ')
+                                    ? 'font-weight-700 '
+                                    : 'font-weight-500 ')
                             }
                             onClick={() => props.onChange(option.value)}
                         >
