@@ -56,7 +56,7 @@ const TextArea = React.forwardRef((props: TextAreaProps, ref: any) => {
                 onBlur={() => setFocus(false)}
                 className={
                     'font-weight-500 text-lg md:no-selection ' +
-                    'border-0 rounded w-full ' +
+                    'border-0 rounded w-full min-h-12 max-h-128 ' +
                     'py-2 pl-3 pr-10 md:pr-12 text-gray-800 ' +
                     (props.flat
                         ? 'shadow-outline-gray bg-white transition duration-150 '

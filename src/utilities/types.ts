@@ -77,6 +77,7 @@ export interface SurveyConfig {
     end: number;
     mode: 0 | 1 | 2;
     draft: boolean;
+    submission_limit: number;
     title: string;
     description: string;
     fields: SurveyField[];

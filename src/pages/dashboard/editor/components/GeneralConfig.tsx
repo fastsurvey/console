@@ -4,6 +4,11 @@ import TextArea from '../../../../components/formFields/TextArea';
 import TextInput from '../../../../components/formFields/TextInput';
 import {SurveyConfig} from '../../../../utilities/types';
 
+const AUTH_MODE = [
+    {value: 0, label: 'No Authentication'},
+    {value: 1, label: 'Email Verification'},
+];
+
 const DAYS = [...Array(31).keys()].map((i) => {
     return {label: (i + 1).toString(), value: i + 1};
 });
@@ -98,22 +103,58 @@ function GeneralConfig(props: GeneralConfigProps) {
                     value={props.config.title}
                     onChange={() => {}}
                     flat
-                    charLimits={{min: 0, max: 500}}
+                    charLimits={{min: 0, max: 2000}}
                     className='leading-8'
                     wrapperClassName='self-stretch flex-grow'
                 />
             </div>
-            <div className='flex flex-row items-center justify-center w-full mb-4'>
-                <div className='h-12 mr-4 text-xl text-right w-14 leading-12 font-weight-600'>
-                    Start:
+            <div className='flex flex-row w-full mb-4'>
+                <div className='flex flex-col'>
+                    <div className='flex flex-row mb-4'>
+                        <div className='h-12 mr-4 text-xl text-right leading-12 font-weight-600'>
+                            Authentication:
+                        </div>
+                        <div className='w-56 mr-2'>
+                            <DropDown
+                                value={0}
+                                onChange={() => {}}
+                                options={AUTH_MODE}
+                            />
+                        </div>
+                    </div>
+                    <div className='flex flex-row items-start'>
+                        <div className='h-12 mr-3 text-xl font-weight-600 leading-12'>
+                            Submission Limit:
+                        </div>
+                        <TextInput
+                            value={props.config.submission_limit.toString()}
+                            onChange={() => {}}
+                            flat
+                            wrapperClassName='w-32'
+                            hint={{
+                                text: '1 - 10.000',
+                                fulfilled:
+                                    1 <= props.config.submission_limit &&
+                                    props.config.submission_limit <= 10000,
+                            }}
+                        />
+                    </div>
                 </div>
-                <DateSelector />
-            </div>
-            <div className='flex flex-row items-center justify-center w-full mb-4'>
-                <div className='h-12 mr-4 text-xl text-right w-14 leading-12 font-weight-600'>
-                    End:
+                <div className='self-stretch flex-grow' />
+                <div className='flex flex-col'>
+                    <div className='flex flex-row items-center justify-center w-full mb-4'>
+                        <div className='h-12 mr-4 text-xl text-right w-14 leading-12 font-weight-600'>
+                            Start:
+                        </div>
+                        <DateSelector />
+                    </div>
+                    <div className='flex flex-row items-center justify-center w-full'>
+                        <div className='h-12 mr-4 text-xl text-right w-14 leading-12 font-weight-600'>
+                            End:
+                        </div>
+                        <DateSelector />
+                    </div>
                 </div>
-                <DateSelector />
             </div>
         </div>
     );
