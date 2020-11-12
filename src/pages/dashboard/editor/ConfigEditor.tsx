@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {useParams} from 'react-router-dom';
 import {ReduxState, SurveyConfig} from '../../../utilities/types';
+import EditorControlStrip from './components/EditorControlStrip';
 
 interface ConfigEditorProps {
     configs: undefined | SurveyConfig[];
@@ -35,10 +36,12 @@ function ConfigEditor(props: ConfigEditorProps) {
     const thisConfig: SurveyConfig = filteredConfigs[0];
 
     return (
-        <div id='ConfigEditor' className='px-4 py-12 center-content'>
-            <div className='w-40vw'>
-                <h3 className='text-center'>{thisConfig.title}</h3>
-            </div>
+        <div
+            id='ConfigEditor'
+            className='flex flex-col items-center px-4 pt-4 pb-12'
+        >
+            <EditorControlStrip config={thisConfig} />
+            <h3 className='mt-16 text-center'>{thisConfig.title}</h3>
         </div>
     );
 }
