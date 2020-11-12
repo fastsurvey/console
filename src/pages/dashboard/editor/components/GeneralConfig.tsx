@@ -107,29 +107,50 @@ function GeneralConfig(props: GeneralConfigProps) {
                 <div className='h-12 text-xl leading-12 font-weight-600'>
                     Date:
                 </div>
-                <div className='w-20 mx-2'>
-                    <DropDown value={3} onChange={() => {}} options={DAYS} />
+                <div className='mx-2 w-14'>
+                    <DropDown
+                        value={3}
+                        onChange={() => {}}
+                        options={DAYS}
+                        hideChevron
+                    />
                 </div>
                 <div className='h-12 text-xl leading-12 font-weight-600'>.</div>
-                <div className='mx-2 w-42'>
-                    <DropDown value={3} onChange={() => {}} options={MONTHS} />
+                <div className='mx-2 w-36'>
+                    <DropDown
+                        value={10}
+                        onChange={() => {}}
+                        options={MONTHS}
+                        hideChevron
+                    />
                 </div>
                 <div className='h-12 text-xl leading-12 font-weight-600'>.</div>
-                <div className='ml-2 mr-10 w-28'>
-                    <DropDown value={123} onChange={() => {}} options={YEARS} />
+                <div className='ml-2 mr-10 w-22'>
+                    <DropDown
+                        value={123}
+                        onChange={() => {}}
+                        options={YEARS}
+                        hideChevron
+                    />
                 </div>
                 <div className='h-12 text-xl leading-12 font-weight-600'>
                     Time:
                 </div>
-                <div className='w-20 mx-2'>
-                    <DropDown value={16} onChange={() => {}} options={HOURS} />
+                <div className='mx-2 w-14'>
+                    <DropDown
+                        value={16}
+                        onChange={() => {}}
+                        options={HOURS}
+                        hideChevron
+                    />
                 </div>
                 <div className='h-12 text-xl leading-12 font-weight-600'>:</div>
-                <div className='w-20 ml-2'>
+                <div className='ml-2 w-14'>
                     <DropDown
                         value={20}
                         onChange={() => {}}
                         options={MINUTES}
+                        hideChevron
                     />
                 </div>
             </div>

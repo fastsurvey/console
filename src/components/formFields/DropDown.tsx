@@ -7,6 +7,7 @@ interface DropDownProps {
     onChange(newValue: number): void;
     className?: string;
     onEnter?(): void;
+    hideChevron?: boolean;
 }
 
 const DropDown = React.forwardRef((props: DropDownProps, ref: any) => {
@@ -38,34 +39,38 @@ const DropDown = React.forwardRef((props: DropDownProps, ref: any) => {
             }
         >
             <div
-                className={'flex flex-col shadow-outline-gray bg-white rounded'}
+                className={
+                    'flex flex-col shadow-outline-gray bg-white rounded ' +
+                    (props.hideChevron ? 'text-center ' : '')
+                }
             >
                 <div
                     className={
                         'z-20 h-12 px-3 py-2 text-xl font-weight-600 ' +
                         'w-full flex flex-row cursor-pointer ' +
-                        'transition-colors duration-300 ' +
+                        'transition-colors duration-200 ' +
                         (isOpen ? 'bg-gray-300 ' : 'bg-transparent ')
                     }
                     onClick={open}
                 >
-                    <div>
+                    <div className='self-stretch flex-grow '>
                         {
                             props.options.filter(
                                 (option) => option.value == props.value,
                             )[0].label
                         }
                     </div>
-                    <div className='self-stretch flex-grow hidden lg:block' />
-                    <div
-                        className={
-                            'w-8 h-8 text-gray-500 ' +
-                            'transition-transform duration-200 transform ' +
-                            (isOpen ? 'rotate-180 ' : 'rotate-0 ')
-                        }
-                    >
-                        {ICONS.expand_more}
-                    </div>
+                    {!props.hideChevron && (
+                        <div
+                            className={
+                                'w-8 h-8 text-gray-500 ' +
+                                'transition-transform duration-200 transform ' +
+                                (isOpen ? 'rotate-180 ' : 'rotate-0 ')
+                            }
+                        >
+                            {ICONS.expand_more}
+                        </div>
+                    )}
                 </div>
                 <div
                     className={
