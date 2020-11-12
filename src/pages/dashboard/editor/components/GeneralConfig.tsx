@@ -90,7 +90,7 @@ function GeneralConfig(props: GeneralConfigProps) {
                     />
                 </div>
             </div>
-            <div className='flex flex-row items-start w-full'>
+            <div className='flex flex-row items-start w-full mb-4'>
                 <div className='h-12 mr-3 text-xl font-weight-600 leading-12'>
                     Description:
                 </div>
@@ -103,59 +103,70 @@ function GeneralConfig(props: GeneralConfigProps) {
                     wrapperClassName='self-stretch flex-grow'
                 />
             </div>
-            <div className='flex flex-row items-start w-full'>
-                <div className='h-12 text-xl leading-12 font-weight-600'>
-                    Date:
+            <div className='flex flex-row items-center justify-center w-full mb-4'>
+                <div className='h-12 mr-4 text-xl text-right w-14 leading-12 font-weight-600'>
+                    Start:
                 </div>
-                <div className='mx-2 w-14'>
-                    <DropDown
-                        value={3}
-                        onChange={() => {}}
-                        options={DAYS}
-                        hideChevron
-                    />
+                <DateSelector />
+            </div>
+            <div className='flex flex-row items-center justify-center w-full mb-4'>
+                <div className='h-12 mr-4 text-xl text-right w-14 leading-12 font-weight-600'>
+                    End:
                 </div>
-                <div className='h-12 text-xl leading-12 font-weight-600'>.</div>
-                <div className='mx-2 w-36'>
-                    <DropDown
-                        value={10}
-                        onChange={() => {}}
-                        options={MONTHS}
-                        hideChevron
-                    />
-                </div>
-                <div className='h-12 text-xl leading-12 font-weight-600'>.</div>
-                <div className='ml-2 mr-10 w-22'>
-                    <DropDown
-                        value={123}
-                        onChange={() => {}}
-                        options={YEARS}
-                        hideChevron
-                    />
-                </div>
-                <div className='h-12 text-xl leading-12 font-weight-600'>
-                    Time:
-                </div>
-                <div className='mx-2 w-14'>
-                    <DropDown
-                        value={16}
-                        onChange={() => {}}
-                        options={HOURS}
-                        hideChevron
-                    />
-                </div>
-                <div className='h-12 text-xl leading-12 font-weight-600'>:</div>
-                <div className='ml-2 w-14'>
-                    <DropDown
-                        value={20}
-                        onChange={() => {}}
-                        options={MINUTES}
-                        hideChevron
-                    />
-                </div>
+                <DateSelector />
             </div>
         </div>
     );
 }
 
 export default GeneralConfig;
+
+function DateSelector() {
+    return (
+        <React.Fragment>
+            <div className='mr-2 w-14'>
+                <DropDown
+                    value={3}
+                    onChange={() => {}}
+                    options={DAYS}
+                    hideChevron
+                />
+            </div>
+            <div className='h-12 text-xl leading-12 font-weight-600'>.</div>
+            <div className='mx-2 w-36'>
+                <DropDown
+                    value={10}
+                    onChange={() => {}}
+                    options={MONTHS}
+                    hideChevron
+                />
+            </div>
+            <div className='h-12 text-xl leading-12 font-weight-600'>.</div>
+            <div className='ml-2 mr-8 w-22'>
+                <DropDown
+                    value={123}
+                    onChange={() => {}}
+                    options={YEARS}
+                    hideChevron
+                />
+            </div>
+            <div className='mx-2 w-14'>
+                <DropDown
+                    value={16}
+                    onChange={() => {}}
+                    options={HOURS}
+                    hideChevron
+                />
+            </div>
+            <div className='h-12 text-xl leading-12 font-weight-600'>:</div>
+            <div className='ml-2 w-14'>
+                <DropDown
+                    value={20}
+                    onChange={() => {}}
+                    options={MINUTES}
+                    hideChevron
+                />
+            </div>
+        </React.Fragment>
+    );
+}
