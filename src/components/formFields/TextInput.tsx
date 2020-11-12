@@ -6,10 +6,12 @@ interface TextInputProps {
     type?: string;
     placeholder?: string;
     className?: string;
+    wrapperClassName?: string;
     required?: boolean;
     hint?: {text: string; fulfilled: boolean};
     autoComplete?: string;
     onEnter?(): void;
+    flat?: boolean;
 }
 
 const TextInput = React.forwardRef((props: TextInputProps, ref: any) => {
@@ -29,7 +31,12 @@ const TextInput = React.forwardRef((props: TextInputProps, ref: any) => {
     }
 
     return (
-        <div className='relative mb-2'>
+        <div
+            className={
+                'relative ' +
+                (props.wrapperClassName ? props.wrapperClassName : '')
+            }
+        >
             <input
                 ref={ref}
                 onKeyDown={handleKeyDown}
@@ -40,15 +47,16 @@ const TextInput = React.forwardRef((props: TextInputProps, ref: any) => {
                 onBlur={() => setFocus(false)}
                 className={
                     'font-weight-500 text-lg md:no-selection ' +
-                    'shadow border-0 rounded w-full h-12 ' +
+                    'border-0 rounded w-full h-12 ' +
                     'py-2 pl-3 pr-10 md:pr-12 text-gray-700 ' +
+                    (props.flat
+                        ? 'shadow-outline-gray bg-white transition duration-150 '
+                        : 'shadow ') +
                     'focus:outline-none focus:shadow-outline ' +
-                    (props.className !== undefined ? props.className : '')
+                    (props.className ? props.className : '')
                 }
-                type={props.type !== undefined ? props.type : 'text'}
-                autoComplete={
-                    props.autoComplete !== undefined ? props.autoComplete : ''
-                }
+                type={props.type ? props.type : 'text'}
+                autoComplete={props.autoComplete ? props.autoComplete : ''}
             />
             {props.hint && (
                 <div

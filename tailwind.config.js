@@ -12,6 +12,12 @@ module.exports = {
     },
     theme: {
         extend: {
+            lineHeight: {
+                '12': '3rem'
+            },
+            boxShadow: {
+                'outline-gray': '0 0 0 2px rgba(226, 232, 240, 1.0)'
+            },
             transitionProperty: {
                 'height': 'height',
                 'width': 'width'
