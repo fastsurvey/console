@@ -15,6 +15,7 @@ interface ButtonLinkProps {
     disabled?: boolean;
     spinning?: boolean;
     closeAllMessages(): void;
+    icon?: React.ReactNode;
 }
 
 function ButtonLink(props: ButtonLinkProps) {
@@ -22,6 +23,7 @@ function ButtonLink(props: ButtonLinkProps) {
 
     const button = (
         <Button
+            icon={props.icon}
             text={props.children}
             disabled={props.disabled}
             spinning={props.spinning}

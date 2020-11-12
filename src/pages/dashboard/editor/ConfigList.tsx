@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import ButtonLink from '../../../components/links/ButtonLink';
 import {ReduxState, SurveyConfig} from '../../../utilities/types';
 import ConfigPreviewPanel from './ConfigPreviewPanel';
+import {ICONS} from '../../../assets/icons/icons';
 
 interface ConfigListProps {
     configs: undefined | SurveyConfig[];
@@ -38,7 +39,11 @@ function ConfigList(props: ConfigListProps) {
                     key={config.survey_name}
                 />
             ))}
-            <ButtonLink onClick={() => {}} className='w-full mt-1'>
+            <ButtonLink
+                icon={ICONS.add}
+                onClick={() => {}}
+                className='w-full mt-1'
+            >
                 New survey
             </ButtonLink>
         </div>
