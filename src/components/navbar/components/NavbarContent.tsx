@@ -2,7 +2,6 @@ import React from 'react';
 import {useHistory, useLocation} from 'react-router-dom';
 import NavbarButton from './NavbarButton';
 import NavbarLogo from './NavbarLogo';
-import {Link} from 'react-router-dom';
 import {ICONS} from '../../../assets/icons/icons';
 import {Message, ReduxState} from '../../../utilities/types';
 import {openMessageAction} from '../../../utilities/reduxActions';

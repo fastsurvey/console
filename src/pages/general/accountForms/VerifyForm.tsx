@@ -86,6 +86,7 @@ function VerifyForm(props: VerifyFormProps) {
                                     props.closeAllMessages();
                                     setPassword(newValue);
                                 }}
+                                className='mb-2'
                                 type='password'
                                 autoComplete='current-password'
                                 ref={input1}

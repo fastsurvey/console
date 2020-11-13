@@ -102,6 +102,7 @@ function storeReducer(
                     message.text !== 'Please save or undo your changes first!'
                 );
             });
+            break;
         default:
             break;
     }

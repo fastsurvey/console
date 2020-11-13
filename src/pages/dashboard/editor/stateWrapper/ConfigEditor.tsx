@@ -19,7 +19,7 @@ function ConfigEditor(props: ConfigEditorProps) {
 
     useEffect(() => {
         setLocalConfigState(props.centralConfig);
-    }, [props.centralConfig.local_id]);
+    }, [props.centralConfig, props.centralConfig.local_id]);
 
     function syncState() {
         // TODO: Validate & Push to backend

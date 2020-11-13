@@ -71,6 +71,7 @@ function RequestPasswordForm(props: RequestPasswordFormProps) {
                                 props.closeAllMessages();
                                 setEmail(newValue);
                             }}
+                            className='mb-2'
                             autoComplete='username'
                             ref={input1}
                             onEnter={handleSubmit}

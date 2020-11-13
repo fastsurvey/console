@@ -94,6 +94,7 @@ function SetPasswordForm(props: SetPasswordFormProps) {
                                     text: '> 7 characters',
                                     fulfilled: password.length > 7,
                                 }}
+                                className='mb-2'
                                 autoComplete='new-password'
                                 onEnter={focusInput2}
                             />
@@ -111,6 +112,7 @@ function SetPasswordForm(props: SetPasswordFormProps) {
                                         password.length > 7 &&
                                         password === passwordConfirmation,
                                 }}
+                                className='mb-2'
                                 autoComplete='new-password'
                                 ref={input2}
                                 onEnter={handleSubmit}

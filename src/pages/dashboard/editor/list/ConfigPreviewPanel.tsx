@@ -3,10 +3,7 @@ import {Message, ReduxState, SurveyConfig} from '../../../../utilities/types';
 import {ICONS} from '../../../../assets/icons/icons';
 import {useHistory, useLocation} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {
-    closeMessageAction,
-    openMessageAction,
-} from '../../../../utilities/reduxActions';
+import {openMessageAction} from '../../../../utilities/reduxActions';
 
 interface ConfigPreviewPanelProps {
     config: SurveyConfig;

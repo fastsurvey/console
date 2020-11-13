@@ -79,6 +79,7 @@ function LoginForm(props: LoginFormProps) {
                         props.closeAllMessages();
                         setEmail(newValue);
                     }}
+                    className='mb-2'
                     autoComplete='email username'
                     onEnter={focusInput2}
                 />
@@ -89,6 +90,7 @@ function LoginForm(props: LoginFormProps) {
                         props.closeAllMessages();
                         setPassword(newValue);
                     }}
+                    className='mb-2'
                     type='password'
                     autoComplete='current-password'
                     ref={input2}

@@ -91,6 +91,7 @@ function RegisterForm(props: RegisterFormProps) {
                         props.closeAllMessages();
                         setEmail(newValue);
                     }}
+                    className='mb-2'
                     autoComplete='username'
                     onEnter={focusInput2}
                 />
@@ -107,6 +108,7 @@ function RegisterForm(props: RegisterFormProps) {
                         text: '> 7 characters',
                         fulfilled: password.length > 7,
                     }}
+                    className='mb-2'
                     autoComplete='new-password'
                     ref={input2}
                     onEnter={focusInput3}
@@ -126,6 +128,7 @@ function RegisterForm(props: RegisterFormProps) {
                             password.length > 7 &&
                             password === passwordConfirmation,
                     }}
+                    className='mb-2'
                     autoComplete='new-password'
                     ref={input3}
                     onEnter={handleRegistration}
