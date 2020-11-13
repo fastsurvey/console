@@ -78,6 +78,16 @@ function storeReducer(
         case 'ADD_CONFIGS':
             newState.configs = action.configs;
             break;
+        case 'MODIFY_CONFIG':
+            if (newState.configs !== undefined) {
+                newState.configs = newState.configs.map(
+                    (config: SurveyConfig) =>
+                        config.survey_name === action.survey_name
+                            ? action.config
+                            : config,
+                );
+            }
+            break;
         default:
             break;
     }

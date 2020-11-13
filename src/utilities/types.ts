@@ -29,7 +29,8 @@ export type ReduxAction =
     | CloseAllMessagesAction
     | OpenModalAction
     | CloseModalAction
-    | AddConfigsAction;
+    | AddConfigsAction
+    | ModifyConfigAction;
 
 export interface LogInAction {
     type: 'LOG_IN';
@@ -66,6 +67,12 @@ export interface CloseModalAction {
 export interface AddConfigsAction {
     type: 'ADD_CONFIGS';
     configs: SurveyConfig[];
+}
+
+export interface ModifyConfigAction {
+    type: 'MODIFY_CONFIG';
+    survey_name: string;
+    config: SurveyConfig;
 }
 
 // --------------------------------------------------------

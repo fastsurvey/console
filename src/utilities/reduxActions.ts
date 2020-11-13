@@ -1,4 +1,4 @@
-import {AddConfigsAction, SurveyConfig} from './types';
+import {AddConfigsAction, ModifyConfigAction, SurveyConfig} from './types';
 import {
     LogOutAction,
     LogInAction,
@@ -51,4 +51,13 @@ export const addConfigsAction = (
 ): AddConfigsAction => ({
     type: 'ADD_CONFIGS',
     configs,
+});
+
+export const modifyConfigAction = (
+    survey_name: string,
+    config: SurveyConfig,
+): ModifyConfigAction => ({
+    type: 'MODIFY_CONFIG',
+    survey_name,
+    config,
 });
