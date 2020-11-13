@@ -1,16 +1,35 @@
 import React from 'react';
-import {SurveyConfig} from '../../../../utilities/types';
+import {ReduxState, SurveyConfig} from '../../../../utilities/types';
 import {ICONS} from '../../../../assets/icons/icons';
-import {Link} from 'react-router-dom';
+import {useHistory, useLocation} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {openMessageAction} from '../../../../utilities/reduxActions';
 
 interface ConfigPreviewPanelProps {
     config: SurveyConfig;
     index: number;
+    configIsDiffering: boolean;
+    openMessage(text: string): void;
 }
 
 function ConfigPreviewPanel(props: ConfigPreviewPanelProps) {
     let statusColor: string;
     let statusText: string;
+
+    let location = useLocation();
+    let history = useHistory();
+
+    function handleClick() {
+        if (
+            location.pathname !== `/configuration/${props.config.survey_name}`
+        ) {
+            if (!props.configIsDiffering) {
+                history.push(`/configuration/${props.config.survey_name}`);
+            } else {
+                props.openMessage('Please save your progess first!');
+            }
+        }
+    }
 
     if (props.config.draft) {
         statusColor = 'gray-500';
@@ -21,37 +40,45 @@ function ConfigPreviewPanel(props: ConfigPreviewPanelProps) {
     }
 
     return (
-        <Link to={'/configuration/' + props.config.survey_name}>
-            <div
-                className={
-                    'w-full p-2 my-1 bg-white rounded-l shadow ' +
-                    'no-selection border-r-4 border-' +
-                    statusColor
-                }
-            >
-                <div className='flex flex-row items-center w-full h-8'>
-                    <div className='text-lg font-weight-600'>
-                        {props.config.title}
-                    </div>
-                    <div className={'self-stretch flex-grow'} />
-                    <span
-                        className={
-                            'ml-2  font-weight-500 text-base text-' +
-                            statusColor
-                        }
-                    >
-                        {statusText}
-                    </span>
+        <div
+            onClick={handleClick}
+            className={
+                'w-full p-2 my-1 rounded-l shadow ' +
+                'no-selection border-r-4 border-' +
+                statusColor +
+                (location.pathname !==
+                `/configuration/${props.config.survey_name}`
+                    ? ' cursor-pointer bg-gray-200 '
+                    : ' cursor-default bg-white ')
+            }
+        >
+            <div className='flex flex-row items-center w-full h-8'>
+                <div className='text-lg font-weight-600'>
+                    {props.config.title}
                 </div>
-                <div className='flex flex-row text-base text-blue-600 font-weight-500'>
-                    <div className='w-6 h-6 mr-1'>{ICONS.link}</div>
-                    <div className='h-6'>
-                        {props.config.admin_name}/{props.config.survey_name}
-                    </div>
+                <div className={'self-stretch flex-grow'} />
+                <span
+                    className={
+                        'ml-2  font-weight-500 text-base text-' + statusColor
+                    }
+                >
+                    {statusText}
+                </span>
+            </div>
+            <div className='flex flex-row text-base text-blue-600 font-weight-500'>
+                <div className='w-6 h-6 mr-1'>{ICONS.link}</div>
+                <div className='h-6'>
+                    {props.config.admin_name}/{props.config.survey_name}
                 </div>
             </div>
-        </Link>
+        </div>
     );
 }
 
-export default ConfigPreviewPanel;
+const mapStateToProps = (state: ReduxState) => ({
+    configIsDiffering: state.configIsDiffering,
+});
+const mapDispatchToProps = (dispatch: any) => ({
+    openMessage: (text: string) => dispatch(openMessageAction(text)),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(ConfigPreviewPanel);

@@ -12,7 +12,6 @@ import FieldConfigForm from '../components/fields/FieldConfigForm';
 interface ConfigEditorProps {
     centralConfig: SurveyConfig;
     modifyConfig(config: SurveyConfig): void;
-    configIsDiffering: boolean;
     markDiffering(): void;
 }
 function ConfigEditor(props: ConfigEditorProps) {
@@ -41,7 +40,6 @@ function ConfigEditor(props: ConfigEditorProps) {
             <EditorControlStrip
                 config={localConfig}
                 setConfig={setLocalConfig}
-                differing={props.configIsDiffering}
                 syncState={syncState}
             />
             <GeneralConfig config={localConfig} setConfig={setLocalConfig} />
@@ -55,9 +53,7 @@ function ConfigEditor(props: ConfigEditorProps) {
     );
 }
 
-const mapStateToProps = (state: ReduxState) => ({
-    configIsDiffering: state.configIsDiffering,
-});
+const mapStateToProps = (state: ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
     modifyConfig: (config: SurveyConfig) =>
         dispatch(modifyConfigAction(config)),

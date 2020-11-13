@@ -1,6 +1,7 @@
 import React from 'react';
-import {SurveyConfig} from '../../../../utilities/types';
+import {ReduxState, SurveyConfig} from '../../../../utilities/types';
 import {ICONS} from '../../../../assets/icons/icons';
+import {connect} from 'react-redux';
 
 interface ControlStripButtonProps {
     label: string;
@@ -38,7 +39,7 @@ function ControlStripButton(props: ControlStripButtonProps) {
 interface EditorControlStripProps {
     config: SurveyConfig;
     setConfig(config: SurveyConfig): void;
-    differing: boolean;
+    configIsDiffering: boolean;
     syncState(): void;
 }
 
@@ -90,7 +91,7 @@ function EditorControlStrip(props: EditorControlStripProps) {
             />
             <ControlStripButton
                 last
-                disabled={!props.differing}
+                disabled={!props.configIsDiffering}
                 label='Save'
                 icon={ICONS.save}
                 onClick={props.syncState}
@@ -99,4 +100,8 @@ function EditorControlStrip(props: EditorControlStripProps) {
     );
 }
 
-export default EditorControlStrip;
+const mapStateToProps = (state: ReduxState) => ({
+    configIsDiffering: state.configIsDiffering,
+});
+const mapDispatchToProps = (dispatch: any) => ({});
+export default connect(mapStateToProps, mapDispatchToProps)(EditorControlStrip);
