@@ -1,14 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {useParams} from 'react-router-dom';
-import {ReduxState, SurveyConfig} from '../../../utilities/types';
-import EditorControlStrip from './components/EditorControlStrip';
-import GeneralConfig from './components/GeneralConfig';
+import {ReduxState, SurveyConfig} from '../../../../utilities/types';
+import ConfigEditor from './ConfigEditor';
 
-interface ConfigEditorProps {
+interface ConfigEditorWrappperProps {
     configs: undefined | SurveyConfig[];
 }
-function ConfigEditor(props: ConfigEditorProps) {
+function ConfigEditorWrappper(props: ConfigEditorWrappperProps) {
     let params = useParams();
 
     if (!props.configs) {
@@ -34,21 +33,14 @@ function ConfigEditor(props: ConfigEditorProps) {
         );
     }
 
-    const thisConfig: SurveyConfig = filteredConfigs[0];
-
-    return (
-        <div
-            id='ConfigEditor'
-            className='flex flex-col items-center px-8 pt-4 pb-12'
-        >
-            <EditorControlStrip config={thisConfig} />
-            <GeneralConfig config={thisConfig} />
-        </div>
-    );
+    return <ConfigEditor centralConfig={filteredConfigs[0]} />;
 }
 
 const mapStateToProps = (state: ReduxState) => ({
     configs: state.configs,
 });
 const mapDispatchToProps = (dispatch: any) => ({});
-export default connect(mapStateToProps, mapDispatchToProps)(ConfigEditor);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(ConfigEditorWrappper);

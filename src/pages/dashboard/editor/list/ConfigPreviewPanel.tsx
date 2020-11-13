@@ -1,6 +1,6 @@
 import React from 'react';
-import {SurveyConfig} from '../../../utilities/types';
-import {ICONS} from '../../../assets/icons/icons';
+import {SurveyConfig} from '../../../../utilities/types';
+import {ICONS} from '../../../../assets/icons/icons';
 import {Link} from 'react-router-dom';
 
 interface ConfigPreviewPanelProps {

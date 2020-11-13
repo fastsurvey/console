@@ -18,8 +18,8 @@ import LoginImage from '../assets/images/secure.svg';
 import VerifyImage from '../assets/images/letter.svg';
 import LoaderOverlay from '../components/overlays/LoaderOverlay';
 import MessageQueue from '../components/messages/MessageQueue';
-import ConfigList from '../pages/dashboard/editor/ConfigList';
-import ConfigEditor from '../pages/dashboard/editor/ConfigEditor';
+import ConfigList from '../pages/dashboard/editor/list/ConfigList';
+import ConfigEditorWrapper from '../pages/dashboard/editor/stateWrapper/ConfigEditorWrapper';
 
 interface RouterProps {
     loggingIn: boolean;
@@ -55,7 +55,7 @@ function Router(props: RouterProps) {
                                                 path='/configuration/:survey_name'
                                             >
                                                 <ConfigList />
-                                                <ConfigEditor />
+                                                <ConfigEditorWrapper />
                                             </Route>
                                             <Route exact path='/results'>
                                                 <h3>Results</h3>

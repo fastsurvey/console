@@ -1,9 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import ButtonLink from '../../../components/links/ButtonLink';
-import {ReduxState, SurveyConfig} from '../../../utilities/types';
+import ButtonLink from '../../../../components/links/ButtonLink';
+import {ReduxState, SurveyConfig} from '../../../../utilities/types';
 import ConfigPreviewPanel from './ConfigPreviewPanel';
-import {ICONS} from '../../../assets/icons/icons';
+import {ICONS} from '../../../../assets/icons/icons';
 
 interface ConfigListProps {
     configs: undefined | SurveyConfig[];
