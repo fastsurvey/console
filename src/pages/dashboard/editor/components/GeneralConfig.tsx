@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import DropDown from '../../../../components/formFields/DropDown';
 import TextArea from '../../../../components/formFields/TextArea';
 import TextInput from '../../../../components/formFields/TextInput';
@@ -46,11 +46,6 @@ interface GeneralConfigProps {
 }
 
 function GeneralConfig(props: GeneralConfigProps) {
-    const [startDate, setStartDate] = useState(
-        new Date(props.config.start * 1000),
-    );
-    const [endDate, setEndDate] = useState(new Date(props.config.end * 1000));
-
     return (
         <div className='flex flex-col w-full min-h-full mt-24'>
             <div className='flex flex-row mb-4'>
@@ -151,13 +146,17 @@ function GeneralConfig(props: GeneralConfigProps) {
                         <div className='h-12 mr-4 text-xl text-right w-14 leading-12 font-weight-600'>
                             Start:
                         </div>
-                        <DateSelector date={startDate} />
+                        <DateSelector
+                            date={new Date(props.config.start * 1000)}
+                        />
                     </div>
                     <div className='flex flex-row items-center justify-center w-full'>
                         <div className='h-12 mr-4 text-xl text-right w-14 leading-12 font-weight-600'>
                             End:
                         </div>
-                        <DateSelector date={endDate} />
+                        <DateSelector
+                            date={new Date(props.config.end * 1000)}
+                        />
                     </div>
                 </div>
             </div>

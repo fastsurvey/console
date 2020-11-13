@@ -8,11 +8,17 @@ interface ControlStripButtonProps {
     first?: boolean;
     last?: boolean;
     disabled?: boolean;
+    onClick?(): void;
 }
 
 function ControlStripButton(props: ControlStripButtonProps) {
     return (
         <div
+            onClick={() => {
+                if (!props.disabled && props.onClick !== undefined) {
+                    props.onClick();
+                }
+            }}
             className={
                 'py-1 px-2 h-10 flex flex-row items-center justify-center ' +
                 (props.disabled
@@ -37,8 +43,20 @@ function EditorControlStrip(props: EditorControlStripProps) {
     return (
         <div className={'fixed h-10 flex flex-row items-center shadow rounded'}>
             <ControlStripButton
-                disabled={props.config.draft}
                 first
+                disabled={props.config.draft}
+                label='Open'
+                icon={ICONS.launch}
+                onClick={() =>
+                    window.open(
+                        `https://fastsurvey.io/${props.config.admin_name}` +
+                            `/${props.config.survey_name}`,
+                        '_blank',
+                    )
+                }
+            />
+            <ControlStripButton
+                disabled={props.config.draft}
                 label='Start Now'
                 icon={ICONS.play}
             />

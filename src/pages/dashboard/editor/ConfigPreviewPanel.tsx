@@ -44,18 +44,7 @@ function ConfigPreviewPanel(props: ConfigPreviewPanelProps) {
                     </span>
                 </div>
                 <div className='flex flex-row text-base text-blue-600 font-weight-500'>
-                    <a
-                        href={
-                            'https://fastsurvey.io/' +
-                            props.config.admin_name +
-                            '/' +
-                            props.config.survey_name
-                        }
-                        target='_blank'
-                        rel='noopener noreferrer'
-                    >
-                        <div className='w-6 h-6 mr-1'>{ICONS.link}</div>
-                    </a>
+                    <div className='w-6 h-6 mr-1'>{ICONS.link}</div>
                     <div className='h-6'>
                         {props.config.admin_name}/{props.config.survey_name}
                     </div>
