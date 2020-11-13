@@ -4,6 +4,7 @@ import {ReduxState, SurveyConfig} from '../../../../utilities/types';
 import EditorControlStrip from '../components/EditorControlStrip';
 import GeneralConfig from '../components/GeneralConfig';
 import {modifyConfigAction} from '../../../../utilities/reduxActions';
+import TextFieldConfigForm from '../components/fields/TextFieldConfigForm';
 
 interface ConfigEditorProps {
     configs: SurveyConfig[] | undefined;
@@ -33,6 +34,18 @@ function ConfigEditor(props: ConfigEditorProps) {
         >
             <EditorControlStrip config={localConfig} />
             <GeneralConfig config={localConfig} />
+            {localConfig.fields.map((fieldConfig) => {
+                switch (fieldConfig.type) {
+                    case 'Text':
+                        return (
+                            <TextFieldConfigForm fieldConfig={fieldConfig} />
+                        );
+                    default:
+                        return (
+                            <div className='w-full h-2 my-4 bg-red-600'></div>
+                        );
+                }
+            })}
         </div>
     );
 }

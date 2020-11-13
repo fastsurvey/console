@@ -46,7 +46,7 @@ const TextArea = React.forwardRef((props: TextAreaProps, ref: any) => {
             }
         >
             <textarea
-                rows={4}
+                rows={props.rows ? props.rows : 4}
                 ref={ref}
                 onKeyDown={handleKeyDown}
                 placeholder={placeholder}
@@ -57,7 +57,7 @@ const TextArea = React.forwardRef((props: TextAreaProps, ref: any) => {
                 className={
                     'font-weight-500 text-lg md:no-selection ' +
                     'border-0 rounded w-full min-h-12 max-h-128 ' +
-                    'py-2 pl-3 pr-10 md:pr-12 text-gray-800 ' +
+                    'py-2 pl-3 pr-12 text-gray-800 leading-8 ' +
                     (props.flat
                         ? 'shadow-outline-gray bg-white transition duration-150 '
                         : 'shadow ') +
@@ -77,10 +77,10 @@ const TextArea = React.forwardRef((props: TextAreaProps, ref: any) => {
             {props.charLimits && (
                 <div
                     className={
-                        'relative z-50 w-full px-1 leading-6 ' +
+                        'relative w-full px-1 leading-6 ' +
                         'overflow-hidden font-weight-600 ' +
                         (hintFulfilled ? 'text-green-500' : 'text-magenta') +
-                        ' transition-all duration-300 ' +
+                        ' transition-size-colors duration-300 ' +
                         (focused ? 'h-8 py-1 mb-2' : 'h-0 py-0 mb-0')
                     }
                 >

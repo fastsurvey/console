@@ -47,7 +47,7 @@ interface GeneralConfigProps {
 
 function GeneralConfig(props: GeneralConfigProps) {
     return (
-        <div className='flex flex-col w-full min-h-full mt-24'>
+        <div className='flex flex-col w-full min-h-full pb-4 mt-24 mb-8 border-b-4 border-gray-300'>
             <div className='flex flex-row mb-4'>
                 <div className='flex flex-row items-start w-1/2 pr-4'>
                     <div className='h-12 mr-3 text-xl font-weight-600 leading-12'>
@@ -83,14 +83,14 @@ function GeneralConfig(props: GeneralConfigProps) {
                             text:
                                 'URL-conform, 3-120 ' +
                                 `characters (${
-                                    120 - props.config.title.length
+                                    120 - props.config.survey_name.length
                                 } left)`,
                             fulfilled:
                                 props.config.survey_name.match(
                                     /^[a-zA-Z0-9-_]*$/,
                                 ) !== null &&
-                                3 <= props.config.title.length &&
-                                props.config.title.length <= 120,
+                                3 <= props.config.survey_name.length &&
+                                props.config.survey_name.length <= 120,
                         }}
                     />
                 </div>
@@ -100,7 +100,7 @@ function GeneralConfig(props: GeneralConfigProps) {
                     Description:
                 </div>
                 <TextArea
-                    value={props.config.title}
+                    value={props.config.description}
                     onChange={() => {}}
                     flat
                     charLimits={{min: 0, max: 2000}}
