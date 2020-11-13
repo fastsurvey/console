@@ -21,7 +21,8 @@ module.exports = {
                 '12': '3rem'
             },
             boxShadow: {
-                'outline-gray': '0 0 0 2px rgba(226, 232, 240, 1.0)'
+                'outline-gray': '0 0 0 2px rgba(226, 232, 240, 1.0)',
+                'outline-gray-elevated': '0 0 0 2px rgba(226, 232, 240, 1.0), 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.12)',
             },
             transitionProperty: {
                 'height': 'height',

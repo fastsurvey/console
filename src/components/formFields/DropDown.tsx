@@ -47,8 +47,11 @@ const DropDown = React.forwardRef((props: DropDownProps, ref: any) => {
         >
             <div
                 className={
-                    'flex flex-col shadow-outline-gray bg-white rounded ' +
-                    (props.hideChevron ? 'text-center ' : ' ')
+                    'flex flex-col bg-white rounded ' +
+                    (props.hideChevron ? 'text-center ' : ' ') +
+                    (isOpen
+                        ? 'shadow-outline-gray-elevated '
+                        : 'shadow-outline-gray ')
                 }
             >
                 <div
