@@ -6,6 +6,7 @@ export interface ReduxState {
     messages: Message[];
     modalOpen: boolean;
     configs: undefined | SurveyConfig[];
+    configIsDiffering: boolean;
 }
 
 export interface OAuth2Token {
@@ -30,7 +31,8 @@ export type ReduxAction =
     | OpenModalAction
     | CloseModalAction
     | AddConfigsAction
-    | ModifyConfigAction;
+    | ModifyConfigAction
+    | MarkDifferingAction;
 
 export interface LogInAction {
     type: 'LOG_IN';
@@ -72,6 +74,10 @@ export interface AddConfigsAction {
 export interface ModifyConfigAction {
     type: 'MODIFY_CONFIG';
     config: SurveyConfig;
+}
+
+export interface MarkDifferingAction {
+    type: 'MARK_DIFFERING';
 }
 
 // --------------------------------------------------------

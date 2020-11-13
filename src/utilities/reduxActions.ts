@@ -1,4 +1,9 @@
-import {AddConfigsAction, ModifyConfigAction, SurveyConfig} from './types';
+import {
+    AddConfigsAction,
+    MarkDifferingAction,
+    ModifyConfigAction,
+    SurveyConfig,
+} from './types';
 import {
     LogOutAction,
     LogInAction,
@@ -58,4 +63,8 @@ export const modifyConfigAction = (
 ): ModifyConfigAction => ({
     type: 'MODIFY_CONFIG',
     config,
+});
+
+export const markDifferingAction = (): MarkDifferingAction => ({
+    type: 'MARK_DIFFERING',
 });

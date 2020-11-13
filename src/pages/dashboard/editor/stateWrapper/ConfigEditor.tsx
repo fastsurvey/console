@@ -3,31 +3,33 @@ import {connect} from 'react-redux';
 import {ReduxState, SurveyConfig} from '../../../../utilities/types';
 import EditorControlStrip from '../components/EditorControlStrip';
 import GeneralConfig from '../components/GeneralConfig';
-import {modifyConfigAction} from '../../../../utilities/reduxActions';
+import {
+    modifyConfigAction,
+    markDifferingAction,
+} from '../../../../utilities/reduxActions';
 import FieldConfigForm from '../components/fields/FieldConfigForm';
 
 interface ConfigEditorProps {
     centralConfig: SurveyConfig;
     modifyConfig(config: SurveyConfig): void;
+    configIsDiffering: boolean;
+    markDiffering(): void;
 }
 function ConfigEditor(props: ConfigEditorProps) {
     const [localConfig, setLocalConfigState] = useState(props.centralConfig);
-    const [differing, setDiffering] = useState(false);
 
     useEffect(() => {
         setLocalConfigState(props.centralConfig);
-        setDiffering(false);
     }, [props.centralConfig.local_id]);
 
     function syncState() {
         // TODO: Validate & Push to backend
         props.modifyConfig(localConfig);
-        setDiffering(false);
     }
 
     function setLocalConfig(config: SurveyConfig) {
         // TODO: Add proper state comparison
-        setDiffering(true);
+        props.markDiffering();
         setLocalConfigState(config);
     }
 
@@ -39,7 +41,7 @@ function ConfigEditor(props: ConfigEditorProps) {
             <EditorControlStrip
                 config={localConfig}
                 setConfig={setLocalConfig}
-                differing={differing}
+                differing={props.configIsDiffering}
                 syncState={syncState}
             />
             <GeneralConfig config={localConfig} setConfig={setLocalConfig} />
@@ -53,9 +55,12 @@ function ConfigEditor(props: ConfigEditorProps) {
     );
 }
 
-const mapStateToProps = (state: ReduxState) => ({});
+const mapStateToProps = (state: ReduxState) => ({
+    configIsDiffering: state.configIsDiffering,
+});
 const mapDispatchToProps = (dispatch: any) => ({
     modifyConfig: (config: SurveyConfig) =>
         dispatch(modifyConfigAction(config)),
+    markDiffering: () => dispatch(markDifferingAction()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(ConfigEditor);

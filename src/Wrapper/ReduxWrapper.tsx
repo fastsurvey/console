@@ -26,6 +26,7 @@ function storeReducer(
         messages: [],
         modalOpen: false,
         configs: undefined,
+        configIsDiffering: false,
     },
     action: ReduxAction,
 ) {
@@ -37,6 +38,7 @@ function storeReducer(
         messages: state.messages,
         modalOpen: state.modalOpen,
         configs: state.configs,
+        configIsDiffering: state.configIsDiffering,
     };
 
     switch (action.type) {
@@ -87,7 +89,10 @@ function storeReducer(
                             : config,
                 );
             }
+            newState.configIsDiffering = false;
             break;
+        case 'MARK_DIFFERING':
+            newState.configIsDiffering = true;
         default:
             break;
     }
