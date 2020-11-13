@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import DropDown from '../../../../components/formFields/DropDown';
 import TextArea from '../../../../components/formFields/TextArea';
 import TextInput from '../../../../components/formFields/TextInput';
@@ -46,6 +46,11 @@ interface GeneralConfigProps {
 }
 
 function GeneralConfig(props: GeneralConfigProps) {
+    const [startDate, setStartDate] = useState(
+        new Date(props.config.start * 1000),
+    );
+    const [endDate, setEndDate] = useState(new Date(props.config.end * 1000));
+
     return (
         <div className='flex flex-col w-full min-h-full mt-24'>
             <div className='flex flex-row mb-4'>
@@ -116,7 +121,7 @@ function GeneralConfig(props: GeneralConfigProps) {
                         </div>
                         <div className='w-56 mr-2'>
                             <DropDown
-                                value={0}
+                                value={props.config.mode}
                                 onChange={() => {}}
                                 options={AUTH_MODE}
                             />
@@ -146,13 +151,13 @@ function GeneralConfig(props: GeneralConfigProps) {
                         <div className='h-12 mr-4 text-xl text-right w-14 leading-12 font-weight-600'>
                             Start:
                         </div>
-                        <DateSelector />
+                        <DateSelector date={startDate} />
                     </div>
                     <div className='flex flex-row items-center justify-center w-full'>
                         <div className='h-12 mr-4 text-xl text-right w-14 leading-12 font-weight-600'>
                             End:
                         </div>
-                        <DateSelector />
+                        <DateSelector date={endDate} />
                     </div>
                 </div>
             </div>
@@ -162,12 +167,15 @@ function GeneralConfig(props: GeneralConfigProps) {
 
 export default GeneralConfig;
 
-function DateSelector() {
+interface DateSelectorProps {
+    date: any;
+}
+function DateSelector(props: DateSelectorProps) {
     return (
         <React.Fragment>
             <div className='mr-2 w-14'>
                 <DropDown
-                    value={3}
+                    value={props.date.getDate()}
                     onChange={() => {}}
                     options={DAYS}
                     hideChevron
@@ -176,7 +184,7 @@ function DateSelector() {
             {DateSeparator('.')}
             <div className='mx-2 w-36'>
                 <DropDown
-                    value={10}
+                    value={props.date.getMonth()}
                     onChange={() => {}}
                     options={MONTHS}
                     hideChevron
@@ -185,7 +193,7 @@ function DateSelector() {
             {DateSeparator('.')}
             <div className='ml-2 mr-8 w-22'>
                 <DropDown
-                    value={123}
+                    value={props.date.getYear()}
                     onChange={() => {}}
                     options={YEARS}
                     hideChevron
@@ -193,7 +201,7 @@ function DateSelector() {
             </div>
             <div className='mx-2 w-14'>
                 <DropDown
-                    value={16}
+                    value={props.date.getHours()}
                     onChange={() => {}}
                     options={HOURS}
                     hideChevron
@@ -202,7 +210,7 @@ function DateSelector() {
             {DateSeparator(':')}
             <div className='ml-2 w-14'>
                 <DropDown
-                    value={20}
+                    value={props.date.getMinutes()}
                     onChange={() => {}}
                     options={MINUTES}
                     hideChevron

@@ -16,12 +16,13 @@ const DropDown = React.forwardRef((props: DropDownProps, ref: any) => {
 
     function handleKeyDown(e: any) {
         if (['Escape', 'Enter'].includes(e.key)) {
-            setOpen(false);
+            close();
         }
     }
 
     function close() {
         document.removeEventListener('click', close);
+        document.removeEventListener('keydown', handleKeyDown);
         setOpen(false);
         setTimeout(() => setZIndex('z-10'), 200);
     }
@@ -29,6 +30,7 @@ const DropDown = React.forwardRef((props: DropDownProps, ref: any) => {
     function open() {
         if (!isOpen) {
             document.addEventListener('click', close);
+            document.addEventListener('keydown', handleKeyDown);
             setOpen(true);
             setZIndex('z-20');
         }
@@ -61,7 +63,7 @@ const DropDown = React.forwardRef((props: DropDownProps, ref: any) => {
                     <div className='self-stretch flex-grow '>
                         {
                             props.options.filter(
-                                (option) => option.value == props.value,
+                                (option) => option.value === props.value,
                             )[0].label
                         }
                     </div>
@@ -87,6 +89,7 @@ const DropDown = React.forwardRef((props: DropDownProps, ref: any) => {
                 >
                     {props.options.map((option, index) => (
                         <div
+                            key={option.value}
                             className={
                                 'relative w-full h-12 px-3 py-2 ' +
                                 'leading-8 cursor-pointer ' +

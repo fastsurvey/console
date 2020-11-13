@@ -52,8 +52,8 @@ function Button(props: ButtonProps) {
                     (props.spinning ? 'opacity-0' : 'opacity-100')
                 }
             >
-                {props.icon && <div className='w-8 h-8 p-1'>{props.icon}</div>}
-                <div className='px-1'>{props.text}</div>
+                {props.icon && <div className='w-6 h-8 py-1'>{props.icon}</div>}
+                <div className='px-2'>{props.text}</div>
             </div>
             <div
                 className={
