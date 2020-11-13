@@ -59,13 +59,17 @@ function storeReducer(
             Cookies.remove('oauth2_token');
             break;
         case 'OPEN_MESSAGE':
-            if (!newState.messages.includes(action.text)) {
-                newState.messages = [action.text].concat(newState.messages);
+            if (
+                newState.messages.filter(
+                    (message) => message.text === action.message.text,
+                ).length === 0
+            ) {
+                newState.messages = [...[action.message], ...newState.messages];
             }
             break;
         case 'CLOSE_MESSAGE':
-            newState.messages = [...newState.messages].filter((text) => {
-                return text !== action.text;
+            newState.messages = newState.messages.filter((message) => {
+                return message.text !== action.text;
             });
             break;
         case 'CLOSE_ALL_MESSAGES':
@@ -93,6 +97,11 @@ function storeReducer(
             break;
         case 'MARK_DIFFERING':
             newState.configIsDiffering = action.differing;
+            newState.messages = newState.messages.filter((message) => {
+                return (
+                    message.text !== 'Please save or undo your changes first!'
+                );
+            });
         default:
             break;
     }

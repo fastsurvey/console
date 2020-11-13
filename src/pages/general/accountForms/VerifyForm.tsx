@@ -1,7 +1,12 @@
 import React, {useRef, useState} from 'react';
 import TextInput from '../../../components/formFields/TextInput';
 import {connect} from 'react-redux';
-import {OAuth2Token, Account, ReduxState} from '../../../utilities/types';
+import {
+    OAuth2Token,
+    Account,
+    ReduxState,
+    Message,
+} from '../../../utilities/types';
 import {authPostRequest} from '../../../utilities/axiosClients';
 import {
     logInAction,
@@ -12,7 +17,7 @@ import ButtonLink from '../../../components/links/ButtonLink';
 
 interface VerifyFormProps {
     logIn(oauth2_token: OAuth2Token, account: Account): void;
-    openMessage(content: string): void;
+    openMessage(message: Message): void;
     closeAllMessages(): void;
 }
 
@@ -46,12 +51,16 @@ function VerifyForm(props: VerifyFormProps) {
                 .catch((error) => {
                     setSubmitting(false);
                     if (error?.response?.status === 401) {
-                        props.openMessage('Invalid password or wrong link');
+                        props.openMessage({
+                            text: 'Invalid password or wrong link',
+                            type: 'error',
+                        });
                     } else {
                         // Invalid password formats will be catched by frontend
-                        props.openMessage(
-                            'Server error. Please try again later',
-                        );
+                        props.openMessage({
+                            text: 'Server error. Please try again later',
+                            type: 'error',
+                        });
                     }
                 });
         }
@@ -116,7 +125,7 @@ const mapStateToProps = (state: ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
     logIn: (oauth2_token: OAuth2Token, account: Account) =>
         dispatch(logInAction(oauth2_token, account)),
-    openMessage: (content: string) => dispatch(openMessageAction(content)),
+    openMessage: (message: Message) => dispatch(openMessageAction(message)),
     closeAllMessages: () => dispatch(closeAllMessagesAction()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(VerifyForm);

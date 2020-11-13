@@ -1,6 +1,7 @@
 import {
     AddConfigsAction,
     MarkDifferingAction,
+    Message,
     ModifyConfigAction,
     SurveyConfig,
 } from './types';
@@ -29,9 +30,9 @@ export const logOutAction = (): LogOutAction => ({
     type: 'LOG_OUT',
 });
 
-export const openMessageAction = (text: string): OpenMessageAction => ({
+export const openMessageAction = (message: Message): OpenMessageAction => ({
     type: 'OPEN_MESSAGE',
-    text,
+    message,
 });
 
 export const closeMessageAction = (text: string): CloseMessageAction => ({

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {Account, ReduxState} from '../../../utilities/types';
+import {Account, Message, ReduxState} from '../../../utilities/types';
 import {
     logOutAction,
     openMessageAction,
@@ -14,7 +14,7 @@ import ButtonLink from '../../../components/links/ButtonLink';
 interface VerifyWallProps {
     account: undefined | Account;
     logOut(): void;
-    openMessage(content: string): void;
+    openMessage(message: Message): void;
     closeAllMessages(): void;
 }
 
@@ -36,12 +36,16 @@ function VerifyWall(props: VerifyWallProps) {
                 .catch((error) => {
                     setSubmitting(false);
                     if (error?.response?.status === 400) {
-                        props.openMessage('Invalid email address');
+                        props.openMessage({
+                            text: 'Invalid email address',
+                            type: 'error',
+                        });
                     } else {
                         // Invalid password formats will be catched by frontend
-                        props.openMessage(
-                            'Server error. Please try again later',
-                        );
+                        props.openMessage({
+                            text: 'Server error. Please try again later',
+                            type: 'error',
+                        });
                     }
                 });
         }
@@ -77,7 +81,7 @@ const mapStateToProps = (state: ReduxState) => ({
 });
 const mapDispatchToProps = (dispatch: any) => ({
     logOut: () => dispatch(logOutAction()),
-    openMessage: (content: string) => dispatch(openMessageAction(content)),
+    openMessage: (message: Message) => dispatch(openMessageAction(message)),
     closeAllMessages: () => dispatch(closeAllMessagesAction()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(VerifyWall);

@@ -20,7 +20,10 @@ export interface Account {
     email_verified: boolean;
 }
 
-export type Message = string;
+export type Message = {
+    text: string;
+    type: 'info' | 'warning' | 'error' | 'success';
+};
 
 export type ReduxAction =
     | LogInAction
@@ -46,7 +49,7 @@ export interface LogOutAction {
 
 export interface OpenMessageAction {
     type: 'OPEN_MESSAGE';
-    text: string;
+    message: Message;
 }
 
 export interface CloseMessageAction {

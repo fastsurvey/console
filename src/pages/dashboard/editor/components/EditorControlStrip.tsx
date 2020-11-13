@@ -2,6 +2,7 @@ import React from 'react';
 import {ReduxState, SurveyConfig} from '../../../../utilities/types';
 import {ICONS} from '../../../../assets/icons/icons';
 import {connect} from 'react-redux';
+import {closeMessageAction} from '../../../../utilities/reduxActions';
 
 interface ControlStripButtonProps {
     label: string;

@@ -1,15 +1,18 @@
 import React from 'react';
-import {ReduxState, SurveyConfig} from '../../../../utilities/types';
+import {Message, ReduxState, SurveyConfig} from '../../../../utilities/types';
 import {ICONS} from '../../../../assets/icons/icons';
 import {useHistory, useLocation} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {openMessageAction} from '../../../../utilities/reduxActions';
+import {
+    closeMessageAction,
+    openMessageAction,
+} from '../../../../utilities/reduxActions';
 
 interface ConfigPreviewPanelProps {
     config: SurveyConfig;
     index: number;
     configIsDiffering: boolean;
-    openMessage(text: string): void;
+    openMessage(message: Message): void;
 }
 
 function ConfigPreviewPanel(props: ConfigPreviewPanelProps) {
@@ -26,7 +29,10 @@ function ConfigPreviewPanel(props: ConfigPreviewPanelProps) {
             if (!props.configIsDiffering) {
                 history.push(`/configuration/${props.config.survey_name}`);
             } else {
-                props.openMessage('Please save your progess first!');
+                props.openMessage({
+                    text: 'Please save or undo your changes first!',
+                    type: 'warning',
+                });
             }
         }
     }
@@ -79,6 +85,6 @@ const mapStateToProps = (state: ReduxState) => ({
     configIsDiffering: state.configIsDiffering,
 });
 const mapDispatchToProps = (dispatch: any) => ({
-    openMessage: (text: string) => dispatch(openMessageAction(text)),
+    openMessage: (message: Message) => dispatch(openMessageAction(message)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(ConfigPreviewPanel);

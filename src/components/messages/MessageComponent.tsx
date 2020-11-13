@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {ICONS} from '../../assets/icons/icons';
+import {Message} from '../../utilities/types';
 
-interface MessageProps {
-    text: string;
+interface MessageComponentProps {
+    message: Message;
     close(): void;
 }
 
-function Message(props: MessageProps) {
+function MessageComponent(props: MessageComponentProps) {
     const [size, setSize] = useState('h-0 py-0');
     const [delay, setDelay] = useState('delay-200');
     const [toBeClosed, setToBeClosed] = useState(false);
@@ -26,18 +27,35 @@ function Message(props: MessageProps) {
         }, 300);
     }
 
+    let colors: string;
+    switch (props.message.type) {
+        case 'error':
+            colors = 'bg-red-600 text-red-100';
+            break;
+        case 'warning':
+            colors = 'bg-yellow-400 text-yellow-800';
+            break;
+        case 'success':
+            colors = 'bg-green-500 text-green-100';
+            break;
+        default:
+            colors = 'bg-gray-300 text-gray-800';
+    }
+
     return (
         <div
             className={
-                'flex flex-row items-center text-gray-800 font-weight-600 ' +
-                'overflow-hidden pl-3 pr-1 m-2 bg-gray-100 rounded shadow ' +
+                'flex flex-row items-center font-weight-600 ' +
+                'overflow-hidden pl-3 pr-1 m-2 rounded shadow ' +
                 size +
+                ' ' +
+                colors +
                 ' ' +
                 delay +
                 ' transition-all duration-300'
             }
         >
-            <div className='text-lg'>{props.text}</div>
+            <div className='text-lg'>{props.message.text}</div>
             <div className='flex-grow' />
             <div className='w-10 h-10 p-1 cursor-pointer' onClick={handleClose}>
                 {ICONS.close}
@@ -46,4 +64,4 @@ function Message(props: MessageProps) {
     );
 }
 
-export default Message;
+export default MessageComponent;
