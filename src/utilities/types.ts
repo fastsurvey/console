@@ -71,13 +71,13 @@ export interface AddConfigsAction {
 
 export interface ModifyConfigAction {
     type: 'MODIFY_CONFIG';
-    survey_name: string;
     config: SurveyConfig;
 }
 
 // --------------------------------------------------------
 
 export interface SurveyConfig {
+    local_id: number;
     admin_name: string;
     survey_name: string;
     start: number;

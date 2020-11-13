@@ -54,10 +54,8 @@ export const addConfigsAction = (
 });
 
 export const modifyConfigAction = (
-    survey_name: string,
     config: SurveyConfig,
 ): ModifyConfigAction => ({
     type: 'MODIFY_CONFIG',
-    survey_name,
     config,
 });

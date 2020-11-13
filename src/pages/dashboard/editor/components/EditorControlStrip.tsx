@@ -37,9 +37,26 @@ function ControlStripButton(props: ControlStripButtonProps) {
 }
 interface EditorControlStripProps {
     config: SurveyConfig;
+    setConfig(config: SurveyConfig): void;
+    differing: boolean;
+    syncState(): void;
 }
 
 function EditorControlStrip(props: EditorControlStripProps) {
+    function startNow() {
+        props.setConfig({
+            ...props.config,
+            ...{start: Math.floor(Date.now() / 1000)},
+        });
+    }
+
+    function endNow() {
+        props.setConfig({
+            ...props.config,
+            ...{end: Math.floor(Date.now() / 1000)},
+        });
+    }
+
     return (
         <div className={'fixed h-10 flex flex-row items-center shadow rounded'}>
             <ControlStripButton
@@ -59,17 +76,25 @@ function EditorControlStrip(props: EditorControlStripProps) {
                 disabled={props.config.draft}
                 label='Start Now'
                 icon={ICONS.play}
+                onClick={startNow}
             />
             <ControlStripButton
                 disabled={props.config.draft}
                 label='End Now'
                 icon={ICONS.stop}
+                onClick={endNow}
             />
             <ControlStripButton
                 label={props.config.draft ? 'Publish' : 'Draft'}
                 icon={props.config.draft ? ICONS.open_in_browser : ICONS.create}
             />
-            <ControlStripButton last label='Save' icon={ICONS.save} />
+            <ControlStripButton
+                last
+                disabled={!props.differing}
+                label='Save'
+                icon={ICONS.save}
+                onClick={props.syncState}
+            />
         </div>
     );
 }

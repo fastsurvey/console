@@ -25,7 +25,7 @@ const TextInput = React.forwardRef((props: TextInputProps, ref: any) => {
             if (props.onEnter !== undefined) {
                 props.onEnter();
             }
-        } else if (e.key === 'Escape') {
+        } else if (e.key === 'Escape' || e.key === 'Tab') {
             e.target.blur();
         }
     }

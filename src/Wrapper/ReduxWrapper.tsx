@@ -82,7 +82,7 @@ function storeReducer(
             if (newState.configs !== undefined) {
                 newState.configs = newState.configs.map(
                     (config: SurveyConfig) =>
-                        config.survey_name === action.survey_name
+                        config.local_id === action.config.local_id
                             ? action.config
                             : config,
                 );
@@ -107,6 +107,9 @@ export function ReduxWrapper(props: ReduxWrapperProps) {
     async function logIn(oauth2_token: OAuth2Token, account: Account) {
         store.dispatch(logInAction(oauth2_token, account));
         await fetchSurveys(oauth2_token, (configs: SurveyConfig[]) => {
+            configs.forEach((config, index) => {
+                config.local_id = index;
+            });
             store.dispatch(addConfigsAction(configs));
         });
     }

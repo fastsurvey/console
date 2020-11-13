@@ -22,7 +22,14 @@
     "build:tailwind": "tailwind build src/styles/tailwind.css -o src/styles/tailwind.out.css"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "plugins": [
+      "react-hooks"
+    ],
+    "rules": {
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn"
+    }
   },
   "browserslist": {
     "production": [
@@ -48,6 +55,7 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-redux": "^7.1.9",
     "@types/react-router-dom": "^5.1.6",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "react-scripts": "3.4.3",
     "source-map-explorer": "^2.5.0",
     "tailwindcss": "^1.8.13",

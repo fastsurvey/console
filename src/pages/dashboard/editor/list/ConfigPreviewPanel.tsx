@@ -25,7 +25,7 @@ function ConfigPreviewPanel(props: ConfigPreviewPanelProps) {
             <div
                 className={
                     'w-full p-2 my-1 bg-white rounded-l shadow ' +
-                    'border-r-4 border-' +
+                    'no-selection border-r-4 border-' +
                     statusColor
                 }
             >

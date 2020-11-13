@@ -43,6 +43,7 @@ const MINUTES = [...Array(60).keys()].map((i) => {
 
 interface GeneralConfigProps {
     config: SurveyConfig;
+    setConfig(config: SurveyConfig): void;
 }
 
 function GeneralConfig(props: GeneralConfigProps) {
@@ -55,7 +56,12 @@ function GeneralConfig(props: GeneralConfigProps) {
                     </div>
                     <TextInput
                         value={props.config.title}
-                        onChange={() => {}}
+                        onChange={(newValue: string) => {
+                            props.setConfig({
+                                ...props.config,
+                                ...{title: newValue},
+                            });
+                        }}
                         flat
                         wrapperClassName='self-stretch flex-grow'
                         placeholder='The title of your survey'

@@ -4,37 +4,45 @@ import {ReduxState, SurveyConfig} from '../../../../utilities/types';
 import EditorControlStrip from '../components/EditorControlStrip';
 import GeneralConfig from '../components/GeneralConfig';
 import {modifyConfigAction} from '../../../../utilities/reduxActions';
-import TextFieldConfigForm from '../components/fields/TextFieldConfigForm';
 import FieldConfigForm from '../components/fields/FieldConfigForm';
 
 interface ConfigEditorProps {
-    configs: SurveyConfig[] | undefined;
     centralConfig: SurveyConfig;
-    modifyConfig(survey_name: string, config: SurveyConfig): void;
+    modifyConfig(config: SurveyConfig): void;
 }
 function ConfigEditor(props: ConfigEditorProps) {
-    const [localConfig, setLocalConfig] = useState(props.centralConfig);
-    const [survey_name, set_survey_name] = useState(
-        props.centralConfig.survey_name,
-    );
+    const [localConfig, setLocalConfigState] = useState(props.centralConfig);
+    const [differing, setDiffering] = useState(false);
 
     useEffect(() => {
-        setLocalConfig(props.centralConfig);
-        set_survey_name(props.centralConfig.survey_name);
+        setLocalConfigState(props.centralConfig);
+        setDiffering(false);
+    }, [props.centralConfig.local_id]);
 
-        // returned function will be called on component unmount
-        return () => {
-            props.modifyConfig(survey_name, localConfig);
-        };
-    }, [props.centralConfig, props.centralConfig.survey_name]);
+    function syncState() {
+        // TODO: Validate & Push to backend
+        props.modifyConfig(localConfig);
+        setDiffering(false);
+    }
+
+    function setLocalConfig(config: SurveyConfig) {
+        // TODO: Add proper state comparison
+        setDiffering(true);
+        setLocalConfigState(config);
+    }
 
     return (
         <div
             id='ConfigEditor'
-            className='flex flex-col items-center px-8 pt-4 pb-12'
+            className='flex flex-col items-center px-8 pt-4 pb-12 no-selection'
         >
-            <EditorControlStrip config={localConfig} />
-            <GeneralConfig config={localConfig} />
+            <EditorControlStrip
+                config={localConfig}
+                setConfig={setLocalConfig}
+                differing={differing}
+                syncState={syncState}
+            />
+            <GeneralConfig config={localConfig} setConfig={setLocalConfig} />
             {localConfig.fields.map((fieldConfig) => (
                 <FieldConfigForm
                     key={fieldConfig.type + fieldConfig.title}
@@ -45,11 +53,9 @@ function ConfigEditor(props: ConfigEditorProps) {
     );
 }
 
-const mapStateToProps = (state: ReduxState) => ({
-    configs: state.configs,
-});
+const mapStateToProps = (state: ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
-    modifyConfig: (survey_name: string, config: SurveyConfig) =>
-        dispatch(modifyConfigAction(survey_name, config)),
+    modifyConfig: (config: SurveyConfig) =>
+        dispatch(modifyConfigAction(config)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(ConfigEditor);
