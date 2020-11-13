@@ -92,7 +92,7 @@ function storeReducer(
             newState.configIsDiffering = false;
             break;
         case 'MARK_DIFFERING':
-            newState.configIsDiffering = true;
+            newState.configIsDiffering = action.differing;
         default:
             break;
     }

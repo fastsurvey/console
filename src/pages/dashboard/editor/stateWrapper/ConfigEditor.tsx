@@ -12,7 +12,7 @@ import FieldConfigForm from '../components/fields/FieldConfigForm';
 interface ConfigEditorProps {
     centralConfig: SurveyConfig;
     modifyConfig(config: SurveyConfig): void;
-    markDiffering(): void;
+    markDiffering(differing: boolean): void;
 }
 function ConfigEditor(props: ConfigEditorProps) {
     const [localConfig, setLocalConfigState] = useState(props.centralConfig);
@@ -26,9 +26,14 @@ function ConfigEditor(props: ConfigEditorProps) {
         props.modifyConfig(localConfig);
     }
 
+    function revertState() {
+        props.markDiffering(false);
+        setLocalConfigState(props.centralConfig);
+    }
+
     function setLocalConfig(config: SurveyConfig) {
         // TODO: Add proper state comparison
-        props.markDiffering();
+        props.markDiffering(true);
         setLocalConfigState(config);
     }
 
@@ -41,6 +46,7 @@ function ConfigEditor(props: ConfigEditorProps) {
                 config={localConfig}
                 setConfig={setLocalConfig}
                 syncState={syncState}
+                revertState={revertState}
             />
             <GeneralConfig config={localConfig} setConfig={setLocalConfig} />
             {localConfig.fields.map((fieldConfig) => (
@@ -57,6 +63,7 @@ const mapStateToProps = (state: ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
     modifyConfig: (config: SurveyConfig) =>
         dispatch(modifyConfigAction(config)),
-    markDiffering: () => dispatch(markDifferingAction()),
+    markDiffering: (differing: boolean) =>
+        dispatch(markDifferingAction(differing)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(ConfigEditor);

@@ -41,6 +41,7 @@ interface EditorControlStripProps {
     setConfig(config: SurveyConfig): void;
     configIsDiffering: boolean;
     syncState(): void;
+    revertState(): void;
 }
 
 function EditorControlStrip(props: EditorControlStripProps) {
@@ -88,6 +89,12 @@ function EditorControlStrip(props: EditorControlStripProps) {
             <ControlStripButton
                 label={props.config.draft ? 'Publish' : 'Draft'}
                 icon={props.config.draft ? ICONS.open_in_browser : ICONS.create}
+            />
+            <ControlStripButton
+                disabled={!props.configIsDiffering}
+                label='Revert'
+                icon={ICONS.undo}
+                onClick={props.revertState}
             />
             <ControlStripButton
                 last

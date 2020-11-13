@@ -65,6 +65,9 @@ export const modifyConfigAction = (
     config,
 });
 
-export const markDifferingAction = (): MarkDifferingAction => ({
+export const markDifferingAction = (
+    differing: boolean,
+): MarkDifferingAction => ({
     type: 'MARK_DIFFERING',
+    differing,
 });

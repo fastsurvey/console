@@ -78,6 +78,7 @@ export interface ModifyConfigAction {
 
 export interface MarkDifferingAction {
     type: 'MARK_DIFFERING';
+    differing: boolean;
 }
 
 // --------------------------------------------------------
