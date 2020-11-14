@@ -1,8 +1,13 @@
 import React from 'react';
-import {ReduxState, SurveyConfig} from '../../../../../utilities/types';
+import {
+    Message,
+    ReduxState,
+    SurveyConfig,
+} from '../../../../../utilities/types';
 import {ICONS} from '../../../../../assets/icons/icons';
 import {connect} from 'react-redux';
 import ControlStripButton from './ControlStripButton';
+import {openMessageAction} from '../../../../../utilities/reduxActions';
 
 interface EditorControlStripProps {
     config: SurveyConfig;
@@ -10,6 +15,7 @@ interface EditorControlStripProps {
     configIsDiffering: boolean;
     syncState(): void;
     revertState(): void;
+    openMessage(message: Message): void;
 }
 
 function EditorControlStrip(props: EditorControlStripProps) {
@@ -17,7 +23,7 @@ function EditorControlStrip(props: EditorControlStripProps) {
         // TODO: Push new start timestamp to server
         props.setConfig({
             ...props.config,
-            ...{start: Math.floor(Date.now() / 1000)},
+            start: Math.floor(Date.now() / 1000),
         });
     }
 
@@ -25,7 +31,7 @@ function EditorControlStrip(props: EditorControlStripProps) {
         // TODO: Push new end timestamp to server
         props.setConfig({
             ...props.config,
-            ...{end: Math.floor(Date.now() / 1000)},
+            end: Math.floor(Date.now() / 1000),
         });
     }
 
@@ -33,16 +39,23 @@ function EditorControlStrip(props: EditorControlStripProps) {
         // TODO: Push new end timestamp to server
         props.setConfig({
             ...props.config,
-            ...{draft: true},
+            draft: true,
         });
     }
 
     function publishNow() {
         // TODO: Push new end timestamp to server
-        props.setConfig({
-            ...props.config,
-            ...{draft: false},
-        });
+        if (props.configIsDiffering) {
+            props.openMessage({
+                text: 'Please save or undo your changes first!',
+                type: 'warning',
+            });
+        } else {
+            props.setConfig({
+                ...props.config,
+                draft: false,
+            });
+        }
     }
 
     return (
@@ -97,7 +110,7 @@ function EditorControlStrip(props: EditorControlStripProps) {
                         <ControlStripButton
                             first
                             disabled={!props.configIsDiffering}
-                            label='Revert'
+                            label='Undo'
                             icon={ICONS.undo}
                             onClick={props.revertState}
                         />
@@ -123,5 +136,7 @@ function EditorControlStrip(props: EditorControlStripProps) {
 const mapStateToProps = (state: ReduxState) => ({
     configIsDiffering: state.configIsDiffering,
 });
-const mapDispatchToProps = (dispatch: any) => ({});
+const mapDispatchToProps = (dispatch: any) => ({
+    openMessage: (message: Message) => dispatch(openMessageAction(message)),
+});
 export default connect(mapStateToProps, mapDispatchToProps)(EditorControlStrip);

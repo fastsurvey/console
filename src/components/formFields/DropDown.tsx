@@ -58,11 +58,11 @@ const DropDown = React.forwardRef((props: DropDownProps, ref: any) => {
                 <div
                     className={
                         'h-12 px-3 py-2 leading-8 ' +
-                        'w-full flex flex-row rounded ' +
+                        'w-full flex flex-row ' +
                         'transition-colors duration-200 ' +
                         (isOpen ? 'bg-gray-300 ' : ' ') +
                         (props.disabled
-                            ? 'cursor-not-allowed bg-gray-200 '
+                            ? 'cursor-not-allowed bg-gray-200 rounded '
                             : 'cursor-pointer ')
                     }
                     onClick={open}
