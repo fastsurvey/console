@@ -14,6 +14,7 @@ interface EditorControlStripProps {
 
 function EditorControlStrip(props: EditorControlStripProps) {
     function startNow() {
+        // TODO: Push new start timestamp to server
         props.setConfig({
             ...props.config,
             ...{start: Math.floor(Date.now() / 1000)},
@@ -21,9 +22,26 @@ function EditorControlStrip(props: EditorControlStripProps) {
     }
 
     function endNow() {
+        // TODO: Push new end timestamp to server
         props.setConfig({
             ...props.config,
             ...{end: Math.floor(Date.now() / 1000)},
+        });
+    }
+
+    function editNow() {
+        // TODO: Push new end timestamp to server
+        props.setConfig({
+            ...props.config,
+            ...{draft: true},
+        });
+    }
+
+    function publishNow() {
+        // TODO: Push new end timestamp to server
+        props.setConfig({
+            ...props.config,
+            ...{draft: false},
         });
     }
 
@@ -68,8 +86,9 @@ function EditorControlStrip(props: EditorControlStripProps) {
                         />
                         <ControlStripButton
                             last
-                            label='Draft'
+                            label='Edit'
                             icon={ICONS.create}
+                            onClick={editNow}
                         />
                     </React.Fragment>
                 )}
@@ -77,21 +96,22 @@ function EditorControlStrip(props: EditorControlStripProps) {
                     <React.Fragment>
                         <ControlStripButton
                             first
-                            label='Publish'
-                            icon={ICONS.open_in_browser}
-                        />
-                        <ControlStripButton
                             disabled={!props.configIsDiffering}
                             label='Revert'
                             icon={ICONS.undo}
                             onClick={props.revertState}
                         />
                         <ControlStripButton
-                            last
                             disabled={!props.configIsDiffering}
                             label='Save'
                             icon={ICONS.save}
                             onClick={props.syncState}
+                        />
+                        <ControlStripButton
+                            last
+                            label='Publish'
+                            icon={ICONS.open_in_browser}
+                            onClick={publishNow}
                         />
                     </React.Fragment>
                 )}

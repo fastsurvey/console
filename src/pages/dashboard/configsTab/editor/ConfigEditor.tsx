@@ -40,8 +40,8 @@ function ConfigEditor(props: ConfigEditorProps) {
     return (
         <React.Fragment>
             <EditorControlStrip
-                config={localConfig}
-                setConfig={setLocalConfig}
+                config={props.centralConfig}
+                setConfig={props.modifyConfig}
                 syncState={syncState}
                 revertState={revertState}
             />

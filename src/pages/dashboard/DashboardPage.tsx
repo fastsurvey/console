@@ -27,6 +27,7 @@ function DashBoardPage(props: DashBoardPageProps) {
         if (props.loggedIn && props.oauth2_token !== undefined) {
             fetch(props.oauth2_token);
         }
+        // eslint-disable-next-line
     }, [props.loggedIn, props.oauth2_token]);
 
     return (

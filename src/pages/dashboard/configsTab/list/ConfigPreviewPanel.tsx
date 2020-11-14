@@ -38,8 +38,17 @@ function ConfigPreviewPanel(props: ConfigPreviewPanelProps) {
         statusColor = 'gray-500';
         statusText = 'Draft';
     } else {
-        statusColor = 'green-500';
-        statusText = 'Running';
+        const now = Date.now() / 1000;
+        if (now < props.config.start) {
+            statusColor = 'yellow-600';
+            statusText = 'Pending';
+        } else if (now > props.config.end) {
+            statusColor = 'gray-700';
+            statusText = 'Finished';
+        } else {
+            statusColor = 'green-500';
+            statusText = 'Running';
+        }
     }
 
     return (
