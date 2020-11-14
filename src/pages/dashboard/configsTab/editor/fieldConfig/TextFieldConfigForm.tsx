@@ -5,9 +5,16 @@ import {SurveyField, TextField} from '../../../../../utilities/types';
 interface TextFieldConfigFormProps {
     fieldConfig: TextField;
     setFieldConfig(fieldConfig: TextField): void;
+    disabled: boolean;
 }
 
 function TextFieldConfigForm(props: TextFieldConfigFormProps) {
+    const commonProps = {
+        disabled: props.disabled,
+        flat: true,
+        wrapperClassName: 'w-28',
+    };
+
     return (
         <div className='flex flex-row'>
             <div className='flex flex-row items-start mr-8'>
@@ -15,6 +22,7 @@ function TextFieldConfigForm(props: TextFieldConfigFormProps) {
                     Min. Characters:
                 </div>
                 <TextInput
+                    {...commonProps}
                     value={props.fieldConfig.min_chars.toString()}
                     onChange={(newValue: string) =>
                         props.setFieldConfig({
@@ -23,8 +31,6 @@ function TextFieldConfigForm(props: TextFieldConfigFormProps) {
                                 newValue.length > 0 ? parseInt(newValue) : 0,
                         })
                     }
-                    flat
-                    wrapperClassName='w-28'
                     hint={{
                         text: '<= max char.',
                         fulfilled:
@@ -39,6 +45,7 @@ function TextFieldConfigForm(props: TextFieldConfigFormProps) {
                     Max. Characters:
                 </div>
                 <TextInput
+                    {...commonProps}
                     value={props.fieldConfig.max_chars.toString()}
                     onChange={(newValue: string) =>
                         props.setFieldConfig({
@@ -47,8 +54,6 @@ function TextFieldConfigForm(props: TextFieldConfigFormProps) {
                                 newValue.length > 0 ? parseInt(newValue) : 0,
                         })
                     }
-                    flat
-                    wrapperClassName='w-28'
                     hint={{
                         text: '<= 2000',
                         fulfilled: props.fieldConfig.max_chars <= 2000,

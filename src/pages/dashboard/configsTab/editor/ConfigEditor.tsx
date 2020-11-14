@@ -74,6 +74,7 @@ function ConfigEditor(props: ConfigEditorProps) {
                         setFieldConfig={(fieldConfig: SurveyField) =>
                             setFieldConfig(fieldConfig, index)
                         }
+                        disabled={!localConfig.draft}
                     />
                 ))}
             </div>

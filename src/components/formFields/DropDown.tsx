@@ -8,6 +8,7 @@ interface DropDownProps {
     className?: string;
     onEnter?(): void;
     hideChevron?: boolean;
+    disabled?: boolean;
 }
 
 const DropDown = React.forwardRef((props: DropDownProps, ref: any) => {
@@ -28,7 +29,7 @@ const DropDown = React.forwardRef((props: DropDownProps, ref: any) => {
     }
 
     function open() {
-        if (!isOpen) {
+        if (!isOpen && !props.disabled) {
             document.addEventListener('click', close);
             document.addEventListener('keydown', handleKeyDown);
             setOpen(true);
@@ -57,9 +58,12 @@ const DropDown = React.forwardRef((props: DropDownProps, ref: any) => {
                 <div
                     className={
                         'h-12 px-3 py-2 leading-8 ' +
-                        'w-full flex flex-row cursor-pointer ' +
+                        'w-full flex flex-row rounded ' +
                         'transition-colors duration-200 ' +
-                        (isOpen ? 'bg-gray-300 ' : 'bg-transparent ')
+                        (isOpen ? 'bg-gray-300 ' : ' ') +
+                        (props.disabled
+                            ? 'cursor-not-allowed bg-gray-200 '
+                            : 'cursor-pointer ')
                     }
                     onClick={open}
                 >

@@ -12,6 +12,9 @@ interface GeneralConfigProps {
 }
 
 function GeneralConfig(props: GeneralConfigProps) {
+    const commonProps = {
+        disabled: !props.config.draft,
+    };
     return (
         <div className='flex flex-col w-full min-h-full pt-4 pb-4 mb-8 border-b-4 border-gray-500'>
             <div className='flex flex-row mb-4'>
@@ -20,6 +23,8 @@ function GeneralConfig(props: GeneralConfigProps) {
                         Title:
                     </div>
                     <TextInput
+                        {...commonProps}
+                        flat
                         value={props.config.title}
                         onChange={(newValue: string) => {
                             props.setConfig({
@@ -27,8 +32,6 @@ function GeneralConfig(props: GeneralConfigProps) {
                                 ...{title: newValue},
                             });
                         }}
-                        flat
-                        wrapperClassName='self-stretch flex-grow'
                         placeholder='The title of your survey'
                         hint={{
                             text:
@@ -38,6 +41,7 @@ function GeneralConfig(props: GeneralConfigProps) {
                                 1 <= props.config.title.length &&
                                 props.config.title.length <= 120,
                         }}
+                        wrapperClassName='self-stretch flex-grow'
                     />
                 </div>
                 <div className='flex flex-row items-start w-1/2 pl-4'>
@@ -45,6 +49,8 @@ function GeneralConfig(props: GeneralConfigProps) {
                         Identifier:
                     </div>
                     <TextInput
+                        {...commonProps}
+                        flat
                         value={props.config.survey_name}
                         onChange={(newValue: string) => {
                             props.setConfig({
@@ -52,8 +58,6 @@ function GeneralConfig(props: GeneralConfigProps) {
                                 ...{survey_name: newValue},
                             });
                         }}
-                        flat
-                        wrapperClassName='self-stretch flex-grow'
                         placeholder='URL conform identifier'
                         hint={{
                             text:
@@ -68,6 +72,7 @@ function GeneralConfig(props: GeneralConfigProps) {
                                 3 <= props.config.survey_name.length &&
                                 props.config.survey_name.length <= 120,
                         }}
+                        wrapperClassName='self-stretch flex-grow'
                     />
                 </div>
             </div>
@@ -76,6 +81,8 @@ function GeneralConfig(props: GeneralConfigProps) {
                     Description:
                 </div>
                 <TextArea
+                    {...commonProps}
+                    flat
                     value={props.config.description}
                     onChange={(newValue: string) => {
                         props.setConfig({
@@ -83,7 +90,6 @@ function GeneralConfig(props: GeneralConfigProps) {
                             ...{description: newValue},
                         });
                     }}
-                    flat
                     charLimits={{min: 0, max: 2000}}
                     className='leading-8'
                     wrapperClassName='self-stretch flex-grow'
@@ -97,6 +103,7 @@ function GeneralConfig(props: GeneralConfigProps) {
                         </div>
                         <div className='w-56 mr-2'>
                             <DropDown
+                                {...commonProps}
                                 value={props.config.mode}
                                 onChange={(newValue: 0 | 1 | 2) => {
                                     props.setConfig({
@@ -113,6 +120,8 @@ function GeneralConfig(props: GeneralConfigProps) {
                             Submission Limit:
                         </div>
                         <TextInput
+                            {...commonProps}
+                            flat
                             value={props.config.submission_limit.toString()}
                             onChange={(newValue: string) => {
                                 props.setConfig({
@@ -125,7 +134,6 @@ function GeneralConfig(props: GeneralConfigProps) {
                                     },
                                 });
                             }}
-                            flat
                             wrapperClassName='w-32'
                             hint={{
                                 text: '1 - 10.000',
@@ -143,6 +151,7 @@ function GeneralConfig(props: GeneralConfigProps) {
                             Start:
                         </div>
                         <DateSelectorRow
+                            {...commonProps}
                             date={new Date(props.config.start * 1000)}
                             setNewTimestamp={(timestamp: number) => {
                                 props.setConfig({
@@ -157,6 +166,7 @@ function GeneralConfig(props: GeneralConfigProps) {
                             End:
                         </div>
                         <DateSelectorRow
+                            {...commonProps}
                             date={new Date(props.config.end * 1000)}
                             setNewTimestamp={(timestamp: number) => {
                                 props.setConfig({

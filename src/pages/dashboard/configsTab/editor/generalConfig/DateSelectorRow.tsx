@@ -5,6 +5,7 @@ import {MONTHS, YEARS, HOURS, MINUTES} from '../constants';
 interface DateSelectorProps {
     date: any;
     setNewTimestamp(timestamp: number): void;
+    disabled?: boolean;
 }
 function DateSelector(props: DateSelectorProps) {
     function getDaysInMonth(year: number, month: number) {
@@ -71,59 +72,64 @@ function DateSelector(props: DateSelectorProps) {
         props.setNewTimestamp(newDate.getTime() / 1000);
     }
 
+    const commonProps = {
+        disabled: props.disabled,
+        hideChevron: true,
+    };
+
     return (
         <React.Fragment>
             <div className='mr-2 w-14'>
                 <DropDown
+                    {...commonProps}
                     value={props.date.getDate()}
                     onChange={(newValue: number) => {
                         changeDay(newValue);
                     }}
                     options={DAYS}
-                    hideChevron
                 />
             </div>
             {DateSeparator('.')}
             <div className='mx-2 w-36'>
                 <DropDown
+                    {...commonProps}
                     value={props.date.getMonth()}
                     onChange={(newValue: number) => {
                         changeMonth(newValue);
                     }}
                     options={MONTHS}
-                    hideChevron
                 />
             </div>
             {DateSeparator('.')}
             <div className='ml-2 mr-8 w-22'>
                 <DropDown
+                    {...commonProps}
                     value={props.date.getYear()}
                     onChange={(newValue: number) => {
                         changeYear(newValue);
                     }}
                     options={YEARS}
-                    hideChevron
                 />
             </div>
             <div className='mx-2 w-14'>
                 <DropDown
+                    {...commonProps}
                     value={props.date.getHours()}
                     onChange={(newValue: number) => {
                         changeTime(newValue, props.date.getMinutes());
                     }}
                     options={HOURS}
-                    hideChevron
                 />
             </div>
             {DateSeparator(':')}
             <div className='ml-2 w-14'>
                 <DropDown
+                    {...commonProps}
                     value={props.date.getMinutes()}
                     onChange={(newValue: number) => {
                         changeTime(props.date.getHours(), newValue);
                     }}
                     options={MINUTES}
-                    hideChevron
                 />
             </div>
         </React.Fragment>

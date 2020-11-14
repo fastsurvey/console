@@ -8,17 +8,28 @@ import TextFieldConfigForm from './TextFieldConfigForm';
 interface FieldConfigFormProps {
     fieldConfig: SurveyField;
     setFieldConfig(fieldConfig: SurveyField): void;
+    disabled: boolean;
 }
 
 function FieldConfigForm(props: FieldConfigFormProps) {
     let FieldSettings: React.ReactNode;
 
+    const commonPropsGeneral = {
+        disabled: props.disabled,
+        setFieldConfig: props.setFieldConfig,
+    };
+    const commonPropsSpecific = {
+        disabled: props.disabled,
+        flat: true,
+        wrapperClassName: 'self-stretch flex-grow mr-2',
+    };
+
     switch (props.fieldConfig.type) {
         case 'Text':
             FieldSettings = (
                 <TextFieldConfigForm
+                    {...commonPropsGeneral}
                     fieldConfig={props.fieldConfig}
-                    setFieldConfig={props.setFieldConfig}
                 />
             );
             break;
@@ -63,6 +74,7 @@ function FieldConfigForm(props: FieldConfigFormProps) {
                             Title:
                         </div>
                         <TextInput
+                            {...commonPropsSpecific}
                             value={props.fieldConfig.title}
                             onChange={(newValue: string) =>
                                 props.setFieldConfig({
@@ -70,8 +82,6 @@ function FieldConfigForm(props: FieldConfigFormProps) {
                                     title: newValue,
                                 })
                             }
-                            flat
-                            wrapperClassName='self-stretch flex-grow mr-2'
                             placeholder='The title of your survey'
                             hint={{
                                 text:
@@ -93,6 +103,7 @@ function FieldConfigForm(props: FieldConfigFormProps) {
                             Description:
                         </div>
                         <TextArea
+                            {...commonPropsSpecific}
                             rows={2}
                             value={props.fieldConfig.description}
                             onChange={(newValue: string) =>
@@ -101,9 +112,7 @@ function FieldConfigForm(props: FieldConfigFormProps) {
                                     description: newValue,
                                 })
                             }
-                            flat
                             charLimits={{min: 0, max: 2000}}
-                            wrapperClassName='self-stretch flex-grow mr-2'
                         />
                     </div>
                 </div>

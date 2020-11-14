@@ -11,6 +11,7 @@ interface TextAreaProps {
     onEnter?(): void;
     flat?: boolean;
     rows?: number;
+    disabled?: boolean;
 }
 
 const TextArea = React.forwardRef((props: TextAreaProps, ref: any) => {
@@ -46,6 +47,7 @@ const TextArea = React.forwardRef((props: TextAreaProps, ref: any) => {
             }
         >
             <textarea
+                disabled={props.disabled === true}
                 rows={props.rows ? props.rows : 4}
                 ref={ref}
                 onKeyDown={handleKeyDown}
@@ -62,7 +64,11 @@ const TextArea = React.forwardRef((props: TextAreaProps, ref: any) => {
                         ? 'shadow-outline-gray bg-white transition duration-150 '
                         : 'shadow ') +
                     'focus:outline-none focus:shadow-outline ' +
-                    (props.className ? props.className : '')
+                    (props.className ? props.className : '') +
+                    ' ' +
+                    (props.disabled
+                        ? 'bg-gray-200 cursor-not-allowed '
+                        : 'bg-white ')
                 }
                 autoComplete={autoComplete}
             />

@@ -12,6 +12,7 @@ interface TextInputProps {
     autoComplete?: string;
     onEnter?(): void;
     flat?: boolean;
+    disabled?: boolean;
 }
 
 const TextInput = React.forwardRef((props: TextInputProps, ref: any) => {
@@ -38,6 +39,7 @@ const TextInput = React.forwardRef((props: TextInputProps, ref: any) => {
             }
         >
             <input
+                disabled={props.disabled === true}
                 ref={ref}
                 onKeyDown={handleKeyDown}
                 placeholder={placeholder}
@@ -46,14 +48,19 @@ const TextInput = React.forwardRef((props: TextInputProps, ref: any) => {
                 onFocus={() => setFocus(true)}
                 onBlur={() => setFocus(false)}
                 className={
-                    'font-weight-500 text-lg  text-gray-800 no-selection ' +
+                    'font-weight-500 text-lg text-gray-800 no-selection ' +
                     'border-0 rounded w-full h-12 ' +
                     'py-2 pl-3 pr-10 md:pr-12 ' +
+                    'transition duration-150 ' +
                     (props.flat
-                        ? 'shadow-outline-gray bg-white transition duration-150 '
+                        ? 'shadow-outline-gray space-x-1 '
                         : 'shadow ') +
                     'focus:outline-none focus:shadow-outline ' +
-                    (props.className ? props.className : '')
+                    (props.className ? props.className : '') +
+                    ' ' +
+                    (props.disabled
+                        ? 'bg-gray-200 cursor-not-allowed '
+                        : 'bg-white ')
                 }
                 type={props.type ? props.type : 'text'}
                 autoComplete={props.autoComplete ? props.autoComplete : ''}
