@@ -38,24 +38,30 @@ function ConfigEditor(props: ConfigEditorProps) {
     }
 
     return (
-        <div
-            id='ConfigEditor'
-            className='flex flex-col items-center px-8 pt-4 pb-12 no-selection'
-        >
+        <React.Fragment>
             <EditorControlStrip
                 config={localConfig}
                 setConfig={setLocalConfig}
                 syncState={syncState}
                 revertState={revertState}
             />
-            <GeneralConfig config={localConfig} setConfig={setLocalConfig} />
-            {localConfig.fields.map((fieldConfig) => (
-                <FieldConfigForm
-                    key={fieldConfig.type + fieldConfig.title}
-                    fieldConfig={fieldConfig}
+            <div
+                id='ConfigEditor'
+                className='flex flex-col items-center px-8 pb-12 no-selection'
+                style={{paddingTop: 'calc(6rem - 4px)'}}
+            >
+                <GeneralConfig
+                    config={localConfig}
+                    setConfig={setLocalConfig}
                 />
-            ))}
-        </div>
+                {localConfig.fields.map((fieldConfig) => (
+                    <FieldConfigForm
+                        key={fieldConfig.type + fieldConfig.title}
+                        fieldConfig={fieldConfig}
+                    />
+                ))}
+            </div>
+        </React.Fragment>
     );
 }
 

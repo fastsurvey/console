@@ -48,7 +48,7 @@ interface GeneralConfigProps {
 
 function GeneralConfig(props: GeneralConfigProps) {
     return (
-        <div className='flex flex-col w-full min-h-full pb-4 mt-24 mb-8 border-b-4 border-gray-300'>
+        <div className='flex flex-col w-full min-h-full pt-4 pb-4 mb-8 border-b-4 border-gray-500'>
             <div className='flex flex-row mb-4'>
                 <div className='flex flex-row items-start w-1/2 pr-4'>
                     <div className='h-12 mr-3 text-xl font-weight-600 leading-12'>

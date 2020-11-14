@@ -94,21 +94,7 @@ function FieldConfigForm(props: FieldConfigFormProps) {
                     </div>
                 </div>
             </div>
-            <div className={'w-full flex flex-row'}>
-                <div className={'flex flex-row'}>
-                    <div
-                        className={
-                            'bg-gray-300 rounded-br h-10 leading-10 font-weight-500 text-xl flex flex-row'
-                        }
-                    >
-                        <div className='w-10 h-10 p-2 cursor-move'>
-                            {ICONS.tune}
-                        </div>
-                        <div className='pr-4'>Settings</div>
-                    </div>
-                </div>
-                <div className={'flex flex-row p-2 ml-2 '}>{FieldSettings}</div>
-            </div>
+            <div className={'w-full p-2'}>{FieldSettings}</div>
         </div>
     );
 }

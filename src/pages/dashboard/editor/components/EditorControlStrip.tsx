@@ -60,49 +60,74 @@ function EditorControlStrip(props: EditorControlStripProps) {
     }
 
     return (
-        <div className={'fixed h-10 flex flex-row items-center shadow rounded'}>
-            <ControlStripButton
-                first
-                disabled={props.config.draft}
-                label='Open'
-                icon={ICONS.launch}
-                onClick={() =>
-                    window.open(
-                        `https://fastsurvey.io/${props.config.admin_name}` +
-                            `/${props.config.survey_name}`,
-                        '_blank',
-                    )
+        <div
+            id='ControlStrip'
+            className={
+                'z-50 fixed center-content p-4 border-b-4 border-gray-500 bg-gray-300'
+            }
+        >
+            <div
+                className={
+                    'relative w-auto flex flex-row items-center shadow rounded'
                 }
-            />
-            <ControlStripButton
-                disabled={props.config.draft}
-                label='Start Now'
-                icon={ICONS.play}
-                onClick={startNow}
-            />
-            <ControlStripButton
-                disabled={props.config.draft}
-                label='End Now'
-                icon={ICONS.stop}
-                onClick={endNow}
-            />
-            <ControlStripButton
-                label={props.config.draft ? 'Publish' : 'Draft'}
-                icon={props.config.draft ? ICONS.open_in_browser : ICONS.create}
-            />
-            <ControlStripButton
-                disabled={!props.configIsDiffering}
-                label='Revert'
-                icon={ICONS.undo}
-                onClick={props.revertState}
-            />
-            <ControlStripButton
-                last
-                disabled={!props.configIsDiffering}
-                label='Save'
-                icon={ICONS.save}
-                onClick={props.syncState}
-            />
+            >
+                {!props.config.draft && (
+                    <React.Fragment>
+                        <ControlStripButton
+                            first
+                            disabled={props.config.draft}
+                            label='Open'
+                            icon={ICONS.launch}
+                            onClick={() =>
+                                window.open(
+                                    `https://fastsurvey.io/${props.config.admin_name}` +
+                                        `/${props.config.survey_name}`,
+                                    '_blank',
+                                )
+                            }
+                        />
+                        <ControlStripButton
+                            disabled={props.config.draft}
+                            label='Start Now'
+                            icon={ICONS.play}
+                            onClick={startNow}
+                        />
+                        <ControlStripButton
+                            disabled={props.config.draft}
+                            label='End Now'
+                            icon={ICONS.stop}
+                            onClick={endNow}
+                        />
+                        <ControlStripButton
+                            last
+                            label='Draft'
+                            icon={ICONS.create}
+                        />
+                    </React.Fragment>
+                )}
+                {props.config.draft && (
+                    <React.Fragment>
+                        <ControlStripButton
+                            first
+                            label='Publish'
+                            icon={ICONS.open_in_browser}
+                        />
+                        <ControlStripButton
+                            disabled={!props.configIsDiffering}
+                            label='Revert'
+                            icon={ICONS.undo}
+                            onClick={props.revertState}
+                        />
+                        <ControlStripButton
+                            last
+                            disabled={!props.configIsDiffering}
+                            label='Save'
+                            icon={ICONS.save}
+                            onClick={props.syncState}
+                        />
+                    </React.Fragment>
+                )}
+            </div>
         </div>
     );
 }
