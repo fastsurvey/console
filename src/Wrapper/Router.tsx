@@ -18,8 +18,8 @@ import LoginImage from '../assets/images/secure.svg';
 import VerifyImage from '../assets/images/letter.svg';
 import LoaderOverlay from '../components/overlays/LoaderOverlay';
 import MessageQueue from '../components/messages/MessageQueue';
-import ConfigList from '../pages/dashboard/editor/list/ConfigList';
-import ConfigEditorWrapper from '../pages/dashboard/editor/stateWrapper/ConfigEditorWrapper';
+import ConfigList from '../pages/dashboard/configsTab/list/ConfigList';
+import ConfigEditorWrapper from '../pages/dashboard/configsTab/editor/ConfigEditorWrapper';
 
 interface RouterProps {
     loggingIn: boolean;

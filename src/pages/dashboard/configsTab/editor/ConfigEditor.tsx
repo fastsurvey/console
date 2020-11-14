@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {ReduxState, SurveyConfig} from '../../../../utilities/types';
-import EditorControlStrip from '../components/EditorControlStrip';
-import GeneralConfig from '../components/GeneralConfig';
+import EditorControlStrip from './controlStrip/EditorControlStrip';
+import GeneralConfig from './generalConfig/GeneralConfig';
 import {
     modifyConfigAction,
     markDifferingAction,
 } from '../../../../utilities/reduxActions';
-import FieldConfigForm from '../components/fields/FieldConfigForm';
+import FieldConfigForm from './fieldConfig/FieldConfigForm';
 
 interface ConfigEditorProps {
     centralConfig: SurveyConfig;
