@@ -18,9 +18,6 @@ function DashBoardPage(props: DashBoardPageProps) {
     useEffect(() => {
         async function fetch(oauth2_token: OAuth2Token) {
             await fetchSurveys(oauth2_token, (configs: SurveyConfig[]) => {
-                configs.forEach((config, index) => {
-                    config.local_id = index;
-                });
                 props.addConfigs(configs);
             });
         }

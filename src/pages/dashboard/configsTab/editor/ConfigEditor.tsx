@@ -1,6 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
-import {ReduxState, SurveyConfig} from '../../../../utilities/types';
+import {
+    ReduxState,
+    SurveyConfig,
+    SurveyField,
+} from '../../../../utilities/types';
 import EditorControlStrip from './controlStrip/EditorControlStrip';
 import GeneralConfig from './generalConfig/GeneralConfig';
 import {
@@ -37,6 +41,15 @@ function ConfigEditor(props: ConfigEditorProps) {
         setLocalConfigState(config);
     }
 
+    function setFieldConfig(newFieldConfig: SurveyField, newIndex: number) {
+        setLocalConfig({
+            ...localConfig,
+            fields: localConfig.fields.map((fieldConfig, index) =>
+                index !== newIndex ? fieldConfig : newFieldConfig,
+            ),
+        });
+    }
+
     return (
         <React.Fragment>
             <EditorControlStrip
@@ -54,10 +67,13 @@ function ConfigEditor(props: ConfigEditorProps) {
                     config={localConfig}
                     setConfig={setLocalConfig}
                 />
-                {localConfig.fields.map((fieldConfig) => (
+                {localConfig.fields.map((fieldConfig, index) => (
                     <FieldConfigForm
-                        key={fieldConfig.type + fieldConfig.title}
+                        key={fieldConfig.local_id}
                         fieldConfig={fieldConfig}
+                        setFieldConfig={(fieldConfig: SurveyField) =>
+                            setFieldConfig(fieldConfig, index)
+                        }
                     />
                 ))}
             </div>

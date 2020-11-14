@@ -107,55 +107,54 @@ export type SurveyField =
     | SelectionField
     | TextField;
 
-export interface EmailField {
-    type: 'Email';
+interface GeneralSurveyField {
+    local_id: number;
     title: string;
     description: string;
+}
+interface SurveyFieldOption {
+    type: 'Option';
+    title: string;
+    description: string;
+}
+
+export interface EmailField extends GeneralSurveyField {
+    type: 'Email';
     regex: string;
     hint: string;
 }
 
-export interface OptionField {
+export interface OptionField extends GeneralSurveyField {
     type: 'Option';
     title: string;
     description: string;
     mandatory: boolean;
 }
 
-export interface RadioField {
+export interface RadioField extends GeneralSurveyField {
     type: 'Radio';
     title: string;
     description: string;
     fields: RadioFieldOption[];
 }
 
-export interface RadioFieldOption {
-    type: 'Option';
-    title: string;
-    description: string;
+export interface RadioFieldOption extends SurveyFieldOption {
     mandatory: false;
 }
 
-export interface SelectionField {
+export interface SelectionField extends GeneralSurveyField {
     type: 'Selection';
-    title: string;
-    description: string;
     min_select: number;
     max_select: number;
     fields: SelectionFieldOption[];
 }
 
-export interface SelectionFieldOption {
-    type: 'Option';
-    title: string;
-    description: string;
+export interface SelectionFieldOption extends SurveyFieldOption {
     mandatory: false;
 }
 
-export interface TextField {
+export interface TextField extends GeneralSurveyField {
     type: 'Text';
-    title: string;
-    description: string;
     min_chars: number;
     max_chars: number;
 }

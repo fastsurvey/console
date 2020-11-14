@@ -7,6 +7,7 @@ import TextFieldConfigForm from './TextFieldConfigForm';
 
 interface FieldConfigFormProps {
     fieldConfig: SurveyField;
+    setFieldConfig(fieldConfig: SurveyField): void;
 }
 
 function FieldConfigForm(props: FieldConfigFormProps) {
@@ -15,7 +16,10 @@ function FieldConfigForm(props: FieldConfigFormProps) {
     switch (props.fieldConfig.type) {
         case 'Text':
             FieldSettings = (
-                <TextFieldConfigForm fieldConfig={props.fieldConfig} />
+                <TextFieldConfigForm
+                    fieldConfig={props.fieldConfig}
+                    setFieldConfig={props.setFieldConfig}
+                />
             );
             break;
 
@@ -60,7 +64,12 @@ function FieldConfigForm(props: FieldConfigFormProps) {
                         </div>
                         <TextInput
                             value={props.fieldConfig.title}
-                            onChange={() => {}}
+                            onChange={(newValue: string) =>
+                                props.setFieldConfig({
+                                    ...props.fieldConfig,
+                                    title: newValue,
+                                })
+                            }
                             flat
                             wrapperClassName='self-stretch flex-grow mr-2'
                             placeholder='The title of your survey'
@@ -86,7 +95,12 @@ function FieldConfigForm(props: FieldConfigFormProps) {
                         <TextArea
                             rows={2}
                             value={props.fieldConfig.description}
-                            onChange={() => {}}
+                            onChange={(newValue: string) =>
+                                props.setFieldConfig({
+                                    ...props.fieldConfig,
+                                    description: newValue,
+                                })
+                            }
                             flat
                             charLimits={{min: 0, max: 2000}}
                             wrapperClassName='self-stretch flex-grow mr-2'

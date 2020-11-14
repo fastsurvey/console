@@ -1,9 +1,10 @@
 import React from 'react';
 import TextInput from '../../../../../components/formFields/TextInput';
-import {TextField} from '../../../../../utilities/types';
+import {SurveyField, TextField} from '../../../../../utilities/types';
 
 interface TextFieldConfigFormProps {
     fieldConfig: TextField;
+    setFieldConfig(fieldConfig: TextField): void;
 }
 
 function TextFieldConfigForm(props: TextFieldConfigFormProps) {
@@ -15,7 +16,13 @@ function TextFieldConfigForm(props: TextFieldConfigFormProps) {
                 </div>
                 <TextInput
                     value={props.fieldConfig.min_chars.toString()}
-                    onChange={() => {}}
+                    onChange={(newValue: string) =>
+                        props.setFieldConfig({
+                            ...props.fieldConfig,
+                            min_chars:
+                                newValue.length > 0 ? parseInt(newValue) : 0,
+                        })
+                    }
                     flat
                     wrapperClassName='w-28'
                     hint={{
@@ -33,7 +40,13 @@ function TextFieldConfigForm(props: TextFieldConfigFormProps) {
                 </div>
                 <TextInput
                     value={props.fieldConfig.max_chars.toString()}
-                    onChange={() => {}}
+                    onChange={(newValue: string) =>
+                        props.setFieldConfig({
+                            ...props.fieldConfig,
+                            max_chars:
+                                newValue.length > 0 ? parseInt(newValue) : 0,
+                        })
+                    }
                     flat
                     wrapperClassName='w-28'
                     hint={{
