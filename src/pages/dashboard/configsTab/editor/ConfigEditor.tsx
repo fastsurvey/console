@@ -12,6 +12,7 @@ import {
     markDifferingAction,
 } from '../../../../utilities/reduxActions';
 import FieldConfigForm from './fieldConfig/FieldConfigForm';
+import {useHistory} from 'react-router-dom';
 
 interface ConfigEditorProps {
     centralConfig: SurveyConfig;
@@ -20,6 +21,7 @@ interface ConfigEditorProps {
 }
 function ConfigEditor(props: ConfigEditorProps) {
     const [localConfig, setLocalConfigState] = useState(props.centralConfig);
+    let history = useHistory();
 
     useEffect(() => {
         setLocalConfigState(props.centralConfig);
@@ -28,6 +30,9 @@ function ConfigEditor(props: ConfigEditorProps) {
     function syncState() {
         // TODO: Validate & Push to backend
         props.modifyConfig(localConfig);
+        if (localConfig.survey_name !== props.centralConfig.survey_name) {
+            history.push(`/configuration/${localConfig.survey_name}`);
+        }
     }
 
     function revertState() {
