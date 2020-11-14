@@ -3,10 +3,6 @@ export const AUTH_MODE = [
     {value: 1, label: 'Email Verification'},
 ];
 
-export const DAYS = [...Array(31).keys()].map((i) => {
-    return {label: (i + 1).toString(), value: i + 1};
-});
-
 export const MONTHS = [
     {value: 0, label: 'January'},
     {value: 1, label: 'February'},

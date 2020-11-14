@@ -46,7 +46,12 @@ function GeneralConfig(props: GeneralConfigProps) {
                     </div>
                     <TextInput
                         value={props.config.survey_name}
-                        onChange={() => {}}
+                        onChange={(newValue: string) => {
+                            props.setConfig({
+                                ...props.config,
+                                ...{survey_name: newValue},
+                            });
+                        }}
                         flat
                         wrapperClassName='self-stretch flex-grow'
                         placeholder='URL conform identifier'
@@ -72,7 +77,12 @@ function GeneralConfig(props: GeneralConfigProps) {
                 </div>
                 <TextArea
                     value={props.config.description}
-                    onChange={() => {}}
+                    onChange={(newValue: string) => {
+                        props.setConfig({
+                            ...props.config,
+                            ...{description: newValue},
+                        });
+                    }}
                     flat
                     charLimits={{min: 0, max: 2000}}
                     className='leading-8'
@@ -88,7 +98,12 @@ function GeneralConfig(props: GeneralConfigProps) {
                         <div className='w-56 mr-2'>
                             <DropDown
                                 value={props.config.mode}
-                                onChange={() => {}}
+                                onChange={(newValue: 0 | 1 | 2) => {
+                                    props.setConfig({
+                                        ...props.config,
+                                        ...{mode: newValue},
+                                    });
+                                }}
                                 options={AUTH_MODE}
                             />
                         </div>
@@ -99,7 +114,17 @@ function GeneralConfig(props: GeneralConfigProps) {
                         </div>
                         <TextInput
                             value={props.config.submission_limit.toString()}
-                            onChange={() => {}}
+                            onChange={(newValue: string) => {
+                                props.setConfig({
+                                    ...props.config,
+                                    ...{
+                                        submission_limit:
+                                            newValue.length > 0
+                                                ? parseInt(newValue)
+                                                : 0,
+                                    },
+                                });
+                            }}
                             flat
                             wrapperClassName='w-32'
                             hint={{
@@ -119,6 +144,12 @@ function GeneralConfig(props: GeneralConfigProps) {
                         </div>
                         <DateSelectorRow
                             date={new Date(props.config.start * 1000)}
+                            setNewTimestamp={(timestamp: number) => {
+                                props.setConfig({
+                                    ...props.config,
+                                    ...{start: timestamp},
+                                });
+                            }}
                         />
                     </div>
                     <div className='flex flex-row items-center justify-center w-full'>
@@ -127,6 +158,12 @@ function GeneralConfig(props: GeneralConfigProps) {
                         </div>
                         <DateSelectorRow
                             date={new Date(props.config.end * 1000)}
+                            setNewTimestamp={(timestamp: number) => {
+                                props.setConfig({
+                                    ...props.config,
+                                    ...{end: timestamp},
+                                });
+                            }}
                         />
                     </div>
                 </div>
