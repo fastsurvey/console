@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {ICONS} from '../../../../../assets/icons/icons';
 import Checkbox from '../../../../../components/formFields/Checkbox';
 import TextInput from '../../../../../components/formFields/TextInput';
@@ -15,6 +15,14 @@ interface RadioFieldConfigFormProps {
 }
 
 function RadioFieldConfigForm(props: RadioFieldConfigFormProps) {
+    const [optionsVisible, setOptionsVisible] = useState(
+        props.fieldConfig.fields.map(() => true),
+    );
+    useEffect(
+        () => setOptionsVisible(props.fieldConfig.fields.map(() => true)),
+        [props.fieldConfig.fields],
+    );
+
     const titleIsValid = (title: string) =>
         1 <= title.length && title.length <= 120;
 
@@ -38,10 +46,20 @@ function RadioFieldConfigForm(props: RadioFieldConfigFormProps) {
                 <div className='h-12 ml-2 mr-3 text-xl font-weight-600 leading-12'>
                     Options:
                 </div>
-                <div className='flex flex-col w-full gap-y-2'>
+                <div className='flex flex-col w-full'>
                     {props.fieldConfig.fields.map(
                         (optionField, optionIndex) => (
-                            <div className='flex flex-row w-full'>
+                            <div
+                                key={optionField.local_id}
+                                className={
+                                    'flex flex-row w-full mb-2 ' +
+                                    'transition-transform duration-300 ' +
+                                    'transform origin-top ' +
+                                    (optionsVisible[optionIndex]
+                                        ? 'scale-y-100 '
+                                        : 'scale-y-0 ')
+                                }
+                            >
                                 <TextInput
                                     {...commonProps}
                                     value={optionField.title}
@@ -73,15 +91,29 @@ function RadioFieldConfigForm(props: RadioFieldConfigFormProps) {
                                 <TriggerIcon
                                     disabled={props.disabled}
                                     icon={ICONS.delete}
-                                    onClick={() =>
-                                        updateFieldConfig({
-                                            ...props.fieldConfig,
-                                            fields: props.fieldConfig.fields.filter(
-                                                (oldOptionField, oldIndex) =>
-                                                    optionIndex !== oldIndex,
+                                    onClick={() => {
+                                        setOptionsVisible(
+                                            optionsVisible.map(
+                                                (optionVisible, index) =>
+                                                    index === optionIndex
+                                                        ? false
+                                                        : optionVisible,
                                             ),
-                                        })
-                                    }
+                                        );
+                                        setTimeout(() => {
+                                            updateFieldConfig({
+                                                ...props.fieldConfig,
+                                                fields: props.fieldConfig.fields.filter(
+                                                    (
+                                                        oldOptionField,
+                                                        oldIndex,
+                                                    ) =>
+                                                        optionIndex !==
+                                                        oldIndex,
+                                                ),
+                                            });
+                                        }, 300);
+                                    }}
                                 />
                             </div>
                         ),

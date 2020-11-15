@@ -21,6 +21,7 @@ function GeneralConfig(props: GeneralConfigProps) {
 
     const titleIsValid = (title: string) =>
         1 <= title.length && title.length <= 120;
+
     const surveyNameIsValid = (survey_name: string) =>
         survey_name.match(/^[a-zA-Z0-9-_]*$/) !== null &&
         3 <= survey_name.length &&
@@ -30,8 +31,10 @@ function GeneralConfig(props: GeneralConfigProps) {
                 config.local_id !== props.config.local_id &&
                 config.survey_name === survey_name,
         ).length === 0;
+
     const descriptionIsValid = (description: string) =>
         description.length <= 2000;
+
     const submissionLimitIsValid = (submission_limit: number) =>
         1 <= submission_limit && submission_limit <= 10000;
 
