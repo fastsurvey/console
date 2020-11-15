@@ -1,3 +1,5 @@
+import GeneralConfig from '../pages/dashboard/configsTab/editor/generalConfig/GeneralConfig';
+
 export interface ReduxState {
     loggingIn: boolean;
     loggedIn: boolean;
@@ -112,11 +114,6 @@ interface GeneralSurveyField {
     title: string;
     description: string;
 }
-interface SurveyFieldOption {
-    type: 'Option';
-    title: string;
-    description: string;
-}
 
 export interface EmailField extends GeneralSurveyField {
     type: 'Email';
@@ -135,21 +132,17 @@ export interface RadioField extends GeneralSurveyField {
     type: 'Radio';
     title: string;
     description: string;
-    fields: RadioFieldOption[];
-}
-
-export interface RadioFieldOption extends SurveyFieldOption {
-    mandatory: false;
+    fields: FieldOption[];
 }
 
 export interface SelectionField extends GeneralSurveyField {
     type: 'Selection';
     min_select: number;
     max_select: number;
-    fields: SelectionFieldOption[];
+    fields: FieldOption[];
 }
 
-export interface SelectionFieldOption extends SurveyFieldOption {
+export interface FieldOption extends GeneralSurveyField {
     mandatory: false;
 }
 

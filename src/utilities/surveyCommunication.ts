@@ -1,5 +1,5 @@
 import {surveyGetRequest} from './axiosClients';
-import {OAuth2Token, SurveyConfig, SurveyField} from './types';
+import {FieldOption, OAuth2Token, SurveyConfig, SurveyField} from './types';
 
 export async function fetchSurveys(
     oauth2_token: OAuth2Token,
@@ -14,6 +14,20 @@ export async function fetchSurveys(
                 config.fields.forEach(
                     (field: SurveyField, subIndex: number) => {
                         field.local_id = 1000 * index + subIndex;
+                        if (
+                            field.type === 'Radio' ||
+                            field.type === 'Selection'
+                        ) {
+                            field.fields.forEach(
+                                (
+                                    fieldOption: FieldOption,
+                                    subSubIndex: number,
+                                ) => {
+                                    fieldOption.local_id =
+                                        1000 * field.local_id + subSubIndex;
+                                },
+                            );
+                        }
                     },
                 );
             });
