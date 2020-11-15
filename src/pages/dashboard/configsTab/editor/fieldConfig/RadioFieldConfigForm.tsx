@@ -1,7 +1,9 @@
 import React from 'react';
+import {ICONS} from '../../../../../assets/icons/icons';
 import Checkbox from '../../../../../components/formFields/Checkbox';
 import TextInput from '../../../../../components/formFields/TextInput';
 import {TextField, RadioField} from '../../../../../utilities/types';
+import TriggerIcon from '../../../../../components/formFields/TriggerIcon';
 
 interface RadioFieldConfigFormProps {
     fieldConfig: RadioField;
@@ -27,7 +29,7 @@ function RadioFieldConfigForm(props: RadioFieldConfigFormProps) {
     const commonProps = {
         disabled: props.disabled,
         flat: true,
-        wrapperClassName: 'w-full',
+        wrapperClassName: 'flex-max',
     };
 
     return (
@@ -39,32 +41,49 @@ function RadioFieldConfigForm(props: RadioFieldConfigFormProps) {
                 <div className='flex flex-col w-full gap-y-2'>
                     {props.fieldConfig.fields.map(
                         (optionField, optionIndex) => (
-                            <TextInput
-                                {...commonProps}
-                                value={optionField.title}
-                                onChange={(newValue: string) =>
-                                    updateFieldConfig({
-                                        ...props.fieldConfig,
-                                        fields: props.fieldConfig.fields.map(
-                                            (oldOptionField, oldIndex) =>
-                                                optionIndex === oldIndex
-                                                    ? {
-                                                          ...oldOptionField,
-                                                          title: newValue,
-                                                      }
-                                                    : oldOptionField,
+                            <div className='flex flex-row w-full'>
+                                <TextInput
+                                    {...commonProps}
+                                    value={optionField.title}
+                                    onChange={(newValue: string) =>
+                                        updateFieldConfig({
+                                            ...props.fieldConfig,
+                                            fields: props.fieldConfig.fields.map(
+                                                (oldOptionField, oldIndex) =>
+                                                    optionIndex === oldIndex
+                                                        ? {
+                                                              ...oldOptionField,
+                                                              title: newValue,
+                                                          }
+                                                        : oldOptionField,
+                                            ),
+                                        })
+                                    }
+                                    hint={{
+                                        text:
+                                            'Not empty, max. 120 characters ' +
+                                            `(${
+                                                120 - optionField.title.length
+                                            } left)`,
+                                        fulfilled: titleIsValid(
+                                            optionField.title,
                                         ),
-                                    })
-                                }
-                                hint={{
-                                    text:
-                                        'Not empty, max. 120 characters ' +
-                                        `(${
-                                            120 - optionField.title.length
-                                        } left)`,
-                                    fulfilled: titleIsValid(optionField.title),
-                                }}
-                            />
+                                    }}
+                                />
+                                <TriggerIcon
+                                    disabled={props.disabled}
+                                    icon={ICONS.delete}
+                                    onClick={() =>
+                                        updateFieldConfig({
+                                            ...props.fieldConfig,
+                                            fields: props.fieldConfig.fields.filter(
+                                                (oldOptionField, oldIndex) =>
+                                                    optionIndex !== oldIndex,
+                                            ),
+                                        })
+                                    }
+                                />
+                            </div>
                         ),
                     )}
                 </div>
