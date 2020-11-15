@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
 import DropDown from '../../../../../components/formFields/DropDown';
 import TextArea from '../../../../../components/formFields/TextArea';
 import TextInput from '../../../../../components/formFields/TextInput';
-import {SurveyConfig} from '../../../../../utilities/types';
+import {ReduxState, SurveyConfig} from '../../../../../utilities/types';
 import {AUTH_MODE} from '../constants';
 import DateSelectorRow from './DateSelectorRow';
 
 interface GeneralConfigProps {
+    configs: SurveyConfig[] | undefined;
     config: SurveyConfig;
     setConfig(config: SurveyConfig): void;
     updateValidator(newState: boolean): void;
@@ -24,8 +26,11 @@ function GeneralConfig(props: GeneralConfigProps) {
         survey_name.match(/^[a-zA-Z0-9-_]*$/) !== null &&
         3 <= survey_name.length &&
         survey_name.length <= 120 &&
-        true;
-
+        props.configs?.filter(
+            (config) =>
+                config.local_id !== props.config.local_id &&
+                config.survey_name === survey_name,
+        ).length === 0;
     const descriptionIsValid = (description: string) =>
         description.length <= 2000;
 
@@ -38,12 +43,12 @@ function GeneralConfig(props: GeneralConfigProps) {
     }, [valid]);
 
     function updateConfig(newConfig: SurveyConfig) {
-        props.setConfig(newConfig);
         props.updateValidator(
             titleIsValid(newConfig.title) &&
                 surveyNameIsValid(newConfig.survey_name) &&
                 descriptionIsValid(newConfig.description),
         );
+        props.setConfig(newConfig);
     }
 
     return (
@@ -207,5 +212,8 @@ function GeneralConfig(props: GeneralConfigProps) {
         </div>
     );
 }
-
-export default GeneralConfig;
+const mapStateToProps = (state: ReduxState) => ({
+    configs: state.configs,
+});
+const mapDispatchToProps = (dispatch: any) => ({});
+export default connect(mapStateToProps, mapDispatchToProps)(GeneralConfig);
