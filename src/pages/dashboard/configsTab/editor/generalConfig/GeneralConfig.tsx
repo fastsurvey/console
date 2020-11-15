@@ -33,6 +33,8 @@ function GeneralConfig(props: GeneralConfigProps) {
         ).length === 0;
     const descriptionIsValid = (description: string) =>
         description.length <= 2000;
+    const submissionLimitIsValid = (submission_limit: number) =>
+        1 <= submission_limit && submission_limit <= 10000;
 
     useEffect(() => {
         setValid(true);
@@ -46,7 +48,8 @@ function GeneralConfig(props: GeneralConfigProps) {
         props.updateValidator(
             titleIsValid(newConfig.title) &&
                 surveyNameIsValid(newConfig.survey_name) &&
-                descriptionIsValid(newConfig.description),
+                descriptionIsValid(newConfig.description) &&
+                submissionLimitIsValid(newConfig.submission_limit),
         );
         props.setConfig(newConfig);
     }
@@ -155,7 +158,7 @@ function GeneralConfig(props: GeneralConfigProps) {
                             flat
                             value={props.config.submission_limit.toString()}
                             onChange={(newValue: string) => {
-                                props.setConfig({
+                                updateConfig({
                                     ...props.config,
                                     ...{
                                         submission_limit:
@@ -168,9 +171,9 @@ function GeneralConfig(props: GeneralConfigProps) {
                             wrapperClassName='w-32'
                             hint={{
                                 text: '1 - 10.000',
-                                fulfilled:
-                                    1 <= props.config.submission_limit &&
-                                    props.config.submission_limit <= 10000,
+                                fulfilled: submissionLimitIsValid(
+                                    props.config.submission_limit,
+                                ),
                             }}
                         />
                     </div>

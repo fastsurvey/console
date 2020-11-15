@@ -15,12 +15,14 @@ import {
 } from '../../../../utilities/reduxActions';
 import FieldConfigForm from './fieldConfig/FieldConfigForm';
 import {useHistory} from 'react-router-dom';
+import {closeAllMessagesAction} from '../../../../utilities/reduxActions';
 
 interface ConfigEditorProps {
     centralConfig: SurveyConfig;
     modifyConfig(config: SurveyConfig): void;
     markDiffering(differing: boolean): void;
     openMessage(message: Message): void;
+    closeAllMessages(): void;
 }
 function ConfigEditor(props: ConfigEditorProps) {
     const [localConfig, setLocalConfigState] = useState(props.centralConfig);
@@ -76,7 +78,8 @@ function ConfigEditor(props: ConfigEditorProps) {
                 });
             }
         } else {
-            // TODO: Try to push to backend
+            // TODO: Push to backend and show error/success message
+            props.closeAllMessages();
             props.modifyConfig(localConfig);
             if (localConfig.survey_name !== props.centralConfig.survey_name) {
                 history.push(`/configuration/${localConfig.survey_name}`);
@@ -146,5 +149,6 @@ const mapDispatchToProps = (dispatch: any) => ({
     markDiffering: (differing: boolean) =>
         dispatch(markDifferingAction(differing)),
     openMessage: (message: Message) => dispatch(openMessageAction(message)),
+    closeAllMessages: () => dispatch(closeAllMessagesAction()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(ConfigEditor);
