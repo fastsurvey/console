@@ -47,7 +47,6 @@ function FieldConfigForm(props: FieldConfigFormProps) {
     const commonFieldProps = {
         disabled: props.disabled,
         setFieldConfig: updateSubfieldConfig,
-        updateValidator: setSettingsValidator,
     };
     const commonInputProps = {
         disabled: props.disabled,

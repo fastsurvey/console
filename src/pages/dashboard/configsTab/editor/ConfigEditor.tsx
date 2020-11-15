@@ -41,22 +41,23 @@ function ConfigEditor(props: ConfigEditorProps) {
     }, [props.centralConfig, props.centralConfig.local_id]);
 
     function updateValidator(newIndex: number, newState: boolean) {
-        console.log({validators});
-        setValidators(
-            validators.map((state, index) =>
-                index !== newIndex ? state : newState,
-            ),
+        const newValidators: boolean[] = validators.map((state, index) =>
+            index !== newIndex ? state : newState,
         );
+        setValidators(newValidators);
+        if (!validators.includes(false)) {
+            props.closeAllMessages();
+        }
     }
 
     function syncState() {
         const settingsInvalid = validators.includes(false);
         const timingInvalid = localConfig.start >= localConfig.end;
         const authInvalid =
-            localConfig.mode == 1 &&
+            localConfig.mode === 1 &&
             localConfig.fields.filter(
-                (fieldConfig: SurveyField) => fieldConfig.type == 'Email',
-            ).length != 1;
+                (fieldConfig: SurveyField) => fieldConfig.type === 'Email',
+            ).length !== 1;
 
         if (settingsInvalid || timingInvalid || authInvalid) {
             if (settingsInvalid) {

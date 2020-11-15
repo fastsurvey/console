@@ -1,6 +1,6 @@
 import React from 'react';
 import TextInput from '../../../../../components/formFields/TextInput';
-import {SurveyField, TextField} from '../../../../../utilities/types';
+import {TextField} from '../../../../../utilities/types';
 
 interface TextFieldConfigFormProps {
     fieldConfig: TextField;
@@ -9,7 +9,6 @@ interface TextFieldConfigFormProps {
         subValidation: (fieldConfig: TextField) => boolean,
     ): void;
     disabled: boolean;
-    updateValidator(newState: boolean): void;
 }
 
 function TextFieldConfigForm(props: TextFieldConfigFormProps) {

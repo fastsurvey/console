@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import DropDown from '../../../../../components/formFields/DropDown';
 import TextArea from '../../../../../components/formFields/TextArea';
