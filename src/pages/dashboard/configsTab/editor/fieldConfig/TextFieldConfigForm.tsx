@@ -4,11 +4,29 @@ import {SurveyField, TextField} from '../../../../../utilities/types';
 
 interface TextFieldConfigFormProps {
     fieldConfig: TextField;
-    setFieldConfig(fieldConfig: TextField): void;
+    setFieldConfig(
+        fieldConfig: TextField,
+        subValidation: (fieldConfig: TextField) => boolean,
+    ): void;
     disabled: boolean;
+    updateValidator(newState: boolean): void;
 }
 
 function TextFieldConfigForm(props: TextFieldConfigFormProps) {
+    const minCharsIsValid = (min_chars: number) =>
+        0 <= min_chars && min_chars <= props.fieldConfig.max_chars;
+
+    const maxCharsIsValid = (max_chars: number) => max_chars <= 2000;
+
+    function updateFieldConfig(newFieldConfig: TextField) {
+        props.setFieldConfig(
+            newFieldConfig,
+            (newFieldConfig: TextField) =>
+                minCharsIsValid(newFieldConfig.min_chars) &&
+                maxCharsIsValid(newFieldConfig.max_chars),
+        );
+    }
+
     const commonProps = {
         disabled: props.disabled,
         flat: true,
@@ -25,7 +43,7 @@ function TextFieldConfigForm(props: TextFieldConfigFormProps) {
                     {...commonProps}
                     value={props.fieldConfig.min_chars.toString()}
                     onChange={(newValue: string) =>
-                        props.setFieldConfig({
+                        updateFieldConfig({
                             ...props.fieldConfig,
                             min_chars:
                                 newValue.length > 0 ? parseInt(newValue) : 0,
@@ -33,10 +51,7 @@ function TextFieldConfigForm(props: TextFieldConfigFormProps) {
                     }
                     hint={{
                         text: '<= max char.',
-                        fulfilled:
-                            0 <= props.fieldConfig.min_chars &&
-                            props.fieldConfig.min_chars <=
-                                props.fieldConfig.max_chars,
+                        fulfilled: minCharsIsValid(props.fieldConfig.min_chars),
                     }}
                 />
             </div>
@@ -48,7 +63,7 @@ function TextFieldConfigForm(props: TextFieldConfigFormProps) {
                     {...commonProps}
                     value={props.fieldConfig.max_chars.toString()}
                     onChange={(newValue: string) =>
-                        props.setFieldConfig({
+                        updateFieldConfig({
                             ...props.fieldConfig,
                             max_chars:
                                 newValue.length > 0 ? parseInt(newValue) : 0,
@@ -56,7 +71,7 @@ function TextFieldConfigForm(props: TextFieldConfigFormProps) {
                     }
                     hint={{
                         text: '<= 2000',
-                        fulfilled: props.fieldConfig.max_chars <= 2000,
+                        fulfilled: maxCharsIsValid(props.fieldConfig.max_chars),
                     }}
                 />
             </div>

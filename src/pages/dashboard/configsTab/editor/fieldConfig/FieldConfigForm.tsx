@@ -18,19 +18,38 @@ function FieldConfigForm(props: FieldConfigFormProps) {
     const descriptionIsValid = (description: string) =>
         description.length <= 2000;
 
+    const [settingsValidator, setSettingsValidator] = useState(true);
+    useEffect(() => setSettingsValidator(true), [props.fieldConfig.local_id]);
+
     function updateFieldConfig(newFieldConfig: SurveyField) {
         props.updateValidator(
             titleIsValid(newFieldConfig.title) &&
-                descriptionIsValid(newFieldConfig.description),
+                descriptionIsValid(newFieldConfig.description) &&
+                settingsValidator,
         );
         props.setFieldConfig(newFieldConfig);
     }
 
-    const commonPropsGeneral = {
+    function updateSubfieldConfig(
+        newFieldConfig: SurveyField,
+        subValidation: (fieldConfig: SurveyField) => boolean,
+    ) {
+        const subValidationResult = subValidation(newFieldConfig);
+        setSettingsValidator(subValidationResult);
+        props.updateValidator(
+            titleIsValid(newFieldConfig.title) &&
+                descriptionIsValid(newFieldConfig.description) &&
+                subValidationResult,
+        );
+        props.setFieldConfig(newFieldConfig);
+    }
+
+    const commonFieldProps = {
         disabled: props.disabled,
-        setFieldConfig: props.setFieldConfig,
+        setFieldConfig: updateSubfieldConfig,
+        updateValidator: setSettingsValidator,
     };
-    const commonPropsSpecific = {
+    const commonInputProps = {
         disabled: props.disabled,
         flat: true,
         wrapperClassName: 'self-stretch flex-grow mr-2',
@@ -40,8 +59,9 @@ function FieldConfigForm(props: FieldConfigFormProps) {
     switch (props.fieldConfig.type) {
         case 'Text':
             FieldSettings = (
+                // @ts-ignore
                 <TextFieldConfigForm
-                    {...commonPropsGeneral}
+                    {...commonFieldProps}
                     fieldConfig={props.fieldConfig}
                 />
             );
@@ -87,7 +107,7 @@ function FieldConfigForm(props: FieldConfigFormProps) {
                             Title:
                         </div>
                         <TextInput
-                            {...commonPropsSpecific}
+                            {...commonInputProps}
                             value={props.fieldConfig.title}
                             onChange={(newValue: string) =>
                                 updateFieldConfig({
@@ -116,7 +136,7 @@ function FieldConfigForm(props: FieldConfigFormProps) {
                             Description:
                         </div>
                         <TextArea
-                            {...commonPropsSpecific}
+                            {...commonInputProps}
                             rows={2}
                             value={props.fieldConfig.description}
                             onChange={(newValue: string) =>
