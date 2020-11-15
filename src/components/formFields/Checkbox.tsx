@@ -12,8 +12,10 @@ const Checkbox = React.forwardRef((props: CheckboxProps, ref: any) => {
     return (
         <div
             className={
-                'relative h-12 w-12 p-2' +
-                'font-weight-500 text-lg text-gray-800 no-selection ' +
+                'w-12 h-12 p-2 ' +
+                (props.disabled
+                    ? 'text-gray-500 cursor-not-allowed'
+                    : 'text-gray-800 cursor-pointer ') +
                 (props.className ? props.className : '')
             }
             onClick={() => {
@@ -22,13 +24,7 @@ const Checkbox = React.forwardRef((props: CheckboxProps, ref: any) => {
                 }
             }}
         >
-            <div
-                className={
-                    'w-8 h-8 ' + (props.disabled ? 'bg-gray-200 rounded ' : '')
-                }
-            >
-                {props.checked ? ICONS.checkbox_true : ICONS.checkbox_false}
-            </div>
+            {props.checked ? ICONS.checkbox_true : ICONS.checkbox_false}
         </div>
     );
 });

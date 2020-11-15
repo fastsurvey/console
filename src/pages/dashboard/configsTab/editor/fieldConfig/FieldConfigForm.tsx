@@ -4,6 +4,7 @@ import TextArea from '../../../../../components/formFields/TextArea';
 import TextInput from '../../../../../components/formFields/TextInput';
 import {SurveyField} from '../../../../../utilities/types';
 import TextFieldConfigForm from './TextFieldConfigForm';
+import OptionFieldConfigForm from './OptionFieldConfigForm';
 
 interface FieldConfigFormProps {
     fieldConfig: SurveyField;
@@ -60,6 +61,15 @@ function FieldConfigForm(props: FieldConfigFormProps) {
             FieldSettings = (
                 // @ts-ignore
                 <TextFieldConfigForm
+                    {...commonFieldProps}
+                    fieldConfig={props.fieldConfig}
+                />
+            );
+            break;
+        case 'Option':
+            FieldSettings = (
+                // @ts-ignore
+                <OptionFieldConfigForm
                     {...commonFieldProps}
                     fieldConfig={props.fieldConfig}
                 />

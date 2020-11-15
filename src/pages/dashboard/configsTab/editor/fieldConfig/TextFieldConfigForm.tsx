@@ -35,7 +35,7 @@ function TextFieldConfigForm(props: TextFieldConfigFormProps) {
     return (
         <div className='flex flex-row'>
             <div className='flex flex-row items-start mr-8'>
-                <div className='h-12 mr-3 text-xl font-weight-600 leading-12'>
+                <div className='h-12 ml-2 mr-3 text-xl font-weight-600 leading-12'>
                     Min. Characters:
                 </div>
                 <TextInput
