@@ -5,6 +5,7 @@ import TextInput from '../../../../../components/formFields/TextInput';
 import {SurveyField} from '../../../../../utilities/types';
 import TextFieldConfigForm from './TextFieldConfigForm';
 import OptionFieldConfigForm from './OptionFieldConfigForm';
+import RadioFieldConfigForm from './RadioFieldConfigForm';
 
 interface FieldConfigFormProps {
     fieldConfig: SurveyField;
@@ -75,7 +76,15 @@ function FieldConfigForm(props: FieldConfigFormProps) {
                 />
             );
             break;
-
+        case 'Radio':
+            FieldSettings = (
+                // @ts-ignore
+                <RadioFieldConfigForm
+                    {...commonFieldProps}
+                    fieldConfig={props.fieldConfig}
+                />
+            );
+            break;
         default:
             FieldSettings = (
                 <div className='w-full my-4 text-center'>

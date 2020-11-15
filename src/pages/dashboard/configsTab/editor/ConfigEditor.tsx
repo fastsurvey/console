@@ -58,6 +58,13 @@ function ConfigEditor(props: ConfigEditorProps) {
             localConfig.fields.filter(
                 (fieldConfig: SurveyField) => fieldConfig.type === 'Email',
             ).length !== 1;
+        const subfieldsInvalid =
+            localConfig.fields.filter(
+                (fieldConfig: SurveyField) =>
+                    (fieldConfig.type === 'Radio' ||
+                        fieldConfig.type === 'Selection') &&
+                    fieldConfig.fields.length < 2,
+            ).length > 0;
 
         if (settingsInvalid || timingInvalid || authInvalid) {
             if (settingsInvalid) {
@@ -75,6 +82,12 @@ function ConfigEditor(props: ConfigEditorProps) {
             if (authInvalid) {
                 props.openMessage({
                     text: 'Email-authentication requires unique email field',
+                    type: 'error',
+                });
+            }
+            if (subfieldsInvalid) {
+                props.openMessage({
+                    text: 'Radio/Selection fields require at least 2 options',
                     type: 'error',
                 });
             }
