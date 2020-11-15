@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import DropDown from '../../../../../components/formFields/DropDown';
 import TextArea from '../../../../../components/formFields/TextArea';
 import TextInput from '../../../../../components/formFields/TextInput';
@@ -9,12 +9,43 @@ import DateSelectorRow from './DateSelectorRow';
 interface GeneralConfigProps {
     config: SurveyConfig;
     setConfig(config: SurveyConfig): void;
+    updateValidator(newState: boolean): void;
 }
 
 function GeneralConfig(props: GeneralConfigProps) {
     const commonProps = {
         disabled: !props.config.draft,
     };
+
+    const [valid, setValid] = useState(true);
+    const titleIsValid = (title: string) =>
+        1 <= title.length && title.length <= 120;
+    const surveyNameIsValid = (survey_name: string) =>
+        survey_name.match(/^[a-zA-Z0-9-_]*$/) !== null &&
+        3 <= survey_name.length &&
+        survey_name.length <= 120 &&
+        true;
+
+    const descriptionIsValid = (description: string) =>
+        description.length <= 2000;
+
+    useEffect(() => {
+        setValid(true);
+    }, [props.config.local_id]);
+
+    useEffect(() => {
+        props.updateValidator(valid);
+    }, [valid]);
+
+    function updateConfig(newConfig: SurveyConfig) {
+        props.setConfig(newConfig);
+        props.updateValidator(
+            titleIsValid(newConfig.title) &&
+                surveyNameIsValid(newConfig.survey_name) &&
+                descriptionIsValid(newConfig.description),
+        );
+    }
+
     return (
         <div className='flex flex-col w-full min-h-full pt-4 pb-4 mb-8 border-b-4 border-gray-500'>
             <div className='flex flex-row mb-4'>
@@ -27,7 +58,7 @@ function GeneralConfig(props: GeneralConfigProps) {
                         flat
                         value={props.config.title}
                         onChange={(newValue: string) => {
-                            props.setConfig({
+                            updateConfig({
                                 ...props.config,
                                 ...{title: newValue},
                             });
@@ -37,9 +68,7 @@ function GeneralConfig(props: GeneralConfigProps) {
                             text:
                                 'Not empty, max. 120 characters ' +
                                 `(${120 - props.config.title.length} left)`,
-                            fulfilled:
-                                1 <= props.config.title.length &&
-                                props.config.title.length <= 120,
+                            fulfilled: titleIsValid(props.config.title),
                         }}
                         wrapperClassName='self-stretch flex-grow'
                     />
@@ -53,7 +82,7 @@ function GeneralConfig(props: GeneralConfigProps) {
                         flat
                         value={props.config.survey_name}
                         onChange={(newValue: string) => {
-                            props.setConfig({
+                            updateConfig({
                                 ...props.config,
                                 ...{survey_name: newValue},
                             });
@@ -61,16 +90,13 @@ function GeneralConfig(props: GeneralConfigProps) {
                         placeholder='URL conform identifier'
                         hint={{
                             text:
-                                'URL-conform, 3-120 ' +
+                                'URL-safe, unique, 3-120 ' +
                                 `characters (${
                                     120 - props.config.survey_name.length
                                 } left)`,
-                            fulfilled:
-                                props.config.survey_name.match(
-                                    /^[a-zA-Z0-9-_]*$/,
-                                ) !== null &&
-                                3 <= props.config.survey_name.length &&
-                                props.config.survey_name.length <= 120,
+                            fulfilled: surveyNameIsValid(
+                                props.config.survey_name,
+                            ),
                         }}
                         wrapperClassName='self-stretch flex-grow'
                     />
@@ -85,7 +111,7 @@ function GeneralConfig(props: GeneralConfigProps) {
                     flat
                     value={props.config.description}
                     onChange={(newValue: string) => {
-                        props.setConfig({
+                        updateConfig({
                             ...props.config,
                             ...{description: newValue},
                         });

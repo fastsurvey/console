@@ -24,19 +24,39 @@ interface ConfigEditorProps {
 }
 function ConfigEditor(props: ConfigEditorProps) {
     const [localConfig, setLocalConfigState] = useState(props.centralConfig);
-    const [validationErrors, setValidationErrors] = useState([]);
+    const initialValidators: boolean[] = [];
+    const [validators, setValidators] = useState(initialValidators);
 
     let history = useHistory();
 
     useEffect(() => {
         setLocalConfigState(props.centralConfig);
+        const newValidators = [];
+        for (let i = 0; i <= props.centralConfig.fields.length; i++) {
+            newValidators.push(true);
+        }
+        setValidators(newValidators);
     }, [props.centralConfig, props.centralConfig.local_id]);
 
-    function syncState() {
-        const settingsInvalid = validationErrors.length !== 0;
-        const timingInvalid = localConfig.start >= localConfig.end;
+    function updateValidator(newIndex: number, newState: boolean) {
+        console.log({validators});
+        setValidators(
+            validators.map((state, index) =>
+                index !== newIndex ? state : newState,
+            ),
+        );
+    }
 
-        if (settingsInvalid || timingInvalid) {
+    function syncState() {
+        const settingsInvalid = validators.includes(false);
+        const timingInvalid = localConfig.start >= localConfig.end;
+        const authInvalid =
+            localConfig.mode == 1 &&
+            localConfig.fields.filter(
+                (fieldConfig: SurveyField) => fieldConfig.type == 'Email',
+            ).length != 1;
+
+        if (settingsInvalid || timingInvalid || authInvalid) {
             if (settingsInvalid) {
                 props.openMessage({
                     text: 'Invalid fields: Please check all red circles',
@@ -46,6 +66,12 @@ function ConfigEditor(props: ConfigEditorProps) {
             if (timingInvalid) {
                 props.openMessage({
                     text: 'End time before start time',
+                    type: 'error',
+                });
+            }
+            if (authInvalid) {
+                props.openMessage({
+                    text: 'Email-authentication requires unique email field',
                     type: 'error',
                 });
             }
@@ -94,6 +120,9 @@ function ConfigEditor(props: ConfigEditorProps) {
                 <GeneralConfig
                     config={localConfig}
                     setConfig={setLocalConfig}
+                    updateValidator={(newState: boolean) =>
+                        updateValidator(0, newState)
+                    }
                 />
                 {localConfig.fields.map((fieldConfig, index) => (
                     <FieldConfigForm
