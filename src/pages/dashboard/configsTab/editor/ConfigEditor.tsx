@@ -89,6 +89,7 @@ function ConfigEditor(props: ConfigEditorProps) {
 
     function revertState() {
         props.markDiffering(false);
+        props.closeAllMessages();
         setLocalConfigState(props.centralConfig);
     }
 
@@ -135,6 +136,9 @@ function ConfigEditor(props: ConfigEditorProps) {
                             setFieldConfig(fieldConfig, index)
                         }
                         disabled={!localConfig.draft}
+                        updateValidator={(newState: boolean) =>
+                            updateValidator(1 + index, newState)
+                        }
                     />
                 ))}
             </div>

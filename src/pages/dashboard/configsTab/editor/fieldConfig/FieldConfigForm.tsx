@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {ICONS} from '../../../../../assets/icons/icons';
 import TextArea from '../../../../../components/formFields/TextArea';
 import TextInput from '../../../../../components/formFields/TextInput';
@@ -9,10 +9,22 @@ interface FieldConfigFormProps {
     fieldConfig: SurveyField;
     setFieldConfig(fieldConfig: SurveyField): void;
     disabled: boolean;
+    updateValidator(newState: boolean): void;
 }
 
 function FieldConfigForm(props: FieldConfigFormProps) {
-    let FieldSettings: React.ReactNode;
+    const titleIsValid = (title: string) =>
+        1 <= title.length && title.length <= 120;
+    const descriptionIsValid = (description: string) =>
+        description.length <= 2000;
+
+    function updateFieldConfig(newFieldConfig: SurveyField) {
+        props.updateValidator(
+            titleIsValid(newFieldConfig.title) &&
+                descriptionIsValid(newFieldConfig.description),
+        );
+        props.setFieldConfig(newFieldConfig);
+    }
 
     const commonPropsGeneral = {
         disabled: props.disabled,
@@ -24,6 +36,7 @@ function FieldConfigForm(props: FieldConfigFormProps) {
         wrapperClassName: 'self-stretch flex-grow mr-2',
     };
 
+    let FieldSettings: React.ReactNode;
     switch (props.fieldConfig.type) {
         case 'Text':
             FieldSettings = (
@@ -77,7 +90,7 @@ function FieldConfigForm(props: FieldConfigFormProps) {
                             {...commonPropsSpecific}
                             value={props.fieldConfig.title}
                             onChange={(newValue: string) =>
-                                props.setFieldConfig({
+                                updateFieldConfig({
                                     ...props.fieldConfig,
                                     title: newValue,
                                 })
@@ -89,9 +102,9 @@ function FieldConfigForm(props: FieldConfigFormProps) {
                                     `(${
                                         120 - props.fieldConfig.title.length
                                     } left)`,
-                                fulfilled:
-                                    1 <= props.fieldConfig.title.length &&
-                                    props.fieldConfig.title.length <= 120,
+                                fulfilled: titleIsValid(
+                                    props.fieldConfig.title,
+                                ),
                             }}
                         />
                     </div>
@@ -107,7 +120,7 @@ function FieldConfigForm(props: FieldConfigFormProps) {
                             rows={2}
                             value={props.fieldConfig.description}
                             onChange={(newValue: string) =>
-                                props.setFieldConfig({
+                                updateFieldConfig({
                                     ...props.fieldConfig,
                                     description: newValue,
                                 })

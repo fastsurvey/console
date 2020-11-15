@@ -19,7 +19,6 @@ function GeneralConfig(props: GeneralConfigProps) {
         disabled: !props.config.draft,
     };
 
-    const [valid, setValid] = useState(true);
     const titleIsValid = (title: string) =>
         1 <= title.length && title.length <= 120;
     const surveyNameIsValid = (survey_name: string) =>
@@ -35,14 +34,6 @@ function GeneralConfig(props: GeneralConfigProps) {
         description.length <= 2000;
     const submissionLimitIsValid = (submission_limit: number) =>
         1 <= submission_limit && submission_limit <= 10000;
-
-    useEffect(() => {
-        setValid(true);
-    }, [props.config.local_id]);
-
-    useEffect(() => {
-        props.updateValidator(valid);
-    }, [valid]);
 
     function updateConfig(newConfig: SurveyConfig) {
         props.updateValidator(
