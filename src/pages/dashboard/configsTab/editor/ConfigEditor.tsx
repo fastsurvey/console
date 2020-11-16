@@ -132,7 +132,7 @@ function ConfigEditor(props: ConfigEditorProps) {
             />
             <div
                 id='ConfigEditor'
-                className='flex flex-col items-center px-8 pb-12 no-selection'
+                className='flex flex-col items-center px-8 pb-64 no-selection'
                 style={{paddingTop: 'calc(6rem - 4px)'}}
             >
                 <GeneralConfig

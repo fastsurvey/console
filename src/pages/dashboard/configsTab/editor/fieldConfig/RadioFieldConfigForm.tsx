@@ -1,10 +1,10 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {ICONS} from '../../../../../assets/icons/icons';
-import Checkbox from '../../../../../components/formFields/Checkbox';
 import TextInput from '../../../../../components/formFields/TextInput';
-import {TextField, RadioField} from '../../../../../utilities/types';
+import {RadioField} from '../../../../../utilities/types';
 import TriggerIcon from '../../../../../components/formFields/TriggerIcon';
 import {TEMPLATES} from '../constants';
+import {animateScroll} from 'react-scroll';
 
 interface RadioFieldConfigFormProps {
     fieldConfig: RadioField;
@@ -38,6 +38,7 @@ function RadioFieldConfigForm(props: RadioFieldConfigFormProps) {
     const nextRowRef: any = useRef(null);
     const [newOption, setNewOption] = useState('');
     function addFieldOption() {
+        nextRowRef.current?.blur();
         optionsVisible.push(true);
         const local_id: number =
             Math.max(
@@ -52,8 +53,11 @@ function RadioFieldConfigForm(props: RadioFieldConfigFormProps) {
                 {...TEMPLATES.NEW_FIELD_OPTION, title: newOption, local_id},
             ],
         });
+
+        // Suitable for 1rem = 16px
+        animateScroll.scrollMore(56, {duration: 150});
+
         setNewOption('');
-        nextRowRef.current?.blur();
     }
 
     const commonProps = {
@@ -151,6 +155,7 @@ function RadioFieldConfigForm(props: RadioFieldConfigFormProps) {
                             hint={{
                                 text: 'Press <Enter> to add',
                                 fulfilled: newOption !== '',
+                                hideDot: true,
                             }}
                             onEnter={
                                 newOption !== '' ? addFieldOption : () => {}

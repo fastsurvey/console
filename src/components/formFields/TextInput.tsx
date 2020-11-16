@@ -69,6 +69,7 @@ const TextInput = React.forwardRef((props: TextInputProps, ref: any) => {
                 <div
                     className={
                         'absolute top-0 right-0 w-2 h-2 mt-5 mr-2 rounded-full ' +
+                        'transition-colors duration-150 ' +
                         (props.hint.fulfilled ? 'bg-green-500' : 'bg-magenta')
                     }
                 />
@@ -81,7 +82,7 @@ const TextInput = React.forwardRef((props: TextInputProps, ref: any) => {
                         (props.hint.fulfilled
                             ? 'text-green-500'
                             : 'text-magenta') +
-                        ' transition-all duration-300 ' +
+                        ' transition-all duration-150 ' +
                         (focused ? 'h-8 py-1 mb-2' : 'h-0 py-0 mb-0')
                     }
                 >
