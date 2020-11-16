@@ -6,6 +6,7 @@ import {SurveyField} from '../../../../../utilities/types';
 import TextFieldConfigForm from './TextFieldConfigForm';
 import OptionFieldConfigForm from './OptionFieldConfigForm';
 import RadioFieldConfigForm from './RadioFieldConfigForm';
+import SelectionFieldConfigForm from './SelectionFieldConfigForm';
 
 interface FieldConfigFormProps {
     fieldConfig: SurveyField;
@@ -80,6 +81,15 @@ function FieldConfigForm(props: FieldConfigFormProps) {
             FieldSettings = (
                 // @ts-ignore
                 <RadioFieldConfigForm
+                    {...commonFieldProps}
+                    fieldConfig={props.fieldConfig}
+                />
+            );
+            break;
+        case 'Selection':
+            FieldSettings = (
+                // @ts-ignore
+                <SelectionFieldConfigForm
                     {...commonFieldProps}
                     fieldConfig={props.fieldConfig}
                 />
