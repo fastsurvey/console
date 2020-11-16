@@ -8,7 +8,7 @@ interface TextInputProps {
     className?: string;
     wrapperClassName?: string;
     required?: boolean;
-    hint?: {text: string; fulfilled: boolean};
+    hint?: {text: string; fulfilled: boolean; hideDot?: boolean};
     autoComplete?: string;
     onEnter?(): void;
     flat?: boolean;
@@ -65,7 +65,7 @@ const TextInput = React.forwardRef((props: TextInputProps, ref: any) => {
                 type={props.type ? props.type : 'text'}
                 autoComplete={props.autoComplete ? props.autoComplete : ''}
             />
-            {props.hint && (
+            {props.hint && !props.hint.hideDot && (
                 <div
                     className={
                         'absolute top-0 right-0 w-2 h-2 mt-5 mr-2 rounded-full ' +

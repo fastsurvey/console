@@ -4,7 +4,7 @@ import DropDown from '../../../../../components/formFields/DropDown';
 import TextArea from '../../../../../components/formFields/TextArea';
 import TextInput from '../../../../../components/formFields/TextInput';
 import {ReduxState, SurveyConfig} from '../../../../../utilities/types';
-import {AUTH_MODE} from '../constants';
+import {FORM_OPTIONS} from '../constants';
 import DateSelectorRow from './DateSelectorRow';
 
 interface GeneralConfigProps {
@@ -139,7 +139,7 @@ function GeneralConfig(props: GeneralConfigProps) {
                                         ...{mode: newValue},
                                     });
                                 }}
-                                options={AUTH_MODE}
+                                options={FORM_OPTIONS.AUTH_MODE}
                             />
                         </div>
                     </div>

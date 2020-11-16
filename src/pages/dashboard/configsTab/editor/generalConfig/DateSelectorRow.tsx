@@ -1,6 +1,6 @@
 import React from 'react';
 import DropDown from '../../../../../components/formFields/DropDown';
-import {MONTHS, YEARS, HOURS, MINUTES} from '../constants';
+import {FORM_OPTIONS} from '../constants';
 
 interface DateSelectorProps {
     date: any;
@@ -97,7 +97,7 @@ function DateSelector(props: DateSelectorProps) {
                     onChange={(newValue: number) => {
                         changeMonth(newValue);
                     }}
-                    options={MONTHS}
+                    options={FORM_OPTIONS.MONTHS}
                 />
             </div>
             {DateSeparator('.')}
@@ -108,7 +108,7 @@ function DateSelector(props: DateSelectorProps) {
                     onChange={(newValue: number) => {
                         changeYear(newValue);
                     }}
-                    options={YEARS}
+                    options={FORM_OPTIONS.YEARS}
                 />
             </div>
             <div className='mx-2 w-14'>
@@ -118,7 +118,7 @@ function DateSelector(props: DateSelectorProps) {
                     onChange={(newValue: number) => {
                         changeTime(newValue, props.date.getMinutes());
                     }}
-                    options={HOURS}
+                    options={FORM_OPTIONS.HOURS}
                 />
             </div>
             {DateSeparator(':')}
@@ -129,7 +129,7 @@ function DateSelector(props: DateSelectorProps) {
                     onChange={(newValue: number) => {
                         changeTime(props.date.getHours(), newValue);
                     }}
-                    options={MINUTES}
+                    options={FORM_OPTIONS.MINUTES}
                 />
             </div>
         </React.Fragment>

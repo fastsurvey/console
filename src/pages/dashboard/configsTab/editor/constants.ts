@@ -1,9 +1,10 @@
-export const AUTH_MODE = [
+import {FieldOption} from '../../../../utilities/types';
+const AUTH_MODE = [
     {value: 0, label: 'No Authentication'},
     {value: 1, label: 'Email Verification'},
 ];
 
-export const MONTHS = [
+const MONTHS = [
     {value: 0, label: 'January'},
     {value: 1, label: 'February'},
     {value: 2, label: 'March'},
@@ -18,7 +19,7 @@ export const MONTHS = [
     {value: 11, label: 'December'},
 ];
 
-export const YEARS = [
+const YEARS = [
     {value: 120, label: '2020'},
     {value: 121, label: '2021'},
     {value: 122, label: '2022'},
@@ -27,10 +28,27 @@ export const YEARS = [
     {value: 125, label: '2025'},
 ];
 
-export const HOURS = [...Array(24).keys()].map((i) => {
+const HOURS = [...Array(24).keys()].map((i) => {
     return {label: i.toString(), value: i};
 });
 
-export const MINUTES = [...Array(60).keys()].map((i) => {
+const MINUTES = [...Array(60).keys()].map((i) => {
     return {label: i.toString(), value: i};
 });
+
+export const FORM_OPTIONS = {
+    AUTH_MODE,
+    MONTHS,
+    YEARS,
+    HOURS,
+    MINUTES,
+};
+
+const NEW_FIELD_OPTION: FieldOption = {
+    local_id: 0,
+    title: '',
+    description: '',
+    mandatory: false,
+};
+
+export const TEMPLATES = {NEW_FIELD_OPTION};

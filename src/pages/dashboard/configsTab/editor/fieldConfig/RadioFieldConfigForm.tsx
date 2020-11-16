@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {ICONS} from '../../../../../assets/icons/icons';
 import Checkbox from '../../../../../components/formFields/Checkbox';
 import TextInput from '../../../../../components/formFields/TextInput';
 import {TextField, RadioField} from '../../../../../utilities/types';
 import TriggerIcon from '../../../../../components/formFields/TriggerIcon';
+import {TEMPLATES} from '../constants';
 
 interface RadioFieldConfigFormProps {
     fieldConfig: RadioField;
@@ -32,6 +33,27 @@ function RadioFieldConfigForm(props: RadioFieldConfigFormProps) {
                 titleIsValid(optionField.title),
             ),
         );
+    }
+
+    const nextRowRef: any = useRef(null);
+    const [newOption, setNewOption] = useState('');
+    function addFieldOption() {
+        optionsVisible.push(true);
+        const local_id: number =
+            Math.max(
+                ...props.fieldConfig.fields.map(
+                    (fieldConfig) => fieldConfig.local_id,
+                ),
+            ) + 1;
+        updateFieldConfig({
+            ...props.fieldConfig,
+            fields: [
+                ...props.fieldConfig.fields,
+                {...TEMPLATES.NEW_FIELD_OPTION, title: newOption, local_id},
+            ],
+        });
+        setNewOption('');
+        nextRowRef.current?.blur();
     }
 
     const commonProps = {
@@ -118,6 +140,23 @@ function RadioFieldConfigForm(props: RadioFieldConfigFormProps) {
                             </div>
                         ),
                     )}
+                    <div className='w-full pr-12'>
+                        <TextInput
+                            flat
+                            ref={nextRowRef}
+                            wrapperClassName={'flex-max opacity-60 '}
+                            value={newOption}
+                            onChange={setNewOption}
+                            placeholder='New option'
+                            hint={{
+                                text: 'Press <Enter> to add',
+                                fulfilled: newOption !== '',
+                            }}
+                            onEnter={
+                                newOption !== '' ? addFieldOption : () => {}
+                            }
+                        />
+                    </div>
                 </div>
             </div>
         </div>

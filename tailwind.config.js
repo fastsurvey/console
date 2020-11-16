@@ -17,6 +17,12 @@ module.exports = {
                 'beige-300': '#E4C3AD',
                 'beige-500': '#D19A75',
             },
+            opacity: {
+                '60': '.6',
+                '70': '.7',
+                '80': '.8',
+                '90': '.9',
+            },
             lineHeight: {
                 '12': '3rem'
             },
