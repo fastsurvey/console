@@ -4,7 +4,6 @@ node_modules
 tailwind.out.css
 build
 scripts
-package-lock.json
 
 # Created by https://www.toptal.com/developers/gitignore/api/node,vscode,react,git,macos,linux,yarn
 # Edit at https://www.toptal.com/developers/gitignore?templates=node,vscode,react,git,macos,linux,yarn

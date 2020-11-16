@@ -99,3 +99,8 @@ svg {
 .bg-magenta {
     background-color: #FD0948;
 }
+
+.flex-max {
+    @apply self-stretch;
+    @apply flex-grow;
+}

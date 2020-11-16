@@ -1,3 +1,5 @@
+import GeneralConfig from '../pages/dashboard/configsTab/editor/generalConfig/GeneralConfig';
+
 export interface ReduxState {
     loggingIn: boolean;
     loggedIn: boolean;
@@ -5,11 +7,13 @@ export interface ReduxState {
     account: undefined | Account;
     messages: Message[];
     modalOpen: boolean;
+    configs: undefined | SurveyConfig[];
+    configIsDiffering: boolean;
 }
 
 export interface OAuth2Token {
-    accessToken: string;
-    refreshToken: string;
+    access_token: string;
+    refresh_token: string;
     bearer: string;
 }
 
@@ -18,7 +22,10 @@ export interface Account {
     email_verified: boolean;
 }
 
-export type Message = string;
+export type Message = {
+    text: string;
+    type: 'info' | 'warning' | 'error' | 'success';
+};
 
 export type ReduxAction =
     | LogInAction
@@ -27,7 +34,10 @@ export type ReduxAction =
     | CloseMessageAction
     | CloseAllMessagesAction
     | OpenModalAction
-    | CloseModalAction;
+    | CloseModalAction
+    | AddConfigsAction
+    | ModifyConfigAction
+    | MarkDifferingAction;
 
 export interface LogInAction {
     type: 'LOG_IN';
@@ -41,7 +51,7 @@ export interface LogOutAction {
 
 export interface OpenMessageAction {
     type: 'OPEN_MESSAGE';
-    text: string;
+    message: Message;
 }
 
 export interface CloseMessageAction {
@@ -59,4 +69,92 @@ export interface OpenModalAction {
 
 export interface CloseModalAction {
     type: 'CLOSE_MODAL';
+}
+
+export interface AddConfigsAction {
+    type: 'ADD_CONFIGS';
+    configs: SurveyConfig[];
+}
+
+export interface ModifyConfigAction {
+    type: 'MODIFY_CONFIG';
+    config: SurveyConfig;
+}
+
+export interface MarkDifferingAction {
+    type: 'MARK_DIFFERING';
+    differing: boolean;
+}
+
+// --------------------------------------------------------
+
+export interface SurveyConfig {
+    local_id: number;
+    admin_name: string;
+    survey_name: string;
+    start: number;
+    end: number;
+    mode: 0 | 1 | 2;
+    draft: boolean;
+    submission_limit: number;
+    title: string;
+    description: string;
+    fields: SurveyField[];
+}
+
+export type SurveyField =
+    | EmailField
+    | OptionField
+    | RadioField
+    | SelectionField
+    | TextField;
+
+interface GeneralSurveyField {
+    local_id: number;
+    title: string;
+    description: string;
+}
+
+export interface EmailField extends GeneralSurveyField {
+    type: 'Email';
+    regex: string;
+    hint: string;
+}
+
+export interface OptionField extends GeneralSurveyField {
+    type: 'Option';
+    title: string;
+    description: string;
+    mandatory: boolean;
+}
+
+export interface RadioField extends GeneralSurveyField {
+    type: 'Radio';
+    title: string;
+    description: string;
+    fields: FieldOption[];
+}
+
+export interface SelectionField extends GeneralSurveyField {
+    type: 'Selection';
+    min_select: number;
+    max_select: number;
+    fields: FieldOption[];
+}
+
+export interface FieldOption extends GeneralSurveyField {
+    mandatory: false;
+}
+
+export interface TextField extends GeneralSurveyField {
+    type: 'Text';
+    min_chars: number;
+    max_chars: number;
+}
+
+export interface EmailRegexSetup {
+    label: string;
+    value: number;
+    regex: string;
+    hint: string;
 }

@@ -1,4 +1,11 @@
 import {
+    AddConfigsAction,
+    MarkDifferingAction,
+    Message,
+    ModifyConfigAction,
+    SurveyConfig,
+} from './types';
+import {
     LogOutAction,
     LogInAction,
     OAuth2Token,
@@ -23,9 +30,9 @@ export const logOutAction = (): LogOutAction => ({
     type: 'LOG_OUT',
 });
 
-export const openMessageAction = (text: string): OpenMessageAction => ({
+export const openMessageAction = (message: Message): OpenMessageAction => ({
     type: 'OPEN_MESSAGE',
-    text,
+    message,
 });
 
 export const closeMessageAction = (text: string): CloseMessageAction => ({
@@ -43,4 +50,25 @@ export const openModalAction = (): OpenModalAction => ({
 
 export const closeModalAction = (): CloseModalAction => ({
     type: 'CLOSE_MODAL',
+});
+
+export const addConfigsAction = (
+    configs: SurveyConfig[],
+): AddConfigsAction => ({
+    type: 'ADD_CONFIGS',
+    configs,
+});
+
+export const modifyConfigAction = (
+    config: SurveyConfig,
+): ModifyConfigAction => ({
+    type: 'MODIFY_CONFIG',
+    config,
+});
+
+export const markDifferingAction = (
+    differing: boolean,
+): MarkDifferingAction => ({
+    type: 'MARK_DIFFERING',
+    differing,
 });

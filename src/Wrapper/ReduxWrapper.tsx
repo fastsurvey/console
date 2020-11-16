@@ -8,8 +8,14 @@ import {
     OAuth2Token,
 } from '../utilities/types';
 import Cookies from 'js-cookie';
-import {logInAction, logOutAction} from '../utilities/reduxActions';
+import {
+    addConfigsAction,
+    logInAction,
+    logOutAction,
+} from '../utilities/reduxActions';
 import {generateValidOAuthToken} from '../utilities/jwtEncryption';
+import {fetchSurveys} from '../utilities/surveyCommunication';
+import {SurveyConfig} from '../utilities/types';
 
 function storeReducer(
     state = {
@@ -19,6 +25,8 @@ function storeReducer(
         account: undefined,
         messages: [],
         modalOpen: false,
+        configs: undefined,
+        configIsDiffering: false,
     },
     action: ReduxAction,
 ) {
@@ -29,6 +37,8 @@ function storeReducer(
         account: state.account,
         messages: state.messages,
         modalOpen: state.modalOpen,
+        configs: state.configs,
+        configIsDiffering: state.configIsDiffering,
     };
 
     switch (action.type) {
@@ -49,13 +59,17 @@ function storeReducer(
             Cookies.remove('oauth2_token');
             break;
         case 'OPEN_MESSAGE':
-            if (!newState.messages.includes(action.text)) {
-                newState.messages = [action.text].concat(newState.messages);
+            if (
+                newState.messages.filter(
+                    (message) => message.text === action.message.text,
+                ).length === 0
+            ) {
+                newState.messages = [...[action.message], ...newState.messages];
             }
             break;
         case 'CLOSE_MESSAGE':
-            newState.messages = [...newState.messages].filter((text) => {
-                return text !== action.text;
+            newState.messages = newState.messages.filter((message) => {
+                return message.text !== action.text;
             });
             break;
         case 'CLOSE_ALL_MESSAGES':
@@ -66,6 +80,28 @@ function storeReducer(
             break;
         case 'CLOSE_MODAL':
             newState.modalOpen = false;
+            break;
+        case 'ADD_CONFIGS':
+            newState.configs = action.configs;
+            break;
+        case 'MODIFY_CONFIG':
+            if (newState.configs !== undefined) {
+                newState.configs = newState.configs.map(
+                    (config: SurveyConfig) =>
+                        config.local_id === action.config.local_id
+                            ? action.config
+                            : config,
+                );
+            }
+            newState.configIsDiffering = false;
+            break;
+        case 'MARK_DIFFERING':
+            newState.configIsDiffering = action.differing;
+            newState.messages = newState.messages.filter((message) => {
+                return (
+                    message.text !== 'Please save or undo your changes first!'
+                );
+            });
             break;
         default:
             break;
@@ -83,8 +119,11 @@ interface ReduxWrapperProps {
 export function ReduxWrapper(props: ReduxWrapperProps) {
     const [cookieLogin, setCookieLogin] = useState(false);
 
-    function logIn(oauth2_token: OAuth2Token, account: Account) {
+    async function logIn(oauth2_token: OAuth2Token, account: Account) {
         store.dispatch(logInAction(oauth2_token, account));
+        await fetchSurveys(oauth2_token, (configs: SurveyConfig[]) => {
+            store.dispatch(addConfigsAction(configs));
+        });
     }
 
     useEffect(() => {

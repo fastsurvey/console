@@ -4,12 +4,14 @@ interface NavbarLinkComponentProps {
     text: string;
     active?: boolean;
     icon: React.ReactNode;
+    onClick?(): void;
 }
 function NavbarButton(props: NavbarLinkComponentProps) {
     return (
         <div
+            onClick={props.onClick ? props.onClick : () => {}}
             className={
-                'relative w-58 h-14 mx-3 my-1 p-2 text-lg font-weight-600 flex flex-row items-center justify-start rounded cursor-pointer ' +
+                'relative w-58 h-12 mx-3 my-1 px-2 py-1 text-lg font-weight-600 flex flex-row items-center justify-start rounded cursor-pointer ' +
                 (props.active
                     ? 'text-white bg-gray-800'
                     : 'text-gray-400 hover:text-white hover:bg-gray-800')

@@ -1,6 +1,11 @@
 import React, {useRef, useState} from 'react';
 import TextInput from '../../../components/formFields/TextInput';
-import {ReduxState, OAuth2Token, Account} from '../../../utilities/types';
+import {
+    ReduxState,
+    OAuth2Token,
+    Account,
+    Message,
+} from '../../../utilities/types';
 import {
     closeAllMessagesAction,
     logInAction,
@@ -13,7 +18,7 @@ import ButtonLink from '../../../components/links/ButtonLink';
 
 interface RegisterFormProps {
     logIn(oauth2_token: OAuth2Token, account: Account): void;
-    openMessage(content: string): void;
+    openMessage(message: Message): void;
     closeAllMessages(): void;
 }
 
@@ -51,18 +56,21 @@ function RegisterForm(props: RegisterFormProps) {
                 .catch((error) => {
                     setSubmitting(false);
                     const detail = error?.response?.data?.detail;
-                    let message: string;
+                    let messageText: string;
                     if (detail === 'email already taken') {
-                        message = 'Email ' + email + ' is already taken';
+                        messageText = 'Email ' + email + ' is already taken';
                     } else if (
                         detail === 'verification email could not be sent'
                     ) {
-                        message = 'Email address invalid';
+                        messageText = 'Email address invalid';
                     } else {
                         // Invalid password formats will be catched by frontend
-                        message = 'Server error. Please try again later';
+                        messageText = 'Server error. Please try again later';
                     }
-                    props.openMessage(message);
+                    props.openMessage({
+                        text: messageText,
+                        type: 'error',
+                    });
                 });
         }
     }
@@ -83,6 +91,7 @@ function RegisterForm(props: RegisterFormProps) {
                         props.closeAllMessages();
                         setEmail(newValue);
                     }}
+                    className='mb-2'
                     autoComplete='username'
                     onEnter={focusInput2}
                 />
@@ -99,6 +108,7 @@ function RegisterForm(props: RegisterFormProps) {
                         text: '> 7 characters',
                         fulfilled: password.length > 7,
                     }}
+                    className='mb-2'
                     autoComplete='new-password'
                     ref={input2}
                     onEnter={focusInput3}
@@ -118,6 +128,7 @@ function RegisterForm(props: RegisterFormProps) {
                             password.length > 7 &&
                             password === passwordConfirmation,
                     }}
+                    className='mb-2'
                     autoComplete='new-password'
                     ref={input3}
                     onEnter={handleRegistration}
@@ -142,7 +153,7 @@ const mapStateToProps = (state: ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
     logIn: (oauth2_token: OAuth2Token, account: Account) =>
         dispatch(logInAction(oauth2_token, account)),
-    openMessage: (content: string) => dispatch(openMessageAction(content)),
+    openMessage: (message: Message) => dispatch(openMessageAction(message)),
     closeAllMessages: () => dispatch(closeAllMessagesAction()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);

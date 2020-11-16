@@ -7,6 +7,7 @@ interface ButtonProps {
     className?: string;
     disabled?: boolean;
     spinning?: boolean;
+    icon?: React.ReactNode;
 }
 
 function Button(props: ButtonProps) {
@@ -29,7 +30,7 @@ function Button(props: ButtonProps) {
             tabIndex={0}
             className={
                 'no-selection relative inline-block rounded ' +
-                'h-10 px-6 py-1 leading-8 font-weight-600 ' +
+                'h-10 px-2 py-1 leading-8 font-weight-600 ' +
                 'text-lg transition duration-200 outline-none ' +
                 className +
                 ' ' +
@@ -47,11 +48,12 @@ function Button(props: ButtonProps) {
         >
             <div
                 className={
-                    'transition-opacity duration-200 ' +
+                    'flex flex-row transition-opacity duration-200 ' +
                     (props.spinning ? 'opacity-0' : 'opacity-100')
                 }
             >
-                {props.text}
+                {props.icon && <div className='w-6 h-8 py-1'>{props.icon}</div>}
+                <div className='px-2'>{props.text}</div>
             </div>
             <div
                 className={

@@ -2,7 +2,6 @@
     position: relative;
     margin-left: 16rem;
     width: calc(100vw - 16rem);
-    padding: 4rem;
     min-height: calc(100vh);
 }
 
@@ -15,4 +14,10 @@
     h3:first-child {
         padding-left: 2.5rem;
     }
+}
+
+#ConfigEditor,
+#ControlStrip {
+    margin-left: 20rem;
+    width: calc(100vw - 36rem);
 }

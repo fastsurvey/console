@@ -18,6 +18,8 @@ import LoginImage from '../assets/images/secure.svg';
 import VerifyImage from '../assets/images/letter.svg';
 import LoaderOverlay from '../components/overlays/LoaderOverlay';
 import MessageQueue from '../components/messages/MessageQueue';
+import ConfigList from '../pages/dashboard/configsTab/list/ConfigList';
+import ConfigEditorWrapper from '../pages/dashboard/configsTab/editor/ConfigEditorWrapper';
 
 interface RouterProps {
     loggingIn: boolean;
@@ -34,7 +36,7 @@ function Router(props: RouterProps) {
                     <Route exact strict path='/'>
                         <Redirect to='/login' />
                     </Route>
-                    <Route path='(/configurations|/results|/account)'>
+                    <Route path='(/configurations|/results|/account|/configuration)'>
                         {!props.loggingIn && props.loggedIn && (
                             <React.Fragment>
                                 {props.account?.email_verified !== true && (
@@ -46,7 +48,14 @@ function Router(props: RouterProps) {
                                     <DashBoardPage>
                                         <Switch>
                                             <Route exact path='/configurations'>
-                                                <h3>Configurations</h3>
+                                                <ConfigList />
+                                            </Route>
+                                            <Route
+                                                exact
+                                                path='/configuration/:survey_name'
+                                            >
+                                                <ConfigList />
+                                                <ConfigEditorWrapper />
                                             </Route>
                                             <Route exact path='/results'>
                                                 <h3>Results</h3>

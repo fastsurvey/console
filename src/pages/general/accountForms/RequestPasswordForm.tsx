@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
 import InputComponent from '../../../components/formFields/TextInput';
 import {connect} from 'react-redux';
-import {ReduxState} from '../../../utilities/types';
+import {Message, ReduxState} from '../../../utilities/types';
 import {authPostRequest} from '../../../utilities/axiosClients';
 import TextLink from '../../../components/links/TextLink';
 import ButtonLink from '../../../components/links/ButtonLink';
@@ -11,7 +11,7 @@ import {
 } from '../../../utilities/reduxActions';
 
 interface RequestPasswordFormProps {
-    openMessage(content: string): void;
+    openMessage(message: Message): void;
     closeAllMessages(): void;
 }
 
@@ -36,12 +36,16 @@ function RequestPasswordForm(props: RequestPasswordFormProps) {
                 .catch((error) => {
                     setSubmitting(false);
                     if (error?.response?.status === 400) {
-                        props.openMessage('Invalid email address');
+                        props.openMessage({
+                            text: 'Invalid email address',
+                            type: 'error',
+                        });
                     } else {
                         // Invalid password formats will be catched by frontend
-                        props.openMessage(
-                            'Server error. Please try again later',
-                        );
+                        props.openMessage({
+                            text: 'Server error. Please try again later',
+                            type: 'error',
+                        });
                     }
                 });
         }
@@ -67,6 +71,7 @@ function RequestPasswordForm(props: RequestPasswordFormProps) {
                                 props.closeAllMessages();
                                 setEmail(newValue);
                             }}
+                            className='mb-2'
                             autoComplete='username'
                             ref={input1}
                             onEnter={handleSubmit}
@@ -110,7 +115,7 @@ function RequestPasswordForm(props: RequestPasswordFormProps) {
 
 const mapStateToProps = (state: ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
-    openMessage: (content: string) => dispatch(openMessageAction(content)),
+    openMessage: (message: Message) => dispatch(openMessageAction(message)),
     closeAllMessages: () => dispatch(closeAllMessagesAction()),
 });
 export default connect(

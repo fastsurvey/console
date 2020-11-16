@@ -1,0 +1,46 @@
+import React from 'react';
+import {connect} from 'react-redux';
+import {useParams} from 'react-router-dom';
+import {ReduxState, SurveyConfig} from '../../../../utilities/types';
+import ConfigEditor from './ConfigEditor';
+
+interface ConfigEditorWrappperProps {
+    configs: undefined | SurveyConfig[];
+}
+function ConfigEditorWrappper(props: ConfigEditorWrappperProps) {
+    let params = useParams();
+
+    if (!props.configs) {
+        return (
+            <div id='ConfigEditor'>
+                <h3>Configurations</h3>
+                <p>Loading surveys ...</p>
+            </div>
+        );
+    }
+
+    const filteredConfigs = props.configs.filter((config) => {
+        // @ts-ignore
+        return config.survey_name === params.survey_name;
+    });
+
+    if (filteredConfigs.length === 0) {
+        return (
+            <div id='ConfigEditor'>
+                <h3>Nothing here ...</h3>
+                <p>404</p>
+            </div>
+        );
+    }
+
+    return <ConfigEditor centralConfig={filteredConfigs[0]} />;
+}
+
+const mapStateToProps = (state: ReduxState) => ({
+    configs: state.configs,
+});
+const mapDispatchToProps = (dispatch: any) => ({});
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(ConfigEditorWrappper);
