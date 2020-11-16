@@ -1,7 +1,6 @@
 import React from 'react';
 import Checkbox from '../../../../../components/formFields/Checkbox';
-import TextInput from '../../../../../components/formFields/TextInput';
-import {TextField, OptionField} from '../../../../../utilities/types';
+import {OptionField} from '../../../../../utilities/types';
 
 interface OptionFieldConfigFormProps {
     fieldConfig: OptionField;

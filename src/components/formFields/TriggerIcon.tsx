@@ -1,5 +1,4 @@
 import React from 'react';
-import {ICONS} from '../../assets/icons/icons';
 
 interface TriggerIconProps {
     onClick?(): void;
