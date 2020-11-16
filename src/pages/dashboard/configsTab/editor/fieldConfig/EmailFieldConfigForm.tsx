@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import DropDown from '../../../../../components/formFields/DropDown';
 import TextInput from '../../../../../components/formFields/TextInput';
-import {EmailField} from '../../../../../utilities/types';
+import {EmailField, EmailRegexSetup} from '../../../../../utilities/types';
+import {FORM_OPTIONS} from '../constants';
 
 interface EmailFieldConfigFormProps {
     fieldConfig: EmailField;
@@ -12,11 +14,44 @@ interface EmailFieldConfigFormProps {
 }
 
 function EmailFieldConfigForm(props: EmailFieldConfigFormProps) {
+    const regexIsValid = (regex: string) => regex.length <= 250;
     const hintIsValid = (hint: string) => hint.length <= 120;
+    const [setupValue, setSetupValue] = useState(
+        FORM_OPTIONS.EMAIL_REGEX.length,
+    );
+    const [customSetup, setCustomSetup] = useState({
+        label: 'Custom Rule',
+        value: FORM_OPTIONS.EMAIL_REGEX.length,
+        regex: props.fieldConfig.regex,
+        hint: props.fieldConfig.hint,
+    });
+
+    useEffect(() => {
+        const newSetup: EmailRegexSetup[] = FORM_OPTIONS.EMAIL_REGEX.filter(
+            (setup) =>
+                setup.regex === props.fieldConfig.regex &&
+                setup.hint === props.fieldConfig.hint,
+        );
+
+        if (newSetup.length === 0) {
+            setSetupValue(FORM_OPTIONS.EMAIL_REGEX.length);
+            setCustomSetup({
+                label: 'Custom Rule',
+                value: FORM_OPTIONS.EMAIL_REGEX.length,
+                regex: props.fieldConfig.regex,
+                hint: props.fieldConfig.hint,
+            });
+        } else {
+            setSetupValue(newSetup[0].value);
+        }
+    }, [props.fieldConfig.regex, props.fieldConfig.hint]);
 
     function updateFieldConfig(newFieldConfig: EmailField) {
-        props.setFieldConfig(newFieldConfig, (newFieldConfig: EmailField) =>
-            hintIsValid(newFieldConfig.hint),
+        props.setFieldConfig(
+            newFieldConfig,
+            (newFieldConfig: EmailField) =>
+                hintIsValid(newFieldConfig.hint) &&
+                regexIsValid(newFieldConfig.regex),
         );
     }
 
@@ -27,7 +62,25 @@ function EmailFieldConfigForm(props: EmailFieldConfigFormProps) {
 
     return (
         <div className='flex flex-row'>
-            <div className='flex flex-col w-50'></div>
+            <div className='flex flex-col justify-center mr-4 w-72 h-26'>
+                <DropDown
+                    {...commonProps}
+                    value={setupValue}
+                    className={'w-128'}
+                    onChange={(newValue: number) => {
+                        const setup = [
+                            ...FORM_OPTIONS.EMAIL_REGEX,
+                            customSetup,
+                        ].filter((setup) => setup.value === newValue)[0];
+                        updateFieldConfig({
+                            ...props.fieldConfig,
+                            regex: setup.regex,
+                            hint: setup.hint,
+                        });
+                    }}
+                    options={[...FORM_OPTIONS.EMAIL_REGEX, customSetup]}
+                />
+            </div>
             <div className='flex flex-col flex-max'>
                 <div className='flex flex-row items-start mb-2'>
                     <div className='h-12 mx-3 text-xl text-right w-18 font-weight-600 leading-12'>
@@ -44,6 +97,12 @@ function EmailFieldConfigForm(props: EmailFieldConfigFormProps) {
                                 regex: newValue,
                             })
                         }
+                        hint={{
+                            text: `<= 250 Characters (${
+                                250 - props.fieldConfig.hint.length
+                            } left)`,
+                            fulfilled: regexIsValid(props.fieldConfig.regex),
+                        }}
                     />
                 </div>
                 <div className='flex flex-row items-start'>

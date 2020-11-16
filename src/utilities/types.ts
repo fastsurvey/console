@@ -151,3 +151,10 @@ export interface TextField extends GeneralSurveyField {
     min_chars: number;
     max_chars: number;
 }
+
+export interface EmailRegexSetup {
+    label: string;
+    value: number;
+    regex: string;
+    hint: string;
+}
