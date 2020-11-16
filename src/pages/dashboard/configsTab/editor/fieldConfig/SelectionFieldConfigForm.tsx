@@ -23,15 +23,23 @@ function SelectionFieldConfigForm(props: SelectionFieldConfigFormProps) {
         () => setOptionsVisible(props.fieldConfig.fields.map(() => true)),
         [props.fieldConfig.fields],
     );
-
+    const minSelectIsValid = (newFieldConfig: SelectionField) =>
+        0 <= newFieldConfig.min_select &&
+        newFieldConfig.min_select <= newFieldConfig.max_select;
+    const maxSelectIsValid = (newFieldConfig: SelectionField) =>
+        newFieldConfig.max_select <= newFieldConfig.fields.length;
     const titleIsValid = (title: string) =>
         1 <= title.length && title.length <= 120;
 
     function updateFieldConfig(newFieldConfig: SelectionField) {
-        props.setFieldConfig(newFieldConfig, (newFieldConfig: SelectionField) =>
-            newFieldConfig.fields.every((optionField) =>
-                titleIsValid(optionField.title),
-            ),
+        props.setFieldConfig(
+            newFieldConfig,
+            (newFieldConfig: SelectionField) =>
+                newFieldConfig.fields.every((optionField) =>
+                    titleIsValid(optionField.title),
+                ) &&
+                minSelectIsValid(newFieldConfig) &&
+                maxSelectIsValid(newFieldConfig),
         );
     }
 
@@ -60,14 +68,60 @@ function SelectionFieldConfigForm(props: SelectionFieldConfigFormProps) {
         setNewOption('');
     }
 
-    const commonProps = {
+    const commonSelectionProps = {
         disabled: props.disabled,
         flat: true,
-        wrapperClassName: 'flex-max',
+        wrapperClassName: 'w-28',
     };
 
     return (
-        <div className='flex flex-row'>
+        <div className='flex flex-col'>
+            <div className='flex flex-row mb-2'>
+                <div className='flex flex-row items-start mr-8'>
+                    <div className='h-12 ml-2 mr-3 text-xl font-weight-600 leading-12'>
+                        Min. Selection:
+                    </div>
+                    <TextInput
+                        {...commonSelectionProps}
+                        value={props.fieldConfig.min_select.toString()}
+                        onChange={(newValue: string) =>
+                            updateFieldConfig({
+                                ...props.fieldConfig,
+                                min_select:
+                                    newValue.length > 0
+                                        ? parseInt(newValue)
+                                        : 0,
+                            })
+                        }
+                        hint={{
+                            text: '<= max select.',
+                            fulfilled: minSelectIsValid(props.fieldConfig),
+                        }}
+                    />
+                </div>
+                <div className='flex flex-row items-start mr-8'>
+                    <div className='h-12 mr-3 text-xl font-weight-600 leading-12'>
+                        Max. Selection:
+                    </div>
+                    <TextInput
+                        {...commonSelectionProps}
+                        value={props.fieldConfig.max_select.toString()}
+                        onChange={(newValue: string) =>
+                            updateFieldConfig({
+                                ...props.fieldConfig,
+                                max_select:
+                                    newValue.length > 0
+                                        ? parseInt(newValue)
+                                        : 0,
+                            })
+                        }
+                        hint={{
+                            text: '<= number of options',
+                            fulfilled: maxSelectIsValid(props.fieldConfig),
+                        }}
+                    />
+                </div>
+            </div>
             <div className='flex flex-row w-full'>
                 <div className='h-12 ml-2 mr-3 text-xl font-weight-600 leading-12'>
                     Options:
@@ -87,7 +141,9 @@ function SelectionFieldConfigForm(props: SelectionFieldConfigFormProps) {
                                 }
                             >
                                 <TextInput
-                                    {...commonProps}
+                                    disabled={props.disabled}
+                                    flat
+                                    wrapperClassName={'flex-max'}
                                     value={optionField.title}
                                     onChange={(newValue: string) =>
                                         updateFieldConfig({
