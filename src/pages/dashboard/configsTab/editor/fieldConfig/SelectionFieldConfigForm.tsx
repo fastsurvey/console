@@ -116,7 +116,7 @@ function SelectionFieldConfigForm(props: SelectionFieldConfigFormProps) {
                             })
                         }
                         hint={{
-                            text: '<= number of options',
+                            text: `<= ${props.fieldConfig.fields.length}`,
                             fulfilled: maxSelectIsValid(props.fieldConfig),
                         }}
                     />

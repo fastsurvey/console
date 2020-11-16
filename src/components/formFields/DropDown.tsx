@@ -43,6 +43,7 @@ const DropDown = React.forwardRef((props: DropDownProps, ref: any) => {
                 'relative w-full overflow-visible rounded h-12 ' +
                 'font-weight-500 text-lg text-gray-800 no-selection ' +
                 (props.className ? props.className : '') +
+                ' ' +
                 zIndex
             }
         >

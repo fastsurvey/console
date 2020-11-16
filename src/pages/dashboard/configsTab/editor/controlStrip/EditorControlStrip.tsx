@@ -19,11 +19,24 @@ interface EditorControlStripProps {
 }
 
 function EditorControlStrip(props: EditorControlStripProps) {
+    function now() {
+        return Math.floor(Date.now() / 1000);
+    }
+
     function startNow() {
         // TODO: Push new start timestamp to server
         props.setConfig({
             ...props.config,
-            start: Math.floor(Date.now() / 1000),
+            start: now(),
+        });
+    }
+
+    function reopenNow() {
+        // TODO: Push new start timestamp to server
+        props.setConfig({
+            ...props.config,
+            start: now(),
+            end: now() + 3600 * 24,
         });
     }
 
@@ -87,13 +100,25 @@ function EditorControlStrip(props: EditorControlStripProps) {
                             }
                         />
                         <ControlStripButton
-                            disabled={props.config.draft}
-                            label='Start Now'
+                            disabled={
+                                props.config.start <= now() &&
+                                now() < props.config.end
+                            }
+                            label={
+                                now() < props.config.end
+                                    ? 'Start Now'
+                                    : 'Reopen Now'
+                            }
                             icon={ICONS.play}
-                            onClick={startNow}
+                            onClick={
+                                now() < props.config.end ? startNow : reopenNow
+                            }
                         />
                         <ControlStripButton
-                            disabled={props.config.draft}
+                            disabled={
+                                now() >= props.config.end ||
+                                now() < props.config.start
+                            }
                             label='End Now'
                             icon={ICONS.stop}
                             onClick={endNow}
