@@ -7,6 +7,7 @@ import TextFieldConfigForm from './TextFieldConfigForm';
 import OptionFieldConfigForm from './OptionFieldConfigForm';
 import RadioFieldConfigForm from './RadioFieldConfigForm';
 import SelectionFieldConfigForm from './SelectionFieldConfigForm';
+import EmailFieldConfigForm from './EmailFieldConfigForm';
 
 interface FieldConfigFormProps {
     fieldConfig: SurveyField;
@@ -95,6 +96,15 @@ function FieldConfigForm(props: FieldConfigFormProps) {
                 />
             );
             break;
+        case 'Email':
+            FieldSettings = (
+                // @ts-ignore
+                <EmailFieldConfigForm
+                    {...commonFieldProps}
+                    fieldConfig={props.fieldConfig}
+                />
+            );
+            break;
         default:
             FieldSettings = (
                 <div className='w-full my-4 text-center'>
@@ -107,7 +117,7 @@ function FieldConfigForm(props: FieldConfigFormProps) {
     return (
         <div
             className={
-                'w-full bg-gray-100 shadow-outline-gray rounded flex flex-col mb-4'
+                'w-full bg-gray-100 shadow-outline-gray rounded flex flex-col mb-8'
             }
         >
             <div
