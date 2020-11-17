@@ -72,3 +72,30 @@ export const markDifferingAction = (
     type: 'MARK_DIFFERING',
     differing,
 });
+
+export const dispatcher = {
+    openMessage: (dispatch: any) => (message: Message): void =>
+        dispatch({
+            type: 'OPEN_MESSAGE',
+            message,
+        }),
+    closeMessage: (dispatch: any) => (text: string): void =>
+        dispatch({
+            type: 'OPEN_MESSAGE',
+            text,
+        }),
+    closeAllMessages: (dispatch: any) => (): void =>
+        dispatch({
+            type: 'CLOSE_ALL_MESSAGES',
+        }),
+    modifyConfig: (dispatch: any) => (config: SurveyConfig): void =>
+        dispatch({
+            type: 'MODIFY_CONFIG',
+            config,
+        }),
+    markDiffering: (dispatch: any) => (differing: boolean): void =>
+        dispatch({
+            type: 'MARK_DIFFERING',
+            differing,
+        }),
+};

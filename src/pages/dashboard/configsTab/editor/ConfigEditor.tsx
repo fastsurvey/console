@@ -9,9 +9,8 @@ import {
 import EditorControlStrip from './controlStrip/EditorControlStrip';
 import GeneralConfig from './generalConfig/GeneralConfig';
 import {
-    modifyConfigAction,
-    markDifferingAction,
     openMessageAction,
+    dispatcher,
 } from '../../../../utilities/reduxActions';
 import FieldConfigForm from './fieldConfig/FieldConfigForm';
 import {useHistory} from 'react-router-dom';
@@ -162,11 +161,9 @@ function ConfigEditor(props: ConfigEditorProps) {
 
 const mapStateToProps = (state: ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
-    modifyConfig: (config: SurveyConfig) =>
-        dispatch(modifyConfigAction(config)),
-    markDiffering: (differing: boolean) =>
-        dispatch(markDifferingAction(differing)),
-    openMessage: (message: Message) => dispatch(openMessageAction(message)),
-    closeAllMessages: () => dispatch(closeAllMessagesAction()),
+    modifyConfig: dispatcher.modifyConfig(dispatch),
+    markDiffering: dispatcher.markDiffering(dispatch),
+    openMessage: dispatcher.openMessage(dispatch),
+    closeAllMessages: dispatcher.closeAllMessages(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(ConfigEditor);
