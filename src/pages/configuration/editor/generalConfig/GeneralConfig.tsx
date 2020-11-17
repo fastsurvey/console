@@ -5,7 +5,7 @@ import {stateTypes, configTypes, formOptions} from 'utilities';
 
 import {DropDown, TextArea, TextInput} from 'components';
 
-import DateSelectorRow from './DateSelectorRow';
+import DatePicker from '../../../../components/formFields/date-picker/date-picker';
 
 interface GeneralConfigProps {
     configs: configTypes.SurveyConfig[] | undefined;
@@ -178,9 +178,9 @@ function GeneralConfig(props: GeneralConfigProps) {
                         <div className='h-12 mr-4 text-xl text-right w-14 leading-12 font-weight-600'>
                             Start:
                         </div>
-                        <DateSelectorRow
+                        <DatePicker
                             {...commonProps}
-                            date={new Date(props.config.start * 1000)}
+                            timestamp={props.config.start}
                             setNewTimestamp={(timestamp: number) => {
                                 props.setConfig({
                                     ...props.config,
@@ -193,9 +193,9 @@ function GeneralConfig(props: GeneralConfigProps) {
                         <div className='h-12 mr-4 text-xl text-right w-14 leading-12 font-weight-600'>
                             End:
                         </div>
-                        <DateSelectorRow
+                        <DatePicker
                             {...commonProps}
-                            date={new Date(props.config.end * 1000)}
+                            timestamp={props.config.end}
                             setNewTimestamp={(timestamp: number) => {
                                 props.setConfig({
                                     ...props.config,

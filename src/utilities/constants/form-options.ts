@@ -19,12 +19,12 @@ const formOptions = {
         {value: 11, label: 'December'},
     ],
     YEARS: [
-        {value: 120, label: '2020'},
-        {value: 121, label: '2021'},
-        {value: 122, label: '2022'},
-        {value: 123, label: '2023'},
-        {value: 124, label: '2024'},
-        {value: 125, label: '2025'},
+        {value: 2020, label: '2020'},
+        {value: 2021, label: '2021'},
+        {value: 2022, label: '2022'},
+        {value: 2023, label: '2023'},
+        {value: 2024, label: '2024'},
+        {value: 2025, label: '2025'},
     ],
     HOURS: [...Array(24).keys()].map((i) => {
         return {label: i.toString(), value: i};
