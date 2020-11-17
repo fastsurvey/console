@@ -1,12 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
-import {
-    ReduxAction,
-    ReduxState,
-    Account,
-    OAuth2Token,
-} from '../utilities/types';
+import stateTypes from '../utilities/types/stateTypes';
 import Cookies from 'js-cookie';
 import dispatcher from '../utilities/dispatcher';
 import {generateValidOAuthToken} from '../utilities/jwtEncryption';
@@ -24,9 +19,9 @@ function storeReducer(
         configs: undefined,
         configIsDiffering: false,
     },
-    action: ReduxAction,
+    action: stateTypes.ReduxAction,
 ) {
-    const newState: ReduxState = {
+    const newState: stateTypes.ReduxState = {
         loggingIn: state.loggingIn,
         loggedIn: state.loggedIn,
         oauth2_token: state.oauth2_token,
@@ -115,7 +110,10 @@ interface ReduxWrapperProps {
 export function ReduxWrapper(props: ReduxWrapperProps) {
     const [cookieLogin, setCookieLogin] = useState(false);
 
-    async function logIn(oauth2_token: OAuth2Token, account: Account) {
+    async function logIn(
+        oauth2_token: stateTypes.OAuth2Token,
+        account: stateTypes.Account,
+    ) {
         dispatcher.logIn(store.dispatch)(oauth2_token, account);
         await fetchSurveys(oauth2_token, (configs: SurveyConfig[]) => {
             dispatcher.addConfigs(store.dispatch)(configs);

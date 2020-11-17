@@ -1,11 +1,6 @@
 import React, {useRef, useState} from 'react';
 import TextInput from '../../../components/formFields/TextInput';
-import {
-    ReduxState,
-    OAuth2Token,
-    Account,
-    Message,
-} from '../../../utilities/types';
+import stateTypes from '../../../utilities/types/stateTypes';
 import dispatcher from '../../../utilities/dispatcher';
 import {connect} from 'react-redux';
 import {authPostRequest} from '../../../utilities/axiosClients';
@@ -13,8 +8,11 @@ import TextLink from '../../../components/links/TextLink';
 import ButtonLink from '../../../components/links/ButtonLink';
 
 interface RegisterFormProps {
-    logIn(oauth2_token: OAuth2Token, account: Account): void;
-    openMessage(message: Message): void;
+    logIn(
+        oauth2_token: stateTypes.OAuth2Token,
+        account: stateTypes.Account,
+    ): void;
+    openMessage(message: stateTypes.Message): void;
     closeAllMessages(): void;
 }
 
@@ -145,7 +143,7 @@ function RegisterForm(props: RegisterFormProps) {
     );
 }
 
-const mapStateToProps = (state: ReduxState) => ({});
+const mapStateToProps = (state: stateTypes.ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
     logIn: dispatcher.logOut(dispatch),
     openMessage: dispatcher.openMessage(dispatch),

@@ -1,10 +1,10 @@
-import {Message, SurveyConfig} from './types';
-import {OAuth2Token, Account} from './types';
+import {SurveyConfig} from './types';
+import stateTypes from './types/stateTypes';
 
 const dispatcher = {
     logIn: (dispatch: any) => (
-        oauth2_token: OAuth2Token,
-        account: Account,
+        oauth2_token: stateTypes.OAuth2Token,
+        account: stateTypes.Account,
     ): void =>
         dispatch({
             type: 'LOG_IN',
@@ -23,7 +23,7 @@ const dispatcher = {
         dispatch({
             type: 'CLOSE_MODAL',
         }),
-    openMessage: (dispatch: any) => (message: Message): void =>
+    openMessage: (dispatch: any) => (message: stateTypes.Message): void =>
         dispatch({
             type: 'OPEN_MESSAGE',
             message,

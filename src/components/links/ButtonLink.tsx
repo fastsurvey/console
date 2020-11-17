@@ -5,7 +5,7 @@ import Button from '../buttons/Button';
 import ButtonRow from '../buttons/ButtonRow';
 import dispatcher from '../../utilities/dispatcher';
 import {connect} from 'react-redux';
-import {ReduxState} from '../../utilities/types';
+import stateTypes from '../../utilities/types/stateTypes';
 
 interface ButtonLinkProps {
     children: string;
@@ -64,7 +64,7 @@ function ButtonLink(props: ButtonLinkProps) {
     );
 }
 
-const mapStateToProps = (state: ReduxState) => ({});
+const mapStateToProps = (state: stateTypes.ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
     closeAllMessages: dispatcher.closeAllMessages(dispatch),
 });

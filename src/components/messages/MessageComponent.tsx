@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {ICONS} from '../../assets/icons/icons';
-import {Message} from '../../utilities/types';
+import stateTypes from '../../utilities/types/stateTypes';
 
 interface MessageComponentProps {
-    message: Message;
+    message: stateTypes.Message;
     close(): void;
 }
 

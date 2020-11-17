@@ -1,19 +1,17 @@
 import React, {useRef, useState} from 'react';
 import TextInput from '../../../components/formFields/TextInput';
 import {connect} from 'react-redux';
-import {
-    ReduxState,
-    OAuth2Token,
-    Account,
-    Message,
-} from '../../../utilities/types';
+import stateTypes from '../../../utilities/types/stateTypes';
 import {authPostRequest} from '../../../utilities/axiosClients';
 import ButtonLink from '../../../components/links/ButtonLink';
 import dispatcher from '../../../utilities/dispatcher';
 
 interface SetPasswordFormProps {
-    logIn(oauth2_token: OAuth2Token, account: Account): void;
-    openMessage(message: Message): void;
+    logIn(
+        oauth2_token: stateTypes.OAuth2Token,
+        account: stateTypes.Account,
+    ): void;
+    openMessage(message: stateTypes.Message): void;
     closeAllMessages(): void;
 }
 
@@ -143,7 +141,7 @@ function SetPasswordForm(props: SetPasswordFormProps) {
     );
 }
 
-const mapStateToProps = (state: ReduxState) => ({});
+const mapStateToProps = (state: stateTypes.ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
     logIn: dispatcher.logIn(dispatch),
     openMessage: dispatcher.openMessage(dispatch),

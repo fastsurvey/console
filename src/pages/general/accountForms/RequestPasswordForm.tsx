@@ -1,14 +1,14 @@
 import React, {useRef, useState} from 'react';
 import InputComponent from '../../../components/formFields/TextInput';
 import {connect} from 'react-redux';
-import {Message, ReduxState} from '../../../utilities/types';
+import stateTypes from '../../../utilities/types/stateTypes';
 import {authPostRequest} from '../../../utilities/axiosClients';
 import TextLink from '../../../components/links/TextLink';
 import ButtonLink from '../../../components/links/ButtonLink';
 import dispatcher from '../../../utilities/dispatcher';
 
 interface RequestPasswordFormProps {
-    openMessage(message: Message): void;
+    openMessage(message: stateTypes.Message): void;
     closeAllMessages(): void;
 }
 
@@ -110,7 +110,7 @@ function RequestPasswordForm(props: RequestPasswordFormProps) {
     );
 }
 
-const mapStateToProps = (state: ReduxState) => ({});
+const mapStateToProps = (state: stateTypes.ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
     openMessage: dispatcher.openMessage(dispatch),
     closeAllMessages: dispatcher.closeAllMessages(dispatch),

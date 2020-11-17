@@ -1,9 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import ButtonLink from '../../../../components/links/ButtonLink';
-import {ReduxState, SurveyConfig} from '../../../../utilities/types';
+import {SurveyConfig} from '../../../../utilities/types';
 import ConfigPreviewPanel from './ConfigPreviewPanel';
 import {ICONS} from '../../../../assets/icons/icons';
+import stateTypes from '../../../../utilities/types/stateTypes';
 
 interface ConfigListProps {
     configs: undefined | SurveyConfig[];
@@ -50,7 +51,7 @@ function ConfigList(props: ConfigListProps) {
     );
 }
 
-const mapStateToProps = (state: ReduxState) => ({
+const mapStateToProps = (state: stateTypes.ReduxState) => ({
     configs: state.configs,
 });
 const mapDispatchToProps = (dispatch: any) => ({});

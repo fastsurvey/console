@@ -3,7 +3,8 @@ import {connect} from 'react-redux';
 import DropDown from '../../../../../components/formFields/DropDown';
 import TextArea from '../../../../../components/formFields/TextArea';
 import TextInput from '../../../../../components/formFields/TextInput';
-import {ReduxState, SurveyConfig} from '../../../../../utilities/types';
+import {SurveyConfig} from '../../../../../utilities/types';
+import stateTypes from '../../../../../utilities/types/stateTypes';
 import {FORM_OPTIONS} from '../constants';
 import DateSelectorRow from './DateSelectorRow';
 
@@ -209,7 +210,7 @@ function GeneralConfig(props: GeneralConfigProps) {
         </div>
     );
 }
-const mapStateToProps = (state: ReduxState) => ({
+const mapStateToProps = (state: stateTypes.ReduxState) => ({
     configs: state.configs,
 });
 const mapDispatchToProps = (dispatch: any) => ({});

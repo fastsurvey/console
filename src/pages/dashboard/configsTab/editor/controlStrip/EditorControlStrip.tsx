@@ -1,13 +1,10 @@
 import React from 'react';
-import {
-    Message,
-    ReduxState,
-    SurveyConfig,
-} from '../../../../../utilities/types';
+import {SurveyConfig} from '../../../../../utilities/types';
 import {ICONS} from '../../../../../assets/icons/icons';
 import {connect} from 'react-redux';
 import ControlStripButton from './ControlStripButton';
 import dispatcher from '../../../../../utilities/dispatcher';
+import stateTypes from '../../../../../utilities/types/stateTypes';
 
 interface EditorControlStripProps {
     config: SurveyConfig;
@@ -15,7 +12,7 @@ interface EditorControlStripProps {
     configIsDiffering: boolean;
     syncState(): void;
     revertState(): void;
-    openMessage(message: Message): void;
+    openMessage(message: stateTypes.Message): void;
 }
 
 function EditorControlStrip(props: EditorControlStripProps) {
@@ -159,7 +156,7 @@ function EditorControlStrip(props: EditorControlStripProps) {
     );
 }
 
-const mapStateToProps = (state: ReduxState) => ({
+const mapStateToProps = (state: stateTypes.ReduxState) => ({
     configIsDiffering: state.configIsDiffering,
 });
 const mapDispatchToProps = (dispatch: any) => ({

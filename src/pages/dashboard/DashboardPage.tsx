@@ -4,19 +4,20 @@ import MobileNavbar from '../../components/navbar/MobileNavbar';
 import Navbar from '../../components/navbar/RegularNavbar';
 import dispatcher from '../../utilities/dispatcher';
 import {fetchSurveys} from '../../utilities/surveyCommunication';
-import {ReduxState, SurveyConfig, OAuth2Token} from '../../utilities/types';
+import {SurveyConfig} from '../../utilities/types';
+import stateTypes from '../../utilities/types/stateTypes';
 import './DashboardPage.scss';
 
 interface DashBoardPageProps {
     children: React.ReactNode;
     modalOpen: boolean;
     loggedIn: boolean;
-    oauth2_token: OAuth2Token | undefined;
+    oauth2_token: stateTypes.OAuth2Token | undefined;
     addConfigs(configs: SurveyConfig[]): void;
 }
 function DashBoardPage(props: DashBoardPageProps) {
     useEffect(() => {
-        async function fetch(oauth2_token: OAuth2Token) {
+        async function fetch(oauth2_token: stateTypes.OAuth2Token) {
             await fetchSurveys(oauth2_token, (configs: SurveyConfig[]) => {
                 props.addConfigs(configs);
             });
@@ -57,7 +58,7 @@ function DashBoardPage(props: DashBoardPageProps) {
     );
 }
 
-const mapStateToProps = (state: ReduxState) => ({
+const mapStateToProps = (state: stateTypes.ReduxState) => ({
     modalOpen: state.modalOpen,
     loggedIn: state.loggedIn,
     oauth2_token: state.oauth2_token,

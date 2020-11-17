@@ -1,7 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {useParams} from 'react-router-dom';
-import {ReduxState, SurveyConfig} from '../../../../utilities/types';
+import {SurveyConfig} from '../../../../utilities/types';
+import stateTypes from '../../../../utilities/types/stateTypes';
 import ConfigEditor from './ConfigEditor';
 
 interface ConfigEditorWrappperProps {
@@ -36,7 +37,7 @@ function ConfigEditorWrappper(props: ConfigEditorWrappperProps) {
     return <ConfigEditor centralConfig={filteredConfigs[0]} />;
 }
 
-const mapStateToProps = (state: ReduxState) => ({
+const mapStateToProps = (state: stateTypes.ReduxState) => ({
     configs: state.configs,
 });
 const mapDispatchToProps = (dispatch: any) => ({});

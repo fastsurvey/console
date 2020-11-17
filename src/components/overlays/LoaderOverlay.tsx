@@ -1,6 +1,6 @@
 import React from 'react';
 import '../../styles/loader.scss';
-import {ReduxState} from '../../utilities/types';
+import stateTypes from '../../utilities/types/stateTypes';
 import {connect} from 'react-redux';
 import LogoBanner from '../logos/LogoBanner';
 
@@ -46,7 +46,7 @@ function LoaderOverlay(props: LoaderOverlayProps) {
     );
 }
 
-const mapStateToProps = (state: ReduxState) => ({
+const mapStateToProps = (state: stateTypes.ReduxState) => ({
     loggingIn: state.loggingIn,
 });
 const mapDispatchToProps = (dispatch: any) => ({});

@@ -1,23 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
-import {
-    Message,
-    ReduxState,
-    SurveyConfig,
-    SurveyField,
-} from '../../../../utilities/types';
+import {SurveyConfig, SurveyField} from '../../../../utilities/types';
 import dispatcher from '../../../../utilities/dispatcher';
 import {useHistory} from 'react-router-dom';
 
 import EditorControlStrip from './controlStrip/EditorControlStrip';
 import GeneralConfig from './generalConfig/GeneralConfig';
 import FieldConfigForm from './fieldConfig/FieldConfigForm';
+import stateTypes from '../../../../utilities/types/stateTypes';
 
 interface ConfigEditorProps {
     centralConfig: SurveyConfig;
     modifyConfig(config: SurveyConfig): void;
     markDiffering(differing: boolean): void;
-    openMessage(message: Message): void;
+    openMessage(message: stateTypes.Message): void;
     closeAllMessages(): void;
 }
 function ConfigEditor(props: ConfigEditorProps) {
@@ -156,7 +152,7 @@ function ConfigEditor(props: ConfigEditorProps) {
     );
 }
 
-const mapStateToProps = (state: ReduxState) => ({});
+const mapStateToProps = (state: stateTypes.ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
     modifyConfig: dispatcher.modifyConfig(dispatch),
     markDiffering: dispatcher.markDiffering(dispatch),

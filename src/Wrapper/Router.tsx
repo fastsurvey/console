@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Switch, Route, BrowserRouter, Redirect} from 'react-router-dom';
 
-import {ReduxState, Account} from '../utilities/types';
+import stateTypes from '../utilities/types/stateTypes';
 
 import LoginForm from '../pages/general/accountForms/LoginForm';
 import RegisterForm from '../pages/general/accountForms/RegisterForm';
@@ -24,7 +24,7 @@ import ConfigEditorWrapper from '../pages/dashboard/configsTab/editor/ConfigEdit
 interface RouterProps {
     loggingIn: boolean;
     loggedIn: boolean;
-    account: undefined | Account;
+    account: undefined | stateTypes.Account;
 }
 function Router(props: RouterProps) {
     return (
@@ -115,7 +115,7 @@ function Router(props: RouterProps) {
     );
 }
 
-const mapStateToProps = (state: ReduxState) => ({
+const mapStateToProps = (state: stateTypes.ReduxState) => ({
     loggingIn: state.loggingIn,
     loggedIn: state.loggedIn,
     account: state.account,

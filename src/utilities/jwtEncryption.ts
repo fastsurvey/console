@@ -1,10 +1,13 @@
 import assert from 'assert';
 import Cookies from 'js-cookie';
-import {OAuth2Token, Account} from './types';
+import stateTypes from './types/stateTypes';
 import {authPostRequest} from './axiosClients';
 
 export async function generateValidOAuthToken(
-    logIn: (oauth2_token: OAuth2Token, account: Account) => void,
+    logIn: (
+        oauth2_token: stateTypes.OAuth2Token,
+        account: stateTypes.Account,
+    ) => void,
 ) {
     const oauth2_token_cookie = Cookies.get('oauth2_token');
     assert(

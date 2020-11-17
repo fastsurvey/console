@@ -1,8 +1,9 @@
 import {surveyGetRequest} from './axiosClients';
-import {FieldOption, OAuth2Token, SurveyConfig, SurveyField} from './types';
+import {FieldOption, SurveyConfig, SurveyField} from './types';
+import stateTypes from './types/stateTypes';
 
 export async function fetchSurveys(
-    oauth2_token: OAuth2Token,
+    oauth2_token: stateTypes.OAuth2Token,
     addConfigs: (configs: SurveyConfig[]) => void,
 ) {
     // TODO: Username in account

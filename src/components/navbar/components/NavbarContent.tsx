@@ -3,7 +3,7 @@ import {useHistory, useLocation} from 'react-router-dom';
 import NavbarButton from './NavbarButton';
 import NavbarLogo from './NavbarLogo';
 import {ICONS} from '../../../assets/icons/icons';
-import {Message, ReduxState} from '../../../utilities/types';
+import stateTypes from '../../../utilities/types/stateTypes';
 import dispatcher from '../../../utilities/dispatcher';
 import {connect} from 'react-redux';
 
@@ -11,7 +11,7 @@ interface NavbarContentProps {
     logOut(): void;
     closeModal(): void;
     configIsDiffering: boolean;
-    openMessage(message: Message): void;
+    openMessage(message: stateTypes.Message): void;
 }
 function NavbarContent(props: NavbarContentProps) {
     let location = useLocation();
@@ -66,7 +66,7 @@ function NavbarContent(props: NavbarContentProps) {
     );
 }
 
-const mapStateToProps = (state: ReduxState) => ({
+const mapStateToProps = (state: stateTypes.ReduxState) => ({
     configIsDiffering: state.configIsDiffering,
 });
 const mapDispatchToProps = (dispatch: any) => ({

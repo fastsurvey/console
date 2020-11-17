@@ -1,15 +1,16 @@
 import React from 'react';
-import {Message, ReduxState, SurveyConfig} from '../../../../utilities/types';
+import {SurveyConfig} from '../../../../utilities/types';
 import {ICONS} from '../../../../assets/icons/icons';
 import {useHistory, useLocation} from 'react-router-dom';
 import {connect} from 'react-redux';
 import dispatcher from '../../../../utilities/dispatcher';
+import stateTypes from '../../../../utilities/types/stateTypes';
 
 interface ConfigPreviewPanelProps {
     config: SurveyConfig;
     index: number;
     configIsDiffering: boolean;
-    openMessage(message: Message): void;
+    openMessage(message: stateTypes.Message): void;
 }
 
 function ConfigPreviewPanel(props: ConfigPreviewPanelProps) {
@@ -87,7 +88,7 @@ function ConfigPreviewPanel(props: ConfigPreviewPanelProps) {
     );
 }
 
-const mapStateToProps = (state: ReduxState) => ({
+const mapStateToProps = (state: stateTypes.ReduxState) => ({
     configIsDiffering: state.configIsDiffering,
 });
 const mapDispatchToProps = (dispatch: any) => ({

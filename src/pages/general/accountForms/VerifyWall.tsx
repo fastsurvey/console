@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {Account, Message, ReduxState} from '../../../utilities/types';
+import stateTypes from '../../../utilities/types/stateTypes';
 import dispatcher from '../../../utilities/dispatcher';
 import assert from 'assert';
 import {authPostRequest} from '../../../utilities/axiosClients';
@@ -8,9 +8,9 @@ import TextLink from '../../../components/links/TextLink';
 import ButtonLink from '../../../components/links/ButtonLink';
 
 interface VerifyWallProps {
-    account: undefined | Account;
+    account: undefined | stateTypes.Account;
     logOut(): void;
-    openMessage(message: Message): void;
+    openMessage(message: stateTypes.Message): void;
     closeAllMessages(): void;
 }
 
@@ -72,7 +72,7 @@ function VerifyWall(props: VerifyWallProps) {
     );
 }
 
-const mapStateToProps = (state: ReduxState) => ({
+const mapStateToProps = (state: stateTypes.ReduxState) => ({
     account: state.account,
 });
 const mapDispatchToProps = (dispatch: any) => ({

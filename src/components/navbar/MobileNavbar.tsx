@@ -3,7 +3,7 @@ import React from 'react';
 import {ICONS} from '../../assets/icons/icons';
 import dispatcher from '../../utilities/dispatcher';
 import {connect} from 'react-redux';
-import {ReduxState} from '../../utilities/types';
+import stateTypes from '../../utilities/types/stateTypes';
 import NavbarContent from './components/NavbarContent';
 
 interface MobileNavbarProps {
@@ -63,7 +63,7 @@ function MobileNavbar(props: MobileNavbarProps) {
     );
 }
 
-const mapStateToProps = (state: ReduxState) => ({
+const mapStateToProps = (state: stateTypes.ReduxState) => ({
     modalOpen: state.modalOpen,
 });
 const mapDispatchToProps = (dispatch: any) => ({
