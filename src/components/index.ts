@@ -1,8 +1,8 @@
 export {default as Button} from './buttons/Button';
 export {default as ButtonRow} from './buttons/ButtonRow';
 
-export {default as Checkbox} from './formFields/Checkbox';
-export {default as DropDown} from './formFields/DropDown';
+export {default as Checkbox} from './formFields/check-box';
+export {default as DropDown} from './formFields/drop-down/drop-down';
 export {default as TextArea} from './formFields/TextArea';
 export {default as TextInput} from './formFields/TextInput';
 export {default as TriggerIcon} from './formFields/TriggerIcon';
