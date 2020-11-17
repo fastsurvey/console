@@ -6,7 +6,7 @@ import stateTypes from 'utilities/types/stateTypes';
 import configTypes from 'utilities/types/configTypes';
 import dispatcher from 'utilities/dispatcher';
 
-import EditorControlStrip from './controlStrip/EditorControlStrip';
+import ControlStrip from './control-strip/control-strip';
 import GeneralConfig from './generalConfig/GeneralConfig';
 import FieldConfigForm from './fieldConfig/FieldConfigForm';
 
@@ -121,7 +121,7 @@ function ConfigEditor(props: ConfigEditorProps) {
 
     return (
         <React.Fragment>
-            <EditorControlStrip
+            <ControlStrip
                 config={props.centralConfig}
                 setConfig={props.modifyConfig}
                 syncState={syncState}
