@@ -1,12 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {useParams} from 'react-router-dom';
-import {SurveyConfig} from '../../../../utilities/types';
+import configTypes from '../../../../utilities/types/configTypes';
 import stateTypes from '../../../../utilities/types/stateTypes';
 import ConfigEditor from './ConfigEditor';
 
 interface ConfigEditorWrappperProps {
-    configs: undefined | SurveyConfig[];
+    configs: undefined | configTypes.SurveyConfig[];
 }
 function ConfigEditorWrappper(props: ConfigEditorWrappperProps) {
     let params = useParams();

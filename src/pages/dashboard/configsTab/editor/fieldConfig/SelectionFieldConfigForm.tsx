@@ -1,16 +1,16 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {ICONS} from '../../../../../assets/icons/icons';
 import TextInput from '../../../../../components/formFields/TextInput';
-import {SelectionField} from '../../../../../utilities/types';
+import configTypes from '../../../../../utilities/types/configTypes';
 import TriggerIcon from '../../../../../components/formFields/TriggerIcon';
 import {TEMPLATES} from '../constants';
 import {animateScroll} from 'react-scroll';
 
 interface SelectionFieldConfigFormProps {
-    fieldConfig: SelectionField;
+    fieldConfig: configTypes.SelectionField;
     setFieldConfig(
-        fieldConfig: SelectionField,
-        subValidation: (fieldConfig: SelectionField) => boolean,
+        fieldConfig: configTypes.SelectionField,
+        subValidation: (fieldConfig: configTypes.SelectionField) => boolean,
     ): void;
     disabled: boolean;
 }
@@ -23,18 +23,18 @@ function SelectionFieldConfigForm(props: SelectionFieldConfigFormProps) {
         () => setOptionsVisible(props.fieldConfig.fields.map(() => true)),
         [props.fieldConfig.fields],
     );
-    const minSelectIsValid = (newFieldConfig: SelectionField) =>
+    const minSelectIsValid = (newFieldConfig: configTypes.SelectionField) =>
         0 <= newFieldConfig.min_select &&
         newFieldConfig.min_select <= newFieldConfig.max_select;
-    const maxSelectIsValid = (newFieldConfig: SelectionField) =>
+    const maxSelectIsValid = (newFieldConfig: configTypes.SelectionField) =>
         newFieldConfig.max_select <= newFieldConfig.fields.length;
     const titleIsValid = (title: string) =>
         1 <= title.length && title.length <= 120;
 
-    function updateFieldConfig(newFieldConfig: SelectionField) {
+    function updateFieldConfig(newFieldConfig: configTypes.SelectionField) {
         props.setFieldConfig(
             newFieldConfig,
-            (newFieldConfig: SelectionField) =>
+            (newFieldConfig: configTypes.SelectionField) =>
                 newFieldConfig.fields.every((optionField) =>
                     titleIsValid(optionField.title),
                 ) &&

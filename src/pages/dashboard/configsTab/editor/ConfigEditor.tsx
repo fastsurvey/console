@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
-import {SurveyConfig, SurveyField} from '../../../../utilities/types';
+import configTypes from '../../../../utilities/types/configTypes';
 import dispatcher from '../../../../utilities/dispatcher';
 import {useHistory} from 'react-router-dom';
 
@@ -10,8 +10,8 @@ import FieldConfigForm from './fieldConfig/FieldConfigForm';
 import stateTypes from '../../../../utilities/types/stateTypes';
 
 interface ConfigEditorProps {
-    centralConfig: SurveyConfig;
-    modifyConfig(config: SurveyConfig): void;
+    centralConfig: configTypes.SurveyConfig;
+    modifyConfig(config: configTypes.SurveyConfig): void;
     markDiffering(differing: boolean): void;
     openMessage(message: stateTypes.Message): void;
     closeAllMessages(): void;
@@ -48,11 +48,12 @@ function ConfigEditor(props: ConfigEditorProps) {
         const authInvalid =
             localConfig.mode === 1 &&
             localConfig.fields.filter(
-                (fieldConfig: SurveyField) => fieldConfig.type === 'Email',
+                (fieldConfig: configTypes.SurveyField) =>
+                    fieldConfig.type === 'Email',
             ).length !== 1;
         const subfieldsInvalid =
             localConfig.fields.filter(
-                (fieldConfig: SurveyField) =>
+                (fieldConfig: configTypes.SurveyField) =>
                     (fieldConfig.type === 'Radio' ||
                         fieldConfig.type === 'Selection') &&
                     fieldConfig.fields.length < 2,
@@ -99,13 +100,16 @@ function ConfigEditor(props: ConfigEditorProps) {
         setLocalConfigState(props.centralConfig);
     }
 
-    function setLocalConfig(config: SurveyConfig) {
+    function setLocalConfig(config: configTypes.SurveyConfig) {
         // TODO: Add proper state comparison
         props.markDiffering(true);
         setLocalConfigState(config);
     }
 
-    function setFieldConfig(newFieldConfig: SurveyField, newIndex: number) {
+    function setFieldConfig(
+        newFieldConfig: configTypes.SurveyField,
+        newIndex: number,
+    ) {
         setLocalConfig({
             ...localConfig,
             fields: localConfig.fields.map((fieldConfig, index) =>
@@ -138,9 +142,9 @@ function ConfigEditor(props: ConfigEditorProps) {
                     <FieldConfigForm
                         key={fieldConfig.local_id}
                         fieldConfig={fieldConfig}
-                        setFieldConfig={(fieldConfig: SurveyField) =>
-                            setFieldConfig(fieldConfig, index)
-                        }
+                        setFieldConfig={(
+                            fieldConfig: configTypes.SurveyField,
+                        ) => setFieldConfig(fieldConfig, index)}
                         disabled={!localConfig.draft}
                         updateValidator={(newState: boolean) =>
                             updateValidator(1 + index, newState)

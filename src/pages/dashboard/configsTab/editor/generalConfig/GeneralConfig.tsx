@@ -3,15 +3,15 @@ import {connect} from 'react-redux';
 import DropDown from '../../../../../components/formFields/DropDown';
 import TextArea from '../../../../../components/formFields/TextArea';
 import TextInput from '../../../../../components/formFields/TextInput';
-import {SurveyConfig} from '../../../../../utilities/types';
+import configTypes from '../../../../../utilities/types/configTypes';
 import stateTypes from '../../../../../utilities/types/stateTypes';
 import {FORM_OPTIONS} from '../constants';
 import DateSelectorRow from './DateSelectorRow';
 
 interface GeneralConfigProps {
-    configs: SurveyConfig[] | undefined;
-    config: SurveyConfig;
-    setConfig(config: SurveyConfig): void;
+    configs: configTypes.SurveyConfig[] | undefined;
+    config: configTypes.SurveyConfig;
+    setConfig(config: configTypes.SurveyConfig): void;
     updateValidator(newState: boolean): void;
 }
 
@@ -39,7 +39,7 @@ function GeneralConfig(props: GeneralConfigProps) {
     const submissionLimitIsValid = (submission_limit: number) =>
         1 <= submission_limit && submission_limit <= 10000;
 
-    function updateConfig(newConfig: SurveyConfig) {
+    function updateConfig(newConfig: configTypes.SurveyConfig) {
         props.updateValidator(
             titleIsValid(newConfig.title) &&
                 surveyNameIsValid(newConfig.survey_name) &&

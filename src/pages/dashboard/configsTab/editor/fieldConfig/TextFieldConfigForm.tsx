@@ -1,12 +1,12 @@
 import React from 'react';
 import TextInput from '../../../../../components/formFields/TextInput';
-import {TextField} from '../../../../../utilities/types';
+import configTypes from '../../../../../utilities/types/configTypes';
 
 interface TextFieldConfigFormProps {
-    fieldConfig: TextField;
+    fieldConfig: configTypes.TextField;
     setFieldConfig(
-        fieldConfig: TextField,
-        subValidation: (fieldConfig: TextField) => boolean,
+        fieldConfig: configTypes.TextField,
+        subValidation: (fieldConfig: configTypes.TextField) => boolean,
     ): void;
     disabled: boolean;
 }
@@ -17,10 +17,10 @@ function TextFieldConfigForm(props: TextFieldConfigFormProps) {
 
     const maxCharsIsValid = (max_chars: number) => max_chars <= 2000;
 
-    function updateFieldConfig(newFieldConfig: TextField) {
+    function updateFieldConfig(newFieldConfig: configTypes.TextField) {
         props.setFieldConfig(
             newFieldConfig,
-            (newFieldConfig: TextField) =>
+            (newFieldConfig: configTypes.TextField) =>
                 minCharsIsValid(newFieldConfig.min_chars) &&
                 maxCharsIsValid(newFieldConfig.max_chars),
         );

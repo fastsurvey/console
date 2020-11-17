@@ -4,7 +4,7 @@ import MobileNavbar from '../../components/navbar/MobileNavbar';
 import Navbar from '../../components/navbar/RegularNavbar';
 import dispatcher from '../../utilities/dispatcher';
 import {fetchSurveys} from '../../utilities/surveyCommunication';
-import {SurveyConfig} from '../../utilities/types';
+import configTypes from '../../utilities/types/configTypes';
 import stateTypes from '../../utilities/types/stateTypes';
 import './DashboardPage.scss';
 
@@ -13,14 +13,17 @@ interface DashBoardPageProps {
     modalOpen: boolean;
     loggedIn: boolean;
     oauth2_token: stateTypes.OAuth2Token | undefined;
-    addConfigs(configs: SurveyConfig[]): void;
+    addConfigs(configs: configTypes.SurveyConfig[]): void;
 }
 function DashBoardPage(props: DashBoardPageProps) {
     useEffect(() => {
         async function fetch(oauth2_token: stateTypes.OAuth2Token) {
-            await fetchSurveys(oauth2_token, (configs: SurveyConfig[]) => {
-                props.addConfigs(configs);
-            });
+            await fetchSurveys(
+                oauth2_token,
+                (configs: configTypes.SurveyConfig[]) => {
+                    props.addConfigs(configs);
+                },
+            );
         }
         if (props.loggedIn && props.oauth2_token !== undefined) {
             fetch(props.oauth2_token);

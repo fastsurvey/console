@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 import dispatcher from '../utilities/dispatcher';
 import {generateValidOAuthToken} from '../utilities/jwtEncryption';
 import {fetchSurveys} from '../utilities/surveyCommunication';
-import {SurveyConfig} from '../utilities/types';
+import configTypes from '../utilities/types/configTypes';
 
 function storeReducer(
     state = {
@@ -78,7 +78,7 @@ function storeReducer(
         case 'MODIFY_CONFIG':
             if (newState.configs !== undefined) {
                 newState.configs = newState.configs.map(
-                    (config: SurveyConfig) =>
+                    (config: configTypes.SurveyConfig) =>
                         config.local_id === action.config.local_id
                             ? action.config
                             : config,
@@ -115,9 +115,12 @@ export function ReduxWrapper(props: ReduxWrapperProps) {
         account: stateTypes.Account,
     ) {
         dispatcher.logIn(store.dispatch)(oauth2_token, account);
-        await fetchSurveys(oauth2_token, (configs: SurveyConfig[]) => {
-            dispatcher.addConfigs(store.dispatch)(configs);
-        });
+        await fetchSurveys(
+            oauth2_token,
+            (configs: configTypes.SurveyConfig[]) => {
+                dispatcher.addConfigs(store.dispatch)(configs);
+            },
+        );
     }
 
     useEffect(() => {

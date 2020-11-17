@@ -1,18 +1,18 @@
 import React from 'react';
 import Checkbox from '../../../../../components/formFields/Checkbox';
-import {OptionField} from '../../../../../utilities/types';
+import configTypes from '../../../../../utilities/types/configTypes';
 
 interface OptionFieldConfigFormProps {
-    fieldConfig: OptionField;
+    fieldConfig: configTypes.OptionField;
     setFieldConfig(
-        fieldConfig: OptionField,
-        subValidation: (fieldConfig: OptionField) => boolean,
+        fieldConfig: configTypes.OptionField,
+        subValidation: (fieldConfig: configTypes.OptionField) => boolean,
     ): void;
     disabled: boolean;
 }
 
 function OptionFieldConfigForm(props: OptionFieldConfigFormProps) {
-    function updateFieldConfig(newFieldConfig: OptionField) {
+    function updateFieldConfig(newFieldConfig: configTypes.OptionField) {
         props.setFieldConfig(newFieldConfig, () => true);
     }
 

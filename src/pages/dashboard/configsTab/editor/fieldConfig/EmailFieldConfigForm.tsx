@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import DropDown from '../../../../../components/formFields/DropDown';
 import TextInput from '../../../../../components/formFields/TextInput';
-import {EmailField, EmailRegexSetup} from '../../../../../utilities/types';
+import configTypes from '../../../../../utilities/types/configTypes';
 import {FORM_OPTIONS} from '../constants';
 
 interface EmailFieldConfigFormProps {
-    fieldConfig: EmailField;
+    fieldConfig: configTypes.EmailField;
     setFieldConfig(
-        fieldConfig: EmailField,
-        subValidation: (fieldConfig: EmailField) => boolean,
+        fieldConfig: configTypes.EmailField,
+        subValidation: (fieldConfig: configTypes.EmailField) => boolean,
     ): void;
     disabled: boolean;
 }
@@ -27,7 +27,7 @@ function EmailFieldConfigForm(props: EmailFieldConfigFormProps) {
     });
 
     useEffect(() => {
-        const newSetup: EmailRegexSetup[] = FORM_OPTIONS.EMAIL_REGEX.filter(
+        const newSetup: configTypes.EmailRegexSetup[] = FORM_OPTIONS.EMAIL_REGEX.filter(
             (setup) =>
                 setup.regex === props.fieldConfig.regex &&
                 setup.hint === props.fieldConfig.hint,
@@ -46,10 +46,10 @@ function EmailFieldConfigForm(props: EmailFieldConfigFormProps) {
         }
     }, [props.fieldConfig.regex, props.fieldConfig.hint]);
 
-    function updateFieldConfig(newFieldConfig: EmailField) {
+    function updateFieldConfig(newFieldConfig: configTypes.EmailField) {
         props.setFieldConfig(
             newFieldConfig,
-            (newFieldConfig: EmailField) =>
+            (newFieldConfig: configTypes.EmailField) =>
                 hintIsValid(newFieldConfig.hint) &&
                 regexIsValid(newFieldConfig.regex),
         );

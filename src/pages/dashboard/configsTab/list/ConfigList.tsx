@@ -1,13 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import ButtonLink from '../../../../components/links/ButtonLink';
-import {SurveyConfig} from '../../../../utilities/types';
+import configTypes from '../../../../utilities/types/configTypes';
 import ConfigPreviewPanel from './ConfigPreviewPanel';
 import {ICONS} from '../../../../assets/icons/icons';
 import stateTypes from '../../../../utilities/types/stateTypes';
 
 interface ConfigListProps {
-    configs: undefined | SurveyConfig[];
+    configs: undefined | configTypes.SurveyConfig[];
 }
 function ConfigList(props: ConfigListProps) {
     if (!props.configs) {

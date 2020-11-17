@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {ICONS} from '../../../../../assets/icons/icons';
 import TextArea from '../../../../../components/formFields/TextArea';
 import TextInput from '../../../../../components/formFields/TextInput';
-import {SurveyField} from '../../../../../utilities/types';
+import configTypes from '../../../../../utilities/types/configTypes';
 import TextFieldConfigForm from './TextFieldConfigForm';
 import OptionFieldConfigForm from './OptionFieldConfigForm';
 import RadioFieldConfigForm from './RadioFieldConfigForm';
@@ -10,8 +10,8 @@ import SelectionFieldConfigForm from './SelectionFieldConfigForm';
 import EmailFieldConfigForm from './EmailFieldConfigForm';
 
 interface FieldConfigFormProps {
-    fieldConfig: SurveyField;
-    setFieldConfig(fieldConfig: SurveyField): void;
+    fieldConfig: configTypes.SurveyField;
+    setFieldConfig(fieldConfig: configTypes.SurveyField): void;
     disabled: boolean;
     updateValidator(newState: boolean): void;
 }
@@ -25,7 +25,7 @@ function FieldConfigForm(props: FieldConfigFormProps) {
     const [settingsValidator, setSettingsValidator] = useState(true);
     useEffect(() => setSettingsValidator(true), [props.fieldConfig.local_id]);
 
-    function updateFieldConfig(newFieldConfig: SurveyField) {
+    function updateFieldConfig(newFieldConfig: configTypes.SurveyField) {
         props.updateValidator(
             titleIsValid(newFieldConfig.title) &&
                 descriptionIsValid(newFieldConfig.description) &&
@@ -35,8 +35,8 @@ function FieldConfigForm(props: FieldConfigFormProps) {
     }
 
     function updateSubfieldConfig(
-        newFieldConfig: SurveyField,
-        subValidation: (fieldConfig: SurveyField) => boolean,
+        newFieldConfig: configTypes.SurveyField,
+        subValidation: (fieldConfig: configTypes.SurveyField) => boolean,
     ) {
         const subValidationResult = subValidation(newFieldConfig);
         setSettingsValidator(subValidationResult);

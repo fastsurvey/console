@@ -1,4 +1,4 @@
-import {EmailRegexSetup, FieldOption} from '../../../../utilities/types';
+import configTypes from '../../../../utilities/types/configTypes';
 const AUTH_MODE = [
     {value: 0, label: 'No Authentication'},
     {value: 1, label: 'Email Verification'},
@@ -36,7 +36,7 @@ const MINUTES = [...Array(60).keys()].map((i) => {
     return {label: i.toString(), value: i};
 });
 
-const EMAIL_REGEX: EmailRegexSetup[] = [
+const EMAIL_REGEX: configTypes.EmailRegexSetup[] = [
     {
         label: 'Any Email',
         value: 0,
@@ -60,7 +60,7 @@ export const FORM_OPTIONS = {
     EMAIL_REGEX,
 };
 
-const NEW_FIELD_OPTION: FieldOption = {
+const NEW_FIELD_OPTION: configTypes.FieldOption = {
     local_id: 0,
     title: '',
     description: '',

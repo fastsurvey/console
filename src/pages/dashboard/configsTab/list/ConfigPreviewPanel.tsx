@@ -1,5 +1,5 @@
 import React from 'react';
-import {SurveyConfig} from '../../../../utilities/types';
+import configTypes from '../../../../utilities/types/configTypes';
 import {ICONS} from '../../../../assets/icons/icons';
 import {useHistory, useLocation} from 'react-router-dom';
 import {connect} from 'react-redux';
@@ -7,7 +7,7 @@ import dispatcher from '../../../../utilities/dispatcher';
 import stateTypes from '../../../../utilities/types/stateTypes';
 
 interface ConfigPreviewPanelProps {
-    config: SurveyConfig;
+    config: configTypes.SurveyConfig;
     index: number;
     configIsDiffering: boolean;
     openMessage(message: stateTypes.Message): void;

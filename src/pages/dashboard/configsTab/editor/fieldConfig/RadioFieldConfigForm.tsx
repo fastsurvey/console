@@ -1,16 +1,16 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {ICONS} from '../../../../../assets/icons/icons';
 import TextInput from '../../../../../components/formFields/TextInput';
-import {RadioField} from '../../../../../utilities/types';
+import configTypes from '../../../../../utilities/types/configTypes';
 import TriggerIcon from '../../../../../components/formFields/TriggerIcon';
 import {TEMPLATES} from '../constants';
 import {animateScroll} from 'react-scroll';
 
 interface RadioFieldConfigFormProps {
-    fieldConfig: RadioField;
+    fieldConfig: configTypes.RadioField;
     setFieldConfig(
-        fieldConfig: RadioField,
-        subValidation: (fieldConfig: RadioField) => boolean,
+        fieldConfig: configTypes.RadioField,
+        subValidation: (fieldConfig: configTypes.RadioField) => boolean,
     ): void;
     disabled: boolean;
 }
@@ -27,11 +27,13 @@ function RadioFieldConfigForm(props: RadioFieldConfigFormProps) {
     const titleIsValid = (title: string) =>
         1 <= title.length && title.length <= 120;
 
-    function updateFieldConfig(newFieldConfig: RadioField) {
-        props.setFieldConfig(newFieldConfig, (newFieldConfig: RadioField) =>
-            newFieldConfig.fields.every((optionField) =>
-                titleIsValid(optionField.title),
-            ),
+    function updateFieldConfig(newFieldConfig: configTypes.RadioField) {
+        props.setFieldConfig(
+            newFieldConfig,
+            (newFieldConfig: configTypes.RadioField) =>
+                newFieldConfig.fields.every((optionField) =>
+                    titleIsValid(optionField.title),
+                ),
         );
     }
 

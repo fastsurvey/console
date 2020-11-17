@@ -1,14 +1,14 @@
-import {SurveyConfig} from '../types';
+import configTypes from './configTypes';
 
 namespace stateTypes {
     export interface ReduxState {
         loggingIn: boolean;
         loggedIn: boolean;
-        oauth2_token: undefined | OAuth2Token;
-        account: undefined | Account;
-        messages: Message[];
+        oauth2_token: undefined | stateTypes.OAuth2Token;
+        account: undefined | stateTypes.Account;
+        messages: stateTypes.Message[];
         modalOpen: boolean;
-        configs: undefined | SurveyConfig[];
+        configs: undefined | configTypes.SurveyConfig[];
         configIsDiffering: boolean;
     }
 
@@ -31,15 +31,15 @@ namespace stateTypes {
     export type ReduxAction =
         | {
               type: 'LOG_IN';
-              oauth2_token: OAuth2Token;
-              account: Account;
+              oauth2_token: stateTypes.OAuth2Token;
+              account: stateTypes.Account;
           }
         | {
               type: 'LOG_OUT';
           }
         | {
               type: 'OPEN_MESSAGE';
-              message: Message;
+              message: stateTypes.Message;
           }
         | {
               type: 'CLOSE_MESSAGE';
@@ -56,11 +56,11 @@ namespace stateTypes {
           }
         | {
               type: 'ADD_CONFIGS';
-              configs: SurveyConfig[];
+              configs: configTypes.SurveyConfig[];
           }
         | {
               type: 'MODIFY_CONFIG';
-              config: SurveyConfig;
+              config: configTypes.SurveyConfig;
           }
         | {
               type: 'MARK_DIFFERING';

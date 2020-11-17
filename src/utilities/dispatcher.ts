@@ -1,4 +1,4 @@
-import {SurveyConfig} from './types';
+import configTypes from './types/configTypes';
 import stateTypes from './types/stateTypes';
 
 const dispatcher = {
@@ -37,12 +37,14 @@ const dispatcher = {
         dispatch({
             type: 'CLOSE_ALL_MESSAGES',
         }),
-    addConfigs: (dispatch: any) => (configs: SurveyConfig[]): void =>
+    addConfigs: (dispatch: any) => (
+        configs: configTypes.SurveyConfig[],
+    ): void =>
         dispatch({
             type: 'ADD_CONFIGS',
             configs,
         }),
-    modifyConfig: (dispatch: any) => (config: SurveyConfig): void =>
+    modifyConfig: (dispatch: any) => (config: configTypes.SurveyConfig): void =>
         dispatch({
             type: 'MODIFY_CONFIG',
             config,

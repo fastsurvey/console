@@ -1,5 +1,5 @@
 import React from 'react';
-import {SurveyConfig} from '../../../../../utilities/types';
+import configTypes from '../../../../../utilities/types/configTypes';
 import {ICONS} from '../../../../../assets/icons/icons';
 import {connect} from 'react-redux';
 import ControlStripButton from './ControlStripButton';
@@ -7,8 +7,8 @@ import dispatcher from '../../../../../utilities/dispatcher';
 import stateTypes from '../../../../../utilities/types/stateTypes';
 
 interface EditorControlStripProps {
-    config: SurveyConfig;
-    setConfig(config: SurveyConfig): void;
+    config: configTypes.SurveyConfig;
+    setConfig(config: configTypes.SurveyConfig): void;
     configIsDiffering: boolean;
     syncState(): void;
     revertState(): void;
