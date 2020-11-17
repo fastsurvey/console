@@ -3,7 +3,7 @@ import {ICONS} from '../../../../../assets/icons/icons';
 import TextInput from '../../../../../components/formFields/TextInput';
 import configTypes from '../../../../../utilities/types/configTypes';
 import TriggerIcon from '../../../../../components/formFields/TriggerIcon';
-import {TEMPLATES} from '../constants';
+import templates from 'utilities/constants/templates';
 import {animateScroll} from 'react-scroll';
 
 interface SelectionFieldConfigFormProps {
@@ -58,7 +58,7 @@ function SelectionFieldConfigForm(props: SelectionFieldConfigFormProps) {
             ...props.fieldConfig,
             fields: [
                 ...props.fieldConfig.fields,
-                {...TEMPLATES.NEW_FIELD_OPTION, title: newOption, local_id},
+                {...templates.NEW_FIELD_OPTION, title: newOption, local_id},
             ],
         });
 

@@ -54,7 +54,7 @@ namespace configTypes {
     }
 
     export interface FieldOption extends GeneralSurveyField {
-        mandatory: false;
+        mandatory: boolean;
     }
 
     export interface TextField extends GeneralSurveyField {

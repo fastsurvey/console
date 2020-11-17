@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
-import configTypes from '../../../../utilities/types/configTypes';
-import dispatcher from '../../../../utilities/dispatcher';
 import {useHistory} from 'react-router-dom';
+
+import stateTypes from 'utilities/types/stateTypes';
+import configTypes from 'utilities/types/configTypes';
+import dispatcher from 'utilities/dispatcher';
 
 import EditorControlStrip from './controlStrip/EditorControlStrip';
 import GeneralConfig from './generalConfig/GeneralConfig';
 import FieldConfigForm from './fieldConfig/FieldConfigForm';
-import stateTypes from '../../../../utilities/types/stateTypes';
 
 interface ConfigEditorProps {
     centralConfig: configTypes.SurveyConfig;

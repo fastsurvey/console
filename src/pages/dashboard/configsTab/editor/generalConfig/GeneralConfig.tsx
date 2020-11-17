@@ -5,7 +5,7 @@ import TextArea from '../../../../../components/formFields/TextArea';
 import TextInput from '../../../../../components/formFields/TextInput';
 import configTypes from '../../../../../utilities/types/configTypes';
 import stateTypes from '../../../../../utilities/types/stateTypes';
-import {FORM_OPTIONS} from '../constants';
+import formOptions from 'utilities/constants/formOptions';
 import DateSelectorRow from './DateSelectorRow';
 
 interface GeneralConfigProps {
@@ -140,7 +140,7 @@ function GeneralConfig(props: GeneralConfigProps) {
                                         ...{mode: newValue},
                                     });
                                 }}
-                                options={FORM_OPTIONS.AUTH_MODE}
+                                options={formOptions.AUTH_MODE}
                             />
                         </div>
                     </div>

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import DropDown from '../../../../../components/formFields/DropDown';
 import TextInput from '../../../../../components/formFields/TextInput';
 import configTypes from '../../../../../utilities/types/configTypes';
-import {FORM_OPTIONS} from '../constants';
+import formOptions from '../../../../../utilities/constants/formOptions';
 
 interface EmailFieldConfigFormProps {
     fieldConfig: configTypes.EmailField;
@@ -17,27 +17,27 @@ function EmailFieldConfigForm(props: EmailFieldConfigFormProps) {
     const regexIsValid = (regex: string) => regex.length <= 250;
     const hintIsValid = (hint: string) => hint.length <= 120;
     const [setupValue, setSetupValue] = useState(
-        FORM_OPTIONS.EMAIL_REGEX.length,
+        formOptions.EMAIL_REGEX.length,
     );
     const [customSetup, setCustomSetup] = useState({
         label: 'Custom Rule',
-        value: FORM_OPTIONS.EMAIL_REGEX.length,
+        value: formOptions.EMAIL_REGEX.length,
         regex: props.fieldConfig.regex,
         hint: props.fieldConfig.hint,
     });
 
     useEffect(() => {
-        const newSetup: configTypes.EmailRegexSetup[] = FORM_OPTIONS.EMAIL_REGEX.filter(
+        const newSetup: configTypes.EmailRegexSetup[] = formOptions.EMAIL_REGEX.filter(
             (setup) =>
                 setup.regex === props.fieldConfig.regex &&
                 setup.hint === props.fieldConfig.hint,
         );
 
         if (newSetup.length === 0) {
-            setSetupValue(FORM_OPTIONS.EMAIL_REGEX.length);
+            setSetupValue(formOptions.EMAIL_REGEX.length);
             setCustomSetup({
                 label: 'Custom Rule',
-                value: FORM_OPTIONS.EMAIL_REGEX.length,
+                value: formOptions.EMAIL_REGEX.length,
                 regex: props.fieldConfig.regex,
                 hint: props.fieldConfig.hint,
             });
@@ -69,7 +69,7 @@ function EmailFieldConfigForm(props: EmailFieldConfigFormProps) {
                     className={'w-128'}
                     onChange={(newValue: number) => {
                         const setup = [
-                            ...FORM_OPTIONS.EMAIL_REGEX,
+                            ...formOptions.EMAIL_REGEX,
                             customSetup,
                         ].filter((setup) => setup.value === newValue)[0];
                         updateFieldConfig({
@@ -78,7 +78,7 @@ function EmailFieldConfigForm(props: EmailFieldConfigFormProps) {
                             hint: setup.hint,
                         });
                     }}
-                    options={[...FORM_OPTIONS.EMAIL_REGEX, customSetup]}
+                    options={[...formOptions.EMAIL_REGEX, customSetup]}
                 />
             </div>
             <div className='flex flex-col flex-max'>

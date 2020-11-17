@@ -1,8 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {useParams} from 'react-router-dom';
-import configTypes from '../../../../utilities/types/configTypes';
-import stateTypes from '../../../../utilities/types/stateTypes';
+
+import configTypes from 'utilities/types/configTypes';
+import stateTypes from 'utilities/types/stateTypes';
+
 import ConfigEditor from './ConfigEditor';
 
 interface ConfigEditorWrappperProps {
