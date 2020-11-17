@@ -6,8 +6,7 @@ import stateTypes from 'utilities/types/stateTypes';
 import dispatcher from 'utilities/dispatcher';
 import {authPostRequest} from 'utilities/axiosClients';
 
-import TextLink from 'components/links/TextLink';
-import ButtonLink from 'components/links/ButtonLink';
+import {TextLink, ButtonLink} from 'components';
 
 interface VerifyWallProps {
     account: undefined | stateTypes.Account;

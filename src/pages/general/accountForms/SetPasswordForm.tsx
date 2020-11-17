@@ -5,8 +5,7 @@ import stateTypes from 'utilities/types/stateTypes';
 import {authPostRequest} from 'utilities/axiosClients';
 import dispatcher from 'utilities/dispatcher';
 
-import ButtonLink from 'components/links/ButtonLink';
-import TextInput from 'components/formFields/TextInput';
+import {TextInput, ButtonLink} from 'components';
 
 interface SetPasswordFormProps {
     logIn(

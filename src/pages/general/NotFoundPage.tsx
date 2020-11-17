@@ -1,7 +1,6 @@
 import React from 'react';
 
-import TextLink from 'components/links/TextLink';
-import MainWrapper from 'components/wrapper/MainWrapper';
+import {TextLink, MainWrapper} from 'components';
 
 import EmptyImage from 'assets/images/empty.svg';
 

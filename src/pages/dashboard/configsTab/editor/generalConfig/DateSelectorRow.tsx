@@ -2,7 +2,7 @@ import React from 'react';
 
 import formOptions from 'utilities/constants/formOptions';
 
-import DropDown from 'components/formFields/DropDown';
+import {DropDown} from 'components';
 
 interface DateSelectorProps {
     date: any;

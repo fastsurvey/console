@@ -4,8 +4,7 @@ import {animateScroll} from 'react-scroll';
 import configTypes from 'utilities/types/configTypes';
 import templates from 'utilities/constants/templates';
 
-import TextInput from 'components/formFields/TextInput';
-import TriggerIcon from 'components/formFields/TriggerIcon';
+import {TextInput, TriggerIcon} from 'components';
 
 import icons from 'assets/icons/icons';
 

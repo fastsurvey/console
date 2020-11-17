@@ -2,8 +2,7 @@ import React, {useEffect, useState} from 'react';
 
 import configTypes from 'utilities/types/configTypes';
 
-import TextArea from 'components/formFields/TextArea';
-import TextInput from 'components/formFields/TextInput';
+import {TextArea, TextInput} from 'components';
 
 import TextFieldConfigForm from './TextFieldConfigForm';
 import OptionFieldConfigForm from './OptionFieldConfigForm';

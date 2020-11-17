@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MainWrapper from 'components/wrapper/MainWrapper';
+import {MainWrapper} from 'components';
 
 interface FormPageProps {
     children: React.ReactNode;

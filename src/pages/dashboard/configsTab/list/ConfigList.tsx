@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import configTypes from 'utilities/types/configTypes';
 import stateTypes from 'utilities/types/stateTypes';
 
-import ButtonLink from 'components/links/ButtonLink';
+import {ButtonLink} from 'components';
 
 import ConfigPreviewPanel from './ConfigPreviewPanel';
 

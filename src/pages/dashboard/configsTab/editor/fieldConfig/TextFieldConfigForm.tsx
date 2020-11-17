@@ -2,7 +2,7 @@ import React from 'react';
 
 import configTypes from 'utilities/types/configTypes';
 
-import TextInput from 'components/formFields/TextInput';
+import {TextInput} from 'components';
 
 interface TextFieldConfigFormProps {
     fieldConfig: configTypes.TextField;

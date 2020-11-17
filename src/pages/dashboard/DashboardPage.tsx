@@ -6,8 +6,7 @@ import {fetchSurveys} from 'utilities/surveyCommunication';
 import configTypes from 'utilities/types/configTypes';
 import stateTypes from 'utilities/types/stateTypes';
 
-import MobileNavbar from 'components/navbar/MobileNavbar';
-import Navbar from 'components/navbar/RegularNavbar';
+import {MobileNavbar, RegularNavbar} from 'components';
 
 import './DashboardPage.scss';
 
@@ -38,7 +37,7 @@ function DashBoardPage(props: DashBoardPageProps) {
         <React.Fragment>
             <header>
                 <div id='RegularNavbar' className='hidden lg:block'>
-                    <Navbar />
+                    <RegularNavbar />
                 </div>
                 <div id='MobileNavbar' className='block lg:hidden'>
                     <MobileNavbar />

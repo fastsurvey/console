@@ -5,9 +5,7 @@ import configTypes from 'utilities/types/configTypes';
 import stateTypes from 'utilities/types/stateTypes';
 import formOptions from 'utilities/constants/formOptions';
 
-import DropDown from 'components/formFields/DropDown';
-import TextArea from 'components/formFields/TextArea';
-import TextInput from 'components/formFields/TextInput';
+import {DropDown, TextArea, TextInput} from 'components';
 
 import DateSelectorRow from './DateSelectorRow';
 

@@ -5,9 +5,7 @@ import stateTypes from 'utilities/types/stateTypes';
 import dispatcher from 'utilities/dispatcher';
 import {authPostRequest} from 'utilities/axiosClients';
 
-import TextInput from 'components/formFields/TextInput';
-import TextLink from 'components/links/TextLink';
-import ButtonLink from 'components/links/ButtonLink';
+import {TextInput, TextLink, ButtonLink} from 'components';
 
 interface RegisterFormProps {
     logIn(
