@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {stateTypes, dispatcher} from 'utilities';
+import {stateTypes, dispatchers} from 'utilities';
 
 import NavbarContent from './components/NavbarContent';
 
@@ -68,8 +68,8 @@ const mapStateToProps = (state: stateTypes.ReduxState) => ({
     modalOpen: state.modalOpen,
 });
 const mapDispatchToProps = (dispatch: any) => ({
-    logOut: dispatcher.logOut(dispatch),
-    openModal: dispatcher.openModal(dispatch),
-    closeModal: dispatcher.closeModal(dispatch),
+    logOut: dispatchers.logOut(dispatch),
+    openModal: dispatchers.openModal(dispatch),
+    closeModal: dispatchers.closeModal(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(MobileNavbar);

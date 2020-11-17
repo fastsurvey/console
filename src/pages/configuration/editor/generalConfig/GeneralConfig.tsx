@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {stateTypes, configTypes, formOptions} from 'utilities';
+import {stateTypes, configTypes, formOptions, validators} from 'utilities';
 import {DropDown, TextArea, TextInput, DatePicker} from 'components';
 
 interface GeneralConfigProps {
@@ -9,30 +9,18 @@ interface GeneralConfigProps {
     setConfig(config: configTypes.SurveyConfig): void;
     updateValidator(newState: boolean): void;
 }
-
 function GeneralConfig(props: GeneralConfigProps) {
     const commonProps = {
         disabled: !props.config.draft,
     };
 
-    const titleIsValid = (title: string) =>
-        1 <= title.length && title.length <= 120;
-
-    const surveyNameIsValid = (survey_name: string) =>
-        survey_name.match(/^[a-zA-Z0-9-_]*$/) !== null &&
-        3 <= survey_name.length &&
-        survey_name.length <= 120 &&
-        props.configs?.filter(
-            (config) =>
-                config.local_id !== props.config.local_id &&
-                config.survey_name === survey_name,
-        ).length === 0;
-
-    const descriptionIsValid = (description: string) =>
-        description.length <= 2000;
-
-    const submissionLimitIsValid = (submission_limit: number) =>
-        1 <= submission_limit && submission_limit <= 10000;
+    const titleIsValid = validators.title;
+    const surveyNameIsValid = validators.surveyName(
+        props.configs,
+        props.config,
+    );
+    const descriptionIsValid = validators.description;
+    const submissionLimitIsValid = validators.submissionLimit;
 
     function updateConfig(newConfig: configTypes.SurveyConfig) {
         props.updateValidator(

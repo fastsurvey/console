@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {dispatcher, stateTypes} from 'utilities';
+import {dispatchers, stateTypes} from 'utilities';
 
 import MessageComponent from './MessageComponent';
 
@@ -30,6 +30,6 @@ const mapStateToProps = (state: stateTypes.ReduxState) => ({
     messages: state.messages,
 });
 const mapDispatchToProps = (dispatch: any) => ({
-    closeMessage: dispatcher.closeMessage(dispatch),
+    closeMessage: dispatchers.closeMessage(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(MessageQueue);

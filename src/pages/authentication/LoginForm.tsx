@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
 import {connect} from 'react-redux';
 
-import {stateTypes, dispatcher, authPostRequest} from 'utilities';
+import {stateTypes, dispatchers, authPostRequest} from 'utilities';
 
 import {TextInput, TextLink, ButtonLink} from 'components';
 
@@ -109,8 +109,8 @@ function LoginForm(props: LoginFormProps) {
 
 const mapStateToProps = (state: stateTypes.ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
-    logIn: dispatcher.logIn(dispatch),
-    openMessage: dispatcher.openMessage(dispatch),
-    closeAllMessages: dispatcher.closeAllMessages(dispatch),
+    logIn: dispatchers.logIn(dispatch),
+    openMessage: dispatchers.openMessage(dispatch),
+    closeAllMessages: dispatchers.closeAllMessages(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

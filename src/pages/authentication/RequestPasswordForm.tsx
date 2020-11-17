@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
 import {connect} from 'react-redux';
 
-import {stateTypes, dispatcher, authPostRequest} from 'utilities';
+import {stateTypes, dispatchers, authPostRequest} from 'utilities';
 
 import {TextInput, TextLink, ButtonLink} from 'components';
 
@@ -110,8 +110,8 @@ function RequestPasswordForm(props: RequestPasswordFormProps) {
 
 const mapStateToProps = (state: stateTypes.ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
-    openMessage: dispatcher.openMessage(dispatch),
-    closeAllMessages: dispatcher.closeAllMessages(dispatch),
+    openMessage: dispatchers.openMessage(dispatch),
+    closeAllMessages: dispatchers.closeAllMessages(dispatch),
 });
 export default connect(
     mapStateToProps,

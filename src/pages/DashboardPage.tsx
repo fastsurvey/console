@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {stateTypes, configTypes, dispatcher, fetchSurveys} from 'utilities';
+import {stateTypes, configTypes, dispatchers, fetchSurveys} from 'utilities';
 import {MobileNavbar, RegularNavbar} from 'components';
 import 'styles/DashboardPage.scss';
 
@@ -63,6 +63,6 @@ const mapStateToProps = (state: stateTypes.ReduxState) => ({
     oauth2_token: state.oauth2_token,
 });
 const mapDispatchToProps = (dispatch: any) => ({
-    addConfigs: dispatcher.addConfigs(dispatch),
+    addConfigs: dispatchers.addConfigs(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(DashBoardPage);

@@ -2,7 +2,7 @@ import React from 'react';
 import {useHistory, useLocation} from 'react-router-dom';
 import {connect} from 'react-redux';
 
-import {stateTypes, dispatcher} from 'utilities';
+import {stateTypes, dispatchers} from 'utilities';
 
 import NavbarButton from './NavbarButton';
 import NavbarLogo from './NavbarLogo';
@@ -72,6 +72,6 @@ const mapStateToProps = (state: stateTypes.ReduxState) => ({
     configIsDiffering: state.configIsDiffering,
 });
 const mapDispatchToProps = (dispatch: any) => ({
-    openMessage: dispatcher.openMessage(dispatch),
+    openMessage: dispatchers.openMessage(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(NavbarContent);

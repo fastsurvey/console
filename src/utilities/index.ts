@@ -7,7 +7,8 @@ export {default as environment} from './constants/environment';
 export {default as formOptions} from './constants/form-options';
 export {default as templates} from './constants/templates';
 
-export {default as dispatcher} from './dispatcher';
+export {default as dispatchers} from './dispatchers';
+export {default as validators} from './validators';
 
 export {default as fetchSurveys} from './surveyCommunication';
 export {default as generateValidOAuthToken} from './jwtEncryption';

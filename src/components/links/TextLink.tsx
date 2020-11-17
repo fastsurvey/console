@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import assert from 'assert';
 
-import {dispatcher, stateTypes} from 'utilities';
+import {dispatchers, stateTypes} from 'utilities';
 
 interface TextLinkProps {
     children: string;
@@ -55,6 +55,6 @@ function TextLink(props: TextLinkProps) {
 
 const mapStateToProps = (state: stateTypes.ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
-    closeAllMessages: dispatcher.closeAllMessages(dispatch),
+    closeAllMessages: dispatchers.closeAllMessages(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(TextLink);

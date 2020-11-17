@@ -1,6 +1,6 @@
 import {stateTypes, configTypes} from 'utilities';
 
-const dispatcher = {
+const dispatchers = {
     logIn: (dispatch: any) => (
         oauth2_token: stateTypes.OAuth2Token,
         account: stateTypes.Account,
@@ -55,4 +55,4 @@ const dispatcher = {
         }),
 };
 
-export default dispatcher;
+export default dispatchers;

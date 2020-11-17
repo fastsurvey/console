@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 
-import {stateTypes, configTypes, dispatcher} from 'utilities';
+import {stateTypes, configTypes, dispatchers} from 'utilities';
 
 import ControlStrip from './control-strip/control-strip';
 import GeneralConfig from './generalConfig/GeneralConfig';
@@ -157,9 +157,9 @@ function ConfigEditor(props: ConfigEditorProps) {
 
 const mapStateToProps = (state: stateTypes.ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
-    modifyConfig: dispatcher.modifyConfig(dispatch),
-    markDiffering: dispatcher.markDiffering(dispatch),
-    openMessage: dispatcher.openMessage(dispatch),
-    closeAllMessages: dispatcher.closeAllMessages(dispatch),
+    modifyConfig: dispatchers.modifyConfig(dispatch),
+    markDiffering: dispatchers.markDiffering(dispatch),
+    openMessage: dispatchers.openMessage(dispatch),
+    closeAllMessages: dispatchers.closeAllMessages(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(ConfigEditor);

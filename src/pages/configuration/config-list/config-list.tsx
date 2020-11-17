@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {useLocation, useHistory} from 'react-router-dom';
-import {stateTypes, configTypes, dispatcher} from 'utilities';
+import {stateTypes, configTypes, dispatchers} from 'utilities';
 import {ButtonLink} from 'components';
 import ConfigPreviewPanel from './visual-config-panel';
 import VisualConfigList from './visual-config-list';
@@ -69,6 +69,6 @@ const mapStateToProps = (state: stateTypes.ReduxState) => ({
     configIsDiffering: state.configIsDiffering,
 });
 const mapDispatchToProps = (dispatch: any) => ({
-    openMessage: dispatcher.openMessage(dispatch),
+    openMessage: dispatchers.openMessage(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(ConfigList);

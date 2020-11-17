@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import assert from 'assert';
 
-import {stateTypes, dispatcher, authPostRequest} from 'utilities';
+import {stateTypes, dispatchers, authPostRequest} from 'utilities';
 
 import {TextLink, ButtonLink} from 'components';
 
@@ -75,8 +75,8 @@ const mapStateToProps = (state: stateTypes.ReduxState) => ({
     account: state.account,
 });
 const mapDispatchToProps = (dispatch: any) => ({
-    logOut: dispatcher.logOut(dispatch),
-    openMessage: dispatcher.openMessage(dispatch),
-    closeAllMessages: dispatcher.closeAllMessages(dispatch),
+    logOut: dispatchers.logOut(dispatch),
+    openMessage: dispatchers.openMessage(dispatch),
+    closeAllMessages: dispatchers.closeAllMessages(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(VerifyWall);

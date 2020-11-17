@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 import {
     stateTypes,
     configTypes,
-    dispatcher,
+    dispatchers,
     fetchSurveys,
     generateValidOAuthToken,
 } from 'utilities';
@@ -117,11 +117,11 @@ export function ReduxWrapper(props: ReduxWrapperProps) {
         oauth2_token: stateTypes.OAuth2Token,
         account: stateTypes.Account,
     ) {
-        dispatcher.logIn(store.dispatch)(oauth2_token, account);
+        dispatchers.logIn(store.dispatch)(oauth2_token, account);
         await fetchSurveys(
             oauth2_token,
             (configs: configTypes.SurveyConfig[]) => {
-                dispatcher.addConfigs(store.dispatch)(configs);
+                dispatchers.addConfigs(store.dispatch)(configs);
             },
         );
     }
@@ -131,7 +131,7 @@ export function ReduxWrapper(props: ReduxWrapperProps) {
             try {
                 await generateValidOAuthToken(logIn);
             } catch {
-                dispatcher.logOut(store.dispatch)();
+                dispatchers.logOut(store.dispatch)();
             }
         }
 
