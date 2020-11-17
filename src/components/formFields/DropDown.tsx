@@ -11,7 +11,7 @@ interface DropDownProps {
     disabled?: boolean;
 }
 
-const DropDown = React.forwardRef((props: DropDownProps, ref: any) => {
+const DropDown = (props: DropDownProps) => {
     const [isOpen, setOpen] = useState(false);
     const [zIndex, setZIndex] = useState('z-10');
 
@@ -115,6 +115,6 @@ const DropDown = React.forwardRef((props: DropDownProps, ref: any) => {
             </div>
         </div>
     );
-});
+};
 
 export default DropDown;

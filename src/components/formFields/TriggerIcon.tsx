@@ -7,7 +7,7 @@ interface TriggerIconProps {
     icon: React.ReactNode;
 }
 
-const TriggerIcon = React.forwardRef((props: TriggerIconProps, ref: any) => {
+const TriggerIcon = (props: TriggerIconProps) => {
     return (
         <div
             className={
@@ -22,6 +22,6 @@ const TriggerIcon = React.forwardRef((props: TriggerIconProps, ref: any) => {
             {props.icon}
         </div>
     );
-});
+};
 
 export default TriggerIcon;

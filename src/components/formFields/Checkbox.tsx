@@ -8,7 +8,7 @@ interface CheckboxProps {
     disabled?: boolean;
 }
 
-const Checkbox = React.forwardRef((props: CheckboxProps, ref: any) => {
+const Checkbox = (props: CheckboxProps) => {
     return (
         <div
             className={
@@ -27,6 +27,6 @@ const Checkbox = React.forwardRef((props: CheckboxProps, ref: any) => {
             {props.checked ? icons.checkbox_true : icons.checkbox_false}
         </div>
     );
-});
+};
 
 export default Checkbox;
