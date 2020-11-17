@@ -6,7 +6,6 @@ interface TriggerIconProps {
     disabled?: boolean;
     icon: React.ReactNode;
 }
-
 const TriggerIcon = (props: TriggerIconProps) => {
     return (
         <div

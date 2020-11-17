@@ -1,11 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-
 import {stateTypes, configTypes, formOptions} from 'utilities';
-
-import {DropDown, TextArea, TextInput} from 'components';
-
-import DatePicker from '../../../../components/formFields/date-picker/date-picker';
+import {DropDown, TextArea, TextInput, DatePicker} from 'components';
 
 interface GeneralConfigProps {
     configs: configTypes.SurveyConfig[] | undefined;

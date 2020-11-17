@@ -1,23 +1,19 @@
 import React from 'react';
 import {connect} from 'react-redux';
-
 import {stateTypes} from 'utilities';
-
 import {LogoBanner} from 'components';
-
 import 'styles/loader.scss';
 
 interface LoaderOverlayProps {
     loggingIn: boolean;
 }
-
 function LoaderOverlay(props: LoaderOverlayProps) {
     return (
         <div
             id='LoaderOverlay'
             className={
                 'fixed z-50 bg-white w-100vw h-100vh center-content ' +
-                'transition-opacity duration-500 delay-0 ' +
+                'transition-opacity duration-500 delay-500 ' +
                 (props.loggingIn
                     ? 'opacity-100'
                     : 'opacity-0 pointer-events-none')
@@ -31,18 +27,9 @@ function LoaderOverlay(props: LoaderOverlayProps) {
                 }
             >
                 <div className='lds-spinner'>
-                    <div />
-                    <div />
-                    <div />
-                    <div />
-                    <div />
-                    <div />
-                    <div />
-                    <div />
-                    <div />
-                    <div />
-                    <div />
-                    <div />
+                    {[...Array(12).keys()].map(() => (
+                        <div />
+                    ))}
                 </div>
             </div>
         </div>

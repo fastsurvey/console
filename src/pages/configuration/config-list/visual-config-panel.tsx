@@ -37,8 +37,8 @@ function ConfigPreviewPanel(props: ConfigPreviewPanelProps) {
                 'no-selection border-r-4 border-' +
                 statusColor +
                 (props.selected
-                    ? ' cursor-pointer bg-gray-200 '
-                    : ' cursor-default bg-white ')
+                    ? ' cursor-default bg-white'
+                    : ' cursor-pointer bg-gray-200')
             }
         >
             <div className='flex flex-row items-center w-full h-8'>

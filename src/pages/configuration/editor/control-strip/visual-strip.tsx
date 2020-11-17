@@ -7,7 +7,7 @@ const VisualStrip = (props: VisualStripProps) => (
     <div
         id='ControlStrip'
         className={
-            'z-50 fixed center-content p-4 border-b-4 border-gray-500 ' +
+            'z-40 fixed center-content p-4 border-b-4 border-gray-500 ' +
             'bg-gray-300 no-selection '
         }
     >

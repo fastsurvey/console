@@ -65,10 +65,9 @@ const TextArea = React.forwardRef((props: TextAreaProps, ref: any) => {
                         : 'shadow ') +
                     'focus:outline-none focus:shadow-outline ' +
                     (props.className ? props.className : '') +
-                    ' ' +
                     (props.disabled
-                        ? 'bg-gray-200 cursor-not-allowed '
-                        : 'bg-white ')
+                        ? ' bg-gray-200 cursor-not-allowed '
+                        : ' bg-white ')
                 }
                 autoComplete={autoComplete}
             />

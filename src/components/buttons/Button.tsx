@@ -11,8 +11,6 @@ interface ButtonProps {
 }
 
 function Button(props: ButtonProps) {
-    const className = props.className === undefined ? '' : props.className;
-
     const reactivityClass =
         props.invisible || props.disabled || props.spinning
             ? 'cursor-default pointer-events-none'
@@ -32,19 +30,10 @@ function Button(props: ButtonProps) {
                 'no-selection relative inline-block rounded ' +
                 'h-10 px-2 py-1 leading-8 font-weight-600 ' +
                 'text-lg transition duration-200 outline-none ' +
-                className +
-                ' ' +
-                reactivityClass +
-                ' ' +
-                visibilityClass +
-                ' ' +
-                disabledClass
+                `${reactivityClass} ${visibilityClass} ${disabledClass} ` +
+                (props.className ? props.className : '')
             }
-            onClick={
-                props.onClick !== undefined && !props.disabled
-                    ? props.onClick
-                    : () => {}
-            }
+            onClick={!props.disabled ? props.onClick : undefined}
         >
             <div
                 className={
@@ -63,24 +52,15 @@ function Button(props: ButtonProps) {
             >
                 <div
                     className={
-                        'absolute top-1/2 right-1/2 h-10 w-10 ' +
-                        'transform translate-x-1/2 -translate-y-1/2'
+                        'absolute top-1/2 left-1/2 h-10 w-10 ' +
+                        'transform -translate-x-1/2 -translate-y-1/2'
                     }
                 >
                     <div className='origin-top-left transform scale-50'>
                         <div className='lds-spinner'>
-                            <div />
-                            <div />
-                            <div />
-                            <div />
-                            <div />
-                            <div />
-                            <div />
-                            <div />
-                            <div />
-                            <div />
-                            <div />
-                            <div />
+                            {[...Array(12).keys()].map(() => (
+                                <div />
+                            ))}
                         </div>
                     </div>
                 </div>

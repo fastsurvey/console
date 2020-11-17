@@ -45,7 +45,10 @@ function ConfigList(props: ConfigListProps) {
             {props.configs.map((config, index) => (
                 <ConfigPreviewPanel
                     key={config.local_id}
-                    selected={config.survey_name === location.pathname}
+                    selected={
+                        location.pathname ===
+                        `/configuration/${config.survey_name}`
+                    }
                     onClick={() => handleClick(config.survey_name)}
                     config={config}
                 />
