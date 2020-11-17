@@ -1,11 +1,7 @@
 import React from 'react';
 
 import {ICONS} from '../../assets/icons/icons';
-import {
-    closeModalAction,
-    logOutAction,
-    openModalAction,
-} from '../../utilities/reduxActions';
+import dispatcher from '../../utilities/dispatcher';
 import {connect} from 'react-redux';
 import {ReduxState} from '../../utilities/types';
 import NavbarContent from './components/NavbarContent';
@@ -71,8 +67,8 @@ const mapStateToProps = (state: ReduxState) => ({
     modalOpen: state.modalOpen,
 });
 const mapDispatchToProps = (dispatch: any) => ({
-    logOut: () => dispatch(logOutAction()),
-    openModal: () => dispatch(openModalAction()),
-    closeModal: () => dispatch(closeModalAction()),
+    logOut: dispatcher.logOut(dispatch),
+    openModal: dispatcher.openModal(dispatch),
+    closeModal: dispatcher.closeModal(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(MobileNavbar);

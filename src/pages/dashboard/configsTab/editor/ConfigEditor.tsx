@@ -6,15 +6,12 @@ import {
     SurveyConfig,
     SurveyField,
 } from '../../../../utilities/types';
+import dispatcher from '../../../../utilities/dispatcher';
+import {useHistory} from 'react-router-dom';
+
 import EditorControlStrip from './controlStrip/EditorControlStrip';
 import GeneralConfig from './generalConfig/GeneralConfig';
-import {
-    openMessageAction,
-    dispatcher,
-} from '../../../../utilities/reduxActions';
 import FieldConfigForm from './fieldConfig/FieldConfigForm';
-import {useHistory} from 'react-router-dom';
-import {closeAllMessagesAction} from '../../../../utilities/reduxActions';
 
 interface ConfigEditorProps {
     centralConfig: SurveyConfig;

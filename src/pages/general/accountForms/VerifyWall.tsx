@@ -1,11 +1,7 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {Account, Message, ReduxState} from '../../../utilities/types';
-import {
-    logOutAction,
-    openMessageAction,
-    closeAllMessagesAction,
-} from '../../../utilities/reduxActions';
+import dispatcher from '../../../utilities/dispatcher';
 import assert from 'assert';
 import {authPostRequest} from '../../../utilities/axiosClients';
 import TextLink from '../../../components/links/TextLink';
@@ -80,8 +76,8 @@ const mapStateToProps = (state: ReduxState) => ({
     account: state.account,
 });
 const mapDispatchToProps = (dispatch: any) => ({
-    logOut: () => dispatch(logOutAction()),
-    openMessage: (message: Message) => dispatch(openMessageAction(message)),
-    closeAllMessages: () => dispatch(closeAllMessagesAction()),
+    logOut: dispatcher.logOut(dispatch),
+    openMessage: dispatcher.openMessage(dispatch),
+    closeAllMessages: dispatcher.closeAllMessages(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(VerifyWall);

@@ -6,11 +6,7 @@ import {
     Account,
     Message,
 } from '../../../utilities/types';
-import {
-    closeAllMessagesAction,
-    logInAction,
-    openMessageAction,
-} from '../../../utilities/reduxActions';
+import dispatcher from '../../../utilities/dispatcher';
 import {connect} from 'react-redux';
 import {authPostRequest} from '../../../utilities/axiosClients';
 import TextLink from '../../../components/links/TextLink';
@@ -151,9 +147,8 @@ function RegisterForm(props: RegisterFormProps) {
 
 const mapStateToProps = (state: ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
-    logIn: (oauth2_token: OAuth2Token, account: Account) =>
-        dispatch(logInAction(oauth2_token, account)),
-    openMessage: (message: Message) => dispatch(openMessageAction(message)),
-    closeAllMessages: () => dispatch(closeAllMessagesAction()),
+    logIn: dispatcher.logOut(dispatch),
+    openMessage: dispatcher.openMessage(dispatch),
+    closeAllMessages: dispatcher.closeAllMessages(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);

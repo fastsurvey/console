@@ -4,7 +4,7 @@ import NavbarButton from './NavbarButton';
 import NavbarLogo from './NavbarLogo';
 import {ICONS} from '../../../assets/icons/icons';
 import {Message, ReduxState} from '../../../utilities/types';
-import {openMessageAction} from '../../../utilities/reduxActions';
+import dispatcher from '../../../utilities/dispatcher';
 import {connect} from 'react-redux';
 
 interface NavbarContentProps {
@@ -70,6 +70,6 @@ const mapStateToProps = (state: ReduxState) => ({
     configIsDiffering: state.configIsDiffering,
 });
 const mapDispatchToProps = (dispatch: any) => ({
-    openMessage: (message: Message) => dispatch(openMessageAction(message)),
+    openMessage: dispatcher.openMessage(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(NavbarContent);

@@ -7,7 +7,7 @@ import {
 import {ICONS} from '../../../../../assets/icons/icons';
 import {connect} from 'react-redux';
 import ControlStripButton from './ControlStripButton';
-import {openMessageAction} from '../../../../../utilities/reduxActions';
+import dispatcher from '../../../../../utilities/dispatcher';
 
 interface EditorControlStripProps {
     config: SurveyConfig;
@@ -163,6 +163,6 @@ const mapStateToProps = (state: ReduxState) => ({
     configIsDiffering: state.configIsDiffering,
 });
 const mapDispatchToProps = (dispatch: any) => ({
-    openMessage: (message: Message) => dispatch(openMessageAction(message)),
+    openMessage: dispatcher.openMessage(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(EditorControlStrip);

@@ -10,11 +10,7 @@ import {
 import {authPostRequest} from '../../../utilities/axiosClients';
 import TextLink from '../../../components/links/TextLink';
 import ButtonLink from '../../../components/links/ButtonLink';
-import {
-    logInAction,
-    openMessageAction,
-    closeAllMessagesAction,
-} from '../../../utilities/reduxActions';
+import dispatcher from '../../../utilities/dispatcher';
 
 interface LoginFormProps {
     logIn(oauth2_token: OAuth2Token, account: Account): void;
@@ -117,9 +113,8 @@ function LoginForm(props: LoginFormProps) {
 
 const mapStateToProps = (state: ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
-    logIn: (oauth2_token: OAuth2Token, account: Account) =>
-        dispatch(logInAction(oauth2_token, account)),
-    openMessage: (message: Message) => dispatch(openMessageAction(message)),
-    closeAllMessages: () => dispatch(closeAllMessagesAction()),
+    logIn: dispatcher.logIn(dispatch),
+    openMessage: dispatcher.openMessage(dispatch),
+    closeAllMessages: dispatcher.closeAllMessages(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

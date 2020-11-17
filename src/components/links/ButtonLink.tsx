@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import assert from 'assert';
 import Button from '../buttons/Button';
 import ButtonRow from '../buttons/ButtonRow';
-import {closeAllMessagesAction} from '../../utilities/reduxActions';
+import dispatcher from '../../utilities/dispatcher';
 import {connect} from 'react-redux';
 import {ReduxState} from '../../utilities/types';
 
@@ -66,6 +66,6 @@ function ButtonLink(props: ButtonLinkProps) {
 
 const mapStateToProps = (state: ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
-    closeAllMessages: () => dispatch(closeAllMessagesAction()),
+    closeAllMessages: dispatcher.closeAllMessages(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(ButtonLink);

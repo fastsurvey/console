@@ -8,11 +8,7 @@ import {
     OAuth2Token,
 } from '../utilities/types';
 import Cookies from 'js-cookie';
-import {
-    addConfigsAction,
-    logInAction,
-    logOutAction,
-} from '../utilities/reduxActions';
+import dispatcher from '../utilities/dispatcher';
 import {generateValidOAuthToken} from '../utilities/jwtEncryption';
 import {fetchSurveys} from '../utilities/surveyCommunication';
 import {SurveyConfig} from '../utilities/types';
@@ -120,9 +116,9 @@ export function ReduxWrapper(props: ReduxWrapperProps) {
     const [cookieLogin, setCookieLogin] = useState(false);
 
     async function logIn(oauth2_token: OAuth2Token, account: Account) {
-        store.dispatch(logInAction(oauth2_token, account));
+        dispatcher.logIn(store.dispatch)(oauth2_token, account);
         await fetchSurveys(oauth2_token, (configs: SurveyConfig[]) => {
-            store.dispatch(addConfigsAction(configs));
+            dispatcher.addConfigs(store.dispatch)(configs);
         });
     }
 
@@ -131,7 +127,7 @@ export function ReduxWrapper(props: ReduxWrapperProps) {
             try {
                 await generateValidOAuthToken(logIn);
             } catch {
-                store.dispatch(logOutAction());
+                dispatcher.logOut(store.dispatch)();
             }
         }
 

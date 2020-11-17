@@ -1,5 +1,5 @@
 import React from 'react';
-import {logOutAction} from '../../utilities/reduxActions';
+import dispatcher from '../../utilities/dispatcher';
 import {connect} from 'react-redux';
 import {ReduxState} from '../../utilities/types';
 import NavbarContent from './components/NavbarContent';
@@ -23,6 +23,6 @@ function RegularNavbar(props: RegularNavbarProps) {
 
 const mapStateToProps = (state: ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
-    logOut: () => dispatch(logOutAction()),
+    logOut: dispatcher.logOut(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(RegularNavbar);

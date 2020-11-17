@@ -1,5 +1,5 @@
 import React from 'react';
-import {closeMessageAction} from '../../utilities/reduxActions';
+import dispatcher from '../../utilities/dispatcher';
 import {ReduxState, Message} from '../../utilities/types';
 import {connect} from 'react-redux';
 import MessageComponent from './MessageComponent';
@@ -27,6 +27,6 @@ const mapStateToProps = (state: ReduxState) => ({
     messages: state.messages,
 });
 const mapDispatchToProps = (dispatch: any) => ({
-    closeMessage: (text: string) => dispatch(closeMessageAction(text)),
+    closeMessage: dispatcher.closeMessage(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(MessageQueue);

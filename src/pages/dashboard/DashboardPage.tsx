@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import MobileNavbar from '../../components/navbar/MobileNavbar';
 import Navbar from '../../components/navbar/RegularNavbar';
-import {addConfigsAction} from '../../utilities/reduxActions';
+import dispatcher from '../../utilities/dispatcher';
 import {fetchSurveys} from '../../utilities/surveyCommunication';
 import {ReduxState, SurveyConfig, OAuth2Token} from '../../utilities/types';
 import './DashboardPage.scss';
@@ -63,7 +63,6 @@ const mapStateToProps = (state: ReduxState) => ({
     oauth2_token: state.oauth2_token,
 });
 const mapDispatchToProps = (dispatch: any) => ({
-    addConfigs: (configs: SurveyConfig[]) =>
-        dispatch(addConfigsAction(configs)),
+    addConfigs: dispatcher.addConfigs(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(DashBoardPage);

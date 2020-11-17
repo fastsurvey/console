@@ -3,7 +3,7 @@ import {Message, ReduxState, SurveyConfig} from '../../../../utilities/types';
 import {ICONS} from '../../../../assets/icons/icons';
 import {useHistory, useLocation} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {openMessageAction} from '../../../../utilities/reduxActions';
+import dispatcher from '../../../../utilities/dispatcher';
 
 interface ConfigPreviewPanelProps {
     config: SurveyConfig;
@@ -91,6 +91,6 @@ const mapStateToProps = (state: ReduxState) => ({
     configIsDiffering: state.configIsDiffering,
 });
 const mapDispatchToProps = (dispatch: any) => ({
-    openMessage: (message: Message) => dispatch(openMessageAction(message)),
+    openMessage: dispatcher.openMessage(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(ConfigPreviewPanel);

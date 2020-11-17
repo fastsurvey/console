@@ -5,10 +5,7 @@ import {Message, ReduxState} from '../../../utilities/types';
 import {authPostRequest} from '../../../utilities/axiosClients';
 import TextLink from '../../../components/links/TextLink';
 import ButtonLink from '../../../components/links/ButtonLink';
-import {
-    openMessageAction,
-    closeAllMessagesAction,
-} from '../../../utilities/reduxActions';
+import dispatcher from '../../../utilities/dispatcher';
 
 interface RequestPasswordFormProps {
     openMessage(message: Message): void;
@@ -115,8 +112,8 @@ function RequestPasswordForm(props: RequestPasswordFormProps) {
 
 const mapStateToProps = (state: ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
-    openMessage: (message: Message) => dispatch(openMessageAction(message)),
-    closeAllMessages: () => dispatch(closeAllMessagesAction()),
+    openMessage: dispatcher.openMessage(dispatch),
+    closeAllMessages: dispatcher.closeAllMessages(dispatch),
 });
 export default connect(
     mapStateToProps,
