@@ -1,39 +1,16 @@
 import React from 'react';
-import {useHistory, useLocation} from 'react-router-dom';
-import {connect} from 'react-redux';
-
-import {stateTypes, configTypes, dispatcher} from 'utilities';
-
+import {configTypes} from 'utilities';
 import icons from 'assets/icons/icons';
 
 interface ConfigPreviewPanelProps {
     config: configTypes.SurveyConfig;
-    index: number;
-    configIsDiffering: boolean;
-    openMessage(message: stateTypes.Message): void;
+    selected: boolean;
+    onClick(): void;
 }
 
 function ConfigPreviewPanel(props: ConfigPreviewPanelProps) {
     let statusColor: string;
     let statusText: string;
-
-    let location = useLocation();
-    let history = useHistory();
-
-    function handleClick() {
-        if (
-            location.pathname !== `/configuration/${props.config.survey_name}`
-        ) {
-            if (!props.configIsDiffering) {
-                history.push(`/configuration/${props.config.survey_name}`);
-            } else {
-                props.openMessage({
-                    text: 'Please save or undo your changes first!',
-                    type: 'warning',
-                });
-            }
-        }
-    }
 
     if (props.config.draft) {
         statusColor = 'gray-500';
@@ -43,7 +20,7 @@ function ConfigPreviewPanel(props: ConfigPreviewPanelProps) {
         if (now < props.config.start) {
             statusColor = 'yellow-600';
             statusText = 'Pending';
-        } else if (now > props.config.end) {
+        } else if (now >= props.config.end) {
             statusColor = 'gray-700';
             statusText = 'Finished';
         } else {
@@ -54,13 +31,12 @@ function ConfigPreviewPanel(props: ConfigPreviewPanelProps) {
 
     return (
         <div
-            onClick={handleClick}
+            onClick={props.onClick}
             className={
                 'w-full p-2 my-1 rounded-l shadow ' +
                 'no-selection border-r-4 border-' +
                 statusColor +
-                (location.pathname !==
-                `/configuration/${props.config.survey_name}`
+                (props.selected
                     ? ' cursor-pointer bg-gray-200 '
                     : ' cursor-default bg-white ')
             }
@@ -88,10 +64,4 @@ function ConfigPreviewPanel(props: ConfigPreviewPanelProps) {
     );
 }
 
-const mapStateToProps = (state: stateTypes.ReduxState) => ({
-    configIsDiffering: state.configIsDiffering,
-});
-const mapDispatchToProps = (dispatch: any) => ({
-    openMessage: dispatcher.openMessage(dispatch),
-});
-export default connect(mapStateToProps, mapDispatchToProps)(ConfigPreviewPanel);
+export default ConfigPreviewPanel;

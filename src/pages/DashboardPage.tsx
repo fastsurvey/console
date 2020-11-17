@@ -1,10 +1,7 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-
 import {stateTypes, configTypes, dispatcher, fetchSurveys} from 'utilities';
-
 import {MobileNavbar, RegularNavbar} from 'components';
-
 import 'styles/DashboardPage.scss';
 
 interface DashBoardPageProps {

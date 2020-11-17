@@ -1,7 +1,5 @@
 import React from 'react';
-
 import {TextLink, MainWrapper} from 'components';
-
 import EmptyImage from 'assets/images/empty.svg';
 
 function NotFoundPage() {
