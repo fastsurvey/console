@@ -1,9 +1,10 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import assert from 'assert';
-import stateTypes from '../../utilities/types/stateTypes';
-import dispatcher from '../../utilities/dispatcher';
 import {connect} from 'react-redux';
+import assert from 'assert';
+
+import stateTypes from 'utilities/types/stateTypes';
+import dispatcher from 'utilities/dispatcher';
 
 interface TextLinkProps {
     children: string;

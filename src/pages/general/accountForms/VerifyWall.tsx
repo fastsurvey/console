@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import stateTypes from '../../../utilities/types/stateTypes';
-import dispatcher from '../../../utilities/dispatcher';
 import assert from 'assert';
-import {authPostRequest} from '../../../utilities/axiosClients';
-import TextLink from '../../../components/links/TextLink';
-import ButtonLink from '../../../components/links/ButtonLink';
+
+import stateTypes from 'utilities/types/stateTypes';
+import dispatcher from 'utilities/dispatcher';
+import {authPostRequest} from 'utilities/axiosClients';
+
+import TextLink from 'components/links/TextLink';
+import ButtonLink from 'components/links/ButtonLink';
 
 interface VerifyWallProps {
     account: undefined | stateTypes.Account;

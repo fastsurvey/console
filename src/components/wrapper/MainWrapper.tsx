@@ -1,5 +1,6 @@
 import React from 'react';
-import LogoBanner from '../logos/LogoBanner';
+
+import LogoBanner from 'components/logos/LogoBanner';
 
 interface MainWrapperProps {
     children: React.ReactNode;

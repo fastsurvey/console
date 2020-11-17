@@ -1,11 +1,13 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import assert from 'assert';
-import Button from '../buttons/Button';
-import ButtonRow from '../buttons/ButtonRow';
-import dispatcher from '../../utilities/dispatcher';
 import {connect} from 'react-redux';
-import stateTypes from '../../utilities/types/stateTypes';
+import assert from 'assert';
+
+import stateTypes from 'utilities/types/stateTypes';
+import dispatcher from 'utilities/dispatcher';
+
+import Button from 'components/buttons/Button';
+import ButtonRow from 'components/buttons/ButtonRow';
 
 interface ButtonLinkProps {
     children: string;

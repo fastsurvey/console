@@ -1,6 +1,6 @@
-import {surveyGetRequest} from './axiosClients';
-import configTypes from './types/configTypes';
-import stateTypes from './types/stateTypes';
+import {surveyGetRequest} from 'utilities/axiosClients';
+import configTypes from 'utilities/types/configTypes';
+import stateTypes from 'utilities/types/stateTypes';
 
 export async function fetchSurveys(
     oauth2_token: stateTypes.OAuth2Token,

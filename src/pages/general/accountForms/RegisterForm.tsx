@@ -1,11 +1,13 @@
 import React, {useRef, useState} from 'react';
-import TextInput from '../../../components/formFields/TextInput';
-import stateTypes from '../../../utilities/types/stateTypes';
-import dispatcher from '../../../utilities/dispatcher';
 import {connect} from 'react-redux';
-import {authPostRequest} from '../../../utilities/axiosClients';
-import TextLink from '../../../components/links/TextLink';
-import ButtonLink from '../../../components/links/ButtonLink';
+
+import stateTypes from 'utilities/types/stateTypes';
+import dispatcher from 'utilities/dispatcher';
+import {authPostRequest} from 'utilities/axiosClients';
+
+import TextInput from 'components/formFields/TextInput';
+import TextLink from 'components/links/TextLink';
+import ButtonLink from 'components/links/ButtonLink';
 
 interface RegisterFormProps {
     logIn(

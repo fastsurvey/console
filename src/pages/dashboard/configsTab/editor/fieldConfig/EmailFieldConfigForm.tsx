@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import DropDown from '../../../../../components/formFields/DropDown';
-import TextInput from '../../../../../components/formFields/TextInput';
-import configTypes from '../../../../../utilities/types/configTypes';
-import formOptions from '../../../../../utilities/constants/formOptions';
+
+import configTypes from 'utilities/types/configTypes';
+import formOptions from 'utilities/constants/formOptions';
+
+import DropDown from 'components/formFields/DropDown';
+import TextInput from 'components/formFields/TextInput';
 
 interface EmailFieldConfigFormProps {
     fieldConfig: configTypes.EmailField;

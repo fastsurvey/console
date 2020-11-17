@@ -1,11 +1,14 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import DropDown from '../../../../../components/formFields/DropDown';
-import TextArea from '../../../../../components/formFields/TextArea';
-import TextInput from '../../../../../components/formFields/TextInput';
-import configTypes from '../../../../../utilities/types/configTypes';
-import stateTypes from '../../../../../utilities/types/stateTypes';
+
+import configTypes from 'utilities/types/configTypes';
+import stateTypes from 'utilities/types/stateTypes';
 import formOptions from 'utilities/constants/formOptions';
+
+import DropDown from 'components/formFields/DropDown';
+import TextArea from 'components/formFields/TextArea';
+import TextInput from 'components/formFields/TextInput';
+
 import DateSelectorRow from './DateSelectorRow';
 
 interface GeneralConfigProps {

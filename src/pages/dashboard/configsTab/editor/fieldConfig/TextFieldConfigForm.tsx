@@ -1,6 +1,8 @@
 import React from 'react';
-import TextInput from '../../../../../components/formFields/TextInput';
-import configTypes from '../../../../../utilities/types/configTypes';
+
+import configTypes from 'utilities/types/configTypes';
+
+import TextInput from 'components/formFields/TextInput';
 
 interface TextFieldConfigFormProps {
     fieldConfig: configTypes.TextField;

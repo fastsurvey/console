@@ -1,12 +1,13 @@
 import React, {useRef, useState} from 'react';
-import InputComponent from '../../../components/formFields/TextInput';
 import {connect} from 'react-redux';
-import stateTypes from '../../../utilities/types/stateTypes';
-import {authPostRequest} from '../../../utilities/axiosClients';
-import TextLink from '../../../components/links/TextLink';
-import ButtonLink from '../../../components/links/ButtonLink';
-import dispatcher from '../../../utilities/dispatcher';
 
+import stateTypes from 'utilities/types/stateTypes';
+import {authPostRequest} from 'utilities/axiosClients';
+import dispatcher from 'utilities/dispatcher';
+
+import TextInput from 'components/formFields/TextInput';
+import TextLink from 'components/links/TextLink';
+import ButtonLink from 'components/links/ButtonLink';
 interface RequestPasswordFormProps {
     openMessage(message: stateTypes.Message): void;
     closeAllMessages(): void;
@@ -61,7 +62,7 @@ function RequestPasswordForm(props: RequestPasswordFormProps) {
                     </h2>
 
                     <form>
-                        <InputComponent
+                        <TextInput
                             placeholder='email'
                             value={email}
                             onChange={(newValue) => {

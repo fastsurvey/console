@@ -1,5 +1,5 @@
 import React from 'react';
-import {ICONS} from '../../assets/icons/icons';
+import icons from 'assets/icons/icons';
 
 interface CheckboxProps {
     checked: boolean;
@@ -24,7 +24,7 @@ const Checkbox = React.forwardRef((props: CheckboxProps, ref: any) => {
                 }
             }}
         >
-            {props.checked ? ICONS.checkbox_true : ICONS.checkbox_false}
+            {props.checked ? icons.checkbox_true : icons.checkbox_false}
         </div>
     );
 });

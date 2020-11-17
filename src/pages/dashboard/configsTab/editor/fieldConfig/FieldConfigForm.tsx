@@ -1,13 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import {ICONS} from '../../../../../assets/icons/icons';
-import TextArea from '../../../../../components/formFields/TextArea';
-import TextInput from '../../../../../components/formFields/TextInput';
-import configTypes from '../../../../../utilities/types/configTypes';
+
+import configTypes from 'utilities/types/configTypes';
+
+import TextArea from 'components/formFields/TextArea';
+import TextInput from 'components/formFields/TextInput';
+
 import TextFieldConfigForm from './TextFieldConfigForm';
 import OptionFieldConfigForm from './OptionFieldConfigForm';
 import RadioFieldConfigForm from './RadioFieldConfigForm';
 import SelectionFieldConfigForm from './SelectionFieldConfigForm';
 import EmailFieldConfigForm from './EmailFieldConfigForm';
+
+import icons from 'assets/icons/icons';
 
 interface FieldConfigFormProps {
     fieldConfig: configTypes.SurveyField;
@@ -131,7 +135,7 @@ function FieldConfigForm(props: FieldConfigFormProps) {
                         }
                     >
                         <div className='w-10 h-10 p-2 cursor-move'>
-                            {ICONS.drag}
+                            {icons.drag}
                         </div>
                         <div className='pr-4'>{props.fieldConfig.type}</div>
                     </div>

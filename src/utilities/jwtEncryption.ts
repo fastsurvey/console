@@ -1,7 +1,8 @@
 import assert from 'assert';
 import Cookies from 'js-cookie';
-import stateTypes from './types/stateTypes';
-import {authPostRequest} from './axiosClients';
+
+import stateTypes from 'utilities/types/stateTypes';
+import {authPostRequest} from 'utilities/axiosClients';
 
 export async function generateValidOAuthToken(
     logIn: (

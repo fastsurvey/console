@@ -1,11 +1,14 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import MobileNavbar from '../../components/navbar/MobileNavbar';
-import Navbar from '../../components/navbar/RegularNavbar';
-import dispatcher from '../../utilities/dispatcher';
-import {fetchSurveys} from '../../utilities/surveyCommunication';
-import configTypes from '../../utilities/types/configTypes';
-import stateTypes from '../../utilities/types/stateTypes';
+
+import dispatcher from 'utilities/dispatcher';
+import {fetchSurveys} from 'utilities/surveyCommunication';
+import configTypes from 'utilities/types/configTypes';
+import stateTypes from 'utilities/types/stateTypes';
+
+import MobileNavbar from 'components/navbar/MobileNavbar';
+import Navbar from 'components/navbar/RegularNavbar';
+
 import './DashboardPage.scss';
 
 interface DashBoardPageProps {

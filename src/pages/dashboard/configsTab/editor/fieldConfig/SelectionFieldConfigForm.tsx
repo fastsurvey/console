@@ -1,10 +1,13 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {ICONS} from '../../../../../assets/icons/icons';
-import TextInput from '../../../../../components/formFields/TextInput';
-import configTypes from '../../../../../utilities/types/configTypes';
-import TriggerIcon from '../../../../../components/formFields/TriggerIcon';
-import templates from 'utilities/constants/templates';
 import {animateScroll} from 'react-scroll';
+
+import configTypes from 'utilities/types/configTypes';
+import templates from 'utilities/constants/templates';
+
+import TextInput from 'components/formFields/TextInput';
+import TriggerIcon from 'components/formFields/TriggerIcon';
+
+import icons from 'assets/icons/icons';
 
 interface SelectionFieldConfigFormProps {
     fieldConfig: configTypes.SelectionField;
@@ -172,7 +175,7 @@ function SelectionFieldConfigForm(props: SelectionFieldConfigFormProps) {
                                 />
                                 <TriggerIcon
                                     disabled={props.disabled}
-                                    icon={ICONS.delete}
+                                    icon={icons.delete}
                                     onClick={() => {
                                         setOptionsVisible(
                                             optionsVisible.map(

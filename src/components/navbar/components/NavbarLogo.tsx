@@ -1,5 +1,6 @@
 import React from 'react';
-import FastSurveyIcon from '../../../assets/branding/rocket-light.svg';
+
+import FastSurveyIcon from 'assets/branding/rocket-light.svg';
 
 function LogoComponent() {
     return (

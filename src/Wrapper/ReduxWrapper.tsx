@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
-import stateTypes from '../utilities/types/stateTypes';
 import Cookies from 'js-cookie';
-import dispatcher from '../utilities/dispatcher';
-import {generateValidOAuthToken} from '../utilities/jwtEncryption';
-import {fetchSurveys} from '../utilities/surveyCommunication';
-import configTypes from '../utilities/types/configTypes';
+
+import stateTypes from 'utilities/types/stateTypes';
+import configTypes from 'utilities/types/configTypes';
+import dispatcher from 'utilities/dispatcher';
+import {generateValidOAuthToken} from 'utilities/jwtEncryption';
+import {fetchSurveys} from 'utilities/surveyCommunication';
 
 function storeReducer(
     state = {

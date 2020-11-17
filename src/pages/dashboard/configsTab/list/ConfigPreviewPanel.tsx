@@ -1,10 +1,12 @@
 import React from 'react';
-import configTypes from '../../../../utilities/types/configTypes';
-import {ICONS} from '../../../../assets/icons/icons';
 import {useHistory, useLocation} from 'react-router-dom';
 import {connect} from 'react-redux';
-import dispatcher from '../../../../utilities/dispatcher';
-import stateTypes from '../../../../utilities/types/stateTypes';
+
+import configTypes from 'utilities/types/configTypes';
+import stateTypes from 'utilities/types/stateTypes';
+import dispatcher from 'utilities/dispatcher';
+
+import icons from 'assets/icons/icons';
 
 interface ConfigPreviewPanelProps {
     config: configTypes.SurveyConfig;
@@ -79,7 +81,7 @@ function ConfigPreviewPanel(props: ConfigPreviewPanelProps) {
                 </span>
             </div>
             <div className='flex flex-row text-base text-blue-600 font-weight-500'>
-                <div className='w-6 h-6 mr-1'>{ICONS.link}</div>
+                <div className='w-6 h-6 mr-1'>{icons.link}</div>
                 <div className='h-6'>
                     {props.config.admin_name}/{props.config.survey_name}
                 </div>

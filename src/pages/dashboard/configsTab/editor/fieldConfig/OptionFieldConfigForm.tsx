@@ -1,6 +1,8 @@
 import React from 'react';
-import Checkbox from '../../../../../components/formFields/Checkbox';
-import configTypes from '../../../../../utilities/types/configTypes';
+
+import configTypes from 'utilities/types/configTypes';
+
+import Checkbox from 'components/formFields/Checkbox';
 
 interface OptionFieldConfigFormProps {
     fieldConfig: configTypes.OptionField;

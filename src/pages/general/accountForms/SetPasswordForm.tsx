@@ -1,10 +1,12 @@
 import React, {useRef, useState} from 'react';
-import TextInput from '../../../components/formFields/TextInput';
 import {connect} from 'react-redux';
-import stateTypes from '../../../utilities/types/stateTypes';
-import {authPostRequest} from '../../../utilities/axiosClients';
-import ButtonLink from '../../../components/links/ButtonLink';
-import dispatcher from '../../../utilities/dispatcher';
+
+import stateTypes from 'utilities/types/stateTypes';
+import {authPostRequest} from 'utilities/axiosClients';
+import dispatcher from 'utilities/dispatcher';
+
+import ButtonLink from 'components/links/ButtonLink';
+import TextInput from 'components/formFields/TextInput';
 
 interface SetPasswordFormProps {
     logIn(

@@ -1,6 +1,7 @@
 import React from 'react';
-import FastSurveyIcon from '../../assets/branding/rocket.svg';
 import {Link} from 'react-router-dom';
+
+import FastSurveyIcon from 'assets/branding/rocket.svg';
 
 interface LogoBannerProps {
     slim?: boolean;

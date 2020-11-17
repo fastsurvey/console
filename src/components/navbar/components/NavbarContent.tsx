@@ -1,11 +1,13 @@
 import React from 'react';
 import {useHistory, useLocation} from 'react-router-dom';
+import {connect} from 'react-redux';
+
+import stateTypes from 'utilities/types/stateTypes';
+import dispatcher from 'utilities/dispatcher';
+
 import NavbarButton from './NavbarButton';
 import NavbarLogo from './NavbarLogo';
-import {ICONS} from '../../../assets/icons/icons';
-import stateTypes from '../../../utilities/types/stateTypes';
-import dispatcher from '../../../utilities/dispatcher';
-import {connect} from 'react-redux';
+import icons from 'assets/icons/icons';
 
 interface NavbarContentProps {
     logOut(): void;
@@ -41,26 +43,26 @@ function NavbarContent(props: NavbarContentProps) {
             <NavbarButton
                 onClick={() => openLink('/configurations')}
                 text='Configs'
-                icon={ICONS.vote}
+                icon={icons.vote}
                 active={location.pathname.startsWith('/configuration')}
             />
             <NavbarButton
                 onClick={() => openLink('/results')}
                 text='Results'
-                icon={ICONS.charts}
+                icon={icons.charts}
                 active={location.pathname === '/results'}
             />
             <NavbarButton
                 onClick={() => openLink('/account')}
                 text='Account'
-                icon={ICONS.account}
+                icon={icons.account}
                 active={location.pathname === '/account'}
             />
 
             <div className={'self-stretch flex-grow'} />
 
             <div onClick={props.logOut}>
-                <NavbarButton text='Logout' icon={ICONS.logout} />
+                <NavbarButton text='Logout' icon={icons.logout} />
             </div>
         </React.Fragment>
     );

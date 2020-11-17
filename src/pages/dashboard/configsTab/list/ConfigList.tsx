@@ -1,10 +1,14 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import ButtonLink from '../../../../components/links/ButtonLink';
-import configTypes from '../../../../utilities/types/configTypes';
+
+import configTypes from 'utilities/types/configTypes';
+import stateTypes from 'utilities/types/stateTypes';
+
+import ButtonLink from 'components/links/ButtonLink';
+
 import ConfigPreviewPanel from './ConfigPreviewPanel';
-import {ICONS} from '../../../../assets/icons/icons';
-import stateTypes from '../../../../utilities/types/stateTypes';
+
+import icons from 'assets/icons/icons';
 
 interface ConfigListProps {
     configs: undefined | configTypes.SurveyConfig[];
@@ -41,7 +45,7 @@ function ConfigList(props: ConfigListProps) {
                 />
             ))}
             <ButtonLink
-                icon={ICONS.add}
+                icon={icons.add}
                 onClick={() => {}}
                 className='w-full mt-1'
             >

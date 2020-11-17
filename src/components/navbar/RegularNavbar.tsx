@@ -1,7 +1,9 @@
 import React from 'react';
-import dispatcher from '../../utilities/dispatcher';
 import {connect} from 'react-redux';
-import stateTypes from '../../utilities/types/stateTypes';
+
+import stateTypes from 'utilities/types/stateTypes';
+import dispatcher from 'utilities/dispatcher';
+
 import NavbarContent from './components/NavbarContent';
 
 interface RegularNavbarProps {

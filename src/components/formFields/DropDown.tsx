@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {ICONS} from '../../assets/icons/icons';
+import icons from 'assets/icons/icons';
 
 interface DropDownProps {
     options: {label: string; value: number}[];
@@ -83,7 +83,7 @@ const DropDown = React.forwardRef((props: DropDownProps, ref: any) => {
                                 (isOpen ? 'rotate-180 ' : 'rotate-0 ')
                             }
                         >
-                            {ICONS.expand_more}
+                            {icons.expand_more}
                         </div>
                     )}
                 </div>

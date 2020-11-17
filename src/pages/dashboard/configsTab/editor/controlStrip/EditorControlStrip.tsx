@@ -1,10 +1,13 @@
 import React from 'react';
-import configTypes from '../../../../../utilities/types/configTypes';
-import {ICONS} from '../../../../../assets/icons/icons';
 import {connect} from 'react-redux';
+
+import configTypes from 'utilities/types/configTypes';
+import stateTypes from 'utilities/types/stateTypes';
+import dispatcher from 'utilities/dispatcher';
+
 import ControlStripButton from './ControlStripButton';
-import dispatcher from '../../../../../utilities/dispatcher';
-import stateTypes from '../../../../../utilities/types/stateTypes';
+
+import icons from 'assets/icons/icons';
 
 interface EditorControlStripProps {
     config: configTypes.SurveyConfig;
@@ -87,7 +90,7 @@ function EditorControlStrip(props: EditorControlStripProps) {
                             first
                             disabled={props.config.draft}
                             label='Open'
-                            icon={ICONS.launch}
+                            icon={icons.launch}
                             onClick={() =>
                                 window.open(
                                     `https://fastsurvey.io/${props.config.admin_name}` +
@@ -106,7 +109,7 @@ function EditorControlStrip(props: EditorControlStripProps) {
                                     ? 'Start Now'
                                     : 'Reopen Now'
                             }
-                            icon={ICONS.play}
+                            icon={icons.play}
                             onClick={
                                 now() < props.config.end ? startNow : reopenNow
                             }
@@ -117,13 +120,13 @@ function EditorControlStrip(props: EditorControlStripProps) {
                                 now() < props.config.start
                             }
                             label='End Now'
-                            icon={ICONS.stop}
+                            icon={icons.stop}
                             onClick={endNow}
                         />
                         <ControlStripButton
                             last
                             label='Edit'
-                            icon={ICONS.create}
+                            icon={icons.create}
                             onClick={editNow}
                         />
                     </React.Fragment>
@@ -134,19 +137,19 @@ function EditorControlStrip(props: EditorControlStripProps) {
                             first
                             disabled={!props.configIsDiffering}
                             label='Undo'
-                            icon={ICONS.undo}
+                            icon={icons.undo}
                             onClick={props.revertState}
                         />
                         <ControlStripButton
                             disabled={!props.configIsDiffering}
                             label='Save'
-                            icon={ICONS.save}
+                            icon={icons.save}
                             onClick={props.syncState}
                         />
                         <ControlStripButton
                             last
                             label='Publish'
-                            icon={ICONS.open_in_browser}
+                            icon={icons.open_in_browser}
                             onClick={publishNow}
                         />
                     </React.Fragment>

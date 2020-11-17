@@ -1,10 +1,12 @@
 import React from 'react';
-
-import {ICONS} from '../../assets/icons/icons';
-import dispatcher from '../../utilities/dispatcher';
 import {connect} from 'react-redux';
-import stateTypes from '../../utilities/types/stateTypes';
+
+import stateTypes from 'utilities/types/stateTypes';
+import dispatcher from 'utilities/dispatcher';
+
 import NavbarContent from './components/NavbarContent';
+
+import icons from 'assets/icons/icons';
 
 interface MobileNavbarProps {
     modalOpen: boolean;
@@ -35,7 +37,7 @@ function MobileNavbar(props: MobileNavbarProps) {
                         : 'opacity-0 pointer-events-none')
                 }
             >
-                {ICONS.close}
+                {icons.close}
             </div>
             <div
                 onClick={props.openModal}
@@ -44,7 +46,7 @@ function MobileNavbar(props: MobileNavbarProps) {
                     'text-gray-900 pointer-events-auto'
                 }
             >
-                {ICONS.menu}
+                {icons.menu}
             </div>
             <div
                 className={

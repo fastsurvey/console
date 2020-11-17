@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {ICONS} from '../../assets/icons/icons';
-import stateTypes from '../../utilities/types/stateTypes';
+
+import stateTypes from 'utilities/types/stateTypes';
+
+import icons from 'assets/icons/icons';
 
 interface MessageComponentProps {
     message: stateTypes.Message;
@@ -58,7 +60,7 @@ function MessageComponent(props: MessageComponentProps) {
             <div className='text-lg'>{props.message.text}</div>
             <div className='flex-grow' />
             <div className='w-10 h-10 p-1 cursor-pointer' onClick={handleClose}>
-                {ICONS.close}
+                {icons.close}
             </div>
         </div>
     );
