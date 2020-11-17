@@ -1,6 +1,6 @@
 import React from 'react';
 
-import formOptions from 'utilities/constants/formOptions';
+import formOptions from 'utilities/constants/form-options';
 
 import {DropDown} from 'components';
 

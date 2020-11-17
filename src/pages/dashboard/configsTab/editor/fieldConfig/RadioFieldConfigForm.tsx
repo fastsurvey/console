@@ -1,8 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {animateScroll} from 'react-scroll';
 
-import configTypes from 'utilities/types/configTypes';
-import templates from 'utilities/constants/templates';
+import {configTypes, templates} from 'utilities';
 
 import {TextInput, TriggerIcon} from 'components';
 

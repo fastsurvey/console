@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import icons from 'assets/icons/icons';
+import {icons} from 'assets';
 
 interface DropDownProps {
     options: {label: string; value: number}[];

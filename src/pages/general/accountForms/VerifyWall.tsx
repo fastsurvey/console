@@ -2,9 +2,7 @@ import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import assert from 'assert';
 
-import stateTypes from 'utilities/types/stateTypes';
-import dispatcher from 'utilities/dispatcher';
-import {authPostRequest} from 'utilities/axiosClients';
+import {stateTypes, dispatcher, authPostRequest} from 'utilities';
 
 import {TextLink, ButtonLink} from 'components';
 

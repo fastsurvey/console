@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-import configTypes from 'utilities/types/configTypes';
+import {configTypes} from 'utilities';
 
 import {TextArea, TextInput} from 'components';
 

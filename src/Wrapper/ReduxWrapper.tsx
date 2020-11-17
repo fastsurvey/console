@@ -3,11 +3,13 @@ import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import Cookies from 'js-cookie';
 
-import stateTypes from 'utilities/types/stateTypes';
-import configTypes from 'utilities/types/configTypes';
-import dispatcher from 'utilities/dispatcher';
-import {generateValidOAuthToken} from 'utilities/jwtEncryption';
-import {fetchSurveys} from 'utilities/surveyCommunication';
+import {
+    stateTypes,
+    configTypes,
+    dispatcher,
+    fetchSurveys,
+    generateValidOAuthToken,
+} from 'utilities';
 
 function storeReducer(
     state = {

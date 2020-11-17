@@ -3,11 +3,10 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import assert from 'assert';
 
-import stateTypes from 'utilities/types/stateTypes';
+import stateTypes from 'utilities/types/state-types';
 import dispatcher from 'utilities/dispatcher';
 
-import Button from 'components/buttons/Button';
-import ButtonRow from 'components/buttons/ButtonRow';
+import {Button, ButtonRow} from 'components';
 
 interface ButtonLinkProps {
     children: string;

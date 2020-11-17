@@ -2,9 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 
-import stateTypes from 'utilities/types/stateTypes';
-import configTypes from 'utilities/types/configTypes';
-import dispatcher from 'utilities/dispatcher';
+import {stateTypes, configTypes, dispatcher} from 'utilities';
 
 import ControlStrip from './control-strip/control-strip';
 import GeneralConfig from './generalConfig/GeneralConfig';

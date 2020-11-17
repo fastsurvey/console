@@ -1,10 +1,7 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 
-import dispatcher from 'utilities/dispatcher';
-import {fetchSurveys} from 'utilities/surveyCommunication';
-import configTypes from 'utilities/types/configTypes';
-import stateTypes from 'utilities/types/stateTypes';
+import {stateTypes, configTypes, dispatcher, fetchSurveys} from 'utilities';
 
 import {MobileNavbar, RegularNavbar} from 'components';
 

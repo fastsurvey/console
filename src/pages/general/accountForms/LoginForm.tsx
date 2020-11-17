@@ -1,9 +1,7 @@
 import React, {useRef, useState} from 'react';
 import {connect} from 'react-redux';
 
-import stateTypes from 'utilities/types/stateTypes';
-import {authPostRequest} from 'utilities/axiosClients';
-import dispatcher from 'utilities/dispatcher';
+import {stateTypes, dispatcher, authPostRequest} from 'utilities';
 
 import {TextInput, TextLink, ButtonLink} from 'components';
 

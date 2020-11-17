@@ -1,9 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import configTypes from 'utilities/types/configTypes';
-import stateTypes from 'utilities/types/stateTypes';
-import dispatcher from 'utilities/dispatcher';
+import {stateTypes, configTypes, dispatcher} from 'utilities';
 
 import VisualDraftStrip from './visual-draft-strip';
 import VisualPublishedStrip from './visual-published-strip';

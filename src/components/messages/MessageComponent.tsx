@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 
-import stateTypes from 'utilities/types/stateTypes';
+import stateTypes from 'utilities/types/state-types';
 
-import icons from 'assets/icons/icons';
+import {icons} from 'assets';
 
 interface MessageComponentProps {
     message: stateTypes.Message;

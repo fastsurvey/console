@@ -2,24 +2,25 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Switch, Route, BrowserRouter, Redirect} from 'react-router-dom';
 
-import stateTypes from '../utilities/types/stateTypes';
+import {stateTypes} from 'utilities';
 
-import LoginForm from '../pages/general/accountForms/LoginForm';
-import RegisterForm from '../pages/general/accountForms/RegisterForm';
-import RequestPasswordForm from '../pages/general/accountForms/RequestPasswordForm';
-import SetPasswordForm from '../pages/general/accountForms/SetPasswordForm';
-import VerifyForm from '../pages/general/accountForms/VerifyForm';
-import VerifyWall from '../pages/general/accountForms/VerifyWall';
-import FormPage from '../pages/general/FormPage';
-import NotFoundPage from '../pages/general/NotFoundPage';
-import DashBoardPage from '../pages/dashboard/DashboardPage';
+import LoginForm from 'pages/general/accountForms/LoginForm';
+import RegisterForm from 'pages/general/accountForms/RegisterForm';
+import RequestPasswordForm from 'pages/general/accountForms/RequestPasswordForm';
+import SetPasswordForm from 'pages/general/accountForms/SetPasswordForm';
+import VerifyForm from 'pages/general/accountForms/VerifyForm';
+import VerifyWall from 'pages/general/accountForms/VerifyWall';
+import FormPage from 'pages/general/FormPage';
+import NotFoundPage from 'pages/general/NotFoundPage';
+import DashBoardPage from 'pages/dashboard/DashboardPage';
 
-import LoginImage from '../assets/images/secure.svg';
-import VerifyImage from '../assets/images/letter.svg';
-import LoaderOverlay from '../components/overlays/LoaderOverlay';
-import MessageQueue from '../components/messages/MessageQueue';
-import ConfigList from '../pages/dashboard/configsTab/list/ConfigList';
-import ConfigEditorWrapper from '../pages/dashboard/configsTab/editor/ConfigEditorWrapper';
+import LoginImage from 'assets/images/secure.svg';
+import VerifyImage from 'assets/images/letter.svg';
+
+import LoaderOverlay from 'components/overlays/LoaderOverlay';
+import MessageQueue from 'components/messages/MessageQueue';
+import ConfigList from 'pages/dashboard/configsTab/list/ConfigList';
+import ConfigEditorWrapper from 'pages/dashboard/configsTab/editor/ConfigEditorWrapper';
 
 interface RouterProps {
     loggingIn: boolean;

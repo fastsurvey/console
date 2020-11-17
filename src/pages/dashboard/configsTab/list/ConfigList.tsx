@@ -1,8 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import configTypes from 'utilities/types/configTypes';
-import stateTypes from 'utilities/types/stateTypes';
+import {stateTypes, configTypes} from 'utilities';
 
 import {ButtonLink} from 'components';
 

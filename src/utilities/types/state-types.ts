@@ -1,6 +1,6 @@
-import configTypes from './configTypes';
+import {configTypes} from './config-types';
 
-namespace stateTypes {
+export declare namespace stateTypes {
     export interface ReduxState {
         loggingIn: boolean;
         loggedIn: boolean;

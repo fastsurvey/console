@@ -1,4 +1,4 @@
-namespace configTypes {
+export declare namespace configTypes {
     export interface SurveyConfig {
         local_id: number;
         admin_name: string;
@@ -70,5 +70,3 @@ namespace configTypes {
         hint: string;
     }
 }
-
-export default configTypes;

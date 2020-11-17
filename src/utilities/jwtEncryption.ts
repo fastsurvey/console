@@ -1,10 +1,9 @@
 import assert from 'assert';
 import Cookies from 'js-cookie';
 
-import stateTypes from 'utilities/types/stateTypes';
-import {authPostRequest} from 'utilities/axiosClients';
+import {stateTypes, authPostRequest} from 'utilities';
 
-export async function generateValidOAuthToken(
+async function generateValidOAuthToken(
     logIn: (
         oauth2_token: stateTypes.OAuth2Token,
         account: stateTypes.Account,
@@ -54,3 +53,5 @@ export async function generateValidOAuthToken(
 // https://github.com/auth0/node-jsonwebtoken/issues/668
 // I'll postpone this - but it would be way more elegant
 // I mean that is the whole point of oauth2_token isn't it!?
+
+export default generateValidOAuthToken;

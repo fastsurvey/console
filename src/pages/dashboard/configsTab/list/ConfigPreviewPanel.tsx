@@ -2,9 +2,7 @@ import React from 'react';
 import {useHistory, useLocation} from 'react-router-dom';
 import {connect} from 'react-redux';
 
-import configTypes from 'utilities/types/configTypes';
-import stateTypes from 'utilities/types/stateTypes';
-import dispatcher from 'utilities/dispatcher';
+import {stateTypes, configTypes, dispatcher} from 'utilities';
 
 import icons from 'assets/icons/icons';
 

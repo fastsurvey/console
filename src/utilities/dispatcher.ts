@@ -1,5 +1,4 @@
-import configTypes from 'utilities/types/configTypes';
-import stateTypes from 'utilities/types/stateTypes';
+import {stateTypes, configTypes} from 'utilities';
 
 const dispatcher = {
     logIn: (dispatch: any) => (

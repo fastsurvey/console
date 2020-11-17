@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-import configTypes from 'utilities/types/configTypes';
-import formOptions from 'utilities/constants/formOptions';
+import {configTypes, formOptions} from 'utilities';
 
 import {DropDown, TextInput} from 'components';
 

@@ -16,7 +16,7 @@ export {default as MessageComponent} from './messages/MessageComponent';
 export {default as MessageQueue} from './messages/MessageQueue';
 
 export {default as MobileNavbar} from './navbar/MobileNavbar';
-export {default as RegularNavbar} from './navbar/MobileNavbar';
+export {default as RegularNavbar} from './navbar/RegularNavbar';
 
 export {default as LoaderOverlay} from './overlays/LoaderOverlay';
 

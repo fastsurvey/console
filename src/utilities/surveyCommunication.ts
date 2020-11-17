@@ -1,8 +1,6 @@
-import {surveyGetRequest} from 'utilities/axiosClients';
-import configTypes from 'utilities/types/configTypes';
-import stateTypes from 'utilities/types/stateTypes';
+import {stateTypes, configTypes, surveyGetRequest} from 'utilities';
 
-export async function fetchSurveys(
+async function fetchSurveys(
     oauth2_token: stateTypes.OAuth2Token,
     addConfigs: (configs: configTypes.SurveyConfig[]) => void,
 ) {
@@ -40,3 +38,5 @@ export async function fetchSurveys(
             // TODO: If 401 -> refresh token
         });
 }
+
+export default fetchSurveys;

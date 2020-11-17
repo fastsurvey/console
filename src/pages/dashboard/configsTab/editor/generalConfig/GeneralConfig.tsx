@@ -1,9 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import configTypes from 'utilities/types/configTypes';
-import stateTypes from 'utilities/types/stateTypes';
-import formOptions from 'utilities/constants/formOptions';
+import {stateTypes, configTypes, formOptions} from 'utilities';
 
 import {DropDown, TextArea, TextInput} from 'components';
 

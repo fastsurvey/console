@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import environment from 'utilities/constants/environment';
-import stateTypes from 'utilities/types/stateTypes';
+import {stateTypes} from 'utilities';
 
 export function authPostRequest(url: string, data: {[key: string]: any}) {
     let formData = new FormData();

@@ -2,12 +2,12 @@ import React from 'react';
 import {useHistory, useLocation} from 'react-router-dom';
 import {connect} from 'react-redux';
 
-import stateTypes from 'utilities/types/stateTypes';
+import stateTypes from 'utilities/types/state-types';
 import dispatcher from 'utilities/dispatcher';
 
 import NavbarButton from './NavbarButton';
 import NavbarLogo from './NavbarLogo';
-import icons from 'assets/icons/icons';
+import {icons} from 'assets';
 
 interface NavbarContentProps {
     logOut(): void;

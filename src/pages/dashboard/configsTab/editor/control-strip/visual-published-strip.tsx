@@ -1,6 +1,6 @@
 import React from 'react';
 
-import configTypes from 'utilities/types/configTypes';
+import {configTypes} from 'utilities';
 
 import ControlStripUI from './visual-strip';
 import ControlStripButton from './visual-button';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import configTypes from 'utilities/types/configTypes';
+import {configTypes} from 'utilities';
 
 import {TextInput} from 'components';
 

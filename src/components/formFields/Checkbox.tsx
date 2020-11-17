@@ -1,5 +1,5 @@
 import React from 'react';
-import icons from 'assets/icons/icons';
+import {icons} from 'assets';
 
 interface CheckboxProps {
     checked: boolean;

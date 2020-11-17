@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import assert from 'assert';
 
-import stateTypes from 'utilities/types/stateTypes';
+import stateTypes from 'utilities/types/state-types';
 import dispatcher from 'utilities/dispatcher';
 
 interface TextLinkProps {
