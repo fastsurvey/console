@@ -3,8 +3,7 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import assert from 'assert';
 
-import stateTypes from 'utilities/types/state-types';
-import dispatcher from 'utilities/dispatcher';
+import {dispatcher, stateTypes} from 'utilities';
 
 import {Button, ButtonRow} from 'components';
 

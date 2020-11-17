@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import stateTypes from 'utilities/types/state-types';
+import {stateTypes} from 'utilities';
 
 import {LogoBanner} from 'components';
 

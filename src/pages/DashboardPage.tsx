@@ -5,7 +5,7 @@ import {stateTypes, configTypes, dispatcher, fetchSurveys} from 'utilities';
 
 import {MobileNavbar, RegularNavbar} from 'components';
 
-import './DashboardPage.scss';
+import 'styles/DashboardPage.scss';
 
 interface DashBoardPageProps {
     children: React.ReactNode;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import FastSurveyIcon from 'assets/branding/rocket-light.svg';
+import {RocketLogoLight} from 'assets';
 
 function LogoComponent() {
     return (
@@ -10,7 +10,7 @@ function LogoComponent() {
             }
         >
             <div className={'h-12 w-12 mr-3'}>
-                <img src={FastSurveyIcon} alt='FastSurvey' />
+                <img src={RocketLogoLight} alt='FastSurvey' />
             </div>
             <div className={'text-white text-2xl'}>FastSurvey</div>
         </div>

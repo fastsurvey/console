@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-import FastSurveyIcon from 'assets/branding/rocket.svg';
+import {RocketLogo} from 'assets';
 
 interface LogoBannerProps {
     slim?: boolean;
@@ -17,7 +17,7 @@ function LogoBanner(props: LogoBannerProps) {
                     }
                 >
                     <div className={'h-12 w-12 mr-3 no-selection'}>
-                        <img src={FastSurveyIcon} alt='FastSurvey' />
+                        <img src={RocketLogo} alt='FastSurvey' />
                     </div>
                     <div className={'text-gray-700 text-2xl no-selection'}>
                         FastSurvey{' '}

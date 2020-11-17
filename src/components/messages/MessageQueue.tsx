@@ -1,8 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import dispatcher from 'utilities/dispatcher';
-import stateTypes from 'utilities/types/state-types';
+import {dispatcher, stateTypes} from 'utilities';
 
 import MessageComponent from './MessageComponent';
 

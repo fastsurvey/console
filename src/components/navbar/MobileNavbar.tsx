@@ -1,8 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import stateTypes from 'utilities/types/state-types';
-import dispatcher from 'utilities/dispatcher';
+import {stateTypes, dispatcher} from 'utilities';
 
 import NavbarContent from './components/NavbarContent';
 
