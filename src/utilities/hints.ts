@@ -34,6 +34,11 @@ const hints = {
         text: '<= 2000',
         fulfilled: validators.maxChars(fieldConfig.max_chars),
     }),
+    newOption: (newOption: string) => ({
+        text: 'Press <Enter> to add',
+        fulfilled: newOption !== '',
+        hideDot: true,
+    }),
 };
 
 export default hints;
