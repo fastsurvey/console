@@ -7,6 +7,7 @@ export {default as environment} from './constants/environment';
 export {default as formOptions} from './constants/form-options';
 export {default as templates} from './constants/templates';
 
+export {default as formatters} from './formatters';
 export {default as dispatchers} from './dispatchers';
 export {default as validators} from './validators';
 export {default as hints} from './hints';

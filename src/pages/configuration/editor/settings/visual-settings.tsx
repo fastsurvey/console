@@ -1,5 +1,5 @@
 import React from 'react';
-import {configTypes, formOptions, hints} from 'utilities';
+import {configTypes, formatters, formOptions, hints} from 'utilities';
 import {DropDown, TextArea, Label, VisualTextInputRow} from 'components';
 import VisualDatePickerRow from './visual-date-picker-row';
 
@@ -74,8 +74,7 @@ const VisualSettings = (props: VisualSettingsProps) => (
                     label='Submission Limit'
                     value={props.config.submission_limit.toString()}
                     onChange={(newValue: string) => ({
-                        submission_limit:
-                            newValue.length > 0 ? parseInt(newValue) : 0,
+                        submission_limit: formatters.atoi(newValue),
                     })}
                     hint={hints.submissionLimit(props.config)}
                 />

@@ -1,5 +1,5 @@
 import React from 'react';
-import {configTypes, hints} from 'utilities';
+import {configTypes, formatters, hints} from 'utilities';
 import {VisualTextInputRow} from 'components';
 
 interface VisualTextSettingsProps {
@@ -22,7 +22,7 @@ function VisualTextSettings(props: VisualTextSettingsProps) {
                 label='Min. Characters'
                 value={props.fieldConfig.min_chars.toString()}
                 onChange={(newValue: string) => ({
-                    min_chars: newValue.length > 0 ? parseInt(newValue) : 0,
+                    min_chars: formatters.atoi(newValue),
                 })}
                 hint={hints.minChars(props.fieldConfig)}
             />
@@ -31,7 +31,7 @@ function VisualTextSettings(props: VisualTextSettingsProps) {
                 label='Max. Characters'
                 value={props.fieldConfig.max_chars.toString()}
                 onChange={(newValue: string) => ({
-                    max_chars: newValue.length > 0 ? parseInt(newValue) : 0,
+                    max_chars: formatters.atoi(newValue),
                 })}
                 hint={hints.maxChars(props.fieldConfig)}
             />
