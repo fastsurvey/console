@@ -1,6 +1,21 @@
 import {configTypes} from 'utilities';
 
 const validators = {
+    fieldOptions: (config: configTypes.SurveyConfig) =>
+        config.fields.filter(
+            (fieldConfig: configTypes.SurveyField) =>
+                (fieldConfig.type === 'Radio' ||
+                    fieldConfig.type === 'Selection') &&
+                fieldConfig.fields.length < 2,
+        ).length === 0,
+
+    authMode: (config: configTypes.SurveyConfig) =>
+        config.mode !== 1 ||
+        config.fields.filter((fieldConfig) => fieldConfig.type === 'Email')
+            .length === 1,
+
+    timing: (config: configTypes.SurveyConfig) => config.start <= config.end,
+
     title: (title: string) => 1 <= title.length && title.length <= 120,
 
     surveyName: (
