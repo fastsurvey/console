@@ -39,6 +39,14 @@ const hints = {
         fulfilled: newOption !== '',
         hideDot: true,
     }),
+    minSelect: (fieldConfig: configTypes.SelectionField) => ({
+        text: '<= max select.',
+        fulfilled: validators.minSelect(fieldConfig),
+    }),
+    maxSelect: (fieldConfig: configTypes.SelectionField) => ({
+        text: `<= ${fieldConfig.fields.length}`,
+        fulfilled: validators.maxSelect(fieldConfig),
+    }),
 };
 
 export default hints;

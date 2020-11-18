@@ -1,8 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {animateScroll} from 'react-scroll';
-import {configTypes, hints, templates, validators} from 'utilities';
-import {icons} from 'assets';
-import {TextInput, TriggerIcon} from 'components';
+import {configTypes, templates} from 'utilities';
 import VisualFieldOptionsList from './visual-field-options-list';
 
 interface FieldOptionsListProps {
