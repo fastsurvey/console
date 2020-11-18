@@ -1,6 +1,6 @@
 import React from 'react';
 import {configTypes, validators} from 'utilities';
-import FieldOptionsList from '../field-option-list/field-option-list';
+import FieldOptionsList from '../field-options-list/field-options-list';
 
 interface RadioFieldConfigFormProps {
     fieldConfig: configTypes.RadioField;
