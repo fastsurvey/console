@@ -47,6 +47,14 @@ const hints = {
         text: `<= ${fieldConfig.fields.length}`,
         fulfilled: validators.maxSelect(fieldConfig),
     }),
+    password: (password: string) => ({
+        text: '> 7 characters',
+        fulfilled: password.length > 7,
+    }),
+    passwordConfirmation: (password: string, passwordConfirmation: string) => ({
+        text: 'passwords have to match',
+        fulfilled: password.length > 7 && password === passwordConfirmation,
+    }),
 };
 
 export default hints;
