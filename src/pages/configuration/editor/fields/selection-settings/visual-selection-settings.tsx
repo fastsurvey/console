@@ -1,6 +1,6 @@
 import React from 'react';
 import {configTypes, formatters, hints} from 'utilities';
-import {TextInput, VisualTextInputRow} from 'components';
+import {VisualTextInputRow} from 'components';
 import FieldOptionsList from '../field-options-list/field-options-list';
 
 interface VisualSelectionSettingsProps {

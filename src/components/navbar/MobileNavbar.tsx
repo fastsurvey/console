@@ -1,11 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
-
 import {stateTypes, dispatchers} from 'utilities';
-
-import NavbarContent from './components/NavbarContent';
-
 import {icons} from 'assets';
+import NavbarContent from './navbar-content/navbar-content';
 
 interface MobileNavbarProps {
     modalOpen: boolean;
