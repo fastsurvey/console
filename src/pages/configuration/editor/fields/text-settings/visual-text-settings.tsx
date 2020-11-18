@@ -1,33 +1,13 @@
 import React from 'react';
-
-import {configTypes} from 'utilities';
-
+import {configTypes, hints} from 'utilities';
 import {TextInput} from 'components';
 
-interface TextFieldConfigFormProps {
+interface VisualTextSettingsProps {
     fieldConfig: configTypes.TextField;
-    setFieldConfig(
-        fieldConfig: configTypes.TextField,
-        subValidation: (fieldConfig: configTypes.TextField) => boolean,
-    ): void;
+    updateFieldConfig(fieldConfig: configTypes.TextField): void;
     disabled: boolean;
 }
-
-function TextFieldConfigForm(props: TextFieldConfigFormProps) {
-    const minCharsIsValid = (min_chars: number) =>
-        0 <= min_chars && min_chars <= props.fieldConfig.max_chars;
-
-    const maxCharsIsValid = (max_chars: number) => max_chars <= 2000;
-
-    function updateFieldConfig(newFieldConfig: configTypes.TextField) {
-        props.setFieldConfig(
-            newFieldConfig,
-            (newFieldConfig: configTypes.TextField) =>
-                minCharsIsValid(newFieldConfig.min_chars) &&
-                maxCharsIsValid(newFieldConfig.max_chars),
-        );
-    }
-
+function VisualTextSettings(props: VisualTextSettingsProps) {
     const commonProps = {
         disabled: props.disabled,
         flat: true,
@@ -44,16 +24,13 @@ function TextFieldConfigForm(props: TextFieldConfigFormProps) {
                     {...commonProps}
                     value={props.fieldConfig.min_chars.toString()}
                     onChange={(newValue: string) =>
-                        updateFieldConfig({
+                        props.updateFieldConfig({
                             ...props.fieldConfig,
                             min_chars:
                                 newValue.length > 0 ? parseInt(newValue) : 0,
                         })
                     }
-                    hint={{
-                        text: '<= max char.',
-                        fulfilled: minCharsIsValid(props.fieldConfig.min_chars),
-                    }}
+                    hint={hints.minChars(props.fieldConfig)}
                 />
             </div>
             <div className='flex flex-row items-start mr-8'>
@@ -64,20 +41,17 @@ function TextFieldConfigForm(props: TextFieldConfigFormProps) {
                     {...commonProps}
                     value={props.fieldConfig.max_chars.toString()}
                     onChange={(newValue: string) =>
-                        updateFieldConfig({
+                        props.updateFieldConfig({
                             ...props.fieldConfig,
                             max_chars:
                                 newValue.length > 0 ? parseInt(newValue) : 0,
                         })
                     }
-                    hint={{
-                        text: '<= 2000',
-                        fulfilled: maxCharsIsValid(props.fieldConfig.max_chars),
-                    }}
+                    hint={hints.maxChars(props.fieldConfig)}
                 />
             </div>
         </div>
     );
 }
 
-export default TextFieldConfigForm;
+export default VisualTextSettings;

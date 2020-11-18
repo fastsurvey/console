@@ -24,6 +24,9 @@ const validators = {
 
     regex: (regex: string) => regex.length <= 250,
     hint: (hint: string) => hint.length <= 120,
+    minChars: (fieldConfig: configTypes.TextField) => (min_chars: number) =>
+        0 <= min_chars && min_chars <= fieldConfig.max_chars,
+    maxChars: (max_chars: number) => max_chars <= 2000,
 };
 
 export default validators;

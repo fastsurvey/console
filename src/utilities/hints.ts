@@ -26,6 +26,14 @@ const hints = {
         text: `<= 120 Characters (${120 - fieldConfig.hint.length} left)`,
         fulfilled: validators.hint(fieldConfig.hint),
     }),
+    minChars: (fieldConfig: configTypes.TextField) => ({
+        text: '<= max char.',
+        fulfilled: validators.minChars(fieldConfig)(fieldConfig.min_chars),
+    }),
+    maxChars: (fieldConfig: configTypes.TextField) => ({
+        text: '<= 2000',
+        fulfilled: validators.maxChars(fieldConfig.max_chars),
+    }),
 };
 
 export default hints;

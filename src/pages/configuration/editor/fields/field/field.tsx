@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {validators, configTypes} from 'utilities';
 
 import VisualField from './visual-field';
-import TextFieldConfigForm from '../TextFieldConfigForm';
+import TextSettings from '../text-settings/text-settings';
 import OptionFieldConfigForm from '../OptionFieldConfigForm';
 import RadioFieldConfigForm from '../RadioFieldConfigForm';
 import SelectionFieldConfigForm from '../SelectionFieldConfigForm';
@@ -55,7 +55,7 @@ function Field(props: FieldProps) {
         case 'Text':
             FieldSettings = (
                 // @ts-ignore
-                <TextFieldConfigForm
+                <TextSettings
                     {...commonFieldProps}
                     fieldConfig={props.fieldConfig}
                 />
