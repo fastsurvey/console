@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
 import {connect} from 'react-redux';
 import {stateTypes, dispatchers, authPostRequest} from 'utilities';
-import VisualSetPassword from './visual-set-password';
+import VisualVerifyForm from './visual-verify-form';
 
 interface Props {
     logIn(
@@ -11,41 +11,38 @@ interface Props {
     openMessage(message: stateTypes.Message): void;
     closeAllMessages(): void;
 }
-function SetPassword(props: Props) {
+function VerifyForm(props: Props) {
     const [password, setPassword] = useState('');
-    const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const [success, setSuccess] = useState(false);
     const [submitting, setSubmitting] = useState(false);
 
     function disabled() {
-        return password.length < 8 || password !== passwordConfirmation;
+        return password.length < 8;
     }
 
     const token = new URLSearchParams(window.location.search).get('token');
+    const input1Ref = useRef<HTMLInputElement>(null);
 
-    const input2Ref = useRef<HTMLInputElement>(null);
-
-    function handleSubmit() {
-        input2Ref.current?.blur();
+    function handleVerify() {
+        input1Ref.current?.blur();
         if (!disabled() && token !== null) {
             setSubmitting(true);
-            authPostRequest('/set-new-password', {
-                password,
-                password_token: token,
-            })
+            authPostRequest('/verify', {password, email_token: token})
                 .then((response) => {
-                    setSubmitting(false);
+                    setTimeout(() => {
+                        setSuccess(true);
+                        setSubmitting(false);
+                    }, 50);
                     props.logIn(
                         response.data.oauth2_token,
                         response.data.account,
                     );
-                    setSuccess(true);
                 })
                 .catch((error) => {
                     setSubmitting(false);
                     if (error?.response?.status === 401) {
                         props.openMessage({
-                            text: 'Invalid Link',
+                            text: 'Invalid password or wrong link',
                             type: 'error',
                         });
                     } else {
@@ -60,19 +57,17 @@ function SetPassword(props: Props) {
     }
 
     return (
-        <VisualSetPassword
+        <VisualVerifyForm
             // @ts-ignore
-            ref={{input2Ref}}
+            ref={{input1Ref}}
             password={password}
             setPassword={setPassword}
-            passwordConfirmation={passwordConfirmation}
-            setPasswordConfirmation={setPasswordConfirmation}
             success={success}
             tokenExists={token !== null}
             disabled={disabled()}
             submitting={submitting}
-            handleSubmit={handleSubmit}
             closeAllMessages={props.closeAllMessages}
+            handleVerify={handleVerify}
         />
     );
 }
@@ -83,4 +78,4 @@ const mapDispatchToProps = (dispatch: any) => ({
     openMessage: dispatchers.openMessage(dispatch),
     closeAllMessages: dispatchers.closeAllMessages(dispatch),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(SetPassword);
+export default connect(mapStateToProps, mapDispatchToProps)(VerifyForm);
