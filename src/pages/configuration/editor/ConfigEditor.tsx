@@ -4,7 +4,7 @@ import {useHistory} from 'react-router-dom';
 import {stateTypes, configTypes, dispatchers} from 'utilities';
 
 import ControlStrip from './control-strip/control-strip';
-import GeneralConfig from './generalConfig/GeneralConfig';
+import Settings from './settings/settings';
 import FieldConfigForm from './fieldConfig/FieldConfigForm';
 
 interface ConfigEditorProps {
@@ -129,7 +129,7 @@ function ConfigEditor(props: ConfigEditorProps) {
                 className='flex flex-col items-center px-8 pb-64 no-selection'
                 style={{paddingTop: 'calc(6rem - 4px)'}}
             >
-                <GeneralConfig
+                <Settings
                     config={localConfig}
                     setConfig={setLocalConfig}
                     updateValidator={(newState: boolean) =>
