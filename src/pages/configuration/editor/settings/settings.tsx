@@ -36,7 +36,7 @@ function Settings(props: SettingsProps) {
             updateValidator={props.updateValidator}
             commonProps={{
                 updateConfig,
-                setConfig: props.setConfig,
+                disabled: !props.config.draft,
                 config: props.config,
             }}
         />

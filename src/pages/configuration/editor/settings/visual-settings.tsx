@@ -1,8 +1,7 @@
 import React from 'react';
 import {configTypes, formOptions, hints} from 'utilities';
-import {DropDown, TextArea, Label} from 'components';
-import VisualDatePickerRow from 'pages/configuration/editor/settings/visual-date-picker-row';
-import VisualTextInputRow from 'pages/configuration/editor/settings/visual-text-input-row';
+import {DropDown, TextArea, Label, VisualTextInputRow} from 'components';
+import VisualDatePickerRow from './visual-date-picker-row';
 
 interface VisualSettingsProps {
     config: configTypes.SurveyConfig;

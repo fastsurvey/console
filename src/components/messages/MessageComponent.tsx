@@ -1,14 +1,11 @@
 import React, {useEffect, useState} from 'react';
-
 import {stateTypes} from 'utilities';
-
 import {icons} from 'assets';
 
 interface MessageComponentProps {
     message: stateTypes.Message;
     close(): void;
 }
-
 function MessageComponent(props: MessageComponentProps) {
     const [size, setSize] = useState('h-0 py-0');
     const [delay, setDelay] = useState('delay-200');

@@ -29,7 +29,7 @@ const dispatchers = {
         }),
     closeMessage: (dispatch: any) => (text: string): void =>
         dispatch({
-            type: 'OPEN_MESSAGE',
+            type: 'CLOSE_MESSAGE',
             text,
         }),
     closeAllMessages: (dispatch: any) => (): void =>

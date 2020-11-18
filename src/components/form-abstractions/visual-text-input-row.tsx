@@ -3,22 +3,24 @@ import {Label, TextInput} from 'components';
 import {configTypes} from 'utilities';
 
 interface VisualTextInputRowProps {
-    config: configTypes.SurveyConfig;
+    config: configTypes.SurveyConfig | configTypes.SurveyField;
     label: string;
     value: string;
     hint: {text: string; fulfilled: boolean};
-    setConfig(config: configTypes.SurveyConfig): void;
-    updateConfig(config: configTypes.SurveyConfig): void;
+    updateConfig(
+        config: configTypes.SurveyConfig | configTypes.SurveyField,
+    ): void;
     onChange(newValue: string): any;
     className?: string;
-    wrapperClassname?: string;
+    wrapperClassName?: string;
     placeholder?: string;
+    disabled: boolean;
 }
 const VisualTextInputRow = (props: VisualTextInputRowProps) => (
     <div className={`flex flex-row items-start ${props.className}`}>
         <Label>{props.label}:</Label>
         <TextInput
-            disabled={!props.config.draft}
+            disabled={props.disabled}
             flat
             value={props.value}
             onChange={(newValue: string) => {
@@ -30,8 +32,8 @@ const VisualTextInputRow = (props: VisualTextInputRowProps) => (
             placeholder={props.placeholder}
             hint={props.hint}
             wrapperClassName={
-                props.wrapperClassname
-                    ? props.wrapperClassname
+                props.wrapperClassName
+                    ? props.wrapperClassName
                     : 'self-stretch flex-grow'
             }
         />
