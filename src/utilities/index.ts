@@ -9,6 +9,7 @@ export {default as templates} from './constants/templates';
 
 export {default as dispatchers} from './dispatchers';
 export {default as validators} from './validators';
+export {default as hints} from './hints';
 
 export {default as fetchSurveys} from './surveyCommunication';
 export {default as generateValidOAuthToken} from './jwtEncryption';

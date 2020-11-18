@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {useHistory} from 'react-router-dom';
-
 import {stateTypes, configTypes, dispatchers} from 'utilities';
 
 import ControlStrip from './control-strip/control-strip';

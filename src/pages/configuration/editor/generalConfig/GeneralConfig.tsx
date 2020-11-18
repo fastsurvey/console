@@ -1,7 +1,15 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {stateTypes, configTypes, formOptions, validators} from 'utilities';
-import {DropDown, TextArea, TextInput, DatePicker} from 'components';
+import {
+    stateTypes,
+    configTypes,
+    formOptions,
+    validators,
+    hints,
+} from 'utilities';
+import {DropDown, TextArea, TextInput, DatePicker, Label} from 'components';
+import VisualDatePickerRow from 'pages/configuration/editor/generalConfig/visual-date-picker-row';
+import VisualTextInputRow from 'pages/configuration/editor/generalConfig/visual-text-input-row';
 
 interface GeneralConfigProps {
     configs: configTypes.SurveyConfig[] | undefined;
@@ -32,66 +40,36 @@ function GeneralConfig(props: GeneralConfigProps) {
         props.setConfig(newConfig);
     }
 
+    const commonRowProps = {
+        updateConfig,
+        setConfig: props.setConfig,
+        config: props.config,
+    };
+
     return (
         <div className='flex flex-col w-full min-h-full pt-4 pb-4 mb-8 border-b-4 border-gray-500'>
             <div className='flex flex-row mb-4'>
-                <div className='flex flex-row items-start w-1/2 pr-4'>
-                    <div className='h-12 mr-3 text-xl font-weight-600 leading-12'>
-                        Title:
-                    </div>
-                    <TextInput
-                        {...commonProps}
-                        flat
-                        value={props.config.title}
-                        onChange={(newValue: string) => {
-                            updateConfig({
-                                ...props.config,
-                                ...{title: newValue},
-                            });
-                        }}
-                        placeholder='The title of your survey'
-                        hint={{
-                            text:
-                                'Not empty, max. 120 characters ' +
-                                `(${120 - props.config.title.length} left)`,
-                            fulfilled: titleIsValid(props.config.title),
-                        }}
-                        wrapperClassName='self-stretch flex-grow'
-                    />
-                </div>
-                <div className='flex flex-row items-start w-1/2 pl-4'>
-                    <div className='h-12 mr-3 text-xl font-weight-600 leading-12'>
-                        Identifier:
-                    </div>
-                    <TextInput
-                        {...commonProps}
-                        flat
-                        value={props.config.survey_name}
-                        onChange={(newValue: string) => {
-                            updateConfig({
-                                ...props.config,
-                                ...{survey_name: newValue},
-                            });
-                        }}
-                        placeholder='URL conform identifier'
-                        hint={{
-                            text:
-                                'URL-safe, unique, 3-120 ' +
-                                `characters (${
-                                    120 - props.config.survey_name.length
-                                } left)`,
-                            fulfilled: surveyNameIsValid(
-                                props.config.survey_name,
-                            ),
-                        }}
-                        wrapperClassName='self-stretch flex-grow'
-                    />
-                </div>
+                <VisualTextInputRow
+                    {...commonRowProps}
+                    className='w-1/2 pr-4'
+                    label='Title'
+                    placeholder='The title of your survey'
+                    value={props.config.title}
+                    onChange={(newValue: string) => ({title: newValue})}
+                    hint={hints.title(props.config.title)}
+                />
+                <VisualTextInputRow
+                    {...commonRowProps}
+                    className='w-1/2 pl-4'
+                    label='Identifier'
+                    placeholder='URL conform identifier'
+                    value={props.config.survey_name}
+                    onChange={(newValue: string) => ({survey_name: newValue})}
+                    hint={hints.surveyName(props.config, surveyNameIsValid)}
+                />
             </div>
             <div className='flex flex-row items-start w-full mb-4'>
-                <div className='h-12 mr-3 text-xl font-weight-600 leading-12'>
-                    Description:
-                </div>
+                <Label>Description:</Label>
                 <TextArea
                     {...commonProps}
                     flat
@@ -110,9 +88,7 @@ function GeneralConfig(props: GeneralConfigProps) {
             <div className='flex flex-row w-full mb-4'>
                 <div className='flex flex-col'>
                     <div className='flex flex-row mb-4'>
-                        <div className='h-12 mr-4 text-xl text-right leading-12 font-weight-600'>
-                            Authentication:
-                        </div>
+                        <Label>Authentication:</Label>
                         <div className='w-56 mr-2'>
                             <DropDown
                                 {...commonProps}
@@ -127,67 +103,34 @@ function GeneralConfig(props: GeneralConfigProps) {
                             />
                         </div>
                     </div>
-                    <div className='flex flex-row items-start'>
-                        <div className='h-12 mr-3 text-xl font-weight-600 leading-12'>
-                            Submission Limit:
-                        </div>
-                        <TextInput
-                            {...commonProps}
-                            flat
-                            value={props.config.submission_limit.toString()}
-                            onChange={(newValue: string) => {
-                                updateConfig({
-                                    ...props.config,
-                                    ...{
-                                        submission_limit:
-                                            newValue.length > 0
-                                                ? parseInt(newValue)
-                                                : 0,
-                                    },
-                                });
-                            }}
-                            wrapperClassName='w-32'
-                            hint={{
-                                text: '1 - 10.000',
-                                fulfilled: submissionLimitIsValid(
-                                    props.config.submission_limit,
-                                ),
-                            }}
-                        />
-                    </div>
+                    <VisualTextInputRow
+                        {...commonRowProps}
+                        wrapperClassname='w-32'
+                        label='Submission Limit'
+                        value={props.config.submission_limit.toString()}
+                        onChange={(newValue: string) => ({
+                            submission_limit:
+                                newValue.length > 0 ? parseInt(newValue) : 0,
+                        })}
+                        hint={hints.submissionLimit(props.config)}
+                    />
                 </div>
                 <div className='self-stretch flex-grow' />
                 <div className='flex flex-col'>
-                    <div className='flex flex-row items-center justify-center w-full mb-4'>
-                        <div className='h-12 mr-4 text-xl text-right w-14 leading-12 font-weight-600'>
-                            Start:
-                        </div>
-                        <DatePicker
-                            {...commonProps}
-                            timestamp={props.config.start}
-                            setNewTimestamp={(timestamp: number) => {
-                                props.setConfig({
-                                    ...props.config,
-                                    ...{start: timestamp},
-                                });
-                            }}
-                        />
-                    </div>
-                    <div className='flex flex-row items-center justify-center w-full'>
-                        <div className='h-12 mr-4 text-xl text-right w-14 leading-12 font-weight-600'>
-                            End:
-                        </div>
-                        <DatePicker
-                            {...commonProps}
-                            timestamp={props.config.end}
-                            setNewTimestamp={(timestamp: number) => {
-                                props.setConfig({
-                                    ...props.config,
-                                    ...{end: timestamp},
-                                });
-                            }}
-                        />
-                    </div>
+                    <VisualDatePickerRow
+                        label='Start'
+                        config={props.config}
+                        setConfig={props.setConfig}
+                        timestamp={props.config.start}
+                        onChange={(timestamp: number) => ({start: timestamp})}
+                    />
+                    <VisualDatePickerRow
+                        label='End'
+                        config={props.config}
+                        setConfig={props.setConfig}
+                        timestamp={props.config.end}
+                        onChange={(timestamp: number) => ({end: timestamp})}
+                    />
                 </div>
             </div>
         </div>
