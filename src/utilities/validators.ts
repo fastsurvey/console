@@ -27,6 +27,11 @@ const validators = {
     minChars: (fieldConfig: configTypes.TextField) => (min_chars: number) =>
         0 <= min_chars && min_chars <= fieldConfig.max_chars,
     maxChars: (max_chars: number) => max_chars <= 2000,
+    minSelect: (fieldConfig: configTypes.SelectionField) =>
+        0 <= fieldConfig.min_select &&
+        fieldConfig.min_select <= fieldConfig.max_select,
+    maxSelect: (fieldConfig: configTypes.SelectionField) =>
+        fieldConfig.max_select <= fieldConfig.fields.length,
 };
 
 export default validators;

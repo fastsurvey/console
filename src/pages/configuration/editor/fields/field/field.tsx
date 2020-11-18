@@ -5,7 +5,7 @@ import VisualField from './visual-field';
 import TextSettings from '../text-settings/text-settings';
 import OptionSettings from '../option-settings/option-settings';
 import RadioSettings from '../radio-settings/radio-settings';
-import SelectionFieldConfigForm from '../SelectionFieldConfigForm';
+import SelectionFieldConfigForm from '../selection-settings/selection-settings';
 import EmailSettings from '../email-settings/email-settings';
 
 interface FieldProps {
