@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface ButtonProps {
+interface Props {
     text: string;
     onClick?(): void;
     invisible?: boolean;
@@ -9,8 +9,7 @@ interface ButtonProps {
     spinning?: boolean;
     icon?: React.ReactNode;
 }
-
-function Button(props: ButtonProps) {
+function Button(props: Props) {
     const reactivityClass =
         props.invisible || props.disabled || props.spinning
             ? 'cursor-default pointer-events-none'

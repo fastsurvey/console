@@ -3,7 +3,7 @@ import {configTypes} from 'utilities';
 import {validators} from 'utilities';
 import VisualSelectionSettings from './visual-selection-settings';
 
-interface SelectionSettingsProps {
+interface Props {
     fieldConfig: configTypes.SelectionField;
     setFieldConfig(
         fieldConfig: configTypes.SelectionField,
@@ -11,7 +11,7 @@ interface SelectionSettingsProps {
     ): void;
     disabled: boolean;
 }
-function SelectionSettings(props: SelectionSettingsProps) {
+function SelectionSettings(props: Props) {
     function updateFieldConfig(newFieldConfig: configTypes.SelectionField) {
         props.setFieldConfig(
             newFieldConfig,

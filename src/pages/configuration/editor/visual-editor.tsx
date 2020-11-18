@@ -1,11 +1,10 @@
 import React from 'react';
 import {configTypes} from 'utilities';
-
 import ControlStrip from './control-strip/control-strip';
 import Settings from './settings/settings';
 import FieldConfigForm from './fields/field/field';
 
-interface VisualEditorProps {
+interface Props {
     centralConfig: configTypes.SurveyConfig;
     modifyConfig(config: configTypes.SurveyConfig): void;
     syncState(): void;
@@ -21,7 +20,7 @@ interface VisualEditorProps {
         newIndex: number,
     ): void;
 }
-function VisualEditor(props: VisualEditorProps) {
+function VisualEditor(props: Props) {
     return (
         <React.Fragment>
             <ControlStrip

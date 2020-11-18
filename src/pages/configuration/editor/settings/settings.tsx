@@ -3,13 +3,13 @@ import {connect} from 'react-redux';
 import {stateTypes, configTypes, validators} from 'utilities';
 import VisualSettings from './visual-settings';
 
-interface SettingsProps {
+interface Props {
     configs: configTypes.SurveyConfig[] | undefined;
     config: configTypes.SurveyConfig;
     setConfig(config: configTypes.SurveyConfig): void;
     updateValidator(newState: boolean): void;
 }
-function Settings(props: SettingsProps) {
+function Settings(props: Props) {
     const titleIsValid = validators.title;
     const surveyNameIsValid = validators.surveyName(
         props.configs,

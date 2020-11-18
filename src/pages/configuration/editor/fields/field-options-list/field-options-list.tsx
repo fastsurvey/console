@@ -3,15 +3,14 @@ import {animateScroll} from 'react-scroll';
 import {configTypes, templates} from 'utilities';
 import VisualFieldOptionsList from './visual-field-options-list';
 
-interface FieldOptionsListProps {
+interface Props {
     fieldConfig: configTypes.RadioField | configTypes.SelectionField;
     updateFieldConfig(
         fieldConfig: configTypes.RadioField | configTypes.SelectionField,
     ): void;
     disabled: boolean;
 }
-
-function FieldOptionsList(props: FieldOptionsListProps) {
+function FieldOptionsList(props: Props) {
     const [optionsVisible, setOptionsVisible] = useState(
         props.fieldConfig.fields.map(() => true),
     );

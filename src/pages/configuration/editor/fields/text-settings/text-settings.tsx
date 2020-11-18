@@ -2,7 +2,7 @@ import React from 'react';
 import {configTypes, validators} from 'utilities';
 import VisualTextSettings from 'pages/configuration/editor/fields/text-settings/visual-text-settings';
 
-interface TextSettingsProps {
+interface Props {
     fieldConfig: configTypes.TextField;
     setFieldConfig(
         fieldConfig: configTypes.TextField,
@@ -10,7 +10,7 @@ interface TextSettingsProps {
     ): void;
     disabled: boolean;
 }
-function TextSettings(props: TextSettingsProps) {
+function TextSettings(props: Props) {
     const minCharsIsValid = validators.minChars(props.fieldConfig);
     const maxCharsIsValid = validators.maxChars;
 

@@ -2,13 +2,13 @@ import React from 'react';
 import {icons} from 'assets';
 import NavbarContent from './navbar-content/navbar-content';
 
-interface VisualMobileNavbarProps {
+interface Props {
     modalOpen: boolean;
     logOut(): void;
     openModal(): void;
     closeModal(): void;
 }
-function VisualMobileNavbar(props: VisualMobileNavbarProps) {
+function VisualMobileNavbar(props: Props) {
     return (
         <React.Fragment>
             <div

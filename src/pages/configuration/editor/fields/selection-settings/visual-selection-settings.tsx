@@ -3,12 +3,12 @@ import {configTypes, formatters, hints} from 'utilities';
 import {VisualTextInputRow} from 'components';
 import FieldOptionsList from '../field-options-list/field-options-list';
 
-interface VisualSelectionSettingsProps {
+interface Props {
     fieldConfig: configTypes.SelectionField;
     updateFieldConfig(fieldConfig: configTypes.SelectionField): void;
     disabled: boolean;
 }
-function VisualSelectionSettings(props: VisualSelectionSettingsProps) {
+function VisualSelectionSettings(props: Props) {
     const commonProps = {
         config: props.fieldConfig,
         disabled: props.disabled,

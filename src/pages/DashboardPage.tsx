@@ -4,14 +4,14 @@ import {stateTypes, configTypes, dispatchers, fetchSurveys} from 'utilities';
 import {Navbar} from 'components';
 import 'styles/DashboardPage.scss';
 
-interface DashBoardPageProps {
+interface Props {
     children: React.ReactNode;
     modalOpen: boolean;
     loggedIn: boolean;
     oauth2_token: stateTypes.OAuth2Token | undefined;
     addConfigs(configs: configTypes.SurveyConfig[]): void;
 }
-function DashBoardPage(props: DashBoardPageProps) {
+function DashBoardPage(props: Props) {
     useEffect(() => {
         async function fetch(oauth2_token: stateTypes.OAuth2Token) {
             await fetchSurveys(

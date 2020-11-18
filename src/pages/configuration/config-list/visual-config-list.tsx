@@ -1,9 +1,9 @@
 import React from 'react';
 
-interface VisualConfigListProps {
+interface Props {
     children: React.ReactNode;
 }
-function VisualConfigList(props: VisualConfigListProps) {
+function VisualConfigList(props: Props) {
     return (
         <div
             className={

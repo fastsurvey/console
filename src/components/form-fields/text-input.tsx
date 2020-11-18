@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-interface TextInputProps {
+interface Props {
     value: string;
     onChange(newValue: string): void;
     type?: string;
@@ -14,8 +14,7 @@ interface TextInputProps {
     flat?: boolean;
     disabled?: boolean;
 }
-
-const TextInput = React.forwardRef((props: TextInputProps, ref: any) => {
+const TextInput = React.forwardRef((props: Props, ref: any) => {
     const placeholder =
         props.placeholder !== undefined ? props.placeholder : '';
 

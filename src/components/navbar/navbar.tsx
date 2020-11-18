@@ -4,13 +4,13 @@ import VisualMobileNavbar from './visual-mobile-navbar';
 import {dispatchers, stateTypes} from 'utilities';
 import {connect} from 'react-redux';
 
-interface NavbarProps {
+interface Props {
     modalOpen: boolean;
     logOut(): void;
     openModal(): void;
     closeModal(): void;
 }
-function Navbar(props: NavbarProps) {
+function Navbar(props: Props) {
     return (
         <React.Fragment>
             <div id='RegularNavbar' className='hidden lg:block'>

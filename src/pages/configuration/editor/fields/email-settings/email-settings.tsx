@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from 'react';
-
 import {configTypes, formOptions, validators} from 'utilities';
-
 import VisualEmailSettings from './visual-email-settings';
 
-interface EmailSettingsProps {
+interface Props {
     fieldConfig: configTypes.EmailField;
     setFieldConfig(
         fieldConfig: configTypes.EmailField,
@@ -12,7 +10,7 @@ interface EmailSettingsProps {
     ): void;
     disabled: boolean;
 }
-function EmailSettings(props: EmailSettingsProps) {
+function EmailSettings(props: Props) {
     const regexIsValid = validators.regex;
     const hintIsValid = validators.hint;
 

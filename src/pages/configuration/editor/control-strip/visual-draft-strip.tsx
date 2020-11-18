@@ -1,17 +1,15 @@
 import React from 'react';
-
+import icons from 'assets/icons/icons';
 import ControlStripUI from './visual-strip';
 import ControlStripButton from './visual-button';
 
-import icons from 'assets/icons/icons';
-
-interface VisualDraftStripProps {
+interface Props {
     configIsDiffering: boolean;
     syncState(): void;
     revertState(): void;
     publishNow(): void;
 }
-const VisualDraftStrip = (props: VisualDraftStripProps) => (
+const VisualDraftStrip = (props: Props) => (
     <ControlStripUI>
         <React.Fragment>
             <ControlStripButton

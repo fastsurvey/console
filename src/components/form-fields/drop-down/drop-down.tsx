@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import VisualDropDown from './visual-drop-down';
 
-interface DropDownProps {
+interface Props {
     options: {label: string; value: number}[];
     value: number;
     className?: string;
@@ -10,8 +10,7 @@ interface DropDownProps {
     onChange(newValue: number): void;
     onEnter?(): void;
 }
-
-const DropDown = (props: DropDownProps) => {
+const DropDown = (props: Props) => {
     const [isOpen, setOpen] = useState(false);
     const [zIndex, setZIndex] = useState('z-10');
 

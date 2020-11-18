@@ -2,7 +2,7 @@ import React from 'react';
 import {Label, TextInput} from 'components';
 import {configTypes} from 'utilities';
 
-interface VisualTextInputRowProps {
+interface Props {
     config: configTypes.SurveyConfig | configTypes.SurveyField;
     label: string;
     value: string;
@@ -16,7 +16,7 @@ interface VisualTextInputRowProps {
     placeholder?: string;
     disabled: boolean;
 }
-const VisualTextInputRow = (props: VisualTextInputRowProps) => (
+const VisualTextInputRow = (props: Props) => (
     <div className={`flex flex-row items-start ${props.className}`}>
         <Label>{props.label}:</Label>
         <TextInput

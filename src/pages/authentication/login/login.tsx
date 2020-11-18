@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {stateTypes, dispatchers, authPostRequest} from 'utilities';
 import VisualLogin from './visual-login';
 
-interface LoginFormProps {
+interface Props {
     logIn(
         oauth2_token: stateTypes.OAuth2Token,
         account: stateTypes.Account,
@@ -12,7 +12,7 @@ interface LoginFormProps {
     closeAllMessages(): void;
 }
 
-function LoginForm(props: LoginFormProps) {
+function LoginForm(props: Props) {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [submitting, setSubmitting] = useState<boolean>(false);

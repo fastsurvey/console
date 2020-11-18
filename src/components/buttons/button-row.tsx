@@ -1,12 +1,11 @@
 import React, {ReactNode} from 'react';
 
-interface ButtonRowProps {
+interface Props {
     children: ReactNode;
     center?: boolean;
     className?: string;
 }
-
-function ButtonRow(props: ButtonRowProps) {
+function ButtonRow(props: Props) {
     return (
         <div
             className={

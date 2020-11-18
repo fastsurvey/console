@@ -1,13 +1,10 @@
 import React from 'react';
-
 import {configTypes} from 'utilities';
-
+import icons from 'assets/icons/icons';
 import ControlStripUI from './visual-strip';
 import ControlStripButton from './visual-button';
 
-import icons from 'assets/icons/icons';
-
-interface VisualPublishedStripProps {
+interface Props {
     now(): number;
     config: configTypes.SurveyConfig;
     startNow(): void;
@@ -15,7 +12,7 @@ interface VisualPublishedStripProps {
     endNow(): void;
     editNow(): void;
 }
-const VisualPublishedStrip = (props: VisualPublishedStripProps) => (
+const VisualPublishedStrip = (props: Props) => (
     <ControlStripUI>
         <ControlStripButton
             first

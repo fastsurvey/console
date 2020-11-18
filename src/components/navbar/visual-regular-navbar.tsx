@@ -1,10 +1,10 @@
 import React from 'react';
 import NavbarContent from './navbar-content/navbar-content';
 
-interface VisualRegularNavbarProps {
+interface Props {
     logOut(): void;
 }
-function VisualRegularNavbar(props: VisualRegularNavbarProps) {
+function VisualRegularNavbar(props: Props) {
     return (
         <React.Fragment>
             <div

@@ -1,7 +1,7 @@
 import React from 'react';
 import {TextInput, TextLink, ButtonLink} from 'components';
 
-interface VisualLoginProps {
+interface Props {
     email: string;
     setEmail(newEmail: string): void;
     password: string;
@@ -13,8 +13,7 @@ interface VisualLoginProps {
     closeAllMessages(): void;
     handleLogin(): void;
 }
-
-const VisualLogin = React.forwardRef((props: VisualLoginProps, refs: any) => {
+const VisualLogin = React.forwardRef((props: Props, refs: any) => {
     const {input2Ref} = refs;
 
     return (

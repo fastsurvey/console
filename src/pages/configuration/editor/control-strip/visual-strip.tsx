@@ -1,9 +1,9 @@
 import React from 'react';
 
-interface VisualStripProps {
+interface Props {
     children: React.ReactNode;
 }
-const VisualStrip = (props: VisualStripProps) => (
+const VisualStrip = (props: Props) => (
     <div
         id='ControlStrip'
         className={

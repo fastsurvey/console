@@ -5,7 +5,7 @@ import assert from 'assert';
 
 import {dispatchers, stateTypes} from 'utilities';
 
-interface TextLinkProps {
+interface Props {
     children: string;
     to?: string;
     onClick?(): void;
@@ -13,7 +13,7 @@ interface TextLinkProps {
     closeAllMessages(): void;
 }
 
-function TextLink(props: TextLinkProps) {
+function TextLink(props: Props) {
     assert(props.to !== undefined || props.onClick !== undefined);
 
     return (

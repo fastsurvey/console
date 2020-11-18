@@ -1,12 +1,12 @@
 import React from 'react';
 
-interface TriggerIconProps {
+interface Props {
     onClick?(): void;
     className?: string;
     disabled?: boolean;
     icon: React.ReactNode;
 }
-const TriggerIcon = (props: TriggerIconProps) => {
+const TriggerIcon = (props: Props) => {
     return (
         <div
             className={

@@ -4,10 +4,10 @@ import {stateTypes} from 'utilities';
 import {LogoBanner} from 'components';
 import 'styles/loader.scss';
 
-interface LoaderOverlayProps {
+interface Props {
     loggingIn: boolean;
 }
-function LoaderOverlay(props: LoaderOverlayProps) {
+function LoaderOverlay(props: Props) {
     return (
         <div
             id='LoaderOverlay'

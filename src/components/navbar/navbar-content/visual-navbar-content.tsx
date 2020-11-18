@@ -3,12 +3,12 @@ import {icons} from 'assets';
 import VisualButton from './visual-navbar-button';
 import VisualLogo from './visual-navbar-logo';
 
-interface NavbarContentProps {
+interface Props {
     logOut(): void;
     openLink(to: string): void;
     location: any;
 }
-function NavbarContent(props: NavbarContentProps) {
+function NavbarContent(props: Props) {
     return (
         <React.Fragment>
             <VisualLogo />

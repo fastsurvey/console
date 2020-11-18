@@ -3,14 +3,14 @@ import {useHistory} from 'react-router-dom';
 import {stateTypes, configTypes, validators} from 'utilities';
 import VisualEditor from './visual-editor';
 
-interface ConfigEditorProps {
+interface Props {
     centralConfig: configTypes.SurveyConfig;
     modifyConfig(config: configTypes.SurveyConfig): void;
     markDiffering(differing: boolean): void;
     openMessage(message: stateTypes.Message): void;
     closeAllMessages(): void;
 }
-function ConfigEditor(props: ConfigEditorProps) {
+function ConfigEditor(props: Props) {
     const [localConfig, setLocalConfigState] = useState(props.centralConfig);
     const [fieldValidators, setFieldValidators] = useState<boolean[]>([]);
 

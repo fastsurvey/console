@@ -2,14 +2,14 @@ import React from 'react';
 import {configTypes, formOptions, hints} from 'utilities';
 import {DropDown, TextInput} from 'components';
 
-interface VisualEmailSettingsProps {
+interface Props {
     setupValue: number;
     customSetup: configTypes.EmailRegexSetup;
     fieldConfig: configTypes.EmailField;
     updateFieldConfig(fieldConfig: configTypes.EmailField): void;
     disabled: boolean;
 }
-function VisualEmailSettings(props: VisualEmailSettingsProps) {
+function VisualEmailSettings(props: Props) {
     const commonProps = {
         disabled: props.disabled,
         flat: true,

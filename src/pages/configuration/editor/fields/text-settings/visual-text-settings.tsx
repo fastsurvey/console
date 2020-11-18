@@ -2,12 +2,12 @@ import React from 'react';
 import {configTypes, formatters, hints} from 'utilities';
 import {VisualTextInputRow} from 'components';
 
-interface VisualTextSettingsProps {
+interface Props {
     fieldConfig: configTypes.TextField;
     updateFieldConfig(fieldConfig: configTypes.TextField): void;
     disabled: boolean;
 }
-function VisualTextSettings(props: VisualTextSettingsProps) {
+function VisualTextSettings(props: Props) {
     const commonProps = {
         config: props.fieldConfig,
         disabled: props.disabled,

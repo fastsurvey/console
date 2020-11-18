@@ -2,7 +2,7 @@ import React from 'react';
 import {configTypes, validators} from 'utilities';
 import FieldOptionsList from '../field-options-list/field-options-list';
 
-interface RadioFieldConfigFormProps {
+interface Props {
     fieldConfig: configTypes.RadioField;
     setFieldConfig(
         fieldConfig: configTypes.RadioField | configTypes.SelectionField,
@@ -10,8 +10,7 @@ interface RadioFieldConfigFormProps {
     ): void;
     disabled: boolean;
 }
-
-function RadioFieldConfigForm(props: RadioFieldConfigFormProps) {
+function RadioFieldConfigForm(props: Props) {
     const titleIsValid = validators.title;
 
     function updateFieldConfig(

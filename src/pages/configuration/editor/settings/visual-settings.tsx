@@ -3,7 +3,7 @@ import {configTypes, formatters, formOptions, hints} from 'utilities';
 import {DropDown, TextArea, Label, VisualTextInputRow} from 'components';
 import VisualDatePickerRow from './visual-date-picker-row';
 
-interface VisualSettingsProps {
+interface Props {
     config: configTypes.SurveyConfig;
     surveyNameIsValid(survey_name: string): boolean;
     updateConfig(config: configTypes.SurveyConfig): void;
@@ -11,7 +11,7 @@ interface VisualSettingsProps {
     updateValidator(newState: boolean): void;
     commonProps: any;
 }
-const VisualSettings = (props: VisualSettingsProps) => (
+const VisualSettings = (props: Props) => (
     <div className='flex flex-col w-full min-h-full pt-4 pb-4 mb-8 border-b-4 border-gray-500'>
         <div className='flex flex-row mb-4'>
             <VisualTextInputRow

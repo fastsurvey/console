@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import VisualDatePicker from './visual-date-picker';
 
-interface DatePickerProps {
+interface Props {
     timestamp: number;
     setNewTimestamp(timestamp: number): void;
     disabled?: boolean;
 }
-function DatePicker(props: DatePickerProps) {
+function DatePicker(props: Props) {
     const [date, setDate] = useState(new Date(props.timestamp * 1000));
     useEffect(() => setDate(new Date(props.timestamp * 1000)), [
         props.timestamp,

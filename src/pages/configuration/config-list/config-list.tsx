@@ -2,19 +2,21 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {useLocation, useHistory} from 'react-router-dom';
 import {stateTypes, configTypes, dispatchers} from 'utilities';
+import icons from 'assets/icons/icons';
+
 import {ButtonLink} from 'components';
 import ConfigPreviewPanel from './visual-config-panel';
 import VisualConfigList from './visual-config-list';
-import icons from 'assets/icons/icons';
 
-interface ConfigListProps {
+interface Props {
     configs: undefined | configTypes.SurveyConfig[];
     configIsDiffering: boolean;
     openMessage(message: stateTypes.Message): void;
 }
-function ConfigList(props: ConfigListProps) {
+function ConfigList(props: Props) {
     let location = useLocation();
     let history = useHistory();
+
     function handleClick(survey_name: string) {
         const configPath = `/configuration/${survey_name}`;
         if (location.pathname !== configPath) {

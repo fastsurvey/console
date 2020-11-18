@@ -1,13 +1,12 @@
 import React from 'react';
-
 import {LogoBanner} from 'components';
 
-interface MainWrapperProps {
+interface Props {
     children: React.ReactNode;
     flexDirection: 'flex-row' | 'flex-col';
 }
 
-function MainWrapper(props: MainWrapperProps) {
+function MainWrapper(props: Props) {
     return (
         <React.Fragment>
             <header className='z-40'>

@@ -1,14 +1,13 @@
 import React from 'react';
 import {icons} from 'assets';
 
-interface CheckboxProps {
+interface Props {
     checked: boolean;
     onChange(newValue: boolean): void;
     className?: string;
     disabled?: boolean;
 }
-
-const Checkbox = (props: CheckboxProps) => {
+const Checkbox = (props: Props) => {
     const handleClick = () => {
         if (!props.disabled) {
             props.onChange(!props.checked);

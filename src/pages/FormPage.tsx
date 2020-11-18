@@ -1,12 +1,11 @@
 import React from 'react';
 import {MainWrapper} from 'components';
 
-interface FormPageProps {
+interface Props {
     children: React.ReactNode;
     image: string;
 }
-
-function FormPage(props: FormPageProps) {
+function FormPage(props: Props) {
     return (
         <MainWrapper flexDirection='flex-row'>
             <div

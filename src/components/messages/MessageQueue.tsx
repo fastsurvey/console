@@ -1,15 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
-
 import {dispatchers, stateTypes} from 'utilities';
-
 import MessageComponent from './MessageComponent';
 
-interface MessageQueueProps {
+interface Props {
     messages: stateTypes.Message[];
     closeMessage(text: string): void;
 }
-function MessageQueue(props: MessageQueueProps) {
+function MessageQueue(props: Props) {
     return (
         <div className='fixed bottom-0 z-30 mx-0 w-100vw md:mx-20vw md:w-60vw xl:w-30vw xl:mx-35vw'>
             {props.messages.map((message: stateTypes.Message) => (

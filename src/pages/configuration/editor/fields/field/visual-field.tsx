@@ -3,15 +3,14 @@ import {configTypes, hints} from 'utilities';
 import {icons} from 'assets';
 import {TextArea, TextInput} from 'components';
 
-interface VisualFieldProps {
+interface Props {
     fieldConfig: configTypes.SurveyField;
     disabled: boolean;
     setFieldConfig(fieldConfig: configTypes.SurveyField): void;
     updateFieldConfig(fieldConfig: configTypes.SurveyField): void;
     children: React.ReactNode;
 }
-
-function VisualField(props: VisualFieldProps) {
+function VisualField(props: Props) {
     const commonInputProps = {
         disabled: props.disabled,
         flat: true,

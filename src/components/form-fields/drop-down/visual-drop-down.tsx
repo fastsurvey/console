@@ -1,7 +1,7 @@
 import React from 'react';
 import {icons} from 'assets';
 
-interface VisualDropDownProps {
+interface Props {
     activeOption: {label: string; value: number};
     options: {label: string; value: number}[];
 
@@ -14,8 +14,7 @@ interface VisualDropDownProps {
     open(): void;
     onChange(newValue: number): void;
 }
-
-const VisualDropDown = (props: VisualDropDownProps) => (
+const VisualDropDown = (props: Props) => (
     <div
         className={
             `relative w-full overflow-visible rounded h-12 ${props.zIndex} ` +

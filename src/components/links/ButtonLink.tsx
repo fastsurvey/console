@@ -2,12 +2,10 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import assert from 'assert';
-
 import {dispatchers, stateTypes} from 'utilities';
-
 import {Button, ButtonRow} from 'components';
 
-interface ButtonLinkProps {
+interface Props {
     children: string;
     to?: string;
     onClick?(): void;
@@ -17,8 +15,7 @@ interface ButtonLinkProps {
     closeAllMessages(): void;
     icon?: React.ReactNode;
 }
-
-function ButtonLink(props: ButtonLinkProps) {
+function ButtonLink(props: Props) {
     assert(props.to !== undefined || props.onClick !== undefined);
 
     const button = (

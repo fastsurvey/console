@@ -4,14 +4,14 @@ import {useParams} from 'react-router-dom';
 import {stateTypes, configTypes, dispatchers} from 'utilities';
 import Editor from './editor';
 
-interface EditorWrappperProps {
+interface Props {
     configs: undefined | configTypes.SurveyConfig[];
     modifyConfig(config: configTypes.SurveyConfig): void;
     markDiffering(differing: boolean): void;
     openMessage(message: stateTypes.Message): void;
     closeAllMessages(): void;
 }
-function EditorWrappper(props: EditorWrappperProps) {
+function EditorWrappper(props: Props) {
     let params = useParams();
 
     if (!props.configs) {

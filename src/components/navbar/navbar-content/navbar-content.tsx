@@ -4,13 +4,13 @@ import {connect} from 'react-redux';
 import {stateTypes, dispatchers} from 'utilities';
 import VisualNavbarContent from './visual-navbar-content';
 
-interface NavbarContentProps {
+interface Props {
     logOut(): void;
     closeModal(): void;
     configIsDiffering: boolean;
     openMessage(message: stateTypes.Message): void;
 }
-function NavbarContent(props: NavbarContentProps) {
+function NavbarContent(props: Props) {
     let location = useLocation();
     let history = useHistory();
 

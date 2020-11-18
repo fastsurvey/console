@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface VisualButtonProps {
+interface Props {
     label: string;
     icon: React.ReactNode;
     first?: boolean;
@@ -8,8 +8,7 @@ interface VisualButtonProps {
     disabled?: boolean;
     onClick?(): void;
 }
-
-const VisualButton = (props: VisualButtonProps) => (
+const VisualButton = (props: Props) => (
     <div
         onClick={() => {
             if (!props.disabled && props.onClick !== undefined) {

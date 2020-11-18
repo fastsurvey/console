@@ -2,7 +2,7 @@ import React from 'react';
 import {configTypes} from 'utilities';
 import VisualOptionSettings from './visual-option-settings';
 
-interface OptionSettingsProps {
+interface Props {
     fieldConfig: configTypes.OptionField;
     setFieldConfig(
         fieldConfig: configTypes.OptionField,
@@ -10,7 +10,7 @@ interface OptionSettingsProps {
     ): void;
     disabled: boolean;
 }
-function OptionSettings(props: OptionSettingsProps) {
+function OptionSettings(props: Props) {
     function updateFieldConfig(newFieldConfig: configTypes.OptionField) {
         props.setFieldConfig(newFieldConfig, () => true);
     }

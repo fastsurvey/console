@@ -1,10 +1,10 @@
 import React from 'react';
 
-interface LabelProps {
+interface Props {
     children: React.ReactNode;
     className?: string;
 }
-const Label = (props: LabelProps) => (
+const Label = (props: Props) => (
     <div
         className={
             'h-12 mr-4 text-xl text-right leading-12 ' +

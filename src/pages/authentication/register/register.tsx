@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {stateTypes, dispatchers, authPostRequest} from 'utilities';
 import VisualRegister from './visual-register';
 
-interface RegisterFormProps {
+interface Props {
     logIn(
         oauth2_token: stateTypes.OAuth2Token,
         account: stateTypes.Account,
@@ -11,7 +11,7 @@ interface RegisterFormProps {
     openMessage(message: stateTypes.Message): void;
     closeAllMessages(): void;
 }
-function RegisterForm(props: RegisterFormProps) {
+function RegisterForm(props: Props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');

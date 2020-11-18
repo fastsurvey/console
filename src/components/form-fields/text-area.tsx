@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-interface TextAreaProps {
+interface Props {
     value: string;
     onChange(newValue: string): void;
     placeholder?: string;
@@ -13,8 +13,7 @@ interface TextAreaProps {
     rows?: number;
     disabled?: boolean;
 }
-
-const TextArea = React.forwardRef((props: TextAreaProps, ref: any) => {
+const TextArea = React.forwardRef((props: Props, ref: any) => {
     const placeholder =
         props.placeholder !== undefined ? props.placeholder : '';
     const autoComplete =

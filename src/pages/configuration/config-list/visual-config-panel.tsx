@@ -2,13 +2,12 @@ import React from 'react';
 import {configTypes} from 'utilities';
 import icons from 'assets/icons/icons';
 
-interface ConfigPreviewPanelProps {
+interface Props {
     config: configTypes.SurveyConfig;
     selected: boolean;
     onClick(): void;
 }
-
-function ConfigPreviewPanel(props: ConfigPreviewPanelProps) {
+function ConfigPreviewPanel(props: Props) {
     let statusColor: string;
     let statusText: string;
 

@@ -1,12 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
-
 import {stateTypes, configTypes, dispatchers} from 'utilities';
-
 import VisualDraftStrip from './visual-draft-strip';
 import VisualPublishedStrip from './visual-published-strip';
 
-interface ControlStripProps {
+interface Props {
     config: configTypes.SurveyConfig;
     setConfig(config: configTypes.SurveyConfig): void;
     configIsDiffering: boolean;
@@ -14,7 +12,7 @@ interface ControlStripProps {
     revertState(): void;
     openMessage(message: stateTypes.Message): void;
 }
-function ControlStrip(props: ControlStripProps) {
+function ControlStrip(props: Props) {
     function now() {
         return Math.floor(Date.now() / 1000);
     }

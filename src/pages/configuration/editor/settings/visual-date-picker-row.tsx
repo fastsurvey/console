@@ -2,14 +2,14 @@ import React from 'react';
 import {configTypes} from 'utilities';
 import {DatePicker, Label} from 'components';
 
-interface VisualDatePickerRowProps {
+interface Props {
     config: configTypes.SurveyConfig;
     label: string;
     timestamp: number;
     setConfig(config: configTypes.SurveyConfig): void;
     onChange(timestamp: number): any;
 }
-const VisualDatePickerRow = (props: VisualDatePickerRowProps) => (
+const VisualDatePickerRow = (props: Props) => (
     <div className='flex flex-row items-center justify-center w-full mb-4'>
         <Label className='w-14'>{props.label}:</Label>
         <DatePicker

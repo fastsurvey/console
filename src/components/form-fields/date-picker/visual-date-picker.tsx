@@ -2,7 +2,7 @@ import React from 'react';
 import formOptions from 'utilities/constants/form-options';
 import {DropDown} from 'components';
 
-interface VisualDatePickerProps {
+interface Props {
     disabled?: boolean;
     date: Date;
     getDaysInMonth(year: number, month: number): void;
@@ -11,7 +11,7 @@ interface VisualDatePickerProps {
     changeYear(newValue: number): void;
     changeTime(newHours: number, newMinutes: number): void;
 }
-function VisualDatePicker(props: VisualDatePickerProps) {
+function VisualDatePicker(props: Props) {
     const commonProps = {
         disabled: props.disabled,
         hideChevron: true,

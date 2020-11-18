@@ -1,12 +1,11 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-
 import {RocketLogo} from 'assets';
 
-interface LogoBannerProps {
+interface Props {
     slim?: boolean;
 }
-function LogoBanner(props: LogoBannerProps) {
+function LogoBanner(props: Props) {
     return (
         <div className='fixed top-0 left-0 z-40 p-2 m-1 md:ml-5 md:p-0 md:mt-6'>
             <Link to='/'>

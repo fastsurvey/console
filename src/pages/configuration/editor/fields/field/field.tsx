@@ -8,14 +8,13 @@ import RadioSettings from '../radio-settings/radio-settings';
 import SelectionSettings from '../selection-settings/selection-settings';
 import EmailSettings from '../email-settings/email-settings';
 
-interface FieldProps {
+interface Props {
     fieldConfig: configTypes.SurveyField;
     setFieldConfig(fieldConfig: configTypes.SurveyField): void;
     disabled: boolean;
     updateValidator(newState: boolean): void;
 }
-
-function Field(props: FieldProps) {
+function Field(props: Props) {
     const titleIsValid = validators.title;
     const descriptionIsValid = validators.description;
 
