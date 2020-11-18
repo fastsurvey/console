@@ -1,7 +1,6 @@
 import React from 'react';
 import {configTypes, hints} from 'utilities';
 import {icons} from 'assets';
-
 import {TextArea, TextInput} from 'components';
 
 interface VisualFieldProps {

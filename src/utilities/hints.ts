@@ -18,6 +18,14 @@ const hints = {
         text: '1 - 10.000',
         fulfilled: validators.submissionLimit(config.submission_limit),
     }),
+    regex: (fieldConfig: configTypes.EmailField) => ({
+        text: `<= 250 Characters (${250 - fieldConfig.hint.length} left)`,
+        fulfilled: validators.regex(fieldConfig.regex),
+    }),
+    hint: (fieldConfig: configTypes.EmailField) => ({
+        text: `<= 120 Characters (${120 - fieldConfig.hint.length} left)`,
+        fulfilled: validators.hint(fieldConfig.hint),
+    }),
 };
 
 export default hints;

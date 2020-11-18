@@ -21,6 +21,9 @@ const validators = {
 
     submissionLimit: (submission_limit: number) =>
         1 <= submission_limit && submission_limit <= 10000,
+
+    regex: (regex: string) => regex.length <= 250,
+    hint: (hint: string) => hint.length <= 120,
 };
 
 export default validators;

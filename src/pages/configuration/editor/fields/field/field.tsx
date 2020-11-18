@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {configTypes} from 'utilities';
+import {validators, configTypes} from 'utilities';
 
+import VisualField from './visual-field';
 import TextFieldConfigForm from '../TextFieldConfigForm';
 import OptionFieldConfigForm from '../OptionFieldConfigForm';
 import RadioFieldConfigForm from '../RadioFieldConfigForm';
 import SelectionFieldConfigForm from '../SelectionFieldConfigForm';
-import EmailFieldConfigForm from '../EmailFieldConfigForm';
-import VisualField from './visual-field';
+import EmailSettings from '../email-settings/email-settings';
 
 interface FieldProps {
     fieldConfig: configTypes.SurveyField;
@@ -16,10 +16,8 @@ interface FieldProps {
 }
 
 function Field(props: FieldProps) {
-    const titleIsValid = (title: string) =>
-        1 <= title.length && title.length <= 120;
-    const descriptionIsValid = (description: string) =>
-        description.length <= 2000;
+    const titleIsValid = validators.title;
+    const descriptionIsValid = validators.description;
 
     const [settingsValidator, setSettingsValidator] = useState(true);
     useEffect(() => setSettingsValidator(true), [props.fieldConfig.local_id]);
@@ -93,7 +91,7 @@ function Field(props: FieldProps) {
         case 'Email':
             FieldSettings = (
                 // @ts-ignore
-                <EmailFieldConfigForm
+                <EmailSettings
                     {...commonFieldProps}
                     fieldConfig={props.fieldConfig}
                 />
