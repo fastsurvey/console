@@ -1,6 +1,6 @@
-export {default as LoginForm} from './login/login';
-export {default as RegisterForm} from './register/register';
-export {default as RequestPasswordForm} from './request-password/request-password';
-export {default as SetPasswordForm} from './set-password/set-password';
-export {default as VerifyForm} from './verify-form/verify-form';
-export {default as VerifyWall} from './VerifyWall';
+export {default as Login} from './login/login';
+export {default as Register} from './register/register';
+export {default as RequestPassword} from './request-password/request-password';
+export {default as SetPassword} from './set-password/set-password';
+export {default as Verify} from './verify/verify';
+export {default as VerifyWall} from './verify-wall/verify-wall';

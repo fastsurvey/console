@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
 import {connect} from 'react-redux';
 import {stateTypes, dispatchers, authPostRequest} from 'utilities';
-import VisualVerifyForm from './visual-verify-form';
+import VisualVerifyForm from './visual-verify';
 
 interface Props {
     logIn(

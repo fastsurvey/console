@@ -1,10 +1,8 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import assert from 'assert';
-
 import {stateTypes, dispatchers, authPostRequest} from 'utilities';
-
-import {TextLink, ButtonLink} from 'components';
+import VisualVerifyWall from './visual-verify-wall';
 
 interface VerifyWallProps {
     account: undefined | stateTypes.Account;
@@ -47,27 +45,13 @@ function VerifyWall(props: VerifyWallProps) {
     }
 
     return (
-        <div className='w-full'>
-            <h2 className='mb-4 text-center no-selection'>
-                Verify your email first!
-            </h2>
-            <p className='mb-4 text-center'>
-                Please verify your email address by clicking the link in the
-                email we've just sent to:
-            </p>
-            <p className='text-center font-weight-600'>{email}</p>
-            <ButtonLink
-                className='pt-4'
-                onClick={handleResend}
-                disabled={!resendPossible}
-                spinning={submitting}
-            >
-                Resend verification email
-            </ButtonLink>
-            <TextLink to='/register' onClick={props.logOut} className='pt-4'>
-                Wrong email address? Just register again.
-            </TextLink>
-        </div>
+        <VisualVerifyWall
+            email={email}
+            handleResend={handleResend}
+            resendPossible={resendPossible}
+            submitting={submitting}
+            logOut={props.logOut}
+        />
     );
 }
 

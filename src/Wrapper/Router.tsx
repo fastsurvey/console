@@ -6,11 +6,11 @@ import {stateTypes} from 'utilities';
 
 import {FormPage, NotFoundPage, DashboardPage} from 'pages';
 import {
-    LoginForm,
-    RegisterForm,
-    RequestPasswordForm,
-    SetPasswordForm,
-    VerifyForm,
+    Login,
+    Register,
+    RequestPassword,
+    SetPassword,
+    Verify,
     VerifyWall,
 } from 'pages/authentication';
 import {ConfigList, ConfigEditor} from 'pages/configuration';
@@ -75,10 +75,10 @@ function Router(props: RouterProps) {
                             <FormPage image={SecureImage}>
                                 <Switch>
                                     <Route exact path='/login'>
-                                        <LoginForm />
+                                        <Login />
                                     </Route>
                                     <Route exact path='/register'>
-                                        <RegisterForm />
+                                        <Register />
                                     </Route>
                                 </Switch>
                             </FormPage>
@@ -89,17 +89,17 @@ function Router(props: RouterProps) {
                     </Route>
                     <Route path='/verify'>
                         <FormPage image={LetterImage}>
-                            <VerifyForm />
+                            <Verify />
                         </FormPage>
                     </Route>
                     <Route path='(/request-password|/set-password)'>
                         <FormPage image={SecureImage}>
                             <Switch>
                                 <Route exact path='/request-password'>
-                                    <RequestPasswordForm />
+                                    <RequestPassword />
                                 </Route>
                                 <Route exact path='/set-password'>
-                                    <SetPasswordForm />
+                                    <SetPassword />
                                 </Route>
                             </Switch>
                         </FormPage>

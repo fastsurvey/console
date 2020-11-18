@@ -107,10 +107,10 @@ function storeReducer(
 // @ts-ignore
 const store = createStore(storeReducer);
 
-interface ReduxWrapperProps {
+interface Props {
     children: React.ReactChild;
 }
-export function ReduxWrapper(props: ReduxWrapperProps) {
+export function ReduxWrapper(props: Props) {
     const [cookieLogin, setCookieLogin] = useState(false);
 
     async function logIn(

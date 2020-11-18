@@ -11,10 +11,10 @@ The other option were to have one image for each
 color. But that would lead to overhead in other
 areas and transitionig colors is not that simple. */
 
-interface SVGProps {
+interface Props {
     children: React.ReactNode;
 }
-function SVG(props: SVGProps) {
+function SVG(props: Props) {
     return (
         <svg
             xmlns='http://www.w3.org/2000/svg'
