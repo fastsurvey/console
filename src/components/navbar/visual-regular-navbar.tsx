@@ -1,12 +1,10 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {stateTypes, dispatchers} from 'utilities';
 import NavbarContent from './navbar-content/navbar-content';
 
-interface RegularNavbarProps {
+interface VisualRegularNavbarProps {
     logOut(): void;
 }
-function RegularNavbar(props: RegularNavbarProps) {
+function VisualRegularNavbar(props: VisualRegularNavbarProps) {
     return (
         <React.Fragment>
             <div
@@ -20,8 +18,4 @@ function RegularNavbar(props: RegularNavbarProps) {
     );
 }
 
-const mapStateToProps = (state: stateTypes.ReduxState) => ({});
-const mapDispatchToProps = (dispatch: any) => ({
-    logOut: dispatchers.logOut(dispatch),
-});
-export default connect(mapStateToProps, mapDispatchToProps)(RegularNavbar);
+export default VisualRegularNavbar;

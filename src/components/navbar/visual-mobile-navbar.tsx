@@ -1,16 +1,14 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {stateTypes, dispatchers} from 'utilities';
 import {icons} from 'assets';
 import NavbarContent from './navbar-content/navbar-content';
 
-interface MobileNavbarProps {
+interface VisualMobileNavbarProps {
     modalOpen: boolean;
     logOut(): void;
     openModal(): void;
     closeModal(): void;
 }
-function MobileNavbar(props: MobileNavbarProps) {
+function VisualMobileNavbar(props: VisualMobileNavbarProps) {
     return (
         <React.Fragment>
             <div
@@ -61,12 +59,4 @@ function MobileNavbar(props: MobileNavbarProps) {
     );
 }
 
-const mapStateToProps = (state: stateTypes.ReduxState) => ({
-    modalOpen: state.modalOpen,
-});
-const mapDispatchToProps = (dispatch: any) => ({
-    logOut: dispatchers.logOut(dispatch),
-    openModal: dispatchers.openModal(dispatch),
-    closeModal: dispatchers.closeModal(dispatch),
-});
-export default connect(mapStateToProps, mapDispatchToProps)(MobileNavbar);
+export default VisualMobileNavbar;

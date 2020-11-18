@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {stateTypes, configTypes, dispatchers, fetchSurveys} from 'utilities';
-import {MobileNavbar, RegularNavbar} from 'components';
+import {Navbar} from 'components';
 import 'styles/DashboardPage.scss';
 
 interface DashBoardPageProps {
@@ -30,12 +30,7 @@ function DashBoardPage(props: DashBoardPageProps) {
     return (
         <React.Fragment>
             <header>
-                <div id='RegularNavbar' className='hidden lg:block'>
-                    <RegularNavbar />
-                </div>
-                <div id='MobileNavbar' className='block lg:hidden'>
-                    <MobileNavbar />
-                </div>
+                <Navbar />
             </header>
             <main>
                 <div id='RegularContent' className={'hidden lg:block'}>
