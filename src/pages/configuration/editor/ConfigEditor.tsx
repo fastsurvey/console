@@ -5,7 +5,7 @@ import {stateTypes, configTypes, dispatchers} from 'utilities';
 
 import ControlStrip from './control-strip/control-strip';
 import Settings from './settings/settings';
-import FieldConfigForm from './fieldConfig/FieldConfigForm';
+import FieldConfigForm from './fields/field/field';
 
 interface ConfigEditorProps {
     centralConfig: configTypes.SurveyConfig;
