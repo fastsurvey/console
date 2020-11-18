@@ -3,7 +3,7 @@ import {validators, configTypes} from 'utilities';
 
 import VisualField from './visual-field';
 import TextSettings from '../text-settings/text-settings';
-import OptionFieldConfigForm from '../OptionFieldConfigForm';
+import OptionSettings from '../option-settings/option-settings';
 import RadioFieldConfigForm from '../RadioFieldConfigForm';
 import SelectionFieldConfigForm from '../SelectionFieldConfigForm';
 import EmailSettings from '../email-settings/email-settings';
@@ -64,7 +64,7 @@ function Field(props: FieldProps) {
         case 'Option':
             FieldSettings = (
                 // @ts-ignore
-                <OptionFieldConfigForm
+                <OptionSettings
                     {...commonFieldProps}
                     fieldConfig={props.fieldConfig}
                 />
