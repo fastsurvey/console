@@ -1,21 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
-import {
-    ReduxAction,
-    ReduxState,
-    Account,
-    OAuth2Token,
-} from '../utilities/types';
 import Cookies from 'js-cookie';
+
 import {
-    addConfigsAction,
-    logInAction,
-    logOutAction,
-} from '../utilities/reduxActions';
-import {generateValidOAuthToken} from '../utilities/jwtEncryption';
-import {fetchSurveys} from '../utilities/surveyCommunication';
-import {SurveyConfig} from '../utilities/types';
+    stateTypes,
+    configTypes,
+    dispatchers,
+    fetchSurveys,
+    generateValidOAuthToken,
+} from 'utilities';
 
 function storeReducer(
     state = {
@@ -28,9 +22,9 @@ function storeReducer(
         configs: undefined,
         configIsDiffering: false,
     },
-    action: ReduxAction,
+    action: stateTypes.ReduxAction,
 ) {
-    const newState: ReduxState = {
+    const newState: stateTypes.ReduxState = {
         loggingIn: state.loggingIn,
         loggedIn: state.loggedIn,
         oauth2_token: state.oauth2_token,
@@ -87,7 +81,7 @@ function storeReducer(
         case 'MODIFY_CONFIG':
             if (newState.configs !== undefined) {
                 newState.configs = newState.configs.map(
-                    (config: SurveyConfig) =>
+                    (config: configTypes.SurveyConfig) =>
                         config.local_id === action.config.local_id
                             ? action.config
                             : config,
@@ -113,17 +107,23 @@ function storeReducer(
 // @ts-ignore
 const store = createStore(storeReducer);
 
-interface ReduxWrapperProps {
+interface Props {
     children: React.ReactChild;
 }
-export function ReduxWrapper(props: ReduxWrapperProps) {
+export function ReduxWrapper(props: Props) {
     const [cookieLogin, setCookieLogin] = useState(false);
 
-    async function logIn(oauth2_token: OAuth2Token, account: Account) {
-        store.dispatch(logInAction(oauth2_token, account));
-        await fetchSurveys(oauth2_token, (configs: SurveyConfig[]) => {
-            store.dispatch(addConfigsAction(configs));
-        });
+    async function logIn(
+        oauth2_token: stateTypes.OAuth2Token,
+        account: stateTypes.Account,
+    ) {
+        dispatchers.logIn(store.dispatch)(oauth2_token, account);
+        await fetchSurveys(
+            oauth2_token,
+            (configs: configTypes.SurveyConfig[]) => {
+                dispatchers.addConfigs(store.dispatch)(configs);
+            },
+        );
     }
 
     useEffect(() => {
@@ -131,7 +131,7 @@ export function ReduxWrapper(props: ReduxWrapperProps) {
             try {
                 await generateValidOAuthToken(logIn);
             } catch {
-                store.dispatch(logOutAction());
+                dispatchers.logOut(store.dispatch)();
             }
         }
 

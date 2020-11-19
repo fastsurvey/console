@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import * as serviceWorker from './serviceWorker';
-import ReduxWrapper from './wrapper/ReduxWrapper';
-import Router from './wrapper/Router';
-import './styles/tailwind.out.css';
-import './styles/compatibilityFixes.css';
+import * as serviceWorker from './service-worker';
+import ReduxWrapper from 'wrapper/ReduxWrapper';
+import Router from 'wrapper/Router';
+import 'styles/tailwind.out.css';
+import 'styles/compatibility-fixes.css';
 
 ReactDOM.render(
     <React.StrictMode>
