@@ -14,16 +14,20 @@ function EmailSettings(props: Props) {
     const regexIsValid = validators.regex;
     const hintIsValid = validators.hint;
 
+    const getCustomSetup = (regex: string, hint: string) => ({
+        label: 'Custom Rule',
+        value: formOptions.EMAIL_REGEX.length,
+        regex: regex,
+        hint: hint,
+    });
+
     // Initial state = custom
     const [setupValue, setSetupValue] = useState(
         formOptions.EMAIL_REGEX.length,
     );
-    const [customSetup, setCustomSetup] = useState({
-        label: 'Custom Rule',
-        value: formOptions.EMAIL_REGEX.length,
-        regex: props.fieldConfig.regex,
-        hint: props.fieldConfig.hint,
-    });
+    const [customSetup, setCustomSetup] = useState(
+        getCustomSetup(props.fieldConfig.regex, props.fieldConfig.hint),
+    );
 
     useEffect(() => {
         const newSetup: configTypes.EmailRegexSetup[] = formOptions.EMAIL_REGEX.filter(
@@ -34,12 +38,9 @@ function EmailSettings(props: Props) {
 
         if (newSetup.length === 0) {
             setSetupValue(formOptions.EMAIL_REGEX.length);
-            setCustomSetup({
-                label: 'Custom Rule',
-                value: formOptions.EMAIL_REGEX.length,
-                regex: props.fieldConfig.regex,
-                hint: props.fieldConfig.hint,
-            });
+            setCustomSetup(
+                getCustomSetup(props.fieldConfig.regex, props.fieldConfig.hint),
+            );
         } else {
             setSetupValue(newSetup[0].value);
         }
@@ -48,9 +49,9 @@ function EmailSettings(props: Props) {
     function updateFieldConfig(newFieldConfig: configTypes.EmailField) {
         props.setFieldConfig(
             newFieldConfig,
-            (newFieldConfig: configTypes.EmailField) =>
-                hintIsValid(newFieldConfig.hint) &&
-                regexIsValid(newFieldConfig.regex),
+            (fieldConfig: configTypes.EmailField) =>
+                hintIsValid(fieldConfig.hint) &&
+                regexIsValid(fieldConfig.regex),
         );
     }
 

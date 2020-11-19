@@ -6,7 +6,7 @@ interface Props {
     message: stateTypes.Message;
     close(): void;
 }
-function MessageComponent(props: Props) {
+function VisualMessage(props: Props) {
     const [size, setSize] = useState('h-0 py-0');
     const [delay, setDelay] = useState('delay-200');
     const [toBeClosed, setToBeClosed] = useState(false);
@@ -63,4 +63,4 @@ function MessageComponent(props: Props) {
     );
 }
 
-export default MessageComponent;
+export default VisualMessage;

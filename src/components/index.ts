@@ -11,16 +11,15 @@ export {default as TextInput} from './form-fields/text-input';
 export {default as TriggerIcon} from './form-fields/trigger-icon';
 export {default as Label} from './form-fields/label';
 
-export {default as ButtonLink} from './links/ButtonLink';
-export {default as TextLink} from './links/TextLink';
+export {default as ButtonLink} from './links/button-link';
+export {default as TextLink} from './links/text-link';
 
-export {default as LogoBanner} from './logos/LogoBanner';
+export {default as LogoBanner} from './logos/logo-banner';
 
-export {default as MessageComponent} from './messages/MessageComponent';
-export {default as MessageQueue} from './messages/MessageQueue';
+export {default as MessageQueue} from './message-queue/message-queue';
 
 export {default as Navbar} from './navbar/navbar';
 
 export {default as LoaderOverlay} from './overlays/loader-overlay';
 
-export {default as MainWrapper} from './wrapper/MainWrapper';
+export {default as MainWrapper} from './wrapper/main-wrapper';

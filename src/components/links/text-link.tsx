@@ -1,9 +1,8 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import assert from 'assert';
-
 import {dispatchers, stateTypes} from 'utilities';
+import Linker from './linker';
 
 interface Props {
     children: string;
@@ -12,7 +11,6 @@ interface Props {
     className?: string;
     closeAllMessages(): void;
 }
-
 function TextLink(props: Props) {
     assert(props.to !== undefined || props.onClick !== undefined);
 
@@ -24,31 +22,13 @@ function TextLink(props: Props) {
                 (props.className !== undefined ? props.className : '')
             }
         >
-            {props.to !== undefined && (
-                <Link
-                    to={props.to}
-                    onClick={() => {
-                        props.closeAllMessages();
-                        if (props.onClick !== undefined) {
-                            props.onClick();
-                        }
-                    }}
-                >
-                    {props.children}
-                </Link>
-            )}
-            {props.to === undefined && (
-                <div
-                    onClick={() => {
-                        props.closeAllMessages();
-                        if (props.onClick !== undefined) {
-                            props.onClick();
-                        }
-                    }}
-                >
-                    {props.children}
-                </div>
-            )}
+            <Linker
+                to={props.to}
+                onClick={props.onClick}
+                closeAllMessages={props.closeAllMessages}
+            >
+                {props.children}
+            </Linker>
         </div>
     );
 }
