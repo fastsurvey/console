@@ -17,7 +17,7 @@ function VisualEmailSettings(props: Props) {
 
     return (
         <div className='flex flex-row'>
-            <div className='flex flex-col justify-center mr-4 w-72 h-26'>
+            <div className='flex flex-col justify-center mr-4 w-72 h-35'>
                 <DropDown
                     {...commonProps}
                     value={props.setupValue}

@@ -18,11 +18,7 @@ function VisualField(props: Props) {
     };
 
     return (
-        <div
-            className={
-                'w-full bg-gray-100 shadow-outline-gray rounded flex flex-col mb-8'
-            }
-        >
+        <div className={'w-full bg-white shadow rounded flex flex-col mb-8'}>
             <div
                 className={'w-full border-gray-300 flex flex-row'}
                 style={{borderBottomWidth: '2px'}}
