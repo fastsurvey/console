@@ -50,11 +50,9 @@ const TextInput = React.forwardRef((props: Props, ref: any) => {
                     'font-weight-500 text-lg text-gray-800 no-selection ' +
                     'border-0 rounded w-full h-12 ' +
                     'py-2 pl-3 pr-10 md:pr-12 ' +
-                    'transition duration-150 ' +
-                    (props.flat
-                        ? 'shadow-outline-gray space-x-1 '
-                        : 'shadow ') +
-                    'focus:outline-none focus:shadow-outline ' +
+                    'transition-all duration-100 ' +
+                    'outline-none focus:ring ring-blue-300 ' +
+                    (props.flat ? 'bg-gray-100 ' : 'bg-white shadow ') +
                     (props.className ? props.className : '') +
                     ' ' +
                     (props.disabled
@@ -69,20 +67,23 @@ const TextInput = React.forwardRef((props: Props, ref: any) => {
                     className={
                         'absolute top-0 right-0 w-2 h-2 mt-5 mr-2 rounded-full ' +
                         'transition-colors duration-150 ' +
-                        (props.hint.fulfilled ? 'bg-green-500' : 'bg-magenta')
+                        (props.hint.fulfilled
+                            ? 'bg-green-500 '
+                            : 'bg-magenta ') +
+                        (focused ? 'opacity-80 ' : 'opacity-50 ')
                     }
                 />
             )}
             {props.hint && (
                 <div
                     className={
-                        'relative z-50 w-full px-1 leading-6 ' +
-                        'overflow-hidden font-weight-600 ' +
+                        'relative w-full px-1 leading-6 mt-1 mb-2 ' +
+                        'overflow-hidden font-weight-500 ' +
+                        'transition-all duration-150 ' +
                         (props.hint.fulfilled
-                            ? 'text-green-500'
-                            : 'text-magenta') +
-                        ' transition-all duration-150 ' +
-                        (focused ? 'h-8 py-1 mb-2' : 'h-0 py-0 mb-0')
+                            ? 'text-green-500 '
+                            : 'text-magenta ') +
+                        (focused ? 'opacity-80 ' : 'opacity-50 ')
                     }
                 >
                     {props.hint.text}

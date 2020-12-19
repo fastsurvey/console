@@ -26,9 +26,7 @@ const VisualDropDown = (props: Props) => (
             className={
                 'flex flex-col bg-white rounded ' +
                 (props.hideChevron ? 'text-center ' : ' ') +
-                (props.isOpen
-                    ? 'shadow-outline-gray-elevated '
-                    : 'shadow-outline-gray ')
+                (props.isOpen ? 'ring ring-blue-300 shadow-lg ' : ' ')
             }
         >
             <div
@@ -36,7 +34,9 @@ const VisualDropDown = (props: Props) => (
                     'h-12 px-3 py-2 leading-8 ' +
                     'w-full flex flex-row ' +
                     'transition-colors duration-200 ' +
-                    (props.isOpen ? 'bg-gray-300 ' : ' ') +
+                    (props.isOpen
+                        ? 'rounded-t bg-gray-200 '
+                        : 'rounded bg-gray-100 ') +
                     (props.disabled
                         ? 'cursor-not-allowed bg-gray-200 rounded '
                         : 'cursor-pointer ')
@@ -72,7 +72,7 @@ const VisualDropDown = (props: Props) => (
                         className={
                             'relative w-full h-12 px-3 py-2 ' +
                             'leading-8 cursor-pointer ' +
-                            'hover:bg-gray-100 ' +
+                            'hover:bg-gray-100 bg-white ' +
                             (option.value === props.activeOption.value
                                 ? 'font-weight-700 '
                                 : 'font-weight-500 ')

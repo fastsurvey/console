@@ -1,4 +1,7 @@
 // prettier-ignore
+
+const colors = require('tailwindcss/colors')
+
 module.exports = {
     purge: {
         enabled: false,
@@ -14,8 +17,11 @@ module.exports = {
         extend: {
             colors: {
                 'magenta': '#FD0948',
-                'beige-300': '#E4C3AD',
-                'beige-500': '#D19A75',
+                gray: colors.blueGray,
+                blue: colors.blue,
+                red: colors.red,
+                green: colors.green,
+                yellow: colors.amber,
             },
             opacity: {
                 '60': '.6',
