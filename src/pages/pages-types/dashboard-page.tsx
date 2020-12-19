@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {stateTypes, configTypes, dispatchers, fetchSurveys} from 'utilities';
 import {Navbar} from 'components';
-import 'styles/dashboard-page.scss';
+import 'styles/dashboard-page.css';
 
 interface Props {
     children: React.ReactNode;

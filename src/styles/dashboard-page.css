@@ -10,10 +10,10 @@
     width: calc(100vw - 4rem);
     padding: 0.8rem 2rem 2rem 2rem;
     min-height: calc(100% - 4rem);
+}
 
-    h3:first-child {
-        padding-left: 2.5rem;
-    }
+#MobileContent h3:first-child {
+    padding-left: 2.5rem;
 }
 
 #ConfigEditor,

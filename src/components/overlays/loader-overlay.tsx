@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {stateTypes} from 'utilities';
 import {LogoBanner} from 'components';
-import 'styles/loader.scss';
+import 'styles/loader.css';
 
 interface Props {
     loggingIn: boolean;
