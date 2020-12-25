@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {stateTypes, configTypes, validators} from 'utilities';
-import VisualSettings from './visual-settings';
+import VisualSettings2 from './visual-settings-2';
 
 interface Props {
     configs: configTypes.SurveyConfig[] | undefined;
@@ -29,7 +29,7 @@ function Settings(props: Props) {
     }
 
     return (
-        <VisualSettings
+        <VisualSettings2
             {...{updateConfig, surveyNameIsValid}}
             config={props.config}
             setConfig={props.setConfig}

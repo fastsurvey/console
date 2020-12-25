@@ -46,7 +46,7 @@ const TextArea = React.forwardRef((props: Props, ref: any) => {
         >
             <textarea
                 disabled={props.disabled === true}
-                rows={props.rows ? props.rows : 4}
+                rows={props.rows ? props.rows : 2}
                 ref={ref}
                 onKeyDown={handleKeyDown}
                 placeholder={placeholder}

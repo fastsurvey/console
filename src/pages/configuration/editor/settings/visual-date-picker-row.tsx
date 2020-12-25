@@ -10,8 +10,8 @@ interface Props {
     onChange(timestamp: number): any;
 }
 const VisualDatePickerRow = (props: Props) => (
-    <div className='flex flex-row items-center justify-center w-full mb-4'>
-        <Label className='w-14'>{props.label}:</Label>
+    <div className='flex flex-row items-start w-full mb-4'>
+        <Label className='w-20%'>{props.label}:</Label>
         <DatePicker
             disabled={!props.config.draft}
             timestamp={props.timestamp}

@@ -17,8 +17,8 @@ interface Props {
     disabled: boolean;
 }
 const VisualTextInputRow = (props: Props) => (
-    <div className={`flex flex-row items-start ${props.className}`}>
-        <Label>{props.label}:</Label>
+    <div className={'flex flex-row items-start w-full'}>
+        <Label className='w-20%'>{props.label}:</Label>
         <TextInput
             disabled={props.disabled}
             flat
@@ -32,9 +32,10 @@ const VisualTextInputRow = (props: Props) => (
             placeholder={props.placeholder}
             hint={props.hint}
             wrapperClassName={
-                props.wrapperClassName
+                'w-80% ' +
+                (props.wrapperClassName
                     ? props.wrapperClassName
-                    : 'self-stretch flex-grow'
+                    : 'self-stretch flex-grow')
             }
         />
     </div>
