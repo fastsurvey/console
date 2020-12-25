@@ -18,7 +18,11 @@ function VisualField(props: Props) {
     };
 
     return (
-        <div className={'w-full bg-white shadow rounded flex flex-col mb-8'}>
+        <div
+            className={
+                'w-full border-l-4 border-emerald-300 flex flex-col mb-8'
+            }
+        >
             <div
                 className={'w-full border-gray-300 flex flex-row'}
                 style={{borderBottomWidth: '2px'}}
@@ -26,13 +30,13 @@ function VisualField(props: Props) {
                 <div className={'flex flex-row w-40'}>
                     <div
                         className={
-                            'bg-gray-300 rounded-tl rounded-br h-10 leading-10 font-weight-700 text-xl flex flex-row'
+                            'bg-emerald-300 text-emerald-800 rounded-r h-10 leading-10 font-weight-700 text-xl flex flex-row'
                         }
                     >
                         <div className='w-10 h-10 p-2 cursor-move'>
                             {icons.drag}
                         </div>
-                        <div className='pr-4'>{props.fieldConfig.type}</div>
+                        <div className='pr-3'>{props.fieldConfig.type}</div>
                     </div>
                 </div>
                 <div className='flex flex-col self-stretch flex-grow'>

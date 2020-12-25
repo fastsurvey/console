@@ -2,7 +2,7 @@ import React from 'react';
 import {configTypes, formatters, formOptions, hints} from 'utilities';
 import {DropDown, TextArea, Label, VisualTextInputRow} from 'components';
 import VisualDatePickerRow from './visual-date-picker-row';
-import {ControlPanelImage} from 'assets';
+import {icons} from 'assets';
 
 interface Props {
     config: configTypes.SurveyConfig;
@@ -13,10 +13,15 @@ interface Props {
     commonProps: any;
 }
 const VisualSettings2 = (props: Props) => (
-    <div className='flex flex-row items-start w-full my-8 border-l-4 border-blue-300'>
+    <div className='flex flex-row items-start w-full my-8 border-l-4 border-yellow-200'>
         <div className='w-20%'>
-            <div className='pl-2 text-2xl text-blue-300 font-weight-600'>
-                General Settings
+            <div
+                className={
+                    'bg-yellow-200 text-yellow-800 rounded-r h-10 leading-10 font-weight-700 text-xl inline-flex'
+                }
+            >
+                <div className='w-10 h-10 p-2'>{icons.tune}</div>
+                <div className='pr-3'>General Settings</div>
             </div>
         </div>
         <div className='flex flex-col w-80% min-h-full'>

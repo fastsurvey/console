@@ -22,6 +22,7 @@ module.exports = {
                 red: colors.red,
                 green: colors.green,
                 yellow: colors.amber,
+                emerald: colors.emerald,
             },
             opacity: {
                 '60': '.6',
