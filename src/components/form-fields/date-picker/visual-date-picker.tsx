@@ -26,7 +26,7 @@ function VisualDatePicker(props: Props) {
     });
 
     return (
-        <React.Fragment>
+        <div className='flex flex-row items-center justify-start w-80%'>
             <div className='mr-2 w-14'>
                 <DropDown
                     {...commonProps}
@@ -74,7 +74,7 @@ function VisualDatePicker(props: Props) {
                     options={formOptions.MINUTES}
                 />
             </div>
-        </React.Fragment>
+        </div>
     );
 }
 

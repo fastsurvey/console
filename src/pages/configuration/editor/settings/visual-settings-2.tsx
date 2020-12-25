@@ -49,8 +49,8 @@ const VisualSettings2 = (props: Props) => (
                         });
                     }}
                     charLimits={{min: 0, max: 2000}}
-                    className='leading-8 w-80%'
-                    wrapperClassName='self-stretch flex-grow'
+                    className='leading-8'
+                    wrapperClassName='w-80%'
                 />
             </div>
 
