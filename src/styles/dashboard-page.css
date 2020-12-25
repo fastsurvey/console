@@ -1,8 +1,8 @@
 #RegularContent {
-    position: relative;
-    margin-left: 16rem;
-    width: calc(100vw - 16rem);
-    min-height: calc(100vh);
+    /*position: relative;*/
+    /*margin-left: 16rem;*/
+    /*width: calc(100vw - 16rem);*/
+    /*min-height: calc(100vh);*/
 }
 
 #MobileContent {
@@ -21,3 +21,4 @@
     margin-left: 20rem;
     width: calc(100vw - 36rem);
 }
+

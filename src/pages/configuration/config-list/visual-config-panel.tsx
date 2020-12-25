@@ -32,7 +32,7 @@ function ConfigPreviewPanel(props: Props) {
         <div
             onClick={props.onClick}
             className={
-                'w-full p-2 my-1 rounded-l shadow ' +
+                'w-full py-2 px-3 my-1 rounded-l shadow ' +
                 'no-selection border-r-4 border-' +
                 statusColor +
                 (props.selected
