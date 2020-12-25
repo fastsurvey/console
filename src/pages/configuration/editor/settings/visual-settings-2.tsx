@@ -2,7 +2,6 @@ import React from 'react';
 import {configTypes, formatters, formOptions, hints} from 'utilities';
 import {DropDown, TextArea, Label, VisualTextInputRow} from 'components';
 import VisualDatePickerRow from './visual-date-picker-row';
-import {icons} from 'assets';
 
 interface Props {
     config: configTypes.SurveyConfig;
@@ -13,18 +12,17 @@ interface Props {
     commonProps: any;
 }
 const VisualSettings2 = (props: Props) => (
-    <div className='flex flex-row items-start w-full my-8 border-l-4 border-yellow-200'>
-        <div className='w-20%'>
+    <div className='flex flex-col items-start w-full mt-8 mb-4 -ml-px overflow-hidden bg-white border-l-4 border-yellow-200 rounded-r rounded-tl shadow-md'>
+        <div className='w-full mb-4 mr-px'>
             <div
                 className={
-                    'bg-yellow-200 text-yellow-800 rounded-r h-10 leading-10 font-weight-700 text-xl inline-flex'
+                    'sm:bg-red-200 md:bg-blue-200 lg:bg-green-200 text-yellow-700 rounded-br h-10 leading-10 font-weight-700 text-xl inline-flex '
                 }
             >
-                <div className='w-10 h-10 p-2'>{icons.tune}</div>
-                <div className='pr-3'>General Settings</div>
+                <div className='px-3'>General Settings</div>
             </div>
         </div>
-        <div className='flex flex-col w-80% min-h-full'>
+        <div className='flex flex-col w-full min-h-full p-2 ml-px'>
             <VisualTextInputRow
                 {...props.commonProps}
                 label='Title'
@@ -42,7 +40,7 @@ const VisualSettings2 = (props: Props) => (
                 hint={hints.surveyName(props.config, props.surveyNameIsValid)}
             />
             <div className='flex flex-row items-start w-full mb-8'>
-                <Label className='w-20%'>Description:</Label>
+                <Label className='w-40% xl:w-30% 2xl:w-20%'>Description:</Label>
                 <TextArea
                     {...props.commonProps}
                     flat
@@ -55,7 +53,7 @@ const VisualSettings2 = (props: Props) => (
                     }}
                     charLimits={{min: 0, max: 2000}}
                     className='leading-8'
-                    wrapperClassName='w-80%'
+                    wrapperClassName='w-60% xl:w-70% 2xl:w-80%'
                 />
             </div>
 
@@ -75,8 +73,8 @@ const VisualSettings2 = (props: Props) => (
             />
 
             <div className={'flex flex-row items-start w-full mt-8 mb-2'}>
-                <Label className='w-20%'>Authentication:</Label>
-                <div className='w-80%'>
+                <Label className='w-30% xl:w-30% 2xl:w-20%'>Auth Mode:</Label>
+                <div className='w-70% xl:w-70% 2xl:w-80%'>
                     <DropDown
                         {...props.commonProps}
                         value={props.config.mode}
@@ -93,7 +91,8 @@ const VisualSettings2 = (props: Props) => (
 
             <VisualTextInputRow
                 {...props.commonProps}
-                label='Submission Limit'
+                label='Limit to'
+                postfix=' submissions'
                 value={props.config.submission_limit.toString()}
                 onChange={(newValue: string) => ({
                     submission_limit: formatters.atoi(newValue),

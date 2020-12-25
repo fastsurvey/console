@@ -33,10 +33,6 @@ module.exports = {
             lineHeight: {
                 '12': '3rem'
             },
-            boxShadow: {
-                'outline-gray': '0 0 0 2px rgba(226, 232, 240, 1.0)',
-                'outline-gray-elevated': '0 0 0 2px rgba(226, 232, 240, 1.0), 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.12)',
-            },
             transitionProperty: {
                 'height': 'height',
                 'width': 'width',
@@ -134,13 +130,17 @@ module.exports = {
                 '144': '36.0rem',
 
                 '10%': '10%',
+                '15%': '15%',
                 '20%': '20%',
+                '25%': '25%',
                 '30%': '30%',
                 '40%': '40%',
                 '50%': '50%',
                 '60%': '60%',
                 '70%': '70%',
+                '75%': '75%',
                 '80%': '80%',
+                '85%': '85%',
                 '90%': '90%',
             },
             inset: {

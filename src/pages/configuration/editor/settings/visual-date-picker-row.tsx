@@ -11,7 +11,7 @@ interface Props {
 }
 const VisualDatePickerRow = (props: Props) => (
     <div className='flex flex-row items-start w-full mb-4'>
-        <Label className='w-20%'>{props.label}:</Label>
+        <Label className='w-40% xl:w-30% 2xl:w-20%'>{props.label}:</Label>
         <DatePicker
             disabled={!props.config.draft}
             timestamp={props.timestamp}
@@ -21,6 +21,7 @@ const VisualDatePickerRow = (props: Props) => (
                     ...props.onChange(timestamp),
                 });
             }}
+            className='w-60% xl:w-70% 2xl:w-80%'
         />
     </div>
 );

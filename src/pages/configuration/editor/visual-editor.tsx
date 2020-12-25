@@ -31,7 +31,7 @@ function VisualEditor(props: Props) {
             />
             <div
                 id='ConfigEditor'
-                className='flex flex-col items-center px-8 pb-64 no-selection'
+                className='flex flex-col items-center px-8 pb-64 bg-gray-100 no-selection'
                 style={{paddingTop: 'calc(6rem - 4px)'}}
             >
                 <Settings

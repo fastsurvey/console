@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 
 interface Props {
     value: string;
+    postfix?: string;
     onChange(newValue: string): void;
     type?: string;
     placeholder?: string;
@@ -62,6 +63,14 @@ const TextInput = React.forwardRef((props: Props, ref: any) => {
                 type={props.type ? props.type : 'text'}
                 autoComplete={props.autoComplete ? props.autoComplete : ''}
             />
+            <div
+                className={
+                    'absolute top-0 right-0 mr-6 my-2 leading-8 ' +
+                    'font-weight-500 text-lg text-gray-800 no-selection '
+                }
+            >
+                {props.postfix}
+            </div>
             {props.hint && !props.hint.hideDot && (
                 <div
                     className={

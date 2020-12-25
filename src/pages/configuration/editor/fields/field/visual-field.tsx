@@ -14,37 +14,31 @@ function VisualField(props: Props) {
     const commonInputProps = {
         disabled: props.disabled,
         flat: true,
-        wrapperClassName: 'self-stretch flex-grow mr-2',
+        wrapperClassName: 'w-85%',
     };
 
     return (
         <div
             className={
-                'w-full border-l-4 border-emerald-300 flex flex-col mb-8'
+                'w-full border-l-4 border-emerald-300 my-4 shadow-md bg-white rounded-tl rounded-r overflow-hidden'
             }
         >
-            <div
-                className={'w-full border-gray-300 flex flex-row'}
-                style={{borderBottomWidth: '2px'}}
-            >
-                <div className={'flex flex-row w-40'}>
+            <div className={'w-full flex flex-row'}>
+                <div className={'flex flex-row w-15%'}>
                     <div
                         className={
-                            'bg-emerald-300 text-emerald-800 rounded-r h-10 leading-10 font-weight-700 text-xl flex flex-row'
+                            'bg-emerald-300 text-emerald-800 rounded-br h-10 leading-10 font-weight-700 text-xl flex flex-row'
                         }
                     >
-                        <div className='w-10 h-10 p-2 cursor-move'>
+                        <div className='w-10 h-10 p-2 opacity-50 cursor-not-allowed'>
                             {icons.drag}
                         </div>
                         <div className='pr-3'>{props.fieldConfig.type}</div>
                     </div>
                 </div>
-                <div className='flex flex-col self-stretch flex-grow'>
-                    <div
-                        className='flex flex-row items-start w-full pt-2 '
-                        style={{paddingBottom: 'calc(0.5rem + 2px)'}}
-                    >
-                        <div className='h-12 mx-3 text-xl text-right w-28 leading-12 font-weight-600'>
+                <div className='flex flex-col w-85% p-2'>
+                    <div className='flex flex-row items-start w-full '>
+                        <div className='h-12 mx-3 text-xl text-right w-15% leading-12 font-weight-600'>
                             Title:
                         </div>
                         <TextInput
@@ -61,10 +55,10 @@ function VisualField(props: Props) {
                         />
                     </div>
                     <div
-                        className='flex flex-row items-start w-full'
+                        className='flex flex-row items-start w-full mb-8'
                         style={{paddingBottom: 'calc(0.25rem - 2px)'}}
                     >
-                        <div className='h-12 mx-3 text-xl text-right w-28 font-weight-600 leading-12'>
+                        <div className='h-12 mx-3 text-xl text-right w-15% font-weight-600 leading-12'>
                             Description:
                         </div>
                         <TextArea
@@ -78,11 +72,12 @@ function VisualField(props: Props) {
                                 })
                             }
                             charLimits={{min: 0, max: 2000}}
+                            wrapperClassName='w-85%'
                         />
                     </div>
+                    {props.children}
                 </div>
             </div>
-            <div className={'w-full p-2'}>{props.children}</div>
         </div>
     );
 }
