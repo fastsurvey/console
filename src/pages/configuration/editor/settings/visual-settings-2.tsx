@@ -16,7 +16,9 @@ const VisualSettings2 = (props: Props) => (
         <div className='w-full mb-4 mr-px'>
             <div
                 className={
-                    'sm:bg-red-200 md:bg-blue-200 lg:bg-green-200 text-yellow-700 rounded-br h-10 leading-10 font-weight-700 text-xl inline-flex '
+                    'rounded-br h-10 leading-10 font-weight-700 text-xl inline-flex ' +
+                    'sm:bg-red-200 md:bg-blue-200 lg:bg-green-200 xl:bg-yellow-200 2xl:bg-red-200 ' +
+                    'text-yellow-700 '
                 }
             >
                 <div className='px-3'>General Settings</div>
