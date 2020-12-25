@@ -32,10 +32,9 @@ function VisualEditor(props: Props) {
             <div
                 className={
                     'left-0 right-0 flex flex-col items-center ' +
-                    'px-8 bg-gray-100 no-selection ' +
+                    'pt-12 px-8 bg-gray-100 no-selection ' +
                     'pb-64 lg:ml-104 xl:ml-124 2xl:ml-144 '
                 }
-                style={{paddingTop: 'calc(6rem - 4px)'}}
             >
                 <Settings
                     config={props.localConfig}

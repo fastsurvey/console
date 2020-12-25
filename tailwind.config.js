@@ -30,6 +30,9 @@ module.exports = {
                 '80': '.8',
                 '90': '.9',
             },
+            boxShadow: {
+                'control-strip': '0 10px 10px 0 rgb(241, 245, 249)'
+            },
             lineHeight: {
                 '12': '3rem'
             },

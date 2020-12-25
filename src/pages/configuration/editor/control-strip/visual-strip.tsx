@@ -6,9 +6,9 @@ interface Props {
 const VisualStrip = (props: Props) => (
     <div
         className={
-            'left-0 right-0 p-4 z-40 fixed center-content ' +
-            'border-b-4 border-gray-500 ' +
-            'bg-gray-300 no-selection ' +
+            'left-0 right-0 py-2 z-40 fixed center-content ' +
+            'shadow-control-strip ' +
+            'bg-gray-100 no-selection ' +
             'lg:ml-104 xl:ml-124 2xl:ml-144 '
         }
     >
