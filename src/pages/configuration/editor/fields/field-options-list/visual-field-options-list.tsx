@@ -2,6 +2,7 @@ import React from 'react';
 import {configTypes, hints} from 'utilities';
 import {icons} from 'assets';
 import {TextInput, TriggerIcon} from 'components';
+import EditorFormRow from 'components/layout/editor-form-row';
 
 interface Props {
     fieldConfig: configTypes.RadioField | configTypes.SelectionField;
@@ -24,10 +25,7 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
     };
 
     return (
-        <div className='flex flex-row w-full'>
-            <div className='h-12 ml-2 mr-3 text-xl font-weight-600 leading-12'>
-                Options:
-            </div>
+        <EditorFormRow label='Options' className='mb-2'>
             <div className='flex flex-col w-full'>
                 {props.fieldConfig.fields.map((optionField, optionIndex) => (
                     <div
@@ -85,11 +83,10 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
                         />
                     </div>
                 ))}
-                <div className='w-full pr-12'>
+                <div className='w-full pr-12 opacity-70'>
                     <TextInput
-                        flat
+                        {...commonProps}
                         ref={ref}
-                        wrapperClassName={'flex-max opacity-60 '}
                         value={props.newOption}
                         onChange={props.setNewOption}
                         placeholder='New option'
@@ -102,7 +99,7 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
                     />
                 </div>
             </div>
-        </div>
+        </EditorFormRow>
     );
 });
 
