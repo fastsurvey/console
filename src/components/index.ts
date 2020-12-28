@@ -3,6 +3,9 @@ export {default as ButtonRow} from './buttons/button-row';
 
 export {default as VisualTextInputRow} from './form-abstractions/visual-text-input-row';
 
+export {default as EditorFormCard} from './layout/editor-form-card';
+export {default as EditorFormRow} from './layout/editor-form-row';
+
 export {default as DatePicker} from './form-fields/date-picker/date-picker';
 export {default as Checkbox} from './form-fields/check-box';
 export {default as DropDown} from './form-fields/drop-down/drop-down';

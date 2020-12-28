@@ -1,7 +1,6 @@
 import React from 'react';
 import {configTypes} from 'utilities';
-import {Checkbox} from 'components';
-import EditorFormRow from 'components/layout/editor-form-row';
+import {Checkbox, EditorFormRow} from 'components';
 
 interface Props {
     fieldConfig: configTypes.OptionField;

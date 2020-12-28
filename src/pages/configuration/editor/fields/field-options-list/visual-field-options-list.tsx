@@ -1,8 +1,7 @@
 import React from 'react';
 import {configTypes, hints} from 'utilities';
 import {icons} from 'assets';
-import {TextInput, TriggerIcon} from 'components';
-import EditorFormRow from 'components/layout/editor-form-row';
+import {TextInput, TriggerIcon, EditorFormRow} from 'components';
 
 interface Props {
     fieldConfig: configTypes.RadioField | configTypes.SelectionField;

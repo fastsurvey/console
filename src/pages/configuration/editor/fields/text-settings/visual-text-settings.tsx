@@ -1,7 +1,6 @@
 import React from 'react';
 import {configTypes, formatters, hints} from 'utilities';
-import {TextInput, VisualTextInputRow} from 'components';
-import EditorFormRow from 'components/layout/editor-form-row';
+import {TextInput, EditorFormRow} from 'components';
 
 interface Props {
     fieldConfig: configTypes.TextField;

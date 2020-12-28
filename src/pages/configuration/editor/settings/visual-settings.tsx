@@ -1,9 +1,14 @@
 import React from 'react';
 import {configTypes, formatters, formOptions, hints} from 'utilities';
-import {DropDown, TextArea, TextInput, DatePicker} from 'components';
-import EditorFormRow from 'components/layout/editor-form-row';
+import {
+    DropDown,
+    TextArea,
+    TextInput,
+    DatePicker,
+    EditorFormCard,
+    EditorFormRow,
+} from 'components';
 import {icons} from 'assets';
-import EditorFormCard from 'components/layout/editor-form-card';
 
 interface Props {
     config: configTypes.SurveyConfig;

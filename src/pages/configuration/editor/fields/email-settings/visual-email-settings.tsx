@@ -1,7 +1,6 @@
 import React from 'react';
 import {configTypes, formOptions, hints} from 'utilities';
-import {DropDown, TextInput} from 'components';
-import EditorFormRow from 'components/layout/editor-form-row';
+import {DropDown, TextInput, EditorFormRow} from 'components';
 
 interface Props {
     setupValue: number;

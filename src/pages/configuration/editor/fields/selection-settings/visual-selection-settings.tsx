@@ -1,8 +1,7 @@
 import React from 'react';
 import {configTypes, formatters, hints} from 'utilities';
-import {TextInput, VisualTextInputRow} from 'components';
+import {TextInput, EditorFormRow} from 'components';
 import FieldOptionsList from '../field-options-list/field-options-list';
-import EditorFormRow from 'components/layout/editor-form-row';
 
 interface Props {
     fieldConfig: configTypes.SelectionField;

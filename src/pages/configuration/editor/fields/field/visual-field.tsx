@@ -1,9 +1,7 @@
 import React from 'react';
 import {configTypes, hints} from 'utilities';
 import {icons} from 'assets';
-import {TextArea, TextInput} from 'components';
-import EditorFormCard from 'components/layout/editor-form-card';
-import EditorFormRow from 'components/layout/editor-form-row';
+import {TextArea, TextInput, EditorFormCard, EditorFormRow} from 'components';
 
 interface Props {
     fieldConfig: configTypes.SurveyField;
