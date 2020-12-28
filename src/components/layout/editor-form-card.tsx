@@ -31,7 +31,7 @@ function EditorFormCard(props: Props) {
                 className={
                     'absolute left-0 right-0 top-0 bottom-0 z-0 ' +
                     'font-weight-600 text-lg leading-10 rounded-t ' +
-                    'flex flex-row items-start justify-start ' +
+                    'flex flex-row items-start justify-start rounded-br ' +
                     colors
                 }
             >
@@ -42,7 +42,8 @@ function EditorFormCard(props: Props) {
             </div>
             <div
                 className={
-                    'z-10 flex flex-col left-0 right-0 min-h-full p-2 pt-4 ml-1 rounded-tl shadow-md bg-white mt-10'
+                    'z-10 flex flex-col left-0 right-0 min-h-full p-2 pt-4 ml-1 ' +
+                    'rounded-tl rounded-br shadow-md bg-white mt-10'
                 }
             >
                 {props.children}

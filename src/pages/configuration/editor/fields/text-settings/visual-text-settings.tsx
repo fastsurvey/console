@@ -1,6 +1,7 @@
 import React from 'react';
 import {configTypes, formatters, hints} from 'utilities';
-import {VisualTextInputRow} from 'components';
+import {TextInput, VisualTextInputRow} from 'components';
+import EditorFormRow from 'components/layout/editor-form-row';
 
 interface Props {
     fieldConfig: configTypes.TextField;
@@ -9,33 +10,39 @@ interface Props {
 }
 function VisualTextSettings(props: Props) {
     const commonProps = {
-        config: props.fieldConfig,
         disabled: props.disabled,
-        updateConfig: props.updateFieldConfig,
-        wrapperClassName: 'w-28',
+        flat: true,
     };
 
     return (
-        <div className='flex flex-row gap-x-8'>
-            <VisualTextInputRow
-                {...commonProps}
-                label='Min. Characters'
-                value={props.fieldConfig.min_chars.toString()}
-                onChange={(newValue: string) => ({
-                    min_chars: formatters.atoi(newValue),
-                })}
-                hint={hints.minChars(props.fieldConfig)}
-            />
-            <VisualTextInputRow
-                {...commonProps}
-                label='Max. Characters'
-                value={props.fieldConfig.max_chars.toString()}
-                onChange={(newValue: string) => ({
-                    max_chars: formatters.atoi(newValue),
-                })}
-                hint={hints.maxChars(props.fieldConfig)}
-            />
-        </div>
+        <>
+            <EditorFormRow label='Min. Characters' className='mb-1'>
+                <TextInput
+                    {...commonProps}
+                    value={props.fieldConfig.min_chars.toString()}
+                    onChange={(newValue: string) =>
+                        props.updateFieldConfig({
+                            ...props.fieldConfig,
+                            min_chars: formatters.atoi(newValue),
+                        })
+                    }
+                    hint={hints.minChars(props.fieldConfig)}
+                />
+            </EditorFormRow>
+            <EditorFormRow label='Max. Characters' className='mb-1'>
+                <TextInput
+                    {...commonProps}
+                    value={props.fieldConfig.max_chars.toString()}
+                    onChange={(newValue: string) =>
+                        props.updateFieldConfig({
+                            ...props.fieldConfig,
+                            max_chars: formatters.atoi(newValue),
+                        })
+                    }
+                    hint={hints.maxChars(props.fieldConfig)}
+                />
+            </EditorFormRow>
+        </>
     );
 }
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import {configTypes} from 'utilities';
 import {Checkbox} from 'components';
+import EditorFormRow from 'components/layout/editor-form-row';
 
 interface Props {
     fieldConfig: configTypes.OptionField;
@@ -8,23 +9,18 @@ interface Props {
     disabled: boolean;
 }
 const VisualOptionSettings = (props: Props) => (
-    <div className='flex flex-row'>
-        <div className='flex flex-row items-start'>
-            <div className='h-12 ml-2 mr-3 text-xl font-weight-600 leading-12'>
-                Required:
-            </div>
-            <Checkbox
-                disabled={props.disabled}
-                checked={props.fieldConfig.mandatory}
-                onChange={(newValue: boolean) =>
-                    props.updateFieldConfig({
-                        ...props.fieldConfig,
-                        mandatory: newValue,
-                    })
-                }
-            />
-        </div>
-    </div>
+    <EditorFormRow label='Required' className='mb-1'>
+        <Checkbox
+            disabled={props.disabled}
+            checked={props.fieldConfig.mandatory}
+            onChange={(newValue: boolean) =>
+                props.updateFieldConfig({
+                    ...props.fieldConfig,
+                    mandatory: newValue,
+                })
+            }
+        />
+    </EditorFormRow>
 );
 
 export default VisualOptionSettings;
