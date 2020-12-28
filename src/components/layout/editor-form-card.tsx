@@ -24,7 +24,7 @@ function EditorFormCard(props: Props) {
             className={
                 'relative flex flex-col w-full my-4 ' +
                 'bg-white rounded-t rounded-br ' +
-                `shadow-md overflow-hidden ${props.className}`
+                `shadow-md ${props.className}`
             }
         >
             <div
@@ -35,7 +35,9 @@ function EditorFormCard(props: Props) {
                     colors
                 }
             >
-                <div className='w-10 h-10 p-2 ml-1'>{props.icon}</div>
+                <div className='w-10 h-10 p-2 ml-1 opacity-60'>
+                    {props.icon}
+                </div>
                 <div>{props.label}</div>
             </div>
             <div

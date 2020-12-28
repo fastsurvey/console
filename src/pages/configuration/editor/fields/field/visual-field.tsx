@@ -3,6 +3,7 @@ import {configTypes, hints} from 'utilities';
 import {icons} from 'assets';
 import {TextArea, TextInput} from 'components';
 import EditorFormCard from 'components/layout/editor-form-card';
+import EditorFormRow from 'components/layout/editor-form-row';
 
 interface Props {
     fieldConfig: configTypes.SurveyField;
@@ -15,7 +16,6 @@ function VisualField(props: Props) {
     const commonInputProps = {
         disabled: props.disabled,
         flat: true,
-        wrapperClassName: 'w-85%',
     };
 
     return (
@@ -24,43 +24,35 @@ function VisualField(props: Props) {
             icon={icons.widgets}
             color='green'
         >
-            <div className='flex flex-row items-start w-full '>
-                <div className='h-12 mx-3 text-xl text-right w-15% leading-12 font-weight-600'>
-                    Title:
-                </div>
+            <EditorFormRow label='Title' className='mb-1'>
                 <TextInput
                     {...commonInputProps}
+                    placeholder='The title of this field'
                     value={props.fieldConfig.title}
-                    onChange={(newValue: string) =>
+                    onChange={(newValue: string) => {
                         props.updateFieldConfig({
                             ...props.fieldConfig,
                             title: newValue,
-                        })
-                    }
-                    placeholder='The title of your survey'
+                        });
+                    }}
                     hint={hints.title(props.fieldConfig.title)}
                 />
-            </div>
-            <div
-                className='flex flex-row items-start w-full mb-8'
-                style={{paddingBottom: 'calc(0.25rem - 2px)'}}
-            >
-                <div className='h-12 mx-3 text-xl text-right w-15% font-weight-600 leading-12'>
-                    Description:
-                </div>
+            </EditorFormRow>
+
+            <EditorFormRow label='Description' className='mb-8'>
                 <TextArea
                     {...commonInputProps}
-                    rows={2}
                     value={props.fieldConfig.description}
-                    onChange={(newValue: string) =>
+                    onChange={(newValue: string) => {
                         props.updateFieldConfig({
                             ...props.fieldConfig,
-                            description: newValue,
-                        })
-                    }
+                            ...{description: newValue},
+                        });
+                    }}
                     charLimits={{min: 0, max: 2000}}
                 />
-            </div>
+            </EditorFormRow>
+
             {props.children}
         </EditorFormCard>
     );
