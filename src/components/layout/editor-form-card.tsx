@@ -11,7 +11,7 @@ function EditorFormCard(props: Props) {
     let colors: string;
     switch (props.color) {
         case 'green':
-            colors = 'bg-gray-300 text-gray-700';
+            colors = 'bg-emerald-300 text-emerald-800';
             break;
         case 'gray':
         default:
