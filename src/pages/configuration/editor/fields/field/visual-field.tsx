@@ -72,7 +72,6 @@ function VisualField(props: Props) {
                                 })
                             }
                             charLimits={{min: 0, max: 2000}}
-                            wrapperClassName='w-85%'
                         />
                     </div>
                     {props.children}

@@ -4,7 +4,7 @@ const colors = require('tailwindcss/colors')
 
 module.exports = {
     purge: {
-        enabled: true,
+        enabled: false,
         content: [
             './src/**/*.js',
             './src/**/*.jsx',
@@ -138,9 +138,13 @@ module.exports = {
                 '20%': '20%',
                 '25%': '25%',
                 '30%': '30%',
+                '35%': '35%',
                 '40%': '40%',
+                '45%': '45%',
                 '50%': '50%',
+                '55%': '55%',
                 '60%': '60%',
+                '65%': '65%',
                 '70%': '70%',
                 '75%': '75%',
                 '80%': '80%',

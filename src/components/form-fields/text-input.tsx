@@ -86,7 +86,7 @@ const TextInput = React.forwardRef((props: Props, ref: any) => {
             {props.hint && (
                 <div
                     className={
-                        'relative w-full px-1 leading-6 mt-1 mb-2 ' +
+                        'relative w-full px-1 leading-6 mt-1 mb-1 ' +
                         'overflow-hidden font-weight-500 ' +
                         'transition-all duration-150 ' +
                         (props.hint.fulfilled

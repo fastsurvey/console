@@ -25,7 +25,7 @@ const TextArea = React.forwardRef((props: Props, ref: any) => {
     }
 
     return (
-        <div className='relative w-full'>
+        <>
             <textarea
                 disabled={props.disabled === true}
                 rows={props.rows ? props.rows : 2}
@@ -39,8 +39,9 @@ const TextArea = React.forwardRef((props: Props, ref: any) => {
                 className={
                     'font-weight-500 text-lg leading-8 no-selection ' +
                     'border-0 rounded w-full min-h-12 max-h-128 ' +
-                    'py-2 pl-3 pr-12 text-gray-800 leading-8 ' +
-                    'transition-all duration-100 bg-gray-100 ' +
+                    'py-2 pl-3 pr-12 leading-8 bg-gray-100 ' +
+                    'transition-all duration-100 ' +
+                    'text-gray-600 focus:text-gray-800 ' +
                     'outline-none focus:ring ring-blue-300 ' +
                     (props.disabled
                         ? ' bg-gray-200 cursor-not-allowed '
@@ -71,7 +72,7 @@ const TextArea = React.forwardRef((props: Props, ref: any) => {
                     {props.value.length}/{props.charLimits.max} characters
                 </div>
             )}
-        </div>
+        </>
     );
 });
 
