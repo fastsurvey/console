@@ -16,11 +16,30 @@ function VisualField(props: Props) {
         flat: true,
     };
 
+    let cardColor: string;
+    switch (props.fieldConfig.type) {
+        case 'Email':
+            cardColor = 'red';
+            break;
+        case 'Option':
+            cardColor = 'orange';
+            break;
+        case 'Radio':
+            cardColor = 'yellow';
+            break;
+        case 'Selection':
+            cardColor = 'green';
+            break;
+        case 'Text':
+            cardColor = 'teal';
+            break;
+    }
+
     return (
         <EditorFormCard
             label={props.fieldConfig.type}
             icon={icons.widgets}
-            color='green'
+            color={cardColor}
         >
             <EditorFormRow label='Title' className='mb-1'>
                 <TextInput

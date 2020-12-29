@@ -5,13 +5,25 @@ interface Props {
     children: React.ReactNode;
     icon: React.ReactNode;
     className?: string;
-    color?: 'green' | 'gray';
+    color?: string;
 }
 function EditorFormCard(props: Props) {
     let colors: string;
     switch (props.color) {
+        case 'red':
+            colors = 'bg-red-200 text-red-600';
+            break;
+        case 'orange':
+            colors = 'bg-orange-200 text-orange-600';
+            break;
+        case 'yellow':
+            colors = 'bg-yellow-200 text-yellow-600';
+            break;
         case 'green':
-            colors = 'bg-emerald-300 text-emerald-700';
+            colors = 'bg-green-200 text-green-600';
+            break;
+        case 'teal':
+            colors = 'bg-teal-200 text-teal-600';
             break;
         case 'gray':
         default:
