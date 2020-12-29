@@ -31,7 +31,7 @@ const VisualSettings = (props: Props) => {
         <EditorFormCard
             label='General Settings'
             icon={icons.tune}
-            className='mt-8'
+            className='z-20 mt-8'
         >
             <EditorFormRow label='Title' className='mb-1'>
                 <TextInput
@@ -44,7 +44,10 @@ const VisualSettings = (props: Props) => {
                             title: newValue,
                         });
                     }}
-                    hint={hints.title(props.config.title)}
+                    hint={{
+                        ...hints.title(props.config.title),
+                        inlineHint: true,
+                    }}
                 />
             </EditorFormRow>
 
@@ -59,10 +62,13 @@ const VisualSettings = (props: Props) => {
                             survey_name: newValue,
                         });
                     }}
-                    hint={hints.surveyName(
-                        props.config,
-                        props.surveyNameIsValid,
-                    )}
+                    hint={{
+                        ...hints.surveyName(
+                            props.config,
+                            props.surveyNameIsValid,
+                        ),
+                        inlineHint: true,
+                    }}
                 />
             </EditorFormRow>
 
@@ -139,7 +145,10 @@ const VisualSettings = (props: Props) => {
                             submission_limit: formatters.atoi(newValue),
                         });
                     }}
-                    hint={hints.submissionLimit(props.config)}
+                    hint={{
+                        ...hints.submissionLimit(props.config),
+                        inlineHint: true,
+                    }}
                 />
             </EditorFormRow>
         </EditorFormCard>

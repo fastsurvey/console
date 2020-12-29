@@ -35,8 +35,8 @@ const VisualDropDown = (props: Props) => (
                     'w-full flex flex-row ' +
                     'transition-colors duration-200 ' +
                     (props.isOpen
-                        ? 'rounded-t bg-gray-200 '
-                        : 'rounded bg-gray-100 ') +
+                        ? 'rounded-t bg-gray-200 text-gray-800 '
+                        : 'rounded bg-gray-100 text-gray-600 ') +
                     (props.disabled
                         ? 'cursor-not-allowed bg-gray-200 rounded '
                         : 'cursor-pointer ')

@@ -33,7 +33,10 @@ function VisualField(props: Props) {
                             title: newValue,
                         });
                     }}
-                    hint={hints.title(props.fieldConfig.title)}
+                    hint={{
+                        ...hints.title(props.fieldConfig.title),
+                        inlineHint: true,
+                    }}
                 />
             </EditorFormRow>
 

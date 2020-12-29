@@ -9,7 +9,12 @@ interface Props {
     className?: string;
     wrapperClassName?: string;
     required?: boolean;
-    hint?: {text: string; fulfilled: boolean; hideDot?: boolean};
+    hint?: {
+        text: string;
+        fulfilled: boolean;
+        hideDot?: boolean;
+        inlineHint?: boolean;
+    };
     autoComplete?: string;
     onEnter?(): void;
     flat?: boolean;
@@ -31,10 +36,13 @@ const TextInput = React.forwardRef((props: Props, ref: any) => {
         }
     }
 
+    const hintColor = props.hint?.fulfilled ? 'green-500' : 'red-500';
+    const hintOpacity = focused ? 'opacity-100' : 'opacity-50';
+
     return (
         <div
             className={
-                'relative ' +
+                'relative w-full ' +
                 (props.wrapperClassName ? props.wrapperClassName : '')
             }
         >
@@ -48,9 +56,10 @@ const TextInput = React.forwardRef((props: Props, ref: any) => {
                 onFocus={() => setFocus(true)}
                 onBlur={() => setFocus(false)}
                 className={
-                    'font-weight-500 text-lg text-gray-800 no-selection ' +
+                    'font-weight-500 text-lg no-selection ' +
                     'border-0 rounded w-full h-12 ' +
                     'py-2 pl-3 pr-10 md:pr-12 ' +
+                    'text-gray-600 focus:text-gray-800 ' +
                     'transition-all duration-100 ' +
                     'outline-none focus:ring ring-blue-300 ' +
                     (props.flat ? 'bg-gray-100 ' : 'bg-white shadow ') +
@@ -63,41 +72,62 @@ const TextInput = React.forwardRef((props: Props, ref: any) => {
                 type={props.type ? props.type : 'text'}
                 autoComplete={props.autoComplete ? props.autoComplete : ''}
             />
+            {props.hint && (
+                <div className='group'>
+                    {!props.hint.hideDot && (
+                        <>
+                            <div
+                                className={
+                                    'absolute top-0 right-0 w-1.5 h-12 mt-0 rounded-r ' +
+                                    'transition-colors duration-150 ' +
+                                    ` bg-${hintColor} ${hintOpacity} `
+                                }
+                            />
+                            <div
+                                className={
+                                    'absolute top-0 right-1.5 w-1.5 h-12 mt-0'
+                                }
+                            />
+                        </>
+                    )}
+
+                    {props.hint.inlineHint && (
+                        <div
+                            className={
+                                'absolute top-0 right-0 leading-12 pointer-events-none ' +
+                                'font-weight-500 mr-3 pl-2 z-10 bg-gray-100 ' +
+                                'transition-all duration-150 ' +
+                                ` text-${hintColor} ` +
+                                (focused
+                                    ? hintOpacity
+                                    : 'opacity-0 group-hover:opacity-100 ')
+                            }
+                        >
+                            {props.hint.text}
+                        </div>
+                    )}
+                    {!props.hint.inlineHint && (
+                        <div
+                            className={
+                                'relative w-full px-1 leading-6 mt-1 mb-1 ' +
+                                'overflow-hidden font-weight-500 ' +
+                                'transition-all duration-150 ' +
+                                ` text-${hintColor} ${hintOpacity} `
+                            }
+                        >
+                            {props.hint.text}
+                        </div>
+                    )}
+                </div>
+            )}
             <div
                 className={
-                    'absolute top-0 right-0 mr-6 my-2 leading-8 ' +
+                    'absolute top-0 right-0 mr-6 my-2 leading-8 z-0 ' +
                     'font-weight-500 text-lg text-gray-800 no-selection '
                 }
             >
                 {props.postfix}
             </div>
-            {props.hint && !props.hint.hideDot && (
-                <div
-                    className={
-                        'absolute top-0 right-0 w-2 h-2 mt-5 mr-2 rounded-full ' +
-                        'transition-colors duration-150 ' +
-                        (props.hint.fulfilled
-                            ? 'bg-green-500 '
-                            : 'bg-magenta ') +
-                        (focused ? 'opacity-80 ' : 'opacity-50 ')
-                    }
-                />
-            )}
-            {props.hint && (
-                <div
-                    className={
-                        'relative w-full px-1 leading-6 mt-1 mb-1 ' +
-                        'overflow-hidden font-weight-500 ' +
-                        'transition-all duration-150 ' +
-                        (props.hint.fulfilled
-                            ? 'text-green-500 '
-                            : 'text-magenta ') +
-                        (focused ? 'opacity-80 ' : 'opacity-50 ')
-                    }
-                >
-                    {props.hint.text}
-                </div>
-            )}
         </div>
     );
 });

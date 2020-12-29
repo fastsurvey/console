@@ -18,7 +18,9 @@ function EditorFormRow(props: Props) {
                     {props.label}:
                 </div>
             </div>
-            <div className='lg:w-75% 2xl:w-85% relative'>{props.children}</div>
+            <div className='lg:w-75% 2xl:w-85% relative flex flex-row'>
+                {props.children}
+            </div>
         </div>
     );
 }
