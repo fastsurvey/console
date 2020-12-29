@@ -30,12 +30,11 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
                     <div
                         key={optionField.local_id}
                         className={
-                            'flex flex-row w-full mb-2 ' +
-                            'transition-transform duration-300 ' +
-                            'transform origin-top ' +
+                            'flex flex-row w-full mb-1 overflow-hidden ' +
+                            'transition-height duration-300 ' +
                             (props.optionsVisible[optionIndex]
-                                ? 'scale-y-100 '
-                                : 'scale-y-0 ')
+                                ? 'h-12 '
+                                : 'h-0 ')
                         }
                     >
                         <TextInput
@@ -55,7 +54,10 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
                                     ),
                                 })
                             }
-                            hint={hints.title(optionField.title)}
+                            hint={{
+                                ...hints.title(optionField.title),
+                                inlineHint: true,
+                            }}
                         />
                         <TriggerIcon
                             disabled={props.disabled}

@@ -26,7 +26,10 @@ function VisualSelectionSettings(props: Props) {
                             min_select: formatters.atoi(newValue),
                         })
                     }
-                    hint={hints.minSelect(props.fieldConfig)}
+                    hint={{
+                        ...hints.minSelect(props.fieldConfig),
+                        inlineHint: true,
+                    }}
                 />
             </EditorFormRow>
             <EditorFormRow label='Max. Selection' className='mb-8'>
@@ -39,7 +42,10 @@ function VisualSelectionSettings(props: Props) {
                             max_select: formatters.atoi(newValue),
                         })
                     }
-                    hint={hints.maxSelect(props.fieldConfig)}
+                    hint={{
+                        ...hints.maxSelect(props.fieldConfig),
+                        inlineHint: true,
+                    }}
                 />
             </EditorFormRow>
             <FieldOptionsList

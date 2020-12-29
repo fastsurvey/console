@@ -25,7 +25,10 @@ function VisualTextSettings(props: Props) {
                             min_chars: formatters.atoi(newValue),
                         })
                     }
-                    hint={hints.minChars(props.fieldConfig)}
+                    hint={{
+                        ...hints.minChars(props.fieldConfig),
+                        inlineHint: true,
+                    }}
                 />
             </EditorFormRow>
             <EditorFormRow label='Max. Characters' className='mb-1'>
@@ -38,7 +41,10 @@ function VisualTextSettings(props: Props) {
                             max_chars: formatters.atoi(newValue),
                         })
                     }
-                    hint={hints.maxChars(props.fieldConfig)}
+                    hint={{
+                        ...hints.maxChars(props.fieldConfig),
+                        inlineHint: true,
+                    }}
                 />
             </EditorFormRow>
         </>

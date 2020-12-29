@@ -17,7 +17,7 @@ function VisualEmailSettings(props: Props) {
 
     return (
         <>
-            <EditorFormRow label='Email Preset' className='mb-4'>
+            <EditorFormRow label='Email Preset' className='mb-1'>
                 <DropDown
                     {...commonProps}
                     value={props.setupValue}
@@ -47,7 +47,7 @@ function VisualEmailSettings(props: Props) {
                             regex: newValue,
                         })
                     }
-                    hint={hints.regex(props.fieldConfig)}
+                    hint={{...hints.regex(props.fieldConfig), inlineHint: true}}
                 />
             </EditorFormRow>
 
@@ -62,7 +62,7 @@ function VisualEmailSettings(props: Props) {
                             hint: newValue,
                         })
                     }
-                    hint={hints.hint(props.fieldConfig)}
+                    hint={{...hints.hint(props.fieldConfig), inlineHint: true}}
                 />
             </EditorFormRow>
         </>

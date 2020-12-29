@@ -117,7 +117,7 @@ const VisualSettings = (props: Props) => {
                 />
             </EditorFormRow>
 
-            <EditorFormRow label='Auth Mode' className='mb-2'>
+            <EditorFormRow label='Auth Mode' className='mb-1'>
                 <DropDown
                     {...commonProps}
                     value={props.config.mode}
@@ -134,7 +134,7 @@ const VisualSettings = (props: Props) => {
                 />
             </EditorFormRow>
 
-            <EditorFormRow label='Limit to' className='mb-0'>
+            <EditorFormRow label='Limit to' className='mb-2'>
                 <TextInput
                     {...commonProps}
                     postfix=' submissions'
