@@ -12,15 +12,15 @@ function ConfigPreviewPanel(props: Props) {
     let statusText: string;
 
     if (props.config.draft) {
-        statusColor = 'gray-500';
+        statusColor = 'gray-800';
         statusText = 'Draft';
     } else {
         const now = Date.now() / 1000;
         if (now < props.config.start) {
-            statusColor = 'yellow-600';
+            statusColor = 'yellow-500';
             statusText = 'Pending';
         } else if (now >= props.config.end) {
-            statusColor = 'gray-700';
+            statusColor = 'gray-400';
             statusText = 'Finished';
         } else {
             statusColor = 'green-500';
@@ -32,7 +32,7 @@ function ConfigPreviewPanel(props: Props) {
         <div
             onClick={props.onClick}
             className={
-                'w-full p-2 my-1 rounded-l shadow ' +
+                'w-full py-2 px-3 my-1 rounded-l shadow ' +
                 'no-selection border-r-4 border-' +
                 statusColor +
                 (props.selected

@@ -1,7 +1,7 @@
 import React from 'react';
 import {configTypes, hints} from 'utilities';
 import {icons} from 'assets';
-import {TextInput, TriggerIcon} from 'components';
+import {TextInput, TriggerIcon, EditorFormRow} from 'components';
 
 interface Props {
     fieldConfig: configTypes.RadioField | configTypes.SelectionField;
@@ -24,21 +24,17 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
     };
 
     return (
-        <div className='flex flex-row w-full'>
-            <div className='h-12 ml-2 mr-3 text-xl font-weight-600 leading-12'>
-                Options:
-            </div>
+        <EditorFormRow label='Options' className='mb-2'>
             <div className='flex flex-col w-full'>
                 {props.fieldConfig.fields.map((optionField, optionIndex) => (
                     <div
                         key={optionField.local_id}
                         className={
-                            'flex flex-row w-full mb-2 ' +
-                            'transition-transform duration-300 ' +
-                            'transform origin-top ' +
+                            'flex flex-row w-full mb-1 ' +
+                            'transition-height duration-300 ' +
                             (props.optionsVisible[optionIndex]
-                                ? 'scale-y-100 '
-                                : 'scale-y-0 ')
+                                ? 'h-12 '
+                                : 'h-0 ')
                         }
                     >
                         <TextInput
@@ -58,7 +54,10 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
                                     ),
                                 })
                             }
-                            hint={hints.title(optionField.title)}
+                            hint={{
+                                ...hints.title(optionField.title),
+                                inlineHint: true,
+                            }}
                         />
                         <TriggerIcon
                             disabled={props.disabled}
@@ -85,11 +84,10 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
                         />
                     </div>
                 ))}
-                <div className='w-full pr-12'>
+                <div className='w-full pr-12 opacity-70'>
                     <TextInput
-                        flat
+                        {...commonProps}
                         ref={ref}
-                        wrapperClassName={'flex-max opacity-60 '}
                         value={props.newOption}
                         onChange={props.setNewOption}
                         placeholder='New option'
@@ -102,7 +100,7 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
                     />
                 </div>
             </div>
-        </div>
+        </EditorFormRow>
     );
 });
 

@@ -1,3 +1,4 @@
 node_modules
 .vscode
 tailwind.out.css
+tailwind.config.js

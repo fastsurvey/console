@@ -5,6 +5,7 @@ interface Props {
     timestamp: number;
     setNewTimestamp(timestamp: number): void;
     disabled?: boolean;
+    className?: string;
 }
 function DatePicker(props: Props) {
     const [date, setDate] = useState(new Date(props.timestamp * 1000));
@@ -71,6 +72,7 @@ function DatePicker(props: Props) {
     return (
         <VisualDatePicker
             disabled={props.disabled}
+            className={props.className}
             {...{
                 date,
                 getDaysInMonth,

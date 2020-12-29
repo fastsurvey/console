@@ -5,10 +5,11 @@ interface Props {
 }
 const VisualStrip = (props: Props) => (
     <div
-        id='ControlStrip'
         className={
-            'z-40 fixed center-content p-4 border-b-4 border-gray-500 ' +
-            'bg-gray-300 no-selection '
+            'left-0 right-0 pt-2 pb-1 z-30 fixed center-content ' +
+            'shadow-control-strip ' +
+            'bg-gray-100 no-selection ' +
+            'lg:ml-104 xl:ml-124 2xl:ml-144 '
         }
     >
         <div

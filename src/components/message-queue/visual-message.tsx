@@ -44,14 +44,10 @@ function VisualMessage(props: Props) {
     return (
         <div
             className={
-                'flex flex-row items-center font-weight-600 ' +
+                'flex flex-row items-center font-weight-600 z-50 ' +
                 'overflow-hidden pl-3 pr-1 m-2 rounded shadow ' +
-                size +
-                ' ' +
-                colors +
-                ' ' +
-                delay +
-                ' transition-all duration-300'
+                `${size} ${colors} ${delay} ` +
+                'transition-all duration-300'
             }
         >
             <div className='text-lg'>{props.message.text}</div>

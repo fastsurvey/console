@@ -1,103 +1,158 @@
 import React from 'react';
 import {configTypes, formatters, formOptions, hints} from 'utilities';
-import {DropDown, TextArea, Label, VisualTextInputRow} from 'components';
-import VisualDatePickerRow from './visual-date-picker-row';
+import {
+    DropDown,
+    TextArea,
+    TextInput,
+    DatePicker,
+    EditorFormCard,
+    EditorFormRow,
+} from 'components';
+import {icons} from 'assets';
 
 interface Props {
     config: configTypes.SurveyConfig;
     surveyNameIsValid(survey_name: string): boolean;
-    updateConfig(config: configTypes.SurveyConfig): void;
-    setConfig(config: configTypes.SurveyConfig): void;
+    updateConfig(
+        config: configTypes.SurveyConfig,
+        skipValidation?: boolean,
+    ): void;
     updateValidator(newState: boolean): void;
     commonProps: any;
+    disabled: boolean;
 }
-const VisualSettings = (props: Props) => (
-    <div className='flex flex-col w-full min-h-full pt-4 pb-4 mb-8 border-b-4 border-gray-500'>
-        <div className='flex flex-row mb-4'>
-            <VisualTextInputRow
-                {...props.commonProps}
-                className='w-1/2 pr-4'
-                label='Title'
-                placeholder='The title of your survey'
-                value={props.config.title}
-                onChange={(newValue: string) => ({title: newValue})}
-                hint={hints.title(props.config.title)}
-            />
-            <VisualTextInputRow
-                {...props.commonProps}
-                className='w-1/2 pl-4'
-                label='Identifier'
-                placeholder='URL conform identifier'
-                value={props.config.survey_name}
-                onChange={(newValue: string) => ({survey_name: newValue})}
-                hint={hints.surveyName(props.config, props.surveyNameIsValid)}
-            />
-        </div>
-        <div className='flex flex-row items-start w-full mb-4'>
-            <Label>Description:</Label>
-            <TextArea
-                {...props.commonProps}
-                flat
-                value={props.config.description}
-                onChange={(newValue: string) => {
-                    props.updateConfig({
-                        ...props.config,
-                        ...{description: newValue},
-                    });
-                }}
-                charLimits={{min: 0, max: 2000}}
-                className='leading-8'
-                wrapperClassName='self-stretch flex-grow'
-            />
-        </div>
-        <div className='flex flex-row w-full mb-4'>
-            <div className='flex flex-col'>
-                <div className='flex flex-row mb-4'>
-                    <Label>Authentication:</Label>
-                    <div className='w-56 mr-2'>
-                        <DropDown
-                            {...props.commonProps}
-                            value={props.config.mode}
-                            onChange={(newValue: 0 | 1 | 2) => {
-                                props.setConfig({
-                                    ...props.config,
-                                    ...{mode: newValue},
-                                });
-                            }}
-                            options={formOptions.AUTH_MODE}
-                        />
-                    </div>
-                </div>
-                <VisualTextInputRow
-                    {...props.commonProps}
-                    wrapperClassname='w-32'
-                    label='Submission Limit'
-                    value={props.config.submission_limit.toString()}
-                    onChange={(newValue: string) => ({
-                        submission_limit: formatters.atoi(newValue),
-                    })}
-                    hint={hints.submissionLimit(props.config)}
+const VisualSettings = (props: Props) => {
+    const commonProps = {
+        disabled: props.disabled,
+        flat: true,
+    };
+
+    return (
+        <EditorFormCard
+            label='General Settings'
+            icon={icons.tune}
+            className='z-20 mt-8'
+        >
+            <EditorFormRow label='Title' className='mb-1'>
+                <TextInput
+                    {...commonProps}
+                    placeholder='The title of your survey'
+                    value={props.config.title}
+                    onChange={(newValue: string) => {
+                        props.updateConfig({
+                            ...props.config,
+                            title: newValue,
+                        });
+                    }}
+                    hint={{
+                        ...hints.title(props.config.title),
+                        inlineHint: true,
+                    }}
                 />
-            </div>
-            <div className='self-stretch flex-grow' />
-            <div className='flex flex-col'>
-                <VisualDatePickerRow
-                    label='Start'
-                    config={props.config}
-                    setConfig={props.setConfig}
+            </EditorFormRow>
+
+            <EditorFormRow label='Identifier' className='mb-1'>
+                <TextInput
+                    {...commonProps}
+                    placeholder='URL conform identifier'
+                    value={props.config.survey_name}
+                    onChange={(newValue: string) => {
+                        props.updateConfig({
+                            ...props.config,
+                            survey_name: newValue,
+                        });
+                    }}
+                    hint={{
+                        ...hints.surveyName(
+                            props.config,
+                            props.surveyNameIsValid,
+                        ),
+                        inlineHint: true,
+                    }}
+                />
+            </EditorFormRow>
+
+            <EditorFormRow label='Description' className='mb-8'>
+                <TextArea
+                    {...commonProps}
+                    value={props.config.description}
+                    onChange={(newValue: string) => {
+                        props.updateConfig({
+                            ...props.config,
+                            ...{description: newValue},
+                        });
+                    }}
+                    charLimits={{min: 0, max: 2000}}
+                />
+            </EditorFormRow>
+
+            <EditorFormRow label='Start' className='mb-2'>
+                <DatePicker
+                    {...commonProps}
                     timestamp={props.config.start}
-                    onChange={(timestamp: number) => ({start: timestamp})}
+                    setNewTimestamp={(timestamp: number) => {
+                        props.updateConfig(
+                            {
+                                ...props.config,
+                                start: timestamp,
+                            },
+                            true,
+                        );
+                    }}
                 />
-                <VisualDatePickerRow
-                    label='End'
-                    config={props.config}
-                    setConfig={props.setConfig}
+            </EditorFormRow>
+            <EditorFormRow label='End' className='mb-8'>
+                <DatePicker
+                    {...commonProps}
                     timestamp={props.config.end}
-                    onChange={(timestamp: number) => ({end: timestamp})}
+                    setNewTimestamp={(timestamp: number) => {
+                        props.updateConfig(
+                            {
+                                ...props.config,
+                                end: timestamp,
+                            },
+                            true,
+                        );
+                    }}
                 />
-            </div>
-        </div>
-    </div>
-);
+            </EditorFormRow>
+
+            <EditorFormRow label='Auth Mode' className='mb-1'>
+                <DropDown
+                    {...commonProps}
+                    value={props.config.mode}
+                    onChange={(newValue: 0 | 1 | 2) => {
+                        props.updateConfig(
+                            {
+                                ...props.config,
+                                mode: newValue,
+                            },
+                            false,
+                        );
+                    }}
+                    options={formOptions.AUTH_MODE}
+                />
+            </EditorFormRow>
+
+            <EditorFormRow label='Limit to' className='mb-2'>
+                <TextInput
+                    {...commonProps}
+                    postfix=' submissions'
+                    value={props.config.submission_limit.toString()}
+                    onChange={(newValue: string) => {
+                        props.updateConfig({
+                            ...props.config,
+                            submission_limit: formatters.atoi(newValue),
+                        });
+                    }}
+                    hint={{
+                        ...hints.submissionLimit(props.config),
+                        inlineHint: true,
+                    }}
+                />
+            </EditorFormRow>
+        </EditorFormCard>
+    );
+};
 
 export default VisualSettings;

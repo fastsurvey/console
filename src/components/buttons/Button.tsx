@@ -19,7 +19,7 @@ function Button(props: Props) {
 
     const disabledClass =
         props.disabled || props.spinning
-            ? 'text-gray-500 bg-gray-200'
+            ? 'text-gray-500 bg-gray-300'
             : 'shadow text-gray-900 bg-gray-100';
 
     return (

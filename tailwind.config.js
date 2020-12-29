@@ -1,4 +1,7 @@
 // prettier-ignore
+
+const colors = require('tailwindcss/colors')
+
 module.exports = {
     purge: {
         enabled: false,
@@ -14,8 +17,14 @@ module.exports = {
         extend: {
             colors: {
                 'magenta': '#FD0948',
-                'beige-300': '#E4C3AD',
-                'beige-500': '#D19A75',
+                gray: colors.blueGray,
+                blue: colors.blue,
+                red: colors.red,
+                orange: colors.orange,
+                yellow: colors.yellow,
+                green: colors.green,
+                teal: colors.teal,
+                
             },
             opacity: {
                 '60': '.6',
@@ -23,12 +32,11 @@ module.exports = {
                 '80': '.8',
                 '90': '.9',
             },
+            boxShadow: {
+                'control-strip': '0 10px 10px 0 rgb(241, 245, 249)'
+            },
             lineHeight: {
                 '12': '3rem'
-            },
-            boxShadow: {
-                'outline-gray': '0 0 0 2px rgba(226, 232, 240, 1.0)',
-                'outline-gray-elevated': '0 0 0 2px rgba(226, 232, 240, 1.0), 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.12)',
             },
             transitionProperty: {
                 'height': 'height',
@@ -75,6 +83,10 @@ module.exports = {
                 '90vw': '90vw',
                 '100vw': '100vw',
 
+                '1.5': '0.375rem',
+                '4': '1rem',
+                '4.5': '1.125rem',
+                '5': '1.25rem',
                 '11': '2.75rem',
                 '12': '3.00rem',
                 '13': '3.25rem',
@@ -91,7 +103,9 @@ module.exports = {
                 '28': '7.0rem',
                 '30': '7.5rem',
                 '32': '8.0rem',
+                '33': '8.25rem',
                 '34': '8.5rem',
+                '35': '8.75rem',
                 '36': '9.0rem',
                 '38': '9.5rem',
                 '40': '10.0rem',
@@ -114,6 +128,7 @@ module.exports = {
                 '80': '20.0rem',
                 '90': '22.5rem',
                 '100': '25.0rem',
+                '104': '26.0rem',
                 '110': '27.5rem',
                 '120': '30.0rem',
 
@@ -125,13 +140,21 @@ module.exports = {
                 '144': '36.0rem',
 
                 '10%': '10%',
+                '15%': '15%',
                 '20%': '20%',
+                '25%': '25%',
                 '30%': '30%',
+                '35%': '35%',
                 '40%': '40%',
+                '45%': '45%',
                 '50%': '50%',
+                '55%': '55%',
                 '60%': '60%',
+                '65%': '65%',
                 '70%': '70%',
+                '75%': '75%',
                 '80%': '80%',
+                '85%': '85%',
                 '90%': '90%',
             },
             inset: {

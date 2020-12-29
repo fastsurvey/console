@@ -32,14 +32,13 @@ const VisualVerifyForm = React.forwardRef((props: Props, refs: any) => {
                                     props.closeAllMessages();
                                     props.setPassword(newValue);
                                 }}
-                                className='mb-2'
+                                className='mb-5'
                                 type='password'
                                 autoComplete='current-password'
                                 ref={input1Ref}
                                 onEnter={props.handleVerify}
                             />
                             <ButtonLink
-                                className='pt-2'
                                 onClick={props.handleVerify}
                                 disabled={props.disabled}
                                 spinning={props.submitting}

@@ -18,27 +18,34 @@ function Settings(props: Props) {
     const descriptionIsValid = validators.description;
     const submissionLimitIsValid = validators.submissionLimit;
 
-    function updateConfig(newConfig: configTypes.SurveyConfig) {
-        props.updateValidator(
-            titleIsValid(newConfig.title) &&
-                surveyNameIsValid(newConfig.survey_name) &&
-                descriptionIsValid(newConfig.description) &&
-                submissionLimitIsValid(newConfig.submission_limit),
-        );
+    function updateConfig(
+        newConfig: configTypes.SurveyConfig,
+        skipValidation?: boolean,
+    ) {
+        if (!skipValidation) {
+            props.updateValidator(
+                titleIsValid(newConfig.title) &&
+                    surveyNameIsValid(newConfig.survey_name) &&
+                    descriptionIsValid(newConfig.description) &&
+                    submissionLimitIsValid(newConfig.submission_limit),
+            );
+        }
+
         props.setConfig(newConfig);
     }
 
     return (
         <VisualSettings
-            {...{updateConfig, surveyNameIsValid}}
+            updateConfig={updateConfig}
+            surveyNameIsValid={surveyNameIsValid}
             config={props.config}
-            setConfig={props.setConfig}
             updateValidator={props.updateValidator}
             commonProps={{
                 updateConfig,
                 disabled: !props.config.draft,
                 config: props.config,
             }}
+            disabled={!props.config.draft}
         />
     );
 }

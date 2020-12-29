@@ -1,4 +1,11 @@
 
+/* Make box shadows work on inputs */
 input {
     -webkit-appearance: none;
+}
+
+/* Without this, it will be set to none (I think by Tailwind) 
+   and one cannot type anything on text inputs */
+input, textarea {
+    -webkit-user-select: text !important;
 }

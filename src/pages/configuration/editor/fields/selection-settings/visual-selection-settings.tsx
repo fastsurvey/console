@@ -1,6 +1,6 @@
 import React from 'react';
 import {configTypes, formatters, hints} from 'utilities';
-import {VisualTextInputRow} from 'components';
+import {TextInput, EditorFormRow} from 'components';
 import FieldOptionsList from '../field-options-list/field-options-list';
 
 interface Props {
@@ -10,34 +10,44 @@ interface Props {
 }
 function VisualSelectionSettings(props: Props) {
     const commonProps = {
-        config: props.fieldConfig,
         disabled: props.disabled,
-        updateConfig: props.updateFieldConfig,
-        wrapperClassName: 'w-28',
+        flat: true,
     };
 
     return (
         <div className='flex flex-col'>
-            <div className='flex flex-row mb-2 ml-2 gap-x-8'>
-                <VisualTextInputRow
+            <EditorFormRow label='Min. Selection' className='mb-1'>
+                <TextInput
                     {...commonProps}
-                    label='Min. Selection'
                     value={props.fieldConfig.min_select.toString()}
-                    onChange={(newValue: string) => ({
-                        min_select: formatters.atoi(newValue),
-                    })}
-                    hint={hints.minSelect(props.fieldConfig)}
+                    onChange={(newValue: string) =>
+                        props.updateFieldConfig({
+                            ...props.fieldConfig,
+                            min_select: formatters.atoi(newValue),
+                        })
+                    }
+                    hint={{
+                        ...hints.minSelect(props.fieldConfig),
+                        inlineHint: true,
+                    }}
                 />
-                <VisualTextInputRow
+            </EditorFormRow>
+            <EditorFormRow label='Max. Selection' className='mb-8'>
+                <TextInput
                     {...commonProps}
-                    label='Max. Selection'
                     value={props.fieldConfig.max_select.toString()}
-                    onChange={(newValue: string) => ({
-                        max_select: formatters.atoi(newValue),
-                    })}
-                    hint={hints.maxSelect(props.fieldConfig)}
+                    onChange={(newValue: string) =>
+                        props.updateFieldConfig({
+                            ...props.fieldConfig,
+                            max_select: formatters.atoi(newValue),
+                        })
+                    }
+                    hint={{
+                        ...hints.maxSelect(props.fieldConfig),
+                        inlineHint: true,
+                    }}
                 />
-            </div>
+            </EditorFormRow>
             <FieldOptionsList
                 fieldConfig={props.fieldConfig}
                 disabled={props.disabled}

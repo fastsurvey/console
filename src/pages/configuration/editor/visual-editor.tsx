@@ -30,9 +30,11 @@ function VisualEditor(props: Props) {
                 revertState={props.revertState}
             />
             <div
-                id='ConfigEditor'
-                className='flex flex-col items-center px-8 pb-64 no-selection'
-                style={{paddingTop: 'calc(6rem - 4px)'}}
+                className={
+                    'left-0 right-0 flex flex-col items-center ' +
+                    'pt-10 px-8 bg-gray-100 no-selection ' +
+                    'pb-64 lg:ml-104 xl:ml-124 2xl:ml-144 '
+                }
             >
                 <Settings
                     config={props.localConfig}

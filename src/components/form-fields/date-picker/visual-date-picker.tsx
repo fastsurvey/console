@@ -4,6 +4,7 @@ import {DropDown} from 'components';
 
 interface Props {
     disabled?: boolean;
+    className?: string;
     date: Date;
     getDaysInMonth(year: number, month: number): void;
     changeDay(newValue: number): void;
@@ -26,7 +27,9 @@ function VisualDatePicker(props: Props) {
     });
 
     return (
-        <React.Fragment>
+        <div
+            className={`flex flex-row items-center justify-start ${props.className}`}
+        >
             <div className='mr-2 w-14'>
                 <DropDown
                     {...commonProps}
@@ -74,7 +77,7 @@ function VisualDatePicker(props: Props) {
                     options={formOptions.MINUTES}
                 />
             </div>
-        </React.Fragment>
+        </div>
     );
 }
 

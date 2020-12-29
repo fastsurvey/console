@@ -5,6 +5,7 @@ import {configTypes} from 'utilities';
 interface Props {
     config: configTypes.SurveyConfig | configTypes.SurveyField;
     label: string;
+    postfix?: string;
     value: string;
     hint: {text: string; fulfilled: boolean};
     updateConfig(
@@ -17,11 +18,12 @@ interface Props {
     disabled: boolean;
 }
 const VisualTextInputRow = (props: Props) => (
-    <div className={`flex flex-row items-start ${props.className}`}>
-        <Label>{props.label}:</Label>
+    <div className={'flex flex-row items-start w-full'}>
+        <Label className='w-40% xl:w-30% 2xl:w-20%'>{props.label}:</Label>
         <TextInput
             disabled={props.disabled}
             flat
+            postfix={props.postfix}
             value={props.value}
             onChange={(newValue: string) => {
                 props.updateConfig({
@@ -32,9 +34,10 @@ const VisualTextInputRow = (props: Props) => (
             placeholder={props.placeholder}
             hint={props.hint}
             wrapperClassName={
-                props.wrapperClassName
+                'w-60% xl:w-70% 2xl:w-80% ' +
+                (props.wrapperClassName
                     ? props.wrapperClassName
-                    : 'self-stretch flex-grow'
+                    : 'self-stretch flex-grow')
             }
         />
     </div>

@@ -52,7 +52,7 @@ const hints = {
         fulfilled: password.length > 7,
     }),
     passwordConfirmation: (password: string, passwordConfirmation: string) => ({
-        text: 'passwords have to match',
+        text: 'passwords match',
         fulfilled: password.length > 7 && password === passwordConfirmation,
     }),
 };

@@ -17,10 +17,10 @@ const Checkbox = (props: Props) => {
     return (
         <div
             className={
-                'w-12 h-12 p-2 transition-colors duration-150 ' +
+                'w-12 h-12 p-3 transition-colors duration-150 ' +
                 (props.disabled
-                    ? 'text-gray-500 cursor-not-allowed '
-                    : 'text-gray-800 cursor-pointer ') +
+                    ? 'text-gray-400 cursor-not-allowed '
+                    : 'text-gray-600 cursor-pointer ') +
                 (props.className ? props.className : '')
             }
             onClick={handleClick}
