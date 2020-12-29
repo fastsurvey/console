@@ -30,7 +30,7 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
                     <div
                         key={optionField.local_id}
                         className={
-                            'flex flex-row w-full mb-1 overflow-hidden ' +
+                            'flex flex-row w-full mb-1 ' +
                             'transition-height duration-300 ' +
                             (props.optionsVisible[optionIndex]
                                 ? 'h-12 '
