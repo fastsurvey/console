@@ -31,7 +31,7 @@ const VisualRegister = React.forwardRef((props: Props, refs: any) => {
                         props.closeAllMessages();
                         props.setEmail(newValue);
                     }}
-                    className='mb-2'
+                    wrapperClassName='mb-3'
                     autoComplete='username'
                     onEnter={() => input2Ref.current?.focus()}
                 />
@@ -46,9 +46,9 @@ const VisualRegister = React.forwardRef((props: Props, refs: any) => {
                     required
                     placeholder='password'
                     type='password'
-                    className='mb-2'
+                    wrapperClassName='mb-1'
                     autoComplete='new-password'
-                    hint={hints.password(props.password)}
+                    hint={{...hints.password(props.password), inlineHint: true}}
                 />
                 <TextInput
                     value={props.passwordConfirmation}
@@ -61,15 +61,17 @@ const VisualRegister = React.forwardRef((props: Props, refs: any) => {
                     required
                     placeholder='confirm password'
                     type='password'
-                    className='mb-2'
+                    wrapperClassName='mb-5'
                     autoComplete='new-password'
-                    hint={hints.passwordConfirmation(
-                        props.password,
-                        props.passwordConfirmation,
-                    )}
+                    hint={{
+                        ...hints.passwordConfirmation(
+                            props.password,
+                            props.passwordConfirmation,
+                        ),
+                        inlineHint: true,
+                    }}
                 />
                 <ButtonLink
-                    className='pt-2'
                     onClick={props.handleRegistration}
                     disabled={props.disabled}
                     spinning={props.submitting}

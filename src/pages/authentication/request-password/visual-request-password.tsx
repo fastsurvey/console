@@ -32,13 +32,12 @@ const VisualRequestPassword = React.forwardRef((props: Props, refs: any) => {
                                 props.closeAllMessages();
                                 props.setEmail(newValue);
                             }}
-                            className='mb-2'
+                            className='mb-5'
                             autoComplete='username'
                             ref={input1Ref}
                             onEnter={props.handleSubmit}
                         />
                         <ButtonLink
-                            className='pt-2'
                             onClick={props.handleSubmit}
                             disabled={props.disabled}
                             spinning={props.submitting}

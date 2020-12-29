@@ -27,7 +27,7 @@ const VisualLogin = React.forwardRef((props: Props, refs: any) => {
                         props.closeAllMessages();
                         props.setEmail(newValue);
                     }}
-                    className='mb-2'
+                    className='mb-3'
                     autoComplete='email username'
                     onEnter={() => input2Ref.current.focus()}
                 />
@@ -38,7 +38,7 @@ const VisualLogin = React.forwardRef((props: Props, refs: any) => {
                         props.closeAllMessages();
                         props.setPassword(newValue);
                     }}
-                    className='mb-4'
+                    className='mb-5'
                     type='password'
                     autoComplete='current-password'
                     ref={input2Ref}

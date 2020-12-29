@@ -36,8 +36,11 @@ const VisualSetPassword = React.forwardRef((props: Props, refs: any) => {
                                     props.setPassword(newValue);
                                 }}
                                 type='password'
-                                hint={hints.password(props.password)}
-                                className='mb-2'
+                                hint={{
+                                    ...hints.password(props.password),
+                                    inlineHint: true,
+                                }}
+                                wrapperClassName='mb-1'
                                 autoComplete='new-password'
                                 onEnter={() => input2Ref.current?.focus()}
                             />
@@ -49,17 +52,19 @@ const VisualSetPassword = React.forwardRef((props: Props, refs: any) => {
                                     props.setPasswordConfirmation(newValue);
                                 }}
                                 type='password'
-                                hint={hints.passwordConfirmation(
-                                    props.password,
-                                    props.passwordConfirmation,
-                                )}
-                                className='mb-2'
+                                hint={{
+                                    ...hints.passwordConfirmation(
+                                        props.password,
+                                        props.passwordConfirmation,
+                                    ),
+                                    inlineHint: true,
+                                }}
+                                wrapperClassName='mb-5'
                                 autoComplete='new-password'
                                 ref={input2Ref}
                                 onEnter={props.handleSubmit}
                             />
                             <ButtonLink
-                                className='pt-2'
                                 onClick={props.handleSubmit}
                                 disabled={props.disabled}
                                 spinning={props.submitting}

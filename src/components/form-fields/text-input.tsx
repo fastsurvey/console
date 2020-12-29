@@ -95,9 +95,10 @@ const TextInput = React.forwardRef((props: Props, ref: any) => {
                         <div
                             className={
                                 'absolute top-0 right-0 leading-12 pointer-events-none ' +
-                                'font-weight-500 mr-3 pl-2 z-10 bg-gray-100 ' +
+                                'font-weight-500 mr-3 pl-2 z-10 ' +
                                 'transition-all duration-150 ' +
                                 ` text-${hintColor} ` +
+                                (props.flat ? 'bg-gray-100 ' : 'bg-white ') +
                                 (focused
                                     ? hintOpacity
                                     : 'opacity-0 group-hover:opacity-100 ')
@@ -109,7 +110,7 @@ const TextInput = React.forwardRef((props: Props, ref: any) => {
                     {!props.hint.inlineHint && (
                         <div
                             className={
-                                'relative w-full px-1 leading-6 mt-1 mb-1 ' +
+                                'relative w-full px-1 leading-6 mt-0 mb-1 ' +
                                 'overflow-hidden font-weight-500 ' +
                                 'transition-all duration-150 ' +
                                 ` text-${hintColor} ${hintOpacity} `
