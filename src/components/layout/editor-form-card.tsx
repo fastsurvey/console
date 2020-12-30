@@ -56,9 +56,7 @@ function EditorFormCard(props: Props) {
     useEffect(() => setMaxHeight(1500), [props.label]);
 
     return (
-        <div
-            className={'relative flex flex-col w-full my-4 ' + props.className}
-        >
+        <div className={'relative flex flex-col w-full ' + props.className}>
             <div
                 className={
                     'absolute left-0 right-0 top-0 bottom-0 ' +

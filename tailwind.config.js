@@ -13,6 +13,13 @@ module.exports = {
             './public/**/*.html',
         ],
     },
+    variants: {
+        extend: {
+          height: ['hover', 'group-hover'],
+          width: ['hover', 'group-hover'],
+          padding: ['hover', 'group-hover'],
+        }
+      },
     theme: {
         extend: {
             colors: {

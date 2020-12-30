@@ -3,6 +3,7 @@ import {configTypes} from 'utilities';
 import ControlStrip from './control-strip/control-strip';
 import Settings from './settings/settings';
 import FieldConfigForm from './fields/field/field';
+import AddFieldPanel from './add-field-panel/add-field-panel';
 
 interface Props {
     centralConfig: configTypes.SurveyConfig;
@@ -44,17 +45,20 @@ function VisualEditor(props: Props) {
                     }
                 />
                 {props.localConfig.fields.map((fieldConfig, index) => (
-                    <FieldConfigForm
-                        key={fieldConfig.local_id}
-                        fieldConfig={fieldConfig}
-                        setFieldConfig={(
-                            newFieldConfig: configTypes.SurveyField,
-                        ) => props.setFieldConfig(newFieldConfig, index)}
-                        disabled={!props.localConfig.draft}
-                        updateValidator={(newState: boolean) =>
-                            props.updateValidator(1 + index, newState)
-                        }
-                    />
+                    <>
+                        <AddFieldPanel />
+                        <FieldConfigForm
+                            key={fieldConfig.local_id}
+                            fieldConfig={fieldConfig}
+                            setFieldConfig={(
+                                newFieldConfig: configTypes.SurveyField,
+                            ) => props.setFieldConfig(newFieldConfig, index)}
+                            disabled={!props.localConfig.draft}
+                            updateValidator={(newState: boolean) =>
+                                props.updateValidator(1 + index, newState)
+                            }
+                        />
+                    </>
                 ))}
             </div>
         </React.Fragment>
