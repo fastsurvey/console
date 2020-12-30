@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {stateTypes, configTypes, validators} from 'utilities';
 import VisualSettings from './visual-settings';

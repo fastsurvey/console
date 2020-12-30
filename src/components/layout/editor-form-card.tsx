@@ -10,6 +10,7 @@ interface Props {
 
     collapse?: boolean;
     setCollapse?(v: boolean): void;
+    longLabel?: string;
 }
 function EditorFormCard(props: Props) {
     let colors: string;
@@ -42,14 +43,17 @@ function EditorFormCard(props: Props) {
     const [maxHeight, setMaxHeight] = useState(1500);
 
     useEffect(() => {
-        const newMaxHeight = ref.current?.clientHeight;
-        console.log({cur: ref.current});
-        if (newMaxHeight && newMaxHeight > 40) {
-            if (maxHeight === 1500 || newMaxHeight > maxHeight) {
-                setMaxHeight(newMaxHeight);
+        if (ref.current) {
+            const newMaxHeight = ref.current.clientHeight;
+            if (newMaxHeight && newMaxHeight > 40) {
+                if (maxHeight === 1500 || newMaxHeight > maxHeight) {
+                    setMaxHeight(newMaxHeight);
+                }
             }
         }
-    }, [props.label, ref.current?.clientHeight]);
+    }, [maxHeight, ref]);
+
+    useEffect(() => setMaxHeight(1500), [props.label]);
 
     return (
         <div
@@ -67,10 +71,16 @@ function EditorFormCard(props: Props) {
                     props.setCollapse ? props.setCollapse(!props.collapse) : {}
                 }
             >
-                <div className='w-10 h-10 p-2 ml-1 opacity-60'>
+                <div className='w-10 h-10 p-2 ml-1 opacity-70'>
                     {props.icon}
                 </div>
-                <div>{props.label}</div>
+                <div className=''>{props.label}</div>
+                {props.longLabel && (
+                    <div className='ml-2 opacity-70 font-weight-500'>
+                        - {props.longLabel}
+                    </div>
+                )}
+
                 <div className='self-stretch flex-grow' />
                 {props.collapse !== undefined &&
                     props.setCollapse !== undefined && (

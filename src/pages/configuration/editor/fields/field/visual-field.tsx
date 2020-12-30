@@ -47,6 +47,7 @@ function VisualField(props: Props) {
             color={cardColor}
             collapse={collapse}
             setCollapse={setCollapse}
+            longLabel={props.fieldConfig.title}
         >
             <EditorFormRow label='Title' className='mb-1'>
                 <TextInput
