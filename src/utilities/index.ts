@@ -7,7 +7,6 @@ export {generalTypes} from './types/general-types';
 
 export {default as environment} from './constants/environment';
 export {default as formOptions} from './constants/form-options';
-export {default as templates} from './constants/templates';
 
 export {default as formatters} from './form-helpers/formatters';
 export {default as dispatchers} from './redux-helpers/dispatchers';
@@ -21,5 +20,6 @@ export {authPostRequest} from './ajax-helpers/axios-clients';
 export {surveyGetRequest} from './ajax-helpers/axios-clients';
 
 export {default as fieldTemplate} from './template-helpers/add-field';
+export {default as optionTemplate} from './template-helpers/add-option';
 
 export {default as colors} from './ui-helpers/colors';
