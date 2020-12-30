@@ -20,4 +20,6 @@ export {default as generateValidOAuthToken} from './auth-helpers/jwt-handling';
 export {authPostRequest} from './ajax-helpers/axios-clients';
 export {surveyGetRequest} from './ajax-helpers/axios-clients';
 
+export {default as fieldTemplate} from './template-helpers/add-field';
+
 export {default as colors} from './ui-helpers/colors';

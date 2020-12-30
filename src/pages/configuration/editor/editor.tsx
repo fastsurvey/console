@@ -1,6 +1,7 @@
+import {concat} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
-import {stateTypes, configTypes, validators} from 'utilities';
+import {stateTypes, configTypes, validators, fieldTemplate} from 'utilities';
 import VisualEditor from './visual-editor';
 
 interface Props {
@@ -34,6 +35,26 @@ function ConfigEditor(props: Props) {
         if (!fieldValidators.includes(false)) {
             props.closeAllMessages();
         }
+    }
+
+    function insert(array: any[], index: number, element: any) {
+        return concat(
+            array.slice(0, index),
+            element,
+            array.slice(index, array.length),
+        );
+    }
+    function insertField(index: number, fieldType: configTypes.FieldType) {
+        setFieldValidators(insert(fieldValidators, index + 1, false));
+
+        const field: configTypes.SurveyField = fieldTemplate(
+            fieldType,
+            localConfig,
+        );
+        setLocalConfig({
+            ...localConfig,
+            fields: insert(localConfig.fields, index, field),
+        });
     }
 
     function syncState() {
@@ -117,6 +138,7 @@ function ConfigEditor(props: Props) {
             updateValidator={updateValidator}
             setLocalConfig={setLocalConfig}
             setFieldConfig={setFieldConfig}
+            insertField={insertField}
         />
     );
 }

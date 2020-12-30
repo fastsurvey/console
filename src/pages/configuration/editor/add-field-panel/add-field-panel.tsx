@@ -2,8 +2,11 @@ import React, {useState} from 'react';
 import icons from 'assets/icons/icons';
 import AddFieldButton from './add-field-button';
 import AddFieldPopup from './add-field-popup';
+import {configTypes} from 'utilities';
 
-interface Props {}
+interface Props {
+    insertField(fieldType: configTypes.FieldType): void;
+}
 function AddFieldPanel(props: Props) {
     const [popupOpen, setPopupOpen] = useState(false);
 
@@ -30,7 +33,10 @@ function AddFieldPanel(props: Props) {
                     icon={icons.addBox}
                     onClick={() => setPopupOpen(true)}
                 />
-                <AddFieldPopup open={popupOpen} />
+                <AddFieldPopup
+                    open={popupOpen}
+                    insertField={props.insertField}
+                />
             </div>
         </>
     );

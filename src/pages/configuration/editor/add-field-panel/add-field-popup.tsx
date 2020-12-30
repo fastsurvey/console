@@ -5,6 +5,7 @@ import {configTypes} from 'utilities';
 
 interface Props {
     open: boolean;
+    insertField(fieldType: configTypes.FieldType): void;
 }
 function AddFieldPopup(props: Props) {
     const fields: configTypes.FieldType[] = [
@@ -21,8 +22,9 @@ function AddFieldPopup(props: Props) {
                 (props.open ? 'scale-y-100' : 'scale-y-0')
             }
         >
-            {fields.map((fieldType: configTypes.FieldType, i: number) => (
+            {fields.map((fieldType: configTypes.FieldType) => (
                 <div
+                    key={fieldType}
                     className={
                         'flex flex-row items-start justify-start ' +
                         'my-1 text-lg leading-10 font-weight-600 rounded ' +
@@ -31,6 +33,7 @@ function AddFieldPopup(props: Props) {
                             colors.fieldTypeToColor(fieldType),
                         )
                     }
+                    onClick={() => props.insertField(fieldType)}
                 >
                     <div className='w-10 h-10 p-2 ml-1 opacity-70'>
                         {icons.widgets}

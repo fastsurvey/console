@@ -20,6 +20,8 @@ interface Props {
         newFieldConfig: configTypes.SurveyField,
         newIndex: number,
     ): void;
+
+    insertField(index: number, fieldType: configTypes.FieldType): void;
 }
 function VisualEditor(props: Props) {
     return (
@@ -45,10 +47,13 @@ function VisualEditor(props: Props) {
                     }
                 />
                 {props.localConfig.fields.map((fieldConfig, index) => (
-                    <>
-                        <AddFieldPanel />
+                    <div className='w-full' key={fieldConfig.local_id}>
+                        <AddFieldPanel
+                            insertField={(fieldType: configTypes.FieldType) =>
+                                props.insertField(index, fieldType)
+                            }
+                        />
                         <FieldConfigForm
-                            key={fieldConfig.local_id}
                             fieldConfig={fieldConfig}
                             setFieldConfig={(
                                 newFieldConfig: configTypes.SurveyField,
@@ -58,7 +63,7 @@ function VisualEditor(props: Props) {
                                 props.updateValidator(1 + index, newState)
                             }
                         />
-                    </>
+                    </div>
                 ))}
             </div>
         </React.Fragment>
