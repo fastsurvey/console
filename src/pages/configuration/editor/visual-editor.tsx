@@ -65,6 +65,14 @@ function VisualEditor(props: Props) {
                         />
                     </div>
                 ))}
+                <AddFieldPanel
+                    insertField={(fieldType: configTypes.FieldType) =>
+                        props.insertField(
+                            props.localConfig.fields.length,
+                            fieldType,
+                        )
+                    }
+                />
             </div>
         </React.Fragment>
     );

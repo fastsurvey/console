@@ -18,7 +18,7 @@ function AddFieldPopup(props: Props) {
     return (
         <div
             className={
-                'absolute z-50 top-0 mt-0 left-1/2 w-40 px-1 rounded shadow-md transform -translate-x-1/2 transition-size duration-200 bg-white cursor-pointer ' +
+                'absolute z-50 top-0 mt-0 left-1/2 w-40 px-1 rounded shadow-md transform -translate-x-1/2 transition-size duration-400 bg-white cursor-pointer ' +
                 (props.open ? 'scale-y-100' : 'scale-y-0')
             }
         >

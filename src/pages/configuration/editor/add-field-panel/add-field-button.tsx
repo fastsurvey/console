@@ -18,13 +18,13 @@ function AddFieldButton(props: Props) {
     );
     return (
         <div
-            className='flex flex-row items-center justify-center text-gray-500 rounded cursor-pointer hover:text-teal-600 gap-x-1'
+            className='flex flex-row items-center justify-center text-gray-500 transition-colors duration-200 rounded cursor-pointer hover:text-teal-600 gap-x-1'
             onClick={props.onClick}
         >
             {props.leftIcon && icon}
             <div
                 className={
-                    'transition-opacity duration-200 ' +
+                    'transition-opacity duration-400 ' +
                     'opacity-0 group-hover:opacity-100 ' +
                     'text-base font-weight-500 leading-8'
                 }

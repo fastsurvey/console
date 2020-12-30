@@ -28,43 +28,42 @@ const fieldTemplate = (
             };
         case 'Option':
             return {
-                type: 'Email',
+                type: 'Option',
                 local_id: newFieldId(config),
 
                 title: '',
                 description: '',
-                regex: '.*',
-                hint: 'Any email address',
+                mandatory: false,
             };
         case 'Radio':
             return {
-                type: 'Email',
+                type: 'Radio',
                 local_id: newFieldId(config),
 
                 title: '',
                 description: '',
-                regex: '.*',
-                hint: 'Any email address',
+                fields: [],
             };
         case 'Selection':
             return {
-                type: 'Email',
+                type: 'Selection',
                 local_id: newFieldId(config),
 
                 title: '',
                 description: '',
-                regex: '.*',
-                hint: 'Any email address',
+                min_select: 0,
+                max_select: 0,
+                fields: [],
             };
         case 'Text':
             return {
-                type: 'Email',
+                type: 'Text',
                 local_id: newFieldId(config),
 
                 title: '',
                 description: '',
-                regex: '.*',
-                hint: 'Any email address',
+                min_chars: 0,
+                max_chars: 0,
             };
     }
 };
