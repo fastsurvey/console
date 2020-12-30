@@ -107,6 +107,11 @@ function ConfigEditor(props: Props) {
     function revertState() {
         props.markDiffering(false);
         props.closeAllMessages();
+        const newValidators = [];
+        for (let i = 0; i <= props.centralConfig.fields.length; i++) {
+            newValidators.push(true);
+        }
+        setFieldValidators(newValidators);
         setLocalConfigState(props.centralConfig);
     }
 
