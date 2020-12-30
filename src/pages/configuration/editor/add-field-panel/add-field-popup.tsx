@@ -3,7 +3,9 @@ import React from 'react';
 import {colors} from 'utilities';
 import {configTypes} from 'utilities';
 
-interface Props {}
+interface Props {
+    open: boolean;
+}
 function AddFieldPopup(props: Props) {
     const fields: configTypes.FieldType[] = [
         'Email',
@@ -15,7 +17,8 @@ function AddFieldPopup(props: Props) {
     return (
         <div
             className={
-                'absolute z-50 top-0 mt-0 group-hover:mt-2 left-1/2 w-40 px-1 rounded shadow-md transform -translate-x-1/2 transition-size duration-200 bg-white cursor-pointer'
+                'absolute z-50 top-0 mt-0 left-1/2 w-40 px-1 rounded shadow-md transform -translate-x-1/2 transition-size duration-200 bg-white cursor-pointer ' +
+                (props.open ? 'scale-y-100' : 'scale-y-0')
             }
         >
             {fields.map((fieldType: configTypes.FieldType, i: number) => (
@@ -23,6 +26,7 @@ function AddFieldPopup(props: Props) {
                     className={
                         'flex flex-row items-start justify-start ' +
                         'my-1 text-lg leading-10 font-weight-600 rounded ' +
+                        'opacity-70 hover:opacity-100 ' +
                         colors.colorToClasses(
                             colors.fieldTypeToColor(fieldType),
                         )
