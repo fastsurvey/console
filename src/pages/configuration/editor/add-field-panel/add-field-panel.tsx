@@ -22,7 +22,7 @@ function AddFieldPanel(props: Props) {
             <div
                 className={
                     'relative w-full group gap-x-2 ' +
-                    'h-8 hover:h-10 hover:my-2 ' +
+                    'h-10 my-1 ' +
                     'transition-size duration-400 ' +
                     'flex flex-row items-center justify-center '
                 }

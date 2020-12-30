@@ -10,7 +10,7 @@ function AddFieldButton(props: Props) {
     const icon = (
         <div
             className={
-                'w-8 h-8 p-2 group-hover:p-1 transition-size duration-200'
+                'w-8 h-8 p-2 opacity-60 group-hover:opacity-100 transition-opacity duration-400'
             }
         >
             {props.icon}
@@ -18,7 +18,7 @@ function AddFieldButton(props: Props) {
     );
     return (
         <div
-            className='flex flex-row items-center justify-center text-gray-500 transition-colors duration-200 rounded cursor-pointer hover:text-teal-600 gap-x-1'
+            className='flex flex-row items-center justify-center text-gray-500 transition-colors duration-200 rounded cursor-pointer hover:text-teal-600'
             onClick={props.onClick}
         >
             {props.leftIcon && icon}

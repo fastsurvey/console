@@ -31,6 +31,7 @@ function ConfigEditor(props: Props) {
         const newValidators: boolean[] = fieldValidators.map((state, index) =>
             index !== newIndex ? state : newState,
         );
+
         setFieldValidators(newValidators);
         if (!fieldValidators.includes(false)) {
             props.closeAllMessages();

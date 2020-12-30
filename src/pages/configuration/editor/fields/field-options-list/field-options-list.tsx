@@ -1,3 +1,4 @@
+import {max} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
 import {animateScroll} from 'react-scroll';
 import {configTypes, templates} from 'utilities';
@@ -21,15 +22,21 @@ function FieldOptionsList(props: Props) {
 
     const nextRowRef: any = useRef(null);
     const [newOption, setNewOption] = useState('');
+
     function addFieldOption() {
         nextRowRef.current?.blur();
         optionsVisible.push(true);
-        const local_id: number =
-            Math.max(
-                ...props.fieldConfig.fields.map(
-                    (fieldConfig) => fieldConfig.local_id,
-                ),
-            ) + 1;
+        let local_id: number | undefined = max(
+            props.fieldConfig.fields.map(
+                (optionConfig: configTypes.FieldOption) =>
+                    optionConfig.local_id,
+            ),
+        );
+        if (local_id === undefined) {
+            local_id = props.fieldConfig.local_id;
+        } else {
+            local_id += 1;
+        }
         props.updateFieldConfig({
             ...props.fieldConfig,
             fields: [
