@@ -20,6 +20,9 @@ interface Props {
     updateValidator(newState: boolean): void;
     commonProps: any;
     disabled: boolean;
+
+    collapse: boolean;
+    setCollapse(v: boolean): void;
 }
 const VisualSettings = (props: Props) => {
     const commonProps = {
@@ -32,6 +35,8 @@ const VisualSettings = (props: Props) => {
             label='General Settings'
             icon={icons.tune}
             className='z-20 mt-8'
+            collapse={props.collapse}
+            setCollapse={props.setCollapse}
         >
             <EditorFormRow label='Title' className='mb-1'>
                 <TextInput

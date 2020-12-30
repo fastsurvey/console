@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {stateTypes, configTypes, validators} from 'utilities';
 import VisualSettings from './visual-settings';
@@ -17,6 +17,8 @@ function Settings(props: Props) {
     );
     const descriptionIsValid = validators.description;
     const submissionLimitIsValid = validators.submissionLimit;
+
+    const [collapse, setCollapse] = useState(false);
 
     function updateConfig(
         newConfig: configTypes.SurveyConfig,
@@ -46,6 +48,8 @@ function Settings(props: Props) {
                 config: props.config,
             }}
             disabled={!props.config.draft}
+            collapse={collapse}
+            setCollapse={setCollapse}
         />
     );
 }
