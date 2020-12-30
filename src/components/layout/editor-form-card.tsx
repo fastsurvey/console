@@ -39,16 +39,17 @@ function EditorFormCard(props: Props) {
 
     // Set a way too large start max-height
     // which the div will never reach
-    const [maxHeight, setMaxHeight] = useState(10000);
+    const [maxHeight, setMaxHeight] = useState(1500);
 
     useEffect(() => {
         const newMaxHeight = ref.current?.clientHeight;
-        if (newMaxHeight && newMaxHeight !== 0) {
-            if (maxHeight === 10000 || newMaxHeight > maxHeight) {
+        console.log({cur: ref.current});
+        if (newMaxHeight && newMaxHeight > 40) {
+            if (maxHeight === 1500 || newMaxHeight > maxHeight) {
                 setMaxHeight(newMaxHeight);
             }
         }
-    }, [maxHeight]);
+    }, [props.label, ref.current?.clientHeight]);
 
     return (
         <div
@@ -57,10 +58,13 @@ function EditorFormCard(props: Props) {
             <div
                 className={
                     'absolute left-0 right-0 top-0 bottom-0 ' +
-                    'rounded shadow-md mr-1 mb-1 z-0 ' +
+                    'rounded shadow-md mr-1 mb-1 z-0 cursor-pointer ' +
                     'flex flex-row items-start justify-start ' +
                     'font-weight-600 text-lg leading-10 ' +
                     colors
+                }
+                onClick={() =>
+                    props.setCollapse ? props.setCollapse(!props.collapse) : {}
                 }
             >
                 <div className='w-10 h-10 p-2 ml-1 opacity-60'>
@@ -72,14 +76,9 @@ function EditorFormCard(props: Props) {
                     props.setCollapse !== undefined && (
                         <div
                             className={
-                                'w-10 h-10 p-2 cursor-pointer ' +
-                                'transition-transform duration-200 transform ' +
+                                'w-10 h-10 p-2 transform ' +
+                                'transition-transform duration-200 ' +
                                 (props.collapse ? 'rotate-0 ' : 'rotate-180 ')
-                            }
-                            onClick={() =>
-                                props.setCollapse
-                                    ? props.setCollapse(!props.collapse)
-                                    : {}
                             }
                         >
                             {icons.expand_more}

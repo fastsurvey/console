@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {configTypes, hints} from 'utilities';
 import {icons} from 'assets';
 import {TextArea, TextInput, EditorFormCard, EditorFormRow} from 'components';
@@ -35,11 +35,18 @@ function VisualField(props: Props) {
             break;
     }
 
+    const [collapse, setCollapse] = useState(true);
+    useEffect(() => {
+        setCollapse(true);
+    }, [props.fieldConfig.local_id]);
+
     return (
         <EditorFormCard
             label={props.fieldConfig.type}
             icon={icons.widgets}
             color={cardColor}
+            collapse={collapse}
+            setCollapse={setCollapse}
         >
             <EditorFormRow label='Title' className='mb-1'>
                 <TextInput

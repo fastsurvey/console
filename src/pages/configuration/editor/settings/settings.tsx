@@ -18,8 +18,6 @@ function Settings(props: Props) {
     const descriptionIsValid = validators.description;
     const submissionLimitIsValid = validators.submissionLimit;
 
-    const [collapse, setCollapse] = useState(false);
-
     function updateConfig(
         newConfig: configTypes.SurveyConfig,
         skipValidation?: boolean,
@@ -48,8 +46,6 @@ function Settings(props: Props) {
                 config: props.config,
             }}
             disabled={!props.config.draft}
-            collapse={collapse}
-            setCollapse={setCollapse}
         />
     );
 }
