@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {configTypes, hints} from 'utilities';
+import {configTypes, hints, colors} from 'utilities';
 import {icons} from 'assets';
 import {TextArea, TextInput, EditorFormCard, EditorFormRow} from 'components';
 
@@ -16,25 +16,6 @@ function VisualField(props: Props) {
         flat: true,
     };
 
-    let cardColor: string;
-    switch (props.fieldConfig.type) {
-        case 'Email':
-            cardColor = 'red';
-            break;
-        case 'Option':
-            cardColor = 'orange';
-            break;
-        case 'Radio':
-            cardColor = 'yellow';
-            break;
-        case 'Selection':
-            cardColor = 'green';
-            break;
-        case 'Text':
-            cardColor = 'teal';
-            break;
-    }
-
     const [collapse, setCollapse] = useState(true);
     useEffect(() => {
         setCollapse(true);
@@ -44,7 +25,7 @@ function VisualField(props: Props) {
         <EditorFormCard
             label={props.fieldConfig.type}
             icon={icons.widgets}
-            color={cardColor}
+            color={colors.fieldTypeToColor(props.fieldConfig.type)}
             collapse={collapse}
             setCollapse={setCollapse}
             longLabel={props.fieldConfig.title}

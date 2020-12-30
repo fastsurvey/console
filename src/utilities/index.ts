@@ -2,6 +2,8 @@
 export {configTypes} from './types/config-types';
 // @ts-ignore
 export {stateTypes} from './types/state-types';
+// @ts-ignore
+export {generalTypes} from './types/general-types';
 
 export {default as environment} from './constants/environment';
 export {default as formOptions} from './constants/form-options';
@@ -17,3 +19,5 @@ export {default as generateValidOAuthToken} from './auth-helpers/jwt-handling';
 
 export {authPostRequest} from './ajax-helpers/axios-clients';
 export {surveyGetRequest} from './ajax-helpers/axios-clients';
+
+export {default as colors} from './ui-helpers/colors';

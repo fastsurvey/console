@@ -18,6 +18,7 @@ module.exports = {
           height: ['hover', 'group-hover'],
           width: ['hover', 'group-hover'],
           padding: ['hover', 'group-hover'],
+          margin: ['hover', 'group-hover'],
         }
       },
     theme: {

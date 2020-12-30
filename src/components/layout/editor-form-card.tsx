@@ -1,41 +1,20 @@
 import React, {useRef, useEffect, useState} from 'react';
 import icons from 'assets/icons/icons';
+import {colors} from 'utilities';
+import {generalTypes} from 'utilities/types/general-types';
 
 interface Props {
     label: string;
     children: React.ReactNode;
     icon: React.ReactNode;
     className?: string;
-    color?: string;
+    color?: generalTypes.Color;
 
     collapse?: boolean;
     setCollapse?(v: boolean): void;
     longLabel?: string;
 }
 function EditorFormCard(props: Props) {
-    let colors: string;
-    switch (props.color) {
-        case 'red':
-            colors = 'bg-red-200 text-red-600';
-            break;
-        case 'orange':
-            colors = 'bg-orange-200 text-orange-600';
-            break;
-        case 'yellow':
-            colors = 'bg-yellow-200 text-yellow-600';
-            break;
-        case 'green':
-            colors = 'bg-green-200 text-green-600';
-            break;
-        case 'teal':
-            colors = 'bg-teal-200 text-teal-600';
-            break;
-        case 'gray':
-        default:
-            colors = 'bg-gray-300 text-gray-600';
-            break;
-    }
-
     let ref = useRef<HTMLDivElement>(null);
 
     // Set a way too large start max-height
@@ -63,7 +42,7 @@ function EditorFormCard(props: Props) {
                     'rounded shadow-md mr-1 mb-1 z-0 cursor-pointer ' +
                     'flex flex-row items-start justify-start ' +
                     'font-weight-600 text-lg leading-10 ' +
-                    colors
+                    colors.colorToClasses(props.color)
                 }
                 onClick={() =>
                     props.setCollapse ? props.setCollapse(!props.collapse) : {}
