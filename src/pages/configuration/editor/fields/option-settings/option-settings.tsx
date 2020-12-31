@@ -1,5 +1,5 @@
 import React from 'react';
-import {configTypes} from 'utilities';
+import {configTypes, validateField} from 'utilities';
 import VisualOptionSettings from './visual-option-settings';
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 }
 function OptionSettings(props: Props) {
     function updateFieldConfig(newFieldConfig: configTypes.OptionField) {
-        props.setFieldConfig(newFieldConfig, () => true);
+        props.setFieldConfig(newFieldConfig, validateField);
     }
 
     return (

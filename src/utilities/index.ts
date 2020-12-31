@@ -11,6 +11,7 @@ export {default as formOptions} from './constants/form-options';
 export {default as formatters} from './form-helpers/formatters';
 export {default as dispatchers} from './redux-helpers/dispatchers';
 export {default as validators} from './form-helpers/validators';
+export {default as validateField} from './form-helpers/validate-field';
 export {default as hints} from './form-helpers/hints';
 export {default as copyToClipboard} from './form-helpers/copy-to-clipboard';
 export {default as addLocalIds} from './form-helpers/add-local-ids';

@@ -1,6 +1,5 @@
 import React from 'react';
-import {configTypes} from 'utilities';
-import {validators} from 'utilities';
+import {configTypes, validateField} from 'utilities';
 import VisualSelectionSettings from './visual-selection-settings';
 
 interface Props {
@@ -13,15 +12,7 @@ interface Props {
 }
 function SelectionSettings(props: Props) {
     function updateFieldConfig(newFieldConfig: configTypes.SelectionField) {
-        props.setFieldConfig(
-            newFieldConfig,
-            (newFieldConfig: configTypes.SelectionField) =>
-                newFieldConfig.fields.every((optionField) =>
-                    validators.title(optionField.title),
-                ) &&
-                validators.minSelect(newFieldConfig) &&
-                validators.maxSelect(newFieldConfig),
-        );
+        props.setFieldConfig(newFieldConfig, validateField);
     }
 
     return (

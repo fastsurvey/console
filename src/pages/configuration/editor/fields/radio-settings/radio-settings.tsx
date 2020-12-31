@@ -1,5 +1,5 @@
 import React from 'react';
-import {configTypes, validators} from 'utilities';
+import {configTypes, validateField} from 'utilities';
 import FieldOptionsList from '../field-options-list/field-options-list';
 
 interface Props {
@@ -11,18 +11,10 @@ interface Props {
     disabled: boolean;
 }
 function RadioFieldConfigForm(props: Props) {
-    const titleIsValid = validators.title;
-
     function updateFieldConfig(
         newFieldConfig: configTypes.RadioField | configTypes.SelectionField,
     ) {
-        props.setFieldConfig(
-            newFieldConfig,
-            (newFieldConfig: configTypes.RadioField) =>
-                newFieldConfig.fields.every((optionField) =>
-                    titleIsValid(optionField.title),
-                ),
-        );
+        props.setFieldConfig(newFieldConfig, validateField);
     }
 
     return (

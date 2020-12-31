@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {configTypes, formOptions, validators} from 'utilities';
+import {configTypes, formOptions, validateField} from 'utilities';
 import VisualEmailSettings from './visual-email-settings';
 
 interface Props {
@@ -11,9 +11,6 @@ interface Props {
     disabled: boolean;
 }
 function EmailSettings(props: Props) {
-    const regexIsValid = validators.regex;
-    const hintIsValid = validators.hint;
-
     const getCustomSetup = (regex: string, hint: string) => ({
         label: 'Custom Rule',
         value: formOptions.EMAIL_REGEX.length,
@@ -21,7 +18,7 @@ function EmailSettings(props: Props) {
         hint: hint,
     });
 
-    // Initial state = custom
+    // Initial state = custom (last index + 1)
     const [setupValue, setSetupValue] = useState(
         formOptions.EMAIL_REGEX.length,
     );
@@ -47,12 +44,7 @@ function EmailSettings(props: Props) {
     }, [props.fieldConfig.regex, props.fieldConfig.hint]);
 
     function updateFieldConfig(newFieldConfig: configTypes.EmailField) {
-        props.setFieldConfig(
-            newFieldConfig,
-            (fieldConfig: configTypes.EmailField) =>
-                hintIsValid(fieldConfig.hint) &&
-                regexIsValid(fieldConfig.regex),
-        );
+        props.setFieldConfig(newFieldConfig, validateField);
     }
 
     return (
