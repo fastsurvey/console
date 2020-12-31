@@ -9,6 +9,7 @@ import {
     validateFormat,
     newFieldId,
     addLocalIds,
+    validateField,
 } from 'utilities';
 import VisualEditor from './visual-editor';
 import {AssertionError} from 'assert';
@@ -80,14 +81,15 @@ function ConfigEditor(props: Props) {
         navigator.clipboard.readText().then((text: string) => {
             try {
                 const newField = JSON.parse(text);
-
                 if (!validateFormat.fieldConfig(newField)) {
-                    console.log('couldnt parse');
                     throw AssertionError;
                 }
 
                 // TODO: Set correct validation status
-                setFieldValidators(insert(fieldValidators, index + 1, true));
+                console.log(newField, validateField(newField));
+                setFieldValidators(
+                    insert(fieldValidators, index + 1, validateField(newField)),
+                );
 
                 const newConfig = {
                     ...localConfig,
@@ -100,6 +102,7 @@ function ConfigEditor(props: Props) {
                 console.log(newConfig);
                 setLocalConfig(newConfig);
             } catch {
+                // TODO: Show message on unsuccessful paste
                 console.log('invalid text format on clipoard');
             }
         });
@@ -187,6 +190,8 @@ function ConfigEditor(props: Props) {
             ),
         });
     }
+
+    console.log(fieldValidators);
 
     return (
         <VisualEditor

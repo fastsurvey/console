@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {
-    validators,
     configTypes,
     copyToClipboard,
     removeLocalIds,
@@ -22,31 +21,12 @@ interface Props {
     removeField(): void;
 }
 function Field(props: Props) {
-    const titleIsValid = validators.title;
-    const descriptionIsValid = validators.description;
-
-    const [settingsValidator, setSettingsValidator] = useState(true);
-    useEffect(() => setSettingsValidator(true), [props.fieldConfig.local_id]);
+    useEffect(() => props.updateValidator(validateField(props.fieldConfig)), [
+        props.fieldConfig.local_id,
+    ]);
 
     function updateFieldConfig(newFieldConfig: configTypes.SurveyField) {
-        props.updateValidator(
-            titleIsValid(newFieldConfig.title) &&
-                descriptionIsValid(newFieldConfig.description) &&
-                settingsValidator,
-        );
-        props.setFieldConfig(newFieldConfig);
-    }
-
-    function updateSpecificFieldConfig(
-        newFieldConfig: configTypes.SurveyField,
-    ) {
-        const subValidationResult = validateField(newFieldConfig);
-        setSettingsValidator(subValidationResult);
-        props.updateValidator(
-            titleIsValid(newFieldConfig.title) &&
-                descriptionIsValid(newFieldConfig.description) &&
-                subValidationResult,
-        );
+        props.updateValidator(validateField(newFieldConfig));
         props.setFieldConfig(newFieldConfig);
     }
 
@@ -66,7 +46,7 @@ function Field(props: Props) {
             FieldSettings = (
                 <TextSettings
                     disabled={props.disabled}
-                    setFieldConfig={updateSpecificFieldConfig}
+                    setFieldConfig={updateFieldConfig}
                     fieldConfig={props.fieldConfig}
                 />
             );
@@ -75,7 +55,7 @@ function Field(props: Props) {
             FieldSettings = (
                 <OptionSettings
                     disabled={props.disabled}
-                    setFieldConfig={updateSpecificFieldConfig}
+                    setFieldConfig={updateFieldConfig}
                     fieldConfig={props.fieldConfig}
                 />
             );
@@ -84,7 +64,7 @@ function Field(props: Props) {
             FieldSettings = (
                 <RadioSettings
                     disabled={props.disabled}
-                    setFieldConfig={updateSpecificFieldConfig}
+                    setFieldConfig={updateFieldConfig}
                     fieldConfig={props.fieldConfig}
                 />
             );
@@ -93,7 +73,7 @@ function Field(props: Props) {
             FieldSettings = (
                 <SelectionSettings
                     disabled={props.disabled}
-                    setFieldConfig={updateSpecificFieldConfig}
+                    setFieldConfig={updateFieldConfig}
                     fieldConfig={props.fieldConfig}
                 />
             );
@@ -102,7 +82,7 @@ function Field(props: Props) {
             FieldSettings = (
                 <EmailSettings
                     disabled={props.disabled}
-                    setFieldConfig={updateSpecificFieldConfig}
+                    setFieldConfig={updateFieldConfig}
                     fieldConfig={props.fieldConfig}
                 />
             );

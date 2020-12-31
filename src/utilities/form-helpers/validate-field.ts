@@ -1,6 +1,13 @@
 import {configTypes, validators} from 'utilities';
 
 function validateField(fieldConfig: configTypes.SurveyField) {
+    if (
+        !validators.title(fieldConfig.title) ||
+        !validators.description(fieldConfig.description)
+    ) {
+        return false;
+    }
+
     switch (fieldConfig.type) {
         case 'Email':
             return (
