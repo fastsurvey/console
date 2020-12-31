@@ -1,5 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {validators, configTypes} from 'utilities';
+import {
+    validators,
+    configTypes,
+    copyToClipboard,
+    removeLocalIds,
+} from 'utilities';
 
 import VisualField from './visual-field';
 import TextSettings from '../text-settings/text-settings';
@@ -46,25 +51,9 @@ function Field(props: Props) {
     }
 
     function copyField() {
-        let config = props.fieldConfig;
-
-        // TODO: Move this into utilities
-        // @ts-ignore
-        delete config.local_id;
-        if (config.type === 'Radio' || config.type === 'Selection') {
-            config.fields.forEach((field: configTypes.FieldOption) => {
-                // @ts-ignore
-                delete field.local_id;
-            });
-        }
-
-        // TODO: Move this into utilities
-        var textField = document.createElement('textarea');
-        textField.innerText = JSON.stringify(config);
-        document.body.appendChild(textField);
-        textField.select();
-        document.execCommand('copy');
-        textField.remove();
+        copyToClipboard(
+            JSON.stringify(removeLocalIds.field(props.fieldConfig)),
+        );
     }
 
     const commonFieldProps = {
