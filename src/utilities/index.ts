@@ -23,5 +23,6 @@ export {surveyGetRequest} from './ajax-helpers/axios-clients';
 export {default as fieldTemplate} from './template-helpers/add-field';
 export {default as optionTemplate} from './template-helpers/add-option';
 export {default as removeLocalIds} from './template-helpers/remove-local-ids';
+export {default as validateFormat} from './template-helpers/validate-format';
 
 export {default as colors} from './ui-helpers/colors';
