@@ -23,17 +23,24 @@ function VisualField(props: Props) {
         setCollapse(true);
     }, [props.fieldConfig.local_id]);
 
+    const [actionLabel, setActionLabel] = useState('');
+
     const buttons = (
         <>
             <div
                 className='w-10 h-10 px-2 py-2 cursor-pointer opacity-70 hover:opacity-100'
-                onClick={props.copyField}
+                onClick={() => {
+                    props.copyField();
+                    setActionLabel('copied!');
+                }}
+                onMouseEnter={() => setActionLabel('copy')}
             >
                 {icons.fileCopy}
             </div>
             <div
                 className='w-10 h-10 px-2 py-2 cursor-pointer opacity-70 hover:opacity-100'
                 onClick={props.removeField}
+                onMouseEnter={() => setActionLabel('remove')}
             >
                 {icons.delete}
             </div>
@@ -48,6 +55,8 @@ function VisualField(props: Props) {
             setCollapse={setCollapse}
             longLabel={props.fieldConfig.title}
             buttons={buttons}
+            actionLabel={actionLabel}
+            setActionLabel={setActionLabel}
         >
             <EditorFormRow label='Title' className='mb-1'>
                 <TextInput
