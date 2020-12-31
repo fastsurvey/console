@@ -21,6 +21,7 @@ export {default as generateValidOAuthToken} from './auth-helpers/jwt-handling';
 export {authPostRequest} from './ajax-helpers/axios-clients';
 export {surveyGetRequest} from './ajax-helpers/axios-clients';
 
+export {default as newFieldId} from './template-helpers/new-field-id';
 export {default as fieldTemplate} from './template-helpers/add-field';
 export {default as optionTemplate} from './template-helpers/add-option';
 export {default as removeLocalIds} from './template-helpers/remove-local-ids';

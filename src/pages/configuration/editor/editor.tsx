@@ -7,6 +7,8 @@ import {
     validators,
     fieldTemplate,
     validateFormat,
+    newFieldId,
+    addLocalIds,
 } from 'utilities';
 import VisualEditor from './visual-editor';
 import {AssertionError} from 'assert';
@@ -74,10 +76,11 @@ function ConfigEditor(props: Props) {
     }
 
     function pasteField(index: number) {
+        console.log(localConfig);
         navigator.clipboard.readText().then((text: string) => {
             try {
                 const newField = JSON.parse(text);
-                console.log({newField, text});
+
                 if (!validateFormat.fieldConfig(newField)) {
                     console.log('couldnt parse');
                     throw AssertionError;
@@ -86,11 +89,16 @@ function ConfigEditor(props: Props) {
                 // TODO: Set correct validation status
                 setFieldValidators(insert(fieldValidators, index + 1, true));
 
-                // TODO: Set correct local_id
-                setLocalConfig({
+                const newConfig = {
                     ...localConfig,
-                    fields: insert(localConfig.fields, index, newField),
-                });
+                    fields: insert(
+                        localConfig.fields,
+                        index,
+                        addLocalIds.field(newField, newFieldId(localConfig)),
+                    ),
+                };
+                console.log(newConfig);
+                setLocalConfig(newConfig);
             } catch {
                 console.log('invalid text format on clipoard');
             }

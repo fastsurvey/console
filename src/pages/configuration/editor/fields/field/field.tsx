@@ -52,7 +52,11 @@ function Field(props: Props) {
 
     function copyField() {
         copyToClipboard(
-            JSON.stringify(removeLocalIds.field(props.fieldConfig)),
+            JSON.stringify(
+                removeLocalIds.field(
+                    JSON.parse(JSON.stringify(props.fieldConfig)),
+                ),
+            ),
         );
     }
 
