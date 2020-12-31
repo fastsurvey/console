@@ -76,7 +76,7 @@ function ConfigEditor(props: Props) {
     function pasteField(index: number) {
         navigator.clipboard.readText().then((text: string) => {
             try {
-                const newField = JSON.parse(JSON.parse(text));
+                const newField = JSON.parse(text);
                 console.log({newField, text});
                 if (!validateFormat.fieldConfig(newField)) {
                     console.log('couldnt parse');
