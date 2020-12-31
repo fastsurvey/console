@@ -13,6 +13,7 @@ export {default as dispatchers} from './redux-helpers/dispatchers';
 export {default as validators} from './form-helpers/validators';
 export {default as hints} from './form-helpers/hints';
 export {default as copyToClipboard} from './form-helpers/copy-to-clipboard';
+export {default as addLocalIds} from './form-helpers/add-local-ids';
 
 export {default as fetchSurveys} from './ajax-helpers/fetching';
 export {default as generateValidOAuthToken} from './auth-helpers/jwt-handling';
