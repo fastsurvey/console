@@ -22,6 +22,7 @@ interface Props {
     ): void;
 
     insertField(index: number, fieldType: configTypes.FieldType): void;
+    pasteField(index: number): void;
     removeField(index: number): void;
 }
 function VisualEditor(props: Props) {
@@ -53,6 +54,7 @@ function VisualEditor(props: Props) {
                             insertField={(fieldType: configTypes.FieldType) =>
                                 props.insertField(index, fieldType)
                             }
+                            pasteField={() => props.pasteField(index)}
                         />
                         <FieldConfigForm
                             fieldConfig={fieldConfig}
@@ -73,6 +75,9 @@ function VisualEditor(props: Props) {
                             props.localConfig.fields.length,
                             fieldType,
                         )
+                    }
+                    pasteField={() =>
+                        props.pasteField(props.localConfig.fields.length)
                     }
                 />
             </div>

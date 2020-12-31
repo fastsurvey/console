@@ -1,8 +1,15 @@
 import {concat} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
-import {stateTypes, configTypes, validators, fieldTemplate} from 'utilities';
+import {
+    stateTypes,
+    configTypes,
+    validators,
+    fieldTemplate,
+    validateFormat,
+} from 'utilities';
 import VisualEditor from './visual-editor';
+import {AssertionError} from 'assert';
 
 interface Props {
     centralConfig: configTypes.SurveyConfig;
@@ -63,6 +70,30 @@ function ConfigEditor(props: Props) {
         setLocalConfig({
             ...localConfig,
             fields: insert(localConfig.fields, index, field),
+        });
+    }
+
+    function pasteField(index: number) {
+        navigator.clipboard.readText().then((text: string) => {
+            try {
+                const newField = JSON.parse(JSON.parse(text));
+                console.log({newField, text});
+                if (!validateFormat.fieldConfig(newField)) {
+                    console.log('couldnt parse');
+                    throw AssertionError;
+                }
+
+                // TODO: Set correct validation status
+                setFieldValidators(insert(fieldValidators, index + 1, true));
+
+                // TODO: Set correct local_id
+                setLocalConfig({
+                    ...localConfig,
+                    fields: insert(localConfig.fields, index, newField),
+                });
+            } catch {
+                console.log('invalid text format on clipoard');
+            }
         });
     }
 
@@ -161,6 +192,7 @@ function ConfigEditor(props: Props) {
             setLocalConfig={setLocalConfig}
             setFieldConfig={setFieldConfig}
             insertField={insertField}
+            pasteField={pasteField}
             removeField={removeField}
         />
     );

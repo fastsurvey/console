@@ -6,6 +6,7 @@ import {configTypes} from 'utilities';
 
 interface Props {
     insertField(fieldType: configTypes.FieldType): void;
+    pasteField(): void;
 }
 function AddFieldPanel(props: Props) {
     const [popupOpen, setPopupOpen] = useState(false);
@@ -39,6 +40,12 @@ function AddFieldPanel(props: Props) {
                         setPopupOpen(false);
                         props.insertField(fieldType);
                     }}
+                />
+                <AddFieldButton
+                    label='paste field'
+                    icon={icons.widgets}
+                    onClick={props.pasteField}
+                    leftIcon
                 />
             </div>
         </>
