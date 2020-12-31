@@ -13,7 +13,7 @@ import {
     Verify,
     VerifyWall,
 } from 'pages/authentication';
-import {ConfigList, ConfigEditor} from 'pages/configuration';
+import {ConfigList, EditorRouter} from 'pages/configuration';
 
 import {LoaderOverlay, MessageQueue} from 'components';
 
@@ -53,7 +53,7 @@ function Router(props: RouterProps) {
                                                 path='/configuration/:survey_name'
                                             >
                                                 <ConfigList />
-                                                <ConfigEditor />
+                                                <EditorRouter />
                                             </Route>
                                             <Route exact path='/results'>
                                                 <h3>Results</h3>

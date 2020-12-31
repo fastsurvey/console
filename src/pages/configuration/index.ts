@@ -1,2 +1,2 @@
-export {default as ConfigEditor} from './editor/editor-wrapper';
+export {default as EditorRouter} from './editor/editor-router';
 export {default as ConfigList} from './config-list/config-list';
