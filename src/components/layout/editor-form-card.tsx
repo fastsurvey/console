@@ -31,7 +31,7 @@ function EditorFormCard(props: Props) {
                 }
             }
         }
-    }, [ref]);
+    }, [maxHeight, ref]);
 
     useEffect(() => setMaxHeight(1500), [props.label]);
 
@@ -49,7 +49,10 @@ function EditorFormCard(props: Props) {
                     colors.colorToClasses(props.color)
                 }
             >
-                <div className='flex flex-row cursor-pointer' onClick={toggle}>
+                <div
+                    className='flex flex-row self-stretch flex-grow cursor-pointer'
+                    onClick={toggle}
+                >
                     <div className='w-10 h-10 p-2 ml-1 opacity-70'>
                         {props.icon}
                     </div>
@@ -59,8 +62,9 @@ function EditorFormCard(props: Props) {
                             - {props.longLabel}
                         </div>
                     )}
+                    <div className='self-stretch flex-grow' />
                 </div>
-                <div className='self-stretch flex-grow' />
+
                 {props.buttons}
                 {props.collapse !== undefined &&
                     props.setCollapse !== undefined && (
@@ -80,9 +84,9 @@ function EditorFormCard(props: Props) {
             <div
                 className={
                     'flex flex-col left-0 right-0 min-h-full p-2 pt-4 ml-1 ' +
-                    'rounded shadow-md bg-white mt-10 z-10 overflow-hidden ' +
+                    'rounded shadow-md bg-white mt-10 z-10 ' +
                     'transition-size duration-300 ' +
-                    (props.collapse ? 'pb-0' : 'pb-2')
+                    (props.collapse ? 'pb-0 overflow-hidden' : 'pb-2')
                 }
                 style={{maxHeight: props.collapse ? '0' : `${maxHeight}px`}}
                 ref={ref}

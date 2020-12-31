@@ -45,6 +45,14 @@ function ConfigEditor(props: Props) {
             array.slice(index, array.length),
         );
     }
+
+    function remove(array: any[], index: number) {
+        return concat(
+            array.slice(0, index),
+            array.slice(index + 1, array.length),
+        );
+    }
+
     function insertField(index: number, fieldType: configTypes.FieldType) {
         setFieldValidators(insert(fieldValidators, index + 1, false));
 
@@ -55,6 +63,14 @@ function ConfigEditor(props: Props) {
         setLocalConfig({
             ...localConfig,
             fields: insert(localConfig.fields, index, field),
+        });
+    }
+
+    function removeField(index: number) {
+        setFieldValidators(remove(fieldValidators, index + 1));
+        setLocalConfig({
+            ...localConfig,
+            fields: remove(localConfig.fields, index),
         });
     }
 
@@ -145,6 +161,7 @@ function ConfigEditor(props: Props) {
             setLocalConfig={setLocalConfig}
             setFieldConfig={setFieldConfig}
             insertField={insertField}
+            removeField={removeField}
         />
     );
 }

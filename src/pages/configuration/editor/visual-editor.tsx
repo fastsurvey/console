@@ -22,6 +22,7 @@ interface Props {
     ): void;
 
     insertField(index: number, fieldType: configTypes.FieldType): void;
+    removeField(index: number): void;
 }
 function VisualEditor(props: Props) {
     return (
@@ -62,7 +63,7 @@ function VisualEditor(props: Props) {
                             updateValidator={(newState: boolean) =>
                                 props.updateValidator(1 + index, newState)
                             }
-                            removeField={() => {}}
+                            removeField={() => props.removeField(index)}
                         />
                     </div>
                 ))}
