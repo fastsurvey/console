@@ -13,6 +13,7 @@ interface Props {
     setFieldConfig(fieldConfig: configTypes.SurveyField): void;
     disabled: boolean;
     updateValidator(newState: boolean): void;
+    removeField(): void;
 }
 function Field(props: Props) {
     const titleIsValid = validators.title;
@@ -111,6 +112,7 @@ function Field(props: Props) {
             setFieldConfig={props.setFieldConfig}
             updateFieldConfig={updateFieldConfig}
             disabled={props.disabled}
+            removeField={props.removeField}
         >
             {FieldSettings}
         </VisualField>

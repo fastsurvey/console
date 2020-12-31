@@ -8,6 +8,7 @@ interface Props {
     disabled: boolean;
     setFieldConfig(fieldConfig: configTypes.SurveyField): void;
     updateFieldConfig(fieldConfig: configTypes.SurveyField): void;
+    removeField(): void;
     children: React.ReactNode;
 }
 function VisualField(props: Props) {
@@ -21,6 +22,14 @@ function VisualField(props: Props) {
         setCollapse(true);
     }, [props.fieldConfig.local_id]);
 
+    const buttons = (
+        <div
+            className='w-8 h-10 px-1 py-2 cursor-pointer opacity-70 hover:opacity-100'
+            onClick={props.removeField}
+        >
+            {icons.delete}
+        </div>
+    );
     return (
         <EditorFormCard
             label={props.fieldConfig.type}
@@ -29,6 +38,7 @@ function VisualField(props: Props) {
             collapse={collapse}
             setCollapse={setCollapse}
             longLabel={props.fieldConfig.title}
+            buttons={buttons}
         >
             <EditorFormRow label='Title' className='mb-1'>
                 <TextInput

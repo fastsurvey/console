@@ -62,6 +62,7 @@ function VisualEditor(props: Props) {
                             updateValidator={(newState: boolean) =>
                                 props.updateValidator(1 + index, newState)
                             }
+                            removeField={() => {}}
                         />
                     </div>
                 ))}
