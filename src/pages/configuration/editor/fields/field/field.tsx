@@ -4,6 +4,7 @@ import {
     configTypes,
     copyToClipboard,
     removeLocalIds,
+    validateField,
 } from 'utilities';
 
 import VisualField from './visual-field';
@@ -36,11 +37,10 @@ function Field(props: Props) {
         props.setFieldConfig(newFieldConfig);
     }
 
-    function updateSubfieldConfig(
+    function updateSpecificFieldConfig(
         newFieldConfig: configTypes.SurveyField,
-        subValidation: (fieldConfig: configTypes.SurveyField) => boolean,
     ) {
-        const subValidationResult = subValidation(newFieldConfig);
+        const subValidationResult = validateField(newFieldConfig);
         setSettingsValidator(subValidationResult);
         props.updateValidator(
             titleIsValid(newFieldConfig.title) &&
@@ -60,54 +60,49 @@ function Field(props: Props) {
         );
     }
 
-    const commonFieldProps = {
-        disabled: props.disabled,
-        setFieldConfig: updateSubfieldConfig,
-    };
-
     let FieldSettings: React.ReactNode;
     switch (props.fieldConfig.type) {
         case 'Text':
             FieldSettings = (
-                // @ts-ignore
                 <TextSettings
-                    {...commonFieldProps}
+                    disabled={props.disabled}
+                    setFieldConfig={updateSpecificFieldConfig}
                     fieldConfig={props.fieldConfig}
                 />
             );
             break;
         case 'Option':
             FieldSettings = (
-                // @ts-ignore
                 <OptionSettings
-                    {...commonFieldProps}
+                    disabled={props.disabled}
+                    setFieldConfig={updateSpecificFieldConfig}
                     fieldConfig={props.fieldConfig}
                 />
             );
             break;
         case 'Radio':
             FieldSettings = (
-                // @ts-ignore
                 <RadioSettings
-                    {...commonFieldProps}
+                    disabled={props.disabled}
+                    setFieldConfig={updateSpecificFieldConfig}
                     fieldConfig={props.fieldConfig}
                 />
             );
             break;
         case 'Selection':
             FieldSettings = (
-                // @ts-ignore
                 <SelectionSettings
-                    {...commonFieldProps}
+                    disabled={props.disabled}
+                    setFieldConfig={updateSpecificFieldConfig}
                     fieldConfig={props.fieldConfig}
                 />
             );
             break;
         case 'Email':
             FieldSettings = (
-                // @ts-ignore
                 <EmailSettings
-                    {...commonFieldProps}
+                    disabled={props.disabled}
+                    setFieldConfig={updateSpecificFieldConfig}
                     fieldConfig={props.fieldConfig}
                 />
             );

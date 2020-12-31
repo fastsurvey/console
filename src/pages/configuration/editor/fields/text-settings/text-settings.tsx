@@ -1,18 +1,15 @@
 import React from 'react';
-import {configTypes, validateField} from 'utilities';
+import {configTypes} from 'utilities';
 import VisualTextSettings from 'pages/configuration/editor/fields/text-settings/visual-text-settings';
 
 interface Props {
     fieldConfig: configTypes.TextField;
-    setFieldConfig(
-        fieldConfig: configTypes.TextField,
-        subValidation: (fieldConfig: configTypes.TextField) => boolean,
-    ): void;
+    setFieldConfig(fieldConfig: configTypes.TextField): void;
     disabled: boolean;
 }
 function TextSettings(props: Props) {
     function updateFieldConfig(newFieldConfig: configTypes.TextField) {
-        props.setFieldConfig(newFieldConfig, validateField);
+        props.setFieldConfig(newFieldConfig);
     }
     return (
         <VisualTextSettings

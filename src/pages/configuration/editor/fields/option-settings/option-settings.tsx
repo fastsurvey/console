@@ -1,18 +1,15 @@
 import React from 'react';
-import {configTypes, validateField} from 'utilities';
+import {configTypes} from 'utilities';
 import VisualOptionSettings from './visual-option-settings';
 
 interface Props {
     fieldConfig: configTypes.OptionField;
-    setFieldConfig(
-        fieldConfig: configTypes.OptionField,
-        subValidation: (fieldConfig: configTypes.OptionField) => boolean,
-    ): void;
+    setFieldConfig(fieldConfig: configTypes.OptionField): void;
     disabled: boolean;
 }
 function OptionSettings(props: Props) {
     function updateFieldConfig(newFieldConfig: configTypes.OptionField) {
-        props.setFieldConfig(newFieldConfig, validateField);
+        props.setFieldConfig(newFieldConfig);
     }
 
     return (

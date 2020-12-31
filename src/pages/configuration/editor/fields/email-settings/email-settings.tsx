@@ -1,13 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {configTypes, formOptions, validateField} from 'utilities';
+import {configTypes, formOptions} from 'utilities';
 import VisualEmailSettings from './visual-email-settings';
 
 interface Props {
     fieldConfig: configTypes.EmailField;
-    setFieldConfig(
-        fieldConfig: configTypes.EmailField,
-        subValidation: (fieldConfig: configTypes.EmailField) => boolean,
-    ): void;
+    setFieldConfig(fieldConfig: configTypes.EmailField): void;
     disabled: boolean;
 }
 function EmailSettings(props: Props) {
@@ -44,7 +41,7 @@ function EmailSettings(props: Props) {
     }, [props.fieldConfig.regex, props.fieldConfig.hint]);
 
     function updateFieldConfig(newFieldConfig: configTypes.EmailField) {
-        props.setFieldConfig(newFieldConfig, validateField);
+        props.setFieldConfig(newFieldConfig);
     }
 
     return (
