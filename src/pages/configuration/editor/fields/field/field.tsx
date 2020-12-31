@@ -45,6 +45,28 @@ function Field(props: Props) {
         props.setFieldConfig(newFieldConfig);
     }
 
+    function copyField() {
+        let config = props.fieldConfig;
+
+        // TODO: Move this into utilities
+        // @ts-ignore
+        delete config.local_id;
+        if (config.type === 'Radio' || config.type === 'Selection') {
+            config.fields.forEach((field: configTypes.FieldOption) => {
+                // @ts-ignore
+                delete field.local_id;
+            });
+        }
+
+        // TODO: Move this into utilities
+        var textField = document.createElement('textarea');
+        textField.innerText = JSON.stringify(config);
+        document.body.appendChild(textField);
+        textField.select();
+        document.execCommand('copy');
+        textField.remove();
+    }
+
     const commonFieldProps = {
         disabled: props.disabled,
         setFieldConfig: updateSubfieldConfig,
@@ -113,6 +135,7 @@ function Field(props: Props) {
             updateFieldConfig={updateFieldConfig}
             disabled={props.disabled}
             removeField={props.removeField}
+            copyField={copyField}
         >
             {FieldSettings}
         </VisualField>
