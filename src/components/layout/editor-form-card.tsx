@@ -20,22 +20,22 @@ interface Props {
 function EditorFormCard(props: Props) {
     let ref = useRef<HTMLDivElement>(null);
 
-    // Set a way too large start max-height
-    // which the div will never reach
-    const [maxHeight, setMaxHeight] = useState(1500);
+    const [overflowHidden, setOverflowHidden] = useState(props.collapse);
+    const [overflowTimeout, setOverflowTimeout] = useState<any>(undefined);
 
     useEffect(() => {
-        if (ref.current) {
-            const newMaxHeight = ref.current.clientHeight;
-            if (newMaxHeight && newMaxHeight > 40) {
-                if (maxHeight === 1500 || newMaxHeight > maxHeight) {
-                    setMaxHeight(newMaxHeight);
-                }
-            }
+        if (props.collapse) {
+            clearTimeout(overflowTimeout);
+            setOverflowHidden(true);
+        } else {
+            clearTimeout(overflowTimeout);
+            setOverflowTimeout(
+                setTimeout(() => {
+                    setOverflowHidden(false);
+                }, 300),
+            );
         }
-    }, [maxHeight, ref]);
-
-    useEffect(() => setMaxHeight(1500), [props.label]);
+    }, [props.collapse]);
 
     const toggle = () => {
         if (props.setCollapse) {
@@ -106,10 +106,12 @@ function EditorFormCard(props: Props) {
                 className={
                     'flex flex-col left-0 right-0 min-h-full p-2 pt-4 ml-1 ' +
                     'rounded shadow-md bg-white mt-10 z-10 ' +
-                    'transition-size duration-300 ' +
-                    (props.collapse ? 'pb-0 overflow-hidden' : 'pb-2')
+                    'transition-size duration-200 ease-linear ' +
+                    (overflowHidden
+                        ? 'overflow-hidden '
+                        : ' overflow-visible ') +
+                    (props.collapse ? 'pb-0 max-h-0' : 'pb-2 max-h-100vh')
                 }
-                style={{maxHeight: props.collapse ? '0' : `${maxHeight}px`}}
                 ref={ref}
             >
                 {props.children}

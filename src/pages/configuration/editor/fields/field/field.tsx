@@ -21,6 +21,7 @@ interface Props {
     removeField(): void;
 }
 function Field(props: Props) {
+    // eslint-disable-next-line
     useEffect(() => props.updateValidator(validateField(props.fieldConfig)), [
         props.fieldConfig.local_id,
     ]);

@@ -36,7 +36,10 @@ const TextInput = React.forwardRef((props: Props, ref: any) => {
         }
     }
 
-    const hintColor = props.hint?.fulfilled ? 'green-500' : 'red-500';
+    const hintTextColor = props.hint?.fulfilled
+        ? 'text-green-500'
+        : 'text-red-500';
+    const hintBgColor = props.hint?.fulfilled ? 'bg-green-500' : 'bg-red-500';
     const hintOpacity = focused ? 'opacity-100' : 'opacity-50';
 
     return (
@@ -80,7 +83,7 @@ const TextInput = React.forwardRef((props: Props, ref: any) => {
                                 className={
                                     'absolute top-0 right-0 w-1.5 h-12 mt-0 rounded-r ' +
                                     'transition-colors duration-150 ' +
-                                    ` bg-${hintColor} ${hintOpacity} `
+                                    ` ${hintBgColor} ${hintOpacity} `
                                 }
                             />
                             <div
@@ -97,7 +100,7 @@ const TextInput = React.forwardRef((props: Props, ref: any) => {
                                 'absolute top-0 right-0 leading-12 pointer-events-none ' +
                                 'font-weight-500 mr-3 pl-2 z-10 ' +
                                 'transition-all duration-150 ' +
-                                ` text-${hintColor} ` +
+                                ` ${hintTextColor} ` +
                                 (props.flat ? 'bg-gray-100 ' : 'bg-white ') +
                                 (focused
                                     ? hintOpacity
@@ -113,7 +116,7 @@ const TextInput = React.forwardRef((props: Props, ref: any) => {
                                 'relative w-full px-1 leading-6 mt-0 mb-1 ' +
                                 'overflow-hidden font-weight-500 ' +
                                 'transition-all duration-150 ' +
-                                ` text-${hintColor} ${hintOpacity} `
+                                ` ${hintTextColor} ${hintOpacity} `
                             }
                         >
                             {props.hint.text}
