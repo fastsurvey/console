@@ -15,6 +15,7 @@ interface Props {
     configIsDiffering: boolean;
     openMessage(message: stateTypes.Message): void;
     openModal(title: string, children: React.ReactNode): void;
+    closeModal(): void;
     addConfig(config: configTypes.SurveyConfig): void;
 }
 function ConfigList(props: Props) {
@@ -36,15 +37,14 @@ function ConfigList(props: Props) {
     }
 
     function addSurvey(surveyName: string) {
-        console.log(surveyName);
-
         if (props.configs !== undefined) {
-            console.log('adding');
             props.addConfig(
                 surveyTemplate('fastsurvey', surveyName, props.configs),
             );
         }
-        // TODO: history.push to new config page
+
+        props.closeModal();
+        history.push(`/configuration/${surveyName}`);
     }
 
     if (!props.configs) {
@@ -94,6 +94,7 @@ const mapStateToProps = (state: stateTypes.ReduxState) => ({
 const mapDispatchToProps = (dispatch: any) => ({
     openMessage: dispatchers.openMessage(dispatch),
     openModal: dispatchers.openModal(dispatch),
+    closeModal: dispatchers.closeModal(dispatch),
     addConfig: dispatchers.addConfig(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(ConfigList);

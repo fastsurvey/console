@@ -101,7 +101,6 @@ function storeReducer(
             newState.configs = action.configs;
             break;
         case 'ADD_CONFIG':
-            console.log('adding2');
             if (newState.configs !== undefined) {
                 newState.configs = [...newState.configs, action.config];
             }
