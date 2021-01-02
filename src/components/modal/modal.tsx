@@ -1,14 +1,14 @@
 import React, {useEffect} from 'react';
+import {dispatchers, stateTypes} from 'utilities';
+import {connect} from 'react-redux';
 
 interface Props {
-    open: boolean;
-    title: string;
-    children: React.ReactNode;
-    onClose(): void;
+    modalState: stateTypes.ModalState;
+    closeModal(): void;
 }
 function Modal(props: Props) {
     useEffect(() => {
-        if (props.open) {
+        if (props.modalState.open) {
             document.body.style.position = 'fixed';
             document.body.style.width = '100vw';
             document.body.style.top = `-${window.scrollY}px`;
@@ -19,30 +19,37 @@ function Modal(props: Props) {
             document.body.style.top = '';
             window.scrollTo(0, parseInt(scrollY || '0') * -1);
         }
-    }, [props.open]);
+    }, [props.modalState.open]);
 
     return (
         <div
             className={
                 'fixed top-0 bottom-0 left-0 right-0 z-50 center-content ' +
-                ' no-selection transition-opacity duration-200 ' +
-                (props.open
+                ' no-selection transition-opacity duration-300 ' +
+                (props.modalState.open
                     ? 'pointer-events-auto opacity-100'
                     : 'pointer-events-none opacity-0')
             }
         >
             <div
                 className='absolute top-0 left-0 z-0 w-full h-full bg-gray-800 opacity-70'
-                onClick={props.onClose}
+                onClick={props.closeModal}
             />
             <div className='z-10 flex flex-col items-center justify-center p-4 bg-white rounded shadow'>
                 <div className='mb-2 text-xl font-weight-600'>
-                    {props.title}
+                    {props.modalState.title}
                 </div>
-                <div className='max-w-50%'>{props.children}</div>
+                <div className='max-w-50%'>{props.modalState.children}</div>
             </div>
         </div>
     );
 }
 
-export default Modal;
+const mapStateToProps = (state: stateTypes.ReduxState) => ({
+    modalState: state.modalState,
+});
+const mapDispatchToProps = (dispatch: any) => ({
+    openModal: dispatchers.openModal(dispatch),
+    closeModal: dispatchers.closeModal(dispatch),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Modal);

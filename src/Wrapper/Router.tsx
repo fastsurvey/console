@@ -29,13 +29,7 @@ function Router(props: RouterProps) {
         <BrowserRouter>
             <LoaderOverlay />
             <MessageQueue />
-            <Modal
-                open={false}
-                title={'Proceed with logout?'}
-                onClose={() => console.log('Closing')}
-            >
-                Yes my dear!
-            </Modal>
+            <Modal />
             <Route>
                 <Switch>
                     <Route exact strict path='/'>

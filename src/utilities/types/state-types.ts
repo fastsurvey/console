@@ -54,10 +54,14 @@ export declare namespace stateTypes {
               text: string;
           }
         | {
+              type: 'OPEN_MODAL';
+              title: string;
+              children: React.ReactNode;
+          }
+        | {
               type:
                   | 'LOG_OUT'
                   | 'CLOSE_ALL_MESSAGES'
-                  | 'OPEN_MODAL'
                   | 'OPEN_NAVBAR'
                   | 'CLOSE_MODAL'
                   | 'CLOSE_NAVBAR';

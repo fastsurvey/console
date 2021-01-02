@@ -21,7 +21,7 @@ function storeReducer(
         configs: undefined,
         configIsDiffering: false,
         navbarState: {
-            open: true,
+            open: false,
         },
         modalState: {
             open: false,
@@ -80,8 +80,8 @@ function storeReducer(
         case 'OPEN_MODAL':
             newState.modalState = {
                 open: true,
-                title: newState.modalState.title,
-                children: newState.modalState.children,
+                title: action.title,
+                children: action.children,
             };
             break;
         case 'CLOSE_MODAL':

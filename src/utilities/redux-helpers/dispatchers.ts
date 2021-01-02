@@ -14,9 +14,14 @@ const dispatchers = {
         dispatch({
             type: 'LOG_OUT',
         }),
-    openModal: (dispatch: any) => (): void =>
+    openModal: (dispatch: any) => (
+        title: string,
+        children: React.ReactNode,
+    ): void =>
         dispatch({
             type: 'OPEN_MODAL',
+            title,
+            children,
         }),
     closeModal: (dispatch: any) => (): void =>
         dispatch({
