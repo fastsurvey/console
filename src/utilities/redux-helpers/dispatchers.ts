@@ -71,6 +71,11 @@ const dispatchers = {
             type: 'MARK_DIFFERING',
             differing,
         }),
+    removeConfig: (dispatch: any) => (surveyName: string): void =>
+        dispatch({
+            type: 'REMOVE_CONFIG',
+            surveyName,
+        }),
 };
 
 export default dispatchers;

@@ -105,6 +105,13 @@ function storeReducer(
                 newState.configs = [...newState.configs, action.config];
             }
             break;
+        case 'REMOVE_CONFIG':
+            if (newState.configs !== undefined) {
+                newState.configs = newState.configs.filter(
+                    (config) => config.survey_name !== action.surveyName,
+                );
+            }
+            break;
         case 'MODIFY_CONFIG':
             if (newState.configs !== undefined) {
                 newState.configs = newState.configs.map(

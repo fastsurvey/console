@@ -77,6 +77,10 @@ export declare namespace stateTypes {
         | {
               type: 'MARK_DIFFERING';
               differing: boolean;
+          }
+        | {
+              type: 'REMOVE_CONFIG';
+              surveyName: string;
           };
 }
 

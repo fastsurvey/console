@@ -3,6 +3,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {stateTypes, configTypes, validators, dispatchers} from 'utilities';
 import VisualSettings from './visual-settings';
+import {useHistory} from 'react-router-dom';
 
 interface Props {
     configs: configTypes.SurveyConfig[] | undefined;
@@ -12,8 +13,11 @@ interface Props {
 
     openModal(title: string, children: React.ReactNode): void;
     closeModal(): void;
+    removeConfig(surveyName: string): void;
 }
 function Settings(props: Props) {
+    let history = useHistory();
+
     const titleIsValid = validators.title;
     const surveyNameIsValid = validators.surveyName(
         props.configs,
@@ -48,7 +52,11 @@ function Settings(props: Props) {
         );
     }
 
-    function removeSurvey() {}
+    function removeSurvey() {
+        props.closeModal();
+        history.push('/configurations');
+        props.removeConfig(props.config.survey_name);
+    }
 
     return (
         <VisualSettings
@@ -72,5 +80,6 @@ const mapStateToProps = (state: stateTypes.ReduxState) => ({
 const mapDispatchToProps = (dispatch: any) => ({
     openModal: dispatchers.openModal(dispatch),
     closeModal: dispatchers.closeModal(dispatch),
+    removeConfig: dispatchers.removeConfig(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);
