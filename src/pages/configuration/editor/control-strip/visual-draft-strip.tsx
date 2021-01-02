@@ -5,9 +5,9 @@ import ControlStripButton from './visual-button';
 
 interface Props {
     configIsDiffering: boolean;
-    syncState(): void;
+    saveState(): void;
     revertState(): void;
-    publishNow(): void;
+    publishState(): void;
 }
 const VisualDraftStrip = (props: Props) => (
     <ControlStripUI>
@@ -23,13 +23,13 @@ const VisualDraftStrip = (props: Props) => (
                 disabled={!props.configIsDiffering}
                 label='Save'
                 icon={icons.save}
-                onClick={props.syncState}
+                onClick={props.saveState}
             />
             <ControlStripButton
                 last
                 label='Publish'
                 icon={icons.open_in_browser}
-                onClick={props.publishNow}
+                onClick={props.publishState}
             />
         </React.Fragment>
     </ControlStripUI>

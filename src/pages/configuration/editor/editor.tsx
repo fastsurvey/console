@@ -15,6 +15,7 @@ import VisualEditor from './visual-editor';
 import {AssertionError} from 'assert';
 
 interface Props {
+    configs: configTypes.SurveyConfig[];
     centralConfig: configTypes.SurveyConfig;
     modifyConfig(config: configTypes.SurveyConfig): void;
     markDiffering(differing: boolean): void;
@@ -112,7 +113,7 @@ function ConfigEditor(props: Props) {
         });
     }
 
-    function syncState() {
+    function publishState() {
         const fieldsAreValid = !fieldValidators.includes(false);
         const timingIsValid = validators.timing(localConfig);
         const authIsValid = validators.authMode(localConfig);
@@ -124,12 +125,13 @@ function ConfigEditor(props: Props) {
             authIsValid &&
             fieldOptionsAreValid
         ) {
-            // TODO: Push to backend and show error/success message
             props.closeAllMessages();
-            props.modifyConfig(localConfig);
-            if (localConfig.survey_name !== props.centralConfig.survey_name) {
-                history.push(`/configuration/${localConfig.survey_name}`);
-            }
+            const publishedConfig: configTypes.SurveyConfig = {
+                ...localConfig,
+                draft: false,
+            };
+            // TODO: Push to backend and show error/success message
+            props.modifyConfig(publishedConfig);
         } else {
             const showConditionalError = (valid: boolean, text: string) => {
                 if (!valid) {
@@ -155,6 +157,26 @@ function ConfigEditor(props: Props) {
                 fieldOptionsAreValid,
                 'Radio/Selection fields require at least 2 options',
             );
+        }
+    }
+    function saveState() {
+        const validSurveyName = validators.surveyName(
+            props.configs,
+            localConfig,
+        )(localConfig.survey_name);
+
+        if (validSurveyName) {
+            props.closeAllMessages();
+            // TODO: Push to backend and show error/success message
+            props.modifyConfig(localConfig);
+            if (localConfig.survey_name !== props.centralConfig.survey_name) {
+                history.push(`/configuration/${localConfig.survey_name}`);
+            }
+        } else {
+            props.openMessage({
+                text: 'Invalid survey identifier',
+                type: 'error',
+            });
         }
     }
 
@@ -191,7 +213,8 @@ function ConfigEditor(props: Props) {
         <VisualEditor
             centralConfig={props.centralConfig}
             modifyConfig={props.modifyConfig}
-            syncState={syncState}
+            saveState={saveState}
+            publishState={publishState}
             revertState={revertState}
             localConfig={localConfig}
             setLocalConfigState={setLocalConfigState}

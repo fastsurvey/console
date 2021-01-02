@@ -8,7 +8,8 @@ import AddFieldPanel from './add-field-panel/add-field-panel';
 interface Props {
     centralConfig: configTypes.SurveyConfig;
     modifyConfig(config: configTypes.SurveyConfig): void;
-    syncState(): void;
+    saveState(): void;
+    publishState(): void;
     revertState(): void;
 
     localConfig: configTypes.SurveyConfig;
@@ -31,7 +32,8 @@ function VisualEditor(props: Props) {
             <ControlStrip
                 config={props.centralConfig}
                 setConfig={props.modifyConfig}
-                syncState={props.syncState}
+                saveState={props.saveState}
+                publishState={props.publishState}
                 revertState={props.revertState}
             />
             <div

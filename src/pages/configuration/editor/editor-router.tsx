@@ -39,6 +39,7 @@ function EditorRouter(props: Props) {
 
     return (
         <Editor
+            configs={props.configs}
             centralConfig={filteredConfigs[0]}
             modifyConfig={props.modifyConfig}
             markDiffering={props.markDiffering}
