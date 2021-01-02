@@ -15,7 +15,7 @@ import {
 } from 'pages/authentication';
 import {ConfigList, EditorRouter} from 'pages/configuration';
 
-import {LoaderOverlay, MessageQueue} from 'components';
+import {LoaderOverlay, MessageQueue, Modal} from 'components';
 
 import {SecureImage, LetterImage} from 'assets';
 
@@ -29,6 +29,13 @@ function Router(props: RouterProps) {
         <BrowserRouter>
             <LoaderOverlay />
             <MessageQueue />
+            <Modal
+                open={true}
+                title={'Proceed with logout?'}
+                onClose={() => console.log('Closing')}
+            >
+                Yes my dear!
+            </Modal>
             <Route>
                 <Switch>
                     <Route exact strict path='/'>

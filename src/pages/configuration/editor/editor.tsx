@@ -77,7 +77,6 @@ function ConfigEditor(props: Props) {
     }
 
     function pasteField(index: number) {
-        console.log(localConfig);
         navigator.clipboard.readText().then((text: string) => {
             try {
                 const newField = JSON.parse(text);
@@ -85,8 +84,6 @@ function ConfigEditor(props: Props) {
                     throw AssertionError;
                 }
 
-                // TODO: Set correct validation status
-                console.log(newField, validateField(newField));
                 setFieldValidators(
                     insert(fieldValidators, index + 1, validateField(newField)),
                 );
@@ -99,11 +96,10 @@ function ConfigEditor(props: Props) {
                         addLocalIds.field(newField, newFieldId(localConfig)),
                     ),
                 };
-                console.log(newConfig);
                 setLocalConfig(newConfig);
             } catch {
                 // TODO: Show message on unsuccessful paste
-                console.log('invalid text format on clipoard');
+                console.info('invalid text format on clipoard');
             }
         });
     }
@@ -190,8 +186,6 @@ function ConfigEditor(props: Props) {
             ),
         });
     }
-
-    console.log(fieldValidators);
 
     return (
         <VisualEditor
