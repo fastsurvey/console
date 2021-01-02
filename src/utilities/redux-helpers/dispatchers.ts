@@ -56,6 +56,11 @@ const dispatchers = {
             type: 'ADD_CONFIGS',
             configs,
         }),
+    addConfig: (dispatch: any) => (config: configTypes.SurveyConfig): void =>
+        dispatch({
+            type: 'ADD_CONFIG',
+            config,
+        }),
     modifyConfig: (dispatch: any) => (config: configTypes.SurveyConfig): void =>
         dispatch({
             type: 'MODIFY_CONFIG',

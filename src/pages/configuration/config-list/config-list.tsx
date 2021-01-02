@@ -8,12 +8,14 @@ import {ButtonLink} from 'components';
 import ConfigPreviewPanel from './visual-config-panel';
 import VisualConfigList from './visual-config-list';
 import AddSurveyPopup from 'pages/configuration/config-list/add-survey-popup';
+import surveyTemplate from '../../../utilities/template-helpers/add-survey';
 
 interface Props {
     configs: undefined | configTypes.SurveyConfig[];
     configIsDiffering: boolean;
     openMessage(message: stateTypes.Message): void;
     openModal(title: string, children: React.ReactNode): void;
+    addConfig(config: configTypes.SurveyConfig): void;
 }
 function ConfigList(props: Props) {
     let location = useLocation();
@@ -35,7 +37,13 @@ function ConfigList(props: Props) {
 
     function addSurvey(surveyName: string) {
         console.log(surveyName);
-        // TODO: Add survey to config list
+
+        if (props.configs !== undefined) {
+            console.log('adding');
+            props.addConfig(
+                surveyTemplate('fastsurvey', surveyName, props.configs),
+            );
+        }
         // TODO: history.push to new config page
     }
 
@@ -86,5 +94,6 @@ const mapStateToProps = (state: stateTypes.ReduxState) => ({
 const mapDispatchToProps = (dispatch: any) => ({
     openMessage: dispatchers.openMessage(dispatch),
     openModal: dispatchers.openModal(dispatch),
+    addConfig: dispatchers.addConfig(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(ConfigList);

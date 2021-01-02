@@ -71,7 +71,7 @@ export declare namespace stateTypes {
               configs: configTypes.SurveyConfig[];
           }
         | {
-              type: 'MODIFY_CONFIG';
+              type: 'MODIFY_CONFIG' | 'ADD_CONFIG';
               config: configTypes.SurveyConfig;
           }
         | {
