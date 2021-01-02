@@ -22,6 +22,14 @@ const dispatchers = {
         dispatch({
             type: 'CLOSE_MODAL',
         }),
+    openNavbar: (dispatch: any) => (): void =>
+        dispatch({
+            type: 'OPEN_NAVBAR',
+        }),
+    closeNavbar: (dispatch: any) => (): void =>
+        dispatch({
+            type: 'CLOSE_NAVBAR',
+        }),
     openMessage: (dispatch: any) => (message: stateTypes.Message): void =>
         dispatch({
             type: 'OPEN_MESSAGE',

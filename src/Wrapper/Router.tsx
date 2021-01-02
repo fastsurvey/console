@@ -30,7 +30,7 @@ function Router(props: RouterProps) {
             <LoaderOverlay />
             <MessageQueue />
             <Modal
-                open={true}
+                open={false}
                 title={'Proceed with logout?'}
                 onClose={() => console.log('Closing')}
             >

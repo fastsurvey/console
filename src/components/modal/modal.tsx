@@ -22,7 +22,15 @@ function Modal(props: Props) {
     }, [props.open]);
 
     return (
-        <div className='fixed top-0 bottom-0 left-0 right-0 z-50 pointer-events-auto center-content no-selection'>
+        <div
+            className={
+                'fixed top-0 bottom-0 left-0 right-0 z-50 center-content ' +
+                ' no-selection transition-opacity duration-200 ' +
+                (props.open
+                    ? 'pointer-events-auto opacity-100'
+                    : 'pointer-events-none opacity-0')
+            }
+        >
             <div
                 className='absolute top-0 left-0 z-0 w-full h-full bg-gray-800 opacity-70'
                 onClick={props.onClose}
