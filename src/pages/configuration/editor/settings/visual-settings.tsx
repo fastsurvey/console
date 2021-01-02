@@ -20,6 +20,7 @@ interface Props {
     updateValidator(newState: boolean): void;
     commonProps: any;
     disabled: boolean;
+    removeSurvey(): void;
 }
 const VisualSettings = (props: Props) => {
     const commonProps = {
@@ -30,6 +31,18 @@ const VisualSettings = (props: Props) => {
     const [collapse, setCollapse] = useState(false);
     useEffect(() => setCollapse(false), [props.config.local_id]);
 
+    const [actionLabel, setActionLabel] = useState('');
+
+    const buttons = (
+        <div
+            className='w-10 h-10 px-2 py-2 cursor-pointer opacity-70 hover:opacity-100'
+            onClick={props.removeSurvey}
+            onMouseEnter={() => setActionLabel('remove survey')}
+        >
+            {icons.deleteForever}
+        </div>
+    );
+
     return (
         <EditorFormCard
             label='General Settings'
@@ -38,6 +51,9 @@ const VisualSettings = (props: Props) => {
             className='z-20 mt-8'
             collapse={collapse}
             setCollapse={setCollapse}
+            buttons={buttons}
+            actionLabel={actionLabel}
+            setActionLabel={setActionLabel}
         >
             <EditorFormRow label='Title' className='mb-1'>
                 <TextInput

@@ -34,6 +34,10 @@ function Settings(props: Props) {
         props.setConfig(newConfig);
     }
 
+    function removeSurvey() {
+        console.log('removing');
+    }
+
     return (
         <VisualSettings
             updateConfig={updateConfig}
@@ -46,6 +50,7 @@ function Settings(props: Props) {
                 config: props.config,
             }}
             disabled={!props.config.draft}
+            removeSurvey={removeSurvey}
         />
     );
 }

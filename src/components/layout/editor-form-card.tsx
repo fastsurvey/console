@@ -78,7 +78,7 @@ function EditorFormCard(props: Props) {
                 </div>
 
                 <div className='relative flex flex-row group'>
-                    <div className='absolute top-0 left-0 h-10 pr-2 text-base leading-10 transform -translate-x-full opacity-0 pointer-events-none font-weight-500 group-hover:opacity-100'>
+                    <div className='absolute top-0 left-0 h-10 pr-2 text-base leading-10 transform -translate-x-full opacity-0 pointer-events-none font-weight-500 group-hover:opacity-100 whitespace-nowrap'>
                         {props.actionLabel}
                     </div>
                     {props.buttons}
