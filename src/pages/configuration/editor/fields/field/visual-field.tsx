@@ -35,7 +35,7 @@ function VisualField(props: Props) {
                 }}
                 onMouseEnter={() => setActionLabel('copy')}
             >
-                {icons.fileCopy}
+                {icons.contentCopy}
             </div>
             <div
                 className='w-10 h-10 px-2 py-2 cursor-pointer opacity-70 hover:opacity-100'
