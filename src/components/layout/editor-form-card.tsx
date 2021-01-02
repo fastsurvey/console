@@ -35,6 +35,7 @@ function EditorFormCard(props: Props) {
                 }, 300),
             );
         }
+        // eslint-disable-next-line
     }, [props.collapse]);
 
     const toggle = () => {

@@ -33,6 +33,7 @@ const VisualSettings = (props: Props) => {
     return (
         <EditorFormCard
             label='General Settings'
+            longLabel={props.config.title}
             icon={icons.tune}
             className='z-20 mt-8'
             collapse={collapse}
