@@ -21,6 +21,7 @@ export {default as LogoBanner} from './logos/logo-banner';
 
 export {default as MessageQueue} from './message-queue/message-queue';
 export {default as Modal} from './modal/modal';
+export {default as ModalButton} from './modal/modal-button';
 
 export {default as Navbar} from './navbar/navbar';
 

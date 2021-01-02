@@ -113,7 +113,7 @@ const TextInput = React.forwardRef((props: Props, ref: any) => {
                     {!props.hint.inlineHint && (
                         <div
                             className={
-                                'relative w-full px-1 leading-6 mt-0 mb-1 ' +
+                                'relative w-full px-1 leading-6 mt-1 mb-1 ' +
                                 'overflow-hidden font-weight-500 ' +
                                 'transition-all duration-150 ' +
                                 ` ${hintTextColor} ${hintOpacity} `

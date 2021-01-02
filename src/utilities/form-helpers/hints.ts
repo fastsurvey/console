@@ -14,6 +14,15 @@ const hints = {
             `characters (${120 - config.survey_name.length} left)`,
         fulfilled: surveyNameIsValid(config.survey_name),
     }),
+    newSurveyName: (
+        newSurveyName: string,
+        surveyNameIsValid: (survey_name: string) => boolean,
+    ) => ({
+        text:
+            'URL-safe, unique, 3-120 ' +
+            `characters (${120 - newSurveyName.length} left)`,
+        fulfilled: surveyNameIsValid(newSurveyName),
+    }),
     submissionLimit: (config: configTypes.SurveyConfig) => ({
         text: '1 - 10.000',
         fulfilled: validators.submissionLimit(config.submission_limit),

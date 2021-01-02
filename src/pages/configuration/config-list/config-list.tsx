@@ -33,8 +33,10 @@ function ConfigList(props: Props) {
         }
     }
 
-    function addSurvey() {
-        props.openModal('Add a new survey', <AddSurveyPopup />);
+    function addSurvey(surveyName: string) {
+        console.log(surveyName);
+        // TODO: Add survey to config list
+        // TODO: history.push to new config page
     }
 
     if (!props.configs) {
@@ -63,7 +65,12 @@ function ConfigList(props: Props) {
             ))}
             <ButtonLink
                 icon={icons.add}
-                onClick={addSurvey}
+                onClick={() =>
+                    props.openModal(
+                        'Add a new survey',
+                        <AddSurveyPopup addSurvey={addSurvey} />,
+                    )
+                }
                 className='w-full mt-1'
             >
                 New survey
