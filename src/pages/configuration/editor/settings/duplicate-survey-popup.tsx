@@ -59,7 +59,7 @@ function DuplicateSurveyPopup(props: Props) {
                         }}
                     />
                     <ModalButton
-                        label='Add'
+                        label='Duplicate'
                         disabled={!isValid}
                         onClick={() => props.duplicateSurvey(surveyName)}
                     />
