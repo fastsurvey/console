@@ -81,6 +81,11 @@ export declare namespace stateTypes {
         | {
               type: 'REMOVE_CONFIG';
               surveyName: string;
+          }
+        | {
+              type: 'DUPLICATE_CONFIG';
+              newSurveyName: string;
+              newConfig: configTypes.SurveyConfig;
           };
 }
 

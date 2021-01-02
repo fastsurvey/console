@@ -76,6 +76,15 @@ const dispatchers = {
             type: 'REMOVE_CONFIG',
             surveyName,
         }),
+    duplicateConfig: (dispatch: any) => (
+        newSurveyName: string,
+        newConfig: configTypes.SurveyConfig,
+    ): void =>
+        dispatch({
+            type: 'DUPLICATE_CONFIG',
+            newSurveyName,
+            newConfig,
+        }),
 };
 
 export default dispatchers;

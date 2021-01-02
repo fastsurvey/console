@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import Cookies from 'js-cookie';
+import addLocalIds from '../utilities/form-helpers/add-local-ids';
 
 import {
     stateTypes,
@@ -103,6 +104,15 @@ function storeReducer(
         case 'ADD_CONFIG':
             if (newState.configs !== undefined) {
                 newState.configs = [...newState.configs, action.config];
+            }
+            break;
+        case 'DUPLICATE_CONFIG':
+            if (newState.configs !== undefined) {
+                const newConfig = addLocalIds.survey(
+                    {...action.newConfig, survey_name: action.newSurveyName},
+                    newState.configs.length,
+                );
+                newState.configs = [...newState.configs, newConfig];
             }
             break;
         case 'REMOVE_CONFIG':

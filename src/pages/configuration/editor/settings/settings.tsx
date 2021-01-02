@@ -1,4 +1,5 @@
-import RemoveSurveyPopup from 'pages/configuration/editor/settings/remove-survey-popup';
+import RemoveSurveyPopup from './remove-survey-popup';
+import DuplicateSurveyPopup from './duplicate-survey-popup';
 import React from 'react';
 import {connect} from 'react-redux';
 import {stateTypes, configTypes, validators, dispatchers} from 'utilities';
@@ -14,6 +15,10 @@ interface Props {
     openModal(title: string, children: React.ReactNode): void;
     closeModal(): void;
     removeConfig(surveyName: string): void;
+    duplicateConfig(
+        newSurveyName: string,
+        newConfig: configTypes.SurveyConfig,
+    ): void;
 }
 function Settings(props: Props) {
     let history = useHistory();
@@ -58,6 +63,21 @@ function Settings(props: Props) {
         props.removeConfig(props.config.survey_name);
     }
 
+    function openDuplicateModal() {
+        props.openModal(
+            'Add a new survey',
+            <DuplicateSurveyPopup
+                originalSurveyName={props.config.survey_name}
+                duplicateSurvey={duplicateSurvey}
+            />,
+        );
+    }
+    function duplicateSurvey(newSurveyName: string) {
+        props.closeModal();
+        props.duplicateConfig(newSurveyName, props.config);
+        history.push(`/configuration/${newSurveyName}`);
+    }
+
     return (
         <VisualSettings
             updateConfig={updateConfig}
@@ -71,6 +91,7 @@ function Settings(props: Props) {
             }}
             disabled={!props.config.draft}
             openRemoveModal={openRemoveModal}
+            openDuplicateModal={openDuplicateModal}
         />
     );
 }
@@ -81,5 +102,6 @@ const mapDispatchToProps = (dispatch: any) => ({
     openModal: dispatchers.openModal(dispatch),
     closeModal: dispatchers.closeModal(dispatch),
     removeConfig: dispatchers.removeConfig(dispatch),
+    duplicateConfig: dispatchers.duplicateConfig(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);
