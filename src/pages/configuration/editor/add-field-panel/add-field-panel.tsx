@@ -1,55 +1,57 @@
-import React, {useState} from 'react';
+import React from 'react';
 import icons from 'assets/icons/icons';
 import AddFieldButton from './add-field-button';
 import AddFieldPopup from './add-field-popup';
-import {configTypes} from 'utilities';
+import {configTypes, stateTypes} from 'utilities';
+import dispatchers from '../../../../utilities/redux-helpers/dispatchers';
+import {connect} from 'react-redux';
 
 interface Props {
     insertField(fieldType: configTypes.FieldType): void;
     pasteField(): void;
+    openModal(title: string, children: React.ReactNode): void;
+    closeModal(): void;
 }
 function AddFieldPanel(props: Props) {
-    const [popupOpen, setPopupOpen] = useState(false);
+    function openAddFieldModal() {
+        props.openModal(
+            'Add a new field',
+            <AddFieldPopup
+                insertField={(fieldType: configTypes.FieldType) => {
+                    props.closeModal();
+                    props.insertField(fieldType);
+                }}
+            />,
+        );
+    }
 
     return (
-        <>
-            <div
-                className={
-                    'fixed top-0 left-0 z-40 w-full h-full bg-gray-800 transition-opacity duration-400 ' +
-                    (popupOpen ? 'opacity-40' : 'opacity-0 pointer-events-none')
-                }
+        <div
+            className={
+                'relative w-full group gap-x-2 ' +
+                'h-10 my-1 ' +
+                'transition-size duration-400 ' +
+                'flex flex-row items-center justify-center '
+            }
+        >
+            <AddFieldButton
+                label='add field'
+                icon={icons.addBox}
+                onClick={openAddFieldModal}
             />
-
-            <div
-                className={
-                    'relative w-full group gap-x-2 ' +
-                    'h-10 my-1 ' +
-                    'transition-size duration-400 ' +
-                    'flex flex-row items-center justify-center '
-                }
-                onMouseLeave={() => setPopupOpen(false)}
-            >
-                <AddFieldButton
-                    label='add field'
-                    icon={icons.addBox}
-                    onClick={() => setPopupOpen(true)}
-                />
-                <AddFieldPopup
-                    open={popupOpen}
-                    insertField={(fieldType: configTypes.FieldType) => {
-                        setPopupOpen(false);
-                        props.insertField(fieldType);
-                    }}
-                />
-                <AddFieldButton
-                    label='paste field'
-                    icon={icons.widgets}
-                    onClick={props.pasteField}
-                    leftIcon
-                />
-            </div>
-        </>
+            <AddFieldButton
+                label='paste field'
+                icon={icons.widgets}
+                onClick={props.pasteField}
+                leftIcon
+            />
+        </div>
     );
 }
 
-export default AddFieldPanel;
+const mapStateToProps = (state: stateTypes.ReduxState) => ({});
+const mapDispatchToProps = (dispatch: any) => ({
+    openModal: dispatchers.openModal(dispatch),
+    closeModal: dispatchers.closeModal(dispatch),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(AddFieldPanel);

@@ -13,12 +13,7 @@ function MainWrapper(props: Props) {
             <header className='z-40'>
                 <LogoBanner />
             </header>
-            <main
-                className={
-                    'fixed z-0 flex-col h-100vh w-100vw center-content ' +
-                    `${props.className}`
-                }
-            >
+            <main className={'left-0 right-0 top-0 ' + `${props.className}`}>
                 <div className={props.flexDirection + ' py-24 center-content'}>
                     {props.children}
                 </div>

@@ -9,9 +9,10 @@ interface Props {
 function Modal(props: Props) {
     useEffect(() => {
         if (props.modalState.open) {
+            const scrollY = window.scrollY;
             document.body.style.position = 'fixed';
             document.body.style.width = '100vw';
-            document.body.style.top = `-${window.scrollY}px`;
+            document.body.style.top = `-${scrollY}px`;
         } else {
             const scrollY = document.body.style.top;
             document.body.style.position = '';
@@ -35,7 +36,7 @@ function Modal(props: Props) {
                 className='absolute top-0 left-0 z-0 w-full h-full bg-gray-800 opacity-70'
                 onClick={props.closeModal}
             />
-            <div className='z-10 flex flex-col items-center justify-center p-4 bg-white rounded shadow'>
+            <div className='z-10 flex flex-col items-center justify-center p-2 bg-white rounded shadow'>
                 <div className='mb-2 text-xl font-weight-600'>
                     {props.modalState.title}
                 </div>

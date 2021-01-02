@@ -36,15 +36,7 @@ function DashBoardPage(props: Props) {
                 <div id='RegularContent' className={'hidden lg:block'}>
                     {props.children}
                 </div>
-                <div
-                    id='MobileContent'
-                    className={
-                        'block lg:hidden ' +
-                        (props.navbarState.open
-                            ? 'overflow-y-hidden'
-                            : 'overflow-y-scroll')
-                    }
-                >
+                <div id='MobileContent' className={'block lg:hidden '}>
                     {props.children}
                 </div>
             </main>
