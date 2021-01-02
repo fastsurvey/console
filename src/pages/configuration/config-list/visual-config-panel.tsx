@@ -40,8 +40,8 @@ function ConfigPreviewPanel(props: Props) {
                     : ' cursor-pointer bg-gray-300')
             }
         >
-            <div className='flex flex-row items-center w-full h-8'>
-                <div className='text-lg text-gray-800 font-weight-600 '>
+            <div className='flex flex-row items-start w-full'>
+                <div className='text-lg leading-8 text-gray-800 font-weight-600 '>
                     {props.config.title}
                 </div>
                 <div className={'self-stretch flex-grow'} />
@@ -54,8 +54,8 @@ function ConfigPreviewPanel(props: Props) {
                 </span>
             </div>
             <div className='flex flex-row text-base text-blue-600 font-weight-500'>
-                <div className='w-6 h-6 mr-1'>{icons.link}</div>
-                <div className='h-6'>
+                <div className='flex-shrink-0 w-6 h-6 mr-1'>{icons.link}</div>
+                <div className='leading-6 break-all'>
                     {props.config.admin_name}/{props.config.survey_name}
                 </div>
             </div>
