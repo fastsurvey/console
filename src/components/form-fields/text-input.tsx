@@ -128,13 +128,11 @@ const TextInput = React.forwardRef((props: Props, ref: any) => {
                 <div
                     className={
                         'absolute top-0 left-0 ml-3 leading-12 pt-px z-0 ' +
-                        'font-weight-600 text-gray-800 pointer-events-none '
+                        'font-weight-500 text-lg text-gray-800 pointer-events-none '
                     }
                 >
-                    <span className='text-lg opacity-0'>{props.value}</span>
-                    <span className='text-base text-gray-600'>
-                        {props.postfix}
-                    </span>
+                    <span className='opacity-0'>{props.value}</span>
+                    <span className='opacity-60'>{props.postfix}</span>
                 </div>
             )}
         </div>
