@@ -1,6 +1,7 @@
+import RemoveSurveyPopup from 'pages/configuration/editor/settings/remove-survey-popup';
 import React from 'react';
 import {connect} from 'react-redux';
-import {stateTypes, configTypes, validators} from 'utilities';
+import {stateTypes, configTypes, validators, dispatchers} from 'utilities';
 import VisualSettings from './visual-settings';
 
 interface Props {
@@ -8,6 +9,9 @@ interface Props {
     config: configTypes.SurveyConfig;
     setConfig(config: configTypes.SurveyConfig): void;
     updateValidator(newState: boolean): void;
+
+    openModal(title: string, children: React.ReactNode): void;
+    closeModal(): void;
 }
 function Settings(props: Props) {
     const titleIsValid = validators.title;
@@ -34,9 +38,17 @@ function Settings(props: Props) {
         props.setConfig(newConfig);
     }
 
-    function removeSurvey() {
-        console.log('removing');
+    function openRemoveModal() {
+        props.openModal(
+            'Remove this survey permanently?',
+            <RemoveSurveyPopup
+                removeSurvey={removeSurvey}
+                closeModal={props.closeModal}
+            />,
+        );
     }
+
+    function removeSurvey() {}
 
     return (
         <VisualSettings
@@ -50,12 +62,15 @@ function Settings(props: Props) {
                 config: props.config,
             }}
             disabled={!props.config.draft}
-            removeSurvey={removeSurvey}
+            openRemoveModal={openRemoveModal}
         />
     );
 }
 const mapStateToProps = (state: stateTypes.ReduxState) => ({
     configs: state.configs,
 });
-const mapDispatchToProps = (dispatch: any) => ({});
+const mapDispatchToProps = (dispatch: any) => ({
+    openModal: dispatchers.openModal(dispatch),
+    closeModal: dispatchers.closeModal(dispatch),
+});
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);
