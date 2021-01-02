@@ -37,7 +37,7 @@ function Modal(props: Props) {
                 onClick={props.closeModal}
             />
             <div className='z-10 flex flex-col items-center justify-center p-2 bg-white rounded shadow'>
-                <div className='mt-1 mb-2 text-xl font-weight-600'>
+                <div className='px-2 mt-1 mb-2 text-xl font-weight-600'>
                     {props.modalState.title}
                 </div>
                 <div className='max-w-50%'>{props.modalState.children}</div>
