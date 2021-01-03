@@ -5,10 +5,10 @@ import {dispatchers, stateTypes} from 'utilities';
 import {connect} from 'react-redux';
 
 interface Props {
-    modalOpen: boolean;
     logOut(): void;
-    openModal(): void;
-    closeModal(): void;
+    navbarState: stateTypes.NavbarState;
+    openNavbar(): void;
+    closeNavbar(): void;
 }
 function Navbar(props: Props) {
     return (
@@ -18,10 +18,10 @@ function Navbar(props: Props) {
             </div>
             <div id='MobileNavbar' className='block lg:hidden'>
                 <VisualMobileNavbar
-                    modalOpen={props.modalOpen}
                     logOut={props.logOut}
-                    openModal={props.openModal}
-                    closeModal={props.closeModal}
+                    navbarState={props.navbarState}
+                    openNavbar={props.openNavbar}
+                    closeNavbar={props.closeNavbar}
                 />
             </div>
         </React.Fragment>
@@ -29,11 +29,11 @@ function Navbar(props: Props) {
 }
 
 const mapStateToProps = (state: stateTypes.ReduxState) => ({
-    modalOpen: state.modalOpen,
+    navbarState: state.navbarState,
 });
 const mapDispatchToProps = (dispatch: any) => ({
     logOut: dispatchers.logOut(dispatch),
-    openModal: dispatchers.openModal(dispatch),
-    closeModal: dispatchers.closeModal(dispatch),
+    openNavbar: dispatchers.openNavbar(dispatch),
+    closeNavbar: dispatchers.closeNavbar(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

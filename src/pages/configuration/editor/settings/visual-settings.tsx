@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {configTypes, formatters, formOptions, hints} from 'utilities';
 import {
     DropDown,
@@ -20,6 +20,8 @@ interface Props {
     updateValidator(newState: boolean): void;
     commonProps: any;
     disabled: boolean;
+    openRemoveModal(): void;
+    openDuplicateModal(): void;
 }
 const VisualSettings = (props: Props) => {
     const commonProps = {
@@ -27,11 +29,43 @@ const VisualSettings = (props: Props) => {
         flat: true,
     };
 
+    const [collapse, setCollapse] = useState(false);
+    useEffect(() => setCollapse(false), [props.config.local_id]);
+
+    const [actionLabel, setActionLabel] = useState('');
+
+    const buttons = (
+        <>
+            <div
+                className='w-10 h-10 px-2 py-2 cursor-pointer opacity-70 hover:opacity-100'
+                onClick={() => {
+                    props.openDuplicateModal();
+                }}
+                onMouseEnter={() => setActionLabel('duplicate survey')}
+            >
+                {icons.fileCopy}
+            </div>
+            <div
+                className='w-10 h-10 px-2 py-2 cursor-pointer opacity-70 hover:opacity-100'
+                onClick={props.openRemoveModal}
+                onMouseEnter={() => setActionLabel('remove survey')}
+            >
+                {icons.deleteForever}
+            </div>
+        </>
+    );
+
     return (
         <EditorFormCard
             label='General Settings'
+            longLabel={props.config.title}
             icon={icons.tune}
             className='z-20 mt-8'
+            collapse={collapse}
+            setCollapse={setCollapse}
+            buttons={buttons}
+            actionLabel={actionLabel}
+            setActionLabel={setActionLabel}
         >
             <EditorFormRow label='Title' className='mb-1'>
                 <TextInput

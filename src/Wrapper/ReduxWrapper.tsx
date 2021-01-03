@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import Cookies from 'js-cookie';
+import addLocalIds from '../utilities/form-helpers/add-local-ids';
 
 import {
     stateTypes,
@@ -18,9 +19,16 @@ function storeReducer(
         oauth2_token: undefined,
         account: undefined,
         messages: [],
-        modalOpen: false,
         configs: undefined,
         configIsDiffering: false,
+        navbarState: {
+            open: false,
+        },
+        modalState: {
+            open: false,
+            title: '',
+            children: <div />,
+        },
     },
     action: stateTypes.ReduxAction,
 ) {
@@ -30,7 +38,8 @@ function storeReducer(
         oauth2_token: state.oauth2_token,
         account: state.account,
         messages: state.messages,
-        modalOpen: state.modalOpen,
+        navbarState: state.navbarState,
+        modalState: state.modalState,
         configs: state.configs,
         configIsDiffering: state.configIsDiffering,
     };
@@ -70,13 +79,48 @@ function storeReducer(
             newState.messages = [];
             break;
         case 'OPEN_MODAL':
-            newState.modalOpen = true;
+            newState.modalState = {
+                open: true,
+                title: action.title,
+                children: action.children,
+            };
             break;
         case 'CLOSE_MODAL':
-            newState.modalOpen = false;
+            newState.modalState = {
+                open: false,
+                title: newState.modalState.title,
+                children: newState.modalState.children,
+            };
+            break;
+        case 'OPEN_NAVBAR':
+            newState.navbarState = {open: true};
+            break;
+        case 'CLOSE_NAVBAR':
+            newState.navbarState = {open: false};
             break;
         case 'ADD_CONFIGS':
             newState.configs = action.configs;
+            break;
+        case 'ADD_CONFIG':
+            if (newState.configs !== undefined) {
+                newState.configs = [...newState.configs, action.config];
+            }
+            break;
+        case 'DUPLICATE_CONFIG':
+            if (newState.configs !== undefined) {
+                const newConfig = addLocalIds.survey(
+                    {...action.newConfig, survey_name: action.newSurveyName},
+                    newState.configs.length,
+                );
+                newState.configs = [...newState.configs, newConfig];
+            }
+            break;
+        case 'REMOVE_CONFIG':
+            if (newState.configs !== undefined) {
+                newState.configs = newState.configs.filter(
+                    (config) => config.survey_name !== action.surveyName,
+                );
+            }
             break;
         case 'MODIFY_CONFIG':
             if (newState.configs !== undefined) {

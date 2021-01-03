@@ -8,7 +8,8 @@ interface Props {
     config: configTypes.SurveyConfig;
     setConfig(config: configTypes.SurveyConfig): void;
     configIsDiffering: boolean;
-    syncState(): void;
+    saveState(): void;
+    publishState(): void;
     revertState(): void;
     openMessage(message: stateTypes.Message): void;
 }
@@ -50,28 +51,13 @@ function ControlStrip(props: Props) {
         });
     }
 
-    function publishNow() {
-        // TODO: Push new end timestamp to server
-        if (props.configIsDiffering) {
-            props.openMessage({
-                text: 'Please save or undo your changes first!',
-                type: 'warning',
-            });
-        } else {
-            props.setConfig({
-                ...props.config,
-                draft: false,
-            });
-        }
-    }
-
     if (props.config.draft) {
         return (
             <VisualDraftStrip
                 configIsDiffering={props.configIsDiffering}
-                syncState={props.syncState}
+                saveState={props.saveState}
                 revertState={props.revertState}
-                publishNow={publishNow}
+                publishState={props.publishState}
             />
         );
     } else {

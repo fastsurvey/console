@@ -6,7 +6,7 @@ import VisualNavbarContent from './visual-navbar-content';
 
 interface Props {
     logOut(): void;
-    closeModal(): void;
+    closeNavbar(): void;
     configIsDiffering: boolean;
     openMessage(message: stateTypes.Message): void;
 }
@@ -15,7 +15,7 @@ function NavbarContent(props: Props) {
     let history = useHistory();
 
     function openLink(target: string) {
-        props.closeModal();
+        props.closeNavbar();
 
         if (props.configIsDiffering) {
             props.openMessage({

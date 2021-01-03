@@ -7,7 +7,8 @@ export declare namespace stateTypes {
         oauth2_token: undefined | stateTypes.OAuth2Token;
         account: undefined | stateTypes.Account;
         messages: stateTypes.Message[];
-        modalOpen: boolean;
+        navbarState: NavbarState;
+        modalState: ModalState;
         configs: undefined | configTypes.SurveyConfig[];
         configIsDiffering: boolean;
     }
@@ -28,14 +29,21 @@ export declare namespace stateTypes {
         type: 'info' | 'warning' | 'error' | 'success';
     };
 
+    export type NavbarState = {
+        open: boolean;
+    };
+
+    export type ModalState = {
+        open: boolean;
+        title: string;
+        children: React.ReactNode;
+    };
+
     export type ReduxAction =
         | {
               type: 'LOG_IN';
               oauth2_token: stateTypes.OAuth2Token;
               account: stateTypes.Account;
-          }
-        | {
-              type: 'LOG_OUT';
           }
         | {
               type: 'OPEN_MESSAGE';
@@ -46,25 +54,38 @@ export declare namespace stateTypes {
               text: string;
           }
         | {
-              type: 'CLOSE_ALL_MESSAGES';
-          }
-        | {
               type: 'OPEN_MODAL';
+              title: string;
+              children: React.ReactNode;
           }
         | {
-              type: 'CLOSE_MODAL';
+              type:
+                  | 'LOG_OUT'
+                  | 'CLOSE_ALL_MESSAGES'
+                  | 'OPEN_NAVBAR'
+                  | 'CLOSE_MODAL'
+                  | 'CLOSE_NAVBAR';
           }
         | {
               type: 'ADD_CONFIGS';
               configs: configTypes.SurveyConfig[];
           }
         | {
-              type: 'MODIFY_CONFIG';
+              type: 'MODIFY_CONFIG' | 'ADD_CONFIG';
               config: configTypes.SurveyConfig;
           }
         | {
               type: 'MARK_DIFFERING';
               differing: boolean;
+          }
+        | {
+              type: 'REMOVE_CONFIG';
+              surveyName: string;
+          }
+        | {
+              type: 'DUPLICATE_CONFIG';
+              newSurveyName: string;
+              newConfig: configTypes.SurveyConfig;
           };
 }
 

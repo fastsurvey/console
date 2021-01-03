@@ -14,7 +14,7 @@ function VisualRegularNavbar(props: Props) {
                     'bg-gray-900 flex flex-col shadow no-selection'
                 }
             >
-                <NavbarContent closeModal={() => {}} logOut={props.logOut} />
+                <NavbarContent closeNavbar={() => {}} logOut={props.logOut} />
             </div>
         </React.Fragment>
     );

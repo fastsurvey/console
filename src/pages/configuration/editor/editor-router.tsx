@@ -11,7 +11,7 @@ interface Props {
     openMessage(message: stateTypes.Message): void;
     closeAllMessages(): void;
 }
-function EditorWrappper(props: Props) {
+function EditorRouter(props: Props) {
     let params = useParams();
 
     if (!props.configs) {
@@ -39,6 +39,7 @@ function EditorWrappper(props: Props) {
 
     return (
         <Editor
+            configs={props.configs}
             centralConfig={filteredConfigs[0]}
             modifyConfig={props.modifyConfig}
             markDiffering={props.markDiffering}
@@ -57,4 +58,4 @@ const mapDispatchToProps = (dispatch: any) => ({
     openMessage: dispatchers.openMessage(dispatch),
     closeAllMessages: dispatchers.closeAllMessages(dispatch),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(EditorWrappper);
+export default connect(mapStateToProps, mapDispatchToProps)(EditorRouter);

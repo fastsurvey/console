@@ -7,11 +7,16 @@ import icons from 'assets/icons/icons';
 import {ButtonLink} from 'components';
 import ConfigPreviewPanel from './visual-config-panel';
 import VisualConfigList from './visual-config-list';
+import AddSurveyPopup from 'pages/configuration/config-list/add-survey-popup';
+import surveyTemplate from '../../../utilities/template-helpers/add-survey';
 
 interface Props {
     configs: undefined | configTypes.SurveyConfig[];
     configIsDiffering: boolean;
     openMessage(message: stateTypes.Message): void;
+    openModal(title: string, children: React.ReactNode): void;
+    closeModal(): void;
+    addConfig(config: configTypes.SurveyConfig): void;
 }
 function ConfigList(props: Props) {
     let location = useLocation();
@@ -29,6 +34,17 @@ function ConfigList(props: Props) {
                 });
             }
         }
+    }
+
+    function addSurvey(surveyName: string) {
+        if (props.configs !== undefined) {
+            props.addConfig(
+                surveyTemplate('fastsurvey', surveyName, props.configs),
+            );
+        }
+
+        props.closeModal();
+        history.push(`/configuration/${surveyName}`);
     }
 
     if (!props.configs) {
@@ -57,7 +73,12 @@ function ConfigList(props: Props) {
             ))}
             <ButtonLink
                 icon={icons.add}
-                onClick={() => {}}
+                onClick={() =>
+                    props.openModal(
+                        'Add a new survey',
+                        <AddSurveyPopup addSurvey={addSurvey} />,
+                    )
+                }
                 className='w-full mt-1'
             >
                 New survey
@@ -72,5 +93,8 @@ const mapStateToProps = (state: stateTypes.ReduxState) => ({
 });
 const mapDispatchToProps = (dispatch: any) => ({
     openMessage: dispatchers.openMessage(dispatch),
+    openModal: dispatchers.openModal(dispatch),
+    closeModal: dispatchers.closeModal(dispatch),
+    addConfig: dispatchers.addConfig(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(ConfigList);

@@ -26,6 +26,8 @@ export declare namespace configTypes {
         description: string;
     }
 
+    export type FieldType = 'Email' | 'Option' | 'Radio' | 'Selection' | 'Text';
+
     export interface EmailField extends GeneralSurveyField {
         type: 'Email';
         regex: string;

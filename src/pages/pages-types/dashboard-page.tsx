@@ -6,7 +6,7 @@ import 'styles/dashboard-page.css';
 
 interface Props {
     children: React.ReactNode;
-    modalOpen: boolean;
+    navbarState: stateTypes.NavbarState;
     loggedIn: boolean;
     oauth2_token: stateTypes.OAuth2Token | undefined;
     addConfigs(configs: configTypes.SurveyConfig[]): void;
@@ -36,15 +36,7 @@ function DashBoardPage(props: Props) {
                 <div id='RegularContent' className={'hidden lg:block'}>
                     {props.children}
                 </div>
-                <div
-                    id='MobileContent'
-                    className={
-                        'block lg:hidden ' +
-                        (props.modalOpen
-                            ? 'overflow-y-hidden'
-                            : 'overflow-y-scroll')
-                    }
-                >
+                <div id='MobileContent' className={'block lg:hidden '}>
                     {props.children}
                 </div>
             </main>
@@ -53,7 +45,7 @@ function DashBoardPage(props: Props) {
 }
 
 const mapStateToProps = (state: stateTypes.ReduxState) => ({
-    modalOpen: state.modalOpen,
+    navbarState: state.navbarState,
     loggedIn: state.loggedIn,
     oauth2_token: state.oauth2_token,
 });

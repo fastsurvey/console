@@ -1,5 +1,5 @@
-import React from 'react';
-import {configTypes, hints} from 'utilities';
+import React, {useEffect, useState} from 'react';
+import {configTypes, hints, colors} from 'utilities';
 import {icons} from 'assets';
 import {TextArea, TextInput, EditorFormCard, EditorFormRow} from 'components';
 
@@ -8,6 +8,8 @@ interface Props {
     disabled: boolean;
     setFieldConfig(fieldConfig: configTypes.SurveyField): void;
     updateFieldConfig(fieldConfig: configTypes.SurveyField): void;
+    removeField(): void;
+    copyField(): void;
     children: React.ReactNode;
 }
 function VisualField(props: Props) {
@@ -16,30 +18,45 @@ function VisualField(props: Props) {
         flat: true,
     };
 
-    let cardColor: string;
-    switch (props.fieldConfig.type) {
-        case 'Email':
-            cardColor = 'red';
-            break;
-        case 'Option':
-            cardColor = 'orange';
-            break;
-        case 'Radio':
-            cardColor = 'yellow';
-            break;
-        case 'Selection':
-            cardColor = 'green';
-            break;
-        case 'Text':
-            cardColor = 'teal';
-            break;
-    }
+    const [collapse, setCollapse] = useState(true);
+    useEffect(() => {
+        setCollapse(true);
+    }, [props.fieldConfig.local_id]);
 
+    const [actionLabel, setActionLabel] = useState('');
+
+    const buttons = (
+        <>
+            <div
+                className='w-10 h-10 px-2 py-2 cursor-pointer opacity-70 hover:opacity-100'
+                onClick={() => {
+                    props.copyField();
+                    setActionLabel('copied!');
+                }}
+                onMouseEnter={() => setActionLabel('copy')}
+            >
+                {icons.contentCopy}
+            </div>
+            <div
+                className='w-10 h-10 px-2 py-2 cursor-pointer opacity-70 hover:opacity-100'
+                onClick={props.removeField}
+                onMouseEnter={() => setActionLabel('remove')}
+            >
+                {icons.delete}
+            </div>
+        </>
+    );
     return (
         <EditorFormCard
             label={props.fieldConfig.type}
             icon={icons.widgets}
-            color={cardColor}
+            color={colors.fieldTypeToColor(props.fieldConfig.type)}
+            collapse={collapse}
+            setCollapse={setCollapse}
+            longLabel={props.fieldConfig.title}
+            buttons={buttons}
+            actionLabel={actionLabel}
+            setActionLabel={setActionLabel}
         >
             <EditorFormRow label='Title' className='mb-1'>
                 <TextInput

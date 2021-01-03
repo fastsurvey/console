@@ -1,5 +1,10 @@
-import React, {useEffect, useState} from 'react';
-import {validators, configTypes} from 'utilities';
+import React, {useEffect} from 'react';
+import {
+    configTypes,
+    copyToClipboard,
+    removeLocalIds,
+    validateField,
+} from 'utilities';
 
 import VisualField from './visual-field';
 import TextSettings from '../text-settings/text-settings';
@@ -13,85 +18,72 @@ interface Props {
     setFieldConfig(fieldConfig: configTypes.SurveyField): void;
     disabled: boolean;
     updateValidator(newState: boolean): void;
+    removeField(): void;
 }
 function Field(props: Props) {
-    const titleIsValid = validators.title;
-    const descriptionIsValid = validators.description;
-
-    const [settingsValidator, setSettingsValidator] = useState(true);
-    useEffect(() => setSettingsValidator(true), [props.fieldConfig.local_id]);
+    // eslint-disable-next-line
+    useEffect(() => props.updateValidator(validateField(props.fieldConfig)), [
+        props.fieldConfig.local_id,
+    ]);
 
     function updateFieldConfig(newFieldConfig: configTypes.SurveyField) {
-        props.updateValidator(
-            titleIsValid(newFieldConfig.title) &&
-                descriptionIsValid(newFieldConfig.description) &&
-                settingsValidator,
-        );
+        props.updateValidator(validateField(newFieldConfig));
         props.setFieldConfig(newFieldConfig);
     }
 
-    function updateSubfieldConfig(
-        newFieldConfig: configTypes.SurveyField,
-        subValidation: (fieldConfig: configTypes.SurveyField) => boolean,
-    ) {
-        const subValidationResult = subValidation(newFieldConfig);
-        setSettingsValidator(subValidationResult);
-        props.updateValidator(
-            titleIsValid(newFieldConfig.title) &&
-                descriptionIsValid(newFieldConfig.description) &&
-                subValidationResult,
+    function copyField() {
+        copyToClipboard(
+            JSON.stringify(
+                removeLocalIds.field(
+                    JSON.parse(JSON.stringify(props.fieldConfig)),
+                ),
+            ),
         );
-        props.setFieldConfig(newFieldConfig);
     }
-
-    const commonFieldProps = {
-        disabled: props.disabled,
-        setFieldConfig: updateSubfieldConfig,
-    };
 
     let FieldSettings: React.ReactNode;
     switch (props.fieldConfig.type) {
         case 'Text':
             FieldSettings = (
-                // @ts-ignore
                 <TextSettings
-                    {...commonFieldProps}
+                    disabled={props.disabled}
+                    setFieldConfig={updateFieldConfig}
                     fieldConfig={props.fieldConfig}
                 />
             );
             break;
         case 'Option':
             FieldSettings = (
-                // @ts-ignore
                 <OptionSettings
-                    {...commonFieldProps}
+                    disabled={props.disabled}
+                    setFieldConfig={updateFieldConfig}
                     fieldConfig={props.fieldConfig}
                 />
             );
             break;
         case 'Radio':
             FieldSettings = (
-                // @ts-ignore
                 <RadioSettings
-                    {...commonFieldProps}
+                    disabled={props.disabled}
+                    setFieldConfig={updateFieldConfig}
                     fieldConfig={props.fieldConfig}
                 />
             );
             break;
         case 'Selection':
             FieldSettings = (
-                // @ts-ignore
                 <SelectionSettings
-                    {...commonFieldProps}
+                    disabled={props.disabled}
+                    setFieldConfig={updateFieldConfig}
                     fieldConfig={props.fieldConfig}
                 />
             );
             break;
         case 'Email':
             FieldSettings = (
-                // @ts-ignore
                 <EmailSettings
-                    {...commonFieldProps}
+                    disabled={props.disabled}
+                    setFieldConfig={updateFieldConfig}
                     fieldConfig={props.fieldConfig}
                 />
             );
@@ -111,6 +103,8 @@ function Field(props: Props) {
             setFieldConfig={props.setFieldConfig}
             updateFieldConfig={updateFieldConfig}
             disabled={props.disabled}
+            removeField={props.removeField}
+            copyField={copyField}
         >
             {FieldSettings}
         </VisualField>

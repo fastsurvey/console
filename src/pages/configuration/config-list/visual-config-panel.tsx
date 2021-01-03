@@ -20,7 +20,7 @@ function ConfigPreviewPanel(props: Props) {
             statusColor = 'yellow-500';
             statusText = 'Pending';
         } else if (now >= props.config.end) {
-            statusColor = 'gray-400';
+            statusColor = 'gray-500';
             statusText = 'Finished';
         } else {
             statusColor = 'green-500';
@@ -37,11 +37,11 @@ function ConfigPreviewPanel(props: Props) {
                 statusColor +
                 (props.selected
                     ? ' cursor-default bg-white'
-                    : ' cursor-pointer bg-gray-200')
+                    : ' cursor-pointer bg-gray-300')
             }
         >
-            <div className='flex flex-row items-center w-full h-8'>
-                <div className='text-lg font-weight-600'>
+            <div className='flex flex-row items-start w-full'>
+                <div className='text-lg leading-8 text-gray-800 font-weight-600 '>
                     {props.config.title}
                 </div>
                 <div className={'self-stretch flex-grow'} />
@@ -54,8 +54,8 @@ function ConfigPreviewPanel(props: Props) {
                 </span>
             </div>
             <div className='flex flex-row text-base text-blue-600 font-weight-500'>
-                <div className='w-6 h-6 mr-1'>{icons.link}</div>
-                <div className='h-6'>
+                <div className='flex-shrink-0 w-6 h-6 mr-1'>{icons.link}</div>
+                <div className='leading-6 break-all'>
                     {props.config.admin_name}/{props.config.survey_name}
                 </div>
             </div>

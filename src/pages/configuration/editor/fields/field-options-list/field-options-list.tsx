@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {animateScroll} from 'react-scroll';
-import {configTypes, templates} from 'utilities';
+import {configTypes, optionTemplate} from 'utilities';
 import VisualFieldOptionsList from './visual-field-options-list';
 
 interface Props {
@@ -21,22 +21,12 @@ function FieldOptionsList(props: Props) {
 
     const nextRowRef: any = useRef(null);
     const [newOption, setNewOption] = useState('');
+
     function addFieldOption() {
         nextRowRef.current?.blur();
         optionsVisible.push(true);
-        const local_id: number =
-            Math.max(
-                ...props.fieldConfig.fields.map(
-                    (fieldConfig) => fieldConfig.local_id,
-                ),
-            ) + 1;
-        props.updateFieldConfig({
-            ...props.fieldConfig,
-            fields: [
-                ...props.fieldConfig.fields,
-                {...templates.NEW_FIELD_OPTION, title: newOption, local_id},
-            ],
-        });
+
+        props.updateFieldConfig(optionTemplate(newOption, props.fieldConfig));
 
         // Suitable for 1rem = 16px
         animateScroll.scrollMore(56, {duration: 150});

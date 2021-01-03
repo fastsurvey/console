@@ -31,6 +31,15 @@ const validators = {
                 config.survey_name === survey_name,
         ).length === 0,
 
+    newSurveyName: (configs: configTypes.SurveyConfig[] | undefined) => (
+        survey_name: string,
+    ) =>
+        survey_name.match(/^[a-zA-Z0-9-_]*$/) !== null &&
+        3 <= survey_name.length &&
+        survey_name.length <= 120 &&
+        configs?.filter((config) => config.survey_name === survey_name)
+            .length === 0,
+
     description: (description: string) =>
         0 <= description.length && description.length <= 2000,
 

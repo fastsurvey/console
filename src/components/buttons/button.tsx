@@ -57,8 +57,8 @@ function Button(props: Props) {
                 >
                     <div className='origin-top-left transform scale-50'>
                         <div className='lds-spinner'>
-                            {[...Array(12).keys()].map(() => (
-                                <div />
+                            {[...Array(12).keys()].map((n: number) => (
+                                <div key={n} />
                             ))}
                         </div>
                     </div>

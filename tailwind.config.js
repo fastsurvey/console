@@ -13,6 +13,14 @@ module.exports = {
             './public/**/*.html',
         ],
     },
+    variants: {
+        extend: {
+          height: ['hover', 'group-hover'],
+          width: ['hover', 'group-hover'],
+          padding: ['hover', 'group-hover'],
+          margin: ['hover', 'group-hover'],
+        }
+      },
     theme: {
         extend: {
             colors: {
@@ -163,7 +171,7 @@ module.exports = {
             maxHeight: {
                 '0':  '0',
                 '64':  '16.0rem',
-                '128':  '32.0rem',
+                '128':  '32.0rem'
             },
             minHeight: {
                 '12':  '3.0rem',

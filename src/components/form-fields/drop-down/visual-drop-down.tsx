@@ -31,7 +31,7 @@ const VisualDropDown = (props: Props) => (
         >
             <div
                 className={
-                    'h-12 px-3 py-2 leading-8 ' +
+                    'h-12 pl-3 pr-2 py-2 leading-8 ' +
                     'w-full flex flex-row ' +
                     'transition-colors duration-200 ' +
                     (props.isOpen
@@ -49,7 +49,7 @@ const VisualDropDown = (props: Props) => (
                 {!props.hideChevron && (
                     <div
                         className={
-                            'w-8 h-8 text-gray-500 ' +
+                            'w-8 h-8 p-1 text-gray-500 ' +
                             'transition-transform duration-200 transform ' +
                             (props.isOpen ? 'rotate-180 ' : 'rotate-0 ')
                         }

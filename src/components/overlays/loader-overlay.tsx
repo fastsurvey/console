@@ -27,8 +27,8 @@ function LoaderOverlay(props: Props) {
                 }
             >
                 <div className='lds-spinner'>
-                    {[...Array(12).keys()].map(() => (
-                        <div />
+                    {[...Array(12).keys()].map((n: number) => (
+                        <div key={n} />
                     ))}
                 </div>
             </div>
