@@ -3,6 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
+        "@tailwindcss/jit": "^0.1.18",
         "@types/lodash": "^4.14.166",
         "@types/react-scroll": "^1.8.2",
         "assert": "^2.0.0",
@@ -18,11 +19,12 @@
     },
     "scripts": {
         "develop": "react-scripts start",
-        "start": "node server.js",
-        "build": "react-scripts build",
+        "build": "yarn build:tailwind && react-scripts build",
         "analyze": "source-map-explorer 'build/static/js/*.js'",
+        "start": "node server.js",
         "test": "react-scripts test",
-        "build:tailwind": "tailwind build src/styles/tailwind.css -o src/styles/tailwind.out.css"
+        "develop:tailwind": "NODE_ENV=development postcss src/styles/tailwind.css -o src/styles/tailwind.out.css -w",
+        "build:tailwind": "NODE_ENV=production postcss src/styles/tailwind.css -o src/styles/tailwind.out.css"
     },
     "eslintConfig": {
         "extends": "react-app",
@@ -60,10 +62,11 @@
         "@types/react-router-dom": "^5.1.6",
         "autoprefixer": "^10.1.0",
         "eslint-plugin-react-hooks": "^4.2.0",
-        "postcss": "^8.2.1",
+        "postcss": "^8.2.10",
+        "postcss-cli": "^8.3.1",
         "react-scripts": "3.4.3",
         "source-map-explorer": "^2.5.0",
-        "tailwindcss": "^2.0.1",
+        "tailwindcss": "^2.1.1",
         "typescript": "~3.7.2"
     }
 }

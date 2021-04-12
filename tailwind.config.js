@@ -3,24 +3,11 @@
 const colors = require('tailwindcss/colors')
 
 module.exports = {
-    purge: {
-        enabled: false,
-        content: [
-            './src/**/*.js',
-            './src/**/*.jsx',
-            './src/**/*.ts',
-            './src/**/*.tsx',
-            './public/**/*.html',
-        ],
-    },
-    variants: {
-        extend: {
-          height: ['hover', 'group-hover'],
-          width: ['hover', 'group-hover'],
-          padding: ['hover', 'group-hover'],
-          margin: ['hover', 'group-hover'],
-        }
-      },
+    mode: 'jit',
+    purge: [
+        './public/**/*.html',
+        './src/**/*.{js,jsx,ts,tsx}',
+      ],
     theme: {
         extend: {
             colors: {
