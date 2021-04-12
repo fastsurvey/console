@@ -11,6 +11,17 @@ export function authPostRequest(url: string, data: {[key: string]: any}) {
     return axios.post(environment.AUTH_BACKEND_URL + url, formData);
 }
 
+export function authGetRequest(
+    url: string,
+    oauth2_token: stateTypes.OAuth2Token,
+) {
+    return axios.get(environment.AUTH_BACKEND_URL + url, {
+        headers: {
+            Authorization: 'bearer ' + oauth2_token.access_token,
+        },
+    });
+}
+
 export function surveyGetRequest(
     url: string,
     oauth2_token: stateTypes.OAuth2Token,

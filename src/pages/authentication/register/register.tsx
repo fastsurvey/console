@@ -1,6 +1,7 @@
 import React, {useRef, useState} from 'react';
 import {connect} from 'react-redux';
 import {stateTypes, dispatchers, authPostRequest} from 'utilities';
+import {authGetRequest} from 'utilities/ajax-helpers/axios-clients';
 import VisualRegister from './visual-register';
 
 interface Props {
@@ -29,13 +30,41 @@ function RegisterForm(props: Props) {
         input3Ref.current?.blur();
         if (!disabled()) {
             setSubmitting(true);
-            authPostRequest('/register', {email, password})
-                .then((response) => {
-                    setSubmitting(false);
-                    props.logIn(
-                        response.data.oauth2_token,
-                        response.data.account,
-                    );
+            authPostRequest(`/users/mumbojambo`, {email, password})
+                .then(() => {
+                    authPostRequest('/authentication', {
+                        identifier: email,
+                        password,
+                    })
+                        .then((authResponse: any) => {
+                            // TODO: refresh token
+
+                            const jwt: stateTypes.OAuth2Token = {
+                                access_token: authResponse.access_token,
+                                refresh_token: authResponse.access_token,
+                                bearer: authResponse.token_type,
+                            };
+
+                            authGetRequest('/users/mumbojambo', jwt)
+                                .then((response) => {
+                                    setSubmitting(false);
+
+                                    props.logIn(jwt, {
+                                        email: email,
+                                        email_verified: response.data.verified,
+                                    });
+                                })
+                                .catch((error) => {
+                                    console.error(
+                                        'GET /users/mumbojambo call went wrong',
+                                    );
+                                });
+                        })
+                        .catch((error) => {
+                            console.error(
+                                'POST /authentication call went wrong',
+                            );
+                        });
                 })
                 .catch((error) => {
                     setSubmitting(false);

@@ -1,6 +1,6 @@
 const environment = {
-    SURVEY_BACKEND_URL: 'http://192.168.178.22:5000',
-    AUTH_BACKEND_URL: 'http://192.168.178.22:8080',
+    SURVEY_BACKEND_URL: 'http://localhost:8000',
+    AUTH_BACKEND_URL: 'https://backend.dev.fastsurvey.io',
 };
 
 export default environment;

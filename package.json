@@ -1,69 +1,69 @@
 {
-  "name": "admin-frontend",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@types/lodash": "^4.14.166",
-    "@types/react-scroll": "^1.8.2",
-    "assert": "^2.0.0",
-    "axios": "^0.20.0",
-    "express": "^4.17.1",
-    "js-cookie": "^2.2.1",
-    "lodash": "^4.17.20",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-redux": "^7.2.1",
-    "react-router-dom": "^5.2.0",
-    "react-scroll": "^1.8.1"
-  },
-  "scripts": {
-    "start-dev": "react-scripts start",
-    "start-prod": "node server.js",
-    "build": "react-scripts build",
-    "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "test": "react-scripts test",
-    "build:tailwind": "tailwind build src/styles/tailwind.css -o src/styles/tailwind.out.css"
-  },
-  "eslintConfig": {
-    "extends": "react-app",
-    "plugins": [
-      "react-hooks"
-    ],
-    "rules": {
-      "react-hooks/rules-of-hooks": "error",
-      "react-hooks/exhaustive-deps": "warn"
+    "name": "admin-frontend",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@types/lodash": "^4.14.166",
+        "@types/react-scroll": "^1.8.2",
+        "assert": "^2.0.0",
+        "axios": "^0.20.0",
+        "express": "^4.17.1",
+        "js-cookie": "^2.2.1",
+        "lodash": "^4.17.20",
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1",
+        "react-redux": "^7.2.1",
+        "react-router-dom": "^5.2.0",
+        "react-scroll": "^1.8.1"
+    },
+    "scripts": {
+        "develop": "react-scripts start",
+        "start": "node server.js",
+        "build": "react-scripts build",
+        "analyze": "source-map-explorer 'build/static/js/*.js'",
+        "test": "react-scripts test",
+        "build:tailwind": "tailwind build src/styles/tailwind.css -o src/styles/tailwind.out.css"
+    },
+    "eslintConfig": {
+        "extends": "react-app",
+        "plugins": [
+            "react-hooks"
+        ],
+        "rules": {
+            "react-hooks/rules-of-hooks": "error",
+            "react-hooks/exhaustive-deps": "warn"
+        }
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "devDependencies": {
+        "@testing-library/jest-dom": "^4.2.4",
+        "@testing-library/react": "^9.3.2",
+        "@testing-library/user-event": "^7.1.2",
+        "@types/jest": "^24.0.0",
+        "@types/js-cookie": "^2.2.6",
+        "@types/jsonwebtoken": "^8.5.0",
+        "@types/node": "^12.0.0",
+        "@types/react": "^16.9.51",
+        "@types/react-dom": "^16.9.8",
+        "@types/react-redux": "^7.1.9",
+        "@types/react-router-dom": "^5.1.6",
+        "autoprefixer": "^10.1.0",
+        "eslint-plugin-react-hooks": "^4.2.0",
+        "postcss": "^8.2.1",
+        "react-scripts": "3.4.3",
+        "source-map-explorer": "^2.5.0",
+        "tailwindcss": "^2.0.1",
+        "typescript": "~3.7.2"
     }
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "@types/jest": "^24.0.0",
-    "@types/js-cookie": "^2.2.6",
-    "@types/jsonwebtoken": "^8.5.0",
-    "@types/node": "^12.0.0",
-    "@types/react": "^16.9.51",
-    "@types/react-dom": "^16.9.8",
-    "@types/react-redux": "^7.1.9",
-    "@types/react-router-dom": "^5.1.6",
-    "autoprefixer": "^10.1.0",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "postcss": "^8.2.1",
-    "react-scripts": "3.4.3",
-    "source-map-explorer": "^2.5.0",
-    "tailwindcss": "^2.0.1",
-    "typescript": "~3.7.2"
-  }
 }
