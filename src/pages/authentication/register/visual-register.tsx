@@ -5,6 +5,8 @@ import {hints} from 'utilities';
 interface Props {
     email: string;
     setEmail(newEmail: string): void;
+    username: string;
+    setUsername(newUsername: string): void;
     password: string;
     setPassword(newPassword: string): void;
     passwordConfirmation: string;
@@ -17,11 +19,11 @@ interface Props {
     handleRegistration(): void;
 }
 const VisualRegister = React.forwardRef((props: Props, refs: any) => {
-    const {input2Ref, input3Ref} = refs;
+    const {input2Ref, input3Ref, input4Ref} = refs;
 
     return (
         <div className='w-full'>
-            <h2 className='mb-4 text-center no-selection'>Register</h2>
+            <h2 className='mb-6 text-center no-selection'>Register</h2>
             <form>
                 <TextInput
                     required
@@ -31,9 +33,22 @@ const VisualRegister = React.forwardRef((props: Props, refs: any) => {
                         props.closeAllMessages();
                         props.setEmail(newValue);
                     }}
-                    wrapperClassName='mb-3'
+                    wrapperClassName='mb-2'
                     autoComplete='username'
                     onEnter={() => input2Ref.current?.focus()}
+                />
+                <TextInput
+                    required
+                    placeholder='username'
+                    value={props.username}
+                    onChange={(newValue) => {
+                        props.closeAllMessages();
+                        props.setUsername(newValue);
+                    }}
+                    ref={input2Ref}
+                    wrapperClassName='mb-6'
+                    autoComplete='username'
+                    onEnter={() => input3Ref.current?.focus()}
                 />
                 <TextInput
                     value={props.password}
@@ -41,12 +56,12 @@ const VisualRegister = React.forwardRef((props: Props, refs: any) => {
                         props.closeAllMessages();
                         props.setPassword(newValue);
                     }}
-                    ref={input2Ref}
-                    onEnter={() => input3Ref.current?.focus()}
+                    ref={input3Ref}
+                    onEnter={() => input4Ref.current?.focus()}
                     required
                     placeholder='password'
                     type='password'
-                    wrapperClassName='mb-1'
+                    wrapperClassName='mb-2'
                     autoComplete='new-password'
                     hint={{...hints.password(props.password), inlineHint: true}}
                 />
@@ -56,13 +71,13 @@ const VisualRegister = React.forwardRef((props: Props, refs: any) => {
                         props.closeAllMessages();
                         props.setPasswordConfirmation(newValue);
                     }}
-                    ref={input3Ref}
+                    ref={input4Ref}
                     onEnter={props.handleRegistration}
                     required
                     placeholder='confirm password'
                     type='password'
                     wrapperClassName='mb-5'
-                    autoComplete='new-password'
+                    autoComplete='new-pa6sword'
                     hint={{
                         ...hints.passwordConfirmation(
                             props.password,

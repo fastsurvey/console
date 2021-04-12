@@ -14,6 +14,7 @@ interface Props {
 }
 function RegisterForm(props: Props) {
     const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const [submitting, setSubmitting] = useState(false);
@@ -24,13 +25,14 @@ function RegisterForm(props: Props) {
 
     const input2Ref = useRef<HTMLInputElement>(null);
     const input3Ref = useRef<HTMLInputElement>(null);
+    const input4Ref = useRef<HTMLInputElement>(null);
 
     function handleRegistration() {
         input2Ref.current?.blur();
         input3Ref.current?.blur();
         if (!disabled()) {
             setSubmitting(true);
-            authPostRequest(`/users/mumbojambo`, {email, password})
+            authPostRequest(`/users/${username}`, {email, password})
                 .then(() => {
                     authPostRequest('/authentication', {
                         identifier: email,
@@ -45,24 +47,27 @@ function RegisterForm(props: Props) {
                                 bearer: authResponse.token_type,
                             };
 
-                            authGetRequest('/users/mumbojambo', jwt)
-                                .then((response) => {
+                            authGetRequest(`/users/${username}`, jwt)
+                                .then((accountResponse: any) => {
                                     setSubmitting(false);
 
                                     props.logIn(jwt, {
                                         email: email,
-                                        email_verified: response.data.verified,
+                                        email_verified:
+                                            accountResponse.data.verified,
                                     });
                                 })
                                 .catch((error) => {
                                     console.error(
                                         'GET /users/mumbojambo call went wrong',
+                                        error,
                                     );
                                 });
                         })
                         .catch((error) => {
                             console.error(
                                 'POST /authentication call went wrong',
+                                error,
                             );
                         });
                 })
@@ -91,9 +96,11 @@ function RegisterForm(props: Props) {
     return (
         <VisualRegister
             // @ts-ignore
-            ref={{input2Ref, input3Ref}}
+            ref={{input2Ref, input3Ref, input4Ref}}
             email={email}
             setEmail={setEmail}
+            username={username}
+            setUsername={setUsername}
             password={password}
             setPassword={setPassword}
             passwordConfirmation={passwordConfirmation}
