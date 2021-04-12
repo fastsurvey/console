@@ -60,6 +60,10 @@ const hints = {
         text: '> 7 characters',
         fulfilled: password.length > 7,
     }),
+    username: (username: string) => ({
+        text: '> 2 characters',
+        fulfilled: username.length > 2,
+    }),
     passwordConfirmation: (password: string, passwordConfirmation: string) => ({
         text: 'passwords match',
         fulfilled: password.length > 7 && password === passwordConfirmation,

@@ -34,7 +34,7 @@ const VisualRegister = React.forwardRef((props: Props, refs: any) => {
                         props.setEmail(newValue);
                     }}
                     wrapperClassName='mb-2'
-                    autoComplete='username'
+                    autoComplete='email'
                     onEnter={() => input2Ref.current?.focus()}
                 />
                 <TextInput
@@ -46,9 +46,10 @@ const VisualRegister = React.forwardRef((props: Props, refs: any) => {
                         props.setUsername(newValue);
                     }}
                     ref={input2Ref}
-                    wrapperClassName='mb-6'
+                    wrapperClassName='mb-2'
                     autoComplete='username'
                     onEnter={() => input3Ref.current?.focus()}
+                    hint={{...hints.username(props.username), inlineHint: true}}
                 />
                 <TextInput
                     value={props.password}
@@ -77,7 +78,7 @@ const VisualRegister = React.forwardRef((props: Props, refs: any) => {
                     placeholder='confirm password'
                     type='password'
                     wrapperClassName='mb-5'
-                    autoComplete='new-pa6sword'
+                    autoComplete='new-password'
                     hint={{
                         ...hints.passwordConfirmation(
                             props.password,

@@ -20,7 +20,11 @@ function RegisterForm(props: Props) {
     const [submitting, setSubmitting] = useState(false);
 
     function disabled() {
-        return password.length < 8 || password !== passwordConfirmation;
+        return (
+            username.length < 3 ||
+            password.length < 8 ||
+            password !== passwordConfirmation
+        );
     }
 
     const input2Ref = useRef<HTMLInputElement>(null);
@@ -30,6 +34,7 @@ function RegisterForm(props: Props) {
     function handleRegistration() {
         input2Ref.current?.blur();
         input3Ref.current?.blur();
+        input4Ref.current?.blur();
         if (!disabled()) {
             setSubmitting(true);
             authPostRequest(`/users/${username}`, {email, password})
