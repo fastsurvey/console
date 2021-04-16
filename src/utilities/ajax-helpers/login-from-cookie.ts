@@ -1,9 +1,9 @@
 import assert from 'assert';
 import Cookies from 'js-cookie';
 
-import {stateTypes, authPostRequest} from 'utilities';
+import {stateTypes, authGetRequest} from 'utilities';
 
-async function generateValidOAuthToken(
+async function loginFromCookie(
     logIn: (
         oauth2_token: stateTypes.OAuth2Token,
         account: stateTypes.Account,
@@ -25,26 +25,18 @@ async function generateValidOAuthToken(
     );
 
     try {
-        const accessResponse = await authPostRequest('/login/access', {
-            access_token: current_oauth2_token.access_token,
-        });
-        const account = accessResponse?.data?.account;
-        assert(account !== undefined);
+        // TODO: Use actual username
+        const accessResponse = await authGetRequest(
+            '/users/123',
+            current_oauth2_token,
+        );
+        const account = accessResponse?.data;
+        assert(account.email_address !== undefined);
         logIn(current_oauth2_token, account);
         return;
     } catch {}
 
-    try {
-        const refreshResponse = await authPostRequest('/login/refresh', {
-            refresh_token: current_oauth2_token.refresh_token,
-        });
-        const new_oauth2_token = refreshResponse?.data?.oauth2_token;
-        const account = refreshResponse?.data?.account;
-        assert(new_oauth2_token !== undefined);
-        assert(account !== undefined);
-        logIn(new_oauth2_token, account);
-        return;
-    } catch {}
+    // TODO: Fetch with refresh token
 
     throw Error;
 }
@@ -54,4 +46,4 @@ async function generateValidOAuthToken(
 // I'll postpone this - but it would be way more elegant
 // I mean that is the whole point of oauth2_token isn't it!?
 
-export default generateValidOAuthToken;
+export default loginFromCookie;

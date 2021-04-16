@@ -10,7 +10,7 @@ async function fetchSurveys(
     addConfigs: (configs: configTypes.SurveyConfig[]) => void,
 ) {
     // TODO: Username in account
-    surveyGetRequest('/fastsurvey', oauth2_token)
+    surveyGetRequest('/users/123/surveys', oauth2_token)
         .then((response) => {
             const configs = response.data.configs;
             configs.map(addLocalIds.survey);

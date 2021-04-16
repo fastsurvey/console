@@ -9,7 +9,7 @@ import {
     configTypes,
     dispatchers,
     fetchSurveys,
-    generateValidOAuthToken,
+    loginFromCookie,
 } from 'utilities';
 
 function storeReducer(
@@ -171,9 +171,9 @@ export function ReduxWrapper(props: Props) {
     }
 
     useEffect(() => {
-        async function loginFromCookie() {
+        async function triggerLogin() {
             try {
-                await generateValidOAuthToken(logIn);
+                await loginFromCookie(logIn);
             } catch {
                 dispatchers.logOut(store.dispatch)();
             }
@@ -181,7 +181,7 @@ export function ReduxWrapper(props: Props) {
 
         if (!cookieLogin) {
             setCookieLogin(true);
-            loginFromCookie();
+            triggerLogin();
         }
     }, [cookieLogin]);
 
