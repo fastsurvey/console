@@ -9,8 +9,12 @@ import ConfigPreviewPanel from './visual-config-panel';
 import VisualConfigList from './visual-config-list';
 import AddSurveyPopup from 'pages/configuration/config-list/add-survey-popup';
 import surveyTemplate from '../../../utilities/template-helpers/add-survey';
+import postConfig from '../../../utilities/ajax-helpers/post-config';
 
 interface Props {
+    oauth2_token: stateTypes.OAuth2Token | undefined;
+    account: stateTypes.Account | undefined;
+
     configs: undefined | configTypes.SurveyConfig[];
     configIsDiffering: boolean;
     openMessage(message: stateTypes.Message): void;
@@ -37,10 +41,18 @@ function ConfigList(props: Props) {
     }
 
     function addSurvey(surveyName: string) {
-        if (props.configs !== undefined) {
-            props.addConfig(
-                surveyTemplate('fastsurvey', surveyName, props.configs),
+        if (props.configs !== undefined && props.oauth2_token) {
+            const newConfig = surveyTemplate(
+                'fastsurvey',
+                surveyName,
+                props.configs,
             );
+            try {
+                postConfig(props.oauth2_token, newConfig);
+                props.addConfig(
+                    surveyTemplate('fastsurvey', surveyName, props.configs),
+                );
+            } catch {}
         }
 
         props.closeModal();
@@ -58,7 +70,9 @@ function ConfigList(props: Props) {
     return (
         <VisualConfigList>
             {props.configs.length === 0 && (
-                <p className='w-full text-center'>No surveys yet</p>
+                <p className='w-full my-4 text-center text-gray-100 font-weight-600'>
+                    No surveys yet
+                </p>
             )}
             {props.configs.map((config, index) => (
                 <ConfigPreviewPanel
@@ -90,6 +104,8 @@ function ConfigList(props: Props) {
 const mapStateToProps = (state: stateTypes.ReduxState) => ({
     configs: state.configs,
     configIsDiffering: state.configIsDiffering,
+    oauth2_token: state.oauth2_token,
+    account: state.account,
 });
 const mapDispatchToProps = (dispatch: any) => ({
     openMessage: dispatchers.openMessage(dispatch),

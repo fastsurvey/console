@@ -32,3 +32,15 @@ export function surveyGetRequest(
         },
     });
 }
+
+export function surveyPostRequest(
+    url: string,
+    oauth2_token: stateTypes.OAuth2Token,
+    body: any,
+) {
+    return axios.post(environment.SURVEY_BACKEND_URL + url, body, {
+        headers: {
+            Authorization: 'bearer ' + oauth2_token.access_token,
+        },
+    });
+}
