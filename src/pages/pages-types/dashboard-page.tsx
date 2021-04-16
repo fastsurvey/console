@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {stateTypes, configTypes, dispatchers, fetchSurveys} from 'utilities';
+import {stateTypes, configTypes, dispatchers, fetchConfigs} from 'utilities';
 import {Navbar} from 'components';
 import 'styles/dashboard-page.css';
 
@@ -14,7 +14,7 @@ interface Props {
 function DashBoardPage(props: Props) {
     useEffect(() => {
         async function fetch(oauth2_token: stateTypes.OAuth2Token) {
-            await fetchSurveys(
+            await fetchConfigs(
                 oauth2_token,
                 (configs: configTypes.SurveyConfig[]) => {
                     props.addConfigs(configs);

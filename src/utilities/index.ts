@@ -16,7 +16,7 @@ export {default as hints} from './form-helpers/hints';
 export {default as copyToClipboard} from './form-helpers/copy-to-clipboard';
 export {default as addLocalIds} from './form-helpers/add-local-ids';
 
-export {default as fetchSurveys} from './ajax-helpers/fetching';
+export {default as fetchConfigs} from './ajax-helpers/fetch-configs';
 export {default as loginFromCookie} from './ajax-helpers/login-from-cookie';
 
 export {authGetRequest} from './ajax-helpers/axios-clients';

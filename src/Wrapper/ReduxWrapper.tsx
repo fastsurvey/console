@@ -8,7 +8,7 @@ import {
     stateTypes,
     configTypes,
     dispatchers,
-    fetchSurveys,
+    fetchConfigs,
     loginFromCookie,
 } from 'utilities';
 
@@ -162,7 +162,7 @@ export function ReduxWrapper(props: Props) {
         account: stateTypes.Account,
     ) {
         dispatchers.logIn(store.dispatch)(oauth2_token, account);
-        await fetchSurveys(
+        await fetchConfigs(
             oauth2_token,
             (configs: configTypes.SurveyConfig[]) => {
                 dispatchers.addConfigs(store.dispatch)(configs);
