@@ -47,10 +47,11 @@ function LoginForm(props: Props) {
                             props.logIn(jwt, accountResponse.data);
                         })
                         .catch((error) => {
-                            console.error(
-                                `GET /users/${email} call went wrong`,
-                                error,
-                            );
+                            setSubmitting(false);
+                            props.openMessage({
+                                text: 'Server error. Please try again later',
+                                type: 'error',
+                            });
                         });
                 })
                 .catch((error) => {
