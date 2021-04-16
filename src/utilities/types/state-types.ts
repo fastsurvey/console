@@ -20,8 +20,9 @@ export declare namespace stateTypes {
     }
 
     export interface Account {
-        email: string;
-        email_verified: boolean;
+        email_address: string;
+        username: string;
+        verified: boolean;
     }
 
     export type Message = {

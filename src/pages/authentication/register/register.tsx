@@ -1,7 +1,6 @@
 import React, {useRef, useState} from 'react';
 import {connect} from 'react-redux';
 import {stateTypes, dispatchers, authPostRequest} from 'utilities';
-import {authGetRequest} from 'utilities/ajax-helpers/axios-clients';
 import VisualRegister from './visual-register';
 
 interface Props {
@@ -39,42 +38,14 @@ function RegisterForm(props: Props) {
             setSubmitting(true);
             authPostRequest(`/users/${username}`, {email, password})
                 .then(() => {
-                    authPostRequest('/authentication', {
-                        identifier: email,
-                        password,
-                    })
-                        .then((authResponse: any) => {
-                            // TODO: refresh token
-
-                            const jwt: stateTypes.OAuth2Token = {
-                                access_token: authResponse.access_token,
-                                refresh_token: authResponse.access_token,
-                                bearer: authResponse.token_type,
-                            };
-
-                            authGetRequest(`/users/${username}`, jwt)
-                                .then((accountResponse: any) => {
-                                    setSubmitting(false);
-
-                                    props.logIn(jwt, {
-                                        email: email,
-                                        email_verified:
-                                            accountResponse.data.verified,
-                                    });
-                                })
-                                .catch((error) => {
-                                    console.error(
-                                        'GET /users/mumbojambo call went wrong',
-                                        error,
-                                    );
-                                });
-                        })
-                        .catch((error) => {
-                            console.error(
-                                'POST /authentication call went wrong',
-                                error,
-                            );
-                        });
+                    setSubmitting(false);
+                    setPassword('');
+                    setPasswordConfirmation('');
+                    props.openMessage({
+                        text:
+                            'Success: Account created! Please verify your email now.',
+                        type: 'success',
+                    });
                 })
                 .catch((error) => {
                     setSubmitting(false);

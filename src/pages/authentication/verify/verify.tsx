@@ -27,14 +27,18 @@ function VerifyForm(props: Props) {
         input1Ref.current?.blur();
         if (!disabled() && token !== null) {
             setSubmitting(true);
-            authPostRequest('/verify', {password, email_token: token})
+            authPostRequest('/verification', {password, token})
                 .then((response) => {
                     setTimeout(() => {
                         setSuccess(true);
                         setSubmitting(false);
                     }, 50);
                     props.logIn(
-                        response.data.oauth2_token,
+                        {
+                            access_token: response.data.access_token,
+                            refresh_token: response.data.access_token,
+                            bearer: response.data.token_type,
+                        },
                         response.data.account,
                     );
                 })

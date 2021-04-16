@@ -2,6 +2,7 @@ import React, {useRef, useState} from 'react';
 import {connect} from 'react-redux';
 import {stateTypes, dispatchers, authPostRequest} from 'utilities';
 import VisualLogin from './visual-login';
+import {authGetRequest} from 'utilities/ajax-helpers/axios-clients';
 
 interface Props {
     logIn(
@@ -18,7 +19,7 @@ function LoginForm(props: Props) {
     const [submitting, setSubmitting] = useState<boolean>(false);
 
     function disabled() {
-        return email.length < 5 || password.length < 8;
+        return email.length < 3 || password.length < 8;
     }
 
     const input2Ref = useRef<HTMLInputElement>(null);
@@ -27,13 +28,30 @@ function LoginForm(props: Props) {
         input2Ref.current?.blur();
         if (!disabled()) {
             setSubmitting(true);
-            authPostRequest('/login/form', {email, password})
-                .then((response) => {
-                    setSubmitting(false);
-                    props.logIn(
-                        response.data.oauth2_token,
-                        response.data.account,
-                    );
+            authPostRequest('/authentication', {identifier: email, password})
+                .then((authResponse: any) => {
+                    // TODO: refresh token
+
+                    console.log('LOGGED IN');
+
+                    const jwt: stateTypes.OAuth2Token = {
+                        access_token: authResponse.data.access_token,
+                        refresh_token: authResponse.data.access_token,
+                        bearer: authResponse.data.token_type,
+                    };
+
+                    authGetRequest(`/users/${email}`, jwt)
+                        .then((accountResponse: any) => {
+                            console.log('FETCHED');
+                            setSubmitting(false);
+                            props.logIn(jwt, accountResponse.data);
+                        })
+                        .catch((error) => {
+                            console.error(
+                                `GET /users/${email} call went wrong`,
+                                error,
+                            );
+                        });
                 })
                 .catch((error) => {
                     setSubmitting(false);

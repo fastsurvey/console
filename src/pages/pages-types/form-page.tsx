@@ -7,7 +7,7 @@ interface Props {
 }
 function FormPage(props: Props) {
     return (
-        <MainWrapper flexDirection='flex-row' className='bg-gray-100'>
+        <MainWrapper flexDirection='flex-row' className='bg-gray-200'>
             <div
                 className={
                     'hidden w-0 center-content ' +

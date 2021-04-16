@@ -36,7 +36,7 @@ module.exports = {
             transitionProperty: {
                 'height': 'height',
                 'width': 'width',
-                'size': 'margin, padding, width, height, max-height',
+                'size': 'margin, padding, width, height, max-height, line-height',
                 'size-colors': 'margin, padding, width, height, text-color, background-color, box-shadow',
             },
             transitionDuration: {

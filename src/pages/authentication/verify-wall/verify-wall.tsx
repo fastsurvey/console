@@ -12,7 +12,7 @@ interface VerifyWallProps {
 }
 
 function VerifyWall(props: VerifyWallProps) {
-    const email = props.account?.email;
+    const email = props.account?.email_address;
     assert(email !== undefined);
 
     const [resendPossible, setResendPossible] = useState(true);

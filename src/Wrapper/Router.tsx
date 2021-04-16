@@ -38,12 +38,12 @@ function Router(props: RouterProps) {
                     <Route path='(/configurations|/results|/account|/configuration)'>
                         {!props.loggingIn && props.loggedIn && (
                             <React.Fragment>
-                                {props.account?.email_verified !== true && (
+                                {props.account?.verified !== true && (
                                     <FormPage image={LetterImage}>
                                         <VerifyWall />
                                     </FormPage>
                                 )}
-                                {props.account?.email_verified && (
+                                {props.account?.verified && (
                                     <DashboardPage>
                                         <Switch>
                                             <Route exact path='/configurations'>
