@@ -11,11 +11,11 @@ const VisualOptionSettings = (props: Props) => (
     <EditorFormRow label='Required' className='mb-1'>
         <Checkbox
             disabled={props.disabled}
-            checked={props.fieldConfig.mandatory}
+            checked={props.fieldConfig.required}
             onChange={(newValue: boolean) =>
                 props.updateFieldConfig({
                     ...props.fieldConfig,
-                    mandatory: newValue,
+                    required: newValue,
                 })
             }
         />

@@ -10,7 +10,7 @@ const addLocalIds = {
     },
     field: (field: configTypes.SurveyField, fieldId: number) => {
         field.local_id = fieldId;
-        if (field.type === 'Radio' || field.type === 'Selection') {
+        if (field.type === 'radio' || field.type === 'selection') {
             field.fields.forEach(
                 (fieldOption: configTypes.FieldOption, subSubIndex: number) => {
                     fieldOption.local_id = 1000 * field.local_id + subSubIndex;

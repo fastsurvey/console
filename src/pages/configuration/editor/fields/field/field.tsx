@@ -43,7 +43,7 @@ function Field(props: Props) {
 
     let FieldSettings: React.ReactNode;
     switch (props.fieldConfig.type) {
-        case 'Text':
+        case 'text':
             FieldSettings = (
                 <TextSettings
                     disabled={props.disabled}
@@ -52,7 +52,7 @@ function Field(props: Props) {
                 />
             );
             break;
-        case 'Option':
+        case 'option':
             FieldSettings = (
                 <OptionSettings
                     disabled={props.disabled}
@@ -61,7 +61,7 @@ function Field(props: Props) {
                 />
             );
             break;
-        case 'Radio':
+        case 'radio':
             FieldSettings = (
                 <RadioSettings
                     disabled={props.disabled}
@@ -70,7 +70,7 @@ function Field(props: Props) {
                 />
             );
             break;
-        case 'Selection':
+        case 'selection':
             FieldSettings = (
                 <SelectionSettings
                     disabled={props.disabled}
@@ -79,7 +79,7 @@ function Field(props: Props) {
                 />
             );
             break;
-        case 'Email':
+        case 'email':
             FieldSettings = (
                 <EmailSettings
                     disabled={props.disabled}

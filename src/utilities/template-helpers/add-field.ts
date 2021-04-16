@@ -5,9 +5,9 @@ const fieldTemplate = (
     config: configTypes.SurveyConfig,
 ): configTypes.SurveyField => {
     switch (fieldType) {
-        case 'Email':
+        case 'email':
             return {
-                type: 'Email',
+                type: 'email',
                 local_id: newFieldId(config),
 
                 title: '',
@@ -15,27 +15,27 @@ const fieldTemplate = (
                 regex: '.*',
                 hint: 'Any email address',
             };
-        case 'Option':
+        case 'option':
             return {
-                type: 'Option',
+                type: 'option',
                 local_id: newFieldId(config),
 
                 title: '',
                 description: '',
-                mandatory: false,
+                required: false,
             };
-        case 'Radio':
+        case 'radio':
             return {
-                type: 'Radio',
+                type: 'radio',
                 local_id: newFieldId(config),
 
                 title: '',
                 description: '',
                 fields: [],
             };
-        case 'Selection':
+        case 'selection':
             return {
-                type: 'Selection',
+                type: 'selection',
                 local_id: newFieldId(config),
 
                 title: '',
@@ -44,9 +44,9 @@ const fieldTemplate = (
                 max_select: 0,
                 fields: [],
             };
-        case 'Text':
+        case 'text':
             return {
-                type: 'Text',
+                type: 'text',
                 local_id: newFieldId(config),
 
                 title: '',

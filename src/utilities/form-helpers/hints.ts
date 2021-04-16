@@ -25,7 +25,7 @@ const hints = {
     }),
     submissionLimit: (config: configTypes.SurveyConfig) => ({
         text: '1 - 10.000',
-        fulfilled: validators.submissionLimit(config.submission_limit),
+        fulfilled: validators.submissionLimit(config.limit),
     }),
     regex: (fieldConfig: configTypes.EmailField) => ({
         text: `<= 250 Characters (${250 - fieldConfig.hint.length} left)`,

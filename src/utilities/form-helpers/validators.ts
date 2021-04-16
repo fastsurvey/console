@@ -4,14 +4,14 @@ const validators = {
     fieldOptions: (config: configTypes.SurveyConfig) =>
         config.fields.filter(
             (fieldConfig: configTypes.SurveyField) =>
-                (fieldConfig.type === 'Radio' ||
-                    fieldConfig.type === 'Selection') &&
+                (fieldConfig.type === 'radio' ||
+                    fieldConfig.type === 'selection') &&
                 fieldConfig.fields.length < 2,
         ).length === 0,
 
     authMode: (config: configTypes.SurveyConfig) =>
-        config.mode !== 1 ||
-        config.fields.filter((fieldConfig) => fieldConfig.type === 'Email')
+        config.authentication !== 'email' ||
+        config.fields.filter((fieldConfig) => fieldConfig.type === 'email')
             .length === 1,
 
     timing: (config: configTypes.SurveyConfig) => config.start <= config.end,

@@ -20,10 +20,11 @@ const optionTemplate = (
         fields: [
             ...fieldConfig.fields,
             {
+                type: 'option',
                 local_id: 0,
                 title: newTitle,
                 description: '',
-                mandatory: false,
+                required: false,
             },
         ],
     };

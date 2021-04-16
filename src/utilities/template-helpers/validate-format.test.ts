@@ -19,24 +19,24 @@ describe('validateFormat.fieldOptionsList', () => {
 
     it('valid list', () => {
         let result = validateOptions([
-            {title: 'sdsf', description: '', mandatory: false},
+            {title: 'sdsf', description: '', required: false},
         ]);
         expect(result).toBe(true);
     });
 
     it('invalid list', () => {
         let result1 = validateOptions([
-            {title: 'sdsf', description: 'era', mandatory: false},
+            {title: 'sdsf', description: 'era', required: false},
         ]);
         expect(result1).toBe(false);
 
         let result2 = validateOptions([
-            {title: 'sdsf', description: '', mandatory: true},
+            {title: 'sdsf', description: '', required: true},
         ]);
         expect(result2).toBe(false);
 
         let result3 = validateOptions([
-            {title: true, description: '', mandatory: true},
+            {title: true, description: '', required: true},
         ]);
         expect(result3).toBe(false);
     });
@@ -56,7 +56,7 @@ describe('validateFormat.fieldConfig', () => {
     };
     const validOption = {
         ...generalField('Option'),
-        mandatory: false,
+        required: false,
     };
     const validRadio = {
         ...generalField('Radio'),
@@ -116,7 +116,7 @@ describe('validateFormat.fieldConfig', () => {
 
     it('invalid option', () => {
         const runTest = fieldTest(validOption, false);
-        runTest({mandatory: ''});
+        runTest({required: ''});
         runTest({unwanted: 0});
     });
 

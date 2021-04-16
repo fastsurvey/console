@@ -40,7 +40,7 @@ function Settings(props: Props) {
                 titleIsValid(newConfig.title) &&
                     surveyNameIsValid(newConfig.survey_name) &&
                     descriptionIsValid(newConfig.description) &&
-                    submissionLimitIsValid(newConfig.submission_limit),
+                    submissionLimitIsValid(newConfig.limit),
             );
         }
 

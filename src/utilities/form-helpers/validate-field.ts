@@ -9,18 +9,18 @@ function validateField(fieldConfig: configTypes.SurveyField) {
     }
 
     switch (fieldConfig.type) {
-        case 'Email':
+        case 'email':
             return (
                 validators.hint(fieldConfig.hint) &&
                 validators.regex(fieldConfig.regex)
             );
-        case 'Option':
+        case 'option':
             return true;
-        case 'Radio':
+        case 'radio':
             return fieldConfig.fields.every((optionField) =>
                 validators.title(optionField.title),
             );
-        case 'Selection':
+        case 'selection':
             return (
                 fieldConfig.fields.every((optionField) =>
                     validators.title(optionField.title),
@@ -28,7 +28,7 @@ function validateField(fieldConfig: configTypes.SurveyField) {
                 validators.minSelect(fieldConfig) &&
                 validators.maxSelect(fieldConfig)
             );
-        case 'Text':
+        case 'text':
             return (
                 validators.minChars(fieldConfig)(fieldConfig.min_chars) &&
                 validators.maxChars(fieldConfig.max_chars)

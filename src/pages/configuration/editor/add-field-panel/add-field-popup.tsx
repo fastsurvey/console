@@ -8,11 +8,11 @@ interface Props {
 }
 function AddFieldPopup(props: Props) {
     const fields: configTypes.FieldType[] = [
-        'Email',
-        'Option',
-        'Radio',
-        'Selection',
-        'Text',
+        'email',
+        'option',
+        'radio',
+        'selection',
+        'text',
     ];
     return (
         <div className='px-1 w-60'>

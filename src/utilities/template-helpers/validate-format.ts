@@ -37,28 +37,28 @@ const validateFormat = {
             };
 
             switch (config.type) {
-                case 'Email':
+                case 'email':
                     checkKeys(['regex', 'hint']);
                     checkTypes(config.regex, 's');
                     checkTypes(config.hint, 's');
                     return true;
-                case 'Option':
+                case 'option':
                     checkKeys(['mandatory']);
-                    checkTypes(config.mandatory, true);
+                    checkTypes(config.required, true);
                     return true;
-                case 'Radio':
+                case 'radio':
                     checkKeys(['fields']);
                     checkTypes(config.fields, [{}]);
                     assert(validateFormat.fieldOptionsList(config.fields));
                     return true;
-                case 'Selection':
+                case 'selection':
                     checkKeys(['fields', 'min_select', 'max_select']);
                     checkTypes(config.fields, [{}]);
                     checkTypes(config.min_select, 2);
                     checkTypes(config.max_select, 2);
                     assert(validateFormat.fieldOptionsList(config.fields));
                     return true;
-                case 'Text':
+                case 'text':
                     checkKeys(['min_chars', 'max_chars']);
                     checkTypes(config.min_chars, 2);
                     checkTypes(config.max_chars, 2);
@@ -73,7 +73,7 @@ const validateFormat = {
             fieldOptions.forEach((fieldOption) => {
                 checkTypes(fieldOption.title, 's');
                 assert(fieldOption.description === '');
-                assert(fieldOption.mandatory === false);
+                assert(fieldOption.required === false);
             });
             return true;
         } catch {

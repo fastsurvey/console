@@ -4,15 +4,15 @@ import {generalTypes} from 'utilities/types/general-types';
 const colors = {
     fieldTypeToColor: (fieldType: configTypes.FieldType) => {
         switch (fieldType) {
-            case 'Email':
+            case 'email':
                 return 'red';
-            case 'Option':
+            case 'option':
                 return 'orange';
-            case 'Radio':
+            case 'radio':
                 return 'yellow';
-            case 'Selection':
+            case 'selection':
                 return 'green';
-            case 'Text':
+            case 'text':
                 return 'teal';
         }
     },
