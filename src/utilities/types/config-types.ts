@@ -5,9 +5,9 @@ export declare namespace configTypes {
         survey_name: string;
         start: number;
         end: number;
-        mode: 0 | 1 | 2;
+        authentication: 'email' | 'open';
         draft: boolean;
-        submission_limit: number;
+        limit: number;
         title: string;
         description: string;
         fields: SurveyField[];
@@ -26,41 +26,38 @@ export declare namespace configTypes {
         description: string;
     }
 
-    export type FieldType = 'Email' | 'Option' | 'Radio' | 'Selection' | 'Text';
+    export type FieldType = 'email' | 'option' | 'radio' | 'selection' | 'text';
 
     export interface EmailField extends GeneralSurveyField {
-        type: 'Email';
+        type: 'email';
         regex: string;
         hint: string;
     }
 
     export interface OptionField extends GeneralSurveyField {
-        type: 'Option';
-        title: string;
-        description: string;
-        mandatory: boolean;
+        type: 'option';
+        required: boolean;
     }
 
     export interface RadioField extends GeneralSurveyField {
-        type: 'Radio';
-        title: string;
-        description: string;
+        type: 'radio';
         fields: FieldOption[];
     }
 
     export interface SelectionField extends GeneralSurveyField {
-        type: 'Selection';
+        type: 'selection';
         min_select: number;
         max_select: number;
         fields: FieldOption[];
     }
 
     export interface FieldOption extends GeneralSurveyField {
-        mandatory: boolean;
+        type: 'option';
+        required: boolean;
     }
 
     export interface TextField extends GeneralSurveyField {
-        type: 'Text';
+        type: 'text';
         min_chars: number;
         max_chars: number;
     }
