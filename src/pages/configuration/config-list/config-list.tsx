@@ -9,10 +9,9 @@ import ConfigPreviewPanel from './visual-config-panel';
 import VisualConfigList from './visual-config-list';
 import AddSurveyPopup from 'pages/configuration/config-list/add-survey-popup';
 import surveyTemplate from '../../../utilities/template-helpers/add-survey';
-import postConfig from '../../../utilities/ajax-helpers/post-config';
 
 interface Props {
-    oauth2_token: stateTypes.OAuth2Token | undefined;
+    authToken: stateTypes.AuthToken | undefined;
     account: stateTypes.Account | undefined;
 
     configs: undefined | configTypes.SurveyConfig[];
@@ -39,7 +38,7 @@ function ConfigList(props: Props) {
             }
         }
     }
-
+    /*
     function addSurvey(surveyName: string) {
         if (props.configs !== undefined && props.oauth2_token) {
             const newConfig = surveyTemplate(
@@ -57,7 +56,7 @@ function ConfigList(props: Props) {
 
         props.closeModal();
         history.push(`/configuration/${surveyName}`);
-    }
+    }*/
 
     if (!props.configs) {
         return (
@@ -90,7 +89,7 @@ function ConfigList(props: Props) {
                 onClick={() =>
                     props.openModal(
                         'Add a new survey',
-                        <AddSurveyPopup addSurvey={addSurvey} />,
+                        <AddSurveyPopup addSurvey={(name: string) => {}} />,
                     )
                 }
                 className='w-full mt-1'
@@ -104,7 +103,7 @@ function ConfigList(props: Props) {
 const mapStateToProps = (state: stateTypes.ReduxState) => ({
     configs: state.configs,
     configIsDiffering: state.configIsDiffering,
-    oauth2_token: state.oauth2_token,
+    authToken: state.authToken,
     account: state.account,
 });
 const mapDispatchToProps = (dispatch: any) => ({

@@ -1,12 +1,13 @@
 import React, {useRef, useState} from 'react';
 import {connect} from 'react-redux';
-import {stateTypes, dispatchers, authPostRequest} from 'utilities';
+import {stateTypes, dispatchers, authPostRequest, configTypes} from 'utilities';
 import VisualVerifyForm from './visual-verify';
 
 interface Props {
     logIn(
-        oauth2_token: stateTypes.OAuth2Token,
+        authToken: stateTypes.AuthToken,
         account: stateTypes.Account,
+        configs: configTypes.SurveyConfig[],
     ): void;
     openMessage(message: stateTypes.Message): void;
     closeAllMessages(): void;
@@ -23,6 +24,7 @@ function VerifyForm(props: Props) {
     const token = new URLSearchParams(window.location.search).get('token');
     const input1Ref = useRef<HTMLInputElement>(null);
 
+    /*
     function handleVerify() {
         input1Ref.current?.blur();
         if (!disabled() && token !== null) {
@@ -58,7 +60,7 @@ function VerifyForm(props: Props) {
                     }
                 });
         }
-    }
+    }*/
 
     return (
         <VisualVerifyForm
@@ -71,7 +73,7 @@ function VerifyForm(props: Props) {
             disabled={disabled()}
             submitting={submitting}
             closeAllMessages={props.closeAllMessages}
-            handleVerify={handleVerify}
+            handleVerify={() => {}}
         />
     );
 }

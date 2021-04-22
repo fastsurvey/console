@@ -2,12 +2,13 @@ import {stateTypes, configTypes} from 'utilities';
 
 const dispatchers = {
     logIn: (dispatch: any) => (
-        oauth2_token: stateTypes.OAuth2Token,
+        authToken: stateTypes.AuthToken,
         account: stateTypes.Account,
+        configs: configTypes.SurveyConfig[],
     ): void =>
         dispatch({
             type: 'LOG_IN',
-            oauth2_token,
+            authToken,
             account,
         }),
     logOut: (dispatch: any) => (): void =>

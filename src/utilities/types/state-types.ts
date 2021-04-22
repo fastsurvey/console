@@ -4,7 +4,7 @@ export declare namespace stateTypes {
     export interface ReduxState {
         loggingIn: boolean;
         loggedIn: boolean;
-        oauth2_token: undefined | stateTypes.OAuth2Token;
+        authToken: undefined | stateTypes.AuthToken;
         account: undefined | stateTypes.Account;
         messages: stateTypes.Message[];
         navbarState: NavbarState;
@@ -13,10 +13,9 @@ export declare namespace stateTypes {
         configIsDiffering: boolean;
     }
 
-    export interface OAuth2Token {
+    export interface AuthToken {
         access_token: string;
-        refresh_token: string;
-        bearer: string;
+        token_type: string;
     }
 
     export interface Account {
@@ -43,8 +42,9 @@ export declare namespace stateTypes {
     export type ReduxAction =
         | {
               type: 'LOG_IN';
-              oauth2_token: stateTypes.OAuth2Token;
+              authToken: stateTypes.AuthToken;
               account: stateTypes.Account;
+              configs: configTypes.SurveyConfig[];
           }
         | {
               type: 'OPEN_MESSAGE';
@@ -66,10 +66,6 @@ export declare namespace stateTypes {
                   | 'OPEN_NAVBAR'
                   | 'CLOSE_MODAL'
                   | 'CLOSE_NAVBAR';
-          }
-        | {
-              type: 'ADD_CONFIGS';
-              configs: configTypes.SurveyConfig[];
           }
         | {
               type: 'MODIFY_CONFIG' | 'ADD_CONFIG';

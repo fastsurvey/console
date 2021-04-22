@@ -1,74 +1,60 @@
 import React, {useRef, useState} from 'react';
 import {connect} from 'react-redux';
-import {stateTypes, dispatchers, authPostRequest} from 'utilities';
+import {stateTypes, dispatchers, configTypes, loginWithForm} from 'utilities';
 import VisualLogin from './visual-login';
-import {authGetRequest} from 'utilities/ajax-helpers/axios-clients';
 
 interface Props {
     logIn(
-        oauth2_token: stateTypes.OAuth2Token,
+        authToken: stateTypes.AuthToken,
         account: stateTypes.Account,
+        configs: configTypes.SurveyConfig[],
     ): void;
     openMessage(message: stateTypes.Message): void;
     closeAllMessages(): void;
 }
 
 function LoginForm(props: Props) {
-    const [email, setEmail] = useState<string>('');
+    const [identifier, setIdentifier] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [submitting, setSubmitting] = useState<boolean>(false);
 
     function disabled() {
-        return email.length < 3 || password.length < 8;
+        return identifier.length < 3 || password.length < 8;
     }
 
     const input2Ref = useRef<HTMLInputElement>(null);
+
+    function abortLogin(code: 401 | 500) {
+        setSubmitting(false);
+
+        switch (code) {
+            case 401:
+                props.openMessage({
+                    text: 'Invalid credentials',
+                    type: 'error',
+                });
+                break;
+            case 500:
+                props.openMessage({
+                    text: 'Server error. Please try again later',
+                    type: 'error',
+                });
+                break;
+        }
+    }
 
     function handleLogin() {
         input2Ref.current?.blur();
         if (!disabled()) {
             setSubmitting(true);
-            authPostRequest('/authentication', {identifier: email, password})
-                .then((authResponse: any) => {
-                    // TODO: refresh token
-
-                    console.log('LOGGED IN');
-
-                    const jwt: stateTypes.OAuth2Token = {
-                        access_token: authResponse.data.access_token,
-                        refresh_token: authResponse.data.access_token,
-                        bearer: authResponse.data.token_type,
-                    };
-
-                    authGetRequest(`/users/${email}`, jwt)
-                        .then((accountResponse: any) => {
-                            console.log('FETCHED');
-                            setSubmitting(false);
-                            props.logIn(jwt, accountResponse.data);
-                        })
-                        .catch((error) => {
-                            setSubmitting(false);
-                            props.openMessage({
-                                text: 'Server error. Please try again later',
-                                type: 'error',
-                            });
-                        });
-                })
-                .catch((error) => {
-                    setSubmitting(false);
-                    if (error?.response?.status === 401) {
-                        props.openMessage({
-                            text: 'Invalid credentials',
-                            type: 'error',
-                        });
-                    } else {
-                        // Invalid password formats will be catched by frontend
-                        props.openMessage({
-                            text: 'Server error. Please try again later',
-                            type: 'error',
-                        });
-                    }
-                });
+            loginWithForm(
+                {
+                    identifier,
+                    password,
+                },
+                props.logIn,
+                abortLogin,
+            );
         }
     }
 
@@ -76,8 +62,8 @@ function LoginForm(props: Props) {
         <VisualLogin
             // @ts-ignore
             ref={{input2Ref}}
-            email={email}
-            setEmail={setEmail}
+            identifier={identifier}
+            setIdentifier={setIdentifier}
             password={password}
             setPassword={setPassword}
             closeAllMessages={props.closeAllMessages}

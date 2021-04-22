@@ -1,12 +1,13 @@
 import React, {useRef, useState} from 'react';
 import {connect} from 'react-redux';
-import {stateTypes, dispatchers, authPostRequest} from 'utilities';
+import {stateTypes, dispatchers, authPostRequest, configTypes} from 'utilities';
 import VisualSetPassword from './visual-set-password';
 
 interface Props {
     logIn(
-        oauth2_token: stateTypes.OAuth2Token,
+        authToken: stateTypes.AuthToken,
         account: stateTypes.Account,
+        configs: configTypes.SurveyConfig[],
     ): void;
     openMessage(message: stateTypes.Message): void;
     closeAllMessages(): void;
@@ -38,6 +39,7 @@ function SetPassword(props: Props) {
                     props.logIn(
                         response.data.oauth2_token,
                         response.data.account,
+                        [],
                     );
                     setSuccess(true);
                 })

@@ -13,7 +13,7 @@ export function authPostRequest(url: string, data: {[key: string]: any}) {
 
 export function authGetRequest(
     url: string,
-    oauth2_token: stateTypes.OAuth2Token,
+    oauth2_token: stateTypes.AuthToken,
 ) {
     return axios.get(environment.AUTH_BACKEND_URL + url, {
         headers: {
@@ -24,7 +24,7 @@ export function authGetRequest(
 
 export function surveyGetRequest(
     url: string,
-    oauth2_token: stateTypes.OAuth2Token,
+    oauth2_token: stateTypes.AuthToken,
 ) {
     return axios.get(environment.SURVEY_BACKEND_URL + url, {
         headers: {
@@ -35,7 +35,7 @@ export function surveyGetRequest(
 
 export function surveyPostRequest(
     url: string,
-    oauth2_token: stateTypes.OAuth2Token,
+    oauth2_token: stateTypes.AuthToken,
     body: any,
 ) {
     return axios.post(environment.SURVEY_BACKEND_URL + url, body, {

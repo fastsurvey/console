@@ -2,8 +2,8 @@ import React from 'react';
 import {TextInput, TextLink, ButtonLink} from 'components';
 
 interface Props {
-    email: string;
-    setEmail(newEmail: string): void;
+    identifier: string;
+    setIdentifier(newIdentifier: string): void;
     password: string;
     setPassword(newPassword: string): void;
 
@@ -22,10 +22,10 @@ const VisualLogin = React.forwardRef((props: Props, refs: any) => {
             <form>
                 <TextInput
                     placeholder='email'
-                    value={props.email}
+                    value={props.identifier}
                     onChange={(newValue) => {
                         props.closeAllMessages();
-                        props.setEmail(newValue);
+                        props.setIdentifier(newValue);
                     }}
                     className='mb-3'
                     autoComplete='email username'

@@ -4,10 +4,6 @@ import {stateTypes, dispatchers, authPostRequest} from 'utilities';
 import VisualRegister from './visual-register';
 
 interface Props {
-    logIn(
-        oauth2_token: stateTypes.OAuth2Token,
-        account: stateTypes.Account,
-    ): void;
     openMessage(message: stateTypes.Message): void;
     closeAllMessages(): void;
 }

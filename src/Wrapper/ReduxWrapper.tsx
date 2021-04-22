@@ -4,22 +4,16 @@ import {Provider} from 'react-redux';
 import Cookies from 'js-cookie';
 import addLocalIds from '../utilities/form-helpers/add-local-ids';
 
-import {
-    stateTypes,
-    configTypes,
-    dispatchers,
-    fetchConfigs,
-    loginFromCookie,
-} from 'utilities';
+import {stateTypes, configTypes, dispatchers, loginWithCookie} from 'utilities';
 
 function storeReducer(
     state = {
         loggingIn: true,
         loggedIn: false,
-        oauth2_token: undefined,
+        authToken: undefined,
         account: undefined,
         messages: [],
-        configs: undefined,
+        configs: [],
         configIsDiffering: false,
         navbarState: {
             open: false,
@@ -35,7 +29,7 @@ function storeReducer(
     const newState: stateTypes.ReduxState = {
         loggingIn: state.loggingIn,
         loggedIn: state.loggedIn,
-        oauth2_token: state.oauth2_token,
+        authToken: state.authToken,
         account: state.account,
         messages: state.messages,
         navbarState: state.navbarState,
@@ -48,18 +42,19 @@ function storeReducer(
         case 'LOG_IN':
             newState.loggingIn = false;
             newState.loggedIn = true;
-            newState.oauth2_token = action.oauth2_token;
+            newState.authToken = action.authToken;
             newState.account = action.account;
-            Cookies.set('oauth2_token', JSON.stringify(action.oauth2_token), {
+            newState.configs = action.configs;
+            Cookies.set('authToken', JSON.stringify(action.authToken), {
                 expires: 7,
             });
             break;
         case 'LOG_OUT':
             newState.loggingIn = false;
             newState.loggedIn = false;
-            newState.oauth2_token = undefined;
+            newState.authToken = undefined;
             newState.account = undefined;
-            Cookies.remove('oauth2_token');
+            Cookies.remove('authToken');
             break;
         case 'OPEN_MESSAGE':
             if (
@@ -97,9 +92,6 @@ function storeReducer(
             break;
         case 'CLOSE_NAVBAR':
             newState.navbarState = {open: false};
-            break;
-        case 'ADD_CONFIGS':
-            newState.configs = action.configs;
             break;
         case 'ADD_CONFIG':
             if (newState.configs !== undefined) {
@@ -157,26 +149,12 @@ interface Props {
 export function ReduxWrapper(props: Props) {
     const [cookieLogin, setCookieLogin] = useState(false);
 
-    async function logIn(
-        oauth2_token: stateTypes.OAuth2Token,
-        account: stateTypes.Account,
-    ) {
-        dispatchers.logIn(store.dispatch)(oauth2_token, account);
-        await fetchConfigs(
-            oauth2_token,
-            (configs: configTypes.SurveyConfig[]) => {
-                dispatchers.addConfigs(store.dispatch)(configs);
-            },
-        );
-    }
-
     useEffect(() => {
         async function triggerLogin() {
-            try {
-                await loginFromCookie(logIn);
-            } catch {
-                dispatchers.logOut(store.dispatch)();
-            }
+            await loginWithCookie(
+                dispatchers.logIn(store.dispatch),
+                dispatchers.logOut(store.dispatch),
+            );
         }
 
         if (!cookieLogin) {

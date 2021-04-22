@@ -1,4 +1,5 @@
 
+/src/**/README.md
 node_modules
 .vscode
 tailwind.out.css
