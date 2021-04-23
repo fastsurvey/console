@@ -16,9 +16,8 @@ export {default as hints} from './form-helpers/hints';
 export {default as copyToClipboard} from './form-helpers/copy-to-clipboard';
 export {default as addLocalIds} from './form-helpers/add-local-ids';
 
-export {default as loginWithCookie} from './ajax-helpers/login-with-cookie';
-export {default as loginWithForm} from './ajax-helpers/login-with-form';
-export {authPostRequest} from './ajax-helpers/axios-clients';
+export {default as backend} from './backend';
+export {authPostRequest} from './backend/axios-clients';
 
 export {default as newFieldId} from './template-helpers/new-field-id';
 export {default as surveyTemplate} from './template-helpers/add-survey';

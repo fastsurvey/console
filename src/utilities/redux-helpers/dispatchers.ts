@@ -10,6 +10,7 @@ const dispatchers = {
             type: 'LOG_IN',
             authToken,
             account,
+            configs,
         }),
     logOut: (dispatch: any) => (): void =>
         dispatch({

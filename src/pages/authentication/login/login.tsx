@@ -1,6 +1,6 @@
 import React, {useRef, useState} from 'react';
 import {connect} from 'react-redux';
-import {stateTypes, dispatchers, configTypes, loginWithForm} from 'utilities';
+import {stateTypes, dispatchers, configTypes, backend} from 'utilities';
 import VisualLogin from './visual-login';
 
 interface Props {
@@ -47,7 +47,7 @@ function LoginForm(props: Props) {
         input2Ref.current?.blur();
         if (!disabled()) {
             setSubmitting(true);
-            loginWithForm(
+            backend.loginWithForm(
                 {
                     identifier,
                     password,

@@ -4,7 +4,7 @@ import {Provider} from 'react-redux';
 import Cookies from 'js-cookie';
 import addLocalIds from '../utilities/form-helpers/add-local-ids';
 
-import {stateTypes, configTypes, dispatchers, loginWithCookie} from 'utilities';
+import {stateTypes, configTypes, dispatchers, backend} from 'utilities';
 
 function storeReducer(
     state = {
@@ -151,7 +151,7 @@ export function ReduxWrapper(props: Props) {
 
     useEffect(() => {
         async function triggerLogin() {
-            await loginWithCookie(
+            await backend.loginWithCookie(
                 dispatchers.logIn(store.dispatch),
                 dispatchers.logOut(store.dispatch),
             );
