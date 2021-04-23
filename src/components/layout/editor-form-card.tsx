@@ -1,7 +1,7 @@
 import React, {useRef, useEffect, useState} from 'react';
 import icons from 'assets/icons/icons';
 import {colors} from 'utilities';
-import {generalTypes} from 'utilities/types/general-types';
+import {types} from 'types';
 
 interface Props {
     label: string;
@@ -9,7 +9,7 @@ interface Props {
     buttons?: React.ReactNode;
     icon: React.ReactNode;
     className?: string;
-    color?: generalTypes.Color;
+    color?: types.Color;
 
     collapse?: boolean;
     setCollapse?(v: boolean): void;

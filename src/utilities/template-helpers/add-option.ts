@@ -1,13 +1,13 @@
-import {configTypes} from 'utilities';
+import {types} from 'types';
 import {max} from 'lodash';
 
 const optionTemplate = (
     newTitle: string,
-    fieldConfig: configTypes.RadioField | configTypes.SelectionField,
-): configTypes.RadioField | configTypes.SelectionField => {
+    fieldConfig: types.RadioField | types.SelectionField,
+): types.RadioField | types.SelectionField => {
     let local_id: number | undefined = max(
         fieldConfig.fields.map(
-            (optionConfig: configTypes.FieldOption) => optionConfig.local_id,
+            (optionConfig: types.FieldOption) => optionConfig.local_id,
         ),
     );
     if (local_id === undefined) {

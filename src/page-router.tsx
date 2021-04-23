@@ -1,8 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Switch, Route, BrowserRouter, Redirect} from 'react-router-dom';
-
-import {stateTypes} from 'utilities';
+import {types} from 'types';
 
 import {FormPage, NotFoundPage, DashboardPage} from 'pages';
 import {
@@ -22,7 +21,7 @@ import {SecureImage, LetterImage} from 'assets';
 interface RouterProps {
     loggingIn: boolean;
     loggedIn: boolean;
-    account: undefined | stateTypes.Account;
+    account: undefined | types.Account;
 }
 function PageRouter(props: RouterProps) {
     return (
@@ -114,7 +113,7 @@ function PageRouter(props: RouterProps) {
     );
 }
 
-const mapStateToProps = (state: stateTypes.ReduxState) => ({
+const mapStateToProps = (state: types.ReduxState) => ({
     loggingIn: state.loggingIn,
     loggedIn: state.loggedIn,
     account: state.account,

@@ -1,14 +1,14 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {stateTypes} from 'utilities';
+import {types} from 'types';
 import {Navbar} from 'components';
 import 'styles/dashboard-page.css';
 
 function DashBoardPage(props: {
     children: React.ReactNode;
-    navbarState: stateTypes.NavbarState;
+    navbarState: types.NavbarState;
     loggedIn: boolean;
-    authToken: stateTypes.AuthToken | undefined;
+    authToken: types.AuthToken | undefined;
 }) {
     return (
         <React.Fragment>
@@ -27,7 +27,7 @@ function DashBoardPage(props: {
     );
 }
 
-const mapStateToProps = (state: stateTypes.ReduxState) => ({
+const mapStateToProps = (state: types.ReduxState) => ({
     navbarState: state.navbarState,
     loggedIn: state.loggedIn,
     authToken: state.authToken,

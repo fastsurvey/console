@@ -1,10 +1,10 @@
-import {configTypes} from 'utilities';
+import {types} from 'types';
 
 const surveyTemplate = (
     adminName: string,
     surveyName: string,
-    configs: configTypes.SurveyConfig[],
-): configTypes.SurveyConfig => {
+    configs: types.SurveyConfig[],
+): types.SurveyConfig => {
     const now = Math.floor(Date.now() / 1000);
     return {
         local_id: configs.length,

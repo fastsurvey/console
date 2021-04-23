@@ -1,16 +1,11 @@
 import React, {useState} from 'react';
-import {
-    configTypes,
-    reduxUtils,
-    hints,
-    stateTypes,
-    validators,
-} from 'utilities';
+import {reduxUtils, hints, validators} from 'utilities';
 import {connect} from 'react-redux';
 import {TextInput, ModalButton} from 'components';
+import {types} from 'types';
 
 interface Props {
-    configs: configTypes.SurveyConfig[] | undefined;
+    configs: types.SurveyConfig[] | undefined;
     originalSurveyName: string;
     closeModal(): void;
     duplicateSurvey(surveyName: string): void;
@@ -71,7 +66,7 @@ function DuplicateSurveyPopup(props: Props) {
     }
 }
 
-const mapStateToProps = (state: stateTypes.ReduxState) => ({
+const mapStateToProps = (state: types.ReduxState) => ({
     configs: state.configs,
 });
 const mapDispatchToProps = (dispatch: any) => ({

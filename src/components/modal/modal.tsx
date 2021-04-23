@@ -1,9 +1,10 @@
 import React, {useEffect} from 'react';
-import {reduxUtils, stateTypes} from 'utilities';
+import {reduxUtils} from 'utilities';
 import {connect} from 'react-redux';
+import {types} from 'types';
 
 interface Props {
-    modalState: stateTypes.ModalState;
+    modalState: types.ModalState;
     closeModal(): void;
 }
 function Modal(props: Props) {
@@ -46,7 +47,7 @@ function Modal(props: Props) {
     );
 }
 
-const mapStateToProps = (state: stateTypes.ReduxState) => ({
+const mapStateToProps = (state: types.ReduxState) => ({
     modalState: state.modalState,
 });
 const mapDispatchToProps = (dispatch: any) => ({

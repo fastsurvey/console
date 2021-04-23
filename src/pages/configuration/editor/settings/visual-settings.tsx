@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {configTypes, formatters, formOptions, hints} from 'utilities';
+import {formatters, formOptions, hints} from 'utilities';
 import {
     DropDown,
     TextArea,
@@ -9,14 +9,12 @@ import {
     EditorFormRow,
 } from 'components';
 import {icons} from 'assets';
+import {types} from 'types';
 
 interface Props {
-    config: configTypes.SurveyConfig;
+    config: types.SurveyConfig;
     surveyNameIsValid(survey_name: string): boolean;
-    updateConfig(
-        config: configTypes.SurveyConfig,
-        skipValidation?: boolean,
-    ): void;
+    updateConfig(config: types.SurveyConfig, skipValidation?: boolean): void;
     updateValidator(newState: boolean): void;
     commonProps: any;
     disabled: boolean;

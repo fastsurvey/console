@@ -1,10 +1,11 @@
 import React from 'react';
-import {configTypes, formatters, hints} from 'utilities';
+import {formatters, hints} from 'utilities';
 import {TextInput, EditorFormRow} from 'components';
+import {types} from 'types';
 
 interface Props {
-    fieldConfig: configTypes.TextField;
-    updateFieldConfig(fieldConfig: configTypes.TextField): void;
+    fieldConfig: types.TextField;
+    updateFieldConfig(fieldConfig: types.TextField): void;
     disabled: boolean;
 }
 function VisualTextSettings(props: Props) {

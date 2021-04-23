@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {configTypes, formOptions} from 'utilities';
+import {formOptions} from 'utilities';
 import VisualEmailSettings from './visual-email-settings';
+import {types} from 'types';
 
 interface Props {
-    fieldConfig: configTypes.EmailField;
-    setFieldConfig(fieldConfig: configTypes.EmailField): void;
+    fieldConfig: types.EmailField;
+    setFieldConfig(fieldConfig: types.EmailField): void;
     disabled: boolean;
 }
 function EmailSettings(props: Props) {
@@ -24,7 +25,7 @@ function EmailSettings(props: Props) {
     );
 
     useEffect(() => {
-        const newSetup: configTypes.EmailRegexSetup[] = formOptions.EMAIL_REGEX.filter(
+        const newSetup: types.EmailRegexSetup[] = formOptions.EMAIL_REGEX.filter(
             (setup) =>
                 setup.regex === props.fieldConfig.regex &&
                 setup.hint === props.fieldConfig.hint,
@@ -40,7 +41,7 @@ function EmailSettings(props: Props) {
         }
     }, [props.fieldConfig.regex, props.fieldConfig.hint]);
 
-    function updateFieldConfig(newFieldConfig: configTypes.EmailField) {
+    function updateFieldConfig(newFieldConfig: types.EmailField) {
         props.setFieldConfig(newFieldConfig);
     }
 

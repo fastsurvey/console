@@ -1,4 +1,4 @@
-import {stateTypes, configTypes} from 'utilities';
+import {types} from 'types';
 import {httpGet, httpPost} from './http-clients';
 
 async function loginWithForm(
@@ -7,9 +7,9 @@ async function loginWithForm(
         password: string;
     },
     login: (
-        authToken: stateTypes.AuthToken,
-        account: stateTypes.Account,
-        configs: configTypes.SurveyConfig[],
+        authToken: types.AuthToken,
+        account: types.Account,
+        configs: types.SurveyConfig[],
     ) => void,
     abort: (statusCode: 401 | 500) => void,
 ) {
@@ -18,7 +18,7 @@ async function loginWithForm(
         formData.append('identifier', data.identifier);
         formData.append('password', data.password);
 
-        const authToken: stateTypes.AuthToken = (
+        const authToken: types.AuthToken = (
             await httpPost('/authentication', formData).catch(
                 (response: {statusCode: number}) => {
                     throw response.statusCode;
@@ -33,10 +33,10 @@ async function loginWithForm(
             username = data.identifier;
         }
 
-        const account: stateTypes.Account = (
+        const account: types.Account = (
             await httpGet(`/users/${username}`, authToken)
         ).data;
-        const configs: configTypes.SurveyConfig[] = (
+        const configs: types.SurveyConfig[] = (
             await httpGet(`/users/${username}/surveys`, authToken)
         ).data;
 

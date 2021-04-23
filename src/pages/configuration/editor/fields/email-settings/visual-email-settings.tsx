@@ -1,12 +1,13 @@
 import React from 'react';
-import {configTypes, formOptions, hints} from 'utilities';
+import {formOptions, hints} from 'utilities';
 import {DropDown, TextInput, EditorFormRow} from 'components';
+import {types} from 'types';
 
 interface Props {
     setupValue: number;
-    customSetup: configTypes.EmailRegexSetup;
-    fieldConfig: configTypes.EmailField;
-    updateFieldConfig(fieldConfig: configTypes.EmailField): void;
+    customSetup: types.EmailRegexSetup;
+    fieldConfig: types.EmailField;
+    updateFieldConfig(fieldConfig: types.EmailField): void;
     disabled: boolean;
 }
 function VisualEmailSettings(props: Props) {

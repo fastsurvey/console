@@ -1,10 +1,3 @@
-// @ts-ignore
-export {configTypes} from './types/config-types';
-// @ts-ignore
-export {stateTypes} from './types/state-types';
-// @ts-ignore
-export {generalTypes} from './types/general-types';
-
 export {default as environment} from './constants/environment';
 export {default as formOptions} from './constants/form-options';
 

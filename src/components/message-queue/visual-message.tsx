@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {stateTypes} from 'utilities';
 import {icons} from 'assets';
+import {types} from 'types';
 
 interface Props {
-    message: stateTypes.Message;
+    message: types.Message;
     close(): void;
 }
 function VisualMessage(props: Props) {

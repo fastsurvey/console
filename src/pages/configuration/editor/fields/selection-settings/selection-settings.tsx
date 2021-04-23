@@ -1,14 +1,14 @@
 import React from 'react';
-import {configTypes} from 'utilities';
+import {types} from 'types';
 import VisualSelectionSettings from './visual-selection-settings';
 
 interface Props {
-    fieldConfig: configTypes.SelectionField;
-    setFieldConfig(fieldConfig: configTypes.SelectionField): void;
+    fieldConfig: types.SelectionField;
+    setFieldConfig(fieldConfig: types.SelectionField): void;
     disabled: boolean;
 }
 function SelectionSettings(props: Props) {
-    function updateFieldConfig(newFieldConfig: configTypes.SelectionField) {
+    function updateFieldConfig(newFieldConfig: types.SelectionField) {
         props.setFieldConfig(newFieldConfig);
     }
 

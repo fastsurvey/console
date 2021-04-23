@@ -1,12 +1,13 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {animateScroll} from 'react-scroll';
-import {configTypes, optionTemplate} from 'utilities';
+import {optionTemplate} from 'utilities';
 import VisualFieldOptionsList from './visual-field-options-list';
+import {types} from 'types';
 
 interface Props {
-    fieldConfig: configTypes.RadioField | configTypes.SelectionField;
+    fieldConfig: types.RadioField | types.SelectionField;
     updateFieldConfig(
-        fieldConfig: configTypes.RadioField | configTypes.SelectionField,
+        fieldConfig: types.RadioField | types.SelectionField,
     ): void;
     disabled: boolean;
 }

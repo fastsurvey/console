@@ -1,11 +1,12 @@
 import React from 'react';
-import {configTypes, formatters, hints} from 'utilities';
+import {formatters, hints} from 'utilities';
 import {TextInput, EditorFormRow} from 'components';
 import FieldOptionsList from '../field-options-list/field-options-list';
+import {types} from 'types';
 
 interface Props {
-    fieldConfig: configTypes.SelectionField;
-    updateFieldConfig(fieldConfig: configTypes.SelectionField): void;
+    fieldConfig: types.SelectionField;
+    updateFieldConfig(fieldConfig: types.SelectionField): void;
     disabled: boolean;
 }
 function VisualSelectionSettings(props: Props) {

@@ -1,14 +1,15 @@
 import React from 'react';
 import {useHistory, useLocation} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {stateTypes, reduxUtils} from 'utilities';
+import {reduxUtils} from 'utilities';
 import VisualNavbarContent from './visual-navbar-content';
+import {types} from 'types';
 
 interface Props {
     logOut(): void;
     closeNavbar(): void;
     configIsDiffering: boolean;
-    openMessage(message: stateTypes.Message): void;
+    openMessage(message: types.Message): void;
 }
 function NavbarContent(props: Props) {
     let location = useLocation();
@@ -38,7 +39,7 @@ function NavbarContent(props: Props) {
     );
 }
 
-const mapStateToProps = (state: stateTypes.ReduxState) => ({
+const mapStateToProps = (state: types.ReduxState) => ({
     configIsDiffering: state.configIsDiffering,
 });
 const mapDispatchToProps = (dispatch: any) => ({

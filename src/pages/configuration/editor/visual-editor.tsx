@@ -1,28 +1,25 @@
 import React from 'react';
-import {configTypes} from 'utilities';
+import {types} from 'types';
 import ControlStrip from './control-strip/control-strip';
 import Settings from './settings/settings';
 import FieldConfigForm from './fields/field/field';
 import AddFieldPanel from './add-field-panel/add-field-panel';
 
 interface Props {
-    centralConfig: configTypes.SurveyConfig;
-    modifyConfig(config: configTypes.SurveyConfig): void;
+    centralConfig: types.SurveyConfig;
+    modifyConfig(config: types.SurveyConfig): void;
     saveState(): void;
     publishState(): void;
     revertState(): void;
 
-    localConfig: configTypes.SurveyConfig;
-    setLocalConfigState(config: configTypes.SurveyConfig): void;
+    localConfig: types.SurveyConfig;
+    setLocalConfigState(config: types.SurveyConfig): void;
 
     updateValidator(newIndex: number, newState: boolean): void;
-    setLocalConfig(config: configTypes.SurveyConfig): void;
-    setFieldConfig(
-        newFieldConfig: configTypes.SurveyField,
-        newIndex: number,
-    ): void;
+    setLocalConfig(config: types.SurveyConfig): void;
+    setFieldConfig(newFieldConfig: types.SurveyField, newIndex: number): void;
 
-    insertField(index: number, fieldType: configTypes.FieldType): void;
+    insertField(index: number, fieldType: types.FieldType): void;
     pasteField(index: number): void;
     removeField(index: number): void;
 }
@@ -53,7 +50,7 @@ function VisualEditor(props: Props) {
                 {props.localConfig.fields.map((fieldConfig, index) => (
                     <div className='w-full' key={fieldConfig.local_id}>
                         <AddFieldPanel
-                            insertField={(fieldType: configTypes.FieldType) =>
+                            insertField={(fieldType: types.FieldType) =>
                                 props.insertField(index, fieldType)
                             }
                             pasteField={() => props.pasteField(index)}
@@ -61,7 +58,7 @@ function VisualEditor(props: Props) {
                         <FieldConfigForm
                             fieldConfig={fieldConfig}
                             setFieldConfig={(
-                                newFieldConfig: configTypes.SurveyField,
+                                newFieldConfig: types.SurveyField,
                             ) => props.setFieldConfig(newFieldConfig, index)}
                             disabled={!props.localConfig.draft}
                             updateValidator={(newState: boolean) =>
@@ -72,7 +69,7 @@ function VisualEditor(props: Props) {
                     </div>
                 ))}
                 <AddFieldPanel
-                    insertField={(fieldType: configTypes.FieldType) =>
+                    insertField={(fieldType: types.FieldType) =>
                         props.insertField(
                             props.localConfig.fields.length,
                             fieldType,

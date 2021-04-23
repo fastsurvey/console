@@ -1,17 +1,18 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {stateTypes, configTypes, reduxUtils} from 'utilities';
+import {reduxUtils} from 'utilities';
+import {types} from 'types';
 import VisualDraftStrip from './visual-draft-strip';
 import VisualPublishedStrip from './visual-published-strip';
 
 interface Props {
-    config: configTypes.SurveyConfig;
-    setConfig(config: configTypes.SurveyConfig): void;
+    config: types.SurveyConfig;
+    setConfig(config: types.SurveyConfig): void;
     configIsDiffering: boolean;
     saveState(): void;
     publishState(): void;
     revertState(): void;
-    openMessage(message: stateTypes.Message): void;
+    openMessage(message: types.Message): void;
 }
 function ControlStrip(props: Props) {
     function now() {
@@ -74,7 +75,7 @@ function ControlStrip(props: Props) {
     }
 }
 
-const mapStateToProps = (state: stateTypes.ReduxState) => ({
+const mapStateToProps = (state: types.ReduxState) => ({
     configIsDiffering: state.configIsDiffering,
 });
 const mapDispatchToProps = (dispatch: any) => ({

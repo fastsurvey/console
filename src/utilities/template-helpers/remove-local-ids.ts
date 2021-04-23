@@ -1,11 +1,11 @@
-import {configTypes} from 'utilities';
+import {types} from 'types';
 
 const removeLocalIds = {
-    field: (config: configTypes.SurveyField) => {
+    field: (config: types.SurveyField) => {
         // @ts-ignore
         delete config.local_id;
         if (config.type === 'radio' || config.type === 'selection') {
-            config.fields.forEach((field: configTypes.FieldOption) => {
+            config.fields.forEach((field: types.FieldOption) => {
                 // @ts-ignore
                 delete field.local_id;
             });

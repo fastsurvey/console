@@ -1,4 +1,5 @@
-import {validators, configTypes} from 'utilities';
+import {validators} from 'utilities';
+import {types} from 'types';
 
 const hints = {
     title: (title: string) => ({
@@ -6,7 +7,7 @@ const hints = {
         fulfilled: validators.title(title),
     }),
     surveyName: (
-        config: configTypes.SurveyConfig,
+        config: types.SurveyConfig,
         surveyNameIsValid: (survey_name: string) => boolean,
     ) => ({
         text:
@@ -23,23 +24,23 @@ const hints = {
             `characters (${120 - newSurveyName.length} left)`,
         fulfilled: surveyNameIsValid(newSurveyName),
     }),
-    submissionLimit: (config: configTypes.SurveyConfig) => ({
+    submissionLimit: (config: types.SurveyConfig) => ({
         text: '1 - 10.000',
         fulfilled: validators.submissionLimit(config.limit),
     }),
-    regex: (fieldConfig: configTypes.EmailField) => ({
+    regex: (fieldConfig: types.EmailField) => ({
         text: `<= 250 Characters (${250 - fieldConfig.hint.length} left)`,
         fulfilled: validators.regex(fieldConfig.regex),
     }),
-    hint: (fieldConfig: configTypes.EmailField) => ({
+    hint: (fieldConfig: types.EmailField) => ({
         text: `<= 120 Characters (${120 - fieldConfig.hint.length} left)`,
         fulfilled: validators.hint(fieldConfig.hint),
     }),
-    minChars: (fieldConfig: configTypes.TextField) => ({
+    minChars: (fieldConfig: types.TextField) => ({
         text: '<= max char.',
         fulfilled: validators.minChars(fieldConfig)(fieldConfig.min_chars),
     }),
-    maxChars: (fieldConfig: configTypes.TextField) => ({
+    maxChars: (fieldConfig: types.TextField) => ({
         text: '<= 2000',
         fulfilled: validators.maxChars(fieldConfig.max_chars),
     }),
@@ -48,11 +49,11 @@ const hints = {
         fulfilled: newOption !== '',
         hideDot: true,
     }),
-    minSelect: (fieldConfig: configTypes.SelectionField) => ({
+    minSelect: (fieldConfig: types.SelectionField) => ({
         text: '<= max select.',
         fulfilled: validators.minSelect(fieldConfig),
     }),
-    maxSelect: (fieldConfig: configTypes.SelectionField) => ({
+    maxSelect: (fieldConfig: types.SelectionField) => ({
         text: `<= ${fieldConfig.fields.length}`,
         fulfilled: validators.maxSelect(fieldConfig),
     }),

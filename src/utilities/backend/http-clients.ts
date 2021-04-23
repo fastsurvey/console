@@ -1,12 +1,13 @@
 import axios from 'axios';
-import {environment, stateTypes} from 'utilities';
+import {environment} from 'utilities';
+import {types} from 'types';
 
 const API_URL = environment.AUTH_BACKEND_URL;
 
 export function httpPost(
     url: string,
     data: {[key: string]: any},
-    auth_token?: stateTypes.AuthToken,
+    auth_token?: types.AuthToken,
 ) {
     if (auth_token) {
         return axios.post(API_URL + url, {
@@ -20,7 +21,7 @@ export function httpPost(
     }
 }
 
-export function httpGet(url: string, auth_token?: stateTypes.AuthToken) {
+export function httpGet(url: string, auth_token?: types.AuthToken) {
     if (auth_token) {
         return axios.get(API_URL + url, {
             headers: {

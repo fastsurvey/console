@@ -1,10 +1,6 @@
 import React, {useEffect} from 'react';
-import {
-    configTypes,
-    copyToClipboard,
-    removeLocalIds,
-    validateField,
-} from 'utilities';
+import {copyToClipboard, removeLocalIds, validateField} from 'utilities';
+import {types} from 'types';
 
 import VisualField from './visual-field';
 import TextSettings from '../text-settings/text-settings';
@@ -14,8 +10,8 @@ import SelectionSettings from '../selection-settings/selection-settings';
 import EmailSettings from '../email-settings/email-settings';
 
 interface Props {
-    fieldConfig: configTypes.SurveyField;
-    setFieldConfig(fieldConfig: configTypes.SurveyField): void;
+    fieldConfig: types.SurveyField;
+    setFieldConfig(fieldConfig: types.SurveyField): void;
     disabled: boolean;
     updateValidator(newState: boolean): void;
     removeField(): void;
@@ -26,7 +22,7 @@ function Field(props: Props) {
         props.fieldConfig.local_id,
     ]);
 
-    function updateFieldConfig(newFieldConfig: configTypes.SurveyField) {
+    function updateFieldConfig(newFieldConfig: types.SurveyField) {
         props.updateValidator(validateField(newFieldConfig));
         props.setFieldConfig(newFieldConfig);
     }

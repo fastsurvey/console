@@ -1,13 +1,14 @@
 import React from 'react';
-import {configTypes, hints} from 'utilities';
+import {hints} from 'utilities';
 import {icons} from 'assets';
 import {TextInput, TriggerIcon, EditorFormRow} from 'components';
+import {types} from 'types';
 
 interface Props {
-    fieldConfig: configTypes.RadioField | configTypes.SelectionField;
+    fieldConfig: types.RadioField | types.SelectionField;
     disabled: boolean;
     updateFieldConfig(
-        fieldConfig: configTypes.RadioField | configTypes.SelectionField,
+        fieldConfig: types.RadioField | types.SelectionField,
     ): void;
 
     setOptionsVisible(optionsVisible: boolean[]): void;

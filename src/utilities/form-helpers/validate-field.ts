@@ -1,6 +1,7 @@
-import {configTypes, validators} from 'utilities';
+import {validators} from 'utilities';
+import {types} from 'types';
 
-function validateField(fieldConfig: configTypes.SurveyField) {
+function validateField(fieldConfig: types.SurveyField) {
     if (
         !validators.title(fieldConfig.title) ||
         !validators.description(fieldConfig.description)

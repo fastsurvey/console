@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {useLocation, useHistory} from 'react-router-dom';
-import {stateTypes, configTypes, reduxUtils} from 'utilities';
+import {reduxUtils} from 'utilities';
 import icons from 'assets/icons/icons';
 
 import {ButtonLink} from 'components';
@@ -9,17 +9,18 @@ import ConfigPreviewPanel from './visual-config-panel';
 import VisualConfigList from './visual-config-list';
 import AddSurveyPopup from 'pages/configuration/config-list/add-survey-popup';
 import surveyTemplate from '../../../utilities/template-helpers/add-survey';
+import {types} from 'types';
 
 interface Props {
-    authToken: stateTypes.AuthToken | undefined;
-    account: stateTypes.Account | undefined;
+    authToken: types.AuthToken | undefined;
+    account: types.Account | undefined;
 
-    configs: undefined | configTypes.SurveyConfig[];
+    configs: undefined | types.SurveyConfig[];
     configIsDiffering: boolean;
-    openMessage(message: stateTypes.Message): void;
+    openMessage(message: types.Message): void;
     openModal(title: string, children: React.ReactNode): void;
     closeModal(): void;
-    addConfig(config: configTypes.SurveyConfig): void;
+    addConfig(config: types.SurveyConfig): void;
 }
 function ConfigList(props: Props) {
     let location = useLocation();
@@ -100,7 +101,7 @@ function ConfigList(props: Props) {
     );
 }
 
-const mapStateToProps = (state: stateTypes.ReduxState) => ({
+const mapStateToProps = (state: types.ReduxState) => ({
     configs: state.configs,
     configIsDiffering: state.configIsDiffering,
     authToken: state.authToken,

@@ -1,14 +1,15 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {useParams} from 'react-router-dom';
-import {stateTypes, configTypes, reduxUtils} from 'utilities';
+import {reduxUtils} from 'utilities';
 import Editor from './editor';
+import {types} from 'types';
 
 interface Props {
-    configs: undefined | configTypes.SurveyConfig[];
-    modifyConfig(config: configTypes.SurveyConfig): void;
+    configs: undefined | types.SurveyConfig[];
+    modifyConfig(config: types.SurveyConfig): void;
     markDiffering(differing: boolean): void;
-    openMessage(message: stateTypes.Message): void;
+    openMessage(message: types.Message): void;
     closeAllMessages(): void;
 }
 function EditorRouter(props: Props) {
@@ -49,7 +50,7 @@ function EditorRouter(props: Props) {
     );
 }
 
-const mapStateToProps = (state: stateTypes.ReduxState) => ({
+const mapStateToProps = (state: types.ReduxState) => ({
     configs: state.configs,
 });
 const mapDispatchToProps = (dispatch: any) => ({

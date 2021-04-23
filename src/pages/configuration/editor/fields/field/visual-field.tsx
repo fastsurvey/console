@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {configTypes, hints, colors} from 'utilities';
+import {hints, colors} from 'utilities';
 import {icons} from 'assets';
 import {TextArea, TextInput, EditorFormCard, EditorFormRow} from 'components';
+import {types} from 'types';
 
 interface Props {
-    fieldConfig: configTypes.SurveyField;
+    fieldConfig: types.SurveyField;
     disabled: boolean;
-    setFieldConfig(fieldConfig: configTypes.SurveyField): void;
-    updateFieldConfig(fieldConfig: configTypes.SurveyField): void;
+    setFieldConfig(fieldConfig: types.SurveyField): void;
+    updateFieldConfig(fieldConfig: types.SurveyField): void;
     removeField(): void;
     copyField(): void;
     children: React.ReactNode;

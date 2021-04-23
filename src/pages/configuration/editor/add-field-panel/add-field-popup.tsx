@@ -1,13 +1,13 @@
 import {icons} from 'assets';
 import React from 'react';
 import {colors} from 'utilities';
-import {configTypes} from 'utilities';
+import {types} from 'types';
 
 interface Props {
-    insertField(fieldType: configTypes.FieldType): void;
+    insertField(fieldType: types.FieldType): void;
 }
 function AddFieldPopup(props: Props) {
-    const fields: configTypes.FieldType[] = [
+    const fields: types.FieldType[] = [
         'email',
         'option',
         'radio',
@@ -16,7 +16,7 @@ function AddFieldPopup(props: Props) {
     ];
     return (
         <div className='px-1 w-60'>
-            {fields.map((fieldType: configTypes.FieldType) => (
+            {fields.map((fieldType: types.FieldType) => (
                 <div
                     key={fieldType}
                     className={

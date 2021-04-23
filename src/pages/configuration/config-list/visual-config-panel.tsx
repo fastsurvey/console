@@ -1,9 +1,9 @@
 import React from 'react';
-import {configTypes} from 'utilities';
+import {types} from 'types';
 import icons from 'assets/icons/icons';
 
 interface Props {
-    config: configTypes.SurveyConfig;
+    config: types.SurveyConfig;
     selected: boolean;
     onClick(): void;
 }

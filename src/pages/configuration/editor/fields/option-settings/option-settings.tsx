@@ -1,14 +1,14 @@
 import React from 'react';
-import {configTypes} from 'utilities';
 import VisualOptionSettings from './visual-option-settings';
+import {types} from 'types';
 
 interface Props {
-    fieldConfig: configTypes.OptionField;
-    setFieldConfig(fieldConfig: configTypes.OptionField): void;
+    fieldConfig: types.OptionField;
+    setFieldConfig(fieldConfig: types.OptionField): void;
     disabled: boolean;
 }
 function OptionSettings(props: Props) {
-    function updateFieldConfig(newFieldConfig: configTypes.OptionField) {
+    function updateFieldConfig(newFieldConfig: types.OptionField) {
         props.setFieldConfig(newFieldConfig);
     }
 

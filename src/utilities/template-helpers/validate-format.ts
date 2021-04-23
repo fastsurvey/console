@@ -1,6 +1,6 @@
 import {AssertionError} from 'assert';
 import {isEqual} from 'lodash';
-import {configTypes} from 'utilities';
+import {types} from 'types';
 
 function assert(condition: boolean) {
     if (!condition) {
@@ -17,7 +17,7 @@ const checkStringArrays = (a: string[], b: string[]) => {
 };
 
 const validateFormat = {
-    fieldConfig: (config: configTypes.SurveyField) => {
+    fieldConfig: (config: types.SurveyField) => {
         try {
             checkTypes(config.title, 's');
             checkTypes(config.description, 's');
@@ -68,7 +68,7 @@ const validateFormat = {
             return false;
         }
     },
-    fieldOptionsList: (fieldOptions: configTypes.FieldOption[]) => {
+    fieldOptionsList: (fieldOptions: types.FieldOption[]) => {
         try {
             fieldOptions.forEach((fieldOption) => {
                 checkTypes(fieldOption.title, 's');

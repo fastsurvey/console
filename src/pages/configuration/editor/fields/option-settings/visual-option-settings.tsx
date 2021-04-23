@@ -1,10 +1,10 @@
 import React from 'react';
-import {configTypes} from 'utilities';
 import {Checkbox, EditorFormRow} from 'components';
+import {types} from 'types';
 
 interface Props {
-    fieldConfig: configTypes.OptionField;
-    updateFieldConfig(fieldConfig: configTypes.OptionField): void;
+    fieldConfig: types.OptionField;
+    updateFieldConfig(fieldConfig: types.OptionField): void;
     disabled: boolean;
 }
 const VisualOptionSettings = (props: Props) => (

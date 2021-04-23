@@ -1,9 +1,9 @@
 import {max} from 'lodash';
-import {configTypes} from 'utilities';
+import {types} from 'types';
 
-function newFieldId(config: configTypes.SurveyConfig): number {
+function newFieldId(config: types.SurveyConfig): number {
     const maxId = max(
-        config.fields.map((field: configTypes.SurveyField) => field.local_id),
+        config.fields.map((field: types.SurveyField) => field.local_id),
     );
     if (maxId === undefined) {
         return config.local_id * 1000;

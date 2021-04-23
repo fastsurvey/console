@@ -1,17 +1,15 @@
 import React from 'react';
-import {configTypes} from 'utilities';
+import {types} from 'types';
 import FieldOptionsList from '../field-options-list/field-options-list';
 
 interface Props {
-    fieldConfig: configTypes.RadioField;
-    setFieldConfig(
-        fieldConfig: configTypes.RadioField | configTypes.SelectionField,
-    ): void;
+    fieldConfig: types.RadioField;
+    setFieldConfig(fieldConfig: types.RadioField | types.SelectionField): void;
     disabled: boolean;
 }
 function RadioFieldConfigForm(props: Props) {
     function updateFieldConfig(
-        newFieldConfig: configTypes.RadioField | configTypes.SelectionField,
+        newFieldConfig: types.RadioField | types.SelectionField,
     ) {
         props.setFieldConfig(newFieldConfig);
     }

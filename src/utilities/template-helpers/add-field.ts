@@ -1,9 +1,10 @@
-import {configTypes, newFieldId} from 'utilities';
+import {newFieldId} from 'utilities';
+import {types} from 'types';
 
 const fieldTemplate = (
-    fieldType: configTypes.FieldType,
-    config: configTypes.SurveyConfig,
-): configTypes.SurveyField => {
+    fieldType: types.FieldType,
+    config: types.SurveyConfig,
+): types.SurveyField => {
     switch (fieldType) {
         case 'email':
             return {

@@ -2,8 +2,6 @@ import {concat} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {
-    stateTypes,
-    configTypes,
     validators,
     fieldTemplate,
     validateFormat,
@@ -13,13 +11,14 @@ import {
 } from 'utilities';
 import VisualEditor from './visual-editor';
 import {AssertionError} from 'assert';
+import {types} from 'types';
 
 interface Props {
-    configs: configTypes.SurveyConfig[];
-    centralConfig: configTypes.SurveyConfig;
-    modifyConfig(config: configTypes.SurveyConfig): void;
+    configs: types.SurveyConfig[];
+    centralConfig: types.SurveyConfig;
+    modifyConfig(config: types.SurveyConfig): void;
     markDiffering(differing: boolean): void;
-    openMessage(message: stateTypes.Message): void;
+    openMessage(message: types.Message): void;
     closeAllMessages(): void;
 }
 function ConfigEditor(props: Props) {
@@ -64,13 +63,10 @@ function ConfigEditor(props: Props) {
         );
     }
 
-    function insertField(index: number, fieldType: configTypes.FieldType) {
+    function insertField(index: number, fieldType: types.FieldType) {
         setFieldValidators(insert(fieldValidators, index + 1, false));
 
-        const field: configTypes.SurveyField = fieldTemplate(
-            fieldType,
-            localConfig,
-        );
+        const field: types.SurveyField = fieldTemplate(fieldType, localConfig);
         setLocalConfig({
             ...localConfig,
             fields: insert(localConfig.fields, index, field),
@@ -126,7 +122,7 @@ function ConfigEditor(props: Props) {
             fieldOptionsAreValid
         ) {
             props.closeAllMessages();
-            const publishedConfig: configTypes.SurveyConfig = {
+            const publishedConfig: types.SurveyConfig = {
                 ...localConfig,
                 draft: false,
             };
@@ -191,14 +187,14 @@ function ConfigEditor(props: Props) {
         setLocalConfigState(props.centralConfig);
     }
 
-    function setLocalConfig(config: configTypes.SurveyConfig) {
+    function setLocalConfig(config: types.SurveyConfig) {
         // TODO: Add proper state comparison
         props.markDiffering(true);
         setLocalConfigState(config);
     }
 
     function setFieldConfig(
-        newFieldConfig: configTypes.SurveyField,
+        newFieldConfig: types.SurveyField,
         newIndex: number,
     ) {
         setLocalConfig({

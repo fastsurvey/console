@@ -1,10 +1,11 @@
 import React from 'react';
 import Cookies from 'js-cookie';
 import {cloneDeep, unionBy} from 'lodash';
-import {addLocalIds, configTypes, stateTypes} from 'utilities';
+import {addLocalIds} from 'utilities';
+import {types} from 'types';
 import assert from 'assert';
 
-export const initialState: stateTypes.ReduxState = {
+export const initialState: types.ReduxState = {
     loggingIn: true,
     loggedIn: false,
     authToken: undefined,
@@ -23,8 +24,8 @@ export const initialState: stateTypes.ReduxState = {
 };
 
 export function updateState(
-    state: stateTypes.ReduxState,
-    action: stateTypes.ReduxAction,
+    state: types.ReduxState,
+    action: types.ReduxAction,
 ) {
     const newState = cloneDeep(state);
 
@@ -113,7 +114,7 @@ export function updateState(
         case 'MODIFY_CONFIG':
             if (newState.configs !== undefined) {
                 newState.configs = newState.configs.map(
-                    (config: configTypes.SurveyConfig) =>
+                    (config: types.SurveyConfig) =>
                         config.local_id === action.config.local_id
                             ? action.config
                             : config,

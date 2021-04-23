@@ -1,10 +1,10 @@
-import {stateTypes, configTypes} from 'utilities';
+import {types} from 'types';
 
 const dispatchers = {
     logIn: (dispatch: any) => (
-        authToken: stateTypes.AuthToken,
-        account: stateTypes.Account,
-        configs: configTypes.SurveyConfig[],
+        authToken: types.AuthToken,
+        account: types.Account,
+        configs: types.SurveyConfig[],
     ): void =>
         dispatch({
             type: 'LOG_IN',
@@ -37,7 +37,7 @@ const dispatchers = {
         dispatch({
             type: 'CLOSE_NAVBAR',
         }),
-    openMessage: (dispatch: any) => (message: stateTypes.Message): void =>
+    openMessage: (dispatch: any) => (message: types.Message): void =>
         dispatch({
             type: 'OPEN_MESSAGE',
             message,
@@ -51,19 +51,17 @@ const dispatchers = {
         dispatch({
             type: 'CLOSE_ALL_MESSAGES',
         }),
-    addConfigs: (dispatch: any) => (
-        configs: configTypes.SurveyConfig[],
-    ): void =>
+    addConfigs: (dispatch: any) => (configs: types.SurveyConfig[]): void =>
         dispatch({
             type: 'ADD_CONFIGS',
             configs,
         }),
-    addConfig: (dispatch: any) => (config: configTypes.SurveyConfig): void =>
+    addConfig: (dispatch: any) => (config: types.SurveyConfig): void =>
         dispatch({
             type: 'ADD_CONFIG',
             config,
         }),
-    modifyConfig: (dispatch: any) => (config: configTypes.SurveyConfig): void =>
+    modifyConfig: (dispatch: any) => (config: types.SurveyConfig): void =>
         dispatch({
             type: 'MODIFY_CONFIG',
             config,
@@ -80,7 +78,7 @@ const dispatchers = {
         }),
     duplicateConfig: (dispatch: any) => (
         newSurveyName: string,
-        newConfig: configTypes.SurveyConfig,
+        newConfig: types.SurveyConfig,
     ): void =>
         dispatch({
             type: 'DUPLICATE_CONFIG',

@@ -1,15 +1,16 @@
 import React, {useRef, useState} from 'react';
 import {connect} from 'react-redux';
-import {stateTypes, reduxUtils, configTypes, backend} from 'utilities';
+import {reduxUtils, backend} from 'utilities';
 import VisualLogin from './visual-login';
+import {types} from 'types';
 
 interface Props {
     logIn(
-        authToken: stateTypes.AuthToken,
-        account: stateTypes.Account,
-        configs: configTypes.SurveyConfig[],
+        authToken: types.AuthToken,
+        account: types.Account,
+        configs: types.SurveyConfig[],
     ): void;
-    openMessage(message: stateTypes.Message): void;
+    openMessage(message: types.Message): void;
     closeAllMessages(): void;
 }
 
@@ -74,7 +75,7 @@ function LoginForm(props: Props) {
     );
 }
 
-const mapStateToProps = (state: stateTypes.ReduxState) => ({});
+const mapStateToProps = (state: types.ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
     logIn: reduxUtils.dispatchers.logIn(dispatch),
     openMessage: reduxUtils.dispatchers.openMessage(dispatch),

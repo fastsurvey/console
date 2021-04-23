@@ -2,12 +2,12 @@ import React from 'react';
 import icons from 'assets/icons/icons';
 import AddFieldButton from './add-field-button';
 import AddFieldPopup from './add-field-popup';
-import {configTypes, stateTypes} from 'utilities';
+import {types} from 'types';
 import dispatchers from '../../../../utilities/redux-utils/dispatchers';
 import {connect} from 'react-redux';
 
 interface Props {
-    insertField(fieldType: configTypes.FieldType): void;
+    insertField(fieldType: types.FieldType): void;
     pasteField(): void;
     openModal(title: string, children: React.ReactNode): void;
     closeModal(): void;
@@ -17,7 +17,7 @@ function AddFieldPanel(props: Props) {
         props.openModal(
             'Add a new field',
             <AddFieldPopup
-                insertField={(fieldType: configTypes.FieldType) => {
+                insertField={(fieldType: types.FieldType) => {
                     props.closeModal();
                     props.insertField(fieldType);
                 }}
@@ -49,7 +49,7 @@ function AddFieldPanel(props: Props) {
     );
 }
 
-const mapStateToProps = (state: stateTypes.ReduxState) => ({});
+const mapStateToProps = (state: types.ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
     openModal: dispatchers.openModal(dispatch),
     closeModal: dispatchers.closeModal(dispatch),

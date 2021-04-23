@@ -1,14 +1,13 @@
 import assert from 'assert';
 import Cookies from 'js-cookie';
-
-import {stateTypes, configTypes} from 'utilities';
+import {types} from 'types';
 import {httpGet} from './http-clients';
 
 async function loginWithCookie(
     login: (
-        authToken: stateTypes.AuthToken,
-        account: stateTypes.Account,
-        configs: configTypes.SurveyConfig[],
+        authToken: types.AuthToken,
+        account: types.Account,
+        configs: types.SurveyConfig[],
     ) => void,
     abort: () => void,
 ) {
@@ -21,10 +20,10 @@ async function loginWithCookie(
 
         const username: string = (await httpGet('/authentication', authToken))
             .data;
-        const account: stateTypes.Account = (
+        const account: types.Account = (
             await httpGet(`/users/${username}`, authToken)
         ).data;
-        const configs: configTypes.SurveyConfig[] = (
+        const configs: types.SurveyConfig[] = (
             await httpGet(`/users/${username}/surveys`, authToken)
         ).data;
 

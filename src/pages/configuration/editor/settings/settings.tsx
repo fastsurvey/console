@@ -2,23 +2,21 @@ import RemoveSurveyPopup from './remove-survey-popup';
 import DuplicateSurveyPopup from './duplicate-survey-popup';
 import React from 'react';
 import {connect} from 'react-redux';
-import {stateTypes, configTypes, validators, reduxUtils} from 'utilities';
+import {validators, reduxUtils} from 'utilities';
 import VisualSettings from './visual-settings';
 import {useHistory} from 'react-router-dom';
+import {types} from 'types';
 
 interface Props {
-    configs: configTypes.SurveyConfig[] | undefined;
-    config: configTypes.SurveyConfig;
-    setConfig(config: configTypes.SurveyConfig): void;
+    configs: types.SurveyConfig[] | undefined;
+    config: types.SurveyConfig;
+    setConfig(config: types.SurveyConfig): void;
     updateValidator(newState: boolean): void;
 
     openModal(title: string, children: React.ReactNode): void;
     closeModal(): void;
     removeConfig(surveyName: string): void;
-    duplicateConfig(
-        newSurveyName: string,
-        newConfig: configTypes.SurveyConfig,
-    ): void;
+    duplicateConfig(newSurveyName: string, newConfig: types.SurveyConfig): void;
 }
 function Settings(props: Props) {
     let history = useHistory();
@@ -32,7 +30,7 @@ function Settings(props: Props) {
     const submissionLimitIsValid = validators.submissionLimit;
 
     function updateConfig(
-        newConfig: configTypes.SurveyConfig,
+        newConfig: types.SurveyConfig,
         skipValidation?: boolean,
     ) {
         if (!skipValidation) {
@@ -95,7 +93,7 @@ function Settings(props: Props) {
         />
     );
 }
-const mapStateToProps = (state: stateTypes.ReduxState) => ({
+const mapStateToProps = (state: types.ReduxState) => ({
     configs: state.configs,
 });
 const mapDispatchToProps = (dispatch: any) => ({

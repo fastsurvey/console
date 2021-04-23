@@ -1,7 +1,6 @@
 import axios from 'axios';
-
 import environment from 'utilities/constants/environment';
-import {stateTypes} from 'utilities';
+import {types} from 'types';
 
 export function authPostRequest(url: string, data: {[key: string]: any}) {
     let formData = new FormData();
@@ -11,10 +10,7 @@ export function authPostRequest(url: string, data: {[key: string]: any}) {
     return axios.post(environment.AUTH_BACKEND_URL + url, formData);
 }
 
-export function authGetRequest(
-    url: string,
-    oauth2_token: stateTypes.AuthToken,
-) {
+export function authGetRequest(url: string, oauth2_token: types.AuthToken) {
     return axios.get(environment.AUTH_BACKEND_URL + url, {
         headers: {
             Authorization: 'bearer ' + oauth2_token.access_token,
@@ -22,10 +18,7 @@ export function authGetRequest(
     });
 }
 
-export function surveyGetRequest(
-    url: string,
-    oauth2_token: stateTypes.AuthToken,
-) {
+export function surveyGetRequest(url: string, oauth2_token: types.AuthToken) {
     return axios.get(environment.SURVEY_BACKEND_URL + url, {
         headers: {
             Authorization: 'bearer ' + oauth2_token.access_token,
@@ -35,7 +28,7 @@ export function surveyGetRequest(
 
 export function surveyPostRequest(
     url: string,
-    oauth2_token: stateTypes.AuthToken,
+    oauth2_token: types.AuthToken,
     body: any,
 ) {
     return axios.post(environment.SURVEY_BACKEND_URL + url, body, {

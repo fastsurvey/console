@@ -1,8 +1,7 @@
-import {configTypes} from 'utilities';
-import {generalTypes} from 'utilities/types/general-types';
+import {types} from 'types';
 
 const colors = {
-    fieldTypeToColor: (fieldType: configTypes.FieldType) => {
+    fieldTypeToColor: (fieldType: types.FieldType) => {
         switch (fieldType) {
             case 'email':
                 return 'red';
@@ -17,7 +16,7 @@ const colors = {
         }
     },
 
-    colorToClasses: (color: generalTypes.Color | undefined) => {
+    colorToClasses: (color: types.Color | undefined) => {
         switch (color) {
             case 'red':
                 return 'bg-red-200 text-red-600';
