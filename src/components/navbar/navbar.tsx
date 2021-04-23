@@ -1,7 +1,7 @@
 import React from 'react';
 import VisualRegularNavbar from './visual-regular-navbar';
 import VisualMobileNavbar from './visual-mobile-navbar';
-import {dispatchers, stateTypes} from 'utilities';
+import {reduxUtils, stateTypes} from 'utilities';
 import {connect} from 'react-redux';
 
 interface Props {
@@ -32,8 +32,8 @@ const mapStateToProps = (state: stateTypes.ReduxState) => ({
     navbarState: state.navbarState,
 });
 const mapDispatchToProps = (dispatch: any) => ({
-    logOut: dispatchers.logOut(dispatch),
-    openNavbar: dispatchers.openNavbar(dispatch),
-    closeNavbar: dispatchers.closeNavbar(dispatch),
+    logOut: reduxUtils.dispatchers.logOut(dispatch),
+    openNavbar: reduxUtils.dispatchers.openNavbar(dispatch),
+    closeNavbar: reduxUtils.dispatchers.closeNavbar(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

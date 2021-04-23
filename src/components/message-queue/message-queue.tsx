@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {dispatchers, stateTypes} from 'utilities';
+import {reduxUtils, stateTypes} from 'utilities';
 import VisualMessage from './visual-message';
 
 interface Props {
@@ -25,6 +25,6 @@ const mapStateToProps = (state: stateTypes.ReduxState) => ({
     messages: state.messages,
 });
 const mapDispatchToProps = (dispatch: any) => ({
-    closeMessage: dispatchers.closeMessage(dispatch),
+    closeMessage: reduxUtils.dispatchers.closeMessage(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(MessageQueue);

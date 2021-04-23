@@ -24,7 +24,7 @@ interface RouterProps {
     loggedIn: boolean;
     account: undefined | stateTypes.Account;
 }
-function Router(props: RouterProps) {
+function PageRouter(props: RouterProps) {
     return (
         <BrowserRouter>
             <LoaderOverlay />
@@ -120,4 +120,4 @@ const mapStateToProps = (state: stateTypes.ReduxState) => ({
     account: state.account,
 });
 const mapDispatchToProps = (dispatch: any) => ({});
-export default connect(mapStateToProps, mapDispatchToProps)(Router);
+export default connect(mapStateToProps, mapDispatchToProps)(PageRouter);

@@ -1,6 +1,6 @@
 import React, {useRef, useState} from 'react';
 import {connect} from 'react-redux';
-import {stateTypes, dispatchers, configTypes, backend} from 'utilities';
+import {stateTypes, reduxUtils, configTypes, backend} from 'utilities';
 import VisualLogin from './visual-login';
 
 interface Props {
@@ -76,8 +76,8 @@ function LoginForm(props: Props) {
 
 const mapStateToProps = (state: stateTypes.ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
-    logIn: dispatchers.logIn(dispatch),
-    openMessage: dispatchers.openMessage(dispatch),
-    closeAllMessages: dispatchers.closeAllMessages(dispatch),
+    logIn: reduxUtils.dispatchers.logIn(dispatch),
+    openMessage: reduxUtils.dispatchers.openMessage(dispatch),
+    closeAllMessages: reduxUtils.dispatchers.closeAllMessages(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

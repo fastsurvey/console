@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {useLocation, useHistory} from 'react-router-dom';
-import {stateTypes, configTypes, dispatchers} from 'utilities';
+import {stateTypes, configTypes, reduxUtils} from 'utilities';
 import icons from 'assets/icons/icons';
 
 import {ButtonLink} from 'components';
@@ -107,9 +107,9 @@ const mapStateToProps = (state: stateTypes.ReduxState) => ({
     account: state.account,
 });
 const mapDispatchToProps = (dispatch: any) => ({
-    openMessage: dispatchers.openMessage(dispatch),
-    openModal: dispatchers.openModal(dispatch),
-    closeModal: dispatchers.closeModal(dispatch),
-    addConfig: dispatchers.addConfig(dispatch),
+    openMessage: reduxUtils.dispatchers.openMessage(dispatch),
+    openModal: reduxUtils.dispatchers.openModal(dispatch),
+    closeModal: reduxUtils.dispatchers.closeModal(dispatch),
+    addConfig: reduxUtils.dispatchers.addConfig(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(ConfigList);

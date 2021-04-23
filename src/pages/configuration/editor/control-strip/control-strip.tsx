@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {stateTypes, configTypes, dispatchers} from 'utilities';
+import {stateTypes, configTypes, reduxUtils} from 'utilities';
 import VisualDraftStrip from './visual-draft-strip';
 import VisualPublishedStrip from './visual-published-strip';
 
@@ -78,6 +78,6 @@ const mapStateToProps = (state: stateTypes.ReduxState) => ({
     configIsDiffering: state.configIsDiffering,
 });
 const mapDispatchToProps = (dispatch: any) => ({
-    openMessage: dispatchers.openMessage(dispatch),
+    openMessage: reduxUtils.dispatchers.openMessage(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(ControlStrip);

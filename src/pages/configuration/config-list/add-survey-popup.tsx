@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {
     configTypes,
-    dispatchers,
+    reduxUtils,
     hints,
     stateTypes,
     validators,
@@ -74,6 +74,6 @@ const mapStateToProps = (state: stateTypes.ReduxState) => ({
     configs: state.configs,
 });
 const mapDispatchToProps = (dispatch: any) => ({
-    closeModal: dispatchers.closeModal(dispatch),
+    closeModal: reduxUtils.dispatchers.closeModal(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(AddSurveyPopup);

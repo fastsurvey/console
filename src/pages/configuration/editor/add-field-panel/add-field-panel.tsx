@@ -3,7 +3,7 @@ import icons from 'assets/icons/icons';
 import AddFieldButton from './add-field-button';
 import AddFieldPopup from './add-field-popup';
 import {configTypes, stateTypes} from 'utilities';
-import dispatchers from '../../../../utilities/redux-helpers/dispatchers';
+import dispatchers from '../../../../utilities/redux-utils/dispatchers';
 import {connect} from 'react-redux';
 
 interface Props {

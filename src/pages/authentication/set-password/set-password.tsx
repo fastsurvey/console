@@ -1,6 +1,6 @@
 import React, {useRef, useState} from 'react';
 import {connect} from 'react-redux';
-import {stateTypes, dispatchers, authPostRequest, configTypes} from 'utilities';
+import {stateTypes, reduxUtils, authPostRequest, configTypes} from 'utilities';
 import VisualSetPassword from './visual-set-password';
 
 interface Props {
@@ -81,8 +81,8 @@ function SetPassword(props: Props) {
 
 const mapStateToProps = (state: stateTypes.ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
-    logIn: dispatchers.logIn(dispatch),
-    openMessage: dispatchers.openMessage(dispatch),
-    closeAllMessages: dispatchers.closeAllMessages(dispatch),
+    logIn: reduxUtils.dispatchers.logIn(dispatch),
+    openMessage: reduxUtils.dispatchers.openMessage(dispatch),
+    closeAllMessages: reduxUtils.dispatchers.closeAllMessages(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(SetPassword);

@@ -1,7 +1,7 @@
 import React from 'react';
 import {useHistory, useLocation} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {stateTypes, dispatchers} from 'utilities';
+import {stateTypes, reduxUtils} from 'utilities';
 import VisualNavbarContent from './visual-navbar-content';
 
 interface Props {
@@ -42,6 +42,6 @@ const mapStateToProps = (state: stateTypes.ReduxState) => ({
     configIsDiffering: state.configIsDiffering,
 });
 const mapDispatchToProps = (dispatch: any) => ({
-    openMessage: dispatchers.openMessage(dispatch),
+    openMessage: reduxUtils.dispatchers.openMessage(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(NavbarContent);

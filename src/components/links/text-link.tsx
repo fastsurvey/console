@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import assert from 'assert';
-import {dispatchers, stateTypes} from 'utilities';
+import {reduxUtils, stateTypes} from 'utilities';
 import Linker from './linker';
 
 interface Props {
@@ -35,6 +35,6 @@ function TextLink(props: Props) {
 
 const mapStateToProps = (state: stateTypes.ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
-    closeAllMessages: dispatchers.closeAllMessages(dispatch),
+    closeAllMessages: reduxUtils.dispatchers.closeAllMessages(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(TextLink);

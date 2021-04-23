@@ -1,6 +1,6 @@
 import React, {useRef, useState} from 'react';
 import {connect} from 'react-redux';
-import {stateTypes, dispatchers, authPostRequest} from 'utilities';
+import {stateTypes, reduxUtils, authPostRequest} from 'utilities';
 import VisualRequestPassword from './visual-request-password';
 
 interface Props {
@@ -63,8 +63,8 @@ function RequestPasswordForm(props: Props) {
 
 const mapStateToProps = (state: stateTypes.ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
-    openMessage: dispatchers.openMessage(dispatch),
-    closeAllMessages: dispatchers.closeAllMessages(dispatch),
+    openMessage: reduxUtils.dispatchers.openMessage(dispatch),
+    closeAllMessages: reduxUtils.dispatchers.closeAllMessages(dispatch),
 });
 export default connect(
     mapStateToProps,

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import assert from 'assert';
-import {stateTypes, dispatchers, authPostRequest} from 'utilities';
+import {stateTypes, reduxUtils, authPostRequest} from 'utilities';
 import VisualVerifyWall from './visual-verify-wall';
 
 interface VerifyWallProps {
@@ -59,8 +59,8 @@ const mapStateToProps = (state: stateTypes.ReduxState) => ({
     account: state.account,
 });
 const mapDispatchToProps = (dispatch: any) => ({
-    logOut: dispatchers.logOut(dispatch),
-    openMessage: dispatchers.openMessage(dispatch),
-    closeAllMessages: dispatchers.closeAllMessages(dispatch),
+    logOut: reduxUtils.dispatchers.logOut(dispatch),
+    openMessage: reduxUtils.dispatchers.openMessage(dispatch),
+    closeAllMessages: reduxUtils.dispatchers.closeAllMessages(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(VerifyWall);

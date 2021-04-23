@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {useParams} from 'react-router-dom';
-import {stateTypes, configTypes, dispatchers} from 'utilities';
+import {stateTypes, configTypes, reduxUtils} from 'utilities';
 import Editor from './editor';
 
 interface Props {
@@ -53,9 +53,9 @@ const mapStateToProps = (state: stateTypes.ReduxState) => ({
     configs: state.configs,
 });
 const mapDispatchToProps = (dispatch: any) => ({
-    modifyConfig: dispatchers.modifyConfig(dispatch),
-    markDiffering: dispatchers.markDiffering(dispatch),
-    openMessage: dispatchers.openMessage(dispatch),
-    closeAllMessages: dispatchers.closeAllMessages(dispatch),
+    modifyConfig: reduxUtils.dispatchers.modifyConfig(dispatch),
+    markDiffering: reduxUtils.dispatchers.markDiffering(dispatch),
+    openMessage: reduxUtils.dispatchers.openMessage(dispatch),
+    closeAllMessages: reduxUtils.dispatchers.closeAllMessages(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(EditorRouter);

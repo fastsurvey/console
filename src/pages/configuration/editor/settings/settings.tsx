@@ -2,7 +2,7 @@ import RemoveSurveyPopup from './remove-survey-popup';
 import DuplicateSurveyPopup from './duplicate-survey-popup';
 import React from 'react';
 import {connect} from 'react-redux';
-import {stateTypes, configTypes, validators, dispatchers} from 'utilities';
+import {stateTypes, configTypes, validators, reduxUtils} from 'utilities';
 import VisualSettings from './visual-settings';
 import {useHistory} from 'react-router-dom';
 
@@ -99,9 +99,9 @@ const mapStateToProps = (state: stateTypes.ReduxState) => ({
     configs: state.configs,
 });
 const mapDispatchToProps = (dispatch: any) => ({
-    openModal: dispatchers.openModal(dispatch),
-    closeModal: dispatchers.closeModal(dispatch),
-    removeConfig: dispatchers.removeConfig(dispatch),
-    duplicateConfig: dispatchers.duplicateConfig(dispatch),
+    openModal: reduxUtils.dispatchers.openModal(dispatch),
+    closeModal: reduxUtils.dispatchers.closeModal(dispatch),
+    removeConfig: reduxUtils.dispatchers.removeConfig(dispatch),
+    duplicateConfig: reduxUtils.dispatchers.duplicateConfig(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

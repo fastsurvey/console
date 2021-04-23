@@ -1,6 +1,6 @@
 import React, {useRef, useState} from 'react';
 import {connect} from 'react-redux';
-import {stateTypes, dispatchers, authPostRequest} from 'utilities';
+import {stateTypes, reduxUtils, authPostRequest} from 'utilities';
 import VisualRegister from './visual-register';
 
 interface Props {
@@ -87,8 +87,8 @@ function RegisterForm(props: Props) {
 
 const mapStateToProps = (state: stateTypes.ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
-    logIn: dispatchers.logOut(dispatch),
-    openMessage: dispatchers.openMessage(dispatch),
-    closeAllMessages: dispatchers.closeAllMessages(dispatch),
+    logIn: reduxUtils.dispatchers.logOut(dispatch),
+    openMessage: reduxUtils.dispatchers.openMessage(dispatch),
+    closeAllMessages: reduxUtils.dispatchers.closeAllMessages(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);
