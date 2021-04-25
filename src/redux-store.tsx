@@ -2,12 +2,13 @@ import React, {useState, useEffect} from 'react';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import {backend, reduxUtils} from 'utilities';
-import {updateState, initialState} from './utilities/redux-utils/update-state';
 import {types} from 'types';
 
 const store = createStore(
-    (state: types.ReduxState = initialState, action: types.ReduxAction) =>
-        updateState(state, action),
+    (
+        state: types.ReduxState = reduxUtils.initialState,
+        action: types.ReduxAction,
+    ) => reduxUtils.updateState(state, action),
 );
 
 interface Props {

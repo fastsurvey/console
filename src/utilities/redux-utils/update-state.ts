@@ -1,32 +1,10 @@
-import React from 'react';
 import Cookies from 'js-cookie';
 import {cloneDeep, unionBy} from 'lodash';
-import {addLocalIds} from 'utilities';
+import {addLocalIds, reduxUtils} from 'utilities';
 import {types} from 'types';
 import assert from 'assert';
 
-export const initialState: types.ReduxState = {
-    loggingIn: true,
-    loggedIn: false,
-    authToken: undefined,
-    account: undefined,
-    messages: [],
-    configs: [],
-    configIsDiffering: false,
-    navbarState: {
-        open: false,
-    },
-    modalState: {
-        open: false,
-        title: '',
-        children: React.Fragment,
-    },
-};
-
-export function updateState(
-    state: types.ReduxState,
-    action: types.ReduxAction,
-) {
+function updateState(state: types.ReduxState, action: types.ReduxAction) {
     const newState = cloneDeep(state);
 
     switch (action.type) {
@@ -43,7 +21,7 @@ export function updateState(
 
         case 'LOG_OUT':
             Cookies.remove('authToken');
-            return {...cloneDeep(initialState), loggingIn: false};
+            return {...cloneDeep(reduxUtils.initialState), loggingIn: false};
 
         case 'OPEN_MESSAGE':
             // do not have mutliple messages with the same text
@@ -136,3 +114,5 @@ export function updateState(
 
     return newState;
 }
+
+export default updateState;

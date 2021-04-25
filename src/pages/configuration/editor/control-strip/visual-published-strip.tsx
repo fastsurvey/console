@@ -6,6 +6,7 @@ import ControlStripButton from './visual-button';
 
 interface Props {
     now(): number;
+    account: types.Account;
     config: types.SurveyConfig;
     startNow(): void;
     reopenNow(): void;
@@ -21,7 +22,7 @@ const VisualPublishedStrip = (props: Props) => (
             icon={icons.launch}
             onClick={() =>
                 window.open(
-                    `https://fastsurvey.io/${props.config.admin_name}` +
+                    `https://fastsurvey.io/${props.account.username}` +
                         `/${props.config.survey_name}`,
                     '_blank',
                 )

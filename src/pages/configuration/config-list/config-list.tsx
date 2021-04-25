@@ -10,12 +10,13 @@ import VisualConfigList from './visual-config-list';
 import AddSurveyPopup from 'pages/configuration/config-list/add-survey-popup';
 import surveyTemplate from '../../../utilities/template-helpers/add-survey';
 import {types} from 'types';
+import assert from 'assert';
 
 interface Props {
-    authToken: types.AuthToken | undefined;
-    account: types.Account | undefined;
+    authToken: types.AuthToken;
+    account: types.Account;
 
-    configs: undefined | types.SurveyConfig[];
+    configs: types.SurveyConfig[];
     configIsDiffering: boolean;
     openMessage(message: types.Message): void;
     openModal(title: string, children: React.ReactNode): void;
@@ -43,7 +44,7 @@ function ConfigList(props: Props) {
     function addSurvey(surveyName: string) {
         if (props.configs !== undefined && props.oauth2_token) {
             const newConfig = surveyTemplate(
-                'fastsurvey',
+                props.account.username,
                 surveyName,
                 props.configs,
             );
@@ -58,14 +59,6 @@ function ConfigList(props: Props) {
         props.closeModal();
         history.push(`/configuration/${surveyName}`);
     }*/
-
-    if (!props.configs) {
-        return (
-            <div className='w-64 h-full center-content'>
-                <p>Loading surveys</p>
-            </div>
-        );
-    }
 
     return (
         <VisualConfigList>
@@ -83,6 +76,7 @@ function ConfigList(props: Props) {
                     }
                     onClick={() => handleClick(config.survey_name)}
                     config={config}
+                    username={props.account.username}
                 />
             ))}
             <ButtonLink

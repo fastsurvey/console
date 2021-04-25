@@ -1,7 +1,6 @@
 export declare namespace types {
     export interface SurveyConfig {
         local_id: number;
-        admin_name: string;
         survey_name: string;
         start: number;
         end: number;
@@ -74,12 +73,12 @@ export declare namespace types {
     export interface ReduxState {
         loggingIn: boolean;
         loggedIn: boolean;
-        authToken: undefined | types.AuthToken;
-        account: undefined | types.Account;
+        authToken: types.AuthToken;
+        account: types.Account;
         messages: types.Message[];
         navbarState: NavbarState;
         modalState: ModalState;
-        configs: undefined | types.SurveyConfig[];
+        configs: types.SurveyConfig[];
         configIsDiffering: boolean;
     }
 

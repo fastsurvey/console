@@ -6,6 +6,7 @@ import VisualDraftStrip from './visual-draft-strip';
 import VisualPublishedStrip from './visual-published-strip';
 
 interface Props {
+    account: types.Account;
     config: types.SurveyConfig;
     setConfig(config: types.SurveyConfig): void;
     configIsDiffering: boolean;
@@ -65,6 +66,7 @@ function ControlStrip(props: Props) {
         return (
             <VisualPublishedStrip
                 now={now}
+                account={props.account}
                 config={props.config}
                 startNow={startNow}
                 reopenNow={reopenNow}
@@ -76,6 +78,7 @@ function ControlStrip(props: Props) {
 }
 
 const mapStateToProps = (state: types.ReduxState) => ({
+    account: state.account,
     configIsDiffering: state.configIsDiffering,
 });
 const mapDispatchToProps = (dispatch: any) => ({

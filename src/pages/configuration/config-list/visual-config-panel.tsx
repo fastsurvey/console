@@ -3,6 +3,7 @@ import {types} from 'types';
 import icons from 'assets/icons/icons';
 
 interface Props {
+    username: string;
     config: types.SurveyConfig;
     selected: boolean;
     onClick(): void;
@@ -56,7 +57,7 @@ function ConfigPreviewPanel(props: Props) {
             <div className='flex flex-row text-base text-blue-600 font-weight-500'>
                 <div className='flex-shrink-0 w-6 h-6 mr-1'>{icons.link}</div>
                 <div className='leading-6 break-all'>
-                    {props.config.admin_name}/{props.config.survey_name}
+                    {props.username}/{props.config.survey_name}
                 </div>
             </div>
         </div>
