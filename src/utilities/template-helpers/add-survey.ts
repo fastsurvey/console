@@ -2,11 +2,11 @@ import {types} from 'types';
 
 const surveyTemplate = (
     surveyName: string,
-    configs: types.SurveyConfig[],
+    newLocalId: number,
 ): types.SurveyConfig => {
     const now = Math.floor(Date.now() / 1000);
     return {
-        local_id: configs.length,
+        local_id: newLocalId,
         survey_name: surveyName,
         start: now,
         end: now + 3600 * 24,
@@ -15,7 +15,15 @@ const surveyTemplate = (
         limit: 100,
         title: '',
         description: '',
-        fields: [],
+        fields: [
+            {
+                type: 'option',
+                local_id: newLocalId * 1000,
+                title: 'Data Privacy',
+                description: 'I accept the terms and conditions',
+                required: true,
+            },
+        ],
     };
 };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {useLocation, useHistory} from 'react-router-dom';
-import {reduxUtils} from 'utilities';
+import {reduxUtils, backend} from 'utilities';
 import icons from 'assets/icons/icons';
 
 import {ButtonLink} from 'components';
@@ -13,8 +13,8 @@ import {types} from 'types';
 import assert from 'assert';
 
 interface Props {
-    authToken: types.AuthToken;
     account: types.Account;
+    authToken: types.AuthToken;
 
     configs: types.SurveyConfig[];
     configIsDiffering: boolean;
@@ -40,25 +40,25 @@ function ConfigList(props: Props) {
             }
         }
     }
-    /*
-    function addSurvey(surveyName: string) {
-        if (props.configs !== undefined && props.oauth2_token) {
-            const newConfig = surveyTemplate(
-                props.account.username,
-                surveyName,
-                props.configs,
-            );
-            try {
-                postConfig(props.oauth2_token, newConfig);
-                props.addConfig(
-                    surveyTemplate('fastsurvey', surveyName, props.configs),
-                );
-            } catch {}
-        }
 
-        props.closeModal();
-        history.push(`/configuration/${surveyName}`);
-    }*/
+    function addSurvey(surveyName: string) {
+        const newConfig = surveyTemplate(surveyName, props.configs.length);
+
+        const success = () => {
+            props.addConfig(newConfig);
+            props.closeModal();
+            history.push(`/configuration/${surveyName}`);
+        };
+        const error = (code: 400 | 401 | 422 | 500) => {};
+
+        backend.createSurvey(
+            props.account,
+            props.authToken,
+            newConfig,
+            success,
+            error,
+        );
+    }
 
     return (
         <VisualConfigList>
@@ -84,7 +84,7 @@ function ConfigList(props: Props) {
                 onClick={() =>
                     props.openModal(
                         'Add a new survey',
-                        <AddSurveyPopup addSurvey={(name: string) => {}} />,
+                        <AddSurveyPopup addSurvey={addSurvey} />,
                     )
                 }
                 className='w-full mt-1'

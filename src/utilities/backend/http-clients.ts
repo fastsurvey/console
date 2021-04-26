@@ -6,12 +6,13 @@ const API_URL = environment.AUTH_BACKEND_URL;
 
 export function httpPost(
     url: string,
-    data: {[key: string]: any},
+    dataObject: {[key: string]: any},
     auth_token?: types.AuthToken,
 ) {
+    const data = JSON.stringify(dataObject);
+
     if (auth_token) {
-        return axios.post(API_URL + url, {
-            ...data,
+        return axios.post(API_URL + url, data, {
             headers: {
                 Authorization: `${auth_token.token_type} ${auth_token.access_token}`,
             },

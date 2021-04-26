@@ -1,6 +1,12 @@
 import {types} from 'types';
 
 const removeLocalIds = {
+    survey: (config: types.SurveyConfig) => {
+        // @ts-ignore
+        delete config.local_id;
+        config.fields = config.fields.map(removeLocalIds.field);
+        return config;
+    },
     field: (config: types.SurveyField) => {
         // @ts-ignore
         delete config.local_id;
