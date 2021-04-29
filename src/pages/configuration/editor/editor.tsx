@@ -52,10 +52,11 @@ function ConfigEditor(props: Props) {
             index !== newIndex ? state : newState,
         );
 
-        setFieldValidators(newValidators);
-        if (!fieldValidators.includes(false)) {
+        if (fieldValidators.includes(false)) {
             props.closeAllMessages();
         }
+
+        setFieldValidators(newValidators);
     }
 
     function insert(array: any[], index: number, element: any) {
@@ -204,6 +205,11 @@ function ConfigEditor(props: Props) {
         newFieldConfig: types.SurveyField,
         newIndex: number,
     ) {
+        const newConfig = {
+            ...localConfig,
+        };
+
+        newConfig.fields[newIndex] = newFieldConfig;
         setLocalConfig({
             ...localConfig,
             fields: localConfig.fields.map((fieldConfig, index) =>
