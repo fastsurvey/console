@@ -7,7 +7,7 @@ interface Props {
     configIsDiffering: boolean;
     saveState(): void;
     revertState(): void;
-    publishState(): void;
+    publishNow(): void;
 }
 const VisualDraftStrip = (props: Props) => (
     <ControlStripUI>
@@ -29,7 +29,7 @@ const VisualDraftStrip = (props: Props) => (
                 last
                 label='Publish'
                 icon={icons.open_in_browser}
-                onClick={props.publishState}
+                onClick={props.publishNow}
             />
         </React.Fragment>
     </ControlStripUI>

@@ -13,7 +13,7 @@ const surveyTemplate = (
         authentication: 'open',
         draft: true,
         limit: 100,
-        title: '',
+        title: 'We need more surveys!',
         description: '',
         fields: [
             {

@@ -7,8 +7,7 @@ import {types} from 'types';
 
 interface Props {
     configs: undefined | types.SurveyConfig[];
-    modifyConfig(config: types.SurveyConfig): void;
-    markDiffering(differing: boolean): void;
+    setCentralConfig(config: types.SurveyConfig): void;
     openMessage(message: types.Message): void;
     closeAllMessages(): void;
 }
@@ -42,8 +41,7 @@ function EditorRouter(props: Props) {
         <Editor
             configs={props.configs}
             centralConfig={filteredConfigs[0]}
-            modifyConfig={props.modifyConfig}
-            markDiffering={props.markDiffering}
+            setCentralConfig={props.setCentralConfig}
             openMessage={props.openMessage}
             closeAllMessages={props.closeAllMessages}
         />
@@ -54,8 +52,7 @@ const mapStateToProps = (state: types.ReduxState) => ({
     configs: state.configs,
 });
 const mapDispatchToProps = (dispatch: any) => ({
-    modifyConfig: reduxUtils.dispatchers.modifyConfig(dispatch),
-    markDiffering: reduxUtils.dispatchers.markDiffering(dispatch),
+    setCentralConfig: reduxUtils.dispatchers.setCentralConfig(dispatch),
     openMessage: reduxUtils.dispatchers.openMessage(dispatch),
     closeAllMessages: reduxUtils.dispatchers.closeAllMessages(dispatch),
 });

@@ -9,6 +9,7 @@ import {
     addLocalIds,
     validateField,
 } from 'utilities';
+import ControlStrip from './control-strip/control-strip';
 import VisualEditor from './visual-editor';
 import {AssertionError} from 'assert';
 import {types} from 'types';
@@ -16,26 +17,35 @@ import {types} from 'types';
 interface Props {
     configs: types.SurveyConfig[];
     centralConfig: types.SurveyConfig;
-    modifyConfig(config: types.SurveyConfig): void;
-    markDiffering(differing: boolean): void;
+    setCentralConfig(config: types.SurveyConfig): void;
     openMessage(message: types.Message): void;
     closeAllMessages(): void;
 }
 function ConfigEditor(props: Props) {
-    const [localConfig, setLocalConfigState] = useState(props.centralConfig);
+    const [differing, setDiffering] = useState(false);
+    const [localConfig, setLocalConfigStateRaw] = useState(props.centralConfig);
     const [fieldValidators, setFieldValidators] = useState<boolean[]>([]);
 
     // Used for: survey_name is changed when editing, new survey
     const history = useHistory();
 
+    function setLocalConfigState(config: types.SurveyConfig) {
+        console.debug(config);
+        setLocalConfigStateRaw(config);
+    }
+
     useEffect(() => {
-        setLocalConfigState(props.centralConfig);
+        //setLocalConfigState(props.centralConfig);
+        initValidators(props.centralConfig);
+    }, [props.centralConfig, props.centralConfig.local_id]);
+
+    function initValidators(config: types.SurveyConfig) {
         const newValidators = [];
-        for (let i = 0; i <= props.centralConfig.fields.length; i++) {
+        for (let i = 0; i <= config.fields.length; i++) {
             newValidators.push(true);
         }
         setFieldValidators(newValidators);
-    }, [props.centralConfig, props.centralConfig.local_id]);
+    }
 
     function updateValidator(newIndex: number, newState: boolean) {
         const newValidators: boolean[] = fieldValidators.map((state, index) =>
@@ -127,7 +137,7 @@ function ConfigEditor(props: Props) {
                 draft: false,
             };
             // TODO: Push to backend and show error/success message
-            props.modifyConfig(publishedConfig);
+            props.setCentralConfig(publishedConfig);
         } else {
             const showConditionalError = (valid: boolean, text: string) => {
                 if (!valid) {
@@ -155,6 +165,7 @@ function ConfigEditor(props: Props) {
             );
         }
     }
+
     function saveState() {
         const validSurveyName = validators.surveyName(
             props.configs,
@@ -164,7 +175,7 @@ function ConfigEditor(props: Props) {
         if (validSurveyName) {
             props.closeAllMessages();
             // TODO: Push to backend and show error/success message
-            props.modifyConfig(localConfig);
+            props.setCentralConfig(localConfig);
             if (localConfig.survey_name !== props.centralConfig.survey_name) {
                 history.push(`/configuration/${localConfig.survey_name}`);
             }
@@ -177,19 +188,15 @@ function ConfigEditor(props: Props) {
     }
 
     function revertState() {
-        props.markDiffering(false);
+        setDiffering(false);
         props.closeAllMessages();
-        const newValidators = [];
-        for (let i = 0; i <= props.centralConfig.fields.length; i++) {
-            newValidators.push(true);
-        }
-        setFieldValidators(newValidators);
         setLocalConfigState(props.centralConfig);
+        initValidators(props.centralConfig);
     }
 
     function setLocalConfig(config: types.SurveyConfig) {
-        // TODO: Add proper state comparison
-        props.markDiffering(true);
+        // TODO: Add proper state comparison (localConfig === centralConfig)
+        setDiffering(true);
         setLocalConfigState(config);
     }
 
@@ -206,21 +213,29 @@ function ConfigEditor(props: Props) {
     }
 
     return (
-        <VisualEditor
-            centralConfig={props.centralConfig}
-            modifyConfig={props.modifyConfig}
-            saveState={saveState}
-            publishState={publishState}
-            revertState={revertState}
-            localConfig={localConfig}
-            setLocalConfigState={setLocalConfigState}
-            updateValidator={updateValidator}
-            setLocalConfig={setLocalConfig}
-            setFieldConfig={setFieldConfig}
-            insertField={insertField}
-            pasteField={pasteField}
-            removeField={removeField}
-        />
+        <>
+            <ControlStrip
+                config={props.centralConfig}
+                setConfig={props.setCentralConfig}
+                saveState={saveState}
+                publishState={publishState}
+                revertState={revertState}
+                differing={differing}
+            />
+            <VisualEditor
+                differing={differing}
+                saveState={saveState}
+                publishState={publishState}
+                revertState={revertState}
+                localConfig={localConfig}
+                updateValidator={updateValidator}
+                setLocalConfig={setLocalConfig}
+                setFieldConfig={setFieldConfig}
+                insertField={insertField}
+                pasteField={pasteField}
+                removeField={removeField}
+            />
+        </>
     );
 }
 

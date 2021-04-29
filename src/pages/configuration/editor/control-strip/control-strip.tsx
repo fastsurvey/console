@@ -8,8 +8,8 @@ import VisualPublishedStrip from './visual-published-strip';
 interface Props {
     account: types.Account;
     config: types.SurveyConfig;
-    setConfig(config: types.SurveyConfig): void;
-    configIsDiffering: boolean;
+    setConfig(config: object): void;
+    differing: boolean;
     saveState(): void;
     publishState(): void;
     revertState(): void;
@@ -21,45 +21,44 @@ function ControlStrip(props: Props) {
     }
 
     function startNow() {
-        // TODO: Push new start timestamp to server
         props.setConfig({
-            ...props.config,
             start: now(),
         });
     }
 
     function reopenNow() {
-        // TODO: Push new start timestamp to server
         props.setConfig({
-            ...props.config,
             start: now(),
             end: now() + 3600 * 24,
         });
     }
 
     function endNow() {
-        // TODO: Push new end timestamp to server
         props.setConfig({
-            ...props.config,
             end: Math.floor(Date.now() / 1000),
         });
     }
 
     function editNow() {
-        // TODO: Push new end timestamp to server
+        props.setConfig({
+            draft: true,
+        });
+    }
+
+    function publishNow() {
         props.setConfig({
             ...props.config,
-            draft: true,
+            draft: false,
         });
     }
 
     if (props.config.draft) {
         return (
             <VisualDraftStrip
-                configIsDiffering={props.configIsDiffering}
+                configIsDiffering={props.differing}
                 saveState={props.saveState}
                 revertState={props.revertState}
-                publishState={props.publishState}
+                publishNow={publishNow}
             />
         );
     } else {
@@ -79,7 +78,6 @@ function ControlStrip(props: Props) {
 
 const mapStateToProps = (state: types.ReduxState) => ({
     account: state.account,
-    configIsDiffering: state.configIsDiffering,
 });
 const mapDispatchToProps = (dispatch: any) => ({
     openMessage: reduxUtils.dispatchers.openMessage(dispatch),

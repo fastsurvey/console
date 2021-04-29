@@ -61,9 +61,9 @@ const dispatchers = {
             type: 'ADD_CONFIG',
             config,
         }),
-    modifyConfig: (dispatch: any) => (config: types.SurveyConfig): void =>
+    setCentralConfig: (dispatch: any) => (config: types.SurveyConfig): void =>
         dispatch({
-            type: 'MODIFY_CONFIG',
+            type: 'SET_CENTRAL_CONFIG',
             config,
         }),
     markDiffering: (dispatch: any) => (differing: boolean): void =>

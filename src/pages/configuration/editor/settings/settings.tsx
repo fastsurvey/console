@@ -41,7 +41,6 @@ function Settings(props: Props) {
                     submissionLimitIsValid(newConfig.limit),
             );
         }
-
         props.setConfig(newConfig);
     }
 

@@ -9,7 +9,7 @@ const addLocalIds = {
         ...config,
         local_id: configId,
         fields: config.fields.map((field, index) =>
-            addLocalIds.field(field, 1000 * config.local_id + index),
+            addLocalIds.field(field, 1000 * configId + index),
         ),
     }),
     field: (field: types.SurveyField, fieldId: number) => {
@@ -18,7 +18,7 @@ const addLocalIds = {
             field.fields = field.fields.map(
                 (fieldOption: types.FieldOption, subSubIndex: number) => ({
                     ...fieldOption,
-                    local_id: 1000 * field.local_id + subSubIndex,
+                    local_id: 1000 * fieldId + subSubIndex,
                 }),
             );
         }

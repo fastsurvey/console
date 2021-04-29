@@ -137,7 +137,7 @@ export declare namespace types {
                   | 'CLOSE_NAVBAR';
           }
         | {
-              type: 'MODIFY_CONFIG' | 'ADD_CONFIG';
+              type: 'SET_CENTRAL_CONFIG' | 'ADD_CONFIG';
               config: types.SurveyConfig;
           }
         | {

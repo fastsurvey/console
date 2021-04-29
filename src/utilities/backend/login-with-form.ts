@@ -14,12 +14,8 @@ async function loginWithForm(
     abort: (statusCode: 401 | 500) => void,
 ) {
     try {
-        const formData = new FormData();
-        formData.append('identifier', data.identifier);
-        formData.append('password', data.password);
-
         const authToken: types.AuthToken = (
-            await httpPost('/authentication', formData).catch(
+            await httpPost('/authentication', data).catch(
                 (response: {statusCode: number}) => {
                     throw response.statusCode;
                 },

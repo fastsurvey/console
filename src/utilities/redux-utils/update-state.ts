@@ -6,6 +6,7 @@ import assert from 'assert';
 
 function updateState(state: types.ReduxState, action: types.ReduxAction) {
     const newState = cloneDeep(state);
+    console.debug(action);
 
     switch (action.type) {
         case 'LOG_IN':
@@ -89,7 +90,7 @@ function updateState(state: types.ReduxState, action: types.ReduxAction) {
             }
             break;
 
-        case 'MODIFY_CONFIG':
+        case 'SET_CENTRAL_CONFIG':
             if (newState.configs !== undefined) {
                 newState.configs = newState.configs.map(
                     (config: types.SurveyConfig) =>
