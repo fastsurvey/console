@@ -9,6 +9,7 @@ import {
     addLocalIds,
     validateField,
     dataUtils,
+    backend,
 } from 'utilities';
 import ControlStrip from './control-strip/control-strip';
 import VisualEditor from './visual-editor';
@@ -16,6 +17,9 @@ import {AssertionError} from 'assert';
 import {types} from 'types';
 
 function ConfigEditor(props: {
+    account: types.Account;
+    authToken: types.AuthToken;
+
     configs: types.SurveyConfig[];
     centralConfig: types.SurveyConfig;
     setCentralConfig(config: types.SurveyConfig): void;
@@ -104,18 +108,35 @@ function ConfigEditor(props: {
         const authIsValid = validators.authMode(localConfig);
         const fieldOptionsAreValid = validators.fieldOptions(localConfig);
 
+        function success() {
+            props.closeAllMessages();
+            props.setCentralConfig(localConfig);
+            if (localConfig.survey_name !== props.centralConfig.survey_name) {
+                history.push(`/configuration/${localConfig.survey_name}`);
+            }
+        }
+
+        function error() {
+            props.openMessage({
+                text: 'Backend error, please try again',
+                type: 'error',
+            });
+        }
+
         if (
             fieldsAreValid &&
             timingIsValid &&
             authIsValid &&
             fieldOptionsAreValid
         ) {
-            props.closeAllMessages();
-            // TODO: Push to backend and show error/success message
-            props.setCentralConfig(localConfig);
-            if (localConfig.survey_name !== props.centralConfig.survey_name) {
-                history.push(`/configuration/${localConfig.survey_name}`);
-            }
+            backend.updateSurvey(
+                props.account,
+                props.authToken,
+                props.centralConfig.survey_name,
+                localConfig,
+                success,
+                error,
+            );
         } else {
             [
                 {

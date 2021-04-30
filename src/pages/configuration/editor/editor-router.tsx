@@ -6,6 +6,9 @@ import Editor from './editor';
 import {types} from 'types';
 
 interface Props {
+    account: types.Account;
+    authToken: types.AuthToken;
+
     configs: types.SurveyConfig[];
     setCentralConfig(config: types.SurveyConfig): void;
     openMessage(message: types.Message): void;
@@ -34,6 +37,8 @@ function EditorRouter(props: Props) {
 
     return (
         <Editor
+            account={props.account}
+            authToken={props.authToken}
             configs={props.configs}
             centralConfig={filteredConfigs[0]}
             setCentralConfig={props.setCentralConfig}
@@ -46,6 +51,8 @@ function EditorRouter(props: Props) {
 }
 
 const mapStateToProps = (state: types.ReduxState) => ({
+    account: state.account,
+    authToken: state.authToken,
     configs: state.configs,
     configIsDiffering: state.configIsDiffering,
 });
