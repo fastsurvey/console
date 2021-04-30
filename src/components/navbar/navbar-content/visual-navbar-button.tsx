@@ -16,8 +16,8 @@ function VisualNavbarButton(props: VisualNavbarButtonProps) {
                 'font-weight-600 flex flex-row items-center ' +
                 'justify-start rounded cursor-pointer ' +
                 (props.active
-                    ? 'text-gray-800 bg-white shadow'
-                    : 'text-gray-500 hover:text-gray-800 hover:bg-white hover:shadow')
+                    ? 'text-gray-100 bg-gray-700'
+                    : 'text-gray-300 hover:text-gray-100 hover:bg-gray-700')
             }
         >
             <div className={'h-8 w-8 p-1'}>{props.icon}</div>

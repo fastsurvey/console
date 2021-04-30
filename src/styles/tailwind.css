@@ -107,6 +107,13 @@
     @apply justify-center;
 }
 
+.centering-row {
+    @apply flex;
+    @apply flex-row;
+    @apply items-center;
+    @apply justify-center;
+}
+
 .text-magenta {
     color: #fd0948;
 }

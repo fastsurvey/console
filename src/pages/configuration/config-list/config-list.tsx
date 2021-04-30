@@ -4,7 +4,7 @@ import {useLocation, useHistory} from 'react-router-dom';
 import {reduxUtils, backend} from 'utilities';
 import icons from 'assets/icons/icons';
 
-import {ButtonLink} from 'components';
+import {ButtonLink, Button} from 'components';
 import ConfigPreviewPanel from './visual-config-panel';
 import VisualConfigList from './visual-config-list';
 import AddSurveyPopup from 'pages/configuration/config-list/add-survey-popup';
@@ -80,18 +80,19 @@ function ConfigList(props: Props) {
                     username={props.account.username}
                 />
             ))}
-            <ButtonLink
-                icon={icons.add}
-                onClick={() =>
-                    props.openModal(
-                        'Add a new survey',
-                        <AddSurveyPopup addSurvey={addSurvey} />,
-                    )
-                }
-                className='w-full mt-1'
-            >
-                New survey
-            </ButtonLink>
+            <div className='w-full mt-1 centering-row'>
+                <Button
+                    icon={icons.add}
+                    text='New survey'
+                    flat
+                    onClick={() =>
+                        props.openModal(
+                            'Add a new survey',
+                            <AddSurveyPopup addSurvey={addSurvey} />,
+                        )
+                    }
+                />
+            </div>
         </VisualConfigList>
     );
 }

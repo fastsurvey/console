@@ -8,6 +8,7 @@ interface Props {
     disabled?: boolean;
     spinning?: boolean;
     icon?: React.ReactNode;
+    flat?: boolean;
 }
 function Button(props: Props) {
     const reactivityClass =
@@ -20,7 +21,9 @@ function Button(props: Props) {
     const disabledClass =
         props.disabled || props.spinning
             ? 'text-gray-500 bg-gray-300'
-            : 'shadow text-gray-900 bg-gray-100';
+            : props.flat
+            ? 'text-gray-800 bg-white '
+            : 'shadow text-gray-900 bg-gray-100 ';
 
     return (
         <div

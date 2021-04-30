@@ -13,18 +13,18 @@ function ConfigPreviewPanel(props: Props) {
     let statusText: string;
 
     if (props.config.draft) {
-        statusColor = 'gray-800';
+        statusColor = 'border-gray-700 text-gray-700';
         statusText = 'Draft';
     } else {
         const now = Date.now() / 1000;
         if (now < props.config.start) {
-            statusColor = 'yellow-500';
+            statusColor = 'border-yellow-600 text-yellow-600';
             statusText = 'Pending';
         } else if (now >= props.config.end) {
-            statusColor = 'gray-500';
+            statusColor = 'border-gray-500 text-gray-500';
             statusText = 'Finished';
         } else {
-            statusColor = 'green-500';
+            statusColor = 'border-green-600 text-green-600';
             statusText = 'Running';
         }
     }
@@ -33,23 +33,21 @@ function ConfigPreviewPanel(props: Props) {
         <div
             onClick={props.onClick}
             className={
-                'w-full py-2 px-3 my-1 rounded-l shadow ' +
-                'no-selection border-r-4 border-' +
+                'w-full py-2 px-3 my-1 rounded-l ' +
+                'no-selection border-r-4 ' +
                 statusColor +
                 (props.selected
-                    ? ' cursor-default bg-white'
-                    : ' cursor-pointer bg-gray-300')
+                    ? ' cursor-default bg-white opacity-100 '
+                    : ' cursor-pointer bg-gray-100 opacity-80 ')
             }
         >
             <div className='flex flex-row items-start w-full'>
-                <div className='text-lg leading-8 text-gray-800 font-weight-600 '>
+                <div className='text-base leading-8 text-gray-800 font-weight-600 '>
                     {props.config.title}
                 </div>
                 <div className={'self-stretch flex-grow'} />
                 <span
-                    className={
-                        'ml-2  font-weight-500 text-base text-' + statusColor
-                    }
+                    className={'ml-2  font-weight-600 text-base ' + statusColor}
                 >
                     {statusText}
                 </span>
