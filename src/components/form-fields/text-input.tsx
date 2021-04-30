@@ -66,11 +66,11 @@ const TextInput = React.forwardRef((props: Props, ref: any) => {
                     'transition-all duration-100 ' +
                     'outline-none focus:ring ring-blue-300 ' +
                     (props.flat
-                        ? 'bg-gray-200 focus:bg-gray-100 '
+                        ? 'bg-gray-100 focus:bg-gray-100 '
                         : 'bg-white shadow ') +
                     (props.className ? props.className : '') +
                     ' ' +
-                    (props.disabled ? 'bg-gray-300 cursor-not-allowed ' : '')
+                    (props.disabled ? '!bg-gray-200 cursor-not-allowed ' : '')
                 }
                 type={props.type ? props.type : 'text'}
                 autoComplete={props.autoComplete ? props.autoComplete : ''}

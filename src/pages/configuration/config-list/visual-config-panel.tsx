@@ -42,7 +42,7 @@ function ConfigPreviewPanel(props: Props) {
             }
         >
             <div className='flex flex-row items-start w-full'>
-                <div className='text-base leading-8 text-gray-800 font-weight-600 '>
+                <div className='mb-1.5 text-base leading-tight text-gray-800 font-weight-600'>
                     {props.config.title}
                 </div>
                 <div className={'self-stretch flex-grow'} />
