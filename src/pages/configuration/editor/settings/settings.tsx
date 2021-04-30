@@ -12,6 +12,7 @@ interface Props {
     authToken: types.AuthToken;
     centralConfigName: string;
     openMessage(m: types.Message): void;
+    configIsDiffering: boolean;
 
     configs: types.SurveyConfig[] | undefined;
     config: types.SurveyConfig;
@@ -84,13 +85,20 @@ function Settings(props: Props) {
     }
 
     function openDuplicateModal() {
-        props.openModal(
-            'Duplicate this survey',
-            <DuplicateSurveyPopup
-                originalSurveyName={props.config.survey_name}
-                duplicateSurvey={duplicateSurvey}
-            />,
-        );
+        if (!props.configIsDiffering) {
+            props.openModal(
+                'Duplicate this survey',
+                <DuplicateSurveyPopup
+                    originalSurveyName={props.config.survey_name}
+                    duplicateSurvey={duplicateSurvey}
+                />,
+            );
+        } else {
+            props.openMessage({
+                text: 'Please save or undo your changes first!',
+                type: 'warning',
+            });
+        }
     }
     function duplicateSurvey(newSurveyName: string) {
         const newConfig = {
@@ -134,6 +142,7 @@ const mapStateToProps = (state: types.ReduxState) => ({
     account: state.account,
     authToken: state.authToken,
     configs: state.configs,
+    configIsDiffering: state.configIsDiffering,
 });
 const mapDispatchToProps = (dispatch: any) => ({
     openMessage: reduxUtils.dispatchers.openMessage(dispatch),
