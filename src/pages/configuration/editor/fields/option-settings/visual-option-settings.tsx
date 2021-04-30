@@ -4,7 +4,7 @@ import {types} from 'types';
 
 interface Props {
     fieldConfig: types.OptionField;
-    updateFieldConfig(fieldConfig: types.OptionField): void;
+    setLocalFieldConfig(fieldConfigChanges: object): void;
     disabled: boolean;
 }
 const VisualOptionSettings = (props: Props) => (
@@ -13,8 +13,7 @@ const VisualOptionSettings = (props: Props) => (
             disabled={props.disabled}
             checked={props.fieldConfig.required}
             onChange={(newValue: boolean) =>
-                props.updateFieldConfig({
-                    ...props.fieldConfig,
+                props.setLocalFieldConfig({
                     required: newValue,
                 })
             }

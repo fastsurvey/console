@@ -3,15 +3,15 @@ import {copyToClipboard, removeLocalIds, validateField} from 'utilities';
 import {types} from 'types';
 
 import VisualField from './visual-field';
-import TextSettings from '../text-settings/text-settings';
-import OptionSettings from '../option-settings/option-settings';
-import RadioSettings from '../radio-settings/radio-settings';
-import SelectionSettings from '../selection-settings/selection-settings';
-import EmailSettings from '../email-settings/email-settings';
+import TextSettings from './text-settings/text-settings';
+import OptionSettings from './option-settings/option-settings';
+import RadioSettings from './radio-settings/radio-settings';
+import SelectionSettings from './selection-settings/selection-settings';
+import EmailSettings from './email-settings/email-settings';
 
 interface Props {
     fieldConfig: types.SurveyField;
-    setFieldConfig(fieldConfig: types.SurveyField): void;
+    setLocalFieldConfig(fieldConfigChanges: object): void;
     disabled: boolean;
     updateValidator(newState: boolean): void;
     removeField(): void;
@@ -22,9 +22,9 @@ function Field(props: Props) {
         props.fieldConfig.local_id,
     ]);
 
-    function updateFieldConfig(newFieldConfig: types.SurveyField) {
+    function updateLocalFieldConfig(newFieldConfig: types.SurveyField) {
         props.updateValidator(validateField(newFieldConfig));
-        props.setFieldConfig(newFieldConfig);
+        props.setLocalFieldConfig(newFieldConfig);
     }
 
     function copyField() {
@@ -43,7 +43,7 @@ function Field(props: Props) {
             FieldSettings = (
                 <TextSettings
                     disabled={props.disabled}
-                    setFieldConfig={updateFieldConfig}
+                    setLocalFieldConfig={updateLocalFieldConfig}
                     fieldConfig={props.fieldConfig}
                 />
             );
@@ -52,7 +52,7 @@ function Field(props: Props) {
             FieldSettings = (
                 <OptionSettings
                     disabled={props.disabled}
-                    setFieldConfig={updateFieldConfig}
+                    setLocalFieldConfig={updateLocalFieldConfig}
                     fieldConfig={props.fieldConfig}
                 />
             );
@@ -61,7 +61,7 @@ function Field(props: Props) {
             FieldSettings = (
                 <RadioSettings
                     disabled={props.disabled}
-                    setFieldConfig={updateFieldConfig}
+                    setLocalFieldConfig={updateLocalFieldConfig}
                     fieldConfig={props.fieldConfig}
                 />
             );
@@ -70,7 +70,7 @@ function Field(props: Props) {
             FieldSettings = (
                 <SelectionSettings
                     disabled={props.disabled}
-                    setFieldConfig={updateFieldConfig}
+                    setLocalFieldConfig={updateLocalFieldConfig}
                     fieldConfig={props.fieldConfig}
                 />
             );
@@ -79,7 +79,7 @@ function Field(props: Props) {
             FieldSettings = (
                 <EmailSettings
                     disabled={props.disabled}
-                    setFieldConfig={updateFieldConfig}
+                    setLocalFieldConfig={updateLocalFieldConfig}
                     fieldConfig={props.fieldConfig}
                 />
             );
@@ -96,8 +96,7 @@ function Field(props: Props) {
     return (
         <VisualField
             fieldConfig={props.fieldConfig}
-            setFieldConfig={props.setFieldConfig}
-            updateFieldConfig={updateFieldConfig}
+            setLocalFieldConfig={updateLocalFieldConfig}
             disabled={props.disabled}
             removeField={props.removeField}
             copyField={copyField}

@@ -4,19 +4,15 @@ import {types} from 'types';
 
 interface Props {
     fieldConfig: types.OptionField;
-    setFieldConfig(fieldConfig: types.OptionField): void;
+    setLocalFieldConfig(fieldConfigChanges: object): void;
     disabled: boolean;
 }
 function OptionSettings(props: Props) {
-    function updateFieldConfig(newFieldConfig: types.OptionField) {
-        props.setFieldConfig(newFieldConfig);
-    }
-
     return (
         <VisualOptionSettings
             fieldConfig={props.fieldConfig}
             disabled={props.disabled}
-            updateFieldConfig={updateFieldConfig}
+            setLocalFieldConfig={props.setLocalFieldConfig}
         />
     );
 }

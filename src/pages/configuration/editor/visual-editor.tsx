@@ -1,27 +1,20 @@
 import React from 'react';
 import {types} from 'types';
 import Settings from './settings/settings';
-import FieldConfigForm from './fields/field/field';
+import Field from './fields/field';
 import AddFieldPanel from './add-field-panel/add-field-panel';
 
-interface Props {
-    differing: boolean;
-
-    saveState(): void;
-    publishState(): void;
-    revertState(): void;
-
+function VisualEditor(props: {
     localConfig: types.SurveyConfig;
-    setLocalConfig(config: types.SurveyConfig): void;
+    setLocalConfig(configChanges: object): void;
+    setLocalFieldConfig(fieldConfigChanges: object, newIndex: number): void;
 
     updateValidator(newIndex: number, newState: boolean): void;
-    setFieldConfig(newFieldConfig: types.SurveyField, newIndex: number): void;
 
     insertField(index: number, fieldType: types.FieldType): void;
     pasteField(index: number): void;
     removeField(index: number): void;
-}
-function VisualEditor(props: Props) {
+}) {
     return (
         <div
             className={
@@ -32,7 +25,7 @@ function VisualEditor(props: Props) {
         >
             <Settings
                 config={props.localConfig}
-                setConfig={props.setLocalConfig}
+                setLocalConfig={props.setLocalConfig}
                 updateValidator={(newState: boolean) =>
                     props.updateValidator(0, newState)
                 }
@@ -45,10 +38,10 @@ function VisualEditor(props: Props) {
                         }
                         pasteField={() => props.pasteField(index)}
                     />
-                    <FieldConfigForm
+                    <Field
                         fieldConfig={fieldConfig}
-                        setFieldConfig={(newFieldConfig: types.SurveyField) =>
-                            props.setFieldConfig(newFieldConfig, index)
+                        setLocalFieldConfig={(newFieldConfig: object) =>
+                            props.setLocalFieldConfig(newFieldConfig, index)
                         }
                         disabled={!props.localConfig.draft}
                         updateValidator={(newState: boolean) =>

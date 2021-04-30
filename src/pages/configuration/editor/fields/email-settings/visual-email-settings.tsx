@@ -7,7 +7,7 @@ interface Props {
     setupValue: number;
     customSetup: types.EmailRegexSetup;
     fieldConfig: types.EmailField;
-    updateFieldConfig(fieldConfig: types.EmailField): void;
+    setLocalFieldConfig(fieldConfigChanges: object): void;
     disabled: boolean;
 }
 function VisualEmailSettings(props: Props) {
@@ -27,8 +27,7 @@ function VisualEmailSettings(props: Props) {
                             ...formOptions.EMAIL_REGEX,
                             props.customSetup,
                         ].filter((setup) => setup.value === newValue)[0];
-                        props.updateFieldConfig({
-                            ...props.fieldConfig,
+                        props.setLocalFieldConfig({
                             regex: setup.regex,
                             hint: setup.hint,
                         });
@@ -43,8 +42,7 @@ function VisualEmailSettings(props: Props) {
                     placeholder='URL conform identifier'
                     value={props.fieldConfig.regex}
                     onChange={(newValue: string) =>
-                        props.updateFieldConfig({
-                            ...props.fieldConfig,
+                        props.setLocalFieldConfig({
                             regex: newValue,
                         })
                     }
@@ -58,8 +56,7 @@ function VisualEmailSettings(props: Props) {
                     placeholder='URL conform identifier'
                     value={props.fieldConfig.hint}
                     onChange={(newValue: string) =>
-                        props.updateFieldConfig({
-                            ...props.fieldConfig,
+                        props.setLocalFieldConfig({
                             hint: newValue,
                         })
                     }

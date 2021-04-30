@@ -6,22 +6,13 @@ import Editor from './editor';
 import {types} from 'types';
 
 interface Props {
-    configs: undefined | types.SurveyConfig[];
+    configs: types.SurveyConfig[];
     setCentralConfig(config: types.SurveyConfig): void;
     openMessage(message: types.Message): void;
     closeAllMessages(): void;
 }
 function EditorRouter(props: Props) {
     let params = useParams();
-
-    if (!props.configs) {
-        return (
-            <div id='ConfigEditor'>
-                <h3>Configurations</h3>
-                <p>Loading surveys ...</p>
-            </div>
-        );
-    }
 
     const filteredConfigs = props.configs.filter((config) => {
         // @ts-ignore

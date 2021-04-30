@@ -6,9 +6,7 @@ import {types} from 'types';
 
 interface Props {
     fieldConfig: types.RadioField | types.SelectionField;
-    updateFieldConfig(
-        fieldConfig: types.RadioField | types.SelectionField,
-    ): void;
+    setLocalFieldConfig(fieldConfigChanges: object): void;
     disabled: boolean;
 }
 function FieldOptionsList(props: Props) {
@@ -27,7 +25,7 @@ function FieldOptionsList(props: Props) {
         nextRowRef.current?.blur();
         optionsVisible.push(true);
 
-        props.updateFieldConfig(optionTemplate(newOption, props.fieldConfig));
+        props.setLocalFieldConfig(optionTemplate(newOption, props.fieldConfig));
 
         // Suitable for 1rem = 16px
         animateScroll.scrollMore(56, {duration: 150});
@@ -38,7 +36,7 @@ function FieldOptionsList(props: Props) {
     return (
         <VisualFieldOptionsList
             fieldConfig={props.fieldConfig}
-            updateFieldConfig={props.updateFieldConfig}
+            setLocalFieldConfig={props.setLocalFieldConfig}
             disabled={props.disabled}
             setOptionsVisible={setOptionsVisible}
             optionsVisible={optionsVisible}

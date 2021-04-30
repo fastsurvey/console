@@ -5,7 +5,7 @@ import {types} from 'types';
 
 interface Props {
     fieldConfig: types.EmailField;
-    setFieldConfig(fieldConfig: types.EmailField): void;
+    setLocalFieldConfig(fieldConfigChanges: object): void;
     disabled: boolean;
 }
 function EmailSettings(props: Props) {
@@ -41,17 +41,13 @@ function EmailSettings(props: Props) {
         }
     }, [props.fieldConfig.regex, props.fieldConfig.hint]);
 
-    function updateFieldConfig(newFieldConfig: types.EmailField) {
-        props.setFieldConfig(newFieldConfig);
-    }
-
     return (
         <VisualEmailSettings
             fieldConfig={props.fieldConfig}
             setupValue={setupValue}
             customSetup={customSetup}
             disabled={props.disabled}
-            updateFieldConfig={updateFieldConfig}
+            setLocalFieldConfig={props.setLocalFieldConfig}
         />
     );
 }

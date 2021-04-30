@@ -7,9 +7,7 @@ import {types} from 'types';
 interface Props {
     fieldConfig: types.RadioField | types.SelectionField;
     disabled: boolean;
-    updateFieldConfig(
-        fieldConfig: types.RadioField | types.SelectionField,
-    ): void;
+    setLocalFieldConfig(fieldConfigChanges: object): void;
 
     setOptionsVisible(optionsVisible: boolean[]): void;
     optionsVisible: boolean[];
@@ -42,8 +40,7 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
                             {...commonProps}
                             value={optionField.title}
                             onChange={(newValue: string) =>
-                                props.updateFieldConfig({
-                                    ...props.fieldConfig,
+                                props.setLocalFieldConfig({
                                     fields: props.fieldConfig.fields.map(
                                         (oldOptionField, oldIndex) =>
                                             optionIndex === oldIndex
@@ -73,8 +70,7 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
                                     ),
                                 );
                                 setTimeout(() => {
-                                    props.updateFieldConfig({
-                                        ...props.fieldConfig,
+                                    props.setLocalFieldConfig({
                                         fields: props.fieldConfig.fields.filter(
                                             (oldOptionField, oldIndex) =>
                                                 optionIndex !== oldIndex,

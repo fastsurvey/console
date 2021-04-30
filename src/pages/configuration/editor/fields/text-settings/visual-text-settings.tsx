@@ -5,7 +5,7 @@ import {types} from 'types';
 
 interface Props {
     fieldConfig: types.TextField;
-    updateFieldConfig(fieldConfig: types.TextField): void;
+    setLocalFieldConfig(fieldConfigChanges: object): void;
     disabled: boolean;
 }
 function VisualTextSettings(props: Props) {
@@ -21,8 +21,7 @@ function VisualTextSettings(props: Props) {
                     {...commonProps}
                     value={props.fieldConfig.min_chars.toString()}
                     onChange={(newValue: string) =>
-                        props.updateFieldConfig({
-                            ...props.fieldConfig,
+                        props.setLocalFieldConfig({
                             min_chars: formatters.atoi(newValue),
                         })
                     }
@@ -37,8 +36,7 @@ function VisualTextSettings(props: Props) {
                     {...commonProps}
                     value={props.fieldConfig.max_chars.toString()}
                     onChange={(newValue: string) =>
-                        props.updateFieldConfig({
-                            ...props.fieldConfig,
+                        props.setLocalFieldConfig({
                             max_chars: formatters.atoi(newValue),
                         })
                     }

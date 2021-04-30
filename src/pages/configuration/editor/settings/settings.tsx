@@ -10,7 +10,7 @@ import {types} from 'types';
 interface Props {
     configs: types.SurveyConfig[] | undefined;
     config: types.SurveyConfig;
-    setConfig(config: types.SurveyConfig): void;
+    setLocalConfig(config: object): void;
     updateValidator(newState: boolean): void;
 
     openModal(title: string, children: React.ReactNode): void;
@@ -41,7 +41,7 @@ function Settings(props: Props) {
                     submissionLimitIsValid(newConfig.limit),
             );
         }
-        props.setConfig(newConfig);
+        props.setLocalConfig(newConfig);
     }
 
     function openRemoveModal() {

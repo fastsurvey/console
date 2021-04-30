@@ -6,7 +6,7 @@ import {types} from 'types';
 
 interface Props {
     fieldConfig: types.SelectionField;
-    updateFieldConfig(fieldConfig: types.SelectionField): void;
+    setLocalFieldConfig(fieldConfigChanges: object): void;
     disabled: boolean;
 }
 function VisualSelectionSettings(props: Props) {
@@ -22,8 +22,7 @@ function VisualSelectionSettings(props: Props) {
                     {...commonProps}
                     value={props.fieldConfig.min_select.toString()}
                     onChange={(newValue: string) =>
-                        props.updateFieldConfig({
-                            ...props.fieldConfig,
+                        props.setLocalFieldConfig({
                             min_select: formatters.atoi(newValue),
                         })
                     }
@@ -38,8 +37,7 @@ function VisualSelectionSettings(props: Props) {
                     {...commonProps}
                     value={props.fieldConfig.max_select.toString()}
                     onChange={(newValue: string) =>
-                        props.updateFieldConfig({
-                            ...props.fieldConfig,
+                        props.setLocalFieldConfig({
                             max_select: formatters.atoi(newValue),
                         })
                     }
@@ -52,7 +50,7 @@ function VisualSelectionSettings(props: Props) {
             <FieldOptionsList
                 fieldConfig={props.fieldConfig}
                 disabled={props.disabled}
-                updateFieldConfig={props.updateFieldConfig}
+                setLocalFieldConfig={props.setLocalFieldConfig}
             />
         </div>
     );

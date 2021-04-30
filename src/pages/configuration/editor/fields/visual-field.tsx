@@ -7,8 +7,7 @@ import {types} from 'types';
 interface Props {
     fieldConfig: types.SurveyField;
     disabled: boolean;
-    setFieldConfig(fieldConfig: types.SurveyField): void;
-    updateFieldConfig(fieldConfig: types.SurveyField): void;
+    setLocalFieldConfig(fieldConfigChanges: object): void;
     removeField(): void;
     copyField(): void;
     children: React.ReactNode;
@@ -65,8 +64,7 @@ function VisualField(props: Props) {
                     placeholder='The title of this field'
                     value={props.fieldConfig.title}
                     onChange={(newValue: string) => {
-                        props.updateFieldConfig({
-                            ...props.fieldConfig,
+                        props.setLocalFieldConfig({
                             title: newValue,
                         });
                     }}
@@ -82,10 +80,7 @@ function VisualField(props: Props) {
                     {...commonInputProps}
                     value={props.fieldConfig.description}
                     onChange={(newValue: string) => {
-                        props.updateFieldConfig({
-                            ...props.fieldConfig,
-                            ...{description: newValue},
-                        });
+                        props.setLocalFieldConfig({description: newValue});
                     }}
                     charLimits={{min: 0, max: 2000}}
                 />

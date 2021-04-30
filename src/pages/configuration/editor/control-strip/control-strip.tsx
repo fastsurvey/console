@@ -8,10 +8,9 @@ import VisualPublishedStrip from './visual-published-strip';
 interface Props {
     account: types.Account;
     config: types.SurveyConfig;
-    setConfig(config: object): void;
+    setCentralConfig(configChanges: object): void;
     differing: boolean;
     saveState(): void;
-    publishState(): void;
     revertState(): void;
     openMessage(message: types.Message): void;
 }
@@ -21,33 +20,32 @@ function ControlStrip(props: Props) {
     }
 
     function startNow() {
-        props.setConfig({
+        props.setCentralConfig({
             start: now(),
         });
     }
 
     function reopenNow() {
-        props.setConfig({
+        props.setCentralConfig({
             start: now(),
             end: now() + 3600 * 24,
         });
     }
 
     function endNow() {
-        props.setConfig({
+        props.setCentralConfig({
             end: Math.floor(Date.now() / 1000),
         });
     }
 
     function editNow() {
-        props.setConfig({
+        props.setCentralConfig({
             draft: true,
         });
     }
 
     function publishNow() {
-        props.setConfig({
-            ...props.config,
+        props.setCentralConfig({
             draft: false,
         });
     }
