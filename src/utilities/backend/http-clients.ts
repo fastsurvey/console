@@ -22,6 +22,18 @@ export function httpPost(
     }
 }
 
+export function httpPut(
+    url: string,
+    dataObject: {[key: string]: any},
+    auth_token: types.AuthToken,
+) {
+    return axios.put(API_URL + url, JSON.stringify(dataObject), {
+        headers: {
+            Authorization: `${auth_token.token_type} ${auth_token.access_token}`,
+        },
+    });
+}
+
 export function httpGet(url: string, auth_token?: types.AuthToken) {
     if (auth_token) {
         return axios.get(API_URL + url, {
