@@ -21,7 +21,7 @@ interface Props {
     openModal(title: string, children: React.ReactNode): void;
     closeModal(): void;
     removeConfig(surveyName: string): void;
-    duplicateConfig(newSurveyName: string, newConfig: types.SurveyConfig): void;
+    addConfig(newConfig: types.SurveyConfig): void;
 }
 function Settings(props: Props) {
     let history = useHistory();
@@ -98,7 +98,7 @@ function Settings(props: Props) {
             survey_name: newSurveyName,
         };
         const success = () => {
-            props.duplicateConfig(newSurveyName, props.config);
+            props.addConfig(newConfig);
             props.closeModal();
             history.push(`/configuration/${newSurveyName}`);
         };
@@ -140,6 +140,6 @@ const mapDispatchToProps = (dispatch: any) => ({
     openModal: reduxUtils.dispatchers.openModal(dispatch),
     closeModal: reduxUtils.dispatchers.closeModal(dispatch),
     removeConfig: reduxUtils.dispatchers.removeConfig(dispatch),
-    duplicateConfig: reduxUtils.dispatchers.duplicateConfig(dispatch),
+    addConfig: reduxUtils.dispatchers.addConfig(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

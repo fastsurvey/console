@@ -68,17 +68,9 @@ function updateState(state: types.ReduxState, action: types.ReduxAction) {
 
         case 'ADD_CONFIG':
             assert(newState.configs);
-            newState.configs = [...newState.configs, action.config];
-            break;
-
-        case 'DUPLICATE_CONFIG':
-            assert(newState.configs);
             newState.configs = [
                 ...newState.configs,
-                addLocalIds.survey(
-                    {...action.newConfig, survey_name: action.newSurveyName},
-                    newState.configs.length,
-                ),
+                addLocalIds.survey(action.config, newState.configs.length),
             ];
             break;
 
