@@ -1,8 +1,10 @@
 export {default as environment} from './constants/environment';
 export {default as formOptions} from './constants/form-options';
 
-export {default as formatters} from './form-helpers/formatters';
 export {default as reduxUtils} from './redux-utils';
+export {default as dataUtils} from './data-utils';
+
+export {default as formatters} from './form-helpers/formatters';
 export {default as validators} from './form-helpers/validators';
 export {default as validateField} from './form-helpers/validate-field';
 export {default as hints} from './form-helpers/hints';

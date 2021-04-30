@@ -1,4 +1,4 @@
-import {concat} from 'lodash';
+import {concat, constant, times} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {
@@ -8,23 +8,12 @@ import {
     newFieldId,
     addLocalIds,
     validateField,
+    dataUtils,
 } from 'utilities';
 import ControlStrip from './control-strip/control-strip';
 import VisualEditor from './visual-editor';
 import {AssertionError} from 'assert';
 import {types} from 'types';
-
-function insert(array: any[], index: number, element: any) {
-    return concat(
-        array.slice(0, index),
-        element,
-        array.slice(index, array.length),
-    );
-}
-
-function remove(array: any[], index: number) {
-    return concat(array.slice(0, index), array.slice(index + 1, array.length));
-}
 
 function ConfigEditor(props: {
     configs: types.SurveyConfig[];
@@ -44,43 +33,28 @@ function ConfigEditor(props: {
     const history = useHistory();
 
     useEffect(() => {
-        setLocalConfigState(props.centralConfig);
-        initValidators(props.centralConfig);
-    }, []);
-
-    useEffect(() => {
         // Switch between configs in editor
         setLocalConfigState(props.centralConfig);
+        initValidators(props.centralConfig);
     }, [props.centralConfig.survey_name]);
 
     function initValidators(config: types.SurveyConfig) {
-        const newValidators = [];
-        for (let i = 0; i <= config.fields.length; i++) {
-            newValidators.push(true);
-        }
-        setFieldValidators(newValidators);
+        setFieldValidators(times(config.fields.length + 1, constant(true)));
     }
 
     function updateValidator(newIndex: number, newState: boolean) {
-        const newValidators: boolean[] = fieldValidators.map((state, index) =>
-            index !== newIndex ? state : newState,
-        );
-        /*
-        if (fieldValidators.includes(false)) {
-            props.closeAllMessages();
-        }*/
-
-        console.log(newValidators);
+        const newValidators = [...fieldValidators];
+        newValidators[newIndex] = newState;
         setFieldValidators(newValidators);
     }
 
     function insertField(index: number, fieldType: types.FieldType) {
-        setFieldValidators(insert(fieldValidators, index + 1, false));
+        setFieldValidators(dataUtils.insert(fieldValidators, index + 1, false));
 
         const field: types.SurveyField = fieldTemplate(fieldType, localConfig);
         setLocalConfig({
             ...localConfig,
-            fields: insert(localConfig.fields, index, field),
+            fields: dataUtils.insert(localConfig.fields, index, field),
         });
     }
 
@@ -93,12 +67,16 @@ function ConfigEditor(props: {
                 }
 
                 setFieldValidators(
-                    insert(fieldValidators, index + 1, validateField(newField)),
+                    dataUtils.insert(
+                        fieldValidators,
+                        index + 1,
+                        validateField(newField),
+                    ),
                 );
 
                 const newConfig = {
                     ...localConfig,
-                    fields: insert(
+                    fields: dataUtils.insert(
                         localConfig.fields,
                         index,
                         addLocalIds.field(newField, newFieldId(localConfig)),
@@ -113,10 +91,10 @@ function ConfigEditor(props: {
     }
 
     function removeField(index: number) {
-        setFieldValidators(remove(fieldValidators, index + 1));
+        setFieldValidators(dataUtils.remove(fieldValidators, index + 1));
         setLocalConfig({
             ...localConfig,
-            fields: remove(localConfig.fields, index),
+            fields: dataUtils.remove(localConfig.fields, index),
         });
     }
 
