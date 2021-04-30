@@ -29,9 +29,15 @@ async function loginWithForm(
             username = data.identifier;
         }
 
-        const account: types.Account = (
+        const email_address: string = (
             await httpGet(`/users/${username}`, authToken)
-        ).data;
+        ).data.email_address;
+        const account = {
+            username,
+            email_address,
+            verified: true,
+        };
+
         const configs: types.SurveyConfig[] = (
             await httpGet(`/users/${username}/surveys`, authToken)
         ).data;
