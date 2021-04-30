@@ -33,3 +33,11 @@ export function httpGet(url: string, auth_token?: types.AuthToken) {
         return axios.get(API_URL + url);
     }
 }
+
+export function httpDelete(url: string, auth_token: types.AuthToken) {
+    return axios.delete(API_URL + url, {
+        headers: {
+            Authorization: `${auth_token.token_type} ${auth_token.access_token}`,
+        },
+    });
+}

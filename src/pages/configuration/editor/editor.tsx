@@ -181,6 +181,7 @@ function ConfigEditor(props: {
                 revertState={revertState}
             />
             <VisualEditor
+                centralConfigName={props.centralConfig.survey_name}
                 localConfig={localConfig}
                 updateValidator={updateValidator}
                 setLocalConfig={setLocalConfig}

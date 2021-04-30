@@ -2,12 +2,17 @@ import RemoveSurveyPopup from './remove-survey-popup';
 import DuplicateSurveyPopup from './duplicate-survey-popup';
 import React from 'react';
 import {connect} from 'react-redux';
-import {validators, reduxUtils} from 'utilities';
+import {validators, reduxUtils, backend} from 'utilities';
 import VisualSettings from './visual-settings';
 import {useHistory} from 'react-router-dom';
 import {types} from 'types';
 
 interface Props {
+    account: types.Account;
+    authToken: types.AuthToken;
+    centralConfigName: string;
+    openMessage(m: types.Message): void;
+
     configs: types.SurveyConfig[] | undefined;
     config: types.SurveyConfig;
     setLocalConfig(config: object): void;
@@ -55,9 +60,27 @@ function Settings(props: Props) {
     }
 
     function removeSurvey() {
-        props.closeModal();
-        history.push('/configurations');
-        props.removeConfig(props.config.survey_name);
+        function success() {
+            props.removeConfig(props.config.survey_name);
+            props.closeModal();
+            history.push('/configurations');
+        }
+
+        function error() {
+            props.closeModal();
+            props.openMessage({
+                text: 'Backend error, please reload the page',
+                type: 'error',
+            });
+        }
+
+        backend.deleteSurvey(
+            props.account,
+            props.authToken,
+            props.centralConfigName,
+            success,
+            error,
+        );
     }
 
     function openDuplicateModal() {
@@ -93,9 +116,12 @@ function Settings(props: Props) {
     );
 }
 const mapStateToProps = (state: types.ReduxState) => ({
+    account: state.account,
+    authToken: state.authToken,
     configs: state.configs,
 });
 const mapDispatchToProps = (dispatch: any) => ({
+    openMessage: reduxUtils.dispatchers.openMessage(dispatch),
     openModal: reduxUtils.dispatchers.openModal(dispatch),
     closeModal: reduxUtils.dispatchers.closeModal(dispatch),
     removeConfig: reduxUtils.dispatchers.removeConfig(dispatch),

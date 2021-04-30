@@ -5,6 +5,7 @@ import Field from './fields/field';
 import AddFieldPanel from './add-field-panel/add-field-panel';
 
 function VisualEditor(props: {
+    centralConfigName: string;
     localConfig: types.SurveyConfig;
     setLocalConfig(configChanges: object): void;
     setLocalFieldConfig(fieldConfigChanges: object, newIndex: number): void;
@@ -24,6 +25,7 @@ function VisualEditor(props: {
             }
         >
             <Settings
+                centralConfigName={props.centralConfigName}
                 config={props.localConfig}
                 setLocalConfig={props.setLocalConfig}
                 updateValidator={(newState: boolean) =>
