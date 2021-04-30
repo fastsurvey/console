@@ -66,6 +66,7 @@ function ConfigEditor(props: {
         navigator.clipboard.readText().then((text: string) => {
             try {
                 const newField = JSON.parse(text);
+
                 if (!validateFormat.fieldConfig(newField)) {
                     throw AssertionError;
                 }
@@ -88,8 +89,11 @@ function ConfigEditor(props: {
                 };
                 setLocalConfig(newConfig);
             } catch {
-                // TODO: Show message on unsuccessful paste
-                console.info('invalid text format on clipoard');
+                props.openMessage({
+                    text: 'Invalid text format on clipboard',
+                    type: 'warning',
+                });
+                console.info('invalid text format on clipboard');
             }
         });
     }

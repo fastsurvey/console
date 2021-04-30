@@ -23,7 +23,7 @@ const validateFormat = {
             checkTypes(config.description, 's');
 
             assert(
-                ['Email', 'Option', 'Radio', 'Selection', 'Text'].includes(
+                ['email', 'option', 'radio', 'selection', 'text'].includes(
                     config.type,
                 ),
             );
@@ -43,7 +43,7 @@ const validateFormat = {
                     checkTypes(config.hint, 's');
                     return true;
                 case 'option':
-                    checkKeys(['mandatory']);
+                    checkKeys(['required']);
                     checkTypes(config.required, true);
                     return true;
                 case 'radio':
