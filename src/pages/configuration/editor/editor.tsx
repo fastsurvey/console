@@ -30,10 +30,13 @@ function ConfigEditor(props: {
     configs: types.SurveyConfig[];
     centralConfig: types.SurveyConfig;
     setCentralConfig(config: types.SurveyConfig): void;
+
+    configIsDiffering: boolean;
+    markDiffering(d: boolean): void;
+
     openMessage(message: types.Message): void;
     closeAllMessages(): void;
 }) {
-    const [differing, setDiffering] = useState(false);
     const [localConfig, setLocalConfigState] = useState(props.centralConfig);
     const [fieldValidators, setFieldValidators] = useState<boolean[]>([]);
 
@@ -46,8 +49,9 @@ function ConfigEditor(props: {
     }, []);
 
     useEffect(() => {
-        setLocalConfig(props.centralConfig);
-    }, [props.centralConfig]);
+        // Switch between configs in editor
+        setLocalConfigState(props.centralConfig);
+    }, [props.centralConfig.survey_name]);
 
     function initValidators(config: types.SurveyConfig) {
         const newValidators = [];
@@ -160,7 +164,7 @@ function ConfigEditor(props: {
     }
 
     function revertState() {
-        setDiffering(false);
+        props.markDiffering(false);
         props.closeAllMessages();
         setLocalConfigState(props.centralConfig);
         initValidators(props.centralConfig);
@@ -168,7 +172,9 @@ function ConfigEditor(props: {
 
     function setLocalConfig(configChanges: object) {
         // TODO: Add proper state comparison (localConfig === centralConfig)
-        setDiffering(true);
+        if (!props.configIsDiffering) {
+            props.markDiffering(true);
+        }
         setLocalConfigState({
             ...localConfig,
             ...configChanges,
@@ -194,7 +200,6 @@ function ConfigEditor(props: {
                 setCentralConfig={props.setCentralConfig}
                 saveState={saveState}
                 revertState={revertState}
-                differing={differing}
             />
             <VisualEditor
                 localConfig={localConfig}

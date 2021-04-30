@@ -9,7 +9,7 @@ interface Props {
     account: types.Account;
     config: types.SurveyConfig;
     setCentralConfig(configChanges: object): void;
-    differing: boolean;
+    configIsDiffering: boolean;
     saveState(): void;
     revertState(): void;
     openMessage(message: types.Message): void;
@@ -53,7 +53,7 @@ function ControlStrip(props: Props) {
     if (props.config.draft) {
         return (
             <VisualDraftStrip
-                configIsDiffering={props.differing}
+                configIsDiffering={props.configIsDiffering}
                 saveState={props.saveState}
                 revertState={props.revertState}
                 publishNow={publishNow}
@@ -76,6 +76,7 @@ function ControlStrip(props: Props) {
 
 const mapStateToProps = (state: types.ReduxState) => ({
     account: state.account,
+    configIsDiffering: state.configIsDiffering,
 });
 const mapDispatchToProps = (dispatch: any) => ({
     openMessage: reduxUtils.dispatchers.openMessage(dispatch),

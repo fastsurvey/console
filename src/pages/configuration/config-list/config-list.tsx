@@ -4,13 +4,12 @@ import {useLocation, useHistory} from 'react-router-dom';
 import {reduxUtils, backend} from 'utilities';
 import icons from 'assets/icons/icons';
 
-import {ButtonLink, Button} from 'components';
+import {Button} from 'components';
 import ConfigPreviewPanel from './visual-config-panel';
 import VisualConfigList from './visual-config-list';
 import AddSurveyPopup from 'pages/configuration/config-list/add-survey-popup';
 import surveyTemplate from '../../../utilities/template-helpers/add-survey';
 import {types} from 'types';
-import assert from 'assert';
 import {sortBy} from 'lodash';
 
 interface Props {
