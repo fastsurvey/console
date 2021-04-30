@@ -65,11 +65,12 @@ function ConfigEditor(props: {
         const newValidators: boolean[] = fieldValidators.map((state, index) =>
             index !== newIndex ? state : newState,
         );
-
+        /*
         if (fieldValidators.includes(false)) {
             props.closeAllMessages();
-        }
+        }*/
 
+        console.log(newValidators);
         setFieldValidators(newValidators);
     }
 

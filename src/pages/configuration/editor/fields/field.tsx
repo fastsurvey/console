@@ -22,9 +22,11 @@ function Field(props: Props) {
         props.fieldConfig.local_id,
     ]);
 
-    function updateLocalFieldConfig(newFieldConfig: types.SurveyField) {
-        props.updateValidator(validateField(newFieldConfig));
-        props.setLocalFieldConfig(newFieldConfig);
+    function updateLocalFieldConfig(fieldConfigChanges: object) {
+        props.updateValidator(
+            validateField({...props.fieldConfig, ...fieldConfigChanges}),
+        );
+        props.setLocalFieldConfig(fieldConfigChanges);
     }
 
     function copyField() {
