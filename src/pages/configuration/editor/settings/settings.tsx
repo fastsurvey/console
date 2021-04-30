@@ -93,9 +93,24 @@ function Settings(props: Props) {
         );
     }
     function duplicateSurvey(newSurveyName: string) {
-        props.closeModal();
-        props.duplicateConfig(newSurveyName, props.config);
-        history.push(`/configuration/${newSurveyName}`);
+        const newConfig = {
+            ...props.config,
+            survey_name: newSurveyName,
+        };
+        const success = () => {
+            props.duplicateConfig(newSurveyName, props.config);
+            props.closeModal();
+            history.push(`/configuration/${newSurveyName}`);
+        };
+        const error = (code: 400 | 401 | 422 | 500) => {};
+
+        backend.createSurvey(
+            props.account,
+            props.authToken,
+            newConfig,
+            success,
+            error,
+        );
     }
 
     return (
