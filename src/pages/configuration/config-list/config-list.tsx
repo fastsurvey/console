@@ -11,6 +11,7 @@ import AddSurveyPopup from 'pages/configuration/config-list/add-survey-popup';
 import surveyTemplate from '../../../utilities/template-helpers/add-survey';
 import {types} from 'types';
 import assert from 'assert';
+import {sortBy} from 'lodash';
 
 interface Props {
     account: types.Account;
@@ -67,7 +68,7 @@ function ConfigList(props: Props) {
                     No surveys yet
                 </p>
             )}
-            {props.configs.map((config, index) => (
+            {sortBy(props.configs, ['survey_name']).map((config, index) => (
                 <ConfigPreviewPanel
                     key={config.local_id}
                     selected={

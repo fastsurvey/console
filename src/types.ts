@@ -93,6 +93,7 @@ export declare namespace types {
         verified: boolean;
     }
 
+    // TODO: Add fix message versions (Message is union of those types)
     export type Message = {
         text: string;
         type: 'info' | 'warning' | 'error' | 'success';

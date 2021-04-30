@@ -13,11 +13,13 @@ const initialState: types.ReduxState = {
         username: '',
         verified: false,
     },
-    messages: [],
+
     configs: [],
-    configIsDiffering: false,
+    configIsDiffering: false, // true if the current config has to be saved/reverted
+
+    messages: [],
     navbarState: {
-        open: false,
+        open: false, // used on mobile
     },
     modalState: {
         open: false,
