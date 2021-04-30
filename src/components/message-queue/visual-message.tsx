@@ -29,16 +29,16 @@ function VisualMessage(props: Props) {
     let colors: string;
     switch (props.message.type) {
         case 'error':
-            colors = 'bg-red-600 text-red-100';
+            colors = 'bg-red-200 text-red-800';
             break;
         case 'warning':
-            colors = 'bg-yellow-400 text-yellow-800';
+            colors = 'bg-yellow-200 text-yellow-800';
             break;
         case 'success':
-            colors = 'bg-green-500 text-green-100';
+            colors = 'bg-green-200 text-green-800';
             break;
         default:
-            colors = 'bg-gray-300 text-gray-800';
+            colors = 'bg-gray-200 text-gray-800';
     }
 
     return (
@@ -50,9 +50,17 @@ function VisualMessage(props: Props) {
                 'transition-all duration-300'
             }
         >
-            <div className='text-lg'>{props.message.text}</div>
+            <div
+                className='overflow-x-scroll text-lg whitespace-nowrap hide-scrollbar'
+                style={{maxWidth: 'calc(100% - 2.5rems)'}}
+            >
+                {props.message.text}
+            </div>
             <div className='flex-grow' />
-            <div className='w-10 h-10 p-1 cursor-pointer' onClick={handleClose}>
+            <div
+                className='flex-shrink-0 w-10 h-10 p-2 cursor-pointer'
+                onClick={handleClose}
+            >
                 {icons.close}
             </div>
         </div>
