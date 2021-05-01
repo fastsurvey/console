@@ -15,11 +15,9 @@ async function loginWithForm(
 ) {
     try {
         const authToken: types.AuthToken = (
-            await httpPost('/authentication', data).catch(
-                (response: {statusCode: number}) => {
-                    throw response.statusCode;
-                },
-            )
+            await httpPost('/authentication', data).catch((error) => {
+                throw error.response.status;
+            })
         ).data;
 
         let username: string;

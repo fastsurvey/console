@@ -1,6 +1,5 @@
 import axios from 'axios';
 import {types} from 'types';
-import {constants} from 'utilities';
 
 const API_URL = 'http://localhost:8000';
 

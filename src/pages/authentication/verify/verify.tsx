@@ -1,8 +1,9 @@
 import React, {useRef, useState} from 'react';
 import {connect} from 'react-redux';
-import {reduxUtils} from 'utilities';
+import {reduxUtils, backend} from 'utilities';
 import VisualVerifyForm from './visual-verify';
 import {types} from 'types';
+import {useHistory} from 'react-router-dom';
 
 interface Props {
     logIn(
@@ -17,6 +18,7 @@ function VerifyForm(props: Props) {
     const [password, setPassword] = useState('');
     const [success, setSuccess] = useState(false);
     const [submitting, setSubmitting] = useState(false);
+    let history = useHistory();
 
     function disabled() {
         return password.length < 8;
@@ -25,43 +27,56 @@ function VerifyForm(props: Props) {
     const token = new URLSearchParams(window.location.search).get('token');
     const input1Ref = useRef<HTMLInputElement>(null);
 
-    /*
     function handleVerify() {
         input1Ref.current?.blur();
+
+        function success() {
+            setSuccess(true);
+            setSubmitting(false);
+
+            props.openMessage({
+                text: 'Success! Redirect to login in 5 seconds.',
+                type: 'success',
+            });
+
+            setTimeout(() => {
+                history.push('/login');
+            }, 5000);
+        }
+
+        function error(code: 400 | 401 | 500) {
+            setSubmitting(false);
+            if (code === 401) {
+                props.openMessage({
+                    text: 'Wrong password or invalid link',
+                    type: 'error',
+                });
+            } else if (code === 400) {
+                props.openMessage({
+                    text: 'Email has already been verified',
+                    type: 'info',
+                });
+            } else {
+                // Invalid password formats will be catched by frontend
+                props.openMessage({
+                    text: 'Server error. Please try again later',
+                    type: 'error',
+                });
+            }
+        }
+
         if (!disabled() && token !== null) {
             setSubmitting(true);
-            authPostRequest('/verification', {password, token})
-                .then((response) => {
-                    setTimeout(() => {
-                        setSuccess(true);
-                        setSubmitting(false);
-                    }, 50);
-                    props.logIn(
-                        {
-                            access_token: response.data.access_token,
-                            refresh_token: response.data.access_token,
-                            bearer: response.data.token_type,
-                        },
-                        response.data.account,
-                    );
-                })
-                .catch((error) => {
-                    setSubmitting(false);
-                    if (error?.response?.status === 401) {
-                        props.openMessage({
-                            text: 'Invalid password or wrong link',
-                            type: 'error',
-                        });
-                    } else {
-                        // Invalid password formats will be catched by frontend
-                        props.openMessage({
-                            text: 'Server error. Please try again later',
-                            type: 'error',
-                        });
-                    }
-                });
+            backend.verifyAccount(
+                {
+                    verification_token: token,
+                    password,
+                },
+                success,
+                error,
+            );
         }
-    }*/
+    }
 
     return (
         <VisualVerifyForm
@@ -74,7 +89,7 @@ function VerifyForm(props: Props) {
             disabled={disabled()}
             submitting={submitting}
             closeAllMessages={props.closeAllMessages}
-            handleVerify={() => {}}
+            handleVerify={handleVerify}
         />
     );
 }

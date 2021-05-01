@@ -12,8 +12,8 @@ async function deleteSurvey(
         await httpDelete(
             `/users/${account.username}/surveys/${centralConfigName}`,
             authToken,
-        ).catch((response: {statusCode: 400 | 401 | 422 | 500}) => {
-            throw response.statusCode;
+        ).catch((error) => {
+            throw error.response.status;
         });
 
         success();
