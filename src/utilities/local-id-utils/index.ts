@@ -1,8 +1,10 @@
 import {initialize} from './initialize';
-import {add} from './add';
+import {newId} from './new-id';
+import {remove} from './remove';
 
 const localIdUtils = {
-    add,
+    remove,
+    newId,
     initialize,
 };
 

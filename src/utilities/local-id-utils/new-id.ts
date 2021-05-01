@@ -28,7 +28,7 @@ function field(config: types.SurveyConfig): number {
     }
 }
 
-export const add = {
+export const newId = {
     fieldOption,
     field,
 };

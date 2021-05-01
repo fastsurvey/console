@@ -1,6 +1,6 @@
 import {types} from 'types';
 import {httpPost} from './http-clients';
-import {removeLocalIds} from 'utilities';
+import {localIdUtils} from 'utilities';
 
 async function createSurvey(
     account: types.Account,
@@ -12,7 +12,7 @@ async function createSurvey(
     try {
         await httpPost(
             `/users/${account.username}/surveys/${config.survey_name}`,
-            removeLocalIds.survey(config),
+            localIdUtils.remove.survey(config),
             authToken,
         ).catch((response: {statusCode: 400 | 401 | 422 | 500}) => {
             throw response.statusCode;

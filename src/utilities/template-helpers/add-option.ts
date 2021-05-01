@@ -12,7 +12,7 @@ const optionTemplate = (
             ...fieldConfig.fields,
             {
                 type: 'option',
-                local_id: localIdUtils.add.fieldOption(fieldConfig),
+                local_id: localIdUtils.newId.fieldOption(fieldConfig),
                 title: newTitle,
                 description: '',
                 required: false,

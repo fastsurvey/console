@@ -87,7 +87,7 @@ function ConfigEditor(props: {
                         index,
                         localIdUtils.initialize.field(
                             newField,
-                            localIdUtils.add.field(localConfig),
+                            localIdUtils.newId.field(localConfig),
                         ),
                     ),
                 };

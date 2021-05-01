@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {copyToClipboard, removeLocalIds, validateField} from 'utilities';
+import {copyToClipboard, validateField} from 'utilities';
 import {types} from 'types';
 
 import VisualField from './visual-field';
@@ -8,6 +8,7 @@ import OptionSettings from './option-settings/option-settings';
 import RadioSettings from './radio-settings/radio-settings';
 import SelectionSettings from './selection-settings/selection-settings';
 import EmailSettings from './email-settings/email-settings';
+import localIdUtils from '../../../../utilities/local-id-utils/index';
 
 interface Props {
     fieldConfig: types.SurveyField;
@@ -32,7 +33,7 @@ function Field(props: Props) {
     function copyField() {
         copyToClipboard(
             JSON.stringify(
-                removeLocalIds.field(
+                localIdUtils.remove.field(
                     JSON.parse(JSON.stringify(props.fieldConfig)),
                 ),
             ),

@@ -1,6 +1,6 @@
 import {types} from 'types';
 import {httpPut} from './http-clients';
-import {removeLocalIds} from 'utilities';
+import {localIdUtils} from 'utilities';
 
 async function updateSurvey(
     account: types.Account,
@@ -13,7 +13,7 @@ async function updateSurvey(
     try {
         await httpPut(
             `/users/${account.username}/surveys/${centralConfigName}`,
-            removeLocalIds.survey(config),
+            localIdUtils.remove.survey(config),
             authToken,
         ).catch((response: {statusCode: 400 | 401 | 422 | 500}) => {
             throw response.statusCode;
