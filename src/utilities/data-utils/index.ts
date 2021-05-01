@@ -1,8 +1,7 @@
-import {insert, remove} from './array-functions';
+import {array} from './array-functions';
 
 const dataUtils = {
-    insert,
-    remove,
+    array,
 };
 
 export default dataUtils;

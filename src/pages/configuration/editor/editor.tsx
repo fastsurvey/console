@@ -1,4 +1,4 @@
-import {concat, constant, times} from 'lodash';
+import {constant, times} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {
@@ -53,12 +53,14 @@ function ConfigEditor(props: {
     }
 
     function insertField(index: number, fieldType: types.FieldType) {
-        setFieldValidators(dataUtils.insert(fieldValidators, index + 1, false));
+        setFieldValidators(
+            dataUtils.array.insert(fieldValidators, index + 1, false),
+        );
 
         const field: types.SurveyField = fieldTemplate(fieldType, localConfig);
         setLocalConfig({
             ...localConfig,
-            fields: dataUtils.insert(localConfig.fields, index, field),
+            fields: dataUtils.array.insert(localConfig.fields, index, field),
         });
     }
 
@@ -72,7 +74,7 @@ function ConfigEditor(props: {
                 }
 
                 setFieldValidators(
-                    dataUtils.insert(
+                    dataUtils.array.insert(
                         fieldValidators,
                         index + 1,
                         validateField(newField),
@@ -81,7 +83,7 @@ function ConfigEditor(props: {
 
                 const newConfig = {
                     ...localConfig,
-                    fields: dataUtils.insert(
+                    fields: dataUtils.array.insert(
                         localConfig.fields,
                         index,
                         addLocalIds.field(newField, newFieldId(localConfig)),
@@ -99,10 +101,10 @@ function ConfigEditor(props: {
     }
 
     function removeField(index: number) {
-        setFieldValidators(dataUtils.remove(fieldValidators, index + 1));
+        setFieldValidators(dataUtils.array.remove(fieldValidators, index + 1));
         setLocalConfig({
             ...localConfig,
-            fields: dataUtils.remove(localConfig.fields, index),
+            fields: dataUtils.array.remove(localConfig.fields, index),
         });
     }
 
