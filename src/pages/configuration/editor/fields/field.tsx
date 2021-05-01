@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {copyToClipboard, validateField} from 'utilities';
+import {clipboardUtils, validateField} from 'utilities';
 import {types} from 'types';
 
 import VisualField from './visual-field';
@@ -31,12 +31,8 @@ function Field(props: Props) {
     }
 
     function copyField() {
-        copyToClipboard(
-            JSON.stringify(
-                localIdUtils.remove.field(
-                    JSON.parse(JSON.stringify(props.fieldConfig)),
-                ),
-            ),
+        clipboardUtils.copy(
+            JSON.stringify(localIdUtils.remove.field(props.fieldConfig)),
         );
     }
 
