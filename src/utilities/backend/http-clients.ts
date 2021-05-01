@@ -1,8 +1,7 @@
 import axios from 'axios';
-import {constants} from 'utilities';
 import {types} from 'types';
 
-const API_URL = constants.environment.AUTH_BACKEND_URL;
+const API_URL = 'http://localhost:8000';
 
 export function httpPost(
     url: string,

@@ -1,6 +1,6 @@
 import React, {useRef, useState} from 'react';
 import {connect} from 'react-redux';
-import {reduxUtils, authPostRequest} from 'utilities';
+import {reduxUtils, backend} from 'utilities';
 import VisualRegister from './visual-register';
 import {types} from 'types';
 
@@ -31,38 +31,44 @@ function RegisterForm(props: Props) {
         input2Ref.current?.blur();
         input3Ref.current?.blur();
         input4Ref.current?.blur();
+
+        function success() {
+            setSubmitting(false);
+            setPassword('');
+            setPasswordConfirmation('');
+            props.openMessage({
+                text: 'Success: Account created! Please verify your email now.',
+                type: 'success',
+            });
+        }
+
+        function error(code: 400 | 500) {
+            setSubmitting(false);
+            let messageText: string;
+            if (code === 400) {
+                messageText = 'Email is already taken';
+            } else {
+                // Invalid password formats will be catched by frontend
+                messageText = 'Server error. Please try again later';
+            }
+            props.openMessage({
+                text: messageText,
+                type: 'error',
+            });
+        }
+
         if (!disabled()) {
             setSubmitting(true);
-            authPostRequest(`/users/${username}`, {email, password})
-                .then(() => {
-                    setSubmitting(false);
-                    setPassword('');
-                    setPasswordConfirmation('');
-                    props.openMessage({
-                        text:
-                            'Success: Account created! Please verify your email now.',
-                        type: 'success',
-                    });
-                })
-                .catch((error) => {
-                    setSubmitting(false);
-                    const detail = error?.response?.data?.detail;
-                    let messageText: string;
-                    if (detail === 'email already taken') {
-                        messageText = 'Email is already taken';
-                    } else if (
-                        detail === 'verification email could not be sent'
-                    ) {
-                        messageText = 'Email address invalid';
-                    } else {
-                        // Invalid password formats will be catched by frontend
-                        messageText = 'Server error. Please try again later';
-                    }
-                    props.openMessage({
-                        text: messageText,
-                        type: 'error',
-                    });
-                });
+
+            backend.createAccount(
+                {
+                    email_address: email,
+                    username,
+                    password,
+                },
+                success,
+                error,
+            );
         }
     }
 

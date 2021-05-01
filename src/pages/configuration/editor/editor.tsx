@@ -37,6 +37,7 @@ function ConfigEditor(props: {
         // Switch between configs in editor
         setLocalConfigState(props.centralConfig);
         initValidators(props.centralConfig);
+        // eslint-disable-next-line
     }, [props.centralConfig.survey_name]);
 
     function initValidators(config: types.SurveyConfig) {
