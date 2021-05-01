@@ -107,13 +107,15 @@ function ConfigEditor(props: {
     }
 
     function saveState() {
+        props.closeAllMessages();
+
         const fieldsAreValid = !fieldValidators.includes(false);
+        const fieldCountIsValid = localConfig.fields.length > 0;
         const timingIsValid = validators.timing(localConfig);
         const authIsValid = validators.authMode(localConfig);
         const fieldOptionsAreValid = validators.fieldOptions(localConfig);
 
         function success() {
-            props.closeAllMessages();
             props.setCentralConfig(localConfig);
             if (localConfig.survey_name !== props.centralConfig.survey_name) {
                 history.push(`/configuration/${localConfig.survey_name}`);
@@ -129,6 +131,7 @@ function ConfigEditor(props: {
 
         if (
             fieldsAreValid &&
+            fieldCountIsValid &&
             timingIsValid &&
             authIsValid &&
             fieldOptionsAreValid
@@ -145,7 +148,11 @@ function ConfigEditor(props: {
             [
                 {
                     pass: fieldsAreValid,
-                    text: 'Invalid fields: Please check all red circles',
+                    text: 'Invalid fields: Please check all red hints',
+                },
+                {
+                    pass: fieldCountIsValid,
+                    text: 'There has to be at least one field',
                 },
                 {
                     pass: timingIsValid,
