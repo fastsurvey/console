@@ -65,7 +65,7 @@ function ConfigList(props: Props) {
     return (
         <VisualConfigList>
             {props.configs.length === 0 && (
-                <p className='w-full my-4 text-center text-gray-100 font-weight-600'>
+                <p className='w-full my-4 text-center text-gray-600 font-weight-500'>
                     No surveys yet
                 </p>
             )}

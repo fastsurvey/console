@@ -35,13 +35,14 @@ function VerifyForm(props: Props) {
             setSubmitting(false);
 
             props.openMessage({
-                text: 'Success! Redirect to login in 5 seconds.',
+                text: 'Success! Redirect to login in 4 seconds.',
                 type: 'success',
             });
 
             setTimeout(() => {
                 history.push('/login');
-            }, 5000);
+                props.closeAllMessages();
+            }, 4000);
         }
 
         function error(code: 400 | 401 | 500) {
@@ -52,12 +53,10 @@ function VerifyForm(props: Props) {
                     type: 'error',
                 });
             } else if (code === 400) {
-                props.openMessage({
-                    text: 'Email has already been verified',
-                    type: 'info',
-                });
+                // email has already been verified but
+                // token and password are correct
+                success();
             } else {
-                // Invalid password formats will be catched by frontend
                 props.openMessage({
                     text: 'Server error. Please try again later',
                     type: 'error',
@@ -88,7 +87,6 @@ function VerifyForm(props: Props) {
             tokenExists={token !== null}
             disabled={disabled()}
             submitting={submitting}
-            closeAllMessages={props.closeAllMessages}
             handleVerify={handleVerify}
         />
     );

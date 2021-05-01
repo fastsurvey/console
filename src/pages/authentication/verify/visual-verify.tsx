@@ -10,7 +10,6 @@ interface Props {
     disabled: boolean;
     submitting: boolean;
 
-    closeAllMessages(): void;
     handleVerify(): void;
 }
 const VisualVerifyForm = React.forwardRef((props: Props, refs: any) => {
@@ -29,7 +28,6 @@ const VisualVerifyForm = React.forwardRef((props: Props, refs: any) => {
                                 placeholder='password'
                                 value={props.password}
                                 onChange={(newValue) => {
-                                    props.closeAllMessages();
                                     props.setPassword(newValue);
                                 }}
                                 className='mb-5'
