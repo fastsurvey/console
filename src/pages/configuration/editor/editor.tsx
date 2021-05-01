@@ -4,16 +4,15 @@ import {useHistory} from 'react-router-dom';
 import {
     validators,
     fieldTemplate,
-    validateFormat,
     validateField,
+    localIdUtils,
+    clipboardUtils,
     dataUtils,
     backend,
 } from 'utilities';
 import ControlStrip from './control-strip/control-strip';
 import VisualEditor from './visual-editor';
-import {AssertionError} from 'assert';
 import {types} from 'types';
-import localIdUtils from '../../../utilities/local-id-utils/index';
 
 function ConfigEditor(props: {
     account: types.Account;
@@ -64,42 +63,36 @@ function ConfigEditor(props: {
     }
 
     function pasteField(index: number) {
-        navigator.clipboard.readText().then((text: string) => {
-            try {
-                const newField = JSON.parse(text);
+        function success(newFieldConfig: types.SurveyField) {
+            setFieldValidators(
+                dataUtils.array.insert(
+                    fieldValidators,
+                    index + 1,
+                    validateField(newFieldConfig),
+                ),
+            );
 
-                if (!validateFormat.fieldConfig(newField)) {
-                    throw AssertionError;
-                }
-
-                setFieldValidators(
-                    dataUtils.array.insert(
-                        fieldValidators,
-                        index + 1,
-                        validateField(newField),
+            const newConfig = {
+                ...localConfig,
+                fields: dataUtils.array.insert(
+                    localConfig.fields,
+                    index,
+                    localIdUtils.initialize.field(
+                        newFieldConfig,
+                        localIdUtils.newId.field(localConfig),
                     ),
-                );
+                ),
+            };
+            setLocalConfig(newConfig);
+        }
 
-                const newConfig = {
-                    ...localConfig,
-                    fields: dataUtils.array.insert(
-                        localConfig.fields,
-                        index,
-                        localIdUtils.initialize.field(
-                            newField,
-                            localIdUtils.newId.field(localConfig),
-                        ),
-                    ),
-                };
-                setLocalConfig(newConfig);
-            } catch {
-                props.openMessage({
-                    text: 'Invalid text format on clipboard',
-                    type: 'warning',
-                });
-                console.info('invalid text format on clipboard');
-            }
-        });
+        function error() {
+            props.openMessage({
+                text: 'Invalid text format on clipboard',
+                type: 'warning',
+            });
+        }
+        clipboardUtils.paste(success, error);
     }
 
     function removeField(index: number) {
