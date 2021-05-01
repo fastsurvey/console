@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 import {cloneDeep, unionBy} from 'lodash';
-import {addLocalIds, reduxUtils} from 'utilities';
+import {reduxUtils, localIdUtils} from 'utilities';
 import {types} from 'types';
 import assert from 'assert';
 
@@ -14,7 +14,7 @@ function updateState(state: types.ReduxState, action: types.ReduxAction) {
             newState.loggedIn = true;
             newState.authToken = action.authToken;
             newState.account = action.account;
-            newState.configs = addLocalIds.surveys(action.configs);
+            newState.configs = localIdUtils.initialize.surveys(action.configs);
             Cookies.set('authToken', JSON.stringify(action.authToken), {
                 expires: 7,
             });
@@ -70,7 +70,10 @@ function updateState(state: types.ReduxState, action: types.ReduxAction) {
             assert(newState.configs);
             newState.configs = [
                 ...newState.configs,
-                addLocalIds.survey(action.config, newState.configs.length),
+                localIdUtils.initialize.survey(
+                    action.config,
+                    newState.configs.length,
+                ),
             ];
             break;
 

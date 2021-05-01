@@ -5,8 +5,6 @@ import {
     validators,
     fieldTemplate,
     validateFormat,
-    newFieldId,
-    addLocalIds,
     validateField,
     dataUtils,
     backend,
@@ -15,6 +13,7 @@ import ControlStrip from './control-strip/control-strip';
 import VisualEditor from './visual-editor';
 import {AssertionError} from 'assert';
 import {types} from 'types';
+import localIdUtils from '../../../utilities/local-id-utils/index';
 
 function ConfigEditor(props: {
     account: types.Account;
@@ -86,7 +85,10 @@ function ConfigEditor(props: {
                     fields: dataUtils.array.insert(
                         localConfig.fields,
                         index,
-                        addLocalIds.field(newField, newFieldId(localConfig)),
+                        localIdUtils.initialize.field(
+                            newField,
+                            localIdUtils.add.field(localConfig),
+                        ),
                     ),
                 };
                 setLocalConfig(newConfig);

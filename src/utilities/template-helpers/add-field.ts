@@ -1,4 +1,4 @@
-import {newFieldId} from 'utilities';
+import {localIdUtils} from 'utilities';
 import {types} from 'types';
 
 const fieldTemplate = (
@@ -9,7 +9,7 @@ const fieldTemplate = (
         case 'email':
             return {
                 type: 'email',
-                local_id: newFieldId(config),
+                local_id: localIdUtils.add.field(config),
 
                 title: '',
                 description: '',
@@ -19,7 +19,7 @@ const fieldTemplate = (
         case 'option':
             return {
                 type: 'option',
-                local_id: newFieldId(config),
+                local_id: localIdUtils.add.field(config),
 
                 title: '',
                 description: '',
@@ -28,7 +28,7 @@ const fieldTemplate = (
         case 'radio':
             return {
                 type: 'radio',
-                local_id: newFieldId(config),
+                local_id: localIdUtils.add.field(config),
 
                 title: '',
                 description: '',
@@ -37,7 +37,7 @@ const fieldTemplate = (
         case 'selection':
             return {
                 type: 'selection',
-                local_id: newFieldId(config),
+                local_id: localIdUtils.add.field(config),
 
                 title: '',
                 description: '',
@@ -48,7 +48,7 @@ const fieldTemplate = (
         case 'text':
             return {
                 type: 'text',
-                local_id: newFieldId(config),
+                local_id: localIdUtils.add.field(config),
 
                 title: '',
                 description: '',
