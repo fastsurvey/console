@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {formUtils, colors} from 'utilities';
+import {formUtils} from 'utilities';
 import {icons} from 'assets';
 import {TextArea, TextInput, EditorFormCard, EditorFormRow} from 'components';
 import {types} from 'types';
@@ -50,7 +50,7 @@ function VisualField(props: Props) {
         <EditorFormCard
             label={props.fieldConfig.type}
             icon={icons.widgets}
-            color={colors.fieldTypeToColor(props.fieldConfig.type)}
+            fieldType={props.fieldConfig.type}
             collapse={collapse}
             setCollapse={setCollapse}
             longLabel={props.fieldConfig.title}

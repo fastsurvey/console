@@ -1,6 +1,6 @@
 import {icons} from 'assets';
 import React from 'react';
-import {colors} from 'utilities';
+import {styleUtils} from 'utilities';
 import {types} from 'types';
 
 interface Props {
@@ -23,9 +23,7 @@ function AddFieldPopup(props: Props) {
                         'flex flex-row items-start justify-start ' +
                         'my-1 text-lg leading-10 font-weight-600 rounded ' +
                         'opacity-70 hover:opacity-100 cursor-pointer ' +
-                        colors.colorToClasses(
-                            colors.fieldTypeToColor(fieldType),
-                        )
+                        styleUtils.color.fieldTypeToClasses(fieldType)
                     }
                     onClick={() => props.insertField(fieldType)}
                 >

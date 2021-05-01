@@ -1,7 +1,7 @@
 import {types} from 'types';
 
-const colors = {
-    fieldTypeToColor: (fieldType: types.FieldType) => {
+export const color = {
+    fieldTypeToColor: (fieldType: types.FieldType | undefined) => {
         switch (fieldType) {
             case 'email':
                 return 'red';
@@ -13,10 +13,12 @@ const colors = {
                 return 'green';
             case 'text':
                 return 'teal';
+            default:
+                return 'gray';
         }
     },
 
-    colorToClasses: (color: types.Color | undefined) => {
+    colorToClasses: (color: types.Color) => {
         switch (color) {
             case 'red':
                 return 'bg-red-200 text-red-600';
@@ -29,10 +31,10 @@ const colors = {
             case 'teal':
                 return 'bg-teal-200 text-teal-600';
             case 'gray':
-            default:
                 return 'bg-gray-300 text-gray-600';
         }
     },
-};
 
-export default colors;
+    fieldTypeToClasses: (fieldType: types.FieldType | undefined) =>
+        color.colorToClasses(color.fieldTypeToColor(fieldType)),
+};
