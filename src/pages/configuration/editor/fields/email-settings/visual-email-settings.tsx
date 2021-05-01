@@ -1,5 +1,5 @@
 import React from 'react';
-import {formOptions, hints} from 'utilities';
+import {formOptions, formUtils} from 'utilities';
 import {DropDown, TextInput, EditorFormRow} from 'components';
 import {types} from 'types';
 
@@ -46,7 +46,10 @@ function VisualEmailSettings(props: Props) {
                             regex: newValue,
                         })
                     }
-                    hint={{...hints.regex(props.fieldConfig), inlineHint: true}}
+                    hint={{
+                        ...formUtils.hints.regex(props.fieldConfig),
+                        inlineHint: true,
+                    }}
                 />
             </EditorFormRow>
 
@@ -60,7 +63,10 @@ function VisualEmailSettings(props: Props) {
                             hint: newValue,
                         })
                     }
-                    hint={{...hints.hint(props.fieldConfig), inlineHint: true}}
+                    hint={{
+                        ...formUtils.hints.hint(props.fieldConfig),
+                        inlineHint: true,
+                    }}
                 />
             </EditorFormRow>
         </>

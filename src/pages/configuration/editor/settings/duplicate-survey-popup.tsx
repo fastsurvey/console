@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {reduxUtils, hints, validators} from 'utilities';
+import {reduxUtils, formUtils} from 'utilities';
 import {connect} from 'react-redux';
 import {TextInput, ModalButton} from 'components';
 import {types} from 'types';
@@ -13,7 +13,9 @@ interface Props {
 function DuplicateSurveyPopup(props: Props) {
     const [surveyName, setSurveyName] = useState(props.originalSurveyName);
 
-    const isValid = validators.newSurveyName(props.configs)(surveyName);
+    const isValid = formUtils.validators.newSurveyName(props.configs)(
+        surveyName,
+    );
 
     if (props.configs) {
         return (
@@ -35,9 +37,11 @@ function DuplicateSurveyPopup(props: Props) {
                             onChange={setSurveyName}
                             onEnter={() => props.duplicateSurvey(surveyName)}
                             hint={{
-                                ...hints.newSurveyName(
+                                ...formUtils.hints.newSurveyName(
                                     surveyName,
-                                    validators.newSurveyName(props.configs),
+                                    formUtils.validators.newSurveyName(
+                                        props.configs,
+                                    ),
                                 ),
                                 inlineHint: false,
                             }}

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {clipboardUtils, validateField} from 'utilities';
+import {clipboardUtils, formUtils} from 'utilities';
 import {types} from 'types';
 
 import VisualField from './visual-field';
@@ -19,13 +19,17 @@ interface Props {
 }
 function Field(props: Props) {
     // eslint-disable-next-line
-    useEffect(() => props.updateValidator(validateField(props.fieldConfig)), [
-        props.fieldConfig.local_id,
-    ]);
+    useEffect(
+        () => props.updateValidator(formUtils.validateField(props.fieldConfig)),
+        [props.fieldConfig.local_id],
+    );
 
     function updateLocalFieldConfig(fieldConfigChanges: object) {
         props.updateValidator(
-            validateField({...props.fieldConfig, ...fieldConfigChanges}),
+            formUtils.validateField({
+                ...props.fieldConfig,
+                ...fieldConfigChanges,
+            }),
         );
         props.setLocalFieldConfig(fieldConfigChanges);
     }

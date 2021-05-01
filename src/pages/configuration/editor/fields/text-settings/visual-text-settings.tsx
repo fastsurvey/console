@@ -1,5 +1,5 @@
 import React from 'react';
-import {formatters, hints} from 'utilities';
+import {formUtils} from 'utilities';
 import {TextInput, EditorFormRow} from 'components';
 import {types} from 'types';
 
@@ -22,11 +22,11 @@ function VisualTextSettings(props: Props) {
                     value={props.fieldConfig.min_chars.toString()}
                     onChange={(newValue: string) =>
                         props.setLocalFieldConfig({
-                            min_chars: formatters.atoi(newValue),
+                            min_chars: formUtils.formatters.atoi(newValue),
                         })
                     }
                     hint={{
-                        ...hints.minChars(props.fieldConfig),
+                        ...formUtils.hints.minChars(props.fieldConfig),
                         inlineHint: true,
                     }}
                 />
@@ -37,11 +37,11 @@ function VisualTextSettings(props: Props) {
                     value={props.fieldConfig.max_chars.toString()}
                     onChange={(newValue: string) =>
                         props.setLocalFieldConfig({
-                            max_chars: formatters.atoi(newValue),
+                            max_chars: formUtils.formatters.atoi(newValue),
                         })
                     }
                     hint={{
-                        ...hints.maxChars(props.fieldConfig),
+                        ...formUtils.hints.maxChars(props.fieldConfig),
                         inlineHint: true,
                     }}
                 />

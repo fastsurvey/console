@@ -1,6 +1,6 @@
 import React from 'react';
 import {TextInput, TextLink, ButtonLink} from 'components';
-import {hints} from 'utilities';
+import {formUtils} from 'utilities';
 
 interface Props {
     email: string;
@@ -49,7 +49,10 @@ const VisualRegister = React.forwardRef((props: Props, refs: any) => {
                     wrapperClassName='mb-2'
                     autoComplete='username'
                     onEnter={() => input3Ref.current?.focus()}
-                    hint={{...hints.username(props.username), inlineHint: true}}
+                    hint={{
+                        ...formUtils.hints.username(props.username),
+                        inlineHint: true,
+                    }}
                 />
                 <TextInput
                     value={props.password}
@@ -64,7 +67,10 @@ const VisualRegister = React.forwardRef((props: Props, refs: any) => {
                     type='password'
                     wrapperClassName='mb-2'
                     autoComplete='new-password'
-                    hint={{...hints.password(props.password), inlineHint: true}}
+                    hint={{
+                        ...formUtils.hints.password(props.password),
+                        inlineHint: true,
+                    }}
                 />
                 <TextInput
                     value={props.passwordConfirmation}
@@ -80,7 +86,7 @@ const VisualRegister = React.forwardRef((props: Props, refs: any) => {
                     wrapperClassName='mb-5'
                     autoComplete='new-password'
                     hint={{
-                        ...hints.passwordConfirmation(
+                        ...formUtils.hints.passwordConfirmation(
                             props.password,
                             props.passwordConfirmation,
                         ),

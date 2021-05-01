@@ -1,7 +1,7 @@
-import {validators} from 'utilities';
+import {validators} from './validators';
 import {types} from 'types';
 
-const hints = {
+export const hints = {
     title: (title: string) => ({
         text: `Not empty, max. 120 characters (${120 - title.length} left)`,
         fulfilled: validators.title(title),
@@ -70,5 +70,3 @@ const hints = {
         fulfilled: password.length > 7 && password === passwordConfirmation,
     }),
 };
-
-export default hints;

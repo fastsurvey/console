@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {formatters, formOptions, hints} from 'utilities';
+import {formUtils, formOptions} from 'utilities';
 import {
     DropDown,
     TextArea,
@@ -77,7 +77,7 @@ const VisualSettings = (props: Props) => {
                         });
                     }}
                     hint={{
-                        ...hints.title(props.config.title),
+                        ...formUtils.hints.title(props.config.title),
                         inlineHint: true,
                     }}
                 />
@@ -95,7 +95,7 @@ const VisualSettings = (props: Props) => {
                         });
                     }}
                     hint={{
-                        ...hints.surveyName(
+                        ...formUtils.hints.surveyName(
                             props.config,
                             props.surveyNameIsValid,
                         ),
@@ -175,11 +175,11 @@ const VisualSettings = (props: Props) => {
                     onChange={(newValue: string) => {
                         props.updateConfig({
                             ...props.config,
-                            limit: formatters.atoi(newValue),
+                            limit: formUtils.formatters.atoi(newValue),
                         });
                     }}
                     hint={{
-                        ...hints.submissionLimit(props.config),
+                        ...formUtils.hints.submissionLimit(props.config),
                         inlineHint: true,
                     }}
                 />

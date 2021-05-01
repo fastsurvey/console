@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {hints, colors} from 'utilities';
+import {formUtils, colors} from 'utilities';
 import {icons} from 'assets';
 import {TextArea, TextInput, EditorFormCard, EditorFormRow} from 'components';
 import {types} from 'types';
@@ -69,7 +69,7 @@ function VisualField(props: Props) {
                         });
                     }}
                     hint={{
-                        ...hints.title(props.fieldConfig.title),
+                        ...formUtils.hints.title(props.fieldConfig.title),
                         inlineHint: true,
                     }}
                 />

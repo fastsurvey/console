@@ -1,5 +1,5 @@
 import React from 'react';
-import {formatters, hints} from 'utilities';
+import {formUtils} from 'utilities';
 import {TextInput, EditorFormRow} from 'components';
 import FieldOptionsList from '../field-options-list/field-options-list';
 import {types} from 'types';
@@ -23,11 +23,11 @@ function VisualSelectionSettings(props: Props) {
                     value={props.fieldConfig.min_select.toString()}
                     onChange={(newValue: string) =>
                         props.setLocalFieldConfig({
-                            min_select: formatters.atoi(newValue),
+                            min_select: formUtils.formatters.atoi(newValue),
                         })
                     }
                     hint={{
-                        ...hints.minSelect(props.fieldConfig),
+                        ...formUtils.hints.minSelect(props.fieldConfig),
                         inlineHint: true,
                     }}
                 />
@@ -38,11 +38,11 @@ function VisualSelectionSettings(props: Props) {
                     value={props.fieldConfig.max_select.toString()}
                     onChange={(newValue: string) =>
                         props.setLocalFieldConfig({
-                            max_select: formatters.atoi(newValue),
+                            max_select: formUtils.formatters.atoi(newValue),
                         })
                     }
                     hint={{
-                        ...hints.maxSelect(props.fieldConfig),
+                        ...formUtils.hints.maxSelect(props.fieldConfig),
                         inlineHint: true,
                     }}
                 />

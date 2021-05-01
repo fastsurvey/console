@@ -2,7 +2,7 @@ import RemoveSurveyPopup from './remove-survey-popup';
 import DuplicateSurveyPopup from './duplicate-survey-popup';
 import React from 'react';
 import {connect} from 'react-redux';
-import {validators, reduxUtils, backend} from 'utilities';
+import {formUtils, reduxUtils, backend} from 'utilities';
 import VisualSettings from './visual-settings';
 import {useHistory} from 'react-router-dom';
 import {types} from 'types';
@@ -27,13 +27,13 @@ interface Props {
 function Settings(props: Props) {
     let history = useHistory();
 
-    const titleIsValid = validators.title;
-    const surveyNameIsValid = validators.surveyName(
+    const titleIsValid = formUtils.validators.title;
+    const surveyNameIsValid = formUtils.validators.surveyName(
         props.configs,
         props.config,
     );
-    const descriptionIsValid = validators.description;
-    const submissionLimitIsValid = validators.submissionLimit;
+    const descriptionIsValid = formUtils.validators.description;
+    const submissionLimitIsValid = formUtils.validators.submissionLimit;
 
     function updateConfig(
         newConfig: types.SurveyConfig,

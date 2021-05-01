@@ -2,9 +2,8 @@ import {constant, times} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {
-    validators,
+    formUtils,
     templateUtils,
-    validateField,
     localIdUtils,
     clipboardUtils,
     dataUtils,
@@ -71,7 +70,7 @@ function ConfigEditor(props: {
                 dataUtils.array.insert(
                     fieldValidators,
                     index + 1,
-                    validateField(newFieldConfig),
+                    formUtils.validateField(newFieldConfig),
                 ),
             );
 
@@ -111,9 +110,11 @@ function ConfigEditor(props: {
 
         const fieldsAreValid = !fieldValidators.includes(false);
         const fieldCountIsValid = localConfig.fields.length > 0;
-        const timingIsValid = validators.timing(localConfig);
-        const authIsValid = validators.authMode(localConfig);
-        const fieldOptionsAreValid = validators.fieldOptions(localConfig);
+        const timingIsValid = formUtils.validators.timing(localConfig);
+        const authIsValid = formUtils.validators.authMode(localConfig);
+        const fieldOptionsAreValid = formUtils.validators.fieldOptions(
+            localConfig,
+        );
 
         function success() {
             props.setCentralConfig(localConfig);

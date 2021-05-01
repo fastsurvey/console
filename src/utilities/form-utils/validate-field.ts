@@ -1,7 +1,7 @@
-import {validators} from 'utilities';
+import {validators} from './validators';
 import {types} from 'types';
 
-function validateField(fieldConfig: types.SurveyField) {
+export function validateField(fieldConfig: types.SurveyField) {
     if (
         !validators.title(fieldConfig.title) ||
         !validators.description(fieldConfig.description)
@@ -36,5 +36,3 @@ function validateField(fieldConfig: types.SurveyField) {
             );
     }
 }
-
-export default validateField;

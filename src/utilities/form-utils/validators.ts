@@ -1,6 +1,6 @@
 import {types} from 'types';
 
-const validators = {
+export const validators = {
     fieldOptions: (config: types.SurveyConfig) =>
         config.fields.filter(
             (fieldConfig: types.SurveyField) =>
@@ -57,5 +57,3 @@ const validators = {
     maxSelect: (fieldConfig: types.SelectionField) =>
         fieldConfig.max_select <= fieldConfig.fields.length,
 };
-
-export default validators;

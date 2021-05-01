@@ -1,5 +1,5 @@
 import React from 'react';
-import {hints} from 'utilities';
+import {formUtils} from 'utilities';
 import {icons} from 'assets';
 import {TextInput, TriggerIcon, EditorFormRow} from 'components';
 import {types} from 'types';
@@ -53,7 +53,7 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
                                 })
                             }
                             hint={{
-                                ...hints.title(optionField.title),
+                                ...formUtils.hints.title(optionField.title),
                                 inlineHint: true,
                             }}
                         />
@@ -88,7 +88,7 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
                         value={props.newOption}
                         onChange={props.setNewOption}
                         placeholder='New option'
-                        hint={hints.newOption(props.newOption)}
+                        hint={formUtils.hints.newOption(props.newOption)}
                         onEnter={
                             props.newOption !== ''
                                 ? props.addFieldOption
