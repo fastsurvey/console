@@ -1,14 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {useLocation, useHistory} from 'react-router-dom';
-import {reduxUtils, backend} from 'utilities';
+import {reduxUtils, backend, templateUtils} from 'utilities';
 import icons from 'assets/icons/icons';
 
 import {Button} from 'components';
 import ConfigPreviewPanel from './visual-config-panel';
 import VisualConfigList from './visual-config-list';
 import AddSurveyPopup from 'pages/configuration/config-list/add-survey-popup';
-import surveyTemplate from '../../../utilities/template-helpers/add-survey';
 import {types} from 'types';
 import {sortBy} from 'lodash';
 
@@ -42,7 +41,10 @@ function ConfigList(props: Props) {
     }
 
     function addSurvey(surveyName: string) {
-        const newConfig = surveyTemplate(surveyName, props.configs.length);
+        const newConfig = templateUtils.survey(
+            surveyName,
+            props.configs.length,
+        );
 
         const success = () => {
             props.addConfig(newConfig);

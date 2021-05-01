@@ -1,6 +1,6 @@
 import {types} from 'types';
 
-const surveyTemplate = (
+export const survey = (
     surveyName: string,
     newLocalId: number,
 ): types.SurveyConfig => {
@@ -27,4 +27,4 @@ const surveyTemplate = (
     };
 };
 
-export default surveyTemplate;
+export default survey;

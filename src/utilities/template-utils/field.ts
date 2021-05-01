@@ -1,7 +1,7 @@
 import {localIdUtils} from 'utilities';
 import {types} from 'types';
 
-const fieldTemplate = (
+export const field = (
     fieldType: types.FieldType,
     config: types.SurveyConfig,
 ): types.SurveyField => {
@@ -57,5 +57,3 @@ const fieldTemplate = (
             };
     }
 };
-
-export default fieldTemplate;

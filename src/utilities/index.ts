@@ -5,6 +5,7 @@ export {default as reduxUtils} from './redux-utils';
 export {default as dataUtils} from './data-utils';
 export {default as localIdUtils} from './local-id-utils';
 export {default as clipboardUtils} from './clipboard-utils';
+export {default as templateUtils} from './template-utils';
 
 export {default as formatters} from './form-helpers/formatters';
 export {default as validators} from './form-helpers/validators';
@@ -13,10 +14,5 @@ export {default as hints} from './form-helpers/hints';
 
 export {default as backend} from './backend';
 export {authPostRequest} from './backend/axios-clients';
-
-export {default as surveyTemplate} from './template-helpers/add-survey';
-export {default as fieldTemplate} from './template-helpers/add-field';
-export {default as optionTemplate} from './template-helpers/add-option';
-export {default as validateFormat} from './template-helpers/validate-format';
 
 export {default as colors} from './ui-helpers/colors';

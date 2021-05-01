@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {
     validators,
-    fieldTemplate,
+    templateUtils,
     validateField,
     localIdUtils,
     clipboardUtils,
@@ -55,7 +55,10 @@ function ConfigEditor(props: {
             dataUtils.array.insert(fieldValidators, index + 1, false),
         );
 
-        const field: types.SurveyField = fieldTemplate(fieldType, localConfig);
+        const field: types.SurveyField = templateUtils.field(
+            fieldType,
+            localConfig,
+        );
         setLocalConfig({
             ...localConfig,
             fields: dataUtils.array.insert(localConfig.fields, index, field),
