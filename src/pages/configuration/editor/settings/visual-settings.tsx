@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {formUtils, formOptions} from 'utilities';
+import {formUtils, constants} from 'utilities';
 import {
     DropDown,
     TextArea,
@@ -163,7 +163,7 @@ const VisualSettings = (props: Props) => {
                             false,
                         );
                     }}
-                    options={formOptions.AUTH_MODE}
+                    options={constants.formOptions.AUTH_MODE}
                 />
             </EditorFormRow>
 

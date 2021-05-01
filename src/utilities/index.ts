@@ -1,5 +1,4 @@
-export {default as environment} from './constants/environment';
-export {default as formOptions} from './constants/form-options';
+export {default as constants} from './constants';
 
 export {default as reduxUtils} from './redux-utils';
 export {default as dataUtils} from './data-utils';

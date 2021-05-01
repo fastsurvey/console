@@ -1,8 +1,8 @@
 import axios from 'axios';
-import {environment} from 'utilities';
+import {constants} from 'utilities';
 import {types} from 'types';
 
-const API_URL = environment.AUTH_BACKEND_URL;
+const API_URL = constants.environment.AUTH_BACKEND_URL;
 
 export function httpPost(
     url: string,

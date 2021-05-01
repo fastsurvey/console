@@ -1,5 +1,5 @@
 import React from 'react';
-import {formOptions, formUtils} from 'utilities';
+import {constants, formUtils} from 'utilities';
 import {DropDown, TextInput, EditorFormRow} from 'components';
 import {types} from 'types';
 
@@ -24,7 +24,7 @@ function VisualEmailSettings(props: Props) {
                     value={props.setupValue}
                     onChange={(newValue: number) => {
                         const setup = [
-                            ...formOptions.EMAIL_REGEX,
+                            ...constants.formOptions.EMAIL_REGEX,
                             props.customSetup,
                         ].filter((setup) => setup.value === newValue)[0];
                         props.setLocalFieldConfig({
@@ -32,7 +32,10 @@ function VisualEmailSettings(props: Props) {
                             hint: setup.hint,
                         });
                     }}
-                    options={[...formOptions.EMAIL_REGEX, props.customSetup]}
+                    options={[
+                        ...constants.formOptions.EMAIL_REGEX,
+                        props.customSetup,
+                    ]}
                 />
             </EditorFormRow>
 

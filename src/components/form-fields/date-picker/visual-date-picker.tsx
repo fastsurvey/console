@@ -1,5 +1,5 @@
 import React from 'react';
-import formOptions from 'utilities/constants/form-options';
+import {constants} from 'utilities';
 import {DropDown} from 'components';
 
 interface Props {
@@ -44,7 +44,7 @@ function VisualDatePicker(props: Props) {
                     {...commonProps}
                     value={props.date.getMonth()}
                     onChange={props.changeMonth}
-                    options={formOptions.MONTHS}
+                    options={constants.formOptions.MONTHS}
                 />
             </div>
             {DateSeparator('.')}
@@ -53,7 +53,7 @@ function VisualDatePicker(props: Props) {
                     {...commonProps}
                     value={props.date.getFullYear()}
                     onChange={props.changeYear}
-                    options={formOptions.YEARS}
+                    options={constants.formOptions.YEARS}
                 />
             </div>
             <div className='mx-2 w-14'>
@@ -63,7 +63,7 @@ function VisualDatePicker(props: Props) {
                     onChange={(newValue: number) => {
                         props.changeTime(newValue, props.date.getMinutes());
                     }}
-                    options={formOptions.HOURS}
+                    options={constants.formOptions.HOURS}
                 />
             </div>
             {DateSeparator(':')}
@@ -74,7 +74,7 @@ function VisualDatePicker(props: Props) {
                     onChange={(newValue: number) => {
                         props.changeTime(props.date.getHours(), newValue);
                     }}
-                    options={formOptions.MINUTES}
+                    options={constants.formOptions.MINUTES}
                 />
             </div>
         </div>
