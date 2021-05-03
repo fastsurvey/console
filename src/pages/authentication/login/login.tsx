@@ -1,55 +1,61 @@
 import React, {useRef, useState} from 'react';
 import {connect} from 'react-redux';
-import {stateTypes, dispatchers, authPostRequest} from 'utilities';
+import {reduxUtils, backend} from 'utilities';
 import VisualLogin from './visual-login';
+import {types} from 'types';
 
 interface Props {
     logIn(
-        oauth2_token: stateTypes.OAuth2Token,
-        account: stateTypes.Account,
+        authToken: types.AuthToken,
+        account: types.Account,
+        configs: types.SurveyConfig[],
     ): void;
-    openMessage(message: stateTypes.Message): void;
+    openMessage(message: types.Message): void;
     closeAllMessages(): void;
 }
 
 function LoginForm(props: Props) {
-    const [email, setEmail] = useState<string>('');
+    const [identifier, setIdentifier] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [submitting, setSubmitting] = useState<boolean>(false);
 
     function disabled() {
-        return email.length < 5 || password.length < 8;
+        return identifier.length < 3 || password.length < 8;
     }
 
     const input2Ref = useRef<HTMLInputElement>(null);
+
+    function abortLogin(code: 401 | 500) {
+        setSubmitting(false);
+
+        switch (code) {
+            case 401:
+                props.openMessage({
+                    text: 'Invalid credentials',
+                    type: 'error',
+                });
+                break;
+            case 500:
+                props.openMessage({
+                    text: 'Server error. Please try again later',
+                    type: 'error',
+                });
+                break;
+        }
+    }
 
     function handleLogin() {
         input2Ref.current?.blur();
         if (!disabled()) {
             setSubmitting(true);
-            authPostRequest('/login/form', {email, password})
-                .then((response) => {
-                    setSubmitting(false);
-                    props.logIn(
-                        response.data.oauth2_token,
-                        response.data.account,
-                    );
-                })
-                .catch((error) => {
-                    setSubmitting(false);
-                    if (error?.response?.status === 401) {
-                        props.openMessage({
-                            text: 'Invalid credentials',
-                            type: 'error',
-                        });
-                    } else {
-                        // Invalid password formats will be catched by frontend
-                        props.openMessage({
-                            text: 'Server error. Please try again later',
-                            type: 'error',
-                        });
-                    }
-                });
+            backend.loginWithForm(
+                {
+                    identifier,
+                    password,
+                },
+                props.logIn,
+                abortLogin,
+            );
         }
     }
 
@@ -57,8 +63,8 @@ function LoginForm(props: Props) {
         <VisualLogin
             // @ts-ignore
             ref={{input2Ref}}
-            email={email}
-            setEmail={setEmail}
+            identifier={identifier}
+            setIdentifier={setIdentifier}
             password={password}
             setPassword={setPassword}
             closeAllMessages={props.closeAllMessages}
@@ -69,10 +75,10 @@ function LoginForm(props: Props) {
     );
 }
 
-const mapStateToProps = (state: stateTypes.ReduxState) => ({});
+const mapStateToProps = (state: types.ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
-    logIn: dispatchers.logIn(dispatch),
-    openMessage: dispatchers.openMessage(dispatch),
-    closeAllMessages: dispatchers.closeAllMessages(dispatch),
+    logIn: reduxUtils.dispatchers.logIn(dispatch),
+    openMessage: reduxUtils.dispatchers.openMessage(dispatch),
+    closeAllMessages: reduxUtils.dispatchers.closeAllMessages(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

@@ -1,14 +1,13 @@
 import React from 'react';
-import {configTypes, hints} from 'utilities';
+import {formUtils} from 'utilities';
 import {icons} from 'assets';
 import {TextInput, TriggerIcon, EditorFormRow} from 'components';
+import {types} from 'types';
 
 interface Props {
-    fieldConfig: configTypes.RadioField | configTypes.SelectionField;
+    fieldConfig: types.RadioField | types.SelectionField;
     disabled: boolean;
-    updateFieldConfig(
-        fieldConfig: configTypes.RadioField | configTypes.SelectionField,
-    ): void;
+    setLocalFieldConfig(fieldConfigChanges: object): void;
 
     setOptionsVisible(optionsVisible: boolean[]): void;
     optionsVisible: boolean[];
@@ -41,8 +40,7 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
                             {...commonProps}
                             value={optionField.title}
                             onChange={(newValue: string) =>
-                                props.updateFieldConfig({
-                                    ...props.fieldConfig,
+                                props.setLocalFieldConfig({
                                     fields: props.fieldConfig.fields.map(
                                         (oldOptionField, oldIndex) =>
                                             optionIndex === oldIndex
@@ -55,7 +53,7 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
                                 })
                             }
                             hint={{
-                                ...hints.title(optionField.title),
+                                ...formUtils.hints.title(optionField.title),
                                 inlineHint: true,
                             }}
                         />
@@ -72,8 +70,7 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
                                     ),
                                 );
                                 setTimeout(() => {
-                                    props.updateFieldConfig({
-                                        ...props.fieldConfig,
+                                    props.setLocalFieldConfig({
                                         fields: props.fieldConfig.fields.filter(
                                             (oldOptionField, oldIndex) =>
                                                 optionIndex !== oldIndex,
@@ -91,7 +88,7 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
                         value={props.newOption}
                         onChange={props.setNewOption}
                         placeholder='New option'
-                        hint={hints.newOption(props.newOption)}
+                        hint={formUtils.hints.newOption(props.newOption)}
                         onEnter={
                             props.newOption !== ''
                                 ? props.addFieldOption

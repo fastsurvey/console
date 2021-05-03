@@ -1,18 +1,19 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import assert from 'assert';
-import {stateTypes, dispatchers, authPostRequest} from 'utilities';
+import {reduxUtils, authPostRequest} from 'utilities';
 import VisualVerifyWall from './visual-verify-wall';
+import {types} from 'types';
 
 interface VerifyWallProps {
-    account: undefined | stateTypes.Account;
+    account: undefined | types.Account;
     logOut(): void;
-    openMessage(message: stateTypes.Message): void;
+    openMessage(message: types.Message): void;
     closeAllMessages(): void;
 }
 
 function VerifyWall(props: VerifyWallProps) {
-    const email = props.account?.email;
+    const email = props.account?.email_address;
     assert(email !== undefined);
 
     const [resendPossible, setResendPossible] = useState(true);
@@ -55,12 +56,12 @@ function VerifyWall(props: VerifyWallProps) {
     );
 }
 
-const mapStateToProps = (state: stateTypes.ReduxState) => ({
+const mapStateToProps = (state: types.ReduxState) => ({
     account: state.account,
 });
 const mapDispatchToProps = (dispatch: any) => ({
-    logOut: dispatchers.logOut(dispatch),
-    openMessage: dispatchers.openMessage(dispatch),
-    closeAllMessages: dispatchers.closeAllMessages(dispatch),
+    logOut: reduxUtils.dispatchers.logOut(dispatch),
+    openMessage: reduxUtils.dispatchers.openMessage(dispatch),
+    closeAllMessages: reduxUtils.dispatchers.closeAllMessages(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(VerifyWall);

@@ -1,11 +1,11 @@
 import React from 'react';
 import {icons} from 'assets';
 import NavbarContent from './navbar-content/navbar-content';
-import {stateTypes} from 'utilities';
+import {types} from 'types';
 
 interface Props {
     logOut(): void;
-    navbarState: stateTypes.NavbarState;
+    navbarState: types.NavbarState;
     openNavbar(): void;
     closeNavbar(): void;
 }

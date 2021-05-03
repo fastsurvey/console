@@ -15,75 +15,90 @@
     font-family: 'Quicksand', sans-serif;
 }
 
-.font-weight-300 {
-    font-weight: 300;
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
 }
 
-.font-weight-400 {
-    font-weight: 400;
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 }
 
-.font-weight-500 {
-    font-weight: 500;
+@layer utilities {
+    .font-weight-300 {
+        font-weight: 300;
+    }
+
+    .font-weight-400 {
+        font-weight: 400;
+    }
+
+    .font-weight-500 {
+        font-weight: 500;
+    }
+
+    .font-weight-600 {
+        font-weight: 600;
+    }
+
+    .font-weight-700 {
+        font-weight: 700;
+    }
 }
 
-.font-weight-600 {
-    font-weight: 600;
-}
+@layer base {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply font-weight-600;
+        @apply w-full;
+        @apply block;
+    }
 
-.font-weight-700 {
-    font-weight: 700;
-}
+    p {
+        @apply text-lg;
+    }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    @apply font-weight-600;
-    @apply w-full;
-    @apply block;
-}
+    h1 {
+        @apply text-5xl;
+        @apply mb-3;
+    }
 
-p {
-    @apply text-lg;
-}
+    h2 {
+        @apply text-4xl;
+        @apply mb-3;
+    }
 
-h1 {
-    @apply text-5xl;
-    @apply mb-3;
-}
+    h3 {
+        @apply text-3xl;
+        @apply mb-2;
+    }
 
-h2 {
-    @apply text-4xl;
-    @apply mb-3;
-}
+    h4 {
+        @apply text-2xl;
+        @apply mb-2;
+    }
 
-h3 {
-    @apply text-3xl;
-    @apply mb-2;
-}
+    h5 {
+        @apply text-xl;
+        @apply mb-1;
+    }
 
-h4 {
-    @apply text-2xl;
-    @apply mb-2;
-}
+    h6 {
+        @apply text-lg;
+        @apply mb-1;
+    }
 
-h5 {
-    @apply text-xl;
-    @apply mb-1;
-}
-
-h6 {
-    @apply text-lg;
-    @apply mb-1;
-}
-
-svg {
-    fill: currentColor;
-    height: 100%;
-    width: 100%;
+    svg {
+        fill: currentColor;
+        height: 100%;
+        width: 100%;
+    }
 }
 
 .center-content {
@@ -92,12 +107,26 @@ svg {
     @apply justify-center;
 }
 
+.centering-row {
+    @apply flex;
+    @apply flex-row;
+    @apply items-center;
+    @apply justify-center;
+}
+
+.centering-col {
+    @apply flex;
+    @apply flex-col;
+    @apply items-center;
+    @apply justify-center;
+}
+
 .text-magenta {
-    color: #FD0948;
+    color: #fd0948;
 }
 
 .bg-magenta {
-    background-color: #FD0948;
+    background-color: #fd0948;
 }
 
 .flex-max {

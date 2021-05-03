@@ -1,16 +1,14 @@
 import React from 'react';
 import {Label, TextInput} from 'components';
-import {configTypes} from 'utilities';
+import {types} from 'types';
 
 interface Props {
-    config: configTypes.SurveyConfig | configTypes.SurveyField;
+    config: types.SurveyConfig | types.SurveyField;
     label: string;
     postfix?: string;
     value: string;
     hint: {text: string; fulfilled: boolean};
-    updateConfig(
-        config: configTypes.SurveyConfig | configTypes.SurveyField,
-    ): void;
+    updateConfig(config: types.SurveyConfig | types.SurveyField): void;
     onChange(newValue: string): any;
     className?: string;
     wrapperClassName?: string;

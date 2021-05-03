@@ -11,17 +11,17 @@ function VisualNavbarButton(props: VisualNavbarButtonProps) {
         <div
             onClick={props.onClick}
             className={
-                'relative h-12 my-1 py-1 text-lg ' +
-                'lg:w-38 xl:w-48 2xl:w-58 mx-3 px-2 ' +
+                'relative h-10 my-1 py-0 text-lg ' +
+                'lg:w-38 xl:w-48 2xl:w-58 mx-3 px-1 ' +
                 'font-weight-600 flex flex-row items-center ' +
                 'justify-start rounded cursor-pointer ' +
                 (props.active
-                    ? 'text-white bg-gray-800'
-                    : 'text-gray-400 hover:text-white hover:bg-gray-800')
+                    ? 'text-gray-100 bg-gray-700'
+                    : 'text-gray-300 hover:text-gray-100 hover:bg-gray-700')
             }
         >
-            <div className={'h-8 w-8'}>{props.icon}</div>
-            <div className={'ml-2'}>{props.text}</div>
+            <div className={'h-8 w-8 p-1'}>{props.icon}</div>
+            <div className={'ml-1'}>{props.text}</div>
         </div>
     );
 }

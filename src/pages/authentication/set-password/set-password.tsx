@@ -1,14 +1,16 @@
 import React, {useRef, useState} from 'react';
 import {connect} from 'react-redux';
-import {stateTypes, dispatchers, authPostRequest} from 'utilities';
+import {reduxUtils, authPostRequest} from 'utilities';
 import VisualSetPassword from './visual-set-password';
+import {types} from 'types';
 
 interface Props {
     logIn(
-        oauth2_token: stateTypes.OAuth2Token,
-        account: stateTypes.Account,
+        authToken: types.AuthToken,
+        account: types.Account,
+        configs: types.SurveyConfig[],
     ): void;
-    openMessage(message: stateTypes.Message): void;
+    openMessage(message: types.Message): void;
     closeAllMessages(): void;
 }
 function SetPassword(props: Props) {
@@ -38,6 +40,7 @@ function SetPassword(props: Props) {
                     props.logIn(
                         response.data.oauth2_token,
                         response.data.account,
+                        [],
                     );
                     setSuccess(true);
                 })
@@ -77,10 +80,10 @@ function SetPassword(props: Props) {
     );
 }
 
-const mapStateToProps = (state: stateTypes.ReduxState) => ({});
+const mapStateToProps = (state: types.ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
-    logIn: dispatchers.logIn(dispatch),
-    openMessage: dispatchers.openMessage(dispatch),
-    closeAllMessages: dispatchers.closeAllMessages(dispatch),
+    logIn: reduxUtils.dispatchers.logIn(dispatch),
+    openMessage: reduxUtils.dispatchers.openMessage(dispatch),
+    closeAllMessages: reduxUtils.dispatchers.closeAllMessages(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(SetPassword);

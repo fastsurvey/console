@@ -1,4 +1,4 @@
-const formOptions = {
+export const formOptions = {
     AUTH_MODE: [
         {value: 0, label: 'No Authentication'},
         {value: 1, label: 'Email Verification'},
@@ -47,5 +47,3 @@ const formOptions = {
         },
     ],
 };
-
-export default formOptions;

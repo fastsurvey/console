@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {configTypes, formatters, formOptions, hints} from 'utilities';
+import {formUtils, constants} from 'utilities';
 import {
     DropDown,
     TextArea,
@@ -9,14 +9,12 @@ import {
     EditorFormRow,
 } from 'components';
 import {icons} from 'assets';
+import {types} from 'types';
 
 interface Props {
-    config: configTypes.SurveyConfig;
+    config: types.SurveyConfig;
     surveyNameIsValid(survey_name: string): boolean;
-    updateConfig(
-        config: configTypes.SurveyConfig,
-        skipValidation?: boolean,
-    ): void;
+    updateConfig(config: types.SurveyConfig, skipValidation?: boolean): void;
     updateValidator(newState: boolean): void;
     commonProps: any;
     disabled: boolean;
@@ -79,7 +77,7 @@ const VisualSettings = (props: Props) => {
                         });
                     }}
                     hint={{
-                        ...hints.title(props.config.title),
+                        ...formUtils.hints.title(props.config.title),
                         inlineHint: true,
                     }}
                 />
@@ -97,7 +95,7 @@ const VisualSettings = (props: Props) => {
                         });
                     }}
                     hint={{
-                        ...hints.surveyName(
+                        ...formUtils.hints.surveyName(
                             props.config,
                             props.surveyNameIsValid,
                         ),
@@ -154,17 +152,18 @@ const VisualSettings = (props: Props) => {
             <EditorFormRow label='Auth Mode' className='mb-1'>
                 <DropDown
                     {...commonProps}
-                    value={props.config.mode}
-                    onChange={(newValue: 0 | 1 | 2) => {
+                    value={props.config.authentication === 'open' ? 0 : 1}
+                    onChange={(newValue: 0 | 1) => {
                         props.updateConfig(
                             {
                                 ...props.config,
-                                mode: newValue,
+                                authentication:
+                                    newValue === 0 ? 'open' : 'email',
                             },
                             false,
                         );
                     }}
-                    options={formOptions.AUTH_MODE}
+                    options={constants.formOptions.AUTH_MODE}
                 />
             </EditorFormRow>
 
@@ -172,15 +171,15 @@ const VisualSettings = (props: Props) => {
                 <TextInput
                     {...commonProps}
                     postfix=' submissions'
-                    value={props.config.submission_limit.toString()}
+                    value={props.config.limit.toString()}
                     onChange={(newValue: string) => {
                         props.updateConfig({
                             ...props.config,
-                            submission_limit: formatters.atoi(newValue),
+                            limit: formUtils.formatters.atoi(newValue),
                         });
                     }}
                     hint={{
-                        ...hints.submissionLimit(props.config),
+                        ...formUtils.hints.submissionLimit(props.config),
                         inlineHint: true,
                     }}
                 />

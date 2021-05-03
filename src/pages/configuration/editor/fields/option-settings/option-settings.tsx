@@ -1,22 +1,18 @@
 import React from 'react';
-import {configTypes} from 'utilities';
 import VisualOptionSettings from './visual-option-settings';
+import {types} from 'types';
 
 interface Props {
-    fieldConfig: configTypes.OptionField;
-    setFieldConfig(fieldConfig: configTypes.OptionField): void;
+    fieldConfig: types.OptionField;
+    setLocalFieldConfig(fieldConfigChanges: object): void;
     disabled: boolean;
 }
 function OptionSettings(props: Props) {
-    function updateFieldConfig(newFieldConfig: configTypes.OptionField) {
-        props.setFieldConfig(newFieldConfig);
-    }
-
     return (
         <VisualOptionSettings
             fieldConfig={props.fieldConfig}
             disabled={props.disabled}
-            updateFieldConfig={updateFieldConfig}
+            setLocalFieldConfig={props.setLocalFieldConfig}
         />
     );
 }

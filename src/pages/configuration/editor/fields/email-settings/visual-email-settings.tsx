@@ -1,12 +1,13 @@
 import React from 'react';
-import {configTypes, formOptions, hints} from 'utilities';
+import {constants, formUtils} from 'utilities';
 import {DropDown, TextInput, EditorFormRow} from 'components';
+import {types} from 'types';
 
 interface Props {
     setupValue: number;
-    customSetup: configTypes.EmailRegexSetup;
-    fieldConfig: configTypes.EmailField;
-    updateFieldConfig(fieldConfig: configTypes.EmailField): void;
+    customSetup: types.EmailRegexSetup;
+    fieldConfig: types.EmailField;
+    setLocalFieldConfig(fieldConfigChanges: object): void;
     disabled: boolean;
 }
 function VisualEmailSettings(props: Props) {
@@ -23,16 +24,18 @@ function VisualEmailSettings(props: Props) {
                     value={props.setupValue}
                     onChange={(newValue: number) => {
                         const setup = [
-                            ...formOptions.EMAIL_REGEX,
+                            ...constants.formOptions.EMAIL_REGEX,
                             props.customSetup,
                         ].filter((setup) => setup.value === newValue)[0];
-                        props.updateFieldConfig({
-                            ...props.fieldConfig,
+                        props.setLocalFieldConfig({
                             regex: setup.regex,
                             hint: setup.hint,
                         });
                     }}
-                    options={[...formOptions.EMAIL_REGEX, props.customSetup]}
+                    options={[
+                        ...constants.formOptions.EMAIL_REGEX,
+                        props.customSetup,
+                    ]}
                 />
             </EditorFormRow>
 
@@ -42,12 +45,14 @@ function VisualEmailSettings(props: Props) {
                     placeholder='URL conform identifier'
                     value={props.fieldConfig.regex}
                     onChange={(newValue: string) =>
-                        props.updateFieldConfig({
-                            ...props.fieldConfig,
+                        props.setLocalFieldConfig({
                             regex: newValue,
                         })
                     }
-                    hint={{...hints.regex(props.fieldConfig), inlineHint: true}}
+                    hint={{
+                        ...formUtils.hints.regex(props.fieldConfig),
+                        inlineHint: true,
+                    }}
                 />
             </EditorFormRow>
 
@@ -57,12 +62,14 @@ function VisualEmailSettings(props: Props) {
                     placeholder='URL conform identifier'
                     value={props.fieldConfig.hint}
                     onChange={(newValue: string) =>
-                        props.updateFieldConfig({
-                            ...props.fieldConfig,
+                        props.setLocalFieldConfig({
                             hint: newValue,
                         })
                     }
-                    hint={{...hints.hint(props.fieldConfig), inlineHint: true}}
+                    hint={{
+                        ...formUtils.hints.hint(props.fieldConfig),
+                        inlineHint: true,
+                    }}
                 />
             </EditorFormRow>
         </>

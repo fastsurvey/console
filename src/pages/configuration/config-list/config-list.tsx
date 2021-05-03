@@ -1,22 +1,26 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {useLocation, useHistory} from 'react-router-dom';
-import {stateTypes, configTypes, dispatchers} from 'utilities';
+import {reduxUtils, backend, templateUtils} from 'utilities';
 import icons from 'assets/icons/icons';
 
-import {ButtonLink} from 'components';
+import {Button} from 'components';
 import ConfigPreviewPanel from './visual-config-panel';
 import VisualConfigList from './visual-config-list';
 import AddSurveyPopup from 'pages/configuration/config-list/add-survey-popup';
-import surveyTemplate from '../../../utilities/template-helpers/add-survey';
+import {types} from 'types';
+import {sortBy} from 'lodash';
 
 interface Props {
-    configs: undefined | configTypes.SurveyConfig[];
+    account: types.Account;
+    authToken: types.AuthToken;
+
+    configs: types.SurveyConfig[];
     configIsDiffering: boolean;
-    openMessage(message: stateTypes.Message): void;
+    openMessage(message: types.Message): void;
     openModal(title: string, children: React.ReactNode): void;
     closeModal(): void;
-    addConfig(config: configTypes.SurveyConfig): void;
+    addConfig(config: types.SurveyConfig): void;
 }
 function ConfigList(props: Props) {
     let location = useLocation();
@@ -37,30 +41,35 @@ function ConfigList(props: Props) {
     }
 
     function addSurvey(surveyName: string) {
-        if (props.configs !== undefined) {
-            props.addConfig(
-                surveyTemplate('fastsurvey', surveyName, props.configs),
-            );
-        }
+        const newConfig = templateUtils.survey(
+            surveyName,
+            props.configs.length,
+        );
 
-        props.closeModal();
-        history.push(`/configuration/${surveyName}`);
-    }
+        const success = () => {
+            props.addConfig(newConfig);
+            props.closeModal();
+            history.push(`/configuration/${surveyName}`);
+        };
+        const error = (code: 400 | 401 | 422 | 500) => {};
 
-    if (!props.configs) {
-        return (
-            <div className='w-64 h-full center-content'>
-                <p>Loading surveys</p>
-            </div>
+        backend.createSurvey(
+            props.account,
+            props.authToken,
+            newConfig,
+            success,
+            error,
         );
     }
 
     return (
         <VisualConfigList>
             {props.configs.length === 0 && (
-                <p className='w-full text-center'>No surveys yet</p>
+                <p className='w-full my-4 text-center text-gray-600 font-weight-500'>
+                    No surveys yet
+                </p>
             )}
-            {props.configs.map((config, index) => (
+            {sortBy(props.configs, ['survey_name']).map((config, index) => (
                 <ConfigPreviewPanel
                     key={config.local_id}
                     selected={
@@ -69,32 +78,36 @@ function ConfigList(props: Props) {
                     }
                     onClick={() => handleClick(config.survey_name)}
                     config={config}
+                    username={props.account.username}
                 />
             ))}
-            <ButtonLink
-                icon={icons.add}
-                onClick={() =>
-                    props.openModal(
-                        'Add a new survey',
-                        <AddSurveyPopup addSurvey={addSurvey} />,
-                    )
-                }
-                className='w-full mt-1'
-            >
-                New survey
-            </ButtonLink>
+            <div className='w-full mt-1 centering-row'>
+                <Button
+                    icon={icons.add}
+                    text='New survey'
+                    flat
+                    onClick={() =>
+                        props.openModal(
+                            'Add a new survey',
+                            <AddSurveyPopup addSurvey={addSurvey} />,
+                        )
+                    }
+                />
+            </div>
         </VisualConfigList>
     );
 }
 
-const mapStateToProps = (state: stateTypes.ReduxState) => ({
+const mapStateToProps = (state: types.ReduxState) => ({
     configs: state.configs,
     configIsDiffering: state.configIsDiffering,
+    authToken: state.authToken,
+    account: state.account,
 });
 const mapDispatchToProps = (dispatch: any) => ({
-    openMessage: dispatchers.openMessage(dispatch),
-    openModal: dispatchers.openModal(dispatch),
-    closeModal: dispatchers.closeModal(dispatch),
-    addConfig: dispatchers.addConfig(dispatch),
+    openMessage: reduxUtils.dispatchers.openMessage(dispatch),
+    openModal: reduxUtils.dispatchers.openModal(dispatch),
+    closeModal: reduxUtils.dispatchers.closeModal(dispatch),
+    addConfig: reduxUtils.dispatchers.addConfig(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(ConfigList);

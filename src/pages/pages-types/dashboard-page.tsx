@@ -1,32 +1,15 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
-import {stateTypes, configTypes, dispatchers, fetchSurveys} from 'utilities';
+import {types} from 'types';
 import {Navbar} from 'components';
 import 'styles/dashboard-page.css';
 
-interface Props {
+function DashBoardPage(props: {
     children: React.ReactNode;
-    navbarState: stateTypes.NavbarState;
+    navbarState: types.NavbarState;
     loggedIn: boolean;
-    oauth2_token: stateTypes.OAuth2Token | undefined;
-    addConfigs(configs: configTypes.SurveyConfig[]): void;
-}
-function DashBoardPage(props: Props) {
-    useEffect(() => {
-        async function fetch(oauth2_token: stateTypes.OAuth2Token) {
-            await fetchSurveys(
-                oauth2_token,
-                (configs: configTypes.SurveyConfig[]) => {
-                    props.addConfigs(configs);
-                },
-            );
-        }
-        if (props.loggedIn && props.oauth2_token !== undefined) {
-            fetch(props.oauth2_token);
-        }
-        // eslint-disable-next-line
-    }, [props.loggedIn, props.oauth2_token]);
-
+    authToken: types.AuthToken | undefined;
+}) {
     return (
         <React.Fragment>
             <header>
@@ -44,12 +27,10 @@ function DashBoardPage(props: Props) {
     );
 }
 
-const mapStateToProps = (state: stateTypes.ReduxState) => ({
+const mapStateToProps = (state: types.ReduxState) => ({
     navbarState: state.navbarState,
     loggedIn: state.loggedIn,
-    oauth2_token: state.oauth2_token,
+    authToken: state.authToken,
 });
-const mapDispatchToProps = (dispatch: any) => ({
-    addConfigs: dispatchers.addConfigs(dispatch),
-});
+const mapDispatchToProps = (dispatch: any) => ({});
 export default connect(mapStateToProps, mapDispatchToProps)(DashBoardPage);

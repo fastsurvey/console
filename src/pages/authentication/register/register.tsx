@@ -1,99 +1,85 @@
 import React, {useRef, useState} from 'react';
 import {connect} from 'react-redux';
-import {stateTypes, dispatchers, authPostRequest} from 'utilities';
-import {authGetRequest} from 'utilities/ajax-helpers/axios-clients';
+import {reduxUtils, backend} from 'utilities';
 import VisualRegister from './visual-register';
+import {types} from 'types';
 
 interface Props {
-    logIn(
-        oauth2_token: stateTypes.OAuth2Token,
-        account: stateTypes.Account,
-    ): void;
-    openMessage(message: stateTypes.Message): void;
+    openMessage(message: types.Message): void;
     closeAllMessages(): void;
 }
 function RegisterForm(props: Props) {
     const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const [submitting, setSubmitting] = useState(false);
 
     function disabled() {
-        return password.length < 8 || password !== passwordConfirmation;
+        return (
+            username.length < 3 ||
+            password.length < 8 ||
+            password !== passwordConfirmation
+        );
     }
 
     const input2Ref = useRef<HTMLInputElement>(null);
     const input3Ref = useRef<HTMLInputElement>(null);
+    const input4Ref = useRef<HTMLInputElement>(null);
 
     function handleRegistration() {
         input2Ref.current?.blur();
         input3Ref.current?.blur();
+        input4Ref.current?.blur();
+
+        function success() {
+            setSubmitting(false);
+            setPassword('');
+            setPasswordConfirmation('');
+            props.openMessage({
+                text: 'Success: Account created! Please verify your email now.',
+                type: 'success',
+            });
+        }
+
+        function error(code: 400 | 500) {
+            setSubmitting(false);
+            let messageText: string;
+            if (code === 400) {
+                messageText = 'Email is already taken';
+            } else {
+                // Invalid password formats will be catched by frontend
+                messageText = 'Server error. Please try again later';
+            }
+            props.openMessage({
+                text: messageText,
+                type: 'error',
+            });
+        }
+
         if (!disabled()) {
             setSubmitting(true);
-            authPostRequest(`/users/mumbojambo`, {email, password})
-                .then(() => {
-                    authPostRequest('/authentication', {
-                        identifier: email,
-                        password,
-                    })
-                        .then((authResponse: any) => {
-                            // TODO: refresh token
 
-                            const jwt: stateTypes.OAuth2Token = {
-                                access_token: authResponse.access_token,
-                                refresh_token: authResponse.access_token,
-                                bearer: authResponse.token_type,
-                            };
-
-                            authGetRequest('/users/mumbojambo', jwt)
-                                .then((response) => {
-                                    setSubmitting(false);
-
-                                    props.logIn(jwt, {
-                                        email: email,
-                                        email_verified: response.data.verified,
-                                    });
-                                })
-                                .catch((error) => {
-                                    console.error(
-                                        'GET /users/mumbojambo call went wrong',
-                                    );
-                                });
-                        })
-                        .catch((error) => {
-                            console.error(
-                                'POST /authentication call went wrong',
-                            );
-                        });
-                })
-                .catch((error) => {
-                    setSubmitting(false);
-                    const detail = error?.response?.data?.detail;
-                    let messageText: string;
-                    if (detail === 'email already taken') {
-                        messageText = 'Email is already taken';
-                    } else if (
-                        detail === 'verification email could not be sent'
-                    ) {
-                        messageText = 'Email address invalid';
-                    } else {
-                        // Invalid password formats will be catched by frontend
-                        messageText = 'Server error. Please try again later';
-                    }
-                    props.openMessage({
-                        text: messageText,
-                        type: 'error',
-                    });
-                });
+            backend.createAccount(
+                {
+                    email_address: email,
+                    username,
+                    password,
+                },
+                success,
+                error,
+            );
         }
     }
 
     return (
         <VisualRegister
             // @ts-ignore
-            ref={{input2Ref, input3Ref}}
+            ref={{input2Ref, input3Ref, input4Ref}}
             email={email}
             setEmail={setEmail}
+            username={username}
+            setUsername={setUsername}
             password={password}
             setPassword={setPassword}
             passwordConfirmation={passwordConfirmation}
@@ -106,10 +92,10 @@ function RegisterForm(props: Props) {
     );
 }
 
-const mapStateToProps = (state: stateTypes.ReduxState) => ({});
+const mapStateToProps = (state: types.ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
-    logIn: dispatchers.logOut(dispatch),
-    openMessage: dispatchers.openMessage(dispatch),
-    closeAllMessages: dispatchers.closeAllMessages(dispatch),
+    logIn: reduxUtils.dispatchers.logOut(dispatch),
+    openMessage: reduxUtils.dispatchers.openMessage(dispatch),
+    closeAllMessages: reduxUtils.dispatchers.closeAllMessages(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);

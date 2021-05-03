@@ -1,31 +1,29 @@
 import {icons} from 'assets';
 import React from 'react';
-import {colors} from 'utilities';
-import {configTypes} from 'utilities';
+import {styleUtils} from 'utilities';
+import {types} from 'types';
 
 interface Props {
-    insertField(fieldType: configTypes.FieldType): void;
+    insertField(fieldType: types.FieldType): void;
 }
 function AddFieldPopup(props: Props) {
-    const fields: configTypes.FieldType[] = [
-        'Email',
-        'Option',
-        'Radio',
-        'Selection',
-        'Text',
+    const fields: types.FieldType[] = [
+        'email',
+        'option',
+        'radio',
+        'selection',
+        'text',
     ];
     return (
         <div className='px-1 w-60'>
-            {fields.map((fieldType: configTypes.FieldType) => (
+            {fields.map((fieldType: types.FieldType) => (
                 <div
                     key={fieldType}
                     className={
                         'flex flex-row items-start justify-start ' +
                         'my-1 text-lg leading-10 font-weight-600 rounded ' +
                         'opacity-70 hover:opacity-100 cursor-pointer ' +
-                        colors.colorToClasses(
-                            colors.fieldTypeToColor(fieldType),
-                        )
+                        styleUtils.color.fieldTypeToClasses(fieldType)
                     }
                     onClick={() => props.insertField(fieldType)}
                 >

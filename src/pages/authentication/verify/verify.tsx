@@ -1,20 +1,24 @@
 import React, {useRef, useState} from 'react';
 import {connect} from 'react-redux';
-import {stateTypes, dispatchers, authPostRequest} from 'utilities';
+import {reduxUtils, backend} from 'utilities';
 import VisualVerifyForm from './visual-verify';
+import {types} from 'types';
+import {useHistory} from 'react-router-dom';
 
 interface Props {
     logIn(
-        oauth2_token: stateTypes.OAuth2Token,
-        account: stateTypes.Account,
+        authToken: types.AuthToken,
+        account: types.Account,
+        configs: types.SurveyConfig[],
     ): void;
-    openMessage(message: stateTypes.Message): void;
+    openMessage(message: types.Message): void;
     closeAllMessages(): void;
 }
 function VerifyForm(props: Props) {
     const [password, setPassword] = useState('');
     const [success, setSuccess] = useState(false);
     const [submitting, setSubmitting] = useState(false);
+    let history = useHistory();
 
     function disabled() {
         return password.length < 8;
@@ -25,34 +29,51 @@ function VerifyForm(props: Props) {
 
     function handleVerify() {
         input1Ref.current?.blur();
+
+        function success() {
+            setSuccess(true);
+            setSubmitting(false);
+
+            props.openMessage({
+                text: 'Success! Redirect to login in 4 seconds.',
+                type: 'success',
+            });
+
+            setTimeout(() => {
+                history.push('/login');
+                props.closeAllMessages();
+            }, 4000);
+        }
+
+        function error(code: 400 | 401 | 500) {
+            setSubmitting(false);
+            if (code === 401) {
+                props.openMessage({
+                    text: 'Wrong password or invalid link',
+                    type: 'error',
+                });
+            } else if (code === 400) {
+                // email has already been verified but
+                // token and password are correct
+                success();
+            } else {
+                props.openMessage({
+                    text: 'Server error. Please try again later',
+                    type: 'error',
+                });
+            }
+        }
+
         if (!disabled() && token !== null) {
             setSubmitting(true);
-            authPostRequest('/verify', {password, email_token: token})
-                .then((response) => {
-                    setTimeout(() => {
-                        setSuccess(true);
-                        setSubmitting(false);
-                    }, 50);
-                    props.logIn(
-                        response.data.oauth2_token,
-                        response.data.account,
-                    );
-                })
-                .catch((error) => {
-                    setSubmitting(false);
-                    if (error?.response?.status === 401) {
-                        props.openMessage({
-                            text: 'Invalid password or wrong link',
-                            type: 'error',
-                        });
-                    } else {
-                        // Invalid password formats will be catched by frontend
-                        props.openMessage({
-                            text: 'Server error. Please try again later',
-                            type: 'error',
-                        });
-                    }
-                });
+            backend.verifyAccount(
+                {
+                    verification_token: token,
+                    password,
+                },
+                success,
+                error,
+            );
         }
     }
 
@@ -66,16 +87,15 @@ function VerifyForm(props: Props) {
             tokenExists={token !== null}
             disabled={disabled()}
             submitting={submitting}
-            closeAllMessages={props.closeAllMessages}
             handleVerify={handleVerify}
         />
     );
 }
 
-const mapStateToProps = (state: stateTypes.ReduxState) => ({});
+const mapStateToProps = (state: types.ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
-    logIn: dispatchers.logIn(dispatch),
-    openMessage: dispatchers.openMessage(dispatch),
-    closeAllMessages: dispatchers.closeAllMessages(dispatch),
+    logIn: reduxUtils.dispatchers.logIn(dispatch),
+    openMessage: reduxUtils.dispatchers.openMessage(dispatch),
+    closeAllMessages: reduxUtils.dispatchers.closeAllMessages(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(VerifyForm);

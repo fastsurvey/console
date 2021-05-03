@@ -1,7 +1,7 @@
 import React, {useRef, useEffect, useState} from 'react';
 import icons from 'assets/icons/icons';
-import {colors} from 'utilities';
-import {generalTypes} from 'utilities/types/general-types';
+import {styleUtils} from 'utilities';
+import {types} from 'types';
 
 interface Props {
     label: string;
@@ -9,7 +9,7 @@ interface Props {
     buttons?: React.ReactNode;
     icon: React.ReactNode;
     className?: string;
-    color?: generalTypes.Color;
+    fieldType?: types.FieldType;
 
     collapse?: boolean;
     setCollapse?(v: boolean): void;
@@ -58,7 +58,7 @@ function EditorFormCard(props: Props) {
                     'rounded shadow-md mr-1 mb-1 z-0 ' +
                     'flex flex-row items-start justify-start ' +
                     'font-weight-600 text-lg leading-10 ' +
-                    colors.colorToClasses(props.color)
+                    styleUtils.color.fieldTypeToClasses(props.fieldType)
                 }
             >
                 <div

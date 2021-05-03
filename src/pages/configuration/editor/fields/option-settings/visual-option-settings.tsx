@@ -1,21 +1,20 @@
 import React from 'react';
-import {configTypes} from 'utilities';
 import {Checkbox, EditorFormRow} from 'components';
+import {types} from 'types';
 
 interface Props {
-    fieldConfig: configTypes.OptionField;
-    updateFieldConfig(fieldConfig: configTypes.OptionField): void;
+    fieldConfig: types.OptionField;
+    setLocalFieldConfig(fieldConfigChanges: object): void;
     disabled: boolean;
 }
 const VisualOptionSettings = (props: Props) => (
     <EditorFormRow label='Required' className='mb-1'>
         <Checkbox
             disabled={props.disabled}
-            checked={props.fieldConfig.mandatory}
+            checked={props.fieldConfig.required}
             onChange={(newValue: boolean) =>
-                props.updateFieldConfig({
-                    ...props.fieldConfig,
-                    mandatory: newValue,
+                props.setLocalFieldConfig({
+                    required: newValue,
                 })
             }
         />

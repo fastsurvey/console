@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {stateTypes} from 'utilities';
+import {types} from 'types';
 import {LogoBanner} from 'components';
 import 'styles/loader.css';
 
@@ -13,7 +13,7 @@ function LoaderOverlay(props: Props) {
             id='LoaderOverlay'
             className={
                 'fixed z-50 bg-white w-100vw h-100vh center-content ' +
-                'transition-opacity duration-500 delay-500 ' +
+                'transition-opacity duration-0 delay-0 ' +
                 (props.loggingIn
                     ? 'opacity-100'
                     : 'opacity-0 pointer-events-none')
@@ -36,7 +36,7 @@ function LoaderOverlay(props: Props) {
     );
 }
 
-const mapStateToProps = (state: stateTypes.ReduxState) => ({
+const mapStateToProps = (state: types.ReduxState) => ({
     loggingIn: state.loggingIn,
 });
 const mapDispatchToProps = (dispatch: any) => ({});

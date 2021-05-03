@@ -14,7 +14,7 @@ function NavbarContent(props: Props) {
             <VisualLogo />
             <VisualButton
                 onClick={() => props.openLink('/configurations')}
-                text='Configs'
+                text='Surveys'
                 icon={icons.vote}
                 active={props.location.pathname.startsWith('/configuration')}
             />

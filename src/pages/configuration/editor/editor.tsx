@@ -1,28 +1,32 @@
-import {concat} from 'lodash';
+import {constant, times} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {
-    stateTypes,
-    configTypes,
-    validators,
-    fieldTemplate,
-    validateFormat,
-    newFieldId,
-    addLocalIds,
-    validateField,
+    formUtils,
+    templateUtils,
+    localIdUtils,
+    clipboardUtils,
+    dataUtils,
+    backend,
 } from 'utilities';
+import ControlStrip from './control-strip/control-strip';
 import VisualEditor from './visual-editor';
-import {AssertionError} from 'assert';
+import {types} from 'types';
 
-interface Props {
-    configs: configTypes.SurveyConfig[];
-    centralConfig: configTypes.SurveyConfig;
-    modifyConfig(config: configTypes.SurveyConfig): void;
-    markDiffering(differing: boolean): void;
-    openMessage(message: stateTypes.Message): void;
+function ConfigEditor(props: {
+    account: types.Account;
+    authToken: types.AuthToken;
+
+    configs: types.SurveyConfig[];
+    centralConfig: types.SurveyConfig;
+    setCentralConfig(config: types.SurveyConfig): void;
+
+    configIsDiffering: boolean;
+    markDiffering(d: boolean): void;
+
+    openMessage(message: types.Message): void;
     closeAllMessages(): void;
-}
-function ConfigEditor(props: Props) {
+}) {
     const [localConfig, setLocalConfigState] = useState(props.centralConfig);
     const [fieldValidators, setFieldValidators] = useState<boolean[]>([]);
 
@@ -30,201 +34,197 @@ function ConfigEditor(props: Props) {
     const history = useHistory();
 
     useEffect(() => {
+        // Switch between configs in editor
         setLocalConfigState(props.centralConfig);
-        const newValidators = [];
-        for (let i = 0; i <= props.centralConfig.fields.length; i++) {
-            newValidators.push(true);
-        }
-        setFieldValidators(newValidators);
-    }, [props.centralConfig, props.centralConfig.local_id]);
+        initValidators(props.centralConfig);
+        // eslint-disable-next-line
+    }, [props.centralConfig.survey_name]);
+
+    function initValidators(config: types.SurveyConfig) {
+        setFieldValidators(times(config.fields.length + 1, constant(true)));
+    }
 
     function updateValidator(newIndex: number, newState: boolean) {
-        const newValidators: boolean[] = fieldValidators.map((state, index) =>
-            index !== newIndex ? state : newState,
-        );
-
+        const newValidators = [...fieldValidators];
+        newValidators[newIndex] = newState;
         setFieldValidators(newValidators);
-        if (!fieldValidators.includes(false)) {
-            props.closeAllMessages();
-        }
     }
 
-    function insert(array: any[], index: number, element: any) {
-        return concat(
-            array.slice(0, index),
-            element,
-            array.slice(index, array.length),
+    function insertField(index: number, fieldType: types.FieldType) {
+        setFieldValidators(
+            dataUtils.array.insert(fieldValidators, index + 1, false),
         );
-    }
 
-    function remove(array: any[], index: number) {
-        return concat(
-            array.slice(0, index),
-            array.slice(index + 1, array.length),
-        );
-    }
-
-    function insertField(index: number, fieldType: configTypes.FieldType) {
-        setFieldValidators(insert(fieldValidators, index + 1, false));
-
-        const field: configTypes.SurveyField = fieldTemplate(
+        const field: types.SurveyField = templateUtils.field(
             fieldType,
             localConfig,
         );
         setLocalConfig({
             ...localConfig,
-            fields: insert(localConfig.fields, index, field),
+            fields: dataUtils.array.insert(localConfig.fields, index, field),
         });
     }
 
     function pasteField(index: number) {
-        navigator.clipboard.readText().then((text: string) => {
-            try {
-                const newField = JSON.parse(text);
-                if (!validateFormat.fieldConfig(newField)) {
-                    throw AssertionError;
-                }
+        function success(newFieldConfig: types.SurveyField) {
+            setFieldValidators(
+                dataUtils.array.insert(
+                    fieldValidators,
+                    index + 1,
+                    formUtils.validateField(newFieldConfig),
+                ),
+            );
 
-                setFieldValidators(
-                    insert(fieldValidators, index + 1, validateField(newField)),
-                );
-
-                const newConfig = {
-                    ...localConfig,
-                    fields: insert(
-                        localConfig.fields,
-                        index,
-                        addLocalIds.field(newField, newFieldId(localConfig)),
+            const newConfig = {
+                ...localConfig,
+                fields: dataUtils.array.insert(
+                    localConfig.fields,
+                    index,
+                    localIdUtils.initialize.field(
+                        newFieldConfig,
+                        localIdUtils.newId.field(localConfig),
                     ),
-                };
-                setLocalConfig(newConfig);
-            } catch {
-                // TODO: Show message on unsuccessful paste
-                console.info('invalid text format on clipoard');
-            }
-        });
+                ),
+            };
+            setLocalConfig(newConfig);
+        }
+
+        function error() {
+            props.openMessage({
+                text: 'Invalid text format on clipboard',
+                type: 'warning',
+            });
+        }
+        clipboardUtils.paste(success, error);
     }
 
     function removeField(index: number) {
-        setFieldValidators(remove(fieldValidators, index + 1));
+        setFieldValidators(dataUtils.array.remove(fieldValidators, index + 1));
         setLocalConfig({
             ...localConfig,
-            fields: remove(localConfig.fields, index),
+            fields: dataUtils.array.remove(localConfig.fields, index),
         });
     }
 
-    function publishState() {
+    function saveState() {
+        props.closeAllMessages();
+
         const fieldsAreValid = !fieldValidators.includes(false);
-        const timingIsValid = validators.timing(localConfig);
-        const authIsValid = validators.authMode(localConfig);
-        const fieldOptionsAreValid = validators.fieldOptions(localConfig);
+        const fieldCountIsValid = localConfig.fields.length > 0;
+        const timingIsValid = formUtils.validators.timing(localConfig);
+        const authIsValid = formUtils.validators.authMode(localConfig);
+        const fieldOptionsAreValid = formUtils.validators.fieldOptions(
+            localConfig,
+        );
+
+        function success() {
+            props.setCentralConfig(localConfig);
+            if (localConfig.survey_name !== props.centralConfig.survey_name) {
+                history.push(`/configuration/${localConfig.survey_name}`);
+            }
+        }
+
+        function error() {
+            props.openMessage({
+                text: 'Backend error, please try again',
+                type: 'error',
+            });
+        }
 
         if (
             fieldsAreValid &&
+            fieldCountIsValid &&
             timingIsValid &&
             authIsValid &&
             fieldOptionsAreValid
         ) {
-            props.closeAllMessages();
-            const publishedConfig: configTypes.SurveyConfig = {
-                ...localConfig,
-                draft: false,
-            };
-            // TODO: Push to backend and show error/success message
-            props.modifyConfig(publishedConfig);
+            backend.updateSurvey(
+                props.account,
+                props.authToken,
+                props.centralConfig.survey_name,
+                localConfig,
+                success,
+                error,
+            );
         } else {
-            const showConditionalError = (valid: boolean, text: string) => {
-                if (!valid) {
-                    props.openMessage({
-                        text,
-                        type: 'error',
-                    });
-                }
-            };
-            showConditionalError(
-                fieldsAreValid,
-                'Invalid fields: Please check all red circles',
-            );
-            showConditionalError(
-                timingIsValid,
-                'End time has to be after start time',
-            );
-            showConditionalError(
-                authIsValid,
-                'Email-authentication requires unique email field',
-            );
-            showConditionalError(
-                fieldOptionsAreValid,
-                'Radio/Selection fields require at least 2 options',
-            );
-        }
-    }
-    function saveState() {
-        const validSurveyName = validators.surveyName(
-            props.configs,
-            localConfig,
-        )(localConfig.survey_name);
-
-        if (validSurveyName) {
-            props.closeAllMessages();
-            // TODO: Push to backend and show error/success message
-            props.modifyConfig(localConfig);
-            if (localConfig.survey_name !== props.centralConfig.survey_name) {
-                history.push(`/configuration/${localConfig.survey_name}`);
-            }
-        } else {
-            props.openMessage({
-                text: 'Invalid survey identifier',
-                type: 'error',
-            });
+            [
+                {
+                    pass: fieldsAreValid,
+                    text: 'Invalid fields: Please check all red hints',
+                },
+                {
+                    pass: fieldCountIsValid,
+                    text: 'There has to be at least one field',
+                },
+                {
+                    pass: timingIsValid,
+                    text: 'End time has to be after start time',
+                },
+                {
+                    pass: authIsValid,
+                    text: 'Email-authentication requires unique email field',
+                },
+                {
+                    pass: fieldOptionsAreValid,
+                    text: 'Radio/Selection fields require at least 2 options',
+                },
+            ]
+                .filter((c) => !c.pass)
+                .forEach((c) => {
+                    props.openMessage({text: c.text, type: 'error'});
+                });
         }
     }
 
     function revertState() {
         props.markDiffering(false);
         props.closeAllMessages();
-        const newValidators = [];
-        for (let i = 0; i <= props.centralConfig.fields.length; i++) {
-            newValidators.push(true);
-        }
-        setFieldValidators(newValidators);
         setLocalConfigState(props.centralConfig);
+        initValidators(props.centralConfig);
     }
 
-    function setLocalConfig(config: configTypes.SurveyConfig) {
-        // TODO: Add proper state comparison
-        props.markDiffering(true);
-        setLocalConfigState(config);
-    }
-
-    function setFieldConfig(
-        newFieldConfig: configTypes.SurveyField,
-        newIndex: number,
-    ) {
-        setLocalConfig({
+    function setLocalConfig(configChanges: object) {
+        // TODO: Add proper state comparison (localConfig === centralConfig)
+        if (!props.configIsDiffering) {
+            props.markDiffering(true);
+        }
+        setLocalConfigState({
             ...localConfig,
-            fields: localConfig.fields.map((fieldConfig, index) =>
-                index !== newIndex ? fieldConfig : newFieldConfig,
-            ),
+            ...configChanges,
         });
     }
 
+    function setLocalFieldConfig(fieldConfigChanges: object, newIndex: number) {
+        const newConfig = {
+            ...localConfig,
+        };
+
+        newConfig.fields[newIndex] = {
+            ...newConfig.fields[newIndex],
+            ...fieldConfigChanges,
+        };
+        setLocalConfig(newConfig);
+    }
+
     return (
-        <VisualEditor
-            centralConfig={props.centralConfig}
-            modifyConfig={props.modifyConfig}
-            saveState={saveState}
-            publishState={publishState}
-            revertState={revertState}
-            localConfig={localConfig}
-            setLocalConfigState={setLocalConfigState}
-            updateValidator={updateValidator}
-            setLocalConfig={setLocalConfig}
-            setFieldConfig={setFieldConfig}
-            insertField={insertField}
-            pasteField={pasteField}
-            removeField={removeField}
-        />
+        <>
+            <ControlStrip
+                config={props.centralConfig}
+                setCentralConfig={props.setCentralConfig}
+                saveState={saveState}
+                revertState={revertState}
+            />
+            <VisualEditor
+                centralConfigName={props.centralConfig.survey_name}
+                localConfig={localConfig}
+                updateValidator={updateValidator}
+                setLocalConfig={setLocalConfig}
+                setLocalFieldConfig={setLocalFieldConfig}
+                insertField={insertField}
+                pasteField={pasteField}
+                removeField={removeField}
+            />
+        </>
     );
 }
 

@@ -47,7 +47,7 @@ const TextArea = React.forwardRef((props: Props, ref: any) => {
                     'text-gray-600 focus:text-gray-800 ' +
                     'outline-none focus:ring ring-blue-300 ' +
                     (props.disabled
-                        ? ' bg-gray-200 cursor-not-allowed '
+                        ? ' !bg-gray-200 cursor-not-allowed '
                         : ' bg-white ')
                 }
             />

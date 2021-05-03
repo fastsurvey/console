@@ -1,12 +1,13 @@
 import React from 'react';
-import {configTypes} from 'utilities';
+import {types} from 'types';
 import icons from 'assets/icons/icons';
 import ControlStripUI from './visual-strip';
 import ControlStripButton from './visual-button';
 
 interface Props {
     now(): number;
-    config: configTypes.SurveyConfig;
+    account: types.Account;
+    config: types.SurveyConfig;
     startNow(): void;
     reopenNow(): void;
     endNow(): void;
@@ -21,7 +22,7 @@ const VisualPublishedStrip = (props: Props) => (
             icon={icons.launch}
             onClick={() =>
                 window.open(
-                    `https://fastsurvey.io/${props.config.admin_name}` +
+                    `https://fastsurvey.io/${props.account.username}` +
                         `/${props.config.survey_name}`,
                     '_blank',
                 )

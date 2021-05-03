@@ -1,10 +1,12 @@
 import React from 'react';
 import {TextInput, TextLink, ButtonLink} from 'components';
-import {hints} from 'utilities';
+import {formUtils} from 'utilities';
 
 interface Props {
     email: string;
     setEmail(newEmail: string): void;
+    username: string;
+    setUsername(newUsername: string): void;
     password: string;
     setPassword(newPassword: string): void;
     passwordConfirmation: string;
@@ -17,11 +19,11 @@ interface Props {
     handleRegistration(): void;
 }
 const VisualRegister = React.forwardRef((props: Props, refs: any) => {
-    const {input2Ref, input3Ref} = refs;
+    const {input2Ref, input3Ref, input4Ref} = refs;
 
     return (
         <div className='w-full'>
-            <h2 className='mb-4 text-center no-selection'>Register</h2>
+            <h2 className='mb-6 text-center no-selection'>Register</h2>
             <form>
                 <TextInput
                     required
@@ -31,9 +33,26 @@ const VisualRegister = React.forwardRef((props: Props, refs: any) => {
                         props.closeAllMessages();
                         props.setEmail(newValue);
                     }}
-                    wrapperClassName='mb-3'
-                    autoComplete='username'
+                    wrapperClassName='mb-2'
+                    autoComplete='email'
                     onEnter={() => input2Ref.current?.focus()}
+                />
+                <TextInput
+                    required
+                    placeholder='username'
+                    value={props.username}
+                    onChange={(newValue) => {
+                        props.closeAllMessages();
+                        props.setUsername(newValue);
+                    }}
+                    ref={input2Ref}
+                    wrapperClassName='mb-2'
+                    autoComplete='username'
+                    onEnter={() => input3Ref.current?.focus()}
+                    hint={{
+                        ...formUtils.hints.username(props.username),
+                        inlineHint: true,
+                    }}
                 />
                 <TextInput
                     value={props.password}
@@ -41,14 +60,17 @@ const VisualRegister = React.forwardRef((props: Props, refs: any) => {
                         props.closeAllMessages();
                         props.setPassword(newValue);
                     }}
-                    ref={input2Ref}
-                    onEnter={() => input3Ref.current?.focus()}
+                    ref={input3Ref}
+                    onEnter={() => input4Ref.current?.focus()}
                     required
                     placeholder='password'
                     type='password'
-                    wrapperClassName='mb-1'
+                    wrapperClassName='mb-2'
                     autoComplete='new-password'
-                    hint={{...hints.password(props.password), inlineHint: true}}
+                    hint={{
+                        ...formUtils.hints.password(props.password),
+                        inlineHint: true,
+                    }}
                 />
                 <TextInput
                     value={props.passwordConfirmation}
@@ -56,7 +78,7 @@ const VisualRegister = React.forwardRef((props: Props, refs: any) => {
                         props.closeAllMessages();
                         props.setPasswordConfirmation(newValue);
                     }}
-                    ref={input3Ref}
+                    ref={input4Ref}
                     onEnter={props.handleRegistration}
                     required
                     placeholder='confirm password'
@@ -64,7 +86,7 @@ const VisualRegister = React.forwardRef((props: Props, refs: any) => {
                     wrapperClassName='mb-5'
                     autoComplete='new-password'
                     hint={{
-                        ...hints.passwordConfirmation(
+                        ...formUtils.hints.passwordConfirmation(
                             props.password,
                             props.passwordConfirmation,
                         ),

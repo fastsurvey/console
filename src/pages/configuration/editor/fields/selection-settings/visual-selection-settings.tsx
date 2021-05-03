@@ -1,11 +1,12 @@
 import React from 'react';
-import {configTypes, formatters, hints} from 'utilities';
+import {formUtils} from 'utilities';
 import {TextInput, EditorFormRow} from 'components';
 import FieldOptionsList from '../field-options-list/field-options-list';
+import {types} from 'types';
 
 interface Props {
-    fieldConfig: configTypes.SelectionField;
-    updateFieldConfig(fieldConfig: configTypes.SelectionField): void;
+    fieldConfig: types.SelectionField;
+    setLocalFieldConfig(fieldConfigChanges: object): void;
     disabled: boolean;
 }
 function VisualSelectionSettings(props: Props) {
@@ -21,13 +22,12 @@ function VisualSelectionSettings(props: Props) {
                     {...commonProps}
                     value={props.fieldConfig.min_select.toString()}
                     onChange={(newValue: string) =>
-                        props.updateFieldConfig({
-                            ...props.fieldConfig,
-                            min_select: formatters.atoi(newValue),
+                        props.setLocalFieldConfig({
+                            min_select: formUtils.formatters.atoi(newValue),
                         })
                     }
                     hint={{
-                        ...hints.minSelect(props.fieldConfig),
+                        ...formUtils.hints.minSelect(props.fieldConfig),
                         inlineHint: true,
                     }}
                 />
@@ -37,13 +37,12 @@ function VisualSelectionSettings(props: Props) {
                     {...commonProps}
                     value={props.fieldConfig.max_select.toString()}
                     onChange={(newValue: string) =>
-                        props.updateFieldConfig({
-                            ...props.fieldConfig,
-                            max_select: formatters.atoi(newValue),
+                        props.setLocalFieldConfig({
+                            max_select: formUtils.formatters.atoi(newValue),
                         })
                     }
                     hint={{
-                        ...hints.maxSelect(props.fieldConfig),
+                        ...formUtils.hints.maxSelect(props.fieldConfig),
                         inlineHint: true,
                     }}
                 />
@@ -51,7 +50,7 @@ function VisualSelectionSettings(props: Props) {
             <FieldOptionsList
                 fieldConfig={props.fieldConfig}
                 disabled={props.disabled}
-                updateFieldConfig={props.updateFieldConfig}
+                setLocalFieldConfig={props.setLocalFieldConfig}
             />
         </div>
     );

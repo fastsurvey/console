@@ -1,6 +1,6 @@
 import React from 'react';
 import {TextInput, ButtonLink} from 'components';
-import {hints} from 'utilities';
+import {formUtils} from 'utilities';
 
 interface Props {
     password: string;
@@ -37,7 +37,7 @@ const VisualSetPassword = React.forwardRef((props: Props, refs: any) => {
                                 }}
                                 type='password'
                                 hint={{
-                                    ...hints.password(props.password),
+                                    ...formUtils.hints.password(props.password),
                                     inlineHint: true,
                                 }}
                                 wrapperClassName='mb-1'
@@ -53,7 +53,7 @@ const VisualSetPassword = React.forwardRef((props: Props, refs: any) => {
                                 }}
                                 type='password'
                                 hint={{
-                                    ...hints.passwordConfirmation(
+                                    ...formUtils.hints.passwordConfirmation(
                                         props.password,
                                         props.passwordConfirmation,
                                     ),
