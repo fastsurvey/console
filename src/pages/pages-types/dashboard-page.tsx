@@ -15,7 +15,7 @@ function DashBoardPage(props: {
             <header>
                 <Navbar />
             </header>
-            <main>
+            <main className='w-screen min-h-screen bg-gray-200'>
                 <div id='RegularContent' className={'hidden lg:block'}>
                     {props.children}
                 </div>

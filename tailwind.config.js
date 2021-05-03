@@ -19,6 +19,7 @@ module.exports = {
                 yellow: colors.yellow,
                 green: colors.green,
                 teal: colors.teal,
+                rose: colors.rose,
                 
             },
             opacity: {

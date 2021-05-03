@@ -33,12 +33,12 @@ function ConfigPreviewPanel(props: Props) {
         <div
             onClick={props.onClick}
             className={
-                'w-full py-2 px-3 my-1 rounded-l ' +
+                'w-full py-2 px-3 my-1 ' +
                 'no-selection border-r-4 ' +
                 statusColor +
                 (props.selected
                     ? ' cursor-default bg-white opacity-100 '
-                    : ' cursor-pointer bg-gray-100 opacity-80 ')
+                    : ' cursor-pointer opacity-80 ')
             }
         >
             <div className='flex flex-row items-start w-full'>

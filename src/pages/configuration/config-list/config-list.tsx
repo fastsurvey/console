@@ -4,7 +4,7 @@ import {useLocation, useHistory} from 'react-router-dom';
 import {reduxUtils, backend, templateUtils} from 'utilities';
 import icons from 'assets/icons/icons';
 
-import {Button} from 'components';
+import {Button, InlineButton} from 'components';
 import ConfigPreviewPanel from './visual-config-panel';
 import VisualConfigList from './visual-config-list';
 import AddSurveyPopup from 'pages/configuration/config-list/add-survey-popup';
@@ -64,6 +64,22 @@ function ConfigList(props: Props) {
 
     return (
         <VisualConfigList>
+            <div
+                className={
+                    'box-content relative w-full h-10 mb-3 ' +
+                    'bg-white text-gray-900 hover:text-rose-600 ' +
+                    'text-center leading-10 font-weight-600 ' +
+                    'shadow cursor-pointer overflow-visible '
+                }
+                onClick={() =>
+                    props.openModal(
+                        'Add a new survey',
+                        <AddSurveyPopup addSurvey={addSurvey} />,
+                    )
+                }
+            >
+                <InlineButton icon={icons.add} text='New Survey' />
+            </div>
             {props.configs.length === 0 && (
                 <p className='w-full my-4 text-center text-gray-600 font-weight-500'>
                     No surveys yet
@@ -81,19 +97,6 @@ function ConfigList(props: Props) {
                     username={props.account.username}
                 />
             ))}
-            <div className='w-full mt-1 centering-row'>
-                <Button
-                    icon={icons.add}
-                    text='New survey'
-                    flat
-                    onClick={() =>
-                        props.openModal(
-                            'Add a new survey',
-                            <AddSurveyPopup addSurvey={addSurvey} />,
-                        )
-                    }
-                />
-            </div>
         </VisualConfigList>
     );
 }

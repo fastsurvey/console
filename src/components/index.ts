@@ -1,4 +1,5 @@
 export {default as Button} from './buttons/button';
+export {default as InlineButton} from './buttons/inline-button';
 export {default as ButtonRow} from './buttons/button-row';
 
 export {default as VisualTextInputRow} from './form-abstractions/visual-text-input-row';
