@@ -1,11 +1,12 @@
 {
-    "name": "admin-frontend",
-    "version": "0.1.0",
-    "private": true,
+    "name": "fastsurvey-console",
+    "version": "0.3.0",
+    "author": {
+        "name": "Moritz Makowski",
+        "email": "moritz@dostuffthatmatters.dev",
+        "url": "https://dostuffthatmatters.dev/"
+    },
     "dependencies": {
-        "@tailwindcss/jit": "^0.1.18",
-        "@types/lodash": "^4.14.166",
-        "@types/react-scroll": "^1.8.2",
         "assert": "^2.0.0",
         "axios": "^0.20.0",
         "express": "^4.17.1",
@@ -52,6 +53,9 @@
         "@testing-library/jest-dom": "^4.2.4",
         "@testing-library/react": "^9.3.2",
         "@testing-library/user-event": "^7.1.2",
+        "@tailwindcss/jit": "^0.1.18",
+        "@types/lodash": "^4.14.166",
+        "@types/react-scroll": "^1.8.2",
         "@types/jest": "^24.0.0",
         "@types/js-cookie": "^2.2.6",
         "@types/jsonwebtoken": "^8.5.0",

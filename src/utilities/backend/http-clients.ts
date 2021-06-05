@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {types} from 'types';
 
-const API_URL = 'https://backend.dev.fastsurvey.io';
+const API_URL = 'http://localhost:8000';
 
 export function httpPost(
     url: string,
