@@ -6,7 +6,7 @@ import assert from 'assert';
 
 function updateState(state: types.ReduxState, action: types.ReduxAction) {
     const newState = cloneDeep(state);
-    console.debug(action);
+    console.debug(action.type);
 
     switch (action.type) {
         case 'LOG_IN':
@@ -78,22 +78,17 @@ function updateState(state: types.ReduxState, action: types.ReduxAction) {
             break;
 
         case 'REMOVE_CONFIG':
-            if (newState.configs !== undefined) {
-                newState.configs = newState.configs.filter(
-                    (config) => config.survey_name !== action.surveyName,
-                );
-            }
+            assert(newState.configs);
+            newState.configs = newState.configs.filter(
+                (config) => config.survey_name !== action.surveyName,
+            );
             break;
 
         case 'SET_CENTRAL_CONFIG':
-            if (newState.configs !== undefined) {
-                newState.configs = newState.configs.map(
-                    (config: types.SurveyConfig) =>
-                        config.local_id === action.config.local_id
-                            ? action.config
-                            : config,
-                );
-            }
+            assert(newState.configs);
+            newState.configs = newState.configs.map((c) =>
+                c.local_id === action.config.local_id ? action.config : c,
+            );
             newState.configIsDiffering = false;
             break;
 

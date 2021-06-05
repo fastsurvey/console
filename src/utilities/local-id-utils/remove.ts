@@ -1,4 +1,5 @@
 import {types} from 'types';
+import {cloneDeep} from 'lodash';
 
 /*
 The only place where I need this functionality is when pushing
@@ -12,10 +13,10 @@ rest of the codebase way simpler.
 */
 
 function survey(config: types.SurveyConfig) {
-    // @ts-ignore
-    delete config.local_id;
-    config.fields = config.fields.map(remove.field);
-    return config;
+    const newConfig: any = cloneDeep(config);
+    delete newConfig.local_id;
+    newConfig.fields = newConfig.fields.map(remove.field);
+    return newConfig;
 }
 
 function field(config: types.SurveyField) {

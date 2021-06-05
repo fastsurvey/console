@@ -113,9 +113,8 @@ function ConfigEditor(props: {
         const fieldCountIsValid = localConfig.fields.length > 0;
         const timingIsValid = formUtils.validators.timing(localConfig);
         const authIsValid = formUtils.validators.authMode(localConfig);
-        const fieldOptionsAreValid = formUtils.validators.fieldOptions(
-            localConfig,
-        );
+        const fieldOptionsAreValid =
+            formUtils.validators.fieldOptions(localConfig);
 
         function success() {
             props.setCentralConfig(localConfig);
