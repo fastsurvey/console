@@ -7,13 +7,11 @@ function VisualConfigList(props: Props) {
     return (
         <div
             className={
-                'fixed top-0 flex flex-col p-2 h-screen ' +
-                'lg:ml-44 lg:w-60 xl:ml-54 xl:w-70 2xl:ml-64 2xl:w-80 ' +
-                ' bg-gray-200 z-40 ' +
+                'p-2 min-h-screen w-full z-0 centering-col ' +
                 'overflow-y-scroll overflow-x-hidden'
             }
         >
-            {props.children}
+            <div className='max-w-3xl bg-red-400'>{props.children}</div>
         </div>
     );
 }

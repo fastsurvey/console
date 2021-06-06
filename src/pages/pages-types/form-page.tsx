@@ -10,7 +10,7 @@ function FormPage(props: Props) {
         <MainWrapper flexDirection='flex-row' className='bg-gray-100'>
             <div
                 className={
-                    'hidden w-0 center-content ' +
+                    'hidden w-0 centering-row ' +
                     'lg:block lg:w-30vw lg:mr-5vw xl:w-30vw'
                 }
             >

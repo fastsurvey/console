@@ -52,7 +52,6 @@ function PageRouter(props: RouterProps) {
                                                 exact
                                                 path='/configuration/:survey_name'
                                             >
-                                                <ConfigList />
                                                 <EditorRouter />
                                             </Route>
                                             <Route exact path='/results'>

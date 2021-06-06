@@ -12,16 +12,16 @@ function LogoBanner(props: Props) {
                 <div
                     className={
                         'flex flex-row items-center justify-start ' +
-                        'font-weight-600'
+                        'font-weight-500'
                     }
                 >
-                    <div className={'h-12 w-12 mr-3 no-selection'}>
+                    <div className={'h-12 w-12 mr-2 no-selection'}>
                         <img src={RocketLogo} alt='FastSurvey' />
                     </div>
                     <div className={'text-gray-700 text-2xl no-selection'}>
                         FastSurvey{' '}
                         {!props.slim && (
-                            <span className='hidden text-magenta md:inline'>
+                            <span className='hidden text-rose-500 md:inline font-weight-300'>
                                 Admin Dashboard
                             </span>
                         )}

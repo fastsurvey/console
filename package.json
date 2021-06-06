@@ -16,7 +16,11 @@
         "react-dom": "^16.13.1",
         "react-redux": "^7.2.1",
         "react-router-dom": "^5.2.0",
-        "react-scroll": "^1.8.1"
+        "react-scroll": "^1.8.1",
+        "typeface-lato": "^1.1.13",
+        "typeface-open-sans": "^1.1.13",
+        "typeface-roboto": "^1.1.13",
+        "typeface-rubik": "^1.1.13"
     },
     "scripts": {
         "develop": "react-scripts start",
@@ -50,20 +54,20 @@
         ]
     },
     "devDependencies": {
+        "@tailwindcss/jit": "^0.1.18",
         "@testing-library/jest-dom": "^4.2.4",
         "@testing-library/react": "^9.3.2",
         "@testing-library/user-event": "^7.1.2",
-        "@tailwindcss/jit": "^0.1.18",
-        "@types/lodash": "^4.14.166",
-        "@types/react-scroll": "^1.8.2",
         "@types/jest": "^24.0.0",
         "@types/js-cookie": "^2.2.6",
         "@types/jsonwebtoken": "^8.5.0",
+        "@types/lodash": "^4.14.166",
         "@types/node": "^12.0.0",
         "@types/react": "^16.9.51",
         "@types/react-dom": "^16.9.8",
         "@types/react-redux": "^7.1.9",
         "@types/react-router-dom": "^5.1.6",
+        "@types/react-scroll": "^1.8.2",
         "autoprefixer": "^10.1.0",
         "eslint-plugin-react-hooks": "^4.2.0",
         "postcss": "^8.2.10",

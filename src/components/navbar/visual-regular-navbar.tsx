@@ -1,5 +1,5 @@
 import React from 'react';
-import NavbarContent from './navbar-content/navbar-content';
+import NavbarContent from './regular-navbar/navbar-content';
 
 interface Props {
     logOut(): void;
@@ -9,9 +9,8 @@ function VisualRegularNavbar(props: Props) {
         <React.Fragment>
             <div
                 className={
-                    'fixed left-0 top-0 pt-4 pb-1 h-100vh ' +
-                    'lg:w-44 xl:w-54 2xl:w-64 ' +
-                    'bg-gray-900 flex flex-col shadow no-selection'
+                    'fixed left-0 top-0 px-2 pt-3 pb-1 h-100vh group ' +
+                    'bg-gray-900 flex-col-start shadow no-selection'
                 }
             >
                 <NavbarContent closeNavbar={() => {}} logOut={props.logOut} />
