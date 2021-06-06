@@ -11,10 +11,7 @@ The other option were to have one image for each
 color. But that would lead to overhead in other
 areas and transitionig colors is not that simple. */
 
-interface Props {
-    children: React.ReactNode;
-}
-function SVG(props: Props) {
+function SVG(props: {children: React.ReactNode}) {
     return (
         <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -29,6 +26,58 @@ function SVG(props: Props) {
 }
 
 const icons = {
+    survey: (
+        <SVG>
+            <path
+                className='primary'
+                d='M5 5h14a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7c0-1.1.9-2 2-2zm3 7a1 1 0 0 0 0 2h8a1 1 0 0 0 0-2H8zm0 4a1 1 0 0 0 0 2h4a1 1 0 0 0 0-2H8z'
+            />
+            <path
+                className='secondary'
+                d='M15 4a2 2 0 0 1 2 2v1a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V6c0-1.1.9-2 2-2 0-1.1.9-2 2-2h2a2 2 0 0 1 2 2z'
+            />
+        </SVG>
+    ),
+    collection: (
+        <SVG>
+            <rect
+                width='20'
+                height='12'
+                x='2'
+                y='10'
+                className='primary'
+                rx='2'
+            />
+            <path
+                className='secondary'
+                d='M20 8H4c0-1.1.9-2 2-2h12a2 2 0 0 1 2 2zm-2-4H6c0-1.1.9-2 2-2h8a2 2 0 0 1 2 2z'
+            />
+        </SVG>
+    ),
+    user: (
+        <SVG>
+            <path
+                className='primary'
+                d='M12 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10z'
+            />
+            <path
+                className='secondary'
+                d='M21 20v-1a5 5 0 0 0-5-5H8a5 5 0 0 0-5 5v1c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2z'
+            />
+        </SVG>
+    ),
+    exit: (
+        <SVG>
+            <path
+                className='transform scale-x-[-1] origin-center primary'
+                d='M11 4h3a1 1 0 0 1 1 1v3a1 1 0 0 1-2 0V6h-2v12h2v-2a1 1 0 0 1 2 0v3a1 1 0 0 1-1 1h-3v1a1 1 0 0 1-1.27.96l-6.98-2A1 1 0 0 1 2 19V5a1 1 0 0 1 .75-.97l6.98-2A1 1 0 0 1 11 3v1z'
+            />
+            <path
+                className='transform scale-x-[-1] origin-center secondary'
+                d='M18.59 11l-1.3-1.3c-.94-.94.47-2.35 1.42-1.4l3 3a1 1 0 0 1 0 1.4l-3 3c-.95.95-2.36-.46-1.42-1.4l1.3-1.3H14a1 1 0 0 1 0-2h4.59z'
+            />
+        </SVG>
+    ),
     vote: (
         <SVG>
             <path d='M11.34 15.02c.39.39 1.02.39 1.41 0l6.36-6.36c.39-.39.39-1.02 0-1.41L14.16 2.3c-.38-.4-1.01-.4-1.4-.01L6.39 8.66c-.39.39-.39 1.02 0 1.41l4.95 4.95zm2.12-10.61L17 7.95l-4.95 4.95-3.54-3.54 4.95-4.95zm6.95 11l-2.12-2.12c-.18-.18-.44-.29-.7-.29h-.27l-2 2h1.91L19 17H5l1.78-2h2.05l-2-2h-.42c-.27 0-.52.11-.71.29l-2.12 2.12c-.37.38-.58.89-.58 1.42V20c0 1.1.9 2 2 2h14c1.1 0 2-.89 2-2v-3.17c0-.53-.21-1.04-.59-1.42z' />

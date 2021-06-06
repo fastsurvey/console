@@ -19,7 +19,6 @@ function LoaderOverlay(props: Props) {
                     : 'opacity-0 pointer-events-none')
             }
         >
-            <Logo slim />
             <div
                 className={
                     'transition-opacity duration-100 delay-1000 ' +

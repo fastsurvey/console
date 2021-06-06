@@ -31,12 +31,12 @@ function NavbarButton(props: {
         <div
             onClick={props.onClick ? props.onClick : () => {}}
             className={
-                'relative h-10 py-0 centering-row ' +
-                'font-weight-400 text-base rounded cursor-pointer ' +
-                (props.active ? 'text-white' : 'text-gray-400')
+                'relative h-10 py-0 centering-row my-1 ' +
+                'font-weight-600 text-base rounded cursor-pointer ' +
+                (props.active ? 'text-white bg-gray-700' : 'text-gray-200')
             }
         >
-            <div className={'h-10 w-10 p-2 '}>{props.icon}</div>
+            <div className={'h-10 w-10 p-2 icon-light-blue'}>{props.icon}</div>
             <div
                 className={
                     'w-0 group-hover:w-36 transform translate-x-2 ' +
@@ -60,19 +60,19 @@ function NavbarContent(props: {
             <NavbarButton
                 onClick={() => props.openLink('/configurations')}
                 text='Surveys'
-                icon={icons.vote}
+                icon={icons.survey}
                 active={props.location.pathname.startsWith('/configuration')}
             />
             <NavbarButton
                 onClick={() => props.openLink('/results')}
                 text='Results'
-                icon={icons.charts}
+                icon={icons.collection}
                 active={props.location.pathname === '/results'}
             />
             <NavbarButton
                 onClick={() => props.openLink('/account')}
                 text='Account'
-                icon={icons.account}
+                icon={icons.user}
                 active={props.location.pathname === '/account'}
             />
 
@@ -81,7 +81,7 @@ function NavbarContent(props: {
             <NavbarButton
                 onClick={props.logOut}
                 text='Logout'
-                icon={icons.logout}
+                icon={icons.exit}
             />
         </React.Fragment>
     );

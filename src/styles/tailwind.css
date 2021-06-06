@@ -88,3 +88,11 @@
     @apply self-stretch;
     @apply flex-grow;
 }
+
+.icon-light-blue .primary {
+    @apply fill-blue-050;
+}
+
+.icon-light-blue .secondary {
+    @apply fill-blue-200;
+}
