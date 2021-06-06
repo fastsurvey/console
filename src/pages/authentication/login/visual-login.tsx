@@ -18,7 +18,9 @@ const VisualLogin = React.forwardRef((props: Props, refs: any) => {
 
     return (
         <div className='w-full'>
-            <h2 className='mb-4 text-center no-selection'>Login</h2>
+            <h1 className='mb-4 text-3xl text-center text-gray-800 font-weight-600 no-selection'>
+                Login
+            </h1>
             <form>
                 <TextInput
                     placeholder='email'

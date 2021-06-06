@@ -17,10 +17,7 @@
         "react-redux": "^7.2.1",
         "react-router-dom": "^5.2.0",
         "react-scroll": "^1.8.1",
-        "typeface-lato": "^1.1.13",
-        "typeface-open-sans": "^1.1.13",
-        "typeface-roboto": "^1.1.13",
-        "typeface-rubik": "^1.1.13"
+        "typeface-quicksand": "^1.1.13"
     },
     "scripts": {
         "develop": "react-scripts start",

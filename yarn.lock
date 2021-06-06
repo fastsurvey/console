@@ -11135,25 +11135,15 @@ typedarray@^0.0.6:
   resolved "https://registry.npmjs.org/typedarray/-/typedarray-0.0.6.tgz"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typeface-lato@^1.1.13:
+typeface-nunito@^1.1.13:
   version "1.1.13"
-  resolved "https://registry.yarnpkg.com/typeface-lato/-/typeface-lato-1.1.13.tgz#630ec75394d7fd2c63148005e6e23f2d8014e931"
-  integrity sha512-sTn5k3+fagGOi8FQfN2MPeUiTdvG0Z3LVqCaQdsg2sYa0fzNteFZussizdwiPxF45OoFN3zdU/ci+PtjolNSPQ==
+  resolved "https://registry.yarnpkg.com/typeface-nunito/-/typeface-nunito-1.1.13.tgz#a57cbd7ff3e74ed99fe60d3361971c61747d130c"
+  integrity sha512-S7tN6pMnJapUxRDNa/RPXtcsxJC0KkBNPFOfGpHCkatVLm+6ltMedgeGtr1lPZsGFXGN890TZmE18bq2pdsmKw==
 
-typeface-open-sans@^1.1.13:
+typeface-quicksand@^1.1.13:
   version "1.1.13"
-  resolved "https://registry.yarnpkg.com/typeface-open-sans/-/typeface-open-sans-1.1.13.tgz#32a09ebd7df59601e01ad81216f98ce641eeafd1"
-  integrity sha512-lVGVHvYl7UJDFB9vN8r7NHw3sVm7Rjeow6b9AeABc/J+2mDaCkmcdVtw3QZnsJW39P+xm5zeggIj9gLHYGn9Iw==
-
-typeface-roboto@^1.1.13:
-  version "1.1.13"
-  resolved "https://registry.yarnpkg.com/typeface-roboto/-/typeface-roboto-1.1.13.tgz#9c4517cb91e311706c74823e857b4bac9a764ae5"
-  integrity sha512-YXvbd3a1QTREoD+FJoEkl0VQNJoEjewR2H11IjVv4bp6ahuIcw0yyw/3udC4vJkHw3T3cUh85FTg8eWef3pSaw==
-
-typeface-rubik@^1.1.13:
-  version "1.1.13"
-  resolved "https://registry.yarnpkg.com/typeface-rubik/-/typeface-rubik-1.1.13.tgz#c01d40f05718590bc05d08ea404666a8ef56377a"
-  integrity sha512-mMWgn3bYfT6V4WWA3yvdEM3AkTA7iK1XwhlOX3+vWfqHc6O9I2RUsi9krEXzNdQ1UE/eoEFBRigMtu30PsdEDg==
+  resolved "https://registry.yarnpkg.com/typeface-quicksand/-/typeface-quicksand-1.1.13.tgz#c408be6f5e09fda5379d74fe44c47938436c321b"
+  integrity sha512-sStzisPEpHfgPDE7EQvaDj9j5kxF56xeJgVc/8F2cchmI1IeuQ5ZE3ufTchSSpKbGRddgjgfWGUyjb7RqtJORA==
 
 typescript@~3.7.2:
   version "3.7.7"

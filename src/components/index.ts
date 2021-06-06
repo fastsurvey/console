@@ -17,14 +17,11 @@ export {default as Label} from './form-fields/label';
 export {default as ButtonLink} from './links/button-link';
 export {default as TextLink} from './links/text-link';
 
-export {default as LogoBanner} from './logos/logo-banner';
-
 export {default as MessageQueue} from './message-queue/message-queue';
 export {default as Modal} from './modal/modal';
 export {default as ModalButton} from './modal/modal-button';
 
 export {default as Navbar} from './navbar/navbar';
 
-export {default as LoaderOverlay} from './overlays/loader-overlay';
-
+export {default as LoaderOverlay} from './wrapper/loader-overlay';
 export {default as MainWrapper} from './wrapper/main-wrapper';

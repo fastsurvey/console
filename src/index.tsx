@@ -4,7 +4,7 @@ import ReduxStore from 'redux-store';
 import PageRouter from 'page-router';
 import 'styles/tailwind.out.css';
 import 'styles/compatibility-fixes.css';
-import 'typeface-roboto';
+import 'typeface-quicksand';
 
 ReactDOM.render(
     <React.StrictMode>
