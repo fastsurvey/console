@@ -46,6 +46,27 @@
     .font-weight-700 {
         font-weight: 700;
     }
+
+    .icon-light-blue .primary {
+        @apply fill-blue-050;
+    }
+
+    .icon-light-blue .secondary {
+        @apply fill-blue-200;
+    }
+
+    .icon-blue .primary {
+        @apply fill-blue-100;
+    }
+
+    .icon-blue .secondary {
+        @apply fill-blue-900;
+    }
+
+    .icon-transparent .primary,
+    .icon-transparent .secondary {
+        fill: transparent;
+    }
 }
 
 @layer base {
@@ -87,12 +108,4 @@
 .flex-max {
     @apply self-stretch;
     @apply flex-grow;
-}
-
-.icon-light-blue .primary {
-    @apply fill-blue-050;
-}
-
-.icon-light-blue .secondary {
-    @apply fill-blue-200;
 }
