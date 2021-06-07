@@ -3,12 +3,10 @@ import {types} from 'types';
 import icons from 'assets/icons/icons';
 
 interface Props {
-    username: string;
+    account: types.Account;
     config: types.SurveyConfig;
-    selected: boolean;
-    onClick(): void;
 }
-function ConfigPreviewPanel(props: Props) {
+function VisualConfigPanel(props: Props) {
     let statusColor: string;
     let statusText: string;
 
@@ -31,14 +29,10 @@ function ConfigPreviewPanel(props: Props) {
 
     return (
         <div
-            onClick={props.onClick}
             className={
                 'w-full py-2 px-3 my-1 rounded-l ' +
-                'no-selection border-r-4 ' +
-                statusColor +
-                (props.selected
-                    ? ' cursor-default bg-white opacity-100 '
-                    : ' cursor-pointer bg-gray-100 opacity-80 ')
+                'no-selection border-r-4 cursor-default bg-white opacity-100 ' +
+                statusColor
             }
         >
             <div className='flex flex-row items-start w-full'>
@@ -55,11 +49,11 @@ function ConfigPreviewPanel(props: Props) {
             <div className='flex flex-row text-base text-blue-600 font-weight-500'>
                 <div className='flex-shrink-0 w-6 h-6 mr-1'>{icons.link}</div>
                 <div className='leading-6 break-all'>
-                    {props.username}/{props.config.survey_name}
+                    {props.account.username}/{props.config.survey_name}
                 </div>
             </div>
         </div>
     );
 }
 
-export default ConfigPreviewPanel;
+export default VisualConfigPanel;
