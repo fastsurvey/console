@@ -15,7 +15,7 @@ function VisualConfigList(props: {
     return (
         <div
             className={
-                'p-2 min-h-screen w-full z-0 centering-col ' +
+                'py-32 min-h-screen w-full z-0 flex-col-top ' +
                 'overflow-y-scroll overflow-x-hidden bg-gray-100'
             }
         >

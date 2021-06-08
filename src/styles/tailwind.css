@@ -103,6 +103,13 @@
     @apply justify-center;
 }
 
+.flex-col-top {
+    @apply flex;
+    @apply flex-col;
+    @apply items-center;
+    @apply justify-start;
+}
+
 .flex-col-left-top {
     @apply flex;
     @apply flex-col;

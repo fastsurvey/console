@@ -76,7 +76,7 @@ function NavbarContent(props: {
                 active={props.location.pathname === '/account'}
             />
 
-            <div className={'self-stretch flex-grow'} />
+            <div className={'flex-max'} />
 
             <NavbarButton
                 onClick={props.logOut}
