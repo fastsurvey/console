@@ -29,7 +29,18 @@ function VisualConfigList(props: {
                     />
                 </div>
 
-                {sortBy(props.configs, ['survey_name']).map((config) => (
+                {sortBy(
+                    props.configs.filter(
+                        (c) =>
+                            c.title
+                                .toLowerCase()
+                                .includes(value.toLowerCase()) ||
+                            c.survey_name
+                                .toLowerCase()
+                                .includes(value.toLowerCase()),
+                    ),
+                    ['survey_name'],
+                ).map((config) => (
                     <Link
                         to={`/configuration/${config.survey_name}`}
                         key={config.local_id}

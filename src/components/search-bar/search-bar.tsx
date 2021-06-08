@@ -11,6 +11,8 @@ function SearchBar(props: {value: string; setValue(v: string): void}) {
                     'outline-none focus:ring ring-blue-200 font-weight-500'
                 }
                 placeholder='search'
+                value={props.value}
+                onChange={(e) => props.setValue(e.target.value)}
             />
             <div
                 className={
