@@ -1,12 +1,15 @@
 import React from 'react';
 
 function VisualTimePill(props: {
-    variant: 'pending' | 'running' | 'finished';
+    variant: 'draft' | 'pending' | 'running' | 'finished';
     phrase: string;
     flat?: boolean;
 }) {
     let colorClasses: string;
     switch (props.variant) {
+        case 'draft':
+            colorClasses = 'bg-blue-100 text-blue-700 ';
+            break;
         case 'pending':
             colorClasses = 'bg-yellow-100 text-yellow-800 ';
             break;

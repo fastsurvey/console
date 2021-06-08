@@ -1,7 +1,7 @@
 import React from 'react';
 import {types} from 'types';
 import icons from 'assets/icons/icons';
-import {TimePill, IconButton} from 'components';
+import {TimePill} from 'components';
 
 interface Props {
     account: types.Account;
