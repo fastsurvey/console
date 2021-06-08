@@ -2,6 +2,7 @@ export {default as Button} from './buttons/button';
 export {default as ButtonRow} from './buttons/button-row';
 export {default as IconButton} from './buttons/icon-button';
 export {default as SearchBar} from './search-bar/search-bar';
+export {default as TimePill} from './time-pill/time-pill';
 
 export {default as VisualTextInputRow} from './form-abstractions/visual-text-input-row';
 
