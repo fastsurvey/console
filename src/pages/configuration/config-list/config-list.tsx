@@ -18,16 +18,13 @@ interface Props {
 function ConfigList(props: Props) {
     let history = useHistory();
 
-    function addSurvey(surveyName: string) {
-        const newConfig = templateUtils.survey(
-            surveyName,
-            props.configs.length,
-        );
+    function addSurvey() {
+        const newConfig = templateUtils.survey(props.configs);
 
         const success = () => {
             props.addConfig(newConfig);
             props.closeModal();
-            history.push(`/configuration/${surveyName}`);
+            history.push(`/configuration/${newConfig.survey_name}`);
         };
         const error = (code: 400 | 401 | 422 | 500) => {};
 

@@ -8,7 +8,7 @@ import {icons} from 'assets';
 
 function VisualConfigList(props: {
     configs: types.SurveyConfig[];
-    addSurvey(surveyName: string): void;
+    addSurvey(): void;
     account: types.Account;
 }) {
     const [value, setValue] = useState('');
@@ -22,7 +22,11 @@ function VisualConfigList(props: {
             <div className='w-full max-w-2xl centering-col'>
                 <div className='w-full mt-1 centering-row gap-x-4'>
                     <SearchBar value={value} setValue={setValue} />
-                    <IconButton icon={icons.addSquare} text='Add Survey' />
+                    <IconButton
+                        icon={icons.addSquare}
+                        text='Add Survey'
+                        onClick={props.addSurvey}
+                    />
                 </div>
 
                 {sortBy(props.configs, ['survey_name']).map((config) => (

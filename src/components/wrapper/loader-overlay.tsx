@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {types} from 'types';
-import Logo from './logo-banner';
 import 'styles/loader.css';
 
 interface Props {
