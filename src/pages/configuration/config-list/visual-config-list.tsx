@@ -19,8 +19,8 @@ function VisualConfigList(props: {
                 'overflow-y-scroll overflow-x-hidden bg-gray-100'
             }
         >
-            <div className='w-full max-w-2xl centering-col'>
-                <div className='w-full mt-1 centering-row gap-x-4'>
+            <div className='w-full max-w-4xl centering-col'>
+                <div className='w-full mt-1 mb-6 centering-row gap-x-4'>
                     <SearchBar value={value} setValue={setValue} />
                     <IconButton
                         icon={icons.addSquare}
@@ -29,28 +29,30 @@ function VisualConfigList(props: {
                     />
                 </div>
 
-                {sortBy(
-                    props.configs.filter(
-                        (c) =>
-                            c.title
-                                .toLowerCase()
-                                .includes(value.toLowerCase()) ||
-                            c.survey_name
-                                .toLowerCase()
-                                .includes(value.toLowerCase()),
-                    ),
-                    ['survey_name'],
-                ).map((config) => (
-                    <Link
-                        to={`/configuration/${config.survey_name}`}
-                        key={config.local_id}
-                    >
-                        <VisualConfigPanel
-                            config={config}
-                            account={props.account}
-                        />
-                    </Link>
-                ))}
+                <div className='grid w-full grid-cols-2 gap-3'>
+                    {sortBy(
+                        props.configs.filter(
+                            (c) =>
+                                c.title
+                                    .toLowerCase()
+                                    .includes(value.toLowerCase()) ||
+                                c.survey_name
+                                    .toLowerCase()
+                                    .includes(value.toLowerCase()),
+                        ),
+                        ['survey_name'],
+                    ).map((config) => (
+                        <Link
+                            to={`/configuration/${config.survey_name}`}
+                            key={config.local_id}
+                        >
+                            <VisualConfigPanel
+                                config={config}
+                                account={props.account}
+                            />
+                        </Link>
+                    ))}
+                </div>
 
                 {props.configs.length === 0 && (
                     <p className='w-full my-4 text-center text-gray-600 font-weight-500'>

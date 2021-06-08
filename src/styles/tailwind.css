@@ -50,7 +50,6 @@
     .icon-light-blue .primary {
         @apply fill-blue-050;
     }
-
     .icon-light-blue .secondary {
         @apply fill-blue-200;
     }
@@ -58,9 +57,15 @@
     .icon-blue .primary {
         @apply fill-blue-100;
     }
-
     .icon-blue .secondary {
         @apply fill-blue-900;
+    }
+
+    .icon-gray .primary {
+        @apply fill-gray-200;
+    }
+    .icon-gray .secondary {
+        @apply fill-gray-400;
     }
 
     .icon-transparent .primary,
@@ -84,11 +89,25 @@
     @apply justify-start;
 }
 
-.flex-col-start {
+.flex-row-top {
+    @apply flex;
+    @apply flex-row;
+    @apply items-start;
+    @apply justify-center;
+}
+
+.flex-col-left {
     @apply flex;
     @apply flex-col;
     @apply items-start;
     @apply justify-center;
+}
+
+.flex-col-left-top {
+    @apply flex;
+    @apply flex-col;
+    @apply items-start;
+    @apply justify-start;
 }
 
 .centering-row {

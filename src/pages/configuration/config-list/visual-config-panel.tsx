@@ -1,56 +1,59 @@
 import React from 'react';
 import {types} from 'types';
 import icons from 'assets/icons/icons';
+import {TimePill, IconButton} from 'components';
 
 interface Props {
     account: types.Account;
     config: types.SurveyConfig;
 }
 function VisualConfigPanel(props: Props) {
-    let statusColor: string;
-    let statusText: string;
-
-    if (props.config.draft) {
-        statusColor = 'border-gray-700 text-gray-700';
-        statusText = 'Draft';
-    } else {
-        const now = Date.now() / 1000;
-        if (now < props.config.start) {
-            statusColor = 'border-yellow-600 text-yellow-600';
-            statusText = 'Pending';
-        } else if (now >= props.config.end) {
-            statusColor = 'border-gray-500 text-gray-500';
-            statusText = 'Finished';
-        } else {
-            statusColor = 'border-green-600 text-green-600';
-            statusText = 'Running';
-        }
-    }
+    const {title, survey_name, limit} = props.config;
+    const {username} = props.account;
 
     return (
         <div
             className={
-                'w-full py-2 px-3 my-1 rounded-l ' +
-                'no-selection border-r-4 cursor-default bg-white opacity-100 ' +
-                statusColor
+                'w-full rounded shadow centering-col ' +
+                'no-selection cursor-pointer group bg-white '
             }
         >
-            <div className='flex flex-row items-start w-full'>
-                <div className='mb-1.5 text-base leading-tight text-gray-800 font-weight-600'>
-                    {props.config.title}
+            <div className={'w-full p-3 bg-white rounded-t flex-col-left'}>
+                <div className='w-full mb-1 flex-row-top'>
+                    <div
+                        className={
+                            'pr-4 text-lg text-gray-800 font-weight-600 ' +
+                            'truncate'
+                        }
+                    >
+                        {title}
+                    </div>
+                    <div className='flex-max' />
+                    <div className='flex-shrink-0'>
+                        <TimePill config={props.config} flat />
+                    </div>
                 </div>
-                <div className={'self-stretch flex-grow'} />
-                <span
-                    className={'ml-2  font-weight-600 text-base ' + statusColor}
-                >
-                    {statusText}
-                </span>
+                <div className='text-sm flex-row-left'>
+                    <div className='p-1 mr-0.5 w-7 h-7 icon-gray'>
+                        {icons.compass}
+                    </div>
+                    <div className='text-gray-600 truncate font-weight-500'>
+                        /{username}/{survey_name}
+                    </div>
+                </div>
+                <div className='text-sm flex-row-left'>
+                    <div className='ml-[1.875rem] text-gray-600 truncate font-weight-500'>
+                        Max. {limit} submissions
+                    </div>
+                </div>
             </div>
-            <div className='flex flex-row text-base text-blue-600 font-weight-500'>
-                <div className='flex-shrink-0 w-6 h-6 mr-1'>{icons.link}</div>
-                <div className='leading-6 break-all'>
-                    {props.account.username}/{props.config.survey_name}
-                </div>
+            <div
+                className={
+                    'w-full px-3 py-2 bg-gray-100 rounded-b group-hover:bg-gray-200 ' +
+                    'text-center text-blue-900 font-weight-600'
+                }
+            >
+                Edit Survey
             </div>
         </div>
     );
