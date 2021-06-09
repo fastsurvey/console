@@ -4,6 +4,7 @@ import icons from 'assets/icons/icons';
 import {TimePill} from 'components';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
+import IconButtonGroup from 'components/buttons/icon-button-group';
 
 function EditorHeader(props: {
     configIsDiffering: boolean;
@@ -24,7 +25,7 @@ function EditorHeader(props: {
 
     return (
         <div className={'w-full flex-col-left mb-1'}>
-            <div className='relative w-full mb-0.5 flex-row-top '>
+            <div className='relative w-full centering-row '>
                 <Link to='/configurations'>
                     <div className='absolute top-50% transform -translate-y-50% w-12 h-12 p-3 -left-14 icon-gray'>
                         {icons.chevronLeftCircle}
@@ -32,14 +33,27 @@ function EditorHeader(props: {
                 </Link>
                 <div
                     className={
-                        'pr-4 text-lg text-gray-800 font-weight-600 ' +
+                        'pr-4 text-xl text-gray-800 font-weight-600 ' +
                         'truncate'
                     }
                 >
                     {title}
                 </div>
                 <div className='flex-max' />
-                buttons
+                <IconButtonGroup
+                    buttons={[
+                        {
+                            icon: icons.closeCirlce,
+                            text: 'Undo',
+                            onClick: props.revertState,
+                        },
+                        {
+                            icon: icons.checkCircle,
+                            text: 'Save',
+                            onClick: props.saveState,
+                        },
+                    ]}
+                />
             </div>
             {draft && <div className='cursor-not-allowed'>{linkContent}</div>}
             {!draft && (
@@ -50,7 +64,7 @@ function EditorHeader(props: {
                     {linkContent}
                 </Link>
             )}
-            <div className='flex-shrink-0 mt-3'>
+            <div className='flex-shrink-0 mt-2'>
                 <TimePill config={props.localConfig} flat />
             </div>
         </div>
