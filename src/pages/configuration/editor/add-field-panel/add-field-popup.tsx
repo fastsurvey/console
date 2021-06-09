@@ -20,15 +20,15 @@ function AddFieldPopup(props: Props) {
                 <div
                     key={fieldType}
                     className={
-                        'flex flex-row items-start justify-start ' +
+                        'flex flex-row items-start justify-start cursor-pointer ' +
                         'my-1 text-lg leading-10 font-weight-600 rounded ' +
-                        'opacity-70 hover:opacity-100 cursor-pointer ' +
+                        'ring-2 ring-transparent hover:ring-blue-200 ' +
                         styleUtils.color.fieldTypeToClasses(fieldType)
                     }
                     onClick={() => props.insertField(fieldType)}
                 >
-                    <div className='w-10 h-10 p-2 ml-1 opacity-70'>
-                        {icons.widgets}
+                    <div className='w-10 h-10 p-2 mx-1'>
+                        {styleUtils.icons.fieldTypeToIcon(fieldType)}
                     </div>
                     <div className=''>{fieldType}</div>
                 </div>

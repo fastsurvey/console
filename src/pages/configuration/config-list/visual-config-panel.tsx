@@ -1,6 +1,5 @@
 import React from 'react';
 import {types} from 'types';
-import icons from 'assets/icons/icons';
 import {TimePill} from 'components';
 
 interface Props {

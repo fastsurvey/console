@@ -3,6 +3,7 @@ import {formUtils} from 'utilities';
 import {icons} from 'assets';
 import {TextArea, TextInput, EditorFormCard, EditorFormRow} from 'components';
 import {types} from 'types';
+import styleUtils from '../../../../utilities/style-utils/index';
 
 interface Props {
     fieldConfig: types.SurveyField;
@@ -47,25 +48,10 @@ function VisualField(props: Props) {
         </>
     );
 
-    let icon;
-
-    switch (props.fieldConfig.type) {
-        case 'email':
-            icon = icons.email;
-            break;
-        case 'text':
-            icon = icons.textCursor;
-            break;
-        case 'option':
-        case 'radio':
-        case 'selection':
-            icon = icons.checkCircle;
-            break;
-    }
     return (
         <EditorFormCard
             label={props.fieldConfig.type}
-            icon={icon}
+            icon={styleUtils.icons.fieldTypeToIcon(props.fieldConfig.type)}
             fieldType={props.fieldConfig.type}
             collapse={collapse}
             setCollapse={setCollapse}

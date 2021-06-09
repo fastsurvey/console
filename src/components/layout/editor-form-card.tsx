@@ -1,4 +1,4 @@
-import React, {useRef, useEffect, useState} from 'react';
+import React, {useRef} from 'react';
 import icons from 'assets/icons/icons';
 import {styleUtils} from 'utilities';
 import {types} from 'types';
