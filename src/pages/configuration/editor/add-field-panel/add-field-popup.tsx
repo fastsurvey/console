@@ -1,4 +1,3 @@
-import {icons} from 'assets';
 import React from 'react';
 import {styleUtils} from 'utilities';
 import {types} from 'types';

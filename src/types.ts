@@ -110,11 +110,11 @@ export declare namespace types {
         | 'error-link-invalid'
         | 'success-redirect-to-login'
         | 'warning-clipboard'
-        | 'editor-error-validators'
-        | 'editor-error-field-count'
-        | 'editor-error-timing'
-        | 'editor-error-authentication'
-        | 'editor-error-option-list';
+        | 'editor-warning-validators'
+        | 'editor-warning-field-count'
+        | 'editor-warning-timing'
+        | 'editor-warning-authentication'
+        | 'editor-warning-option-list';
 
     export type NavbarState = {
         open: boolean;

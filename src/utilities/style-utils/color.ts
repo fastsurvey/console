@@ -8,7 +8,7 @@ export const color = {
             case 'option':
                 return 'bg-orange-100 text-orange-600 icon-dark-orange';
             case 'radio':
-                return 'bg-yellow-100 text-yellow-600 icon-dark-yellow';
+                return 'bg-yellow-100 text-yellow-700 icon-dark-yellow';
             case 'selection':
                 return 'bg-green-100 text-green-600 icon-dark-green';
             case 'text':

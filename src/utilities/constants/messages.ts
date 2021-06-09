@@ -46,29 +46,29 @@ export const messages: {[key in types.MessageId]: types.Message} = {
         text: 'Invalid text format on clipboard',
         type: 'warning',
     },
-    'editor-error-validators': {
-        id: 'editor-error-validators',
+    'editor-warning-validators': {
+        id: 'editor-warning-validators',
         text: 'Invalid fields: Please check all red hints',
-        type: 'error',
+        type: 'warning',
     },
-    'editor-error-field-count': {
-        id: 'editor-error-validators',
+    'editor-warning-field-count': {
+        id: 'editor-warning-validators',
         text: 'There has to be at least one field',
-        type: 'error',
+        type: 'warning',
     },
-    'editor-error-timing': {
-        id: 'editor-error-timing',
+    'editor-warning-timing': {
+        id: 'editor-warning-timing',
         text: 'End time has to be after start time',
-        type: 'error',
+        type: 'warning',
     },
-    'editor-error-authentication': {
-        id: 'editor-error-authentication',
+    'editor-warning-authentication': {
+        id: 'editor-warning-authentication',
         text: 'Email-authentication requires unique email field',
-        type: 'error',
+        type: 'warning',
     },
-    'editor-error-option-list': {
-        id: 'editor-error-option-list',
+    'editor-warning-option-list': {
+        id: 'editor-warning-option-list',
         text: 'Radio/Selection fields require at least 2 options',
-        type: 'error',
+        type: 'warning',
     },
 };

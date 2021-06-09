@@ -140,19 +140,19 @@ function ConfigEditor(props: {
             );
         } else {
             if (!fieldsAreValid) {
-                props.openMessage('editor-error-validators');
+                props.openMessage('editor-warning-validators');
             }
             if (!fieldCountIsValid) {
-                props.openMessage('editor-error-field-count');
+                props.openMessage('editor-warning-field-count');
             }
             if (!timingIsValid) {
-                props.openMessage('editor-error-timing');
+                props.openMessage('editor-warning-timing');
             }
             if (!authIsValid) {
-                props.openMessage('editor-error-authentication');
+                props.openMessage('editor-warning-authentication');
             }
             if (!fieldOptionsAreValid) {
-                props.openMessage('editor-error-option-list');
+                props.openMessage('editor-warning-option-list');
             }
         }
     }

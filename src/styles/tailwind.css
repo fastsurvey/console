@@ -83,10 +83,10 @@
     }
 
     .icon-dark-yellow .primary {
-        @apply fill-yellow-300;
+        @apply fill-yellow-400;
     }
     .icon-dark-yellow .secondary {
-        @apply fill-yellow-600;
+        @apply fill-yellow-700;
     }
 
     .icon-dark-green .primary {
