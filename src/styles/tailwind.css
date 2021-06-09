@@ -62,10 +62,10 @@
     }
 
     .icon-gray .primary {
-        @apply fill-gray-200;
+        @apply fill-gray-300;
     }
     .icon-gray .secondary {
-        @apply fill-gray-400;
+        @apply fill-gray-500;
     }
 
     .icon-transparent .primary,

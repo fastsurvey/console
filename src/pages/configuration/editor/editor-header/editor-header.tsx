@@ -3,6 +3,7 @@ import {types} from 'types';
 import icons from 'assets/icons/icons';
 import {TimePill} from 'components';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 
 function EditorHeader(props: {
     configIsDiffering: boolean;
@@ -12,52 +13,45 @@ function EditorHeader(props: {
     saveState(): void;
     revertState(): void;
 }) {
-    const {title, survey_name, limit} = props.localConfig;
+    const {title, survey_name, draft} = props.localConfig;
     const {username} = props.account;
 
+    const linkContent = (
+        <div className='text-sm text-gray-600 truncate font-weight-500'>
+            /{username}/{survey_name}
+        </div>
+    );
+
     return (
-        <div
-            className={
-                'w-full rounded shadow centering-col ' +
-                'no-selection cursor-pointer group bg-white '
-            }
-        >
-            <div className={'w-full p-3 bg-white rounded-t flex-col-left'}>
-                <div className='w-full mb-1 flex-row-top'>
-                    <div
-                        className={
-                            'pr-4 text-lg text-gray-800 font-weight-600 ' +
-                            'truncate'
-                        }
-                    >
-                        {title}
+        <div className={'w-full flex-col-left mb-1'}>
+            <div className='relative w-full mb-0.5 flex-row-top '>
+                <Link to='/configurations'>
+                    <div className='absolute top-50% transform -translate-y-50% w-12 h-12 p-3 -left-14 icon-gray'>
+                        {icons.chevronLeftCircle}
                     </div>
-                    <div className='flex-max' />
-                    <div className='flex-shrink-0'>
-                        <TimePill config={props.localConfig} flat />
-                    </div>
+                </Link>
+                <div
+                    className={
+                        'pr-4 text-lg text-gray-800 font-weight-600 ' +
+                        'truncate'
+                    }
+                >
+                    {title}
                 </div>
-                <div className='text-sm flex-row-left'>
-                    <div className='p-1 mr-0.5 w-7 h-7 icon-gray'>
-                        {icons.compass}
-                    </div>
-                    <div className='text-gray-600 truncate font-weight-500'>
-                        /{username}/{survey_name}
-                    </div>
-                </div>
-                <div className='text-sm flex-row-left'>
-                    <div className='ml-[1.875rem] text-gray-600 truncate font-weight-500'>
-                        Max. {limit} submissions
-                    </div>
-                </div>
+                <div className='flex-max' />
+                buttons
             </div>
-            <div
-                className={
-                    'w-full px-3 py-2 bg-gray-100 rounded-b group-hover:bg-gray-200 ' +
-                    'text-center text-blue-900 font-weight-600'
-                }
-            >
-                Edit Survey
+            {draft && <div className='cursor-not-allowed'>{linkContent}</div>}
+            {!draft && (
+                <Link
+                    to={`https://dev.fastsurvey.io/${username}/${survey_name}`}
+                    className='underline'
+                >
+                    {linkContent}
+                </Link>
+            )}
+            <div className='flex-shrink-0 mt-3'>
+                <TimePill config={props.localConfig} flat />
             </div>
         </div>
     );
