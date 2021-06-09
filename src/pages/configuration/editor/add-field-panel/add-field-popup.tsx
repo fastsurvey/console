@@ -14,14 +14,15 @@ function AddFieldPopup(props: Props) {
         'text',
     ];
     return (
-        <div className='px-1 w-60'>
+        <div className='p-1.5 w-60 centering-col gap-y-2'>
             {fields.map((fieldType: types.FieldType) => (
-                <div
+                <button
                     key={fieldType}
                     className={
-                        'flex flex-row items-start justify-start cursor-pointer ' +
-                        'my-1 text-lg leading-10 font-weight-600 rounded ' +
-                        'ring-2 ring-transparent hover:ring-blue-200 ' +
+                        'w-full flex-row-left ' +
+                        'text-lg leading-10 font-weight-600 rounded ' +
+                        'ring-[2.5px] ring-transparent hover:ring-blue-200 ' +
+                        'focus:outline-none focus:ring-blue-200 ' +
                         styleUtils.color.fieldTypeToClasses(fieldType)
                     }
                     onClick={() => props.insertField(fieldType)}
@@ -30,7 +31,7 @@ function AddFieldPopup(props: Props) {
                         {styleUtils.icons.fieldTypeToIcon(fieldType)}
                     </div>
                     <div className=''>{fieldType}</div>
-                </div>
+                </button>
             ))}
         </div>
     );
