@@ -14,7 +14,7 @@ function VisualConfigPanel(props: Props) {
         <div
             className={
                 'w-full rounded shadow centering-col ' +
-                'no-selection cursor-pointer group bg-white '
+                'no-selection cursor-pointer bg-white '
             }
         >
             <div className={'w-full p-3 bg-white rounded-t flex-col-left'}>
@@ -42,7 +42,8 @@ function VisualConfigPanel(props: Props) {
             </div>
             <div
                 className={
-                    'w-full px-3 py-2 bg-gray-100 rounded-b group-hover:bg-gray-200 ' +
+                    'w-full px-3 py-2 bg-gray-100 rounded-b ' +
+                    'group-hover:bg-gray-200 group-focus:bg-gray-200 ' +
                     'text-center text-blue-900 font-weight-600'
                 }
             >

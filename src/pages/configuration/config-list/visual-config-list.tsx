@@ -45,6 +45,7 @@ function VisualConfigList(props: {
                         <Link
                             to={`/configuration/${config.survey_name}`}
                             key={config.local_id}
+                            className='rounded ringable group'
                         >
                             <VisualConfigPanel
                                 config={config}

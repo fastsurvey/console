@@ -11,7 +11,8 @@ function NavbarLogo() {
                 className={
                     'text-xl tracking-wide ' +
                     'text-blue-100 font-weight-700 ' +
-                    'w-0 group-hover:w-36 transform translate-x-2 ' +
+                    'w-0 group-hover:w-36 group-focus-within:w-36 ' +
+                    'transform translate-x-2 ' +
                     'transition-width duration-150'
                 }
             >
@@ -28,10 +29,10 @@ function NavbarButton(props: {
     onClick?(): void;
 }) {
     return (
-        <div
+        <button
             onClick={props.onClick ? props.onClick : () => {}}
             className={
-                'relative h-10 py-0 centering-row my-0.5 ' +
+                'relative h-10 py-0 centering-row my-1 ringable ' +
                 'font-weight-600 text-base rounded cursor-pointer ' +
                 (props.active ? 'text-white bg-gray-700' : 'text-gray-200')
             }
@@ -39,13 +40,14 @@ function NavbarButton(props: {
             <div className={'h-10 w-10 p-2 icon-light-blue'}>{props.icon}</div>
             <div
                 className={
-                    'w-0 group-hover:w-36 transform translate-x-2 ' +
+                    'w-0 group-hover:w-36 group-focus-within:w-36 ' +
+                    'transform translate-x-2 text-left ' +
                     'transition-width duration-150 overflow-hidden'
                 }
             >
                 {props.text}
             </div>
-        </div>
+        </button>
     );
 }
 
