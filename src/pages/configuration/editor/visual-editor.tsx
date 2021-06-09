@@ -15,55 +15,54 @@ function VisualEditor(props: {
     insertField(index: number, fieldType: types.FieldType): void;
     pasteField(index: number): void;
     removeField(index: number): void;
+
+    saveState(): void;
+    revertState(): void;
 }) {
     return (
-        <div
-            className={
-                'left-0 right-0 min-h-screen flex flex-col items-center ' +
-                'pt-10 px-8 bg-gray-100 no-selection ' +
-                'pb-64 lg:ml-104 xl:ml-124 2xl:ml-144 '
-            }
-        >
-            <Settings
-                centralConfigName={props.centralConfigName}
-                config={props.localConfig}
-                setLocalConfig={props.setLocalConfig}
-                updateValidator={(newState: boolean) =>
-                    props.updateValidator(0, newState)
-                }
-            />
-            {props.localConfig.fields.map((fieldConfig, index) => (
-                <div className='w-full' key={fieldConfig.local_id}>
-                    <AddFieldPanel
-                        insertField={(fieldType: types.FieldType) =>
-                            props.insertField(index, fieldType)
-                        }
-                        pasteField={() => props.pasteField(index)}
-                    />
-                    <Field
-                        fieldConfig={fieldConfig}
-                        setLocalFieldConfig={(newFieldConfig: object) =>
-                            props.setLocalFieldConfig(newFieldConfig, index)
-                        }
-                        disabled={!props.localConfig.draft}
-                        updateValidator={(newState: boolean) =>
-                            props.updateValidator(1 + index, newState)
-                        }
-                        removeField={() => props.removeField(index)}
-                    />
-                </div>
-            ))}
-            <AddFieldPanel
-                insertField={(fieldType: types.FieldType) =>
-                    props.insertField(
-                        props.localConfig.fields.length,
-                        fieldType,
-                    )
-                }
-                pasteField={() =>
-                    props.pasteField(props.localConfig.fields.length)
-                }
-            />
+        <div className={'w-full py-16 min-h-screen bg-gray-100 centering-col'}>
+            <div className={'w-full max-w-3xl '}>
+                <Settings
+                    centralConfigName={props.centralConfigName}
+                    config={props.localConfig}
+                    setLocalConfig={props.setLocalConfig}
+                    updateValidator={(newState: boolean) =>
+                        props.updateValidator(0, newState)
+                    }
+                />
+                {props.localConfig.fields.map((fieldConfig, index) => (
+                    <div className='w-full' key={fieldConfig.local_id}>
+                        <AddFieldPanel
+                            insertField={(fieldType: types.FieldType) =>
+                                props.insertField(index, fieldType)
+                            }
+                            pasteField={() => props.pasteField(index)}
+                        />
+                        <Field
+                            fieldConfig={fieldConfig}
+                            setLocalFieldConfig={(newFieldConfig: object) =>
+                                props.setLocalFieldConfig(newFieldConfig, index)
+                            }
+                            disabled={!props.localConfig.draft}
+                            updateValidator={(newState: boolean) =>
+                                props.updateValidator(1 + index, newState)
+                            }
+                            removeField={() => props.removeField(index)}
+                        />
+                    </div>
+                ))}
+                <AddFieldPanel
+                    insertField={(fieldType: types.FieldType) =>
+                        props.insertField(
+                            props.localConfig.fields.length,
+                            fieldType,
+                        )
+                    }
+                    pasteField={() =>
+                        props.pasteField(props.localConfig.fields.length)
+                    }
+                />
+            </div>
         </div>
     );
 }

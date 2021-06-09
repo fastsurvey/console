@@ -20,7 +20,7 @@ function VisualConfigList(props: {
             }
         >
             <div className='w-full max-w-4xl centering-col'>
-                <div className='w-full mt-1 mb-6 centering-row gap-x-4'>
+                <div className='w-full mt-1 mb-6 centering-row gap-x-3'>
                     <SearchBar value={value} setValue={setValue} />
                     <IconButton
                         icon={icons.addSquare}

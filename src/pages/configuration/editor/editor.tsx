@@ -206,24 +206,20 @@ function ConfigEditor(props: {
     }
 
     return (
-        <>
-            <ControlStrip
-                config={props.centralConfig}
-                setCentralConfig={props.setCentralConfig}
-                saveState={saveState}
-                revertState={revertState}
-            />
-            <VisualEditor
-                centralConfigName={props.centralConfig.survey_name}
-                localConfig={localConfig}
-                updateValidator={updateValidator}
-                setLocalConfig={setLocalConfig}
-                setLocalFieldConfig={setLocalFieldConfig}
-                insertField={insertField}
-                pasteField={pasteField}
-                removeField={removeField}
-            />
-        </>
+        <VisualEditor
+            centralConfigName={props.centralConfig.survey_name}
+            {...{
+                localConfig,
+                updateValidator,
+                setLocalConfig,
+                setLocalFieldConfig,
+                insertField,
+                pasteField,
+                removeField,
+                saveState,
+                revertState,
+            }}
+        />
     );
 }
 
