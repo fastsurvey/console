@@ -3,6 +3,7 @@ import {types} from 'types';
 import Settings from './settings/settings';
 import Field from './fields/field';
 import AddFieldPanel from './add-field-panel/add-field-panel';
+import EditorHeader from './editor-header/editor-header';
 
 function VisualEditor(props: {
     centralConfigName: string;
@@ -22,6 +23,11 @@ function VisualEditor(props: {
     return (
         <div className={'w-full py-16 min-h-screen bg-gray-100 centering-col'}>
             <div className={'w-full max-w-3xl '}>
+                <EditorHeader
+                    localConfig={props.localConfig}
+                    saveState={props.saveState}
+                    revertState={props.revertState}
+                />
                 <Settings
                     centralConfigName={props.centralConfigName}
                     config={props.localConfig}
