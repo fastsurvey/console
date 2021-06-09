@@ -10,21 +10,21 @@ function VisualMessage(props: Props) {
     let colors: string;
     switch (props.message.type) {
         case 'error':
-            colors = 'bg-gray-900 text-red-200';
+            colors = 'text-red-200';
             break;
         case 'warning':
-            colors = 'bg-gray-900 text-yellow-200';
+            colors = 'text-yellow-200';
             break;
         case 'success':
-            colors = 'bg-gray-900 text-green-200';
+            colors = 'text-green-200';
             break;
     }
 
     return (
         <div
             className={
-                'centering-row pl-3 pr-1 m-2 ' +
-                'font-weight-500  rounded shadow-lg ' +
+                'centering-row pl-3 pr-1 m-2 bg-gray-900 ' +
+                'font-weight-500 rounded shadow-lg w-full ' +
                 `${colors}`
             }
         >
@@ -32,12 +32,15 @@ function VisualMessage(props: Props) {
                 {props.message.text}
             </div>
             <div className='flex-max' />
-            <div
-                className='flex-shrink-0 w-10 h-10 p-2 cursor-pointer'
+            <button
+                className={
+                    'flex-shrink-0 w-7 h-7 p-0.5 m-1.5 cursor-pointer rounded ' +
+                    'focus:outline-none ring-[2.5px] ring-transparent focus:ring-blue-200'
+                }
                 onClick={props.close}
             >
                 {icons.close}
-            </div>
+            </button>
         </div>
     );
 }

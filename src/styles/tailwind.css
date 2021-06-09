@@ -103,6 +103,13 @@
         @apply fill-teal-600;
     }
 
+    .icon-dark-gray .primary {
+        @apply fill-gray-500;
+    }
+    .icon-dark-gray .secondary {
+        @apply fill-gray-900;
+    }
+
     .icon-gray .primary {
         @apply fill-gray-300;
     }
@@ -142,6 +149,13 @@
     @apply flex;
     @apply flex-col;
     @apply items-start;
+    @apply justify-center;
+}
+
+.flex-col-right {
+    @apply flex;
+    @apply flex-col;
+    @apply items-end;
     @apply justify-center;
 }
 
