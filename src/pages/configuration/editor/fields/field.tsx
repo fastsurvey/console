@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {clipboardUtils, formUtils} from 'utilities';
+import {clipboardUtils, formUtils, localIdUtils} from 'utilities';
 import {types} from 'types';
 
 import VisualField from './visual-field';
@@ -8,7 +8,6 @@ import OptionSettings from './option-settings/option-settings';
 import RadioSettings from './radio-settings/radio-settings';
 import SelectionSettings from './selection-settings/selection-settings';
 import EmailSettings from './email-settings/email-settings';
-import localIdUtils from '../../../../utilities/local-id-utils/index';
 
 interface Props {
     fieldConfig: types.SurveyField;
