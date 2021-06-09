@@ -26,15 +26,20 @@ function EditorHeader(props: {
     return (
         <div className={'w-full flex-col-left mb-1'}>
             <div className='relative w-full centering-row '>
-                <Link to='/configurations'>
-                    <div className='absolute top-50% transform -translate-y-50% w-12 h-12 p-3 -left-14 icon-gray'>
-                        {icons.chevronLeftCircle}
-                    </div>
+                <Link
+                    to='/configurations'
+                    className={
+                        'w-10 h-10 m-1 p-2 ' +
+                        'absolute -left-14 top-50% transform -translate-y-50% ' +
+                        'ringable rounded icon-gray'
+                    }
+                >
+                    {icons.chevronLeftCircle}
                 </Link>
+
                 <div
                     className={
-                        'pr-4 text-xl text-gray-800 font-weight-600 ' +
-                        'truncate'
+                        'pr-4 text-xl text-gray-800 font-weight-600 truncate'
                     }
                 >
                     {title}

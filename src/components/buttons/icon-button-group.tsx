@@ -16,9 +16,8 @@ function IconButtonGroup(props: {
                 <button
                     key={index}
                     className={
-                        'p-1 bg-white hover:bg-gray-100 centering-row ' +
-                        'cursor-pointer no-selection ' +
-                        'focus:outline-none ring-[2.5px] ring-transparent focus:ring-blue-200 ' +
+                        'p-0.5 bg-white hover:bg-gray-100 centering-row ' +
+                        'cursor-pointer no-selection ringable ' +
                         (first(index) ? 'rounded-l ' : ' ') +
                         (last(index) ? 'rounded-r ' : ' ')
                     }

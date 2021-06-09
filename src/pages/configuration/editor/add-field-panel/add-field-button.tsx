@@ -10,9 +10,8 @@ function AddFieldButton(props: {
     return (
         <button
             className={
-                'centering-row rounded cursor-pointer px-1 ' +
+                'centering-row rounded cursor-pointer px-1 ringable ' +
                 'icon-dark-gray text-gray-400 hover:text-gray-600 ' +
-                'focus:outline-none ring-[2.5px] ring-transparent focus:ring-blue-200 ' +
                 'text-opacity-0 group-hover:text-opacity-100 ' +
                 'focus:text-gray-600 focus:text-opacity-100 '
             }

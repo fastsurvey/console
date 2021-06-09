@@ -21,7 +21,7 @@ function VisualEditor(props: {
     revertState(): void;
 }) {
     return (
-        <div className={'w-full py-16 min-h-screen bg-gray-100 centering-col'}>
+        <div className={'w-full py-16 min-h-screen bg-gray-100 flex-col-top'}>
             <div className={'w-full max-w-3xl '}>
                 <EditorHeader
                     localConfig={props.localConfig}

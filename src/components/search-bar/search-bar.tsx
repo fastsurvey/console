@@ -16,7 +16,7 @@ function SearchBar(props: {value: string; setValue(v: string): void}) {
                 ref={ref}
                 className={
                     'relative p-1 bg-white text-gray-800 rounded shadow centering-row ' +
-                    'cursor-pointer no-selection h-10 py-1 pl-10 pr-3 w-full ' +
+                    'cursor-pointer no-selection h-9 py-1 pl-10 pr-3 w-full ' +
                     'outline-none focus:ring ring-blue-200 font-weight-500'
                 }
                 placeholder='search'

@@ -8,9 +8,8 @@ function IconButton(props: {
     return (
         <button
             className={
-                'p-1 bg-white rounded shadow centering-row ' +
-                'cursor-pointer no-selection ' +
-                'focus:outline-none ring ring-transparent focus:ring-blue-200'
+                'p-0.5 bg-white rounded shadow centering-row ' +
+                'cursor-pointer no-selection ringable'
             }
             onClick={props.onClick ? props.onClick : () => {}}
         >
