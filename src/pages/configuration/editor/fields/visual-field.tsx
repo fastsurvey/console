@@ -35,21 +35,37 @@ function VisualField(props: Props) {
                 }}
                 onMouseEnter={() => setActionLabel('copy')}
             >
-                {icons.contentCopy}
+                {icons.duplicate}
             </div>
             <div
                 className='w-10 h-10 px-2 py-2 cursor-pointer opacity-70 hover:opacity-100'
                 onClick={props.removeField}
                 onMouseEnter={() => setActionLabel('remove')}
             >
-                {icons.delete}
+                {icons.trash}
             </div>
         </>
     );
+
+    let icon;
+
+    switch (props.fieldConfig.type) {
+        case 'email':
+            icon = icons.email;
+            break;
+        case 'text':
+            icon = icons.textCursor;
+            break;
+        case 'option':
+        case 'radio':
+        case 'selection':
+            icon = icons.checkCircle;
+            break;
+    }
     return (
         <EditorFormCard
             label={props.fieldConfig.type}
-            icon={icons.widgets}
+            icon={icon}
             fieldType={props.fieldConfig.type}
             collapse={collapse}
             setCollapse={setCollapse}

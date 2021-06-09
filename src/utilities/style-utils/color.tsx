@@ -1,40 +1,20 @@
 import {types} from 'types';
 
 export const color = {
-    fieldTypeToColor: (fieldType: types.FieldType | undefined) => {
+    fieldTypeToClasses: (fieldType: types.FieldType | undefined) => {
         switch (fieldType) {
             case 'email':
-                return 'red';
+                return 'bg-red-100 text-red-600 icon-dark-red';
             case 'option':
-                return 'orange';
+                return 'bg-orange-100 text-orange-600 icon-dark-orange';
             case 'radio':
-                return 'yellow';
+                return 'bg-yellow-100 text-yellow-600 icon-dark-yellow';
             case 'selection':
-                return 'green';
+                return 'bg-green-100 text-green-600 icon-dark-green';
             case 'text':
-                return 'teal';
+                return 'bg-teal-100 text-teal-600 icon-dark-teal';
             default:
-                return 'gray';
+                return 'bg-blue-100 text-blue-600 icon-dark-blue';
         }
     },
-
-    colorToClasses: (color: types.Color) => {
-        switch (color) {
-            case 'red':
-                return 'bg-red-200 text-red-600';
-            case 'orange':
-                return 'bg-orange-200 text-orange-600';
-            case 'yellow':
-                return 'bg-yellow-200 text-yellow-600';
-            case 'green':
-                return 'bg-green-200 text-green-600';
-            case 'teal':
-                return 'bg-teal-200 text-teal-600';
-            case 'gray':
-                return 'bg-gray-300 text-gray-600';
-        }
-    },
-
-    fieldTypeToClasses: (fieldType: types.FieldType | undefined) =>
-        color.colorToClasses(color.fieldTypeToColor(fieldType)),
 };

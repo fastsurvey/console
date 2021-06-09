@@ -48,7 +48,7 @@
     }
 
     .icon-light-blue .primary {
-        @apply fill-blue-050;
+        @apply fill-blue-50;
     }
     .icon-light-blue .secondary {
         @apply fill-blue-200;
@@ -59,6 +59,48 @@
     }
     .icon-blue .secondary {
         @apply fill-blue-900;
+    }
+
+    .icon-dark-blue .primary {
+        @apply fill-blue-300;
+    }
+    .icon-dark-blue .secondary {
+        @apply fill-blue-600;
+    }
+
+    .icon-dark-red .primary {
+        @apply fill-red-300;
+    }
+    .icon-dark-red .secondary {
+        @apply fill-red-600;
+    }
+
+    .icon-dark-orange .primary {
+        @apply fill-orange-300;
+    }
+    .icon-dark-orange .secondary {
+        @apply fill-orange-600;
+    }
+
+    .icon-dark-yellow .primary {
+        @apply fill-yellow-300;
+    }
+    .icon-dark-yellow .secondary {
+        @apply fill-yellow-600;
+    }
+
+    .icon-dark-green .primary {
+        @apply fill-green-300;
+    }
+    .icon-dark-green .secondary {
+        @apply fill-green-600;
+    }
+
+    .icon-dark-teal .primary {
+        @apply fill-teal-300;
+    }
+    .icon-dark-green .secondary {
+        @apply fill-teal-600;
     }
 
     .icon-gray .primary {

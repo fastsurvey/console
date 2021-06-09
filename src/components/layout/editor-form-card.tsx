@@ -37,7 +37,7 @@ function EditorFormCard(props: Props) {
         >
             <div
                 className={
-                    'w-full rounded-t centering-row  ' +
+                    'w-full rounded-t centering-row ' +
                     'font-weight-600 text-lg leading-10 ' +
                     styleUtils.color.fieldTypeToClasses(props.fieldType)
                 }
@@ -46,9 +46,7 @@ function EditorFormCard(props: Props) {
                     className='flex flex-row self-stretch flex-grow cursor-pointer'
                     onClick={toggle}
                 >
-                    <div className='w-10 h-10 p-2 ml-1 opacity-70'>
-                        {props.icon}
-                    </div>
+                    <div className='w-10 h-10 p-2 ml-1'>{props.icon}</div>
                     <div className=''>{props.label}</div>
                     {props.longLabel && (
                         <div className='pl-2 opacity-70 font-weight-500'>
@@ -83,7 +81,7 @@ function EditorFormCard(props: Props) {
                                     updateActionlabel(props.collapse)
                                 }
                             >
-                                {icons.expand_more}
+                                {icons.chevronDown}
                             </div>
                         )}
                 </div>

@@ -31,7 +31,7 @@ function NavbarButton(props: {
         <div
             onClick={props.onClick ? props.onClick : () => {}}
             className={
-                'relative h-10 py-0 centering-row my-1 ' +
+                'relative h-10 py-0 centering-row my-0.5 ' +
                 'font-weight-600 text-base rounded cursor-pointer ' +
                 (props.active ? 'text-white bg-gray-700' : 'text-gray-200')
             }
