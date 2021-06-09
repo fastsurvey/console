@@ -10,7 +10,7 @@ interface Props {
         account: types.Account,
         configs: types.SurveyConfig[],
     ): void;
-    openMessage(message: types.Message): void;
+    openMessage(messageId: types.MessageId): void;
     closeAllMessages(): void;
 }
 
@@ -27,21 +27,7 @@ function LoginForm(props: Props) {
 
     function abortLogin(code: 401 | 500) {
         setSubmitting(false);
-
-        switch (code) {
-            case 401:
-                props.openMessage({
-                    text: 'Invalid credentials',
-                    type: 'error',
-                });
-                break;
-            case 500:
-                props.openMessage({
-                    text: 'Server error. Please try again later',
-                    type: 'error',
-                });
-                break;
-        }
+        props.openMessage(code === 401 ? 'error-credentials' : 'error-server');
     }
 
     function handleLogin() {

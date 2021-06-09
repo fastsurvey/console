@@ -8,7 +8,7 @@ import {types} from 'types';
 interface VerifyWallProps {
     account: undefined | types.Account;
     logOut(): void;
-    openMessage(message: types.Message): void;
+    openMessage(messageId: types.MessageId): void;
     closeAllMessages(): void;
 }
 
@@ -29,18 +29,11 @@ function VerifyWall(props: VerifyWallProps) {
                 })
                 .catch((error) => {
                     setSubmitting(false);
-                    if (error?.response?.status === 400) {
-                        props.openMessage({
-                            text: 'Invalid email address',
-                            type: 'error',
-                        });
-                    } else {
-                        // Invalid password formats will be catched by frontend
-                        props.openMessage({
-                            text: 'Server error. Please try again later',
-                            type: 'error',
-                        });
-                    }
+                    props.openMessage(
+                        error?.response?.status === 400
+                            ? 'error-email-invalid'
+                            : 'error-server',
+                    );
                 });
         }
     }

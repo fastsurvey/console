@@ -11,7 +11,7 @@ interface Props {
         account: types.Account,
         configs: types.SurveyConfig[],
     ): void;
-    openMessage(message: types.Message): void;
+    openMessage(messageId: types.MessageId): void;
     closeAllMessages(): void;
 }
 function VerifyForm(props: Props) {
@@ -34,11 +34,7 @@ function VerifyForm(props: Props) {
             setSuccess(true);
             setSubmitting(false);
 
-            props.openMessage({
-                text: 'Success! Redirect to login in 4 seconds.',
-                type: 'success',
-            });
-
+            props.openMessage('success-redirect-to-login');
             setTimeout(() => {
                 history.push('/login');
                 props.closeAllMessages();
@@ -48,19 +44,13 @@ function VerifyForm(props: Props) {
         function error(code: 400 | 401 | 500) {
             setSubmitting(false);
             if (code === 401) {
-                props.openMessage({
-                    text: 'Wrong password or invalid link',
-                    type: 'error',
-                });
+                props.openMessage('error-link-invalid');
             } else if (code === 400) {
                 // email has already been verified but
                 // token and password are correct
                 success();
             } else {
-                props.openMessage({
-                    text: 'Server error. Please try again later',
-                    type: 'error',
-                });
+                props.openMessage('error-server');
             }
         }
 

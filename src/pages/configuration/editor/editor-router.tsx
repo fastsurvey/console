@@ -11,7 +11,7 @@ interface Props {
 
     configs: types.SurveyConfig[];
     setCentralConfig(config: types.SurveyConfig): void;
-    openMessage(message: types.Message): void;
+    openMessage(messageId: types.MessageId): void;
     closeAllMessages(): void;
 
     configIsDiffering: boolean;

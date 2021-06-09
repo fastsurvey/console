@@ -9,7 +9,6 @@ import {
     dataUtils,
     backend,
 } from 'utilities';
-import ControlStrip from './control-strip/control-strip';
 import VisualEditor from './visual-editor';
 import {types} from 'types';
 
@@ -24,7 +23,7 @@ function ConfigEditor(props: {
     configIsDiffering: boolean;
     markDiffering(d: boolean): void;
 
-    openMessage(message: types.Message): void;
+    openMessage(messageId: types.MessageId): void;
     closeAllMessages(): void;
 }) {
     const [localConfig, setLocalConfigState] = useState(props.centralConfig);
@@ -90,10 +89,7 @@ function ConfigEditor(props: {
         }
 
         function error() {
-            props.openMessage({
-                text: 'Invalid text format on clipboard',
-                type: 'warning',
-            });
+            props.openMessage('warning-clipboard');
         }
         clipboardUtils.paste(success, error);
     }
@@ -124,10 +120,7 @@ function ConfigEditor(props: {
         }
 
         function error() {
-            props.openMessage({
-                text: 'Backend error, please try again',
-                type: 'error',
-            });
+            props.openMessage('error-server');
         }
 
         if (
@@ -146,32 +139,21 @@ function ConfigEditor(props: {
                 error,
             );
         } else {
-            [
-                {
-                    pass: fieldsAreValid,
-                    text: 'Invalid fields: Please check all red hints',
-                },
-                {
-                    pass: fieldCountIsValid,
-                    text: 'There has to be at least one field',
-                },
-                {
-                    pass: timingIsValid,
-                    text: 'End time has to be after start time',
-                },
-                {
-                    pass: authIsValid,
-                    text: 'Email-authentication requires unique email field',
-                },
-                {
-                    pass: fieldOptionsAreValid,
-                    text: 'Radio/Selection fields require at least 2 options',
-                },
-            ]
-                .filter((c) => !c.pass)
-                .forEach((c) => {
-                    props.openMessage({text: c.text, type: 'error'});
-                });
+            if (!fieldsAreValid) {
+                props.openMessage('editor-error-validators');
+            }
+            if (!fieldCountIsValid) {
+                props.openMessage('editor-error-field-count');
+            }
+            if (!timingIsValid) {
+                props.openMessage('editor-error-timing');
+            }
+            if (!authIsValid) {
+                props.openMessage('editor-error-authentication');
+            }
+            if (!fieldOptionsAreValid) {
+                props.openMessage('editor-error-option-list');
+            }
         }
     }
 

@@ -11,7 +11,7 @@ interface Props {
     account: types.Account;
     authToken: types.AuthToken;
     centralConfigName: string;
-    openMessage(m: types.Message): void;
+    openMessage(messageId: types.MessageId): void;
     configIsDiffering: boolean;
 
     configs: types.SurveyConfig[] | undefined;
@@ -69,10 +69,7 @@ function Settings(props: Props) {
 
         function error() {
             props.closeModal();
-            props.openMessage({
-                text: 'Backend error, please reload the page',
-                type: 'error',
-            });
+            props.openMessage('error-server');
         }
 
         backend.deleteSurvey(
@@ -94,10 +91,7 @@ function Settings(props: Props) {
                 />,
             );
         } else {
-            props.openMessage({
-                text: 'Please save or undo your changes first!',
-                type: 'warning',
-            });
+            props.openMessage('warning-unsaved');
         }
     }
     function duplicateSurvey(newSurveyName: string) {

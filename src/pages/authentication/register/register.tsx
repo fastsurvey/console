@@ -5,7 +5,7 @@ import VisualRegister from './visual-register';
 import {types} from 'types';
 
 interface Props {
-    openMessage(message: types.Message): void;
+    openMessage(messageId: types.MessageId): void;
     closeAllMessages(): void;
 }
 function RegisterForm(props: Props) {
@@ -36,25 +36,14 @@ function RegisterForm(props: Props) {
             setSubmitting(false);
             setPassword('');
             setPasswordConfirmation('');
-            props.openMessage({
-                text: 'Success: Account created! Please verify your email now.',
-                type: 'success',
-            });
+            props.openMessage('success-account-created');
         }
 
         function error(code: 400 | 500) {
             setSubmitting(false);
-            let messageText: string;
-            if (code === 400) {
-                messageText = 'Email is already taken';
-            } else {
-                // Invalid password formats will be catched by frontend
-                messageText = 'Server error. Please try again later';
-            }
-            props.openMessage({
-                text: messageText,
-                type: 'error',
-            });
+            props.openMessage(
+                code === 400 ? 'error-email-taken' : 'error-server',
+            );
         }
 
         if (!disabled()) {

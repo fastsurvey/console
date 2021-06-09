@@ -10,7 +10,7 @@ interface Props {
         account: types.Account,
         configs: types.SurveyConfig[],
     ): void;
-    openMessage(message: types.Message): void;
+    openMessage(messageId: types.MessageId): void;
     closeAllMessages(): void;
 }
 function SetPassword(props: Props) {
@@ -46,18 +46,11 @@ function SetPassword(props: Props) {
                 })
                 .catch((error) => {
                     setSubmitting(false);
-                    if (error?.response?.status === 401) {
-                        props.openMessage({
-                            text: 'Invalid Link',
-                            type: 'error',
-                        });
-                    } else {
-                        // Invalid password formats will be catched by frontend
-                        props.openMessage({
-                            text: 'Server error. Please try again later',
-                            type: 'error',
-                        });
-                    }
+                    props.openMessage(
+                        error?.response?.status === 401
+                            ? 'error-link-invalid'
+                            : 'error-server',
+                    );
                 });
         }
     }

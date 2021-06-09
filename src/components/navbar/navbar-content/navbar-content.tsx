@@ -9,7 +9,7 @@ interface Props {
     logOut(): void;
     closeNavbar(): void;
     configIsDiffering: boolean;
-    openMessage(message: types.Message): void;
+    openMessage(messageId: types.MessageId): void;
 }
 function NavbarContent(props: Props) {
     let location = useLocation();
@@ -19,10 +19,7 @@ function NavbarContent(props: Props) {
         props.closeNavbar();
 
         if (props.configIsDiffering) {
-            props.openMessage({
-                text: 'Please save or undo your changes first!',
-                type: 'warning',
-            });
+            props.openMessage('warning-unsaved');
         } else {
             history.push(target);
         }

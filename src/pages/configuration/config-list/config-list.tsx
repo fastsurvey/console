@@ -10,7 +10,7 @@ interface Props {
     authToken: types.AuthToken;
 
     configs: types.SurveyConfig[];
-    openMessage(message: types.Message): void;
+    openMessage(messageId: types.MessageId): void;
     openModal(title: string, children: React.ReactNode): void;
     closeModal(): void;
     addConfig(config: types.SurveyConfig): void;
