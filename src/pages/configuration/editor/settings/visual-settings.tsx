@@ -32,24 +32,26 @@ const VisualSettings = (props: Props) => {
 
     const [actionLabel, setActionLabel] = useState('');
 
+    const buttonCSS =
+        'w-7 h-7 p-0.5 m-1.5 opacity-70 hover:opacity-100 rounded ringable-dark';
     const buttons = (
         <>
-            <div
-                className='w-10 h-10 px-2 py-2 cursor-pointer opacity-70 hover:opacity-100'
+            <button
+                className={buttonCSS}
                 onClick={() => {
                     props.openDuplicateModal();
                 }}
                 onMouseEnter={() => setActionLabel('duplicate survey')}
             >
                 {icons.duplicate}
-            </div>
-            <div
-                className='w-10 h-10 px-2 py-2 cursor-pointer opacity-70 hover:opacity-100'
+            </button>
+            <button
+                className={buttonCSS}
                 onClick={props.openRemoveModal}
                 onMouseEnter={() => setActionLabel('remove survey')}
             >
                 {icons.trash}
-            </div>
+            </button>
         </>
     );
 

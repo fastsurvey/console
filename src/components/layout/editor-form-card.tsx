@@ -56,34 +56,30 @@ function EditorFormCard(props: Props) {
                     <div className='self-stretch flex-grow' />
                 </div>
 
-                <div className='relative flex flex-row group'>
+                <div className={'relative flex flex-row group '}>
                     <div
                         className={
                             'absolute top-0 left-0 transform -translate-x-full ' +
                             'h-10 pr-2 text-sm leading-10 font-weight-600 ' +
-                            'opacity-0 group-hover:opacity-75 pointer-events-none ' +
-                            'whitespace-nowrap'
+                            'pointer-events-none whitespace-nowrap ' +
+                            'opacity-0 group-hover:opacity-100 group-focus-within:opacity-100'
                         }
                     >
                         {props.actionLabel}
                     </div>
                     {props.buttons}
-                    {props.collapse !== undefined &&
-                        props.setCollapse !== undefined && (
-                            <button
-                                className={
-                                    'w-7 h-7 p-0.5 my-1.5 mx-0.5 transform cursor-pointer ' +
-                                    'opacity-70 hover:opacity-100 mr-2 rounded ringable-dark ' +
-                                    (props.collapse ? ' ' : 'rotate-180 ')
-                                }
-                                onClick={toggle}
-                                onMouseEnter={() =>
-                                    updateActionlabel(props.collapse)
-                                }
-                            >
-                                {icons.chevronDown}
-                            </button>
-                        )}
+
+                    <button
+                        className={
+                            'w-7 h-7 p-0.5 my-1.5 mx-0.5 transform cursor-pointer ' +
+                            'opacity-70 hover:opacity-100 mr-2 rounded ringable-dark ' +
+                            (props.collapse ? ' ' : 'rotate-180 ')
+                        }
+                        onClick={toggle}
+                        onMouseEnter={() => updateActionlabel(props.collapse)}
+                    >
+                        {icons.chevronDown}
+                    </button>
                 </div>
             </div>
             <div
