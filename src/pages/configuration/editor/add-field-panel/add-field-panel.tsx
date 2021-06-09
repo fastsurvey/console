@@ -28,7 +28,7 @@ function AddFieldPanel(props: Props) {
     return (
         <div
             className={
-                'relative w-full group gap-x-2 ' +
+                'relative w-full group gap-x-4 ' +
                 'h-10 my-1 ' +
                 'transition-size duration-400 ' +
                 'flex flex-row items-center justify-center '
@@ -36,12 +36,12 @@ function AddFieldPanel(props: Props) {
         >
             <AddFieldButton
                 label='add field'
-                icon={icons.addBox}
+                icon={icons.widgetAdd}
                 onClick={openAddFieldModal}
             />
             <AddFieldButton
                 label='paste field'
-                icon={icons.widgets}
+                icon={icons.duplicate}
                 onClick={props.pasteField}
                 leftIcon
             />

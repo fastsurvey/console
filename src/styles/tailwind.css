@@ -104,10 +104,10 @@
     }
 
     .icon-dark-gray .primary {
-        @apply fill-gray-500;
+        @apply fill-gray-400;
     }
     .icon-dark-gray .secondary {
-        @apply fill-gray-900;
+        @apply fill-gray-600;
     }
 
     .icon-gray .primary {
