@@ -42,6 +42,7 @@ const VisualSettings = (props: Props) => {
                     props.openDuplicateModal();
                 }}
                 onMouseEnter={() => setActionLabel('duplicate survey')}
+                onFocus={() => setActionLabel('duplicate survey')}
             >
                 {icons.duplicate}
             </button>
@@ -49,6 +50,7 @@ const VisualSettings = (props: Props) => {
                 className={buttonCSS}
                 onClick={props.openRemoveModal}
                 onMouseEnter={() => setActionLabel('remove survey')}
+                onFocus={() => setActionLabel('remove survey')}
             >
                 {icons.trash}
             </button>

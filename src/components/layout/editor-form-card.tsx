@@ -61,8 +61,8 @@ function EditorFormCard(props: Props) {
                         className={
                             'absolute top-0 left-0 transform -translate-x-full ' +
                             'h-10 pr-2 text-sm leading-10 font-weight-600 ' +
-                            'pointer-events-none whitespace-nowrap ' +
-                            'opacity-0 group-hover:opacity-100 group-focus-within:opacity-100'
+                            'pointer-events-none whitespace-nowrap opacity-0 ' +
+                            'group-hover:opacity-100 group-focus-within:opacity-100'
                         }
                     >
                         {props.actionLabel}
@@ -77,6 +77,7 @@ function EditorFormCard(props: Props) {
                         }
                         onClick={toggle}
                         onMouseEnter={() => updateActionlabel(props.collapse)}
+                        onFocus={() => updateActionlabel(props.collapse)}
                     >
                         {icons.chevronDown}
                     </button>
