@@ -13,7 +13,7 @@ function EditorHeader(props: {
     localConfig: types.SurveyConfig;
     setLocalConfig(configChanges: object): void;
 
-    saveState(publish?: boolean): void;
+    saveState(modifyDraft?: boolean): void;
     revertState(): void;
 }) {
     const {title, survey_name, draft} = props.localConfig;
@@ -21,7 +21,7 @@ function EditorHeader(props: {
 
     const linkContent = (
         <div className='text-sm text-gray-600 truncate font-weight-500'>
-            /{username}/{survey_name}
+            dev.fastsurvey.io/{username}/{survey_name}
         </div>
     );
 
@@ -48,36 +48,46 @@ function EditorHeader(props: {
                 </div>
                 <div className='flex-max' />
                 <IconButtonGroup
-                    buttons={[
-                        {
-                            icon: icons.closeCirlce,
-                            text: 'undo',
-                            onClick: props.revertState,
-                        },
-                        {
-                            icon: icons.checkCircle,
-                            text: 'save',
-                            onClick: props.saveState,
-                        },
-                    ]}
+                    buttons={
+                        draft
+                            ? [
+                                  {
+                                      icon: icons.closeCirlce,
+                                      text: 'undo',
+                                      onClick: props.revertState,
+                                  },
+                                  {
+                                      icon: icons.checkCircle,
+                                      text: 'save',
+                                      onClick: props.saveState,
+                                  },
+                              ]
+                            : []
+                    }
                 />
                 <div className='w-4' />
                 <IconButton
-                    icon={icons.uploadCloud}
-                    text='publish'
+                    icon={draft ? icons.uploadCloud : icons.addBox}
+                    text={draft ? 'publish' : 'edit'}
                     onClick={() => {
                         props.saveState(true);
                     }}
                 />
             </div>
-            {draft && <div className='cursor-not-allowed'>{linkContent}</div>}
+            {draft && (
+                <div className='px-1.5 py-0.5 transform -translate-x-1.5 cursor-not-allowed'>
+                    {linkContent}
+                </div>
+            )}
             {!draft && (
-                <Link
-                    to={`https://dev.fastsurvey.io/${username}/${survey_name}`}
-                    className='underline'
+                <a
+                    href={`https://dev.fastsurvey.io/${username}/${survey_name}`}
+                    className='px-1.5 py-0.5 transform -translate-x-1.5 rounded ringable'
+                    target='_blank'
+                    rel='noopener noreferrer'
                 >
                     {linkContent}
-                </Link>
+                </a>
             )}
             <div className='flex-shrink-0 mt-2'>
                 <TimePill config={props.localConfig} flat />

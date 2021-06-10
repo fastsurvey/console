@@ -102,7 +102,8 @@ function ConfigEditor(props: {
         });
     }
 
-    function saveState(publish?: boolean) {
+    // modifyDraft = true -> convert drafts to published surveys and vice versa
+    function saveState(modifyDraft: boolean = false) {
         props.closeAllMessages();
 
         const fieldsAreValid = !fieldValidators.includes(false);
@@ -130,8 +131,8 @@ function ConfigEditor(props: {
             authIsValid &&
             fieldOptionsAreValid
         ) {
-            if (publish) {
-                localConfig.draft = false;
+            if (modifyDraft) {
+                localConfig.draft = !localConfig.draft;
             }
 
             backend.updateSurvey(
