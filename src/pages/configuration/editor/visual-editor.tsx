@@ -17,7 +17,7 @@ function VisualEditor(props: {
     pasteField(index: number): void;
     removeField(index: number): void;
 
-    saveState(): void;
+    saveState(publish?: boolean): void;
     revertState(): void;
 }) {
     return (
@@ -27,6 +27,7 @@ function VisualEditor(props: {
                     localConfig={props.localConfig}
                     saveState={props.saveState}
                     revertState={props.revertState}
+                    setLocalConfig={props.setLocalConfig}
                 />
                 <Settings
                     centralConfigName={props.centralConfigName}

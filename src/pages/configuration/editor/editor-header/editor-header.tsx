@@ -1,7 +1,7 @@
 import React from 'react';
 import {types} from 'types';
 import icons from 'assets/icons/icons';
-import {TimePill} from 'components';
+import {IconButton, TimePill} from 'components';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import IconButtonGroup from 'components/buttons/icon-button-group';
@@ -11,7 +11,9 @@ function EditorHeader(props: {
     account: types.Account;
 
     localConfig: types.SurveyConfig;
-    saveState(): void;
+    setLocalConfig(configChanges: object): void;
+
+    saveState(publish?: boolean): void;
     revertState(): void;
 }) {
     const {title, survey_name, draft} = props.localConfig;
@@ -49,15 +51,23 @@ function EditorHeader(props: {
                     buttons={[
                         {
                             icon: icons.closeCirlce,
-                            text: 'Undo',
+                            text: 'undo',
                             onClick: props.revertState,
                         },
                         {
                             icon: icons.checkCircle,
-                            text: 'Save',
+                            text: 'save',
                             onClick: props.saveState,
                         },
                     ]}
+                />
+                <div className='w-4' />
+                <IconButton
+                    icon={icons.uploadCloud}
+                    text='publish'
+                    onClick={() => {
+                        props.saveState(true);
+                    }}
                 />
             </div>
             {draft && <div className='cursor-not-allowed'>{linkContent}</div>}

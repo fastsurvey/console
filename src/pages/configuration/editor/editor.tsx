@@ -102,7 +102,7 @@ function ConfigEditor(props: {
         });
     }
 
-    function saveState() {
+    function saveState(publish?: boolean) {
         props.closeAllMessages();
 
         const fieldsAreValid = !fieldValidators.includes(false);
@@ -130,6 +130,10 @@ function ConfigEditor(props: {
             authIsValid &&
             fieldOptionsAreValid
         ) {
+            if (publish) {
+                localConfig.draft = false;
+            }
+
             backend.updateSurvey(
                 props.account,
                 props.authToken,
