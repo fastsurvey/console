@@ -103,7 +103,7 @@ function ConfigEditor(props: {
     }
 
     // modifyDraft = true -> convert drafts to published surveys and vice versa
-    function saveState(configChanges: object = {}) {
+    function saveState(configChanges?: object) {
         const combinedConfig = {
             ...localConfig,
             ...configChanges,

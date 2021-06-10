@@ -21,6 +21,7 @@ async function updateSurvey(
 
         success();
     } catch (code) {
+        // @ts-ignore
         error(code);
     }
 }

@@ -44,13 +44,13 @@ function EditorHeader(props: {
               {
                   icon: icons.closeCirlce,
                   text: 'undo',
-                  onClick: props.revertState,
+                  onClick: () => props.saveState(),
                   disabled: !props.configIsDiffering,
               },
               {
                   icon: icons.checkCircle,
                   text: 'save',
-                  onClick: props.saveState,
+                  onClick: () => props.saveState(),
                   disabled: !props.configIsDiffering,
               },
           ]
