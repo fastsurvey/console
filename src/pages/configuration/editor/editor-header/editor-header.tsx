@@ -13,11 +13,34 @@ function EditorHeader(props: {
     localConfig: types.SurveyConfig;
     setLocalConfig(configChanges: object): void;
 
-    saveState(modifyDraft?: boolean): void;
+    saveState(configChanges?: object): void;
     revertState(): void;
 }) {
-    const {title, survey_name, draft} = props.localConfig;
+    const {title, survey_name, draft, start, end} = props.localConfig;
     const {username} = props.account;
+
+    function now() {
+        return Math.floor(Date.now() / 1000);
+    }
+
+    function startNow() {
+        props.saveState({
+            start: now(),
+        });
+    }
+
+    function reopenNow() {
+        props.saveState({
+            start: now(),
+            end: now() + 3600 * 24,
+        });
+    }
+
+    function endNow() {
+        props.saveState({
+            end: Math.floor(Date.now() / 1000),
+        });
+    }
 
     const linkContent = (
         <div className='text-sm text-gray-600 truncate font-weight-500'>
@@ -62,20 +85,37 @@ function EditorHeader(props: {
                                       onClick: props.saveState,
                                   },
                               ]
-                            : []
+                            : [
+                                  {
+                                      icon: icons.play,
+                                      text:
+                                          now() < end
+                                              ? 'start now'
+                                              : 'reopen now',
+                                      onClick:
+                                          now() < end ? startNow : reopenNow,
+                                  },
+                                  {
+                                      icon: icons.pause,
+                                      text: 'end now',
+                                      onClick: endNow,
+                                  },
+                              ]
                     }
                 />
                 <div className='w-4' />
                 <IconButton
-                    icon={draft ? icons.uploadCloud : icons.addBox}
+                    icon={draft ? icons.uploadCloud : icons.edit}
                     text={draft ? 'publish' : 'edit'}
                     onClick={() => {
-                        props.saveState(true);
+                        props.saveState({
+                            draft: !draft,
+                        });
                     }}
                 />
             </div>
             {draft && (
-                <div className='px-1.5 py-0.5 transform -translate-x-1.5 cursor-not-allowed'>
+                <div className='px-1.5 py-0.5 transform -translate-x-1.5 cursor-not-allowed opacity-70'>
                     {linkContent}
                 </div>
             )}

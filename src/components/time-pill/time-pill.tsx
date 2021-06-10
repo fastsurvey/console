@@ -19,10 +19,10 @@ const diffToPhrase = (diff: number): string => {
         }
     }
 
-    return 'now';
+    return '1 second';
 };
 
-function TimePill(props: {config: types.SurveyConfig; flat?: boolean}) {
+function TimePill(props: {config: types.SurveyConfig; flat: boolean}) {
     const now: number = new Date().getTime() / 1000;
     const {start, end, draft} = props.config;
 

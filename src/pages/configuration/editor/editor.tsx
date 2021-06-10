@@ -103,7 +103,11 @@ function ConfigEditor(props: {
     }
 
     // modifyDraft = true -> convert drafts to published surveys and vice versa
-    function saveState(modifyDraft: boolean = false) {
+    function saveState(configChanges: object = {}) {
+        const combinedConfig = {
+            ...localConfig,
+            ...configChanges,
+        };
         props.closeAllMessages();
 
         const fieldsAreValid = !fieldValidators.includes(false);
@@ -114,7 +118,8 @@ function ConfigEditor(props: {
             formUtils.validators.fieldOptions(localConfig);
 
         function success() {
-            props.setCentralConfig(localConfig);
+            setLocalConfigState(combinedConfig);
+            props.setCentralConfig(combinedConfig);
             if (localConfig.survey_name !== props.centralConfig.survey_name) {
                 history.push(`/configuration/${localConfig.survey_name}`);
             }
@@ -131,15 +136,11 @@ function ConfigEditor(props: {
             authIsValid &&
             fieldOptionsAreValid
         ) {
-            if (modifyDraft) {
-                localConfig.draft = !localConfig.draft;
-            }
-
             backend.updateSurvey(
                 props.account,
                 props.authToken,
                 props.centralConfig.survey_name,
-                localConfig,
+                combinedConfig,
                 success,
                 error,
             );

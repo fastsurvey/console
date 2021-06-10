@@ -13,7 +13,7 @@ function IconButton(props: {
             }
             onClick={props.onClick ? props.onClick : () => {}}
         >
-            <div className='w-8 h-8 p-1 icon-blue'>{props.icon}</div>
+            <div className='p-1 w-7 h-7 icon-blue'>{props.icon}</div>
             <div className={'font-weight-600 text-blue-900 pl-1 pr-2'}>
                 {props.text}
             </div>

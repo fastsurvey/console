@@ -17,7 +17,7 @@ function VisualEditor(props: {
     pasteField(index: number): void;
     removeField(index: number): void;
 
-    saveState(publish?: boolean): void;
+    saveState(configChanges?: object): void;
     revertState(): void;
 }) {
     return (
