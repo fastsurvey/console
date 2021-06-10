@@ -5,6 +5,7 @@ function IconButtonGroup(props: {
         icon: React.ReactNode;
         text: string;
         onClick?(): void;
+        disabled?: boolean;
     }[];
 }) {
     const first = (index: number) => index === 0;
@@ -16,17 +17,19 @@ function IconButtonGroup(props: {
                 <button
                     key={index}
                     className={
-                        'p-0.5 bg-white hover:bg-gray-100 centering-row ' +
-                        'cursor-pointer no-selection ringable rounded-sm ' +
+                        'p-0.5 centering-row ' +
+                        ' no-selection ringable rounded-sm ' +
                         (first(index) ? 'rounded-l ' : ' ') +
-                        (last(index) ? 'rounded-r ' : ' ')
+                        (last(index) ? 'rounded-r ' : ' ') +
+                        (b.disabled
+                            ? 'bg-gray-100 text-gray-600 cursor-default icon-gray '
+                            : 'bg-white hover:bg-gray-100 text-blue-900 cursor-pointer icon-blue ')
                     }
-                    onClick={b.onClick ? b.onClick : () => {}}
+                    onClick={b.onClick && !b.disabled ? b.onClick : () => {}}
+                    disabled={b.disabled ? b.disabled : false}
                 >
-                    <div className='p-1 w-7 h-7 icon-blue'>{b.icon}</div>
-                    <div className={'font-weight-600 text-blue-900 pl-1 pr-2'}>
-                        {b.text}
-                    </div>
+                    <div className='p-1 w-7 h-7'>{b.icon}</div>
+                    <div className={'font-weight-600 pl-1 pr-2 '}>{b.text}</div>
                 </button>
             ))}
         </div>

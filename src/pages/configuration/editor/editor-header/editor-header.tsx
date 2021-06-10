@@ -14,7 +14,7 @@ function EditorHeader(props: {
     saveState(configChanges?: object): void;
     revertState(): void;
 }) {
-    const {draft, end} = props.localConfig;
+    const {draft, start, end} = props.localConfig;
 
     function now() {
         return Math.floor(Date.now() / 1000);
@@ -22,34 +22,36 @@ function EditorHeader(props: {
 
     function startNow() {
         props.saveState({
-            start: now(),
+            start: now() - 1,
         });
     }
 
     function reopenNow() {
         props.saveState({
-            start: now(),
-            end: now() + 3600 * 24,
+            start: now() - 1,
+            end: now() + 3600 * 24 + 1,
         });
     }
 
     function endNow() {
         props.saveState({
-            end: Math.floor(Date.now() / 1000),
+            end: now() - 1,
         });
     }
 
-    const buttons = draft
+    let buttons = draft
         ? [
               {
                   icon: icons.closeCirlce,
                   text: 'undo',
                   onClick: props.revertState,
+                  disabled: !props.configIsDiffering,
               },
               {
                   icon: icons.checkCircle,
                   text: 'save',
                   onClick: props.saveState,
+                  disabled: !props.configIsDiffering,
               },
           ]
         : [
@@ -57,11 +59,13 @@ function EditorHeader(props: {
                   icon: icons.play,
                   text: now() < end ? 'start now' : 'reopen now',
                   onClick: now() < end ? startNow : reopenNow,
+                  disabled: start < now() && now() < end,
               },
               {
                   icon: icons.pause,
                   text: 'end now',
                   onClick: endNow,
+                  disabled: now() < start || end < now(),
               },
           ];
 

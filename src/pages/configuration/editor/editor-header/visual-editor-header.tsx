@@ -19,6 +19,7 @@ function VisualEditorHeader(props: {
         icon: React.ReactNode;
         text: string;
         onClick(): void;
+        disabled?: boolean;
     }[];
 }) {
     const {title, survey_name, draft} = props.localConfig;
