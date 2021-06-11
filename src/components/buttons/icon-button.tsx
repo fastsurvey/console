@@ -24,7 +24,7 @@ function IconButton(props: {
     return (
         <button
             className={
-                'p-0.5 rounded centering-row h-8 ' +
+                'p-0.5 rounded centering-row h-9 ' +
                 'no-selection ringable ' +
                 variantClasses
             }

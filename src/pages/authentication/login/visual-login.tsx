@@ -15,10 +15,7 @@ export default function VisualLogin(props: {
     handleLogin(): void;
 }) {
     return (
-        <form
-            className='w-full max-w-sm p-4 bg-white rounded shadow centering-col gap-y-4'
-            autoComplete='on'
-        >
+        <div className='w-full max-w-sm p-4 bg-white rounded shadow centering-col gap-y-4'>
             <h1 className='text-2xl text-center text-gray-800 font-weight-600 no-selection'>
                 Login
             </h1>
@@ -60,6 +57,6 @@ export default function VisualLogin(props: {
                     Don't have an account yet?
                 </Link>
             </div>
-        </form>
+        </div>
     );
 }

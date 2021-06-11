@@ -117,6 +117,22 @@
         @apply fill-gray-500;
     }
 
+    .icon-green .primary {
+        @apply fill-green-100;
+    }
+
+    .icon-green .secondary {
+        @apply fill-green-500;
+    }
+
+    .icon-red .primary {
+        @apply fill-red-100;
+    }
+
+    .icon-red .secondary {
+        @apply fill-red-400;
+    }
+
     .icon-transparent .primary,
     .icon-transparent .secondary {
         fill: transparent;
