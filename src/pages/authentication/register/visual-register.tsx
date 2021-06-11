@@ -1,16 +1,9 @@
 import React from 'react';
-import {
-    TextInput,
-    TextLink,
-    ButtonLink,
-    LabelSimple,
-    TextInputSimple,
-} from 'components';
-import {formUtils} from 'utilities';
+import {LabelSimple, TextInputSimple} from 'components';
 import {Link} from 'react-router-dom';
 import {IconButton} from 'components';
 
-interface Props {
+export default function VisualRegister(props: {
     email: string;
     setEmail(newEmail: string): void;
     username: string;
@@ -25,10 +18,7 @@ interface Props {
 
     closeAllMessages(): void;
     handleRegistration(): void;
-}
-const VisualRegister = React.forwardRef((props: Props, refs: any) => {
-    const {input2Ref, input3Ref, input4Ref} = refs;
-
+}) {
     return (
         <div className='w-full max-w-sm p-4 bg-white rounded shadow centering-col gap-y-4'>
             <h1 className='text-2xl text-center text-gray-800 font-weight-600 no-selection'>
@@ -38,7 +28,6 @@ const VisualRegister = React.forwardRef((props: Props, refs: any) => {
                 <LabelSimple text='Email' />
                 <TextInputSimple
                     autoFocus
-                    autoComplete='email new-email'
                     value={props.email}
                     setValue={(newValue) => {
                         props.closeAllMessages();
@@ -49,7 +38,6 @@ const VisualRegister = React.forwardRef((props: Props, refs: any) => {
             <div className='w-full centering-col gap-y-0.5'>
                 <LabelSimple text='Username' />
                 <TextInputSimple
-                    autoComplete='username'
                     value={props.username}
                     setValue={(newValue) => {
                         props.closeAllMessages();
@@ -61,7 +49,6 @@ const VisualRegister = React.forwardRef((props: Props, refs: any) => {
                 <LabelSimple text='Password' />
                 <TextInputSimple
                     type='password'
-                    autoComplete='new-password'
                     value={props.password}
                     setValue={(newValue) => {
                         props.closeAllMessages();
@@ -73,7 +60,6 @@ const VisualRegister = React.forwardRef((props: Props, refs: any) => {
                 <LabelSimple text='Repeat Password' />
                 <TextInputSimple
                     type='password'
-                    autoComplete='new-password'
                     value={props.passwordConfirmation}
                     setValue={(newValue) => {
                         props.closeAllMessages();
@@ -99,6 +85,4 @@ const VisualRegister = React.forwardRef((props: Props, refs: any) => {
             </div>
         </div>
     );
-});
-
-export default VisualRegister;
+}

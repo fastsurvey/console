@@ -15,7 +15,10 @@ export default function VisualLogin(props: {
     handleLogin(): void;
 }) {
     return (
-        <div className='w-full max-w-sm p-4 bg-white rounded shadow centering-col gap-y-4'>
+        <form
+            className='w-full max-w-sm p-4 bg-white rounded shadow centering-col gap-y-4'
+            autoComplete='on'
+        >
             <h1 className='text-2xl text-center text-gray-800 font-weight-600 no-selection'>
                 Login
             </h1>
@@ -23,7 +26,6 @@ export default function VisualLogin(props: {
                 <LabelSimple text='Email or Username' />
                 <TextInputSimple
                     autoFocus
-                    autoComplete='email username'
                     value={props.identifier}
                     setValue={(newValue) => {
                         props.closeAllMessages();
@@ -35,7 +37,6 @@ export default function VisualLogin(props: {
                 <LabelSimple text='Password' />
                 <TextInputSimple
                     type='password'
-                    autoComplete='current-password'
                     value={props.password}
                     setValue={(newValue) => {
                         props.closeAllMessages();
@@ -59,6 +60,6 @@ export default function VisualLogin(props: {
                     Don't have an account yet?
                 </Link>
             </div>
-        </div>
+        </form>
     );
 }
