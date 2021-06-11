@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {reduxUtils, backend} from 'utilities';
 import VisualVerifyForm from './visual-verify';
@@ -16,7 +16,7 @@ interface Props {
 }
 function VerifyForm(props: Props) {
     const [password, setPassword] = useState('');
-    const [success, setSuccess] = useState(false);
+    const [verificationSuccessful, setSuccess] = useState(false);
     const [submitting, setSubmitting] = useState(false);
     let history = useHistory();
 
@@ -25,11 +25,8 @@ function VerifyForm(props: Props) {
     }
 
     const token = new URLSearchParams(window.location.search).get('token');
-    const input1Ref = useRef<HTMLInputElement>(null);
 
     function handleVerify() {
-        input1Ref.current?.blur();
-
         function success() {
             setSuccess(true);
             setSubmitting(false);
@@ -69,20 +66,21 @@ function VerifyForm(props: Props) {
 
     return (
         <VisualVerifyForm
-            // @ts-ignore
-            ref={{input1Ref}}
-            password={password}
-            setPassword={setPassword}
-            success={success}
+            {...{
+                password,
+                setPassword,
+                verificationSuccessful,
+                submitting,
+                handleVerify,
+                history,
+            }}
             tokenExists={token !== null}
             disabled={disabled()}
-            submitting={submitting}
-            handleVerify={handleVerify}
         />
     );
 }
 
-const mapStateToProps = (state: types.ReduxState) => ({});
+const mapStateToProps = () => ({});
 const mapDispatchToProps = (dispatch: any) => ({
     logIn: reduxUtils.dispatchers.logIn(dispatch),
     openMessage: reduxUtils.dispatchers.openMessage(dispatch),

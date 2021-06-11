@@ -1,68 +1,105 @@
 import React from 'react';
-import {TextInput, ButtonLink} from 'components';
+import {TextInputSimple, IconButton, LabelSimple} from 'components';
+import {Link} from 'react-router-dom';
 
-interface Props {
+export default function VisualVerifyForm(props: {
     password: string;
     setPassword(password: string): void;
 
-    success: boolean;
+    verificationSuccessful: boolean;
     tokenExists: boolean;
     disabled: boolean;
     submitting: boolean;
 
     handleVerify(): void;
-}
-const VisualVerifyForm = React.forwardRef((props: Props, refs: any) => {
-    const {input1Ref} = refs;
-
+    history: any;
+}) {
     return (
-        <div className='w-full'>
-            {!props.success && (
-                <React.Fragment>
-                    <h2 className='mb-4 text-center no-selection'>
-                        Verify your email
-                    </h2>
+        <div
+            className={
+                'w-full max-w-sm p-4 bg-white rounded shadow ' +
+                'gap-y-4 centering-col'
+            }
+        >
+            {!props.verificationSuccessful && (
+                <>
+                    <h1
+                        className={
+                            'w-full text-2xl text-center no-selection ' +
+                            'text-gray-800 font-weight-600'
+                        }
+                    >
+                        Verify your Email
+                    </h1>
                     {props.tokenExists && (
-                        <form>
-                            <TextInput
-                                placeholder='password'
-                                value={props.password}
-                                onChange={(newValue) => {
-                                    props.setPassword(newValue);
-                                }}
-                                className='mb-5'
-                                type='password'
-                                autoComplete='current-password'
-                                ref={input1Ref}
-                                onEnter={props.handleVerify}
-                            />
-                            <ButtonLink
-                                onClick={props.handleVerify}
-                                disabled={props.disabled}
-                                spinning={props.submitting}
+                        <>
+                            <div className='w-full centering-col gap-y-0.5'>
+                                <LabelSimple text='Password' />
+                                <TextInputSimple
+                                    value={props.password}
+                                    setValue={(newValue) => {
+                                        props.setPassword(newValue);
+                                    }}
+                                    type='password'
+                                />
+                            </div>
+                            <div
+                                className={
+                                    'w-full gap-y-0.5 flex flex-row-reverse ' +
+                                    'items-center justify-center'
+                                }
                             >
-                                Verify
-                            </ButtonLink>
-                        </form>
+                                <IconButton
+                                    text='verify'
+                                    onClick={props.handleVerify}
+                                    disabled={props.disabled}
+                                    variant='flat-light-blue'
+                                />
+                                <div className='flex-max' />
+                                <Link
+                                    to='/login'
+                                    className={
+                                        'px-1.5 py-0.5 -mx-1.5 text-sm ' +
+                                        'rounded ringable text-gray-500 ' +
+                                        'font-weight-600'
+                                    }
+                                >
+                                    Return to Login
+                                </Link>
+                            </div>
+                        </>
                     )}
                     {!props.tokenExists && (
-                        <p className='text-center'>
-                            Sorry, we couldn't find any email token in the url.
-                            Please use exactly the link we've sent to you.
-                        </p>
+                        <>
+                            <p className='text-left text-gray-800 font-weight-500'>
+                                Sorry, we couldn't find any email token in the
+                                url. Please use exactly the link we've sent to
+                                you.
+                            </p>
+                            <Link
+                                to='/login'
+                                className={
+                                    'px-1.5 py-0.5 -mx-1.5 text-sm ' +
+                                    'rounded ringable text-gray-500 ' +
+                                    'font-weight-600'
+                                }
+                            >
+                                Return to Login
+                            </Link>
+                        </>
                     )}
-                </React.Fragment>
+                </>
             )}
-            {props.success && (
-                <React.Fragment>
-                    <h2 className='mb-4 text-center no-selection'>Success!</h2>
-                    <ButtonLink to='configurations'>
-                        Continue to Admin Panel
-                    </ButtonLink>
-                </React.Fragment>
+            {props.verificationSuccessful && (
+                <h1
+                    className={
+                        'w-full text-2xl text-center no-selection ' +
+                        'text-gray-800 font-weight-600'
+                    }
+                >
+                    Success!
+                </h1>
             )}
         </div>
     );
-});
-
-export default VisualVerifyForm;
+}
