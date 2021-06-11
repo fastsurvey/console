@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextInput, TextLink, ButtonLink} from 'components';
+import {TextInput, TextInputSimple, TextLink, ButtonLink} from 'components';
 
 interface Props {
     identifier: string;
@@ -17,35 +17,29 @@ const VisualLogin = React.forwardRef((props: Props, refs: any) => {
     const {input2Ref} = refs;
 
     return (
-        <div className='w-full'>
+        <div className='w-full p-4 bg-white rounded shadow '>
             <h1 className='mb-4 text-3xl text-center text-gray-800 font-weight-600 no-selection'>
                 Login
             </h1>
-            <form>
-                <TextInput
-                    placeholder='email'
+            <form className='centering-col gap-y-2'>
+                <TextInputSimple
+                    autoComplete='email username'
                     value={props.identifier}
-                    onChange={(newValue) => {
+                    setValue={(newValue) => {
                         props.closeAllMessages();
                         props.setIdentifier(newValue);
                     }}
-                    className='mb-3'
-                    autoComplete='email username'
-                    onEnter={() => input2Ref.current.focus()}
                 />
-                <TextInput
-                    placeholder='password'
-                    value={props.password}
-                    onChange={(newValue) => {
+                <TextInputSimple
+                    type='password'
+                    autoComplete='current-password'
+                    value={props.identifier}
+                    setValue={(newValue) => {
                         props.closeAllMessages();
                         props.setPassword(newValue);
                     }}
-                    className='mb-5'
-                    type='password'
-                    autoComplete='current-password'
-                    ref={input2Ref}
-                    onEnter={props.handleLogin}
                 />
+
                 <ButtonLink
                     onClick={props.handleLogin}
                     disabled={props.disabled}
