@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {reduxUtils, backend} from 'utilities';
 import VisualLogin from './visual-login';
@@ -23,15 +23,12 @@ function LoginForm(props: Props) {
         return identifier.length < 3 || password.length < 8;
     }
 
-    const input2Ref = useRef<HTMLInputElement>(null);
-
     function abortLogin(code: 401 | 500) {
         setSubmitting(false);
         props.openMessage(code === 401 ? 'error-credentials' : 'error-server');
     }
 
     function handleLogin() {
-        input2Ref.current?.blur();
         if (!disabled()) {
             setSubmitting(true);
             backend.loginWithForm(
@@ -48,7 +45,6 @@ function LoginForm(props: Props) {
     return (
         <VisualLogin
             // @ts-ignore
-            ref={{input2Ref}}
             identifier={identifier}
             setIdentifier={setIdentifier}
             password={password}

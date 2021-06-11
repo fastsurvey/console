@@ -1,13 +1,8 @@
 import React from 'react';
-import {
-    TextInput,
-    TextInputSimple,
-    TextLink,
-    ButtonLink,
-    LabelSimple,
-} from 'components';
+import {TextInputSimple, LabelSimple, IconButton} from 'components';
+import {Link} from 'react-router-dom';
 
-interface Props {
+export default function VisualLogin(props: {
     identifier: string;
     setIdentifier(newIdentifier: string): void;
     password: string;
@@ -18,55 +13,50 @@ interface Props {
 
     closeAllMessages(): void;
     handleLogin(): void;
-}
-const VisualLogin = React.forwardRef((props: Props, refs: any) => {
+}) {
     return (
-        <div className='w-full p-4 bg-white rounded shadow '>
-            <h1 className='mb-4 text-3xl text-center text-gray-800 font-weight-600 no-selection'>
+        <div className='w-full p-4 bg-white rounded shadow centering-col gap-y-4'>
+            <h1 className='text-2xl text-center text-gray-800 font-weight-600 no-selection'>
                 Login
             </h1>
-            <form className='w-full centering-col gap-y-4'>
-                <div className='w-full centering-col gap-y-0.5'>
-                    <LabelSimple text='Email or Username' />
-                    <TextInputSimple
-                        autoFocus
-                        autoComplete='email username'
-                        value={props.identifier}
-                        setValue={(newValue) => {
-                            props.closeAllMessages();
-                            props.setIdentifier(newValue);
-                        }}
-                    />
-                </div>
-                <div className='w-full centering-col gap-y-0.5'>
-                    <LabelSimple text='Password' />
-                    <TextInputSimple
-                        type='password'
-                        autoComplete='current-password'
-                        value={props.password}
-                        setValue={(newValue) => {
-                            props.closeAllMessages();
-                            props.setPassword(newValue);
-                        }}
-                    />
-                </div>
+            <div className='w-full centering-col gap-y-0.5'>
+                <LabelSimple text='Email or Username' />
+                <TextInputSimple
+                    autoComplete='email username'
+                    value={props.identifier}
+                    setValue={(newValue) => {
+                        props.closeAllMessages();
+                        props.setIdentifier(newValue);
+                    }}
+                />
+            </div>
+            <div className='w-full centering-col gap-y-0.5'>
+                <LabelSimple text='Password' />
+                <TextInputSimple
+                    type='password'
+                    autoComplete='current-password'
+                    value={props.password}
+                    setValue={(newValue) => {
+                        props.closeAllMessages();
+                        props.setPassword(newValue);
+                    }}
+                />
+            </div>
 
-                <ButtonLink
+            <div className='w-full gap-y-0.5 flex flex-row-reverse items-center justify-center'>
+                <IconButton
+                    text='Login'
+                    variant='flat-light-blue'
                     onClick={props.handleLogin}
-                    disabled={props.disabled}
-                    spinning={props.submitting}
+                />
+                <div className='flex-max' />
+                <Link
+                    to='/register'
+                    className='px-1.5 py-0.5 -mx-1.5 text-sm text-gray-400 rounded font-weight-600 ringable'
                 >
-                    Login
-                </ButtonLink>
-            </form>
-            <TextLink to='/register' className='pt-4'>
-                Don't have an account yet?
-            </TextLink>
-            <TextLink to='/request-password' className='pt-2'>
-                Forgot your password?
-            </TextLink>
+                    Don't have an account yet?
+                </Link>
+            </div>
         </div>
     );
-});
-
-export default VisualLogin;
+}

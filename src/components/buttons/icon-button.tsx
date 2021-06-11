@@ -1,22 +1,35 @@
 import React from 'react';
 
 function IconButton(props: {
-    icon: React.ReactNode;
     text: string;
+    icon?: React.ReactNode;
     onClick?(): void;
+    variant?: 'flat-light-blue';
 }) {
+    let variantClasses: string;
+    switch (props.variant) {
+        case 'flat-light-blue':
+            variantClasses = 'bg-blue-50 text-blue-900 icon-dark-blue';
+            break;
+        default:
+            variantClasses = 'bg-white shadow text-blue-900 icon-blue';
+            break;
+    }
+
     return (
         <button
             className={
-                'p-0.5 bg-white rounded shadow centering-row ' +
-                'cursor-pointer no-selection ringable'
+                'p-0.5 rounded centering-row h-8 ' +
+                'cursor-pointer no-selection ringable ' +
+                variantClasses
             }
             onClick={props.onClick ? props.onClick : () => {}}
         >
-            <div className='p-1 w-7 h-7 icon-blue'>{props.icon}</div>
-            <div className={'font-weight-600 text-blue-900 pl-1 pr-2'}>
-                {props.text}
-            </div>
+            {props.icon && (
+                <div className='p-1 -mr-1.5 w-7 h-7'>{props.icon}</div>
+            )}
+
+            <div className={'font-weight-600 px-2'}>{props.text}</div>
         </button>
     );
 }
