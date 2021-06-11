@@ -7,9 +7,12 @@ import {
     DatePicker,
     EditorFormCard,
     EditorFormRow,
+    LabelSimple,
+    TextAreaSimple,
 } from 'components';
 import {icons} from 'assets';
 import {types} from 'types';
+import {TextInputSimple} from 'components';
 
 interface Props {
     config: types.SurveyConfig;
@@ -68,58 +71,43 @@ const VisualSettings = (props: Props) => {
             actionLabel={actionLabel}
             setActionLabel={setActionLabel}
         >
-            <EditorFormRow label='Title' className='mb-1'>
-                <TextInput
-                    {...commonProps}
-                    placeholder='The title of your survey'
+            <div className='w-full centering-col gap-y-0.5'>
+                <LabelSimple text='Title' />
+                <TextInputSimple
                     value={props.config.title}
-                    onChange={(newValue: string) => {
+                    setValue={(newValue: string) => {
                         props.updateConfig({
                             ...props.config,
                             title: newValue,
                         });
                     }}
-                    hint={{
-                        ...formUtils.hints.title(props.config.title),
-                        inlineHint: true,
-                    }}
                 />
-            </EditorFormRow>
-
-            <EditorFormRow label='Identifier' className='mb-1'>
-                <TextInput
-                    {...commonProps}
-                    placeholder='URL conform identifier'
+            </div>
+            <div className='w-full centering-col gap-y-0.5'>
+                <LabelSimple text='URL conform identifier' />
+                <TextInputSimple
                     value={props.config.survey_name}
-                    onChange={(newValue: string) => {
+                    setValue={(newValue: string) => {
                         props.updateConfig({
                             ...props.config,
                             survey_name: newValue,
                         });
                     }}
-                    hint={{
-                        ...formUtils.hints.surveyName(
-                            props.config,
-                            props.surveyNameIsValid,
-                        ),
-                        inlineHint: true,
-                    }}
                 />
-            </EditorFormRow>
+            </div>
 
-            <EditorFormRow label='Description' className='mb-8'>
-                <TextArea
-                    {...commonProps}
+            <div className='w-full centering-col gap-y-0.5'>
+                <LabelSimple text='Description' />
+                <TextAreaSimple
                     value={props.config.description}
-                    onChange={(newValue: string) => {
+                    setValue={(newValue: string) => {
                         props.updateConfig({
                             ...props.config,
-                            ...{description: newValue},
+                            description: newValue,
                         });
                     }}
-                    charLimits={{min: 0, max: 2000}}
                 />
-            </EditorFormRow>
+            </div>
 
             <EditorFormRow label='Start' className='mb-2'>
                 <DatePicker
