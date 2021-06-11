@@ -1,6 +1,14 @@
 import React from 'react';
-import {TextInput, TextLink, ButtonLink} from 'components';
+import {
+    TextInput,
+    TextLink,
+    ButtonLink,
+    LabelSimple,
+    TextInputSimple,
+} from 'components';
 import {formUtils} from 'utilities';
+import {Link} from 'react-router-dom';
+import {IconButton} from 'components';
 
 interface Props {
     email: string;
@@ -22,88 +30,73 @@ const VisualRegister = React.forwardRef((props: Props, refs: any) => {
     const {input2Ref, input3Ref, input4Ref} = refs;
 
     return (
-        <div className='w-full'>
-            <h2 className='mb-6 text-center no-selection'>Register</h2>
-            <form>
-                <TextInput
-                    required
-                    placeholder='email'
+        <div className='w-full max-w-sm p-4 bg-white rounded shadow centering-col gap-y-4'>
+            <h1 className='text-2xl text-center text-gray-800 font-weight-600 no-selection'>
+                Register
+            </h1>
+            <div className='w-full centering-col gap-y-0.5'>
+                <LabelSimple text='Email' />
+                <TextInputSimple
+                    autoFocus
+                    autoComplete='email new-email'
                     value={props.email}
-                    onChange={(newValue) => {
+                    setValue={(newValue) => {
                         props.closeAllMessages();
                         props.setEmail(newValue);
                     }}
-                    wrapperClassName='mb-2'
-                    autoComplete='email'
-                    onEnter={() => input2Ref.current?.focus()}
                 />
-                <TextInput
-                    required
-                    placeholder='username'
+            </div>
+            <div className='w-full centering-col gap-y-0.5'>
+                <LabelSimple text='Username' />
+                <TextInputSimple
+                    autoComplete='username'
                     value={props.username}
-                    onChange={(newValue) => {
+                    setValue={(newValue) => {
                         props.closeAllMessages();
                         props.setUsername(newValue);
                     }}
-                    ref={input2Ref}
-                    wrapperClassName='mb-2'
-                    autoComplete='username'
-                    onEnter={() => input3Ref.current?.focus()}
-                    hint={{
-                        ...formUtils.hints.username(props.username),
-                        inlineHint: true,
-                    }}
                 />
-                <TextInput
+            </div>
+            <div className='w-full centering-col gap-y-0.5'>
+                <LabelSimple text='Password' />
+                <TextInputSimple
+                    type='password'
+                    autoComplete='new-password'
                     value={props.password}
-                    onChange={(newValue) => {
+                    setValue={(newValue) => {
                         props.closeAllMessages();
                         props.setPassword(newValue);
                     }}
-                    ref={input3Ref}
-                    onEnter={() => input4Ref.current?.focus()}
-                    required
-                    placeholder='password'
-                    type='password'
-                    wrapperClassName='mb-2'
-                    autoComplete='new-password'
-                    hint={{
-                        ...formUtils.hints.password(props.password),
-                        inlineHint: true,
-                    }}
                 />
-                <TextInput
+            </div>
+            <div className='w-full centering-col gap-y-0.5'>
+                <LabelSimple text='Repeat Password' />
+                <TextInputSimple
+                    type='password'
+                    autoComplete='new-password'
                     value={props.passwordConfirmation}
-                    onChange={(newValue) => {
+                    setValue={(newValue) => {
                         props.closeAllMessages();
                         props.setPasswordConfirmation(newValue);
                     }}
-                    ref={input4Ref}
-                    onEnter={props.handleRegistration}
-                    required
-                    placeholder='confirm password'
-                    type='password'
-                    wrapperClassName='mb-5'
-                    autoComplete='new-password'
-                    hint={{
-                        ...formUtils.hints.passwordConfirmation(
-                            props.password,
-                            props.passwordConfirmation,
-                        ),
-                        inlineHint: true,
-                    }}
                 />
-                <ButtonLink
+            </div>
+
+            <div className='w-full gap-y-0.5 flex flex-row-reverse items-center justify-center'>
+                <IconButton
+                    text='Login'
+                    variant='flat-light-blue'
                     onClick={props.handleRegistration}
                     disabled={props.disabled}
-                    spinning={props.submitting}
+                />
+                <div className='flex-max' />
+                <Link
+                    to='/login'
+                    className='px-1.5 py-0.5 -mx-1.5 text-sm text-gray-400 rounded font-weight-600 ringable'
                 >
-                    Register
-                </ButtonLink>
-            </form>
-            <TextLink to='/login' className='pt-4'>
-                Already have an account?
-            </TextLink>
+                    Already have an account?
+                </Link>
+            </div>
         </div>
     );
 });

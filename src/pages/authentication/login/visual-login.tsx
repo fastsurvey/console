@@ -22,6 +22,7 @@ export default function VisualLogin(props: {
             <div className='w-full centering-col gap-y-0.5'>
                 <LabelSimple text='Email or Username' />
                 <TextInputSimple
+                    autoFocus
                     autoComplete='email username'
                     value={props.identifier}
                     setValue={(newValue) => {
