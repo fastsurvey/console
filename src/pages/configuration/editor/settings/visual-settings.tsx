@@ -2,13 +2,12 @@ import React, {useState, useEffect} from 'react';
 import {formUtils, constants} from 'utilities';
 import {
     DropDown,
-    TextArea,
-    TextInput,
     DatePicker,
     EditorFormCard,
     EditorFormRow,
     LabelSimple,
     TextAreaSimple,
+    DropDownSimple,
 } from 'components';
 import {icons} from 'assets';
 import {types} from 'types';
@@ -145,10 +144,9 @@ const VisualSettings = (props: Props) => {
 
             <div className='w-full centering-col gap-y-0.5'>
                 <LabelSimple text='Authentication Mode' />
-                <DropDown
-                    {...commonProps}
+                <DropDownSimple
                     value={props.config.authentication === 'open' ? 0 : 1}
-                    onChange={(newValue: 0 | 1) => {
+                    setValue={(newValue: 0 | 1) => {
                         props.updateConfig(
                             {
                                 ...props.config,

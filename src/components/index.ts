@@ -17,6 +17,7 @@ export {default as TextInput} from './form-fields/text-input-deprecated';
 export {default as TextInputSimple} from './form/text-input';
 export {default as LabelSimple} from './form/label';
 export {default as TextAreaSimple} from './form/text-area';
+export {default as DropDownSimple} from './form/drop-down';
 export {default as TriggerIcon} from './form-fields/trigger-icon';
 export {default as Label} from './form-fields/label';
 

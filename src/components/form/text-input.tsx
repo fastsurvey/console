@@ -35,7 +35,8 @@ export default function TextInput(props: {
                 <div
                     className={
                         'absolute top-0 leading-9 left-3 ' +
-                        'text-gray-500 font-weight-500'
+                        'text-gray-500 font-weight-500 ' +
+                        'pointer-events-none'
                     }
                 >
                     <span className='opacity-0'>{props.value}</span>
