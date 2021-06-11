@@ -5,11 +5,16 @@ function IconButton(props: {
     icon?: React.ReactNode;
     onClick?(): void;
     variant?: 'flat-light-blue';
+    disabled?: boolean;
 }) {
+    const {text, icon, onClick, variant, disabled} = props;
+
     let variantClasses: string;
-    switch (props.variant) {
+    switch (variant) {
         case 'flat-light-blue':
-            variantClasses = 'bg-blue-50 text-blue-900 icon-dark-blue';
+            variantClasses = disabled
+                ? 'bg-gray-200 text-gray-400 icon-gray'
+                : 'bg-blue-50 text-blue-900 icon-dark-blue';
             break;
         default:
             variantClasses = 'bg-white shadow text-blue-900 icon-blue';
@@ -20,16 +25,15 @@ function IconButton(props: {
         <button
             className={
                 'p-0.5 rounded centering-row h-8 ' +
-                'cursor-pointer no-selection ringable ' +
+                'no-selection ringable ' +
                 variantClasses
             }
-            onClick={props.onClick ? props.onClick : () => {}}
+            onClick={onClick && !disabled ? onClick : () => {}}
+            disabled={disabled ? disabled : false}
         >
-            {props.icon && (
-                <div className='p-1 -mr-1.5 w-7 h-7'>{props.icon}</div>
-            )}
+            {icon && <div className='p-1 -mr-1.5 w-7 h-7'>{icon}</div>}
 
-            <div className={'font-weight-600 px-2'}>{props.text}</div>
+            <div className={'font-weight-600 px-2'}>{text}</div>
         </button>
     );
 }

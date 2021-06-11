@@ -15,7 +15,7 @@ export default function VisualLogin(props: {
     handleLogin(): void;
 }) {
     return (
-        <div className='w-full p-4 bg-white rounded shadow centering-col gap-y-4'>
+        <div className='w-full max-w-sm p-4 bg-white rounded shadow centering-col gap-y-4'>
             <h1 className='text-2xl text-center text-gray-800 font-weight-600 no-selection'>
                 Login
             </h1>
@@ -48,6 +48,7 @@ export default function VisualLogin(props: {
                     text='Login'
                     variant='flat-light-blue'
                     onClick={props.handleLogin}
+                    disabled={props.disabled}
                 />
                 <div className='flex-max' />
                 <Link
