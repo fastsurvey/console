@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {icons} from 'assets';
 
 export default function DropDown(props: {
@@ -9,12 +9,14 @@ export default function DropDown(props: {
 }) {
     const {options, value, setValue, disabled} = props;
     const [open, setOpen] = useState(false);
+    const ref = useRef<HTMLButtonElement>(null);
 
     const label = options.filter((o) => o.value === value)[0]?.label;
 
     return (
         <div className={'relative w-full centering-col z-50'}>
             <button
+                ref={ref}
                 onClick={() => setOpen(!open)}
                 className={
                     'w-full px-3 h-9 text-left relative rounded ' +
@@ -45,12 +47,14 @@ export default function DropDown(props: {
                         onClick={() => {
                             setValue(option.value);
                             setOpen(false);
+                            ref.current?.focus();
                         }}
                         disabled={props.disabled || !open}
                         className={
-                            'w-full px-2 h-8 text-sm text-left rounded-sm ' +
+                            'w-full h-7 my-0.5 text-sm text-left rounded-sm ' +
                             'font-weight-500 text-gray-700 ringable ' +
-                            'hover:text-black focus:text-black '
+                            'hover:text-black focus:text-black ' +
+                            'flex-row-left '
                         }
                         onKeyDown={(e) => {
                             if (
@@ -62,6 +66,9 @@ export default function DropDown(props: {
                             }
                         }}
                     >
+                        <div className='w-7 h-7 p-1.5 icon-gray'>
+                            {option.value === value ? icons.checkCircle : ''}
+                        </div>
                         {option.label}
                     </button>
                 ))}
