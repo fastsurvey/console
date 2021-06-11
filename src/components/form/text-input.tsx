@@ -3,11 +3,12 @@ import React from 'react';
 export default function TextInput(props: {
     value: string;
     setValue(v: string): void;
-    placeholder?: string;
     autoFocus?: boolean;
     type?: 'text' | 'password';
+    disabled?: boolean;
+    postfix?: string;
 }) {
-    const {value, setValue, placeholder, autoFocus, type} = props;
+    const {value, setValue, autoFocus, type} = props;
 
     function handleKeydown(e: React.KeyboardEvent) {
         if (e.key === 'Escape') {
@@ -17,14 +18,30 @@ export default function TextInput(props: {
     }
 
     return (
-        <input
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            onKeyDown={handleKeydown}
-            autoFocus={autoFocus === true}
-            className='w-full px-3 bg-gray-100 rounded h-9 ringable font-weight-500 '
-            placeholder={placeholder ? placeholder : ''}
-            type={type ? type : 'text'}
-        />
+        <div className='relative w-full '>
+            <input
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                onKeyDown={handleKeydown}
+                autoFocus={autoFocus === true}
+                className={
+                    'w-full px-3 rounded h-9 ringable ' +
+                    'text-gray-800 bg-gray-100 font-weight-500'
+                }
+                type={type ? type : 'text'}
+                disabled={props.disabled === true}
+            />
+            {props.postfix && (
+                <div
+                    className={
+                        'absolute top-0 leading-9 left-3 ' +
+                        'text-gray-500 font-weight-500'
+                    }
+                >
+                    <span className='opacity-0'>{props.value}</span>
+                    {props.postfix}
+                </div>
+            )}
+        </div>
     );
 }

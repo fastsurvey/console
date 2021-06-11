@@ -3,6 +3,7 @@ import React from 'react';
 export default function TextArea(props: {
     value: string;
     setValue(v: string): void;
+    disabled?: boolean;
 }) {
     const {value, setValue} = props;
 
@@ -19,7 +20,11 @@ export default function TextArea(props: {
             value={value}
             onChange={(e) => setValue(e.target.value)}
             onKeyDown={handleKeydown}
-            className='w-full px-3 py-1.5 bg-gray-100 rounded min-h-[5rem] ringable font-weight-500 '
+            className={
+                'w-full px-3 py-1.5  rounded min-h-[5rem] ringable ' +
+                'bg-gray-100 font-weight-500 text-gray-800'
+            }
+            disabled={props.disabled === true}
         />
     );
 }

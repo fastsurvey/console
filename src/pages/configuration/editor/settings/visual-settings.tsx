@@ -64,7 +64,7 @@ const VisualSettings = (props: Props) => {
         <EditorFormCard
             label='General Settings'
             icon={icons.tune}
-            className='z-20 mt-8'
+            className='z-20 mt-6'
             collapse={collapse}
             setCollapse={setCollapse}
             buttons={buttons}
@@ -81,6 +81,7 @@ const VisualSettings = (props: Props) => {
                             title: newValue,
                         });
                     }}
+                    disabled={!props.config.draft || collapse}
                 />
             </div>
             <div className='w-full centering-col gap-y-0.5'>
@@ -93,6 +94,7 @@ const VisualSettings = (props: Props) => {
                             survey_name: newValue,
                         });
                     }}
+                    disabled={!props.config.draft || collapse}
                 />
             </div>
 
@@ -106,6 +108,7 @@ const VisualSettings = (props: Props) => {
                             description: newValue,
                         });
                     }}
+                    disabled={!props.config.draft || collapse}
                 />
             </div>
 
@@ -140,7 +143,8 @@ const VisualSettings = (props: Props) => {
                 />
             </EditorFormRow>
 
-            <EditorFormRow label='Auth Mode' className='mb-1'>
+            <div className='w-full centering-col gap-y-0.5'>
+                <LabelSimple text='Authentication Mode' />
                 <DropDown
                     {...commonProps}
                     value={props.config.authentication === 'open' ? 0 : 1}
@@ -156,25 +160,22 @@ const VisualSettings = (props: Props) => {
                     }}
                     options={constants.formOptions.AUTH_MODE}
                 />
-            </EditorFormRow>
+            </div>
 
-            <EditorFormRow label='Limit to' className='mb-2'>
-                <TextInput
-                    {...commonProps}
-                    postfix=' submissions'
+            <div className='w-full centering-col gap-y-0.5'>
+                <LabelSimple text='Limit to' />
+                <TextInputSimple
                     value={props.config.limit.toString()}
-                    onChange={(newValue: string) => {
+                    setValue={(newValue: string) => {
                         props.updateConfig({
                             ...props.config,
                             limit: formUtils.formatters.atoi(newValue),
                         });
                     }}
-                    hint={{
-                        ...formUtils.hints.submissionLimit(props.config),
-                        inlineHint: true,
-                    }}
+                    disabled={!props.config.draft || collapse}
+                    postfix=' submissions'
                 />
-            </EditorFormRow>
+            </div>
         </EditorFormCard>
     );
 };
