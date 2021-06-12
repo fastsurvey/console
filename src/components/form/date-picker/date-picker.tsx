@@ -35,12 +35,20 @@ function DatePicker(props: Props) {
     }
 
     function setHourTimestamp(t: {hour?: number; minute?: number}) {
+        const ranged = (n: number, to: number) => {
+            while (n < 0) {
+                n += to;
+            }
+            return n % to;
+        };
         const newDate = new Date(
             dateStore.getFullYear(),
             dateStore.getMonth(),
             dateStore.getDate(),
-            t.hour ? t.hour : dateStore.getHours(),
-            t.minute ? t.minute : dateStore.getMinutes(),
+            t.hour === undefined ? dateStore.getHours() : ranged(t.hour, 24),
+            t.minute === undefined
+                ? dateStore.getMinutes()
+                : ranged(t.minute, 60),
         );
         props.setTimestamp(newDate.getTime() / 1000);
     }

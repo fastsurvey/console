@@ -17,15 +17,20 @@ export default function VisualTimePicker(props: {
             <button
                 ref={ref}
                 className={
-                    'px-3 w-full text-center rounded h-9 ringable font-weight-500 ' +
+                    'px-3 w-full centering-row rounded h-9 ringable font-weight-500 ' +
                     (open
                         ? 'text-gray-600 bg-gray-200 '
                         : 'text-gray-800 bg-gray-100')
                 }
                 onClick={() => setOpen(!open)}
             >
-                {date.getHours().toString().padStart(2, '0')}:
-                {date.getMinutes().toString().padStart(2, '0')}
+                <div className='flex-shrink-0 w-6 text-center'>
+                    {date.getHours().toString().padStart(2, '0')}
+                </div>
+                :
+                <div className='flex-shrink-0 w-6 text-center'>
+                    {date.getMinutes().toString().padStart(2, '0')}
+                </div>
             </button>
             <div
                 className={
@@ -34,9 +39,80 @@ export default function VisualTimePicker(props: {
                     (open ? 'py-[5px] mt-2 ' : 'h-0 py-0 mt-0 ')
                 }
             >
-                <div className='px-4 pb-2.5 text-sm text-gray-300 grid grid-cols-2 gap-x-1 gap-y-2'>
-                    <div className='w-8 text-center'>Hour</div>
-                    <div className='w-8 text-center'>Minute</div>
+                <div className='p-2.5 text-sm text-gray-300 grid grid-cols-2 gap-x-2 gap-y-2'>
+                    <div className='w-8 text-center'>H</div>
+                    <div className='w-8 text-center'>M</div>
+                    <div className='bg-gray-700 rounded centering-col'>
+                        <button
+                            className={
+                                'w-7 h-7 p-0.5 transform rotate-180 icon-light-gray ' +
+                                'rounded ringable cursor-pointer'
+                            }
+                            onClick={() =>
+                                setHourTimestamp({
+                                    hour: date.getHours() + 1,
+                                })
+                            }
+                            disabled={!open}
+                        >
+                            {icons.chevronDown}
+                        </button>
+                        <div className='h-6 my-0.5 text-base text-white font-weight-600'>
+                            {date.getHours()}
+                        </div>
+                        <button
+                            className={
+                                'w-7 h-7 p-0.5 transform icon-light-gray ' +
+                                'rounded ringable cursor-pointer'
+                            }
+                            onClick={() => {
+                                setHourTimestamp({
+                                    hour: date.getHours() - 1,
+                                });
+                            }}
+                            disabled={!open}
+                        >
+                            {icons.chevronDown}
+                        </button>
+                    </div>
+                    <div className='bg-gray-700 rounded centering-col'>
+                        <button
+                            className={
+                                'w-7 h-7 p-0.5 transform rotate-180 icon-light-gray ' +
+                                'rounded ringable cursor-pointer'
+                            }
+                            onClick={() =>
+                                setHourTimestamp({
+                                    minute: date.getMinutes() + 1,
+                                })
+                            }
+                            disabled={!open}
+                        >
+                            {icons.chevronDown}
+                        </button>
+                        <div className='h-6 my-0.5 text-base text-white font-weight-600'>
+                            {date.getMinutes()}
+                        </div>
+                        <button
+                            className={
+                                'w-7 h-7 p-0.5 transform icon-light-gray ' +
+                                'rounded ringable cursor-pointer'
+                            }
+                            onClick={() => {
+                                setHourTimestamp({
+                                    minute: date.getMinutes() - 1,
+                                });
+                            }}
+                            disabled={!open}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Tab' && !e.shiftKey) {
+                                    setOpen(false);
+                                }
+                            }}
+                        >
+                            {icons.chevronDown}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
