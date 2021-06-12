@@ -58,12 +58,13 @@ export default function DropDown(props: {
                             'flex-row-left '
                         }
                         onKeyDown={(e) => {
-                            if (
-                                index === options.length - 1 &&
-                                e.key === 'Tab' &&
-                                !e.shiftKey
-                            ) {
-                                setOpen(false);
+                            if (e.key === 'Tab') {
+                                if (
+                                    (index === 0 && e.shiftKey) ||
+                                    (index === options.length - 1 &&
+                                        !e.shiftKey)
+                                )
+                                    setOpen(false);
                             }
                         }}
                     >

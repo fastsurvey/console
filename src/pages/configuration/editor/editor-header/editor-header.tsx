@@ -3,6 +3,7 @@ import {types} from 'types';
 import icons from 'assets/icons/icons';
 import {connect} from 'react-redux';
 import VisualEditorHeader from './visual-editor-header';
+import reduxUtils from '../../../../utilities/redux-utils/index';
 
 function EditorHeader(props: {
     configIsDiffering: boolean;
@@ -13,6 +14,7 @@ function EditorHeader(props: {
 
     saveState(configChanges?: object): void;
     revertState(): void;
+    openMessage(messageId: types.MessageId): void;
 }) {
     const {draft, start, end} = props.localConfig;
 
@@ -44,7 +46,7 @@ function EditorHeader(props: {
               {
                   icon: icons.closeCirlce,
                   text: 'undo',
-                  onClick: () => props.saveState(),
+                  onClick: () => props.revertState(),
                   disabled: !props.configIsDiffering,
               },
               {
@@ -76,5 +78,7 @@ const mapStateToProps = (state: types.ReduxState) => ({
     account: state.account,
     configIsDiffering: state.configIsDiffering,
 });
-const mapDispatchToProps = (dispatch: any) => ({});
+const mapDispatchToProps = (dispatch: any) => ({
+    openMessage: reduxUtils.dispatchers.openMessage(dispatch),
+});
 export default connect(mapStateToProps, mapDispatchToProps)(EditorHeader);

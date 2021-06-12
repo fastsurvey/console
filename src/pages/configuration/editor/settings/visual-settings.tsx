@@ -117,6 +117,7 @@ const VisualSettings = (props: Props) => {
                             true,
                         );
                     }}
+                    disabled={!props.config.draft || collapse}
                 />
             </div>
 
@@ -133,6 +134,7 @@ const VisualSettings = (props: Props) => {
                             true,
                         );
                     }}
+                    disabled={!props.config.draft || collapse}
                 />
             </div>
 

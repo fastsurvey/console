@@ -14,6 +14,7 @@ function VisualEditorHeader(props: {
 
     saveState(configChanges?: object): void;
     revertState(): void;
+    openMessage(messageId: types.MessageId): void;
 
     buttons: {
         icon: React.ReactNode;
@@ -34,16 +35,28 @@ function VisualEditorHeader(props: {
     return (
         <div className={'w-full flex-col-left mb-1'}>
             <div className='relative w-full centering-row '>
-                <Link
-                    to='/configurations'
-                    className={
-                        'w-10 h-10 m-1 p-2 ' +
-                        'absolute -left-14 top-50% transform -translate-y-50% ' +
-                        'ringable rounded icon-gray'
-                    }
-                >
-                    {icons.chevronLeftCircle}
-                </Link>
+                {!props.configIsDiffering && (
+                    <Link
+                        to='/configurations'
+                        className={
+                            'w-10 h-10 m-1 p-2 ringable rounded icon-gray ' +
+                            'absolute -left-14 top-50% transform -translate-y-50% '
+                        }
+                    >
+                        {icons.chevronLeftCircle}
+                    </Link>
+                )}
+                {props.configIsDiffering && (
+                    <button
+                        className={
+                            'w-10 h-10 m-1 p-2 ringable rounded icon-gray ' +
+                            'absolute -left-14 top-50% transform -translate-y-50% '
+                        }
+                        onClick={() => props.openMessage('warning-unsaved')}
+                    >
+                        {icons.chevronLeftCircle}
+                    </button>
+                )}
 
                 <div
                     className={
