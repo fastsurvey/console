@@ -3,18 +3,16 @@ import {icons} from 'assets';
 import {constants} from 'utilities';
 import {range} from 'lodash';
 
-interface Props {
+function VisualDatePicker(props: {
     disabled: boolean;
     dateStore: Date;
     getDaysInMonth(year: number, month: number): number;
     getFirstWeekday(year: number, month: number): number;
     setDateTimestamp(t: {year: number; month: number; day: number}): void;
-    setHourTimestamp(t: {hour?: number; minute?: number}): void;
-}
-function VisualDatePicker(props: Props) {
-    const {dateStore: date, setDateTimestamp} = props;
+}) {
+    const {dateStore: date, setDateTimestamp, disabled} = props;
 
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     const [visibleMonth, setVisibleMonth] = useState(date.getMonth());
     const [visibleYear, setVisibleYear] = useState(date.getFullYear());
 
@@ -57,13 +55,13 @@ function VisualDatePicker(props: Props) {
         return (
             <button
                 className={
-                    'w-6 -mx-0.5 px-0.5 text-center font-weight-500 rounded-sm ringable ' +
+                    'w-6 -mx-0.5 px-0.5 text-center rounded-sm ringable ' +
                     (selectedDay
-                        ? 'bg-red-500 text-red-50 z-0 '
-                        : 'hover:text-white z-10 ')
+                        ? 'bg-red-500 text-red-50 z-0 font-weight-600 '
+                        : 'hover:text-white z-10 font-weight-500 ')
                 }
                 onClick={() => {
-                    if (open) {
+                    if (open && !disabled) {
                         setDateTimestamp({
                             year: visibleYear,
                             month: visibleMonth,
@@ -71,6 +69,15 @@ function VisualDatePicker(props: Props) {
                         });
                         setOpen(false);
                         ref.current?.focus();
+                    }
+                }}
+                onKeyDown={(e) => {
+                    if (
+                        e.key === 'Tab' &&
+                        props.day === dayCount &&
+                        !e.shiftKey
+                    ) {
+                        setOpen(false);
                     }
                 }}
                 disabled={!open}
@@ -137,7 +144,9 @@ function VisualDatePicker(props: Props) {
                 }
                 onClick={() => setOpen(!open)}
             >
-                {date.getDate()}.{date.getMonth()}.{date.getFullYear()}
+                {date.getDate().toString().padStart(2, '0')}.
+                {(date.getMonth() + 1).toString().padStart(2, '0')}.
+                {date.getFullYear().toString().padStart(2, '0')}
             </button>
             <div
                 className={

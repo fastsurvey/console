@@ -210,6 +210,13 @@
     @apply justify-start;
 }
 
+.flex-row-left-top {
+    @apply flex;
+    @apply flex-row;
+    @apply items-start;
+    @apply justify-start;
+}
+
 .centering-row {
     @apply flex;
     @apply flex-row;

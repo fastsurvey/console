@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import VisualDatePicker from './visual-date-picker';
+import VisualTimePicker from './visual-time-picker';
 
 interface Props {
     timestamp: number;
@@ -45,16 +46,24 @@ function DatePicker(props: Props) {
     }
 
     return (
-        <VisualDatePicker
-            disabled={props.disabled === true}
-            {...{
-                dateStore,
-                getDaysInMonth,
-                getFirstWeekday,
-                setDateTimestamp,
-                setHourTimestamp,
-            }}
-        />
+        <div className='flex-row-left-top gap-x-2'>
+            <VisualDatePicker
+                disabled={props.disabled === true}
+                {...{
+                    dateStore,
+                    getDaysInMonth,
+                    getFirstWeekday,
+                    setDateTimestamp,
+                }}
+            />
+            <VisualTimePicker
+                disabled={props.disabled === true}
+                {...{
+                    dateStore,
+                    setHourTimestamp,
+                }}
+            />
+        </div>
     );
 }
 
