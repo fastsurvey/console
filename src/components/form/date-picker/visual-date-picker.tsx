@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {icons} from 'assets';
 import {constants} from 'utilities';
+import {range} from 'lodash';
 
 interface Props {
     disabled: boolean;
@@ -13,7 +14,7 @@ interface Props {
 function VisualDatePicker(props: Props) {
     const {dateStore: date} = props;
 
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
     const [visibleMonth, setVisibleMonth] = useState(date.getMonth());
     const [visibleYear, setVisibleYear] = useState(date.getFullYear());
 
@@ -35,11 +36,13 @@ function VisualDatePicker(props: Props) {
         }
     }
 
+    const skippedDays = props.getFirstWeekday(visibleYear, visibleMonth);
+
     return (
         <div className={' flex-col-left ' + (!open ? 'h-9 ' : ' ')}>
             <button
                 className={
-                    'px-3 w-full text-left rounded h-9 ringable font-weight-500 ' +
+                    'px-3 w-full text-center rounded h-9 ringable font-weight-500 ' +
                     (open
                         ? 'text-gray-600 bg-gray-200 '
                         : 'text-gray-800 bg-gray-100')
@@ -52,10 +55,10 @@ function VisualDatePicker(props: Props) {
                 className={
                     'overflow-hidden z-40 w-full centering-col px-[5px] ' +
                     'bg-gray-800 rounded shadow-sm no-selection ' +
-                    (open ? 'max-h-32 py-[5px] mt-2 ' : 'max-h-0 py-0 mt-0 ')
+                    (open ? 'py-[5px] mt-2 ' : 'h-0 py-0 mt-0 ')
                 }
             >
-                <div className='centering-row'>
+                <div className='mb-1.5 centering-row'>
                     <div
                         className='w-8 h-8 p-1 transform rotate-90 cursor-pointer icon-light-gray'
                         onClick={prevMonth}
@@ -63,10 +66,12 @@ function VisualDatePicker(props: Props) {
                         {icons.chevronDown}
                     </div>
                     <div className='text-white w-22 centering-row'>
-                        <div className='flex-shrink-0 w-9'>
+                        <div className='flex-shrink-0 w-10 text-center'>
                             {constants.formOptions.MONTHS[visibleMonth]}
                         </div>
-                        <div className='flex-shrink-0 w-10'>{visibleYear}</div>
+                        <div className='flex-shrink-0 w-10 text-center'>
+                            {visibleYear}
+                        </div>
                     </div>
                     <div
                         className='w-8 h-8 p-1 transform -rotate-90 cursor-pointer icon-light-gray'
@@ -74,6 +79,21 @@ function VisualDatePicker(props: Props) {
                     >
                         {icons.chevronDown}
                     </div>
+                </div>
+                <div className='grid grid-cols-7 px-4 text-sm text-gray-200 gap-x-2 gap-y-2'>
+                    {['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].map((w) => (
+                        <div className='w-4 text-center'>{w}</div>
+                    ))}
+                    <div
+                        style={{
+                            gridColumn: `span ${skippedDays} / span ${skippedDays}`,
+                        }}
+                    />
+                    {range(props.getDaysInMonth(visibleYear, visibleMonth)).map(
+                        (i) => (
+                            <div className='w-4 text-center'>{i + 1}</div>
+                        ),
+                    )}
                 </div>
             </div>
         </div>
