@@ -22,8 +22,8 @@ interface Props {
     openDuplicateModal(): void;
 }
 const VisualSettings = (props: Props) => {
-    const [collapse, setCollapse] = useState(false);
-    useEffect(() => setCollapse(false), [props.config.local_id]);
+    const [collapse, setCollapse] = useState(true);
+    useEffect(() => setCollapse(true), [props.config.local_id]);
 
     const [actionLabel, setActionLabel] = useState('');
 
@@ -104,6 +104,11 @@ const VisualSettings = (props: Props) => {
                 />
             </div>
 
+            <div
+                className={'h-0.5 bg-gray-300'}
+                style={{width: 'calc(100% + 1.5rem)'}}
+            />
+
             <div className='w-full flex-col-left gap-y-0.5'>
                 <LabelSimple text='Start survey at' />
                 <DatePickerSimple
@@ -137,6 +142,11 @@ const VisualSettings = (props: Props) => {
                     disabled={!props.config.draft || collapse}
                 />
             </div>
+
+            <div
+                className={'h-0.5 bg-gray-300'}
+                style={{width: 'calc(100% + 1.5rem)'}}
+            />
 
             <div className='w-full centering-col gap-y-0.5'>
                 <LabelSimple text='Authentication Mode' />

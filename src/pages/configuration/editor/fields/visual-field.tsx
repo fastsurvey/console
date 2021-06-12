@@ -1,9 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {formUtils} from 'utilities';
 import {icons} from 'assets';
-import {TextArea, TextInput, EditorFormCard, EditorFormRow} from 'components';
+import {
+    EditorFormCard,
+    LabelSimple,
+    TextInputSimple,
+    TextAreaSimple,
+} from 'components';
 import {types} from 'types';
-import styleUtils from '../../../../utilities/style-utils/index';
+import {styleUtils} from 'utilities';
 
 interface Props {
     fieldConfig: types.SurveyField;
@@ -14,14 +18,9 @@ interface Props {
     children: React.ReactNode;
 }
 function VisualField(props: Props) {
-    const commonInputProps = {
-        disabled: props.disabled,
-        flat: true,
-    };
-
-    const [collapse, setCollapse] = useState(true);
+    const [collapse, setCollapse] = useState(false);
     useEffect(() => {
-        setCollapse(true);
+        setCollapse(false);
     }, [props.fieldConfig.local_id]);
 
     const [actionLabel, setActionLabel] = useState('');
@@ -64,33 +63,33 @@ function VisualField(props: Props) {
             actionLabel={actionLabel}
             setActionLabel={setActionLabel}
         >
-            <EditorFormRow label='Title' className='mb-1'>
-                <TextInput
-                    {...commonInputProps}
-                    placeholder='The title of this field'
+            <div className='w-full centering-col gap-y-0.5'>
+                <LabelSimple text='Title' />
+                <TextInputSimple
                     value={props.fieldConfig.title}
-                    onChange={(newValue: string) => {
+                    setValue={(newValue: string) => {
                         props.setLocalFieldConfig({
                             title: newValue,
                         });
                     }}
-                    hint={{
-                        ...formUtils.hints.title(props.fieldConfig.title),
-                        inlineHint: true,
-                    }}
+                    disabled={props.disabled || collapse}
                 />
-            </EditorFormRow>
-
-            <EditorFormRow label='Description' className='mb-8'>
-                <TextArea
-                    {...commonInputProps}
+            </div>
+            <div className='w-full centering-col gap-y-0.5'>
+                <LabelSimple text='Description' />
+                <TextAreaSimple
                     value={props.fieldConfig.description}
-                    onChange={(newValue: string) => {
+                    setValue={(newValue: string) => {
                         props.setLocalFieldConfig({description: newValue});
                     }}
-                    charLimits={{min: 0, max: 2000}}
+                    disabled={props.disabled || collapse}
                 />
-            </EditorFormRow>
+            </div>
+
+            <div
+                className={'h-0.5 bg-gray-300'}
+                style={{width: 'calc(100% + 1.5rem)'}}
+            />
 
             {props.children}
         </EditorFormCard>
