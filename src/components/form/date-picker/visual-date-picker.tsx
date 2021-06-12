@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {icons} from 'assets';
 import {constants} from 'utilities';
-import {last, range} from 'lodash';
+import {range} from 'lodash';
 
 interface Props {
     disabled: boolean;
@@ -12,11 +12,13 @@ interface Props {
     setHourTimestamp(t: {hour?: number; minute?: number}): void;
 }
 function VisualDatePicker(props: Props) {
-    const {dateStore: date} = props;
+    const {dateStore: date, setDateTimestamp} = props;
 
     const [open, setOpen] = useState(true);
     const [visibleMonth, setVisibleMonth] = useState(date.getMonth());
     const [visibleYear, setVisibleYear] = useState(date.getFullYear());
+
+    const ref = useRef<HTMLButtonElement>(null);
 
     function prevMonth() {
         if (visibleMonth === 0) {
@@ -46,6 +48,38 @@ function VisualDatePicker(props: Props) {
         };
     }
 
+    function DayButton(props: {day: number}) {
+        const selectedDay =
+            date.getFullYear() === visibleYear &&
+            date.getMonth() === visibleMonth &&
+            date.getDate() === props.day;
+
+        return (
+            <button
+                className={
+                    'w-6 -mx-0.5 px-0.5 text-center font-weight-500 rounded-sm ringable ' +
+                    (selectedDay
+                        ? 'bg-red-500 text-red-50 z-0 '
+                        : 'hover:text-white z-10 ')
+                }
+                onClick={() => {
+                    if (open) {
+                        setDateTimestamp({
+                            year: visibleYear,
+                            month: visibleMonth,
+                            day: props.day,
+                        });
+                        setOpen(false);
+                        ref.current?.focus();
+                    }
+                }}
+                disabled={!open}
+            >
+                {props.day}
+            </button>
+        );
+    }
+
     // how many days in the first row?
     const dayCount1 = 7 - skippedDays;
 
@@ -55,45 +89,37 @@ function VisualDatePicker(props: Props) {
     // how many days in the last not-filled row?
     const dayCount3 = dayCount - dayCount1 - dayCount2;
 
-    console.log(dayCount, dayCount1, dayCount2, dayCount3);
-
     const dayRows = [
         <div className='grid w-full grid-cols-7 gap-x-2'>
             {range(skippedDays).map((i) => (
-                <div className='w-4 text-center' />
+                <div className='w-5 text-center' />
             ))}
             <div
                 style={colSpan(dayCount1)}
-                className='px-1 -mx-1 bg-gray-700 rounded-sm gap-x-2'
+                className='px-0.5 -mx-0.5 bg-gray-700 rounded-sm gap-x-2'
             >
                 {range(dayCount1).map((i) => (
-                    <div className='w-4 text-center font-weight-600 '>
-                        {i + 1}
-                    </div>
+                    <DayButton day={i + 1} />
                 ))}
             </div>
         </div>,
         ...range(dayCount2 / 7).map((i) => (
             <div
-                className='grid grid-cols-7 px-1 -mx-1 bg-gray-700 rounded-sm gap-x-2'
-                style={{width: 'calc(100% + 0.5rem'}}
+                className='grid grid-cols-7 px-0.5 -mx-0.5 bg-gray-700 rounded-sm gap-x-2'
+                style={{width: 'calc(100% + 0.25rem'}}
             >
                 {range(7).map((j) => (
-                    <div className='w-4 text-center font-weight-600 '>
-                        {dayCount1 + i * 7 + j + 1}
-                    </div>
+                    <DayButton day={dayCount1 + i * 7 + j + 1} />
                 ))}
             </div>
         )),
         dayCount3 > 0 && (
             <div
                 style={colSpan(dayCount3)}
-                className='px-1 -mx-1 bg-gray-700 rounded-sm gap-x-2'
+                className='px-0.5 -mx-0.5 bg-gray-700 rounded-sm gap-x-2'
             >
                 {range(dayCount3).map((i) => (
-                    <div className='w-4 text-center font-weight-600 '>
-                        {dayCount1 + dayCount2 + i + 1}
-                    </div>
+                    <DayButton day={dayCount1 + dayCount2 + i + 1} />
                 ))}
             </div>
         ),
@@ -102,6 +128,7 @@ function VisualDatePicker(props: Props) {
     return (
         <div className={' flex-col-left ' + (!open ? 'h-9 ' : ' ')}>
             <button
+                ref={ref}
                 className={
                     'px-3 w-full text-center rounded h-9 ringable font-weight-500 ' +
                     (open
@@ -120,12 +147,16 @@ function VisualDatePicker(props: Props) {
                 }
             >
                 <div className='mb-1.5 centering-row'>
-                    <div
-                        className='w-8 h-8 p-1 transform rotate-90 cursor-pointer icon-light-gray'
+                    <button
+                        className={
+                            'w-7 h-7 p-0.5 transform rotate-90 icon-light-gray ' +
+                            'rounded ringable cursor-pointer'
+                        }
                         onClick={prevMonth}
+                        disabled={!open}
                     >
                         {icons.chevronDown}
-                    </div>
+                    </button>
                     <div className='text-white w-22 centering-row'>
                         <div className='flex-shrink-0 w-10 text-center'>
                             {constants.formOptions.MONTHS[visibleMonth]}
@@ -134,17 +165,21 @@ function VisualDatePicker(props: Props) {
                             {visibleYear}
                         </div>
                     </div>
-                    <div
-                        className='w-8 h-8 p-1 transform -rotate-90 cursor-pointer icon-light-gray'
+                    <button
+                        className={
+                            'w-7 h-7 p-0.5 transform -rotate-90 icon-light-gray ' +
+                            'rounded ringable cursor-pointer'
+                        }
                         onClick={nextMonth}
+                        disabled={!open}
                     >
                         {icons.chevronDown}
-                    </div>
+                    </button>
                 </div>
                 <div className='px-4 pb-2.5 text-sm text-gray-300 flex-col-left gap-y-2'>
                     <div className='grid grid-cols-7 gap-x-2'>
                         {['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].map((w) => (
-                            <div className='w-4 text-center'>{w}</div>
+                            <div className='w-5 text-center'>{w}</div>
                         ))}
                     </div>
                     {dayRows.map((m) => m)}
