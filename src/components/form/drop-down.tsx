@@ -38,7 +38,7 @@ export default function DropDown(props: {
             <div
                 className={
                     'overflow-hidden z-40 w-full centering-col px-[5px] ' +
-                    'bg-gray-100 rounded ' +
+                    'bg-gray-800 rounded shadow-sm ' +
                     (open ? 'max-h-32 py-[5px] mt-2 ' : 'max-h-0 py-0 mt-0 ')
                 }
             >
@@ -52,8 +52,8 @@ export default function DropDown(props: {
                         disabled={props.disabled || !open}
                         className={
                             'w-full h-7 my-0.5 text-sm text-left rounded-sm ' +
-                            'font-weight-500 text-gray-700 ringable ' +
-                            'hover:text-black focus:text-black ' +
+                            'font-weight-500 text-gray-400 ringable ' +
+                            'hover:text-white focus:text-white ' +
                             'flex-row-left '
                         }
                         onKeyDown={(e) => {
@@ -66,7 +66,7 @@ export default function DropDown(props: {
                             }
                         }}
                     >
-                        <div className='w-7 h-7 p-1.5 icon-gray'>
+                        <div className='w-7 h-7 p-1.5 icon-blue'>
                             {option.value === value ? icons.checkCircle : ''}
                         </div>
                         {option.label}

@@ -8,6 +8,7 @@ import {
     LabelSimple,
     TextAreaSimple,
     DropDownSimple,
+    DatePickerSimple,
 } from 'components';
 import {icons} from 'assets';
 import {types} from 'types';
@@ -141,6 +142,22 @@ const VisualSettings = (props: Props) => {
                     }}
                 />
             </EditorFormRow>
+
+            <div className='w-full centering-col gap-y-0.5'>
+                <LabelSimple text='End survey by' />
+                <DatePickerSimple
+                    timestamp={props.config.end}
+                    setTimestamp={(timestamp: number) => {
+                        props.updateConfig(
+                            {
+                                ...props.config,
+                                end: timestamp,
+                            },
+                            true,
+                        );
+                    }}
+                />
+            </div>
 
             <div className='w-full centering-col gap-y-0.5'>
                 <LabelSimple text='Authentication Mode' />
