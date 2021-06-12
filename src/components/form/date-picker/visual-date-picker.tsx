@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {icons} from 'assets';
 import {constants} from 'utilities';
-import {range} from 'lodash';
+import {last, range} from 'lodash';
 
 interface Props {
     disabled: boolean;
@@ -37,6 +37,67 @@ function VisualDatePicker(props: Props) {
     }
 
     const skippedDays = props.getFirstWeekday(visibleYear, visibleMonth);
+    const dayCount = props.getDaysInMonth(visibleYear, visibleMonth);
+    function colSpan(n: number) {
+        return {
+            display: 'grid',
+            gridColumn: `span ${n} / span ${n}`,
+            gridTemplateColumns: `repeat(${n}, minmax(0, 1fr))`,
+        };
+    }
+
+    // how many days in the first row?
+    const dayCount1 = 7 - skippedDays;
+
+    // how many days in the fully filled rows?
+    const dayCount2 = Math.floor((dayCount - dayCount1) / 7) * 7;
+
+    // how many days in the last not-filled row?
+    const dayCount3 = dayCount - dayCount1 - dayCount2;
+
+    console.log(dayCount, dayCount1, dayCount2, dayCount3);
+
+    const dayRows = [
+        <div className='grid w-full grid-cols-7 gap-x-2'>
+            {range(skippedDays).map((i) => (
+                <div className='w-4 text-center' />
+            ))}
+            <div
+                style={colSpan(dayCount1)}
+                className='px-1 -mx-1 bg-gray-700 rounded-sm gap-x-2'
+            >
+                {range(dayCount1).map((i) => (
+                    <div className='w-4 text-center font-weight-600 '>
+                        {i + 1}
+                    </div>
+                ))}
+            </div>
+        </div>,
+        ...range(dayCount2 / 7).map((i) => (
+            <div
+                className='grid grid-cols-7 px-1 -mx-1 bg-gray-700 rounded-sm gap-x-2'
+                style={{width: 'calc(100% + 0.5rem'}}
+            >
+                {range(7).map((j) => (
+                    <div className='w-4 text-center font-weight-600 '>
+                        {dayCount1 + i * 7 + j + 1}
+                    </div>
+                ))}
+            </div>
+        )),
+        dayCount3 > 0 && (
+            <div
+                style={colSpan(dayCount3)}
+                className='px-1 -mx-1 bg-gray-700 rounded-sm gap-x-2'
+            >
+                {range(dayCount3).map((i) => (
+                    <div className='w-4 text-center font-weight-600 '>
+                        {dayCount1 + dayCount2 + i + 1}
+                    </div>
+                ))}
+            </div>
+        ),
+    ];
 
     return (
         <div className={' flex-col-left ' + (!open ? 'h-9 ' : ' ')}>
@@ -80,20 +141,13 @@ function VisualDatePicker(props: Props) {
                         {icons.chevronDown}
                     </div>
                 </div>
-                <div className='grid grid-cols-7 px-4 text-sm text-gray-200 gap-x-2 gap-y-2'>
-                    {['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].map((w) => (
-                        <div className='w-4 text-center'>{w}</div>
-                    ))}
-                    <div
-                        style={{
-                            gridColumn: `span ${skippedDays} / span ${skippedDays}`,
-                        }}
-                    />
-                    {range(props.getDaysInMonth(visibleYear, visibleMonth)).map(
-                        (i) => (
-                            <div className='w-4 text-center'>{i + 1}</div>
-                        ),
-                    )}
+                <div className='px-4 pb-2.5 text-sm text-gray-300 flex-col-left gap-y-2'>
+                    <div className='grid grid-cols-7 gap-x-2'>
+                        {['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].map((w) => (
+                            <div className='w-4 text-center'>{w}</div>
+                        ))}
+                    </div>
+                    {dayRows.map((m) => m)}
                 </div>
             </div>
         </div>

@@ -15,7 +15,7 @@ function DatePicker(props: Props) {
     }, [props.timestamp]);
 
     function getDaysInMonth(year: number, month: number) {
-        return new Date(year, month, 0).getDate();
+        return new Date(year, month + 1, 0).getDate();
     }
 
     function getFirstWeekday(year: number, month: number) {
