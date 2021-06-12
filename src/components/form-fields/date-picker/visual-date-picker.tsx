@@ -30,6 +30,7 @@ function VisualDatePicker(props: Props) {
         <div
             className={`flex flex-row items-center justify-start ${props.className}`}
         >
+            {/* 
             <div className='mr-2 w-14'>
                 <DropDown
                     {...commonProps}
@@ -76,7 +77,7 @@ function VisualDatePicker(props: Props) {
                     }}
                     options={constants.formOptions.MINUTES}
                 />
-            </div>
+            </div>*/}
         </div>
     );
 }

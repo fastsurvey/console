@@ -112,38 +112,7 @@ const VisualSettings = (props: Props) => {
                 />
             </div>
 
-            <EditorFormRow label='Start' className='mb-2'>
-                <DatePicker
-                    {...commonProps}
-                    timestamp={props.config.start}
-                    setNewTimestamp={(timestamp: number) => {
-                        props.updateConfig(
-                            {
-                                ...props.config,
-                                start: timestamp,
-                            },
-                            true,
-                        );
-                    }}
-                />
-            </EditorFormRow>
-            <EditorFormRow label='End' className='mb-8'>
-                <DatePicker
-                    {...commonProps}
-                    timestamp={props.config.end}
-                    setNewTimestamp={(timestamp: number) => {
-                        props.updateConfig(
-                            {
-                                ...props.config,
-                                end: timestamp,
-                            },
-                            true,
-                        );
-                    }}
-                />
-            </EditorFormRow>
-
-            <div className='w-full centering-col gap-y-0.5'>
+            <div className='w-full flex-col-left gap-y-0.5'>
                 <LabelSimple text='End survey by' />
                 <DatePickerSimple
                     timestamp={props.config.end}
