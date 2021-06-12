@@ -137,16 +137,19 @@ function VisualDatePicker(props: {
             <button
                 ref={ref}
                 className={
-                    'px-3 w-full text-center rounded h-9 ringable font-weight-500 ' +
+                    'px-1 w-full flex-row-left rounded h-9 ringable font-weight-500 ' +
                     (open
                         ? 'text-gray-600 bg-gray-200 '
                         : 'text-gray-800 bg-gray-100')
                 }
                 onClick={() => setOpen(!open)}
             >
-                {date.getDate().toString().padStart(2, '0')}.
-                {(date.getMonth() + 1).toString().padStart(2, '0')}.
-                {date.getFullYear().toString().padStart(2, '0')}
+                <div className='p-1 w-7 h-7 icon-gray'>{icons.calendar}</div>
+                <div className='px-1'>
+                    {date.getDate().toString().padStart(2, '0')}.
+                    {(date.getMonth() + 1).toString().padStart(2, '0')}.
+                    {date.getFullYear().toString().padStart(2, '0')}
+                </div>
             </button>
             <div
                 className={
@@ -163,6 +166,11 @@ function VisualDatePicker(props: {
                         }
                         onClick={prevMonth}
                         disabled={!open}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Tab' && e.shiftKey) {
+                                setOpen(false);
+                            }
+                        }}
                     >
                         {icons.chevronDown}
                     </button>

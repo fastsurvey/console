@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {reduxUtils, backend} from 'utilities';
 import VisualRegister from './visual-register';

@@ -23,6 +23,7 @@ export default function DropDown(props: {
                     'font-weight-500 text-gray-800 z-50 ringable ' +
                     (open ? 'bg-gray-200 ' : 'bg-gray-100 ')
                 }
+                disabled={disabled === true}
             >
                 {label}
                 <div
@@ -49,7 +50,7 @@ export default function DropDown(props: {
                             setOpen(false);
                             ref.current?.focus();
                         }}
-                        disabled={props.disabled || !open}
+                        disabled={disabled || !open}
                         className={
                             'w-full h-7 my-0.5 text-sm text-left rounded-sm ' +
                             'font-weight-500 text-gray-400 ringable ' +

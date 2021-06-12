@@ -1,7 +1,5 @@
 import React, {useState, useRef} from 'react';
 import {icons} from 'assets';
-import {constants} from 'utilities';
-import {range} from 'lodash';
 
 export default function VisualTimePicker(props: {
     disabled: boolean;
@@ -9,7 +7,7 @@ export default function VisualTimePicker(props: {
     setHourTimestamp(t: {hour?: number; minute?: number}): void;
 }) {
     const {dateStore: date, setHourTimestamp} = props;
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     const ref = useRef<HTMLButtonElement>(null);
 
     return (
@@ -17,18 +15,19 @@ export default function VisualTimePicker(props: {
             <button
                 ref={ref}
                 className={
-                    'px-3 w-full centering-row rounded h-9 ringable font-weight-500 ' +
+                    'px-1 w-full flex-row-left rounded h-9 ringable font-weight-500 ' +
                     (open
                         ? 'text-gray-600 bg-gray-200 '
                         : 'text-gray-800 bg-gray-100')
                 }
                 onClick={() => setOpen(!open)}
             >
-                <div className='flex-shrink-0 w-6 text-center'>
+                <div className='p-1 w-7 h-7 icon-gray'>{icons.time}</div>
+                <div className='flex-shrink-0 w-5 text-center'>
                     {date.getHours().toString().padStart(2, '0')}
                 </div>
                 :
-                <div className='flex-shrink-0 w-6 text-center'>
+                <div className='flex-shrink-0 w-5 text-center'>
                     {date.getMinutes().toString().padStart(2, '0')}
                 </div>
             </button>
@@ -54,6 +53,11 @@ export default function VisualTimePicker(props: {
                                 })
                             }
                             disabled={!open}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Tab' && e.shiftKey) {
+                                    setOpen(false);
+                                }
+                            }}
                         >
                             {icons.chevronDown}
                         </button>

@@ -89,7 +89,7 @@ function EditorFormCard(props: Props) {
             >
                 <div
                     className={
-                        'w-full centering-col gap-y-4 ' +
+                        'w-full centering-col gap-y-6 ' +
                         (props.collapse ? 'h-0 overflow-hidden ' : ' ')
                     }
                 >

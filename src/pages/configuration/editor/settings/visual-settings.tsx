@@ -1,10 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {formUtils, constants} from 'utilities';
 import {
-    DropDown,
-    DatePicker,
     EditorFormCard,
-    EditorFormRow,
     LabelSimple,
     TextAreaSimple,
     DropDownSimple,
@@ -25,11 +22,6 @@ interface Props {
     openDuplicateModal(): void;
 }
 const VisualSettings = (props: Props) => {
-    const commonProps = {
-        disabled: props.disabled,
-        flat: true,
-    };
-
     const [collapse, setCollapse] = useState(false);
     useEffect(() => setCollapse(false), [props.config.local_id]);
 
@@ -109,6 +101,22 @@ const VisualSettings = (props: Props) => {
                         });
                     }}
                     disabled={!props.config.draft || collapse}
+                />
+            </div>
+
+            <div className='w-full flex-col-left gap-y-0.5'>
+                <LabelSimple text='Start survey at' />
+                <DatePickerSimple
+                    timestamp={props.config.start}
+                    setTimestamp={(timestamp: number) => {
+                        props.updateConfig(
+                            {
+                                ...props.config,
+                                start: timestamp,
+                            },
+                            true,
+                        );
+                    }}
                 />
             </div>
 
