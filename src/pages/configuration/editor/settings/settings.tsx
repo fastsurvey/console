@@ -17,7 +17,7 @@ interface Props {
     configs: types.SurveyConfig[] | undefined;
     config: types.SurveyConfig;
     setLocalConfig(config: object): void;
-    updateValidator(newState: boolean): void;
+    updateValidator(newState: types.ValidationResult): void;
 
     openModal(title: string, children: React.ReactNode): void;
     closeModal(): void;
@@ -27,24 +27,13 @@ interface Props {
 function Settings(props: Props) {
     let history = useHistory();
 
-    const titleIsValid = formUtils.validators.title;
-    const surveyNameIsValid = formUtils.validators.surveyName(
-        props.configs,
-        props.config,
-    );
-    const descriptionIsValid = formUtils.validators.description;
-    const submissionLimitIsValid = formUtils.validators.submissionLimit;
-
     function updateConfig(
         newConfig: types.SurveyConfig,
         skipValidation?: boolean,
     ) {
-        if (!skipValidation) {
+        if (!skipValidation && props.configs) {
             props.updateValidator(
-                titleIsValid(newConfig.title) &&
-                    surveyNameIsValid(newConfig.survey_name) &&
-                    descriptionIsValid(newConfig.description) &&
-                    submissionLimitIsValid(newConfig.limit),
+                formUtils.validateSettings(props.configs, newConfig),
             );
         }
         props.setLocalConfig(newConfig);
@@ -118,9 +107,7 @@ function Settings(props: Props) {
     return (
         <VisualSettings
             updateConfig={updateConfig}
-            surveyNameIsValid={surveyNameIsValid}
             config={props.config}
-            updateValidator={props.updateValidator}
             commonProps={{
                 updateConfig,
                 disabled: !props.config.draft,

@@ -56,19 +56,4 @@ export const messages: {[key in types.MessageId]: types.Message} = {
         text: 'There has to be at least one field',
         type: 'warning',
     },
-    'editor-warning-timing': {
-        id: 'editor-warning-timing',
-        text: 'End time has to be after start time',
-        type: 'warning',
-    },
-    'editor-warning-authentication': {
-        id: 'editor-warning-authentication',
-        text: 'Email-authentication requires unique email field',
-        type: 'warning',
-    },
-    'editor-warning-option-list': {
-        id: 'editor-warning-option-list',
-        text: 'Radio/Selection fields require at least 2 options',
-        type: 'warning',
-    },
 };

@@ -1,4 +1,4 @@
-import {constant, times} from 'lodash';
+import {constant, every, times} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {
@@ -27,7 +27,9 @@ function ConfigEditor(props: {
     closeAllMessages(): void;
 }) {
     const [localConfig, setLocalConfigState] = useState(props.centralConfig);
-    const [fieldValidators, setFieldValidators] = useState<boolean[]>([]);
+    const [fieldValidators, setFieldValidators] = useState<
+        types.ValidationResult[]
+    >([]);
 
     // Used for: survey_name is changed when editing, new survey
     const history = useHistory();
@@ -40,10 +42,15 @@ function ConfigEditor(props: {
     }, [props.centralConfig.survey_name]);
 
     function initValidators(config: types.SurveyConfig) {
-        setFieldValidators(times(config.fields.length + 1, constant(true)));
+        setFieldValidators(
+            times(config.fields.length + 1, constant({valid: true})),
+        );
     }
 
-    function updateValidator(newIndex: number, newState: boolean) {
+    function updateValidator(
+        newIndex: number,
+        newState: types.ValidationResult,
+    ) {
         const newValidators = [...fieldValidators];
         newValidators[newIndex] = newState;
         setFieldValidators(newValidators);
@@ -110,12 +117,8 @@ function ConfigEditor(props: {
         };
         props.closeAllMessages();
 
-        const fieldsAreValid = !fieldValidators.includes(false);
+        const fieldsAreValid = every(fieldValidators.map((r) => r.valid));
         const fieldCountIsValid = localConfig.fields.length > 0;
-        const timingIsValid = formUtils.validators.timing(localConfig);
-        const authIsValid = formUtils.validators.authMode(localConfig);
-        const fieldOptionsAreValid =
-            formUtils.validators.fieldOptions(localConfig);
 
         function success() {
             setLocalConfigState(combinedConfig);
@@ -129,13 +132,7 @@ function ConfigEditor(props: {
             props.openMessage('error-server');
         }
 
-        if (
-            fieldsAreValid &&
-            fieldCountIsValid &&
-            timingIsValid &&
-            authIsValid &&
-            fieldOptionsAreValid
-        ) {
+        if (fieldsAreValid && fieldCountIsValid) {
             backend.updateSurvey(
                 props.account,
                 props.authToken,
@@ -150,15 +147,6 @@ function ConfigEditor(props: {
             }
             if (!fieldCountIsValid) {
                 props.openMessage('editor-warning-field-count');
-            }
-            if (!timingIsValid) {
-                props.openMessage('editor-warning-timing');
-            }
-            if (!authIsValid) {
-                props.openMessage('editor-warning-authentication');
-            }
-            if (!fieldOptionsAreValid) {
-                props.openMessage('editor-warning-option-list');
             }
         }
     }

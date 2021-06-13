@@ -13,7 +13,7 @@ interface Props {
     fieldConfig: types.SurveyField;
     setLocalFieldConfig(fieldConfigChanges: object): void;
     disabled: boolean;
-    updateValidator(newState: boolean): void;
+    updateValidator(newState: types.ValidationResult): void;
     removeField(): void;
 }
 function Field(props: Props) {

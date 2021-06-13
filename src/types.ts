@@ -111,10 +111,13 @@ export declare namespace types {
         | 'success-redirect-to-login'
         | 'warning-clipboard'
         | 'editor-warning-validators'
-        | 'editor-warning-field-count'
-        | 'editor-warning-timing'
-        | 'editor-warning-authentication'
-        | 'editor-warning-option-list';
+        | 'editor-warning-field-count';
+
+    export type ValidationResult =
+        | {
+              valid: true;
+          }
+        | {valid: false; message: string};
 
     export type NavbarState = {
         open: boolean;

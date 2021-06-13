@@ -11,7 +11,7 @@ function VisualEditor(props: {
     setLocalConfig(configChanges: object): void;
     setLocalFieldConfig(fieldConfigChanges: object, newIndex: number): void;
 
-    updateValidator(newIndex: number, newState: boolean): void;
+    updateValidator(newIndex: number, newState: types.ValidationResult): void;
 
     insertField(index: number, fieldType: types.FieldType): void;
     pasteField(index: number): void;
@@ -33,7 +33,7 @@ function VisualEditor(props: {
                     centralConfigName={props.centralConfigName}
                     config={props.localConfig}
                     setLocalConfig={props.setLocalConfig}
-                    updateValidator={(newState: boolean) =>
+                    updateValidator={(newState: types.ValidationResult) =>
                         props.updateValidator(0, newState)
                     }
                 />
@@ -51,9 +51,9 @@ function VisualEditor(props: {
                                 props.setLocalFieldConfig(newFieldConfig, index)
                             }
                             disabled={!props.localConfig.draft}
-                            updateValidator={(newState: boolean) =>
-                                props.updateValidator(1 + index, newState)
-                            }
+                            updateValidator={(
+                                newState: types.ValidationResult,
+                            ) => props.updateValidator(1 + index, newState)}
                             removeField={() => props.removeField(index)}
                         />
                     </div>

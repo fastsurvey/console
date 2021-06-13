@@ -13,9 +13,7 @@ import {types} from 'types';
 
 interface Props {
     config: types.SurveyConfig;
-    surveyNameIsValid(survey_name: string): boolean;
     updateConfig(config: types.SurveyConfig, skipValidation?: boolean): void;
-    updateValidator(newState: boolean): void;
     commonProps: any;
     disabled: boolean;
     openRemoveModal(): void;

@@ -38,7 +38,7 @@ export const hints = {
     }),
     minChars: (fieldConfig: types.TextField) => ({
         text: '<= max char.',
-        fulfilled: validators.minChars(fieldConfig)(fieldConfig.min_chars),
+        fulfilled: validators.minChars(fieldConfig).valid,
     }),
     maxChars: (fieldConfig: types.TextField) => ({
         text: '<= 2000',

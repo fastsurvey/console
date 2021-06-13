@@ -1,38 +1,45 @@
 import {validators} from './validators';
 import {types} from 'types';
 
-export function validateField(fieldConfig: types.SurveyField) {
-    if (
-        !validators.title(fieldConfig.title) ||
-        !validators.description(fieldConfig.description)
-    ) {
-        return false;
-    }
+export function validateField(
+    fieldConfig: types.SurveyField,
+): types.ValidationResult {
+    const results: types.ValidationResult[] = [
+        validators.title(fieldConfig.title),
+        validators.description(fieldConfig.description),
+    ];
 
     switch (fieldConfig.type) {
         case 'email':
-            return (
-                validators.hint(fieldConfig.hint) &&
-                validators.regex(fieldConfig.regex)
+            results.push(
+                validators.hint(fieldConfig.hint),
+                validators.regex(fieldConfig.regex),
             );
+            break;
         case 'option':
-            return true;
+            break;
         case 'radio':
-            return fieldConfig.fields.every((optionField) =>
-                validators.title(optionField.title),
+            results.push(
+                ...fieldConfig.fields.map((c) => validators.title(c.title)),
+                validators.fieldOptions(fieldConfig),
             );
+            break;
         case 'selection':
-            return (
-                fieldConfig.fields.every((optionField) =>
-                    validators.title(optionField.title),
-                ) &&
-                validators.minSelect(fieldConfig) &&
-                validators.maxSelect(fieldConfig)
+            results.push(
+                ...fieldConfig.fields.map((c) => validators.title(c.title)),
+                validators.fieldOptions(fieldConfig),
+                validators.minSelect(fieldConfig),
+                validators.maxSelect(fieldConfig),
             );
+            break;
         case 'text':
-            return (
-                validators.minChars(fieldConfig)(fieldConfig.min_chars) &&
-                validators.maxChars(fieldConfig.max_chars)
+            results.push(
+                validators.minChars(fieldConfig),
+                validators.maxChars(fieldConfig.max_chars),
             );
+            break;
     }
+
+    // @ts-ignore
+    return [...results.filter((r) => !r.valid), {valid: true}][0];
 }
