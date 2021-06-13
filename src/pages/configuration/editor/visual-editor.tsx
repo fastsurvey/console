@@ -12,6 +12,7 @@ function VisualEditor(props: {
     setLocalFieldConfig(fieldConfigChanges: object, newIndex: number): void;
 
     updateValidator(newIndex: number, newState: types.ValidationResult): void;
+    fieldValidation: types.ValidationResult[];
 
     insertField(index: number, fieldType: types.FieldType): void;
     pasteField(index: number): void;
@@ -36,6 +37,7 @@ function VisualEditor(props: {
                     updateValidator={(newState: types.ValidationResult) =>
                         props.updateValidator(0, newState)
                     }
+                    validation={props.fieldValidation[0]}
                 />
                 {props.localConfig.fields.map((fieldConfig, index) => (
                     <div className='w-full' key={fieldConfig.local_id}>

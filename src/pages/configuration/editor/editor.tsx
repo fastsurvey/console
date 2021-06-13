@@ -27,7 +27,7 @@ function ConfigEditor(props: {
     closeAllMessages(): void;
 }) {
     const [localConfig, setLocalConfigState] = useState(props.centralConfig);
-    const [fieldValidators, setFieldValidators] = useState<
+    const [fieldValidation, setFieldValidation] = useState<
         types.ValidationResult[]
     >([]);
 
@@ -42,7 +42,7 @@ function ConfigEditor(props: {
     }, [props.centralConfig.survey_name]);
 
     function initValidators(config: types.SurveyConfig) {
-        setFieldValidators(
+        setFieldValidation(
             times(config.fields.length + 1, constant({valid: true})),
         );
     }
@@ -51,14 +51,14 @@ function ConfigEditor(props: {
         newIndex: number,
         newState: types.ValidationResult,
     ) {
-        const newValidators = [...fieldValidators];
+        const newValidators = [...fieldValidation];
         newValidators[newIndex] = newState;
-        setFieldValidators(newValidators);
+        setFieldValidation(newValidators);
     }
 
     function insertField(index: number, fieldType: types.FieldType) {
-        setFieldValidators(
-            dataUtils.array.insert(fieldValidators, index + 1, false),
+        setFieldValidation(
+            dataUtils.array.insert(fieldValidation, index + 1, false),
         );
 
         const field: types.SurveyField = templateUtils.field(
@@ -73,9 +73,9 @@ function ConfigEditor(props: {
 
     function pasteField(index: number) {
         function success(newFieldConfig: types.SurveyField) {
-            setFieldValidators(
+            setFieldValidation(
                 dataUtils.array.insert(
-                    fieldValidators,
+                    fieldValidation,
                     index + 1,
                     formUtils.validateField(newFieldConfig),
                 ),
@@ -102,7 +102,7 @@ function ConfigEditor(props: {
     }
 
     function removeField(index: number) {
-        setFieldValidators(dataUtils.array.remove(fieldValidators, index + 1));
+        setFieldValidation(dataUtils.array.remove(fieldValidation, index + 1));
         setLocalConfig({
             ...localConfig,
             fields: dataUtils.array.remove(localConfig.fields, index),
@@ -117,7 +117,7 @@ function ConfigEditor(props: {
         };
         props.closeAllMessages();
 
-        const fieldsAreValid = every(fieldValidators.map((r) => r.valid));
+        const fieldsAreValid = every(fieldValidation.map((r) => r.valid));
         const fieldCountIsValid = localConfig.fields.length > 0;
 
         function success() {
@@ -187,6 +187,7 @@ function ConfigEditor(props: {
             {...{
                 localConfig,
                 updateValidator,
+                fieldValidation,
                 setLocalConfig,
                 setLocalFieldConfig,
                 insertField,

@@ -18,6 +18,7 @@ interface Props {
     disabled: boolean;
     openRemoveModal(): void;
     openDuplicateModal(): void;
+    validation: types.ValidationResult;
 }
 const VisualSettings = (props: Props) => {
     const [collapse, setCollapse] = useState(true);
@@ -60,6 +61,7 @@ const VisualSettings = (props: Props) => {
             buttons={buttons}
             actionLabel={actionLabel}
             setActionLabel={setActionLabel}
+            validation={props.validation}
         >
             <div className='w-full centering-col gap-y-0.5'>
                 <Label text='Title' />
@@ -112,13 +114,10 @@ const VisualSettings = (props: Props) => {
                 <DatePicker
                     timestamp={props.config.start}
                     setTimestamp={(timestamp: number) => {
-                        props.updateConfig(
-                            {
-                                ...props.config,
-                                start: timestamp,
-                            },
-                            true,
-                        );
+                        props.updateConfig({
+                            ...props.config,
+                            start: timestamp,
+                        });
                     }}
                     disabled={!props.config.draft || collapse}
                 />
@@ -129,13 +128,10 @@ const VisualSettings = (props: Props) => {
                 <DatePicker
                     timestamp={props.config.end}
                     setTimestamp={(timestamp: number) => {
-                        props.updateConfig(
-                            {
-                                ...props.config,
-                                end: timestamp,
-                            },
-                            true,
-                        );
+                        props.updateConfig({
+                            ...props.config,
+                            end: timestamp,
+                        });
                     }}
                     disabled={!props.config.draft || collapse}
                 />

@@ -18,6 +18,7 @@ interface Props {
     config: types.SurveyConfig;
     setLocalConfig(config: object): void;
     updateValidator(newState: types.ValidationResult): void;
+    validation: types.ValidationResult;
 
     openModal(title: string, children: React.ReactNode): void;
     closeModal(): void;
@@ -116,6 +117,7 @@ function Settings(props: Props) {
             disabled={!props.config.draft}
             openRemoveModal={openRemoveModal}
             openDuplicateModal={openDuplicateModal}
+            validation={props.validation}
         />
     );
 }
