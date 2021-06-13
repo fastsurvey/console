@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextInputDeprecated, TextLink, ButtonLink} from 'components';
+// import {TextInputDeprecated, TextLink, ButtonLink} from 'components';
 
 interface Props {
     success: boolean;
@@ -14,10 +14,11 @@ interface Props {
     closeAllMessages(): void;
 }
 const VisualRequestPassword = React.forwardRef((props: Props, refs: any) => {
-    const {input1Ref} = refs;
+    //const {input1Ref} = refs;
 
     return (
         <div className='w-full'>
+            {/*
             {!props.success && (
                 <React.Fragment>
                     <h2 className='mb-4 text-center no-selection'>
@@ -68,7 +69,7 @@ const VisualRequestPassword = React.forwardRef((props: Props, refs: any) => {
                         Wrong email address?
                     </TextLink>
                 </React.Fragment>
-            )}
+            )}*/}
         </div>
     );
 });

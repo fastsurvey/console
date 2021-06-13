@@ -16,7 +16,7 @@ interface Props {
 }
 const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
     return (
-        <div className='w-full flex-col-right gap-y-0.5'>
+        <div className='w-full flex-col-right gap-y-1'>
             <LabelSimple text='Options to select' />
             {props.fieldConfig.fields.map((optionConfig, optionIndex) => (
                 <div className='w-full flex-row-left gap-x-2'>
@@ -52,7 +52,7 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
                     </button>
                 </div>
             ))}
-            <div className='w-full pr-10 mt-1 flex-row-right'>
+            <div className='w-full pr-[2.375rem] flex-row-right'>
                 <IconButton
                     text='Add Option'
                     onClick={props.addFieldOption}

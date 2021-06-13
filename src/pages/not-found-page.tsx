@@ -1,6 +1,7 @@
 import React from 'react';
-import {TextLink, MainWrapper} from 'components';
+import {MainWrapper} from 'components';
 import EmptyImage from 'assets/images/empty.svg';
+import {Link} from 'react-router-dom';
 
 function NotFoundPage() {
     return (
@@ -11,7 +12,15 @@ function NotFoundPage() {
                     <img src={EmptyImage} alt='Not Found' />
                 </div>
             </div>
-            <TextLink to='/'>Return to main page</TextLink>
+            <Link
+                to='/'
+                className={
+                    'w-full text-center text-gray-500 ' +
+                    'font-weight-500 no-selection cursor-pointer '
+                }
+            >
+                Return to main page
+            </Link>
         </MainWrapper>
     );
 }
