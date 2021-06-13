@@ -14,7 +14,7 @@ function VisualConfigPanel(props: Props) {
         <div
             className={
                 'w-full rounded shadow centering-col ' +
-                'no-selection cursor-pointer bg-white '
+                'cursor-pointer bg-white '
             }
         >
             <div className={'w-full p-3 bg-white rounded-t flex-col-left'}>
@@ -35,14 +35,14 @@ function VisualConfigPanel(props: Props) {
                 <div className='text-sm text-gray-600 truncate font-weight-500'>
                     /{username}/{survey_name}
                 </div>
-                <div className='mt-3 text-sm text-gray-600 truncate font-weight-500'>
+                <div className='mt-3 text-sm text-gray-600 truncate font-weight-500 no-selection'>
                     {authentication === 'email' ? 'Email Verification, ' : ''}
                     Max. {limit} submissions
                 </div>
             </div>
             <div
                 className={
-                    'w-full px-3 py-2 bg-gray-100 rounded-b ' +
+                    'w-full px-3 py-2 bg-gray-100 rounded-b no-selection ' +
                     'group-hover:bg-gray-200 group-focus:bg-gray-200 ' +
                     'text-center text-blue-900 font-weight-600'
                 }

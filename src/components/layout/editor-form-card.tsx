@@ -37,7 +37,7 @@ function EditorFormCard(props: Props) {
         >
             <div
                 className={
-                    'w-full rounded-t centering-row ' +
+                    'w-full rounded-t centering-row no-selection ' +
                     'font-weight-600 text-base leading-10 ' +
                     styleUtils.color.fieldTypeToClasses(props.fieldType)
                 }
