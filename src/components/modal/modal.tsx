@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {reduxUtils} from 'utilities';
+import {hookUtils, reduxUtils} from 'utilities';
 import {connect} from 'react-redux';
 import {types} from 'types';
 
@@ -8,6 +8,13 @@ interface Props {
     closeModal(): void;
 }
 function Modal(props: Props) {
+    hookUtils.useEvent('keydown', keydown);
+    function keydown(e: KeyboardEvent) {
+        if (e.key === 'Escape' && props.modalState.open) {
+            props.closeModal();
+        }
+    }
+
     useEffect(() => {
         if (props.modalState.open) {
             const scrollY = window.scrollY;

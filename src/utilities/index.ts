@@ -9,3 +9,4 @@ export {default as clipboardUtils} from './clipboard-utils';
 export {default as templateUtils} from './template-utils';
 export {default as formUtils} from './form-utils';
 export {default as styleUtils} from './style-utils';
+export {default as hookUtils} from './hook-utils';
