@@ -97,16 +97,19 @@ function VisualDatePicker(props: {
     const dayCount3 = dayCount - dayCount1 - dayCount2;
 
     const dayRows = [
-        <div className='grid w-full grid-cols-7 gap-x-2'>
+        <div
+            className='grid w-full grid-cols-7 gap-x-2'
+            key={`datepicker-row-${0}`}
+        >
             {range(skippedDays).map((i) => (
-                <div className='w-5 text-center' />
+                <div className='w-5 text-center' key={`skipped-day-${i + 1}`} />
             ))}
             <div
                 style={colSpan(dayCount1)}
                 className='px-0.5 -mx-0.5 bg-gray-700 rounded-sm gap-x-2'
             >
                 {range(dayCount1).map((i) => (
-                    <DayButton day={i + 1} />
+                    <DayButton day={i + 1} key={`day-button-${i + 1}`} />
                 ))}
             </div>
         </div>,
@@ -114,9 +117,13 @@ function VisualDatePicker(props: {
             <div
                 className='grid grid-cols-7 px-0.5 -mx-0.5 bg-gray-700 rounded-sm gap-x-2'
                 style={{width: 'calc(100% + 0.25rem'}}
+                key={`datepicker-row-${i + 1}`}
             >
                 {range(7).map((j) => (
-                    <DayButton day={dayCount1 + i * 7 + j + 1} />
+                    <DayButton
+                        day={dayCount1 + i * 7 + j + 1}
+                        key={`day-button-${dayCount1 + i * 7 + j + 1}`}
+                    />
                 ))}
             </div>
         )),
@@ -124,9 +131,13 @@ function VisualDatePicker(props: {
             <div
                 style={colSpan(dayCount3)}
                 className='px-0.5 -mx-0.5 bg-gray-700 rounded-sm gap-x-2'
+                key={`datepicker-row-end`}
             >
                 {range(dayCount3).map((i) => (
-                    <DayButton day={dayCount1 + dayCount2 + i + 1} />
+                    <DayButton
+                        day={dayCount1 + dayCount2 + i + 1}
+                        key={`day-button-${dayCount1 + dayCount2 + i + 1}`}
+                    />
                 ))}
             </div>
         ),
@@ -196,7 +207,9 @@ function VisualDatePicker(props: {
                 <div className='px-4 pb-2.5 text-sm text-gray-300 flex-col-left gap-y-2'>
                     <div className='grid grid-cols-7 gap-x-2'>
                         {['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].map((w) => (
-                            <div className='w-5 text-center'>{w}</div>
+                            <div key={w} className='w-5 text-center'>
+                                {w}
+                            </div>
                         ))}
                     </div>
                     {dayRows.map((m) => m)}

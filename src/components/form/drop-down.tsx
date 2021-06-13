@@ -45,6 +45,7 @@ export default function DropDown(props: {
             >
                 {options.map((option, index) => (
                     <button
+                        key={index}
                         onClick={() => {
                             setValue(option.value);
                             setOpen(false);
