@@ -10,7 +10,6 @@ export function validateSettings(
         validators.surveyName(configs, thisConfig),
         validators.description(thisConfig.description),
         validators.timing(thisConfig),
-        validators.authMode(thisConfig),
         validators.submissionLimit(thisConfig.limit),
     ];
 

@@ -56,4 +56,9 @@ export const messages: {[key in types.MessageId]: types.Message} = {
         text: 'There has to be at least one field',
         type: 'warning',
     },
+    'editor-warning-authentication': {
+        id: 'editor-warning-authentication',
+        text: 'Email-authentication requires unique email field',
+        type: 'warning',
+    },
 };

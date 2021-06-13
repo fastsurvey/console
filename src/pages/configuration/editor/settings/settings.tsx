@@ -28,11 +28,8 @@ interface Props {
 function Settings(props: Props) {
     let history = useHistory();
 
-    function updateConfig(
-        newConfig: types.SurveyConfig,
-        skipValidation?: boolean,
-    ) {
-        if (!skipValidation && props.configs) {
+    function updateConfig(newConfig: types.SurveyConfig) {
+        if (props.configs) {
             props.updateValidator(
                 formUtils.validateSettings(props.configs, newConfig),
             );

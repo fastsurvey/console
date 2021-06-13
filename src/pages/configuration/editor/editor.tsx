@@ -119,6 +119,8 @@ function ConfigEditor(props: {
 
         const fieldsAreValid = every(fieldValidation.map((r) => r.valid));
         const fieldCountIsValid = localConfig.fields.length > 0;
+        const authModeIsValid =
+            formUtils.validators.authMode(localConfig).valid;
 
         function success() {
             setLocalConfigState(combinedConfig);
@@ -132,7 +134,7 @@ function ConfigEditor(props: {
             props.openMessage('error-server');
         }
 
-        if (fieldsAreValid && fieldCountIsValid) {
+        if (fieldsAreValid && fieldCountIsValid && authModeIsValid) {
             backend.updateSurvey(
                 props.account,
                 props.authToken,
@@ -147,6 +149,9 @@ function ConfigEditor(props: {
             }
             if (!fieldCountIsValid) {
                 props.openMessage('editor-warning-field-count');
+            }
+            if (!authModeIsValid) {
+                props.openMessage('editor-warning-authentication');
             }
         }
     }

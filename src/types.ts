@@ -111,7 +111,8 @@ export declare namespace types {
         | 'success-redirect-to-login'
         | 'warning-clipboard'
         | 'editor-warning-validators'
-        | 'editor-warning-field-count';
+        | 'editor-warning-field-count'
+        | 'editor-warning-authentication';
 
     export type ValidationResult =
         | {
