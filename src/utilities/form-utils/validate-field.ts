@@ -5,7 +5,7 @@ export function validateField(
     fieldConfig: types.SurveyField,
 ): types.ValidationResult {
     const results: types.ValidationResult[] = [
-        validators.title(fieldConfig.title),
+        validators.fieldTitle(fieldConfig.title),
         validators.description(fieldConfig.description),
     ];
 
@@ -20,13 +20,17 @@ export function validateField(
             break;
         case 'radio':
             results.push(
-                ...fieldConfig.fields.map((c) => validators.title(c.title)),
+                ...fieldConfig.fields.map((c) =>
+                    validators.optionTitle(c.title),
+                ),
                 validators.fieldOptions(fieldConfig),
             );
             break;
         case 'selection':
             results.push(
-                ...fieldConfig.fields.map((c) => validators.title(c.title)),
+                ...fieldConfig.fields.map((c) =>
+                    validators.optionTitle(c.title),
+                ),
                 validators.fieldOptions(fieldConfig),
                 validators.minSelect(fieldConfig),
                 validators.maxSelect(fieldConfig),

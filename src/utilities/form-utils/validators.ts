@@ -1,5 +1,25 @@
 import {types} from 'types';
 
+const genericTitle =
+    (variant: 'Title' | 'Field title' | 'Option name') =>
+    (title: string): types.ValidationResult => {
+        if (title.length === 0) {
+            return {
+                valid: false,
+                message: `${variant} too short (> 0 characters)`,
+            };
+        } else if (title.length > 120) {
+            return {
+                valid: false,
+                message:
+                    `${variant} too long (≤ 120 characters, ` +
+                    `currently: ${title.length})`,
+            };
+        } else {
+            return {valid: true};
+        }
+    };
+
 export const validators = {
     fieldOptions: (
         fieldConfig: types.RadioField | types.SelectionField,
@@ -50,23 +70,9 @@ export const validators = {
         }
     },
 
-    title: (title: string): types.ValidationResult => {
-        if (title.length === 0) {
-            return {
-                valid: false,
-                message: `Title too short (> 0 characters)`,
-            };
-        } else if (title.length > 120) {
-            return {
-                valid: false,
-                message:
-                    `Title too long (≤ 120 characters, ` +
-                    `currently: ${title.length})`,
-            };
-        } else {
-            return {valid: true};
-        }
-    },
+    title: genericTitle('Title'),
+    fieldTitle: genericTitle('Field title'),
+    optionTitle: genericTitle('Option name'),
 
     surveyName: (
         configs: types.SurveyConfig[] | undefined,
