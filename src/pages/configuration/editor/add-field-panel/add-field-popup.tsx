@@ -14,7 +14,7 @@ function AddFieldPopup(props: Props) {
         'text',
     ];
     return (
-        <div className='p-1.5 w-60 centering-col gap-y-2'>
+        <div className='p-1.5 centering-col gap-y-2 w-full '>
             {fields.map((fieldType: types.FieldType) => (
                 <button
                     key={fieldType}

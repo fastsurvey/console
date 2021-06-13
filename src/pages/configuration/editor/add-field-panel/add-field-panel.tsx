@@ -11,6 +11,7 @@ interface Props {
     pasteField(): void;
     openModal(title: string, children: React.ReactNode): void;
     closeModal(): void;
+    disabled: boolean;
 }
 function AddFieldPanel(props: Props) {
     function openAddFieldModal() {
@@ -38,12 +39,14 @@ function AddFieldPanel(props: Props) {
                 label='add field'
                 icon={icons.widgetAdd}
                 onClick={openAddFieldModal}
+                disabled={props.disabled}
             />
             <AddFieldButton
                 label='paste field'
                 icon={icons.duplicate}
                 onClick={props.pasteField}
                 leftIcon
+                disabled={props.disabled}
             />
         </div>
     );

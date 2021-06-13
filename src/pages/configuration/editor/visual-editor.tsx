@@ -46,6 +46,7 @@ function VisualEditor(props: {
                                 props.insertField(index, fieldType)
                             }
                             pasteField={() => props.pasteField(index)}
+                            disabled={!props.localConfig.draft}
                         />
                         <Field
                             fieldConfig={fieldConfig}
@@ -71,6 +72,7 @@ function VisualEditor(props: {
                     pasteField={() =>
                         props.pasteField(props.localConfig.fields.length)
                     }
+                    disabled={!props.localConfig.draft}
                 />
             </div>
         </div>
