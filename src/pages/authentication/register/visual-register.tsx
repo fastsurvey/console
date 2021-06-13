@@ -1,7 +1,6 @@
 import React from 'react';
-import {LabelSimple, TextInputSimple} from 'components';
+import {Label, TextInput, Button} from 'components';
 import {Link} from 'react-router-dom';
-import {IconButton} from 'components';
 import {icons} from 'assets';
 
 export default function VisualRegister(props: {
@@ -30,8 +29,8 @@ export default function VisualRegister(props: {
                     Register
                 </h1>
                 <div className='w-full centering-col gap-y-0.5'>
-                    <LabelSimple text='Email' />
-                    <TextInputSimple
+                    <Label text='Email' />
+                    <TextInput
                         autoFocus
                         value={props.email}
                         setValue={(newValue) => {
@@ -41,8 +40,8 @@ export default function VisualRegister(props: {
                     />
                 </div>
                 <div className='w-full centering-col gap-y-0.5'>
-                    <LabelSimple text='Username' />
-                    <TextInputSimple
+                    <Label text='Username' />
+                    <TextInput
                         value={props.username}
                         setValue={(newValue) => {
                             props.closeAllMessages();
@@ -51,8 +50,8 @@ export default function VisualRegister(props: {
                     />
                 </div>
                 <div className='w-full centering-col gap-y-0.5'>
-                    <LabelSimple text='Password' />
-                    <TextInputSimple
+                    <Label text='Password' />
+                    <TextInput
                         type='password'
                         value={props.password}
                         setValue={(newValue) => {
@@ -62,8 +61,8 @@ export default function VisualRegister(props: {
                     />
                 </div>
                 <div className='w-full centering-col gap-y-0.5'>
-                    <LabelSimple text='Repeat Password' />
-                    <TextInputSimple
+                    <Label text='Repeat Password' />
+                    <TextInput
                         type='password'
                         value={props.passwordConfirmation}
                         setValue={(newValue) => {
@@ -74,7 +73,7 @@ export default function VisualRegister(props: {
                 </div>
 
                 <div className='w-full gap-y-0.5 flex flex-row-reverse items-center justify-center'>
-                    <IconButton
+                    <Button
                         text='Login'
                         variant='flat-light-blue'
                         onClick={props.handleRegistration}

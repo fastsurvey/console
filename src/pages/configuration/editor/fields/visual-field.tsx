@@ -1,11 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {icons} from 'assets';
-import {
-    EditorFormCard,
-    LabelSimple,
-    TextInputSimple,
-    TextAreaSimple,
-} from 'components';
+import {EditorFormCard, Label, TextInput, TextArea} from 'components';
 import {types} from 'types';
 import {styleUtils} from 'utilities';
 
@@ -64,8 +59,8 @@ function VisualField(props: Props) {
             setActionLabel={setActionLabel}
         >
             <div className='w-full centering-col gap-y-0.5'>
-                <LabelSimple text='Title' />
-                <TextInputSimple
+                <Label text='Title' />
+                <TextInput
                     value={props.fieldConfig.title}
                     setValue={(newValue: string) => {
                         props.setLocalFieldConfig({
@@ -76,8 +71,8 @@ function VisualField(props: Props) {
                 />
             </div>
             <div className='w-full centering-col gap-y-0.5'>
-                <LabelSimple text='Description' />
-                <TextAreaSimple
+                <Label text='Description' />
+                <TextArea
                     value={props.fieldConfig.description}
                     setValue={(newValue: string) => {
                         props.setLocalFieldConfig({description: newValue});

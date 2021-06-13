@@ -1,6 +1,6 @@
 import React from 'react';
 import {formUtils} from 'utilities';
-import {LabelSimple, TextInputSimple} from 'components';
+import {Label, TextInput} from 'components';
 import {types} from 'types';
 
 interface Props {
@@ -12,8 +12,8 @@ function VisualTextSettings(props: Props) {
     return (
         <>
             <div className='w-full centering-col gap-y-0.5'>
-                <LabelSimple text='Minimum' />
-                <TextInputSimple
+                <Label text='Minimum' />
+                <TextInput
                     value={props.fieldConfig.min_chars.toString()}
                     setValue={(newValue: string) => {
                         props.setLocalFieldConfig({
@@ -25,8 +25,8 @@ function VisualTextSettings(props: Props) {
                 />
             </div>
             <div className='w-full centering-col gap-y-0.5'>
-                <LabelSimple text='Maximum' />
-                <TextInputSimple
+                <Label text='Maximum' />
+                <TextInput
                     value={props.fieldConfig.max_chars.toString()}
                     setValue={(newValue: string) => {
                         props.setLocalFieldConfig({

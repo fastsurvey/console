@@ -1,9 +1,8 @@
 import React from 'react';
 import {types} from 'types';
 import icons from 'assets/icons/icons';
-import {IconButton, TimePill} from 'components';
+import {Button, ButtonGroup, TimePill} from 'components';
 import {Link} from 'react-router-dom';
-import IconButtonGroup from 'components/buttons/icon-button-group';
 
 function VisualEditorHeader(props: {
     configIsDiffering: boolean;
@@ -66,9 +65,9 @@ function VisualEditorHeader(props: {
                     {title}
                 </div>
                 <div className='flex-max' />
-                <IconButtonGroup buttons={props.buttons} />
+                <ButtonGroup buttons={props.buttons} />
                 <div className='w-4' />
-                <IconButton
+                <Button
                     icon={draft ? icons.uploadCloud : icons.edit}
                     text={draft ? 'publish' : 'edit'}
                     onClick={() => {

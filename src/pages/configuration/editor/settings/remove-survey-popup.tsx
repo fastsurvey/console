@@ -1,5 +1,5 @@
 import React from 'react';
-import {IconButton} from 'components';
+import {Button} from 'components';
 
 interface Props {
     closeModal(): void;
@@ -13,12 +13,12 @@ function RemoveSurveyPopup(props: Props) {
                 will not be able to restore this survey anymore.
             </div>
             <div className='w-full flex-row-right gap-x-2'>
-                <IconButton
+                <Button
                     text='Cancel'
                     variant='flat-light-blue'
                     onClick={props.closeModal}
                 />
-                <IconButton
+                <Button
                     text='Remove Survey'
                     variant='flat-light-blue'
                     onClick={props.removeSurvey}

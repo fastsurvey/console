@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextInputSimple, LabelSimple, IconButton} from 'components';
+import {TextInput, Label, Button} from 'components';
 import {Link} from 'react-router-dom';
 
 export default function VisualLogin(props: {
@@ -20,8 +20,8 @@ export default function VisualLogin(props: {
                 Login
             </h1>
             <div className='w-full centering-col gap-y-0.5'>
-                <LabelSimple text='Email or Username' />
-                <TextInputSimple
+                <Label text='Email or Username' />
+                <TextInput
                     autoFocus
                     value={props.identifier}
                     setValue={(newValue) => {
@@ -31,8 +31,8 @@ export default function VisualLogin(props: {
                 />
             </div>
             <div className='w-full centering-col gap-y-0.5'>
-                <LabelSimple text='Password' />
-                <TextInputSimple
+                <Label text='Password' />
+                <TextInput
                     type='password'
                     value={props.password}
                     setValue={(newValue) => {
@@ -43,7 +43,7 @@ export default function VisualLogin(props: {
             </div>
 
             <div className='w-full gap-y-0.5 flex flex-row-reverse items-center justify-center'>
-                <IconButton
+                <Button
                     text='Login'
                     variant='flat-light-blue'
                     onClick={props.handleLogin}

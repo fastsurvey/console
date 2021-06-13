@@ -1,6 +1,6 @@
 import React from 'react';
 
-function IconButton(props: {
+export default function Button(props: {
     text: string;
     icon?: React.ReactNode;
     onClick?(): void;
@@ -37,5 +37,3 @@ function IconButton(props: {
         </button>
     );
 }
-
-export default IconButton;

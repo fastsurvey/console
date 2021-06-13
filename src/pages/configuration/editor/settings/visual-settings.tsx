@@ -2,14 +2,14 @@ import React, {useState, useEffect} from 'react';
 import {formUtils, constants} from 'utilities';
 import {
     EditorFormCard,
-    LabelSimple,
-    TextAreaSimple,
-    DropDownSimple,
-    DatePickerSimple,
+    Label,
+    TextArea,
+    DropDown,
+    DatePicker,
+    TextInput,
 } from 'components';
 import {icons} from 'assets';
 import {types} from 'types';
-import {TextInputSimple} from 'components';
 
 interface Props {
     config: types.SurveyConfig;
@@ -64,8 +64,8 @@ const VisualSettings = (props: Props) => {
             setActionLabel={setActionLabel}
         >
             <div className='w-full centering-col gap-y-0.5'>
-                <LabelSimple text='Title' />
-                <TextInputSimple
+                <Label text='Title' />
+                <TextInput
                     value={props.config.title}
                     setValue={(newValue: string) => {
                         props.updateConfig({
@@ -77,8 +77,8 @@ const VisualSettings = (props: Props) => {
                 />
             </div>
             <div className='w-full centering-col gap-y-0.5'>
-                <LabelSimple text='URL conform identifier' />
-                <TextInputSimple
+                <Label text='URL conform identifier' />
+                <TextInput
                     value={props.config.survey_name}
                     setValue={(newValue: string) => {
                         props.updateConfig({
@@ -91,8 +91,8 @@ const VisualSettings = (props: Props) => {
             </div>
 
             <div className='w-full centering-col gap-y-0.5'>
-                <LabelSimple text='Description' />
-                <TextAreaSimple
+                <Label text='Description' />
+                <TextArea
                     value={props.config.description}
                     setValue={(newValue: string) => {
                         props.updateConfig({
@@ -110,8 +110,8 @@ const VisualSettings = (props: Props) => {
             />
 
             <div className='w-full flex-col-left gap-y-0.5'>
-                <LabelSimple text='Start survey at' />
-                <DatePickerSimple
+                <Label text='Start survey at' />
+                <DatePicker
                     timestamp={props.config.start}
                     setTimestamp={(timestamp: number) => {
                         props.updateConfig(
@@ -127,8 +127,8 @@ const VisualSettings = (props: Props) => {
             </div>
 
             <div className='w-full flex-col-left gap-y-0.5'>
-                <LabelSimple text='End survey by' />
-                <DatePickerSimple
+                <Label text='End survey by' />
+                <DatePicker
                     timestamp={props.config.end}
                     setTimestamp={(timestamp: number) => {
                         props.updateConfig(
@@ -149,8 +149,8 @@ const VisualSettings = (props: Props) => {
             />
 
             <div className='w-full centering-col gap-y-0.5'>
-                <LabelSimple text='Authentication Mode' />
-                <DropDownSimple
+                <Label text='Authentication Mode' />
+                <DropDown
                     value={props.config.authentication === 'open' ? 0 : 1}
                     setValue={(newValue: 0 | 1) => {
                         props.updateConfig(
@@ -167,8 +167,8 @@ const VisualSettings = (props: Props) => {
             </div>
 
             <div className='w-full centering-col gap-y-0.5'>
-                <LabelSimple text='Limit to' />
-                <TextInputSimple
+                <Label text='Limit to' />
+                <TextInput
                     value={props.config.limit.toString()}
                     setValue={(newValue: string) => {
                         props.updateConfig({

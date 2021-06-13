@@ -3,7 +3,7 @@ import {sortBy} from 'lodash';
 import {Link} from 'react-router-dom';
 import {types} from 'types';
 import VisualConfigPanel from './visual-config-panel';
-import {IconButton, SearchBar} from 'components';
+import {Button, SearchBar} from 'components';
 import {icons} from 'assets';
 
 function VisualConfigList(props: {
@@ -22,7 +22,7 @@ function VisualConfigList(props: {
             <div className='w-full max-w-4xl centering-col'>
                 <div className='w-full mt-1 mb-6 centering-row gap-x-3'>
                     <SearchBar value={value} setValue={setValue} />
-                    <IconButton
+                    <Button
                         icon={icons.addSquare}
                         text='Add Survey'
                         onClick={props.addSurvey}

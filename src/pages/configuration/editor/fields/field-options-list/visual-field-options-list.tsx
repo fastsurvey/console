@@ -1,6 +1,6 @@
 import React from 'react';
 import {icons} from 'assets';
-import {LabelSimple, TextInputSimple, IconButton} from 'components';
+import {Label, TextInput, Button} from 'components';
 import {types} from 'types';
 
 interface Props {
@@ -17,10 +17,10 @@ interface Props {
 const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
     return (
         <div className='w-full flex-col-right gap-y-1'>
-            <LabelSimple text='Options to select' />
+            <Label text='Options to select' />
             {props.fieldConfig.fields.map((optionConfig, optionIndex) => (
                 <div className='w-full flex-row-left gap-x-2'>
-                    <TextInputSimple
+                    <TextInput
                         value={optionConfig.title}
                         setValue={(newValue: string) =>
                             props.setLocalFieldConfig({
@@ -53,7 +53,7 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
                 </div>
             ))}
             <div className='w-full pr-[2.375rem] flex-row-right'>
-                <IconButton
+                <Button
                     text='Add Option'
                     onClick={props.addFieldOption}
                     icon={icons.addSquare}

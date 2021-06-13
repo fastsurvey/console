@@ -1,6 +1,6 @@
 import React from 'react';
 
-function IconButtonGroup(props: {
+export default function ButtonGroup(props: {
     buttons: {
         icon: React.ReactNode;
         text: string;
@@ -35,5 +35,3 @@ function IconButtonGroup(props: {
         </div>
     );
 }
-
-export default IconButtonGroup;

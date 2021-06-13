@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextInputSimple, IconButton, LabelSimple} from 'components';
+import {TextInput, Button, Label} from 'components';
 import {Link} from 'react-router-dom';
 
 export default function VisualVerifyForm(props: {
@@ -34,8 +34,8 @@ export default function VisualVerifyForm(props: {
                     {props.tokenExists && (
                         <>
                             <div className='w-full centering-col gap-y-0.5'>
-                                <LabelSimple text='Password' />
-                                <TextInputSimple
+                                <Label text='Password' />
+                                <TextInput
                                     value={props.password}
                                     setValue={(newValue) => {
                                         props.setPassword(newValue);
@@ -49,7 +49,7 @@ export default function VisualVerifyForm(props: {
                                     'items-center justify-center'
                                 }
                             >
-                                <IconButton
+                                <Button
                                     text='verify'
                                     onClick={props.handleVerify}
                                     disabled={props.disabled}

@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
 import {reduxUtils, formUtils} from 'utilities';
 import {connect} from 'react-redux';
-import {LabelSimple, TextInputSimple} from 'components';
+import {Label, TextInput, Button} from 'components';
 import {types} from 'types';
-import {IconButton} from 'components';
 
 interface Props {
     configs: types.SurveyConfig[] | undefined;
@@ -22,14 +21,11 @@ function DuplicateSurveyPopup(props: Props) {
         return (
             <>
                 <div className='w-full max-w-2xl centering-col gap-y-0.5'>
-                    <LabelSimple text='New URL conform identifier' />
-                    <TextInputSimple
-                        value={surveyName}
-                        setValue={setSurveyName}
-                    />
+                    <Label text='New URL conform identifier' />
+                    <TextInput value={surveyName} setValue={setSurveyName} />
                 </div>
                 <div className='w-full flex-row-right gap-x-2'>
-                    <IconButton
+                    <Button
                         text='Cancel'
                         variant='flat-light-blue'
                         onClick={() => {
@@ -37,7 +33,7 @@ function DuplicateSurveyPopup(props: Props) {
                             setTimeout(() => setSurveyName(''), 500);
                         }}
                     />
-                    <IconButton
+                    <Button
                         text='Duplicate'
                         variant='flat-light-blue'
                         disabled={!isValid}

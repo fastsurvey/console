@@ -1,6 +1,6 @@
 import React from 'react';
 import {formUtils} from 'utilities';
-import {LabelSimple, TextInputSimple} from 'components';
+import {Label, TextInput} from 'components';
 import FieldOptionsList from '../field-options-list/field-options-list';
 import {types} from 'types';
 
@@ -22,8 +22,8 @@ function VisualSelectionSettings(props: Props) {
                 style={{width: 'calc(100% + 1.5rem)'}}
             />
             <div className='w-full centering-col gap-y-0.5'>
-                <LabelSimple text='Minimum options selected' />
-                <TextInputSimple
+                <Label text='Minimum options selected' />
+                <TextInput
                     value={props.fieldConfig.min_select.toString()}
                     setValue={(newValue: string) => {
                         props.setLocalFieldConfig({
@@ -34,8 +34,8 @@ function VisualSelectionSettings(props: Props) {
                 />
             </div>
             <div className='w-full centering-col gap-y-0.5'>
-                <LabelSimple text='Maximum options selected' />
-                <TextInputSimple
+                <Label text='Maximum options selected' />
+                <TextInput
                     value={props.fieldConfig.max_select.toString()}
                     setValue={(newValue: string) => {
                         props.setLocalFieldConfig({

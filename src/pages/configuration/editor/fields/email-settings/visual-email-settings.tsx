@@ -1,6 +1,6 @@
 import React from 'react';
 import {constants} from 'utilities';
-import {LabelSimple, DropDownSimple, TextInputSimple} from 'components';
+import {Label, DropDown, TextInput} from 'components';
 import {types} from 'types';
 
 interface Props {
@@ -14,8 +14,8 @@ function VisualEmailSettings(props: Props) {
     return (
         <>
             <div className='w-full centering-col gap-y-0.5'>
-                <LabelSimple text='Allowed Email Formats' />
-                <DropDownSimple
+                <Label text='Allowed Email Formats' />
+                <DropDown
                     value={props.setupValue}
                     setValue={(newValue: number) => {
                         const setup = [
@@ -34,8 +34,8 @@ function VisualEmailSettings(props: Props) {
                 />
             </div>
             <div className='w-full centering-col gap-y-0.5'>
-                <LabelSimple text='Regex' />
-                <TextInputSimple
+                <Label text='Regex' />
+                <TextInput
                     value={props.fieldConfig.regex}
                     setValue={(newValue: string) =>
                         props.setLocalFieldConfig({
@@ -46,8 +46,8 @@ function VisualEmailSettings(props: Props) {
                 />
             </div>
             <div className='w-full centering-col gap-y-0.5'>
-                <LabelSimple text='Hint' />
-                <TextInputSimple
+                <Label text='Hint' />
+                <TextInput
                     value={props.fieldConfig.hint}
                     setValue={(newValue: string) =>
                         props.setLocalFieldConfig({
