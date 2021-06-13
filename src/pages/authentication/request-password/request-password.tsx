@@ -5,7 +5,7 @@ import VisualRequestPassword from './visual-request-password';
 import {types} from 'types';
 
 interface Props {
-    openMessage(message: types.Message): void;
+    openMessage(messageId: types.MessageId): void;
     closeAllMessages(): void;
 }
 function RequestPasswordForm(props: Props) {
@@ -30,18 +30,11 @@ function RequestPasswordForm(props: Props) {
                 })
                 .catch((error) => {
                     setSubmitting(false);
-                    if (error?.response?.status === 400) {
-                        props.openMessage({
-                            text: 'Invalid email address',
-                            type: 'error',
-                        });
-                    } else {
-                        // Invalid password formats will be catched by frontend
-                        props.openMessage({
-                            text: 'Server error. Please try again later',
-                            type: 'error',
-                        });
-                    }
+                    props.openMessage(
+                        error?.response?.status === 400
+                            ? 'error-email-invalid'
+                            : 'error-server',
+                    );
                 });
         }
     }

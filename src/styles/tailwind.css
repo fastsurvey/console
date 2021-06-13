@@ -12,7 +12,7 @@
 * {
     padding: 0;
     margin: 0;
-    font-family: 'Quicksand', sans-serif;
+    font-family: Quicksand, sans-serif;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -46,54 +46,121 @@
     .font-weight-700 {
         font-weight: 700;
     }
+
+    .icon-light-blue .primary {
+        @apply fill-blue-50;
+    }
+    .icon-light-blue .secondary {
+        @apply fill-blue-200;
+    }
+
+    .icon-blue .primary {
+        @apply fill-blue-100;
+    }
+    .icon-blue .secondary {
+        @apply fill-blue-900;
+    }
+
+    .icon-dark-blue .primary {
+        @apply fill-blue-200;
+    }
+    .icon-dark-blue .secondary {
+        @apply fill-blue-700;
+    }
+
+    .icon-dark-red .primary {
+        @apply fill-red-300;
+    }
+    .icon-dark-red .secondary {
+        @apply fill-red-600;
+    }
+
+    .icon-dark-orange .primary {
+        @apply fill-orange-300;
+    }
+    .icon-dark-orange .secondary {
+        @apply fill-orange-600;
+    }
+
+    .icon-dark-yellow .primary {
+        @apply fill-yellow-400;
+    }
+    .icon-dark-yellow .secondary {
+        @apply fill-yellow-700;
+    }
+
+    .icon-dark-green .primary {
+        @apply fill-green-300;
+    }
+    .icon-dark-green .secondary {
+        @apply fill-green-600;
+    }
+
+    .icon-dark-teal .primary {
+        @apply fill-teal-300;
+    }
+    .icon-dark-green .secondary {
+        @apply fill-teal-600;
+    }
+
+    .icon-dark-gray .primary {
+        @apply fill-gray-400;
+    }
+    .icon-dark-gray .secondary {
+        @apply fill-gray-600;
+    }
+
+    .icon-light-gray .primary {
+        @apply fill-gray-100;
+    }
+    .icon-light-gray .secondary {
+        @apply fill-gray-300;
+    }
+
+    .icon-gray .primary {
+        @apply fill-gray-300;
+    }
+    .icon-gray .secondary {
+        @apply fill-gray-500;
+    }
+
+    .icon-green .primary {
+        @apply fill-green-100;
+    }
+
+    .icon-green .secondary {
+        @apply fill-green-500;
+    }
+
+    .icon-red .primary {
+        @apply fill-red-100;
+    }
+
+    .icon-red .secondary {
+        @apply fill-red-400;
+    }
+
+    .icon-transparent .primary,
+    .icon-transparent .secondary {
+        fill: transparent;
+    }
+
+    .ringable {
+        @apply ring-[2.5px];
+        @apply ring-transparent;
+        @apply focus:outline-none;
+        @apply focus:ring-blue-200;
+    }
+
+    .ringable-dark {
+        @apply ring-[2.5px];
+        @apply ring-transparent;
+        @apply focus:outline-none;
+        @apply focus:ring-blue-400;
+    }
 }
 
 @layer base {
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        @apply font-weight-600;
-        @apply w-full;
-        @apply block;
-    }
-
-    p {
-        @apply text-lg;
-    }
-
-    h1 {
-        @apply text-5xl;
-        @apply mb-3;
-    }
-
-    h2 {
-        @apply text-4xl;
-        @apply mb-3;
-    }
-
-    h3 {
-        @apply text-3xl;
-        @apply mb-2;
-    }
-
-    h4 {
-        @apply text-2xl;
-        @apply mb-2;
-    }
-
-    h5 {
-        @apply text-xl;
-        @apply mb-1;
-    }
-
-    h6 {
-        @apply text-lg;
-        @apply mb-1;
-    }
-
     svg {
         fill: currentColor;
         height: 100%;
@@ -101,10 +168,60 @@
     }
 }
 
-.center-content {
+.flex-row-left {
     @apply flex;
+    @apply flex-row;
     @apply items-center;
+    @apply justify-start;
+}
+
+.flex-row-right {
+    @apply flex;
+    @apply flex-row;
+    @apply items-center;
+    @apply justify-end;
+}
+
+.flex-row-top {
+    @apply flex;
+    @apply flex-row;
+    @apply items-start;
     @apply justify-center;
+}
+
+.flex-col-left {
+    @apply flex;
+    @apply flex-col;
+    @apply items-start;
+    @apply justify-center;
+}
+
+.flex-col-right {
+    @apply flex;
+    @apply flex-col;
+    @apply items-end;
+    @apply justify-center;
+}
+
+.flex-col-top {
+    @apply flex;
+    @apply flex-col;
+    @apply items-center;
+    @apply justify-start;
+}
+
+.flex-col-left-top {
+    @apply flex;
+    @apply flex-col;
+    @apply items-start;
+    @apply justify-start;
+}
+
+.flex-row-left-top {
+    @apply flex;
+    @apply flex-row;
+    @apply items-start;
+    @apply justify-start;
 }
 
 .centering-row {
@@ -119,14 +236,6 @@
     @apply flex-col;
     @apply items-center;
     @apply justify-center;
-}
-
-.text-magenta {
-    color: #fd0948;
-}
-
-.bg-magenta {
-    background-color: #fd0948;
 }
 
 .flex-max {

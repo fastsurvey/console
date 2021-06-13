@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {reduxUtils, backend} from 'utilities';
 import VisualVerifyForm from './visual-verify';
@@ -11,12 +11,12 @@ interface Props {
         account: types.Account,
         configs: types.SurveyConfig[],
     ): void;
-    openMessage(message: types.Message): void;
+    openMessage(messageId: types.MessageId): void;
     closeAllMessages(): void;
 }
 function VerifyForm(props: Props) {
     const [password, setPassword] = useState('');
-    const [success, setSuccess] = useState(false);
+    const [verificationSuccessful, setSuccess] = useState(false);
     const [submitting, setSubmitting] = useState(false);
     let history = useHistory();
 
@@ -25,20 +25,13 @@ function VerifyForm(props: Props) {
     }
 
     const token = new URLSearchParams(window.location.search).get('token');
-    const input1Ref = useRef<HTMLInputElement>(null);
 
     function handleVerify() {
-        input1Ref.current?.blur();
-
         function success() {
             setSuccess(true);
             setSubmitting(false);
 
-            props.openMessage({
-                text: 'Success! Redirect to login in 4 seconds.',
-                type: 'success',
-            });
-
+            props.openMessage('success-redirect-to-login');
             setTimeout(() => {
                 history.push('/login');
                 props.closeAllMessages();
@@ -48,19 +41,13 @@ function VerifyForm(props: Props) {
         function error(code: 400 | 401 | 500) {
             setSubmitting(false);
             if (code === 401) {
-                props.openMessage({
-                    text: 'Wrong password or invalid link',
-                    type: 'error',
-                });
+                props.openMessage('error-link-invalid');
             } else if (code === 400) {
                 // email has already been verified but
                 // token and password are correct
                 success();
             } else {
-                props.openMessage({
-                    text: 'Server error. Please try again later',
-                    type: 'error',
-                });
+                props.openMessage('error-server');
             }
         }
 
@@ -79,20 +66,21 @@ function VerifyForm(props: Props) {
 
     return (
         <VisualVerifyForm
-            // @ts-ignore
-            ref={{input1Ref}}
-            password={password}
-            setPassword={setPassword}
-            success={success}
+            {...{
+                password,
+                setPassword,
+                verificationSuccessful,
+                submitting,
+                handleVerify,
+                history,
+            }}
             tokenExists={token !== null}
             disabled={disabled()}
-            submitting={submitting}
-            handleVerify={handleVerify}
         />
     );
 }
 
-const mapStateToProps = (state: types.ReduxState) => ({});
+const mapStateToProps = () => ({});
 const mapDispatchToProps = (dispatch: any) => ({
     logIn: reduxUtils.dispatchers.logIn(dispatch),
     openMessage: reduxUtils.dispatchers.openMessage(dispatch),

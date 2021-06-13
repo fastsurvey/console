@@ -3,20 +3,19 @@ import {connect} from 'react-redux';
 import {Switch, Route, BrowserRouter, Redirect} from 'react-router-dom';
 import {types} from 'types';
 
-import {FormPage, NotFoundPage, DashboardPage} from 'pages';
+import {NotFoundPage, DashboardPage} from 'pages';
 import {
     Login,
     Register,
     RequestPassword,
     SetPassword,
     Verify,
-    VerifyWall,
 } from 'pages/authentication';
 import {ConfigList, EditorRouter} from 'pages/configuration';
 
 import {LoaderOverlay, MessageQueue, Modal} from 'components';
 
-import {SecureImage, LetterImage} from 'assets';
+import MainWrapper from './components/wrapper/main-wrapper';
 
 interface RouterProps {
     loggingIn: boolean;
@@ -37,11 +36,6 @@ function PageRouter(props: RouterProps) {
                     <Route path='(/configurations|/results|/account|/configuration)'>
                         {!props.loggingIn && props.loggedIn && (
                             <React.Fragment>
-                                {props.account?.verified !== true && (
-                                    <FormPage image={LetterImage}>
-                                        <VerifyWall />
-                                    </FormPage>
-                                )}
                                 {props.account?.verified && (
                                     <DashboardPage>
                                         <Switch>
@@ -52,7 +46,6 @@ function PageRouter(props: RouterProps) {
                                                 exact
                                                 path='/configuration/:survey_name'
                                             >
-                                                <ConfigList />
                                                 <EditorRouter />
                                             </Route>
                                             <Route exact path='/results'>
@@ -71,8 +64,8 @@ function PageRouter(props: RouterProps) {
                         )}
                     </Route>
                     <Route path='(/login|/register)'>
-                        {!props.loggingIn && !props.loggedIn && (
-                            <FormPage image={SecureImage}>
+                        <MainWrapper>
+                            {!props.loggingIn && !props.loggedIn && (
                                 <Switch>
                                     <Route exact path='/login'>
                                         <Login />
@@ -81,19 +74,19 @@ function PageRouter(props: RouterProps) {
                                         <Register />
                                     </Route>
                                 </Switch>
-                            </FormPage>
-                        )}
+                            )}
+                        </MainWrapper>
                         {!props.loggingIn && props.loggedIn && (
                             <Redirect to='/configurations' />
                         )}
                     </Route>
                     <Route path='/verify'>
-                        <FormPage image={LetterImage}>
+                        <MainWrapper>
                             <Verify />
-                        </FormPage>
+                        </MainWrapper>
                     </Route>
                     <Route path='(/request-password|/set-password)'>
-                        <FormPage image={SecureImage}>
+                        <MainWrapper>
                             <Switch>
                                 <Route exact path='/request-password'>
                                     <RequestPassword />
@@ -102,7 +95,7 @@ function PageRouter(props: RouterProps) {
                                     <SetPassword />
                                 </Route>
                             </Switch>
-                        </FormPage>
+                        </MainWrapper>
                     </Route>
                     <Route>
                         <NotFoundPage />

@@ -1,11 +1,11 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {reduxUtils, backend} from 'utilities';
 import VisualRegister from './visual-register';
 import {types} from 'types';
 
 interface Props {
-    openMessage(message: types.Message): void;
+    openMessage(messageId: types.MessageId): void;
     closeAllMessages(): void;
 }
 function RegisterForm(props: Props) {
@@ -23,38 +23,50 @@ function RegisterForm(props: Props) {
         );
     }
 
-    const input2Ref = useRef<HTMLInputElement>(null);
-    const input3Ref = useRef<HTMLInputElement>(null);
-    const input4Ref = useRef<HTMLInputElement>(null);
+    function validateEntry() {
+        function disprove(message: string) {
+            return {
+                entryIsValid: false,
+                validationMessage: message,
+            };
+        }
+
+        if (!email.includes('@')) {
+            return disprove('email format invalid');
+        }
+        if (username.length < 3) {
+            return disprove('username too short (≥ 3 characters)');
+        }
+        if (username.length > 20) {
+            return disprove('username too long (≤ 20 characters)');
+        }
+        if (password.length < 8) {
+            return disprove('Password too short (≥ 8 characters)');
+        }
+        if (password.length > 64) {
+            return disprove('Password too long (≤ 64 characters)');
+        }
+        if (password !== passwordConfirmation) {
+            return disprove("passwords don't match");
+        }
+
+        return {
+            entryIsValid: true,
+            validationMessage: 'valid registration data',
+        };
+    }
 
     function handleRegistration() {
-        input2Ref.current?.blur();
-        input3Ref.current?.blur();
-        input4Ref.current?.blur();
-
         function success() {
             setSubmitting(false);
-            setPassword('');
-            setPasswordConfirmation('');
-            props.openMessage({
-                text: 'Success: Account created! Please verify your email now.',
-                type: 'success',
-            });
+            props.openMessage('success-account-created');
         }
 
         function error(code: 400 | 500) {
             setSubmitting(false);
-            let messageText: string;
-            if (code === 400) {
-                messageText = 'Email is already taken';
-            } else {
-                // Invalid password formats will be catched by frontend
-                messageText = 'Server error. Please try again later';
-            }
-            props.openMessage({
-                text: messageText,
-                type: 'error',
-            });
+            props.openMessage(
+                code === 400 ? 'error-email-taken' : 'error-server',
+            );
         }
 
         if (!disabled()) {
@@ -74,20 +86,21 @@ function RegisterForm(props: Props) {
 
     return (
         <VisualRegister
-            // @ts-ignore
-            ref={{input2Ref, input3Ref, input4Ref}}
-            email={email}
-            setEmail={setEmail}
-            username={username}
-            setUsername={setUsername}
-            password={password}
-            setPassword={setPassword}
-            passwordConfirmation={passwordConfirmation}
-            setPasswordConfirmation={setPasswordConfirmation}
+            {...{
+                email,
+                setEmail,
+                username,
+                setUsername,
+                password,
+                setPassword,
+                passwordConfirmation,
+                setPasswordConfirmation,
+            }}
             closeAllMessages={props.closeAllMessages}
             handleRegistration={handleRegistration}
             disabled={disabled()}
             submitting={submitting}
+            {...validateEntry()}
         />
     );
 }

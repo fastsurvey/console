@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {clipboardUtils, formUtils} from 'utilities';
+import {clipboardUtils, formUtils, localIdUtils} from 'utilities';
 import {types} from 'types';
 
 import VisualField from './visual-field';
@@ -8,24 +8,25 @@ import OptionSettings from './option-settings/option-settings';
 import RadioSettings from './radio-settings/radio-settings';
 import SelectionSettings from './selection-settings/selection-settings';
 import EmailSettings from './email-settings/email-settings';
-import localIdUtils from '../../../../utilities/local-id-utils/index';
 
 interface Props {
     fieldConfig: types.SurveyField;
     setLocalFieldConfig(fieldConfigChanges: object): void;
     disabled: boolean;
-    updateValidator(newState: boolean): void;
+    updateValidation(newState: types.ValidationResult): void;
+    validation: types.ValidationResult;
     removeField(): void;
 }
 function Field(props: Props) {
     useEffect(
-        () => props.updateValidator(formUtils.validateField(props.fieldConfig)),
+        () =>
+            props.updateValidation(formUtils.validateField(props.fieldConfig)),
         // eslint-disable-next-line
         [props.fieldConfig.local_id],
     );
 
     function updateLocalFieldConfig(fieldConfigChanges: object) {
-        props.updateValidator(
+        props.updateValidation(
             formUtils.validateField({
                 ...props.fieldConfig,
                 ...fieldConfigChanges,
@@ -103,6 +104,7 @@ function Field(props: Props) {
             disabled={props.disabled}
             removeField={props.removeField}
             copyField={copyField}
+            validation={props.validation}
         >
             {FieldSettings}
         </VisualField>

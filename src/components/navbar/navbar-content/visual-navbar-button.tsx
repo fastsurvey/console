@@ -9,7 +9,7 @@ interface VisualNavbarButtonProps {
 function VisualNavbarButton(props: VisualNavbarButtonProps) {
     return (
         <div
-            onClick={props.onClick}
+            onClick={props.onClick ? props.onClick : () => {}}
             className={
                 'relative h-10 my-1 py-0 text-lg ' +
                 'lg:w-38 xl:w-48 2xl:w-58 mx-3 px-1 ' +

@@ -1,8 +1,9 @@
 import React from 'react';
-import {TextInput, TextLink, ButtonLink} from 'components';
-import {formUtils} from 'utilities';
+import {Label, TextInput, Button} from 'components';
+import {Link} from 'react-router-dom';
+import {icons} from 'assets';
 
-interface Props {
+export default function VisualRegister(props: {
     email: string;
     setEmail(newEmail: string): void;
     username: string;
@@ -12,100 +13,102 @@ interface Props {
     passwordConfirmation: string;
     setPasswordConfirmation(newPasswordConfirmation: string): void;
 
+    entryIsValid: boolean;
+    validationMessage: string;
+
     disabled: boolean;
     submitting: boolean;
 
     closeAllMessages(): void;
     handleRegistration(): void;
-}
-const VisualRegister = React.forwardRef((props: Props, refs: any) => {
-    const {input2Ref, input3Ref, input4Ref} = refs;
-
+}) {
     return (
-        <div className='w-full'>
-            <h2 className='mb-6 text-center no-selection'>Register</h2>
-            <form>
-                <TextInput
-                    required
-                    placeholder='email'
-                    value={props.email}
-                    onChange={(newValue) => {
-                        props.closeAllMessages();
-                        props.setEmail(newValue);
-                    }}
-                    wrapperClassName='mb-2'
-                    autoComplete='email'
-                    onEnter={() => input2Ref.current?.focus()}
-                />
-                <TextInput
-                    required
-                    placeholder='username'
-                    value={props.username}
-                    onChange={(newValue) => {
-                        props.closeAllMessages();
-                        props.setUsername(newValue);
-                    }}
-                    ref={input2Ref}
-                    wrapperClassName='mb-2'
-                    autoComplete='username'
-                    onEnter={() => input3Ref.current?.focus()}
-                    hint={{
-                        ...formUtils.hints.username(props.username),
-                        inlineHint: true,
-                    }}
-                />
-                <TextInput
-                    value={props.password}
-                    onChange={(newValue) => {
-                        props.closeAllMessages();
-                        props.setPassword(newValue);
-                    }}
-                    ref={input3Ref}
-                    onEnter={() => input4Ref.current?.focus()}
-                    required
-                    placeholder='password'
-                    type='password'
-                    wrapperClassName='mb-2'
-                    autoComplete='new-password'
-                    hint={{
-                        ...formUtils.hints.password(props.password),
-                        inlineHint: true,
-                    }}
-                />
-                <TextInput
-                    value={props.passwordConfirmation}
-                    onChange={(newValue) => {
-                        props.closeAllMessages();
-                        props.setPasswordConfirmation(newValue);
-                    }}
-                    ref={input4Ref}
-                    onEnter={props.handleRegistration}
-                    required
-                    placeholder='confirm password'
-                    type='password'
-                    wrapperClassName='mb-5'
-                    autoComplete='new-password'
-                    hint={{
-                        ...formUtils.hints.passwordConfirmation(
-                            props.password,
-                            props.passwordConfirmation,
-                        ),
-                        inlineHint: true,
-                    }}
-                />
-                <ButtonLink
-                    onClick={props.handleRegistration}
-                    disabled={props.disabled}
-                    spinning={props.submitting}
-                >
+        <div className='w-full max-w-sm bg-white rounded shadow centering-col'>
+            <div className='w-full p-4 centering-col gap-y-4'>
+                <h1 className='text-2xl text-center text-gray-800 font-weight-600 no-selection'>
                     Register
-                </ButtonLink>
-            </form>
-            <TextLink to='/login' className='pt-4'>
-                Already have an account?
-            </TextLink>
+                </h1>
+                <div className='w-full centering-col gap-y-0.5'>
+                    <Label text='Email' />
+                    <TextInput
+                        autoFocus
+                        value={props.email}
+                        setValue={(newValue) => {
+                            props.closeAllMessages();
+                            props.setEmail(newValue);
+                        }}
+                    />
+                </div>
+                <div className='w-full centering-col gap-y-0.5'>
+                    <Label text='Username' />
+                    <TextInput
+                        value={props.username}
+                        setValue={(newValue) => {
+                            props.closeAllMessages();
+                            props.setUsername(newValue);
+                        }}
+                    />
+                </div>
+                <div className='w-full centering-col gap-y-0.5'>
+                    <Label text='Password' />
+                    <TextInput
+                        type='password'
+                        value={props.password}
+                        setValue={(newValue) => {
+                            props.closeAllMessages();
+                            props.setPassword(newValue);
+                        }}
+                    />
+                </div>
+                <div className='w-full centering-col gap-y-0.5'>
+                    <Label text='Repeat Password' />
+                    <TextInput
+                        type='password'
+                        value={props.passwordConfirmation}
+                        setValue={(newValue) => {
+                            props.closeAllMessages();
+                            props.setPasswordConfirmation(newValue);
+                        }}
+                    />
+                </div>
+
+                <div className='w-full gap-y-0.5 flex flex-row-reverse items-center justify-center'>
+                    <Button
+                        text='Login'
+                        variant='flat-light-blue'
+                        onClick={props.handleRegistration}
+                        disabled={props.disabled}
+                    />
+                    <div className='flex-max' />
+                    <Link
+                        to='/login'
+                        className='px-1.5 py-0.5 -mx-1.5 text-sm text-gray-400 rounded font-weight-600 ringable'
+                    >
+                        Already have an account?
+                    </Link>
+                </div>
+            </div>
+            <div
+                className={
+                    'w-full p-3 pr-6 text-justify flex-row-top space-x-2 ' +
+                    'border-t-[3px] rounded-b ' +
+                    (props.entryIsValid
+                        ? 'text-green-500 bg-green-50 border-green-100 '
+                        : 'text-red-400 bg-red-50 border-red-100 ')
+                }
+            >
+                <div
+                    className={
+                        'flex-shrink-0 w-6 h-6 ' +
+                        (props.entryIsValid ? 'icon-green ' : 'icon-red ')
+                    }
+                >
+                    {props.entryIsValid ? icons.checkCircle : icons.closeCirlce}
+                </div>
+                <div className='text-left flex-max font-weight-600 text-md'>
+                    {props.validationMessage}
+                </div>
+            </div>
         </div>
     );
-});
-
-export default VisualRegister;
+}

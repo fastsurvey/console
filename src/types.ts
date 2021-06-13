@@ -95,9 +95,30 @@ export declare namespace types {
 
     // TODO: Add fix message versions (Message is union of those types)
     export type Message = {
+        id: MessageId;
         text: string;
-        type: 'info' | 'warning' | 'error' | 'success';
+        type: 'warning' | 'error' | 'success';
     };
+
+    export type MessageId =
+        | 'warning-unsaved'
+        | 'error-credentials'
+        | 'error-server'
+        | 'success-account-created'
+        | 'error-email-taken'
+        | 'error-email-invalid'
+        | 'error-link-invalid'
+        | 'success-redirect-to-login'
+        | 'warning-clipboard'
+        | 'editor-warning-validators'
+        | 'editor-warning-field-count'
+        | 'editor-warning-authentication';
+
+    export type ValidationResult =
+        | {
+              valid: true;
+          }
+        | {valid: false; message: string};
 
     export type NavbarState = {
         open: boolean;
@@ -118,7 +139,7 @@ export declare namespace types {
           }
         | {
               type: 'OPEN_MESSAGE';
-              message: types.Message;
+              messageId: types.MessageId;
           }
         | {
               type: 'CLOSE_MESSAGE';

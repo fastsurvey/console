@@ -1,159 +1,152 @@
 import React, {useState, useEffect} from 'react';
 import {formUtils, constants} from 'utilities';
 import {
-    DropDown,
-    TextArea,
-    TextInput,
-    DatePicker,
     EditorFormCard,
-    EditorFormRow,
+    Label,
+    TextArea,
+    DropDown,
+    DatePicker,
+    TextInput,
 } from 'components';
 import {icons} from 'assets';
 import {types} from 'types';
 
 interface Props {
     config: types.SurveyConfig;
-    surveyNameIsValid(survey_name: string): boolean;
     updateConfig(config: types.SurveyConfig, skipValidation?: boolean): void;
-    updateValidator(newState: boolean): void;
     commonProps: any;
     disabled: boolean;
     openRemoveModal(): void;
     openDuplicateModal(): void;
+    validation: types.ValidationResult;
 }
 const VisualSettings = (props: Props) => {
-    const commonProps = {
-        disabled: props.disabled,
-        flat: true,
-    };
-
-    const [collapse, setCollapse] = useState(false);
-    useEffect(() => setCollapse(false), [props.config.local_id]);
+    const [collapse, setCollapse] = useState(true);
+    useEffect(() => setCollapse(true), [props.config.local_id]);
 
     const [actionLabel, setActionLabel] = useState('');
 
+    const buttonCSS =
+        'w-7 h-7 p-0.5 m-1.5 opacity-70 hover:opacity-100 rounded ringable-dark';
     const buttons = (
         <>
-            <div
-                className='w-10 h-10 px-2 py-2 cursor-pointer opacity-70 hover:opacity-100'
+            <button
+                className={buttonCSS}
                 onClick={() => {
                     props.openDuplicateModal();
                 }}
                 onMouseEnter={() => setActionLabel('duplicate survey')}
+                onFocus={() => setActionLabel('duplicate survey')}
             >
-                {icons.fileCopy}
-            </div>
-            <div
-                className='w-10 h-10 px-2 py-2 cursor-pointer opacity-70 hover:opacity-100'
+                {icons.duplicate}
+            </button>
+            <button
+                className={buttonCSS}
                 onClick={props.openRemoveModal}
                 onMouseEnter={() => setActionLabel('remove survey')}
+                onFocus={() => setActionLabel('remove survey')}
             >
-                {icons.deleteForever}
-            </div>
+                {icons.trash}
+            </button>
         </>
     );
 
     return (
         <EditorFormCard
             label='General Settings'
-            longLabel={props.config.title}
             icon={icons.tune}
-            className='z-20 mt-8'
+            className='z-20 mt-6'
             collapse={collapse}
             setCollapse={setCollapse}
             buttons={buttons}
             actionLabel={actionLabel}
             setActionLabel={setActionLabel}
+            validation={props.validation}
         >
-            <EditorFormRow label='Title' className='mb-1'>
+            <div className='w-full centering-col gap-y-0.5'>
+                <Label text='Title' />
                 <TextInput
-                    {...commonProps}
-                    placeholder='The title of your survey'
                     value={props.config.title}
-                    onChange={(newValue: string) => {
+                    setValue={(newValue: string) => {
                         props.updateConfig({
                             ...props.config,
                             title: newValue,
                         });
                     }}
-                    hint={{
-                        ...formUtils.hints.title(props.config.title),
-                        inlineHint: true,
-                    }}
+                    disabled={!props.config.draft || collapse}
                 />
-            </EditorFormRow>
-
-            <EditorFormRow label='Identifier' className='mb-1'>
+            </div>
+            <div className='w-full centering-col gap-y-0.5'>
+                <Label text='URL conform identifier' />
                 <TextInput
-                    {...commonProps}
-                    placeholder='URL conform identifier'
                     value={props.config.survey_name}
-                    onChange={(newValue: string) => {
+                    setValue={(newValue: string) => {
                         props.updateConfig({
                             ...props.config,
                             survey_name: newValue,
                         });
                     }}
-                    hint={{
-                        ...formUtils.hints.surveyName(
-                            props.config,
-                            props.surveyNameIsValid,
-                        ),
-                        inlineHint: true,
-                    }}
+                    disabled={!props.config.draft || collapse}
                 />
-            </EditorFormRow>
+            </div>
 
-            <EditorFormRow label='Description' className='mb-8'>
+            <div className='w-full centering-col gap-y-0.5'>
+                <Label text='Description' />
                 <TextArea
-                    {...commonProps}
                     value={props.config.description}
-                    onChange={(newValue: string) => {
+                    setValue={(newValue: string) => {
                         props.updateConfig({
                             ...props.config,
-                            ...{description: newValue},
+                            description: newValue,
                         });
                     }}
-                    charLimits={{min: 0, max: 2000}}
+                    disabled={!props.config.draft || collapse}
                 />
-            </EditorFormRow>
+            </div>
 
-            <EditorFormRow label='Start' className='mb-2'>
+            <div
+                className={'h-0.5 bg-gray-300'}
+                style={{width: 'calc(100% + 1.5rem)'}}
+            />
+
+            <div className='w-full flex-col-left gap-y-0.5'>
+                <Label text='Start survey at' />
                 <DatePicker
-                    {...commonProps}
                     timestamp={props.config.start}
-                    setNewTimestamp={(timestamp: number) => {
-                        props.updateConfig(
-                            {
-                                ...props.config,
-                                start: timestamp,
-                            },
-                            true,
-                        );
+                    setTimestamp={(timestamp: number) => {
+                        props.updateConfig({
+                            ...props.config,
+                            start: timestamp,
+                        });
                     }}
+                    disabled={!props.config.draft || collapse}
                 />
-            </EditorFormRow>
-            <EditorFormRow label='End' className='mb-8'>
-                <DatePicker
-                    {...commonProps}
-                    timestamp={props.config.end}
-                    setNewTimestamp={(timestamp: number) => {
-                        props.updateConfig(
-                            {
-                                ...props.config,
-                                end: timestamp,
-                            },
-                            true,
-                        );
-                    }}
-                />
-            </EditorFormRow>
+            </div>
 
-            <EditorFormRow label='Auth Mode' className='mb-1'>
+            <div className='w-full flex-col-left gap-y-0.5'>
+                <Label text='End survey by' />
+                <DatePicker
+                    timestamp={props.config.end}
+                    setTimestamp={(timestamp: number) => {
+                        props.updateConfig({
+                            ...props.config,
+                            end: timestamp,
+                        });
+                    }}
+                    disabled={!props.config.draft || collapse}
+                />
+            </div>
+
+            <div
+                className={'h-0.5 bg-gray-300'}
+                style={{width: 'calc(100% + 1.5rem)'}}
+            />
+
+            <div className='w-full centering-col gap-y-0.5'>
+                <Label text='Authentication Mode' />
                 <DropDown
-                    {...commonProps}
                     value={props.config.authentication === 'open' ? 0 : 1}
-                    onChange={(newValue: 0 | 1) => {
+                    setValue={(newValue: 0 | 1) => {
                         props.updateConfig(
                             {
                                 ...props.config,
@@ -164,26 +157,24 @@ const VisualSettings = (props: Props) => {
                         );
                     }}
                     options={constants.formOptions.AUTH_MODE}
+                    disabled={!props.config.draft || collapse}
                 />
-            </EditorFormRow>
+            </div>
 
-            <EditorFormRow label='Limit to' className='mb-2'>
+            <div className='w-full centering-col gap-y-0.5'>
+                <Label text='Limit to' />
                 <TextInput
-                    {...commonProps}
-                    postfix=' submissions'
                     value={props.config.limit.toString()}
-                    onChange={(newValue: string) => {
+                    setValue={(newValue: string) => {
                         props.updateConfig({
                             ...props.config,
                             limit: formUtils.formatters.atoi(newValue),
                         });
                     }}
-                    hint={{
-                        ...formUtils.hints.submissionLimit(props.config),
-                        inlineHint: true,
-                    }}
+                    disabled={!props.config.draft || collapse}
+                    postfix=' submissions'
                 />
-            </EditorFormRow>
+            </div>
         </EditorFormCard>
     );
 };

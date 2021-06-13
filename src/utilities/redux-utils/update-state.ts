@@ -3,10 +3,11 @@ import {cloneDeep, unionBy} from 'lodash';
 import {reduxUtils, localIdUtils} from 'utilities';
 import {types} from 'types';
 import assert from 'assert';
+import constants from '../constants/index';
 
 function updateState(state: types.ReduxState, action: types.ReduxAction) {
     const newState = cloneDeep(state);
-    console.debug(action);
+    console.debug(action.type);
 
     switch (action.type) {
         case 'LOG_IN':
@@ -27,9 +28,9 @@ function updateState(state: types.ReduxState, action: types.ReduxAction) {
         case 'OPEN_MESSAGE':
             // do not have mutliple messages with the same text
             newState.messages = unionBy(
-                [action.message],
+                [constants.messages[action.messageId]],
                 newState.messages,
-                'text',
+                'id',
             );
             break;
 
@@ -78,29 +79,24 @@ function updateState(state: types.ReduxState, action: types.ReduxAction) {
             break;
 
         case 'REMOVE_CONFIG':
-            if (newState.configs !== undefined) {
-                newState.configs = newState.configs.filter(
-                    (config) => config.survey_name !== action.surveyName,
-                );
-            }
+            assert(newState.configs);
+            newState.configs = newState.configs.filter(
+                (config) => config.survey_name !== action.surveyName,
+            );
             break;
 
         case 'SET_CENTRAL_CONFIG':
-            if (newState.configs !== undefined) {
-                newState.configs = newState.configs.map(
-                    (config: types.SurveyConfig) =>
-                        config.local_id === action.config.local_id
-                            ? action.config
-                            : config,
-                );
-            }
+            assert(newState.configs);
+            newState.configs = newState.configs.map((c) =>
+                c.local_id === action.config.local_id ? action.config : c,
+            );
             newState.configIsDiffering = false;
             break;
 
         case 'MARK_DIFFERING':
             newState.configIsDiffering = action.differing;
             newState.messages = newState.messages.filter(
-                (m) => m.text !== 'Please save or undo your changes first!',
+                (m) => m.id !== 'warning-unsaved',
             );
             break;
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {ModalButton} from 'components';
+import {Button} from 'components';
 
 interface Props {
     closeModal(): void;
@@ -7,22 +7,24 @@ interface Props {
 }
 function RemoveSurveyPopup(props: Props) {
     return (
-        <div className='flex flex-col mt-1 w-96'>
+        <>
             <div className='px-3 text-justify text-gray-800 text-md font-weight-500'>
                 All <strong>submissions will be removed as well</strong> and you
-                will not be able to restore this survey anymore. If you want to
-                keep the submissions,{' '}
-                <strong>you can also archive this survey.</strong>
+                will not be able to restore this survey anymore.
             </div>
-            <div className='flex flex-row justify-center w-full mt-4 gap-x-2'>
-                <ModalButton
-                    label='Cancel'
-                    color='red-light'
+            <div className='w-full flex-row-right gap-x-2'>
+                <Button
+                    text='Cancel'
+                    variant='flat-light-blue'
                     onClick={props.closeModal}
                 />
-                <ModalButton label='Remove' onClick={props.removeSurvey} />
+                <Button
+                    text='Remove Survey'
+                    variant='flat-light-blue'
+                    onClick={props.removeSurvey}
+                />
             </div>
-        </div>
+        </>
     );
 }
 

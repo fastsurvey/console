@@ -1,27 +1,16 @@
 import React from 'react';
-import {LogoBanner} from 'components';
+import Logo from './logo-banner';
 
-interface Props {
-    children: React.ReactNode;
-    flexDirection: 'flex-row' | 'flex-col';
-    className?: string;
-}
-
-function MainWrapper(props: Props) {
+function MainWrapper(props: {children: React.ReactNode; className?: string}) {
     return (
         <React.Fragment>
             <header className='z-40'>
-                <LogoBanner />
+                <Logo />
             </header>
             <main
-                className={
-                    'left-0 right-0 top-0 bottom-0 min-h-screen center-content' +
-                    ` ${props.className}`
-                }
+                className={`w-screen min-h-screen centering-col bg-gray-100 ${props.className}`}
             >
-                <div className={props.flexDirection + ' py-24 center-content'}>
-                    {props.children}
-                </div>
+                {props.children}
             </main>
         </React.Fragment>
     );

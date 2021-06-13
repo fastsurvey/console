@@ -1,4 +1,3 @@
-import {icons} from 'assets';
 import React from 'react';
 import {styleUtils} from 'utilities';
 import {types} from 'types';
@@ -15,23 +14,24 @@ function AddFieldPopup(props: Props) {
         'text',
     ];
     return (
-        <div className='px-1 w-60'>
+        <div className='p-1.5 centering-col gap-y-2 w-full '>
             {fields.map((fieldType: types.FieldType) => (
-                <div
+                <button
                     key={fieldType}
                     className={
-                        'flex flex-row items-start justify-start ' +
-                        'my-1 text-lg leading-10 font-weight-600 rounded ' +
-                        'opacity-70 hover:opacity-100 cursor-pointer ' +
+                        'w-full flex-row-left ' +
+                        'text-lg leading-10 font-weight-600 rounded ' +
+                        'ring-[2.5px] ring-transparent hover:ring-blue-200 ' +
+                        'focus:outline-none focus:ring-blue-200 ' +
                         styleUtils.color.fieldTypeToClasses(fieldType)
                     }
                     onClick={() => props.insertField(fieldType)}
                 >
-                    <div className='w-10 h-10 p-2 ml-1 opacity-70'>
-                        {icons.widgets}
+                    <div className='w-10 h-10 p-2 mx-1'>
+                        {styleUtils.icons.fieldTypeToIcon(fieldType)}
                     </div>
                     <div className=''>{fieldType}</div>
-                </div>
+                </button>
             ))}
         </div>
     );

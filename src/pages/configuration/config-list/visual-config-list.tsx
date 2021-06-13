@@ -1,19 +1,66 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {sortBy} from 'lodash';
+import {Link} from 'react-router-dom';
+import {types} from 'types';
+import VisualConfigPanel from './visual-config-panel';
+import {Button, SearchBar} from 'components';
+import {icons} from 'assets';
 
-interface Props {
-    children: React.ReactNode;
-}
-function VisualConfigList(props: Props) {
+function VisualConfigList(props: {
+    configs: types.SurveyConfig[];
+    addSurvey(): void;
+    account: types.Account;
+}) {
+    const [value, setValue] = useState('');
     return (
         <div
             className={
-                'fixed top-0 flex flex-col p-2 h-screen ' +
-                'lg:ml-44 lg:w-60 xl:ml-54 xl:w-70 2xl:ml-64 2xl:w-80 ' +
-                ' bg-gray-200 z-40 ' +
-                'overflow-y-scroll overflow-x-hidden'
+                'py-32 min-h-screen w-full z-0 flex-col-top ' +
+                'overflow-y-scroll overflow-x-hidden bg-gray-100'
             }
         >
-            {props.children}
+            <div className='w-full max-w-4xl centering-col'>
+                <div className='w-full mt-1 mb-6 centering-row gap-x-3'>
+                    <SearchBar value={value} setValue={setValue} />
+                    <Button
+                        icon={icons.addSquare}
+                        text='Add Survey'
+                        onClick={props.addSurvey}
+                    />
+                </div>
+
+                <div className='grid w-full grid-cols-2 gap-3'>
+                    {sortBy(
+                        props.configs.filter(
+                            (c) =>
+                                c.title
+                                    .toLowerCase()
+                                    .includes(value.toLowerCase()) ||
+                                c.survey_name
+                                    .toLowerCase()
+                                    .includes(value.toLowerCase()),
+                        ),
+                        ['survey_name'],
+                    ).map((config) => (
+                        <Link
+                            to={`/configuration/${config.survey_name}`}
+                            key={config.local_id}
+                            className='rounded ringable group'
+                        >
+                            <VisualConfigPanel
+                                config={config}
+                                account={props.account}
+                            />
+                        </Link>
+                    ))}
+                </div>
+
+                {props.configs.length === 0 && (
+                    <p className='w-full my-4 text-center text-gray-600 font-weight-500'>
+                        No surveys yet
+                    </p>
+                )}
+            </div>
         </div>
     );
 }

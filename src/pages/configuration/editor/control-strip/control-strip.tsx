@@ -12,7 +12,7 @@ interface Props {
     configIsDiffering: boolean;
     saveState(): void;
     revertState(): void;
-    openMessage(message: types.Message): void;
+    openMessage(messageId: types.MessageId): void;
 }
 function ControlStrip(props: Props) {
     function now() {

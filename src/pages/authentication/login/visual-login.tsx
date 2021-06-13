@@ -1,7 +1,8 @@
 import React from 'react';
-import {TextInput, TextLink, ButtonLink} from 'components';
+import {TextInput, Label, Button} from 'components';
+import {Link} from 'react-router-dom';
 
-interface Props {
+export default function VisualLogin(props: {
     identifier: string;
     setIdentifier(newIdentifier: string): void;
     password: string;
@@ -12,54 +13,50 @@ interface Props {
 
     closeAllMessages(): void;
     handleLogin(): void;
-}
-const VisualLogin = React.forwardRef((props: Props, refs: any) => {
-    const {input2Ref} = refs;
-
+}) {
     return (
-        <div className='w-full'>
-            <h2 className='mb-4 text-center no-selection'>Login</h2>
-            <form>
+        <div className='w-full max-w-sm p-4 bg-white rounded shadow centering-col gap-y-4'>
+            <h1 className='text-2xl text-center text-gray-800 font-weight-600 no-selection'>
+                Login
+            </h1>
+            <div className='w-full centering-col gap-y-0.5'>
+                <Label text='Email or Username' />
                 <TextInput
-                    placeholder='email'
+                    autoFocus
                     value={props.identifier}
-                    onChange={(newValue) => {
+                    setValue={(newValue) => {
                         props.closeAllMessages();
                         props.setIdentifier(newValue);
                     }}
-                    className='mb-3'
-                    autoComplete='email username'
-                    onEnter={() => input2Ref.current.focus()}
                 />
+            </div>
+            <div className='w-full centering-col gap-y-0.5'>
+                <Label text='Password' />
                 <TextInput
-                    placeholder='password'
+                    type='password'
                     value={props.password}
-                    onChange={(newValue) => {
+                    setValue={(newValue) => {
                         props.closeAllMessages();
                         props.setPassword(newValue);
                     }}
-                    className='mb-5'
-                    type='password'
-                    autoComplete='current-password'
-                    ref={input2Ref}
-                    onEnter={props.handleLogin}
                 />
-                <ButtonLink
+            </div>
+
+            <div className='w-full gap-y-0.5 flex flex-row-reverse items-center justify-center'>
+                <Button
+                    text='Login'
+                    variant='flat-light-blue'
                     onClick={props.handleLogin}
                     disabled={props.disabled}
-                    spinning={props.submitting}
+                />
+                <div className='flex-max' />
+                <Link
+                    to='/register'
+                    className='px-1.5 py-0.5 -mx-1.5 text-sm text-gray-400 rounded font-weight-600 ringable'
                 >
-                    Login
-                </ButtonLink>
-            </form>
-            <TextLink to='/register' className='pt-4'>
-                Don't have an account yet?
-            </TextLink>
-            <TextLink to='/request-password' className='pt-2'>
-                Forgot your password?
-            </TextLink>
+                    Don't have an account yet?
+                </Link>
+            </div>
         </div>
     );
-});
-
-export default VisualLogin;
+}

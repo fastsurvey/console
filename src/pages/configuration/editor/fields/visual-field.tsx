@@ -1,23 +1,19 @@
 import React, {useEffect, useState} from 'react';
-import {formUtils} from 'utilities';
 import {icons} from 'assets';
-import {TextArea, TextInput, EditorFormCard, EditorFormRow} from 'components';
+import {EditorFormCard, Label, TextInput, TextArea} from 'components';
 import {types} from 'types';
+import {styleUtils} from 'utilities';
 
 interface Props {
     fieldConfig: types.SurveyField;
     disabled: boolean;
     setLocalFieldConfig(fieldConfigChanges: object): void;
+    validation: types.ValidationResult;
     removeField(): void;
     copyField(): void;
     children: React.ReactNode;
 }
 function VisualField(props: Props) {
-    const commonInputProps = {
-        disabled: props.disabled,
-        flat: true,
-    };
-
     const [collapse, setCollapse] = useState(true);
     useEffect(() => {
         setCollapse(true);
@@ -25,31 +21,39 @@ function VisualField(props: Props) {
 
     const [actionLabel, setActionLabel] = useState('');
 
+    const buttonCSS =
+        'w-7 h-7 p-0.5 m-1.5 opacity-70 hover:opacity-100 rounded ringable-dark ';
+    const disabledButtonCSS =
+        'w-7 h-7 p-0.5 m-1.5 opacity-70 rounded cursor-not-allowed ';
     const buttons = (
         <>
-            <div
-                className='w-10 h-10 px-2 py-2 cursor-pointer opacity-70 hover:opacity-100'
+            <button
+                className={buttonCSS}
                 onClick={() => {
                     props.copyField();
                     setActionLabel('copied!');
                 }}
                 onMouseEnter={() => setActionLabel('copy')}
+                onFocus={() => setActionLabel('copy')}
             >
-                {icons.contentCopy}
-            </div>
-            <div
-                className='w-10 h-10 px-2 py-2 cursor-pointer opacity-70 hover:opacity-100'
+                {icons.duplicate}
+            </button>
+            <button
+                className={props.disabled ? disabledButtonCSS : buttonCSS}
                 onClick={props.removeField}
                 onMouseEnter={() => setActionLabel('remove')}
+                onFocus={() => setActionLabel('remove')}
+                disabled={props.disabled}
             >
-                {icons.delete}
-            </div>
+                {icons.trash}
+            </button>
         </>
     );
+
     return (
         <EditorFormCard
             label={props.fieldConfig.type}
-            icon={icons.widgets}
+            icon={styleUtils.icons.fieldTypeToIcon(props.fieldConfig.type)}
             fieldType={props.fieldConfig.type}
             collapse={collapse}
             setCollapse={setCollapse}
@@ -57,34 +61,35 @@ function VisualField(props: Props) {
             buttons={buttons}
             actionLabel={actionLabel}
             setActionLabel={setActionLabel}
+            validation={props.validation}
         >
-            <EditorFormRow label='Title' className='mb-1'>
+            <div className='w-full centering-col gap-y-0.5'>
+                <Label text='Title' />
                 <TextInput
-                    {...commonInputProps}
-                    placeholder='The title of this field'
                     value={props.fieldConfig.title}
-                    onChange={(newValue: string) => {
+                    setValue={(newValue: string) => {
                         props.setLocalFieldConfig({
                             title: newValue,
                         });
                     }}
-                    hint={{
-                        ...formUtils.hints.title(props.fieldConfig.title),
-                        inlineHint: true,
-                    }}
+                    disabled={props.disabled || collapse}
                 />
-            </EditorFormRow>
-
-            <EditorFormRow label='Description' className='mb-8'>
+            </div>
+            <div className='w-full centering-col gap-y-0.5'>
+                <Label text='Description' />
                 <TextArea
-                    {...commonInputProps}
                     value={props.fieldConfig.description}
-                    onChange={(newValue: string) => {
+                    setValue={(newValue: string) => {
                         props.setLocalFieldConfig({description: newValue});
                     }}
-                    charLimits={{min: 0, max: 2000}}
+                    disabled={props.disabled || collapse}
                 />
-            </EditorFormRow>
+            </div>
+
+            <div
+                className={'h-0.5 bg-gray-300'}
+                style={{width: 'calc(100% + 1.5rem)'}}
+            />
 
             {props.children}
         </EditorFormCard>

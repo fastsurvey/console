@@ -1,6 +1,6 @@
 import React from 'react';
 import {formUtils} from 'utilities';
-import {TextInput, EditorFormRow} from 'components';
+import {Label, TextInput} from 'components';
 import {types} from 'types';
 
 interface Props {
@@ -9,43 +9,34 @@ interface Props {
     disabled: boolean;
 }
 function VisualTextSettings(props: Props) {
-    const commonProps = {
-        disabled: props.disabled,
-        flat: true,
-    };
-
     return (
         <>
-            <EditorFormRow label='Min. Characters' className='mb-1'>
+            <div className='w-full centering-col gap-y-0.5'>
+                <Label text='Minimum' />
                 <TextInput
-                    {...commonProps}
                     value={props.fieldConfig.min_chars.toString()}
-                    onChange={(newValue: string) =>
+                    setValue={(newValue: string) => {
                         props.setLocalFieldConfig({
                             min_chars: formUtils.formatters.atoi(newValue),
-                        })
-                    }
-                    hint={{
-                        ...formUtils.hints.minChars(props.fieldConfig),
-                        inlineHint: true,
+                        });
                     }}
+                    disabled={props.disabled}
+                    postfix=' characters'
                 />
-            </EditorFormRow>
-            <EditorFormRow label='Max. Characters' className='mb-1'>
+            </div>
+            <div className='w-full centering-col gap-y-0.5'>
+                <Label text='Maximum' />
                 <TextInput
-                    {...commonProps}
                     value={props.fieldConfig.max_chars.toString()}
-                    onChange={(newValue: string) =>
+                    setValue={(newValue: string) => {
                         props.setLocalFieldConfig({
                             max_chars: formUtils.formatters.atoi(newValue),
-                        })
-                    }
-                    hint={{
-                        ...formUtils.hints.maxChars(props.fieldConfig),
-                        inlineHint: true,
+                        });
                     }}
+                    disabled={props.disabled}
+                    postfix=' characters'
                 />
-            </EditorFormRow>
+            </div>
         </>
     );
 }

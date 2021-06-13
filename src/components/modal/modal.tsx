@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {reduxUtils} from 'utilities';
+import {hookUtils, reduxUtils} from 'utilities';
 import {connect} from 'react-redux';
 import {types} from 'types';
 
@@ -8,6 +8,13 @@ interface Props {
     closeModal(): void;
 }
 function Modal(props: Props) {
+    hookUtils.useEvent('keydown', keydown);
+    function keydown(e: KeyboardEvent) {
+        if (e.key === 'Escape' && props.modalState.open) {
+            props.closeModal();
+        }
+    }
+
     useEffect(() => {
         if (props.modalState.open) {
             const scrollY = window.scrollY;
@@ -26,7 +33,7 @@ function Modal(props: Props) {
     return (
         <div
             className={
-                'fixed top-0 bottom-0 left-0 right-0 z-50 center-content ' +
+                'fixed top-0 bottom-0 left-0 right-0 z-50 centering-row ' +
                 ' no-selection transition-opacity duration-300 ' +
                 (props.modalState.open
                     ? 'pointer-events-auto opacity-100'
@@ -37,11 +44,11 @@ function Modal(props: Props) {
                 className='absolute top-0 left-0 z-0 w-full h-full bg-gray-800 opacity-70'
                 onClick={props.closeModal}
             />
-            <div className='z-10 flex flex-col items-center justify-center p-2 bg-white rounded shadow'>
-                <div className='px-2 mt-1 mb-2 text-xl text-gray-800 font-weight-600'>
+            <div className='z-10 w-full max-w-lg p-3 bg-white rounded shadow centering-col gap-y-2'>
+                <div className='mt-1 text-xl text-gray-800 font-weight-600'>
                     {props.modalState.title}
                 </div>
-                <div className='max-w-50%'>{props.modalState.children}</div>
+                {props.modalState.children}
             </div>
         </div>
     );

@@ -1,6 +1,6 @@
 import React from 'react';
-import {TextInput, ButtonLink} from 'components';
-import {formUtils} from 'utilities';
+// import {TextInputDeprecated, ButtonLink} from 'components';
+// import {formUtils} from 'utilities';
 
 interface Props {
     password: string;
@@ -17,10 +17,11 @@ interface Props {
     closeAllMessages(): void;
 }
 const VisualSetPassword = React.forwardRef((props: Props, refs: any) => {
-    const {input2Ref} = refs;
+    // const {input2Ref} = refs;
 
     return (
         <div className='w-full'>
+            {/*
             {!props.success && (
                 <React.Fragment>
                     <h3 className='mb-4 text-center no-selection'>
@@ -28,7 +29,7 @@ const VisualSetPassword = React.forwardRef((props: Props, refs: any) => {
                     </h3>
                     {props.tokenExists && (
                         <form>
-                            <TextInput
+                            <TextInputDeprecated
                                 placeholder='password'
                                 value={props.password}
                                 onChange={(newValue) => {
@@ -44,7 +45,7 @@ const VisualSetPassword = React.forwardRef((props: Props, refs: any) => {
                                 autoComplete='new-password'
                                 onEnter={() => input2Ref.current?.focus()}
                             />
-                            <TextInput
+                            <TextInputDeprecated
                                 placeholder='confirm password'
                                 value={props.passwordConfirmation}
                                 onChange={(newValue) => {
@@ -88,7 +89,7 @@ const VisualSetPassword = React.forwardRef((props: Props, refs: any) => {
                         Continue to Admin Panel
                     </ButtonLink>
                 </React.Fragment>
-            )}
+            )}*/}
         </div>
     );
 });

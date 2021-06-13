@@ -1,74 +1,40 @@
 import React from 'react';
 
-interface Props {
+export default function Button(props: {
     text: string;
-    onClick?(): void;
-    invisible?: boolean;
-    className?: string;
-    disabled?: boolean;
-    spinning?: boolean;
     icon?: React.ReactNode;
-    flat?: boolean;
-}
-function Button(props: Props) {
-    const reactivityClass =
-        props.invisible || props.disabled || props.spinning
-            ? 'cursor-default pointer-events-none'
-            : 'cursor-pointer';
+    onClick?(): void;
+    variant?: 'flat-light-blue';
+    disabled?: boolean;
+}) {
+    const {text, icon, onClick, variant, disabled} = props;
 
-    const visibilityClass = props.invisible ? 'opacity-0' : '';
-
-    const disabledClass =
-        props.disabled || props.spinning
-            ? 'text-gray-500 bg-gray-300'
-            : props.flat
-            ? 'text-gray-800 bg-white '
-            : 'shadow text-gray-900 bg-gray-100 ';
+    let variantClasses: string;
+    switch (variant) {
+        case 'flat-light-blue':
+            variantClasses = disabled
+                ? 'bg-gray-200 text-gray-400 icon-gray cursor-not-allowed '
+                : 'bg-blue-50 text-blue-900 icon-dark-blue';
+            break;
+        default:
+            variantClasses =
+                'bg-white hover:bg-gray-100 shadow text-blue-900 icon-blue';
+            break;
+    }
 
     return (
-        <div
-            tabIndex={0}
+        <button
             className={
-                'no-selection relative inline-block rounded ' +
-                'h-10 px-2 py-1 leading-8 font-weight-600 ' +
-                'text-lg transition duration-200 outline-none ' +
-                `${reactivityClass} ${visibilityClass} ${disabledClass} ` +
-                (props.className ? props.className : '')
+                'p-0.5 rounded centering-row h-8 ' +
+                'no-selection ringable ' +
+                variantClasses
             }
-            onClick={!props.disabled ? props.onClick : undefined}
+            onClick={onClick && !disabled ? onClick : () => {}}
+            disabled={disabled ? disabled : false}
         >
-            <div
-                className={
-                    'flex flex-row transition-opacity duration-200 ' +
-                    (props.spinning ? 'opacity-0' : 'opacity-100')
-                }
-            >
-                {props.icon && <div className='w-6 h-8 py-1'>{props.icon}</div>}
-                <div className='px-2'>{props.text}</div>
-            </div>
-            <div
-                className={
-                    'pointer-events-none transition-opacity duration-200 ' +
-                    (props.spinning ? 'opacity-100' : 'opacity-0')
-                }
-            >
-                <div
-                    className={
-                        'absolute top-1/2 left-1/2 h-10 w-10 ' +
-                        'transform -translate-x-1/2 -translate-y-1/2'
-                    }
-                >
-                    <div className='origin-top-left transform scale-50'>
-                        <div className='lds-spinner'>
-                            {[...Array(12).keys()].map((n: number) => (
-                                <div key={n} />
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+            {icon && <div className='p-1 -mr-1.5 w-7 h-7'>{icon}</div>}
+
+            <div className={'font-weight-600 px-2'}>{text}</div>
+        </button>
     );
 }
-
-export default Button;

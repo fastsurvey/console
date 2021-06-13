@@ -13,10 +13,10 @@ interface Props {
 function Navbar(props: Props) {
     return (
         <React.Fragment>
-            <div id='RegularNavbar' className='hidden lg:block'>
+            <div id='RegularNavbar' className='z-30 hidden lg:block'>
                 <VisualRegularNavbar logOut={props.logOut} />
             </div>
-            <div id='MobileNavbar' className='block lg:hidden'>
+            <div id='MobileNavbar' className='z-30 block lg:hidden'>
                 <VisualMobileNavbar
                     logOut={props.logOut}
                     navbarState={props.navbarState}

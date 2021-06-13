@@ -1,13 +1,14 @@
+import {max} from 'lodash';
 import {types} from 'types';
+import surveyName from './survey-name';
 
-export const survey = (
-    surveyName: string,
-    newLocalId: number,
-): types.SurveyConfig => {
+export const survey = (configs: types.SurveyConfig[]): types.SurveyConfig => {
     const now = Math.floor(Date.now() / 1000);
+    const newLocalId: any = max(configs.map((c) => c.local_id));
+    const newSurveyName: string = surveyName(configs);
     return {
         local_id: newLocalId,
-        survey_name: surveyName,
+        survey_name: newSurveyName,
         start: now,
         end: now + 3600 * 24,
         authentication: 'open',

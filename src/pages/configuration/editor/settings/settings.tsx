@@ -11,13 +11,14 @@ interface Props {
     account: types.Account;
     authToken: types.AuthToken;
     centralConfigName: string;
-    openMessage(m: types.Message): void;
+    openMessage(messageId: types.MessageId): void;
     configIsDiffering: boolean;
 
     configs: types.SurveyConfig[] | undefined;
     config: types.SurveyConfig;
     setLocalConfig(config: object): void;
-    updateValidator(newState: boolean): void;
+    updateValidation(newState: types.ValidationResult): void;
+    validation: types.ValidationResult;
 
     openModal(title: string, children: React.ReactNode): void;
     closeModal(): void;
@@ -27,24 +28,10 @@ interface Props {
 function Settings(props: Props) {
     let history = useHistory();
 
-    const titleIsValid = formUtils.validators.title;
-    const surveyNameIsValid = formUtils.validators.surveyName(
-        props.configs,
-        props.config,
-    );
-    const descriptionIsValid = formUtils.validators.description;
-    const submissionLimitIsValid = formUtils.validators.submissionLimit;
-
-    function updateConfig(
-        newConfig: types.SurveyConfig,
-        skipValidation?: boolean,
-    ) {
-        if (!skipValidation) {
-            props.updateValidator(
-                titleIsValid(newConfig.title) &&
-                    surveyNameIsValid(newConfig.survey_name) &&
-                    descriptionIsValid(newConfig.description) &&
-                    submissionLimitIsValid(newConfig.limit),
+    function updateConfig(newConfig: types.SurveyConfig) {
+        if (props.configs) {
+            props.updateValidation(
+                formUtils.validateSettings(props.configs, newConfig),
             );
         }
         props.setLocalConfig(newConfig);
@@ -69,10 +56,7 @@ function Settings(props: Props) {
 
         function error() {
             props.closeModal();
-            props.openMessage({
-                text: 'Backend error, please reload the page',
-                type: 'error',
-            });
+            props.openMessage('error-server');
         }
 
         backend.deleteSurvey(
@@ -94,10 +78,7 @@ function Settings(props: Props) {
                 />,
             );
         } else {
-            props.openMessage({
-                text: 'Please save or undo your changes first!',
-                type: 'warning',
-            });
+            props.openMessage('warning-unsaved');
         }
     }
     function duplicateSurvey(newSurveyName: string) {
@@ -124,9 +105,7 @@ function Settings(props: Props) {
     return (
         <VisualSettings
             updateConfig={updateConfig}
-            surveyNameIsValid={surveyNameIsValid}
             config={props.config}
-            updateValidator={props.updateValidator}
             commonProps={{
                 updateConfig,
                 disabled: !props.config.draft,
@@ -135,6 +114,7 @@ function Settings(props: Props) {
             disabled={!props.config.draft}
             openRemoveModal={openRemoveModal}
             openDuplicateModal={openDuplicateModal}
+            validation={props.validation}
         />
     );
 }

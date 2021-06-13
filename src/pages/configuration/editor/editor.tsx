@@ -1,4 +1,4 @@
-import {constant, times} from 'lodash';
+import {constant, every, times} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {
@@ -9,7 +9,6 @@ import {
     dataUtils,
     backend,
 } from 'utilities';
-import ControlStrip from './control-strip/control-strip';
 import VisualEditor from './visual-editor';
 import {types} from 'types';
 
@@ -24,11 +23,13 @@ function ConfigEditor(props: {
     configIsDiffering: boolean;
     markDiffering(d: boolean): void;
 
-    openMessage(message: types.Message): void;
+    openMessage(messageId: types.MessageId): void;
     closeAllMessages(): void;
 }) {
     const [localConfig, setLocalConfigState] = useState(props.centralConfig);
-    const [fieldValidators, setFieldValidators] = useState<boolean[]>([]);
+    const [fieldValidation, setFieldValidation] = useState<
+        types.ValidationResult[]
+    >([]);
 
     // Used for: survey_name is changed when editing, new survey
     const history = useHistory();
@@ -41,18 +42,23 @@ function ConfigEditor(props: {
     }, [props.centralConfig.survey_name]);
 
     function initValidators(config: types.SurveyConfig) {
-        setFieldValidators(times(config.fields.length + 1, constant(true)));
+        setFieldValidation(
+            times(config.fields.length + 1, constant({valid: true})),
+        );
     }
 
-    function updateValidator(newIndex: number, newState: boolean) {
-        const newValidators = [...fieldValidators];
+    function updateValidation(
+        newIndex: number,
+        newState: types.ValidationResult,
+    ) {
+        const newValidators = [...fieldValidation];
         newValidators[newIndex] = newState;
-        setFieldValidators(newValidators);
+        setFieldValidation(newValidators);
     }
 
     function insertField(index: number, fieldType: types.FieldType) {
-        setFieldValidators(
-            dataUtils.array.insert(fieldValidators, index + 1, false),
+        setFieldValidation(
+            dataUtils.array.insert(fieldValidation, index + 1, false),
         );
 
         const field: types.SurveyField = templateUtils.field(
@@ -67,9 +73,9 @@ function ConfigEditor(props: {
 
     function pasteField(index: number) {
         function success(newFieldConfig: types.SurveyField) {
-            setFieldValidators(
+            setFieldValidation(
                 dataUtils.array.insert(
-                    fieldValidators,
+                    fieldValidation,
                     index + 1,
                     formUtils.validateField(newFieldConfig),
                 ),
@@ -90,89 +96,63 @@ function ConfigEditor(props: {
         }
 
         function error() {
-            props.openMessage({
-                text: 'Invalid text format on clipboard',
-                type: 'warning',
-            });
+            props.openMessage('warning-clipboard');
         }
         clipboardUtils.paste(success, error);
     }
 
     function removeField(index: number) {
-        setFieldValidators(dataUtils.array.remove(fieldValidators, index + 1));
+        setFieldValidation(dataUtils.array.remove(fieldValidation, index + 1));
         setLocalConfig({
             ...localConfig,
             fields: dataUtils.array.remove(localConfig.fields, index),
         });
     }
 
-    function saveState() {
+    // modifyDraft = true -> convert drafts to published surveys and vice versa
+    function saveState(configChanges?: object) {
+        const combinedConfig = {
+            ...localConfig,
+            ...configChanges,
+        };
         props.closeAllMessages();
 
-        const fieldsAreValid = !fieldValidators.includes(false);
+        const fieldsAreValid = every(fieldValidation.map((r) => r.valid));
         const fieldCountIsValid = localConfig.fields.length > 0;
-        const timingIsValid = formUtils.validators.timing(localConfig);
-        const authIsValid = formUtils.validators.authMode(localConfig);
-        const fieldOptionsAreValid = formUtils.validators.fieldOptions(
-            localConfig,
-        );
+        const authModeIsValid =
+            formUtils.validators.authMode(localConfig).valid;
 
         function success() {
-            props.setCentralConfig(localConfig);
+            setLocalConfigState(combinedConfig);
+            props.setCentralConfig(combinedConfig);
             if (localConfig.survey_name !== props.centralConfig.survey_name) {
                 history.push(`/configuration/${localConfig.survey_name}`);
             }
         }
 
         function error() {
-            props.openMessage({
-                text: 'Backend error, please try again',
-                type: 'error',
-            });
+            props.openMessage('error-server');
         }
 
-        if (
-            fieldsAreValid &&
-            fieldCountIsValid &&
-            timingIsValid &&
-            authIsValid &&
-            fieldOptionsAreValid
-        ) {
+        if (fieldsAreValid && fieldCountIsValid && authModeIsValid) {
             backend.updateSurvey(
                 props.account,
                 props.authToken,
                 props.centralConfig.survey_name,
-                localConfig,
+                combinedConfig,
                 success,
                 error,
             );
         } else {
-            [
-                {
-                    pass: fieldsAreValid,
-                    text: 'Invalid fields: Please check all red hints',
-                },
-                {
-                    pass: fieldCountIsValid,
-                    text: 'There has to be at least one field',
-                },
-                {
-                    pass: timingIsValid,
-                    text: 'End time has to be after start time',
-                },
-                {
-                    pass: authIsValid,
-                    text: 'Email-authentication requires unique email field',
-                },
-                {
-                    pass: fieldOptionsAreValid,
-                    text: 'Radio/Selection fields require at least 2 options',
-                },
-            ]
-                .filter((c) => !c.pass)
-                .forEach((c) => {
-                    props.openMessage({text: c.text, type: 'error'});
-                });
+            if (!fieldsAreValid) {
+                props.openMessage('editor-warning-validators');
+            }
+            if (!fieldCountIsValid) {
+                props.openMessage('editor-warning-field-count');
+            }
+            if (!authModeIsValid) {
+                props.openMessage('editor-warning-authentication');
+            }
         }
     }
 
@@ -207,24 +187,21 @@ function ConfigEditor(props: {
     }
 
     return (
-        <>
-            <ControlStrip
-                config={props.centralConfig}
-                setCentralConfig={props.setCentralConfig}
-                saveState={saveState}
-                revertState={revertState}
-            />
-            <VisualEditor
-                centralConfigName={props.centralConfig.survey_name}
-                localConfig={localConfig}
-                updateValidator={updateValidator}
-                setLocalConfig={setLocalConfig}
-                setLocalFieldConfig={setLocalFieldConfig}
-                insertField={insertField}
-                pasteField={pasteField}
-                removeField={removeField}
-            />
-        </>
+        <VisualEditor
+            centralConfigName={props.centralConfig.survey_name}
+            {...{
+                localConfig,
+                updateValidation,
+                fieldValidation,
+                setLocalConfig,
+                setLocalFieldConfig,
+                insertField,
+                pasteField,
+                removeField,
+                saveState,
+                revertState,
+            }}
+        />
     );
 }
 

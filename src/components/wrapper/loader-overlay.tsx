@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {types} from 'types';
-import {LogoBanner} from 'components';
 import 'styles/loader.css';
 
 interface Props {
@@ -12,21 +11,20 @@ function LoaderOverlay(props: Props) {
         <div
             id='LoaderOverlay'
             className={
-                'fixed z-50 bg-white w-100vw h-100vh center-content ' +
+                'fixed z-50 w-screen h-screen centering-row ' +
                 'transition-opacity duration-0 delay-0 ' +
                 (props.loggingIn
                     ? 'opacity-100'
                     : 'opacity-0 pointer-events-none')
             }
         >
-            <LogoBanner slim />
             <div
                 className={
                     'transition-opacity duration-100 delay-1000 ' +
                     (props.loggingIn ? 'opacity-100' : 'opacity-0')
                 }
             >
-                <div className='lds-spinner'>
+                <div className='transform scale-[40%] lds-spinner'>
                     {[...Array(12).keys()].map((n: number) => (
                         <div key={n} />
                     ))}
