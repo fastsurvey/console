@@ -25,8 +25,10 @@ export default function TextInput(props: {
                 onKeyDown={handleKeydown}
                 autoFocus={autoFocus === true}
                 className={
-                    'w-full px-3 rounded h-9 ringable ' +
-                    'text-gray-800 bg-gray-100 font-weight-500'
+                    'w-full px-3 rounded h-9 ringable font-weight-500 ' +
+                    (props.disabled
+                        ? 'bg-gray-200 text-gray-600 cursor-not-allowed '
+                        : 'bg-gray-100 text-gray-800 ')
                 }
                 type={type ? type : 'text'}
                 disabled={props.disabled === true}

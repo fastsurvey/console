@@ -31,6 +31,7 @@ function VisualEmailSettings(props: Props) {
                         ...constants.formOptions.EMAIL_REGEX,
                         props.customSetup,
                     ]}
+                    disabled={props.disabled}
                 />
             </div>
             <div className='w-full centering-col gap-y-0.5'>

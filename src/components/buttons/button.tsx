@@ -13,7 +13,7 @@ export default function Button(props: {
     switch (variant) {
         case 'flat-light-blue':
             variantClasses = disabled
-                ? 'bg-gray-200 text-gray-400 icon-gray'
+                ? 'bg-gray-200 text-gray-400 icon-gray cursor-not-allowed '
                 : 'bg-blue-50 text-blue-900 icon-dark-blue';
             break;
         default:

@@ -41,7 +41,12 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
                         disabled={props.disabled}
                     />
                     <button
-                        className='w-8 h-8 p-1 rounded icon-blue ringable'
+                        className={
+                            'w-8 h-8 p-1 rounded icon-blue ringable ' +
+                            (props.disabled
+                                ? 'opacity-60 cursor-not-allowed '
+                                : ' ')
+                        }
                         onClick={() =>
                             props.setLocalFieldConfig({
                                 fields: props.fieldConfig.fields.filter(
@@ -50,6 +55,7 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
                                 ),
                             })
                         }
+                        disabled={props.disabled}
                     >
                         {icons.trash}
                     </button>
@@ -61,6 +67,7 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
                     onClick={props.addFieldOption}
                     icon={icons.addSquare}
                     variant='flat-light-blue'
+                    disabled={props.disabled}
                 />
             </div>
         </div>

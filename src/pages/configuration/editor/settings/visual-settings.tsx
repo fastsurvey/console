@@ -157,6 +157,7 @@ const VisualSettings = (props: Props) => {
                         );
                     }}
                     options={constants.formOptions.AUTH_MODE}
+                    disabled={!props.config.draft || collapse}
                 />
             </div>
 

@@ -21,8 +21,10 @@ export default function TextArea(props: {
             onChange={(e) => setValue(e.target.value)}
             onKeyDown={handleKeydown}
             className={
-                'w-full px-3 py-1.5  rounded min-h-[5rem] ringable ' +
-                'bg-gray-100 font-weight-500 text-gray-800'
+                'w-full px-3 py-1.5  rounded min-h-[5rem] ringable font-weight-500 ' +
+                (props.disabled
+                    ? 'bg-gray-200 text-gray-600 cursor-not-allowed '
+                    : 'bg-gray-100 text-gray-800 ')
             }
             disabled={props.disabled === true}
         />

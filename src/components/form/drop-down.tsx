@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {icons} from 'assets';
 
 export default function DropDown(props: {
@@ -12,16 +12,24 @@ export default function DropDown(props: {
     const ref = useRef<HTMLButtonElement>(null);
 
     const label = options.filter((o) => o.value === value)[0]?.label;
+    useEffect(() => {
+        if (props.disabled) {
+            setOpen(false);
+        }
+    }, [props.disabled]);
 
     return (
         <div className={'relative w-full centering-col z-50'}>
             <button
                 ref={ref}
-                onClick={() => setOpen(!open)}
+                onClick={props.disabled ? () => {} : () => setOpen(!open)}
                 className={
                     'w-full px-3 h-9 text-left relative rounded ' +
-                    'font-weight-500 text-gray-800 z-50 ringable ' +
-                    (open ? 'bg-gray-200 ' : 'bg-gray-100 ')
+                    'font-weight-500 z-50 ringable ' +
+                    (open || props.disabled
+                        ? 'bg-gray-200 text-gray-600 '
+                        : 'bg-gray-100 text-gray-800 ') +
+                    (props.disabled ? 'cursor-not-allowed ' : '')
                 }
                 disabled={disabled === true}
             >
@@ -51,7 +59,7 @@ export default function DropDown(props: {
                             setOpen(false);
                             ref.current?.focus();
                         }}
-                        disabled={disabled || !open}
+                        disabled={!open}
                         className={
                             'w-full h-7 my-0.5 text-sm text-left rounded-sm ' +
                             'font-weight-500 text-gray-400 ringable ' +
