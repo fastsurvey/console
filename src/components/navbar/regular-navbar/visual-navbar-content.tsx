@@ -26,11 +26,11 @@ function NavbarButton(props: {
     text: string;
     active?: boolean;
     icon: React.ReactNode;
-    onClick?(): void;
+    onClick(): void;
 }) {
     return (
         <button
-            onClick={props.onClick ? props.onClick : () => {}}
+            onClick={props.onClick}
             className={
                 'relative h-10 py-0 centering-row my-1 ringable ' +
                 'font-weight-600 text-base rounded cursor-pointer ' +

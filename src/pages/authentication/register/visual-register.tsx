@@ -74,7 +74,7 @@ export default function VisualRegister(props: {
 
                 <div className='w-full gap-y-0.5 flex flex-row-reverse items-center justify-center'>
                     <Button
-                        text='Login'
+                        text='Register'
                         variant='flat-light-blue'
                         onClick={props.handleRegistration}
                         disabled={props.disabled}
