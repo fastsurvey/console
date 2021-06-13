@@ -22,7 +22,9 @@ function VisualField(props: Props) {
     const [actionLabel, setActionLabel] = useState('');
 
     const buttonCSS =
-        'w-7 h-7 p-0.5 m-1.5 opacity-70 hover:opacity-100 rounded ringable-dark';
+        'w-7 h-7 p-0.5 m-1.5 opacity-70 hover:opacity-100 rounded ringable-dark ';
+    const disabledButtonCSS =
+        'w-7 h-7 p-0.5 m-1.5 opacity-70 rounded cursor-not-allowed ';
     const buttons = (
         <>
             <button
@@ -37,10 +39,11 @@ function VisualField(props: Props) {
                 {icons.duplicate}
             </button>
             <button
-                className={buttonCSS}
+                className={props.disabled ? disabledButtonCSS : buttonCSS}
                 onClick={props.removeField}
                 onMouseEnter={() => setActionLabel('remove')}
                 onFocus={() => setActionLabel('remove')}
+                disabled={props.disabled}
             >
                 {icons.trash}
             </button>
