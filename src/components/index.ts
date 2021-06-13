@@ -10,11 +10,9 @@ export {default as DatePickerSimple} from './form/date-picker/date-picker';
 export {default as ToggleSimple} from './form/toggle';
 
 export {default as EditorFormCard} from './layout/editor-form-card';
-export {default as TextInputDeprecated} from './form-fields/text-input-deprecated';
 
 export {default as MessageQueue} from './message-queue/message-queue';
 export {default as Modal} from './modal/modal';
-export {default as ModalButton} from './modal/modal-button';
 
 export {default as Navbar} from './navbar/navbar';
 export {default as LoaderOverlay} from './wrapper/loader-overlay';

@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import {reduxUtils, formUtils} from 'utilities';
 import {connect} from 'react-redux';
-import {TextInputDeprecated, ModalButton} from 'components';
+import {LabelSimple, TextInputSimple} from 'components';
 import {types} from 'types';
+import {IconButton} from 'components';
 
 interface Props {
     configs: types.SurveyConfig[] | undefined;
@@ -19,51 +20,31 @@ function DuplicateSurveyPopup(props: Props) {
 
     if (props.configs) {
         return (
-            <div className='flex flex-col items-start mt-2'>
-                <div className='flex flex-row items-start'>
-                    <div
-                        className={
-                            'h-12 mx-2 leading-12 text-lg ' +
-                            'text-right font-weight-600 text-gray-800'
-                        }
-                    >
-                        Identifier:
-                    </div>
-                    <div className='relative flex flex-row w-128'>
-                        <TextInputDeprecated
-                            flat
-                            placeholder='URL conform identifier'
-                            value={surveyName}
-                            onChange={setSurveyName}
-                            onEnter={() => props.duplicateSurvey(surveyName)}
-                            hint={{
-                                ...formUtils.hints.newSurveyName(
-                                    surveyName,
-                                    formUtils.validators.newSurveyName(
-                                        props.configs,
-                                    ),
-                                ),
-                                inlineHint: false,
-                            }}
-                        />
-                    </div>
+            <>
+                <div className='w-full max-w-2xl centering-col gap-y-0.5'>
+                    <LabelSimple text='New URL conform identifier' />
+                    <TextInputSimple
+                        value={surveyName}
+                        setValue={setSurveyName}
+                    />
                 </div>
-                <div className='flex flex-row justify-center w-full mt-4 gap-x-2'>
-                    <ModalButton
-                        label='Cancel'
-                        color='red-light'
+                <div className='w-full flex-row-right gap-x-2'>
+                    <IconButton
+                        text='Cancel'
+                        variant='flat-light-blue'
                         onClick={() => {
                             props.closeModal();
                             setTimeout(() => setSurveyName(''), 500);
                         }}
                     />
-                    <ModalButton
-                        label='Duplicate'
+                    <IconButton
+                        text='Duplicate'
+                        variant='flat-light-blue'
                         disabled={!isValid}
                         onClick={() => props.duplicateSurvey(surveyName)}
                     />
                 </div>
-            </div>
+            </>
         );
     } else {
         return <div />;
