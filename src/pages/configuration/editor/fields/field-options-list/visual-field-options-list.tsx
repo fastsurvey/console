@@ -19,7 +19,10 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
         <div className='w-full flex-col-right gap-y-1'>
             <Label text='Options to select' />
             {props.fieldConfig.fields.map((optionConfig, optionIndex) => (
-                <div className='w-full flex-row-left gap-x-2'>
+                <div
+                    className='w-full flex-row-left gap-x-2'
+                    key={optionConfig.local_id}
+                >
                     <TextInput
                         value={optionConfig.title}
                         setValue={(newValue: string) =>

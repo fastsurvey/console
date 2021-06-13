@@ -28,6 +28,9 @@ function EditorFormCard(props: Props) {
     const updateActionlabel = (collapse: boolean | undefined) => {
         props.setActionLabel(collapse ? 'expand' : 'collapse');
     };
+
+    const entryIsValid = true;
+    const validationMessage = 'fghjk';
     return (
         <div
             className={
@@ -84,16 +87,40 @@ function EditorFormCard(props: Props) {
                 </div>
             </div>
             <div
-                className={'flex-col-top w-full rounded-b bg-white p-3 '}
+                className={'flex-col-top w-full rounded-b pt-3 bg-white'}
                 ref={ref}
             >
                 <div
                     className={
-                        'w-full centering-col gap-y-6 ' +
+                        'w-full centering-col gap-y-6 px-3 ' +
                         (props.collapse ? 'h-0 overflow-hidden ' : ' ')
                     }
                 >
                     {props.children}
+                </div>
+                <div
+                    className={
+                        'w-full pr-6 mt-3 flex-row-top space-x-2 ' +
+                        'rounded-b text-justify ' +
+                        (props.collapse && entryIsValid
+                            ? 'h-0 overflow-hidden '
+                            : 'border-t-[3px] p-3 ') +
+                        (entryIsValid
+                            ? 'text-green-500 bg-green-50 border-green-100 '
+                            : 'text-red-400 bg-red-50 border-red-100 ')
+                    }
+                >
+                    <div
+                        className={
+                            'flex-shrink-0 w-6 h-6 ' +
+                            (entryIsValid ? 'icon-green ' : 'icon-red ')
+                        }
+                    >
+                        {entryIsValid ? icons.checkCircle : icons.closeCirlce}
+                    </div>
+                    <div className='text-left flex-max font-weight-600 text-md'>
+                        {entryIsValid ? 'Valid' : validationMessage}
+                    </div>
                 </div>
             </div>
         </div>
