@@ -18,6 +18,7 @@ export {default as LabelSimple} from './form/label';
 export {default as TextAreaSimple} from './form/text-area';
 export {default as DropDownSimple} from './form/drop-down';
 export {default as DatePickerSimple} from './form/date-picker/date-picker';
+export {default as ToggleSimple} from './form/toggle';
 export {default as TriggerIcon} from './form-fields/trigger-icon';
 export {default as Label} from './form-fields/label';
 
