@@ -1,7 +1,14 @@
 import React from 'react';
 import {formUtils} from 'utilities';
 import {icons} from 'assets';
-import {TextInput, TriggerIcon, EditorFormRow} from 'components';
+import {
+    TextInput,
+    TriggerIcon,
+    EditorFormRow,
+    LabelSimple,
+    TextInputSimple,
+    IconButton,
+} from 'components';
 import {types} from 'types';
 
 interface Props {
@@ -23,81 +30,51 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
     };
 
     return (
-        <EditorFormRow label='Options' className='mb-2'>
-            <div className='flex flex-col w-full'>
-                {props.fieldConfig.fields.map((optionField, optionIndex) => (
-                    <div
-                        key={optionField.local_id}
-                        className={
-                            'flex flex-row w-full mb-1 ' +
-                            'transition-height duration-300 ' +
-                            (props.optionsVisible[optionIndex]
-                                ? 'h-12 '
-                                : 'h-0 ')
+        <div className='w-full flex-col-right gap-y-0.5'>
+            <LabelSimple text='Options to select' />
+            {props.fieldConfig.fields.map((optionConfig, optionIndex) => (
+                <div className='w-full flex-row-left gap-x-2'>
+                    <TextInputSimple
+                        value={optionConfig.title}
+                        setValue={(newValue: string) =>
+                            props.setLocalFieldConfig({
+                                fields: props.fieldConfig.fields.map(
+                                    (oldOptionField, oldIndex) =>
+                                        optionIndex === oldIndex
+                                            ? {
+                                                  ...oldOptionField,
+                                                  title: newValue,
+                                              }
+                                            : oldOptionField,
+                                ),
+                            })
+                        }
+                        disabled={props.disabled}
+                    />
+                    <button
+                        className='w-8 h-8 p-1 rounded icon-blue ringable'
+                        onClick={() =>
+                            props.setLocalFieldConfig({
+                                fields: props.fieldConfig.fields.filter(
+                                    (oldOptionField, oldIndex) =>
+                                        optionIndex !== oldIndex,
+                                ),
+                            })
                         }
                     >
-                        <TextInput
-                            {...commonProps}
-                            value={optionField.title}
-                            onChange={(newValue: string) =>
-                                props.setLocalFieldConfig({
-                                    fields: props.fieldConfig.fields.map(
-                                        (oldOptionField, oldIndex) =>
-                                            optionIndex === oldIndex
-                                                ? {
-                                                      ...oldOptionField,
-                                                      title: newValue,
-                                                  }
-                                                : oldOptionField,
-                                    ),
-                                })
-                            }
-                            hint={{
-                                ...formUtils.hints.title(optionField.title),
-                                inlineHint: true,
-                            }}
-                        />
-                        <TriggerIcon
-                            disabled={props.disabled}
-                            icon={icons.delete}
-                            onClick={() => {
-                                props.setOptionsVisible(
-                                    props.optionsVisible.map(
-                                        (optionVisible, index) =>
-                                            index === optionIndex
-                                                ? false
-                                                : optionVisible,
-                                    ),
-                                );
-                                setTimeout(() => {
-                                    props.setLocalFieldConfig({
-                                        fields: props.fieldConfig.fields.filter(
-                                            (oldOptionField, oldIndex) =>
-                                                optionIndex !== oldIndex,
-                                        ),
-                                    });
-                                }, 300);
-                            }}
-                        />
-                    </div>
-                ))}
-                <div className='w-full pr-12 opacity-70'>
-                    <TextInput
-                        {...commonProps}
-                        ref={ref}
-                        value={props.newOption}
-                        onChange={props.setNewOption}
-                        placeholder='New option'
-                        hint={formUtils.hints.newOption(props.newOption)}
-                        onEnter={
-                            props.newOption !== ''
-                                ? props.addFieldOption
-                                : () => {}
-                        }
-                    />
+                        {icons.trash}
+                    </button>
                 </div>
+            ))}
+            <div className='w-full pr-10 mt-1 flex-row-right'>
+                <IconButton
+                    text='Add Option'
+                    onClick={props.addFieldOption}
+                    icon={icons.addSquare}
+                    variant='flat-light-blue'
+                />
             </div>
-        </EditorFormRow>
+        </div>
     );
 });
 

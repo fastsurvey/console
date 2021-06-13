@@ -62,10 +62,10 @@
     }
 
     .icon-dark-blue .primary {
-        @apply fill-blue-300;
+        @apply fill-blue-200;
     }
     .icon-dark-blue .secondary {
-        @apply fill-blue-600;
+        @apply fill-blue-700;
     }
 
     .icon-dark-red .primary {
@@ -173,6 +173,13 @@
     @apply flex-row;
     @apply items-center;
     @apply justify-start;
+}
+
+.flex-row-right {
+    @apply flex;
+    @apply flex-row;
+    @apply items-center;
+    @apply justify-end;
 }
 
 .flex-row-top {
