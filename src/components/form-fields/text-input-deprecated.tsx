@@ -20,7 +20,7 @@ interface Props {
     flat?: boolean;
     disabled?: boolean;
 }
-const TextInput = React.forwardRef((props: Props, ref: any) => {
+const TextInputDeprecated = React.forwardRef((props: Props, ref: any) => {
     const placeholder =
         props.placeholder !== undefined ? props.placeholder : '';
 
@@ -139,4 +139,4 @@ const TextInput = React.forwardRef((props: Props, ref: any) => {
     );
 });
 
-export default TextInput;
+export default TextInputDeprecated;

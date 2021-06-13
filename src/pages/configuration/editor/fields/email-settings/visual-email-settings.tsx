@@ -1,12 +1,6 @@
 import React from 'react';
-import {constants, formUtils} from 'utilities';
-import {
-    TextInput,
-    EditorFormRow,
-    LabelSimple,
-    DropDownSimple,
-    TextInputSimple,
-} from 'components';
+import {constants} from 'utilities';
+import {LabelSimple, DropDownSimple, TextInputSimple} from 'components';
 import {types} from 'types';
 
 interface Props {
@@ -17,11 +11,6 @@ interface Props {
     disabled: boolean;
 }
 function VisualEmailSettings(props: Props) {
-    const commonProps = {
-        disabled: props.disabled,
-        flat: true,
-    };
-
     return (
         <>
             <div className='w-full centering-col gap-y-0.5'>

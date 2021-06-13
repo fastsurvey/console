@@ -1,14 +1,6 @@
 import React from 'react';
-import {formUtils} from 'utilities';
 import {icons} from 'assets';
-import {
-    TextInput,
-    TriggerIcon,
-    EditorFormRow,
-    LabelSimple,
-    TextInputSimple,
-    IconButton,
-} from 'components';
+import {LabelSimple, TextInputSimple, IconButton} from 'components';
 import {types} from 'types';
 
 interface Props {
@@ -23,12 +15,6 @@ interface Props {
     addFieldOption(): void;
 }
 const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
-    const commonProps = {
-        disabled: props.disabled,
-        flat: true,
-        wrapperClassName: 'flex-max',
-    };
-
     return (
         <div className='w-full flex-col-right gap-y-0.5'>
             <LabelSimple text='Options to select' />

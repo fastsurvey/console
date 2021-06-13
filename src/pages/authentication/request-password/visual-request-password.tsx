@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextInput, TextLink, ButtonLink} from 'components';
+import {TextInputDeprecated, TextLink, ButtonLink} from 'components';
 
 interface Props {
     success: boolean;
@@ -25,7 +25,7 @@ const VisualRequestPassword = React.forwardRef((props: Props, refs: any) => {
                     </h2>
 
                     <form>
-                        <TextInput
+                        <TextInputDeprecated
                             placeholder='email'
                             value={props.email}
                             onChange={(newValue) => {

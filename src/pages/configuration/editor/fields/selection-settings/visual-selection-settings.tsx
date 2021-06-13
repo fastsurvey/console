@@ -1,11 +1,6 @@
 import React from 'react';
 import {formUtils} from 'utilities';
-import {
-    TextInput,
-    EditorFormRow,
-    LabelSimple,
-    TextInputSimple,
-} from 'components';
+import {LabelSimple, TextInputSimple} from 'components';
 import FieldOptionsList from '../field-options-list/field-options-list';
 import {types} from 'types';
 
@@ -15,11 +10,6 @@ interface Props {
     disabled: boolean;
 }
 function VisualSelectionSettings(props: Props) {
-    const commonProps = {
-        disabled: props.disabled,
-        flat: true,
-    };
-
     return (
         <>
             <FieldOptionsList

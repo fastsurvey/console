@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextInput, ButtonLink} from 'components';
+import {TextInputDeprecated, ButtonLink} from 'components';
 import {formUtils} from 'utilities';
 
 interface Props {
@@ -28,7 +28,7 @@ const VisualSetPassword = React.forwardRef((props: Props, refs: any) => {
                     </h3>
                     {props.tokenExists && (
                         <form>
-                            <TextInput
+                            <TextInputDeprecated
                                 placeholder='password'
                                 value={props.password}
                                 onChange={(newValue) => {
@@ -44,7 +44,7 @@ const VisualSetPassword = React.forwardRef((props: Props, refs: any) => {
                                 autoComplete='new-password'
                                 onEnter={() => input2Ref.current?.focus()}
                             />
-                            <TextInput
+                            <TextInputDeprecated
                                 placeholder='confirm password'
                                 value={props.passwordConfirmation}
                                 onChange={(newValue) => {

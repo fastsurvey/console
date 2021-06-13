@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {reduxUtils, formUtils} from 'utilities';
 import {connect} from 'react-redux';
-import {TextInput, ModalButton} from 'components';
+import {TextInputDeprecated, ModalButton} from 'components';
 import {types} from 'types';
 
 interface Props {
@@ -30,7 +30,7 @@ function DuplicateSurveyPopup(props: Props) {
                         Identifier:
                     </div>
                     <div className='relative flex flex-row w-128'>
-                        <TextInput
+                        <TextInputDeprecated
                             flat
                             placeholder='URL conform identifier'
                             value={surveyName}
