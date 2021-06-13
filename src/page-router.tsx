@@ -16,6 +16,7 @@ import {ConfigList, EditorRouter} from 'pages/configuration';
 import {LoaderOverlay, MessageQueue, Modal} from 'components';
 
 import MainWrapper from './components/wrapper/main-wrapper';
+import {ResultsList} from 'pages/results';
 
 interface RouterProps {
     loggingIn: boolean;
@@ -49,7 +50,7 @@ function PageRouter(props: RouterProps) {
                                                 <EditorRouter />
                                             </Route>
                                             <Route exact path='/results'>
-                                                <h3>Results</h3>
+                                                <ResultsList />
                                             </Route>
                                             <Route exact path='/account'>
                                                 <h3>Account</h3>
