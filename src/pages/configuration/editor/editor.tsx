@@ -47,7 +47,7 @@ function ConfigEditor(props: {
         );
     }
 
-    function updateValidator(
+    function updateValidation(
         newIndex: number,
         newState: types.ValidationResult,
     ) {
@@ -191,7 +191,7 @@ function ConfigEditor(props: {
             centralConfigName={props.centralConfig.survey_name}
             {...{
                 localConfig,
-                updateValidator,
+                updateValidation,
                 fieldValidation,
                 setLocalConfig,
                 setLocalFieldConfig,

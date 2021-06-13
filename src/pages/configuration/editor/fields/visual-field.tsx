@@ -8,14 +8,15 @@ interface Props {
     fieldConfig: types.SurveyField;
     disabled: boolean;
     setLocalFieldConfig(fieldConfigChanges: object): void;
+    validation: types.ValidationResult;
     removeField(): void;
     copyField(): void;
     children: React.ReactNode;
 }
 function VisualField(props: Props) {
-    const [collapse, setCollapse] = useState(false);
+    const [collapse, setCollapse] = useState(true);
     useEffect(() => {
-        setCollapse(false);
+        setCollapse(true);
     }, [props.fieldConfig.local_id]);
 
     const [actionLabel, setActionLabel] = useState('');
@@ -57,6 +58,7 @@ function VisualField(props: Props) {
             buttons={buttons}
             actionLabel={actionLabel}
             setActionLabel={setActionLabel}
+            validation={props.validation}
         >
             <div className='w-full centering-col gap-y-0.5'>
                 <Label text='Title' />

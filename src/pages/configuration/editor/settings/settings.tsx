@@ -17,7 +17,7 @@ interface Props {
     configs: types.SurveyConfig[] | undefined;
     config: types.SurveyConfig;
     setLocalConfig(config: object): void;
-    updateValidator(newState: types.ValidationResult): void;
+    updateValidation(newState: types.ValidationResult): void;
     validation: types.ValidationResult;
 
     openModal(title: string, children: React.ReactNode): void;
@@ -30,7 +30,7 @@ function Settings(props: Props) {
 
     function updateConfig(newConfig: types.SurveyConfig) {
         if (props.configs) {
-            props.updateValidator(
+            props.updateValidation(
                 formUtils.validateSettings(props.configs, newConfig),
             );
         }
