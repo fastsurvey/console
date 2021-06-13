@@ -1,14 +1,33 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {types} from 'types';
 import {TimePill} from 'components';
+import {backend} from 'utilities';
 
 interface Props {
     account: types.Account;
     config: types.SurveyConfig;
+    authToken: types.AuthToken;
 }
 function VisualConfigPanel(props: Props) {
-    const {title, survey_name, limit, authentication} = props.config;
+    const {title, survey_name} = props.config;
     const {username} = props.account;
+
+    const [results, setResults] = useState({});
+    const [fetching, setFetching] = useState(true);
+
+    useEffect(() => {
+        backend.fetchResults(
+            props.account,
+            props.authToken,
+            props.config.survey_name,
+            (r) => {
+                setResults(r);
+                setFetching(false);
+            },
+            console.log,
+        );
+        // eslint-disable-next-line
+    }, []);
 
     return (
         <div
@@ -36,8 +55,8 @@ function VisualConfigPanel(props: Props) {
                     /{username}/{survey_name}
                 </div>
                 <div className='mt-3 text-sm text-gray-600 truncate font-weight-500 no-selection'>
-                    {authentication === 'email' ? 'Email Verification, ' : ''}
-                    Max. {limit} submissions
+                    {fetching && 'fetching'}
+                    {!fetching && results}
                 </div>
             </div>
             <div

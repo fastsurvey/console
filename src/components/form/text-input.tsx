@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import icons from '../../assets/icons/icons';
+import {icons} from 'assets';
 
 export default function TextInput(props: {
     value: string;
@@ -9,8 +9,8 @@ export default function TextInput(props: {
     disabled?: boolean;
     postfix?: string;
 }) {
-    const {value, setValue, autoFocus, type} = props;
-    const [plainText, setPlainText] = useState(props.type !== 'password');
+    const {value, setValue, autoFocus, type, disabled, postfix} = props;
+    const [plainText, setPlainText] = useState(type !== 'password');
 
     function handleKeydown(e: React.KeyboardEvent) {
         if (e.key === 'Escape') {
@@ -28,14 +28,14 @@ export default function TextInput(props: {
                 autoFocus={autoFocus === true}
                 className={
                     'w-full px-3 rounded h-9 ringable font-weight-500 ' +
-                    (props.disabled
+                    (disabled
                         ? 'bg-gray-200 text-gray-600 cursor-not-allowed '
                         : 'bg-gray-100 text-gray-800 ')
                 }
                 type={plainText ? 'text' : 'password'}
-                disabled={props.disabled === true}
+                disabled={disabled === true}
             />
-            {props.postfix && (
+            {postfix && (
                 <div
                     className={
                         'absolute top-0 leading-9 left-3 ' +
@@ -43,11 +43,11 @@ export default function TextInput(props: {
                         'pointer-events-none'
                     }
                 >
-                    <span className='opacity-0'>{props.value}</span>
-                    {props.postfix}
+                    <span className='opacity-0'>{value}</span>
+                    {postfix}
                 </div>
             )}
-            {props.type === 'password' && (
+            {type === 'password' && (
                 <button
                     className={
                         'absolute top-0 h-6 w-6 p-1 m-1.5 right-0 icon-dark-gray ringable rounded'

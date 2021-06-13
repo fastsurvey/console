@@ -8,9 +8,7 @@ function ResultsList(props: {
     account: types.Account;
     authToken: types.AuthToken;
 }) {
-    return (
-        <VisualResultsList configs={props.configs} account={props.account} />
-    );
+    return <VisualResultsList {...props} />;
 }
 
 const mapStateToProps = (state: types.ReduxState) => ({

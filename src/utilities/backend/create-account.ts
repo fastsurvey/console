@@ -1,6 +1,6 @@
 import {httpPost} from './http-clients';
 
-export async function createAccount(
+async function createAccount(
     account: {
         email_address: string;
         username: string;
@@ -19,3 +19,5 @@ export async function createAccount(
         error(code);
     }
 }
+
+export default createAccount;

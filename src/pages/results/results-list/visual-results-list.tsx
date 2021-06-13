@@ -8,6 +8,7 @@ import {SearchBar} from 'components';
 function VisualConfigList(props: {
     configs: types.SurveyConfig[];
     account: types.Account;
+    authToken: types.AuthToken;
 }) {
     const [value, setValue] = useState('');
     return (
@@ -43,6 +44,7 @@ function VisualConfigList(props: {
                             <VisualResultsPanel
                                 config={config}
                                 account={props.account}
+                                authToken={props.authToken}
                             />
                         </Link>
                     ))}

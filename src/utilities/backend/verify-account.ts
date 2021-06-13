@@ -1,6 +1,6 @@
 import {httpPost} from './http-clients';
 
-export async function verifyAccount(
+async function verifyAccount(
     verificationObject: {
         verification_token: string;
         password: string;
@@ -18,3 +18,5 @@ export async function verifyAccount(
         error(code);
     }
 }
+
+export default verifyAccount;
