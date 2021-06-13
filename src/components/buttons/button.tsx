@@ -17,14 +17,15 @@ export default function Button(props: {
                 : 'bg-blue-50 text-blue-900 icon-dark-blue';
             break;
         default:
-            variantClasses = 'bg-white shadow text-blue-900 icon-blue';
+            variantClasses =
+                'bg-white hover:bg-gray-100 shadow text-blue-900 icon-blue';
             break;
     }
 
     return (
         <button
             className={
-                'p-0.5 rounded centering-row h-9 ' +
+                'p-0.5 rounded centering-row h-8 ' +
                 'no-selection ringable ' +
                 variantClasses
             }
