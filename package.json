@@ -18,6 +18,14 @@
         "react-router-dom": "^5.2.0",
         "react-scroll": "^1.8.1",
         "tailwindcss-interaction-variants": "2.x",
+        "autoprefixer": "^10.1.0",
+        "eslint-plugin-react-hooks": "^4.2.0",
+        "postcss": "^8.2.10",
+        "postcss-cli": "^8.3.1",
+        "react-scripts": "3.4.3",
+        "@tailwindcss/jit": "^0.1.18",
+        "tailwindcss": "^2.1.1",
+        "typescript": "~3.7.2",
         "typeface-quicksand": "^1.1.13"
     },
     "scripts": {
@@ -52,7 +60,6 @@
         ]
     },
     "devDependencies": {
-        "@tailwindcss/jit": "^0.1.18",
         "@testing-library/jest-dom": "^4.2.4",
         "@testing-library/react": "^9.3.2",
         "@testing-library/user-event": "^7.1.2",
@@ -66,13 +73,6 @@
         "@types/react-redux": "^7.1.9",
         "@types/react-router-dom": "^5.1.6",
         "@types/react-scroll": "^1.8.2",
-        "autoprefixer": "^10.1.0",
-        "eslint-plugin-react-hooks": "^4.2.0",
-        "postcss": "^8.2.10",
-        "postcss-cli": "^8.3.1",
-        "react-scripts": "3.4.3",
-        "source-map-explorer": "^2.5.0",
-        "tailwindcss": "^2.1.1",
-        "typescript": "~3.7.2"
+        "source-map-explorer": "^2.5.0"
     }
 }
