@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {types} from 'types';
+import {types} from '@types';
 
 const API_URL = 'http://localhost:8000';
 

@@ -1,7 +1,7 @@
 import React from 'react';
-import {constants} from 'utilities';
-import {Label, DropDown, TextInput} from 'components';
-import {types} from 'types';
+import {constants} from '@utilities';
+import {Label, DropDown, TextInput} from '@components';
+import {types} from '@types';
 
 interface Props {
     setupValue: number;

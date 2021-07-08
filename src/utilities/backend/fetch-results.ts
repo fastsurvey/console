@@ -1,4 +1,4 @@
-import {types} from 'types';
+import {types} from '@types';
 import {httpGet} from './http-clients';
 
 async function fetchResults(

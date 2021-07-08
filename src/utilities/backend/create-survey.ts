@@ -1,13 +1,13 @@
-import {types} from 'types';
+import {types} from '@types';
+import {localIdUtils} from '@utilities';
 import {httpPost} from './http-clients';
-import {localIdUtils} from 'utilities';
 
 async function createSurvey(
     account: types.Account,
     authToken: types.AuthToken,
     config: types.SurveyConfig,
     success: () => void,
-    error: (code: 400 | 401 | 422 | 500) => void,
+    error: (code: any) => void,
 ) {
     try {
         await httpPost(

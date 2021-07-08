@@ -1,4 +1,4 @@
-import {types} from 'types';
+import {types} from '@types';
 import {max} from 'lodash';
 
 function fieldOption(

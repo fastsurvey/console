@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {formUtils, constants} from 'utilities';
+import {formUtils, constants} from '@utilities';
 import {
     EditorFormCard,
     Label,
@@ -7,9 +7,9 @@ import {
     DropDown,
     DatePicker,
     TextInput,
-} from 'components';
-import {icons} from 'assets';
-import {types} from 'types';
+} from '@components';
+import {icons} from '@assets';
+import {types} from '@types';
 
 interface Props {
     config: types.SurveyConfig;

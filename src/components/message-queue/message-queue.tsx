@@ -1,9 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {reduxUtils} from 'utilities';
+import {reduxUtils} from '@utilities';
+import {types} from '@types';
+import {icons} from '@assets';
 import VisualMessage from './visual-message';
-import {types} from 'types';
-import {icons} from 'assets';
 
 interface Props {
     messages: types.Message[];

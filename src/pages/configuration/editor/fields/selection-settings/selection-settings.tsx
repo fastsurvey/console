@@ -1,5 +1,5 @@
 import React from 'react';
-import {types} from 'types';
+import {types} from '@types';
 import VisualSelectionSettings from './visual-selection-settings';
 
 interface Props {

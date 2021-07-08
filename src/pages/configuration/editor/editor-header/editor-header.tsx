@@ -1,9 +1,9 @@
 import React from 'react';
-import {types} from 'types';
-import icons from 'assets/icons/icons';
 import {connect} from 'react-redux';
+import {reduxUtils} from '@utilities';
+import {types} from '@types';
+import {icons} from '@assets';
 import VisualEditorHeader from './visual-editor-header';
-import reduxUtils from '../../../../utilities/redux-utils/index';
 
 function EditorHeader(props: {
     configIsDiffering: boolean;

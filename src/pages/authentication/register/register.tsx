@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {reduxUtils, backend} from 'utilities';
+import {reduxUtils, backend} from '@utilities';
+import {types} from '@types';
 import VisualRegister from './visual-register';
-import {types} from 'types';
 
 interface Props {
     openMessage(messageId: types.MessageId): void;

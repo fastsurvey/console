@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {icons} from 'assets';
+import {icons} from '@assets';
 
 export default function DropDown(props: {
     options: {label: string; value: number}[];

@@ -1,5 +1,5 @@
 import {max} from 'lodash';
-import {types} from 'types';
+import {types} from '@types';
 import surveyName from './survey-name';
 
 export const survey = (configs: types.SurveyConfig[]): types.SurveyConfig => {

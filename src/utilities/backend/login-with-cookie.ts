@@ -1,7 +1,12 @@
-import assert from 'assert';
 import Cookies from 'js-cookie';
-import {types} from 'types';
+import {types} from '@types';
 import {httpGet} from './http-clients';
+
+function assert(condition: boolean) {
+    if (!condition) {
+        throw Error;
+    }
+}
 
 async function loginWithCookie(
     login: (
@@ -14,6 +19,8 @@ async function loginWithCookie(
     try {
         const authTokenCookie = Cookies.get('authToken');
         assert(authTokenCookie !== undefined);
+
+        //@ts-ignore
         const authToken = JSON.parse(authTokenCookie);
         assert(authToken.access_token !== undefined);
         assert(authToken.token_type !== undefined);

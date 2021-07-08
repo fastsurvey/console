@@ -1,10 +1,9 @@
-import {AssertionError} from 'assert';
 import {isEqual} from 'lodash';
-import {types} from 'types';
+import {types} from '@types';
 
 function assert(condition: boolean) {
     if (!condition) {
-        throw AssertionError;
+        throw Error;
     }
 }
 

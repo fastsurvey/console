@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {sortBy} from 'lodash';
 import {Link} from 'react-router-dom';
-import {types} from 'types';
+import {types} from '@types';
+import {Button, SearchBar} from '@components';
+import {icons} from '@assets';
 import VisualConfigPanel from './visual-config-panel';
-import {Button, SearchBar} from 'components';
-import {icons} from 'assets';
 
 function VisualConfigList(props: {
     configs: types.SurveyConfig[];

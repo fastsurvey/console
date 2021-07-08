@@ -1,11 +1,12 @@
-import RemoveSurveyPopup from './remove-survey-popup';
-import DuplicateSurveyPopup from './duplicate-survey-popup';
 import React from 'react';
 import {connect} from 'react-redux';
-import {formUtils, reduxUtils, backend} from 'utilities';
-import VisualSettings from './visual-settings';
 import {useHistory} from 'react-router-dom';
-import {types} from 'types';
+import {types} from '@types';
+import {formUtils, reduxUtils, backend} from '@utilities';
+
+import VisualSettings from './visual-settings';
+import RemoveSurveyPopup from './remove-survey-popup';
+import DuplicateSurveyPopup from './duplicate-survey-popup';
 
 interface Props {
     account: types.Account;

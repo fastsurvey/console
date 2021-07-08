@@ -1,22 +1,21 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Switch, Route, BrowserRouter, Redirect} from 'react-router-dom';
-import {types} from 'types';
+import {types} from '@types';
 
-import {NotFoundPage, DashboardPage} from 'pages';
+import {NotFoundPage, DashboardPage} from '@pages';
 import {
     Login,
     Register,
     RequestPassword,
     SetPassword,
     Verify,
-} from 'pages/authentication';
-import {ConfigList, EditorRouter} from 'pages/configuration';
+} from '@pages/authentication';
+import {ConfigList, EditorRouter} from '@pages/configuration';
 
-import {LoaderOverlay, MessageQueue, Modal} from 'components';
+import {LoaderOverlay, MessageQueue, Modal, MainWrapper} from '@components';
 
-import MainWrapper from './components/wrapper/main-wrapper';
-import {ResultsList} from 'pages/results';
+import {ResultsList} from '@pages/results';
 
 interface RouterProps {
     loggingIn: boolean;

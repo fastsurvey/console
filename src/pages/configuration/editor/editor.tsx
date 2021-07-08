@@ -8,9 +8,9 @@ import {
     clipboardUtils,
     dataUtils,
     backend,
-} from 'utilities';
+} from '@utilities';
 import VisualEditor from './visual-editor';
-import {types} from 'types';
+import {types} from '@types';
 
 function ConfigEditor(props: {
     account: types.Account;

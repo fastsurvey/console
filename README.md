@@ -1,3 +1,3 @@
-## FastSurvey Admin Frontend
+## FastSurvey Console
 
 _In development._

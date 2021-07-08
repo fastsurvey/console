@@ -1,7 +1,7 @@
 import React from 'react';
-import {MainWrapper} from 'components';
-import EmptyImage from 'assets/images/empty.svg';
 import {Link} from 'react-router-dom';
+import {MainWrapper} from '@components';
+import EmptyImage from '@assets/images/empty.svg';
 
 function NotFoundPage() {
     return (

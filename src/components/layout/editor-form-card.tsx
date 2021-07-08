@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
-import icons from 'assets/icons/icons';
-import {styleUtils} from 'utilities';
-import {types} from 'types';
+import {icons} from '@assets';
+import {styleUtils} from '@utilities';
+import {types} from '@types';
 
 interface Props {
     label: string;

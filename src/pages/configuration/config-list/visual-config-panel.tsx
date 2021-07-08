@@ -1,6 +1,6 @@
 import React from 'react';
-import {types} from 'types';
-import {TimePill} from 'components';
+import {types} from '@types';
+import {TimePill} from '@components';
 
 interface Props {
     account: types.Account;

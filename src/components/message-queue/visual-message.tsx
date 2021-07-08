@@ -1,6 +1,6 @@
 import React from 'react';
-import {icons} from 'assets';
-import {types} from 'types';
+import {icons} from '@assets';
+import {types} from '@types';
 
 interface Props {
     message: types.Message;

@@ -7,7 +7,7 @@ async function createAccount(
         password: string;
     },
     success: () => void,
-    error: (code: 400 | 500) => void,
+    error: (code: any) => void,
 ) {
     try {
         await httpPost(`/users/${account.username}`, account).catch((error) => {

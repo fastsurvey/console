@@ -1,6 +1,6 @@
 import React from 'react';
-import {styleUtils} from 'utilities';
-import {types} from 'types';
+import {styleUtils} from '@utilities';
+import {types} from '@types';
 
 interface Props {
     insertField(fieldType: types.FieldType): void;

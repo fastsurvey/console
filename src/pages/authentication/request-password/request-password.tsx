@@ -1,8 +1,8 @@
 import React, {useRef, useState} from 'react';
 import {connect} from 'react-redux';
-import {reduxUtils, authPostRequest} from 'utilities';
+import {reduxUtils, authPostRequest} from '@utilities';
 import VisualRequestPassword from './visual-request-password';
-import {types} from 'types';
+import {types} from '@types';
 
 interface Props {
     openMessage(messageId: types.MessageId): void;

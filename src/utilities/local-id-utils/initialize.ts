@@ -1,4 +1,4 @@
-import {types} from 'types';
+import {types} from '@types';
 
 function surveys(configs: types.SurveyConfig[]) {
     return configs.map((config: types.SurveyConfig, i: number) =>

@@ -1,4 +1,4 @@
-import {types} from 'types';
+import {types} from '@types';
 import {httpDelete} from './http-clients';
 
 async function deleteSurvey(
@@ -6,7 +6,7 @@ async function deleteSurvey(
     authToken: types.AuthToken,
     centralConfigName: string,
     success: () => void,
-    error: (code: 400 | 401 | 422 | 500) => void,
+    error: (code: any) => void,
 ) {
     try {
         await httpDelete(

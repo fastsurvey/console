@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {sortBy} from 'lodash';
 import {Link} from 'react-router-dom';
-import {types} from 'types';
+import {types} from '@types';
+import {SearchBar} from '@components';
 import VisualResultsPanel from './visual-results-panel';
-import {SearchBar} from 'components';
 
 function VisualConfigList(props: {
     configs: types.SurveyConfig[];

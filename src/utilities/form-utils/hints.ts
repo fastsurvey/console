@@ -1,5 +1,5 @@
+import {types} from '@types';
 import {validators} from './validators';
-import {types} from 'types';
 
 export const hints = {
     title: (title: string) => ({

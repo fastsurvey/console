@@ -1,7 +1,7 @@
 import React from 'react';
-import {icons} from 'assets';
+import {icons} from '@assets';
+import {types} from '@types';
 import NavbarContent from './navbar-content/navbar-content';
-import {types} from 'types';
 
 interface Props {
     logOut(): void;

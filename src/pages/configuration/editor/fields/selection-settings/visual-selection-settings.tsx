@@ -1,8 +1,8 @@
 import React from 'react';
-import {formUtils} from 'utilities';
-import {Label, TextInput} from 'components';
+import {formUtils} from '@utilities';
+import {Label, TextInput} from '@components';
 import FieldOptionsList from '../field-options-list/field-options-list';
-import {types} from 'types';
+import {types} from '@types';
 
 interface Props {
     fieldConfig: types.SelectionField;

@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReduxStore from 'redux-store';
-import PageRouter from 'page-router';
-import 'styles/tailwind.out.css';
-import 'styles/compatibility-fixes.css';
+import ReduxStore from './redux-store';
+import PageRouter from './page-router';
+
 import 'typeface-quicksand';
+import '@styles/tailwind.css';
+import '@styles/fixes.css';
 
 ReactDOM.render(
     <React.StrictMode>

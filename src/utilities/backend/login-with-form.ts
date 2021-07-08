@@ -1,4 +1,4 @@
-import {types} from 'types';
+import {types} from '@types';
 import {httpGet, httpPost} from './http-clients';
 
 async function loginWithForm(

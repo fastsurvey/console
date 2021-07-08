@@ -1,8 +1,8 @@
 import React, {useRef, useState} from 'react';
 import {connect} from 'react-redux';
-import {reduxUtils, authPostRequest} from 'utilities';
+import {reduxUtils, authPostRequest} from '@utilities';
+import {types} from '@types';
 import VisualSetPassword from './visual-set-password';
-import {types} from 'types';
 
 interface Props {
     logIn(

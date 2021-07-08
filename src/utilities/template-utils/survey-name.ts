@@ -1,4 +1,4 @@
-import {types} from 'types';
+import {types} from '@types';
 
 export const surveyName = (configs: types.SurveyConfig[]): string => {
     const adjectives = [

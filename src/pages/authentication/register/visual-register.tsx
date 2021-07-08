@@ -1,7 +1,7 @@
 import React from 'react';
-import {Label, TextInput, Button} from 'components';
+import {Label, TextInput, Button} from '@components';
 import {Link} from 'react-router-dom';
-import {icons} from 'assets';
+import {icons} from '@assets';
 
 export default function VisualRegister(props: {
     email: string;

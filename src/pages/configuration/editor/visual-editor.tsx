@@ -1,5 +1,5 @@
 import React from 'react';
-import {types} from 'types';
+import {types} from '@types';
 import Settings from './settings/settings';
 import Field from './fields/field';
 import AddFieldPanel from './add-field-panel/add-field-panel';

@@ -1,6 +1,6 @@
 import React from 'react';
-import {types} from 'types';
-import VisualTextSettings from 'pages/configuration/editor/fields/text-settings/visual-text-settings';
+import {types} from '@types';
+import VisualTextSettings from '@pages/configuration/editor/fields/text-settings/visual-text-settings';
 
 interface Props {
     fieldConfig: types.TextField;

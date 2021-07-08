@@ -1,5 +1,5 @@
 import React from 'react';
-import {RocketLogoLight} from 'assets';
+import {RocketLogoLight} from '@assets';
 
 function VisualNavbarLogo() {
     return (

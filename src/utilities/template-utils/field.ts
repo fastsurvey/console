@@ -1,5 +1,5 @@
-import {localIdUtils} from 'utilities';
-import {types} from 'types';
+import {localIdUtils} from '@utilities';
+import {types} from '@types';
 
 export const field = (
     fieldType: types.FieldType,

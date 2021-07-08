@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import {types} from 'types';
-import {TimePill} from 'components';
-import {backend} from 'utilities';
+import {types} from '@types';
+import {TimePill} from '@components';
+import {backend} from '@utilities';
 
 interface Props {
     account: types.Account;

@@ -1,10 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {useHistory} from 'react-router-dom';
-import {reduxUtils, backend, templateUtils} from 'utilities';
+import {reduxUtils, backend, templateUtils} from '@utilities';
+import {types} from '@types';
 import VisualConfigList from './visual-config-list';
-import {types} from 'types';
-
 interface Props {
     account: types.Account;
     authToken: types.AuthToken;

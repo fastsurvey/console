@@ -1,4 +1,4 @@
-import {types} from 'types';
+import {types} from '@types';
 
 const genericTitle =
     (variant: 'Title' | 'Field title' | 'Option name') =>

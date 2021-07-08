@@ -1,8 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {types} from 'types';
-import {Navbar} from 'components';
-import 'styles/dashboard-page.css';
+import {types} from '@types';
+import {Navbar} from '@components';
+
+// TODO: Avoid plain css
+import '@styles/dashboard-page.css';
 
 function DashBoardPage(props: {
     children: React.ReactNode;

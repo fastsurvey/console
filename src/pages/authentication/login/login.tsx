@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {reduxUtils, backend} from 'utilities';
+import {reduxUtils, backend} from '@utilities';
+import {types} from '@types';
 import VisualLogin from './visual-login';
-import {types} from 'types';
 
 interface Props {
     logIn(

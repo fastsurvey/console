@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
-import {clipboardUtils, formUtils, localIdUtils} from 'utilities';
-import {types} from 'types';
+import {clipboardUtils, formUtils, localIdUtils} from '@utilities';
+import {types} from '@types';
 
 import VisualField from './visual-field';
 import TextSettings from './text-settings/text-settings';

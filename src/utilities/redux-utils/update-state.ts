@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 import {cloneDeep, unionBy} from 'lodash';
-import {reduxUtils, localIdUtils} from 'utilities';
-import {types} from 'types';
+import {reduxUtils, localIdUtils} from '@utilities';
+import {types} from '@types';
 import assert from 'assert';
 import constants from '../constants/index';
 

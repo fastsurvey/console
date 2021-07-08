@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import {icons} from 'assets';
+import {icons} from '@assets';
 
 function SearchBar(props: {value: string; setValue(v: string): void}) {
     const ref = useRef<HTMLInputElement>(null);

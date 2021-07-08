@@ -1,9 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {useParams} from 'react-router-dom';
-import {reduxUtils} from 'utilities';
+import {reduxUtils} from '@utilities';
 import Editor from './editor';
-import {types} from 'types';
+import {types} from '@types';
 
 interface Props {
     account: types.Account;
