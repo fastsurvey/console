@@ -1,6 +1,6 @@
 import {types} from '@types';
 import {localIdUtils} from '@utilities';
-import {httpPut} from './http-clients';
+import {httpPut} from '../http-clients';
 
 async function updateSurvey(
     account: types.Account,

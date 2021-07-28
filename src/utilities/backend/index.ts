@@ -1,11 +1,11 @@
-import loginWithCookie from './login-with-cookie';
-import loginWithForm from './login-with-form';
-import createSurvey from './create-survey';
-import deleteSurvey from './delete-survey';
-import updateSurvey from './update-survey';
-import createAccount from './create-account';
-import verifyAccount from './verify-account';
-import fetchResults from './fetch-results';
+import loginWithCookie from './authentication/login-with-cookie';
+import loginWithForm from './authentication/login-with-form';
+import createSurvey from './configuration/create-survey';
+import deleteSurvey from './configuration/delete-survey';
+import updateSurvey from './configuration/update-survey';
+import createAccount from './account/create-account';
+import verifyAccount from './account/verify-account';
+import fetchResults from './results/fetch-results';
 
 const backend = {
     loginWithCookie,

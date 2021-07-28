@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 import {types} from '@types';
-import {httpGet} from './http-clients';
+import {httpGet} from '../http-clients';
 
 function assert(condition: boolean) {
     if (!condition) {

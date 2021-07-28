@@ -1,5 +1,5 @@
 import {types} from '@types';
-import {httpGet, httpPost} from './http-clients';
+import {httpGet, httpPost} from '../http-clients';
 
 async function loginWithForm(
     data: {
@@ -16,6 +16,8 @@ async function loginWithForm(
     try {
         const authToken: types.AuthToken = (
             await httpPost('/authentication', data).catch((error) => {
+                console.log({data});
+                console.log({error});
                 throw error.response.status;
             })
         ).data;
@@ -42,6 +44,7 @@ async function loginWithForm(
 
         login(authToken, account, configs);
     } catch (code) {
+        console.log({code});
         abort(code === 401 ? 401 : 500);
     }
 }

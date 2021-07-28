@@ -1,16 +1,18 @@
 import {types} from '@types';
-import {httpDelete} from './http-clients';
+import {localIdUtils} from '@utilities';
+import {httpPost} from '../http-clients';
 
-async function deleteSurvey(
+async function createSurvey(
     account: types.Account,
     authToken: types.AuthToken,
-    centralConfigName: string,
+    config: types.SurveyConfig,
     success: () => void,
     error: (code: any) => void,
 ) {
     try {
-        await httpDelete(
-            `/users/${account.username}/surveys/${centralConfigName}`,
+        await httpPost(
+            `/users/${account.username}/surveys/${config.survey_name}`,
+            localIdUtils.remove.survey(config),
             authToken,
         ).catch((error) => {
             throw error.response.status;
@@ -22,4 +24,4 @@ async function deleteSurvey(
     }
 }
 
-export default deleteSurvey;
+export default createSurvey;

@@ -1,4 +1,4 @@
-import {httpPost} from './http-clients';
+import {httpPost} from '../http-clients';
 
 async function verifyAccount(
     verificationObject: {

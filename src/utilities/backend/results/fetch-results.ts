@@ -1,5 +1,5 @@
 import {types} from '@types';
-import {httpGet} from './http-clients';
+import {httpGet} from '../http-clients';
 
 async function fetchResults(
     account: types.Account,
