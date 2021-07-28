@@ -1,16 +1,14 @@
 import axios from 'axios';
 import {types} from '@types';
 
-// const API_URL = 'http://localhost:8000';
-const API_URL = 'https://backend.dev.fastsurvey.io';
+const API_URL = 'http://localhost:8000';
+// const API_URL = 'https://api.dev.fastsurvey.de';
 
 export function httpPost(
     url: string,
-    dataObject: {[key: string]: any},
+    data: {[key: string]: any},
     auth_token?: types.AuthToken,
 ) {
-    const data = JSON.stringify(dataObject);
-
     if (auth_token) {
         return axios.post(API_URL + url, data, {
             headers: {
@@ -24,10 +22,10 @@ export function httpPost(
 
 export function httpPut(
     url: string,
-    dataObject: {[key: string]: any},
+    data: {[key: string]: any},
     auth_token: types.AuthToken,
 ) {
-    return axios.put(API_URL + url, JSON.stringify(dataObject), {
+    return axios.put(API_URL + url, data, {
         headers: {
             Authorization: `${auth_token.token_type} ${auth_token.access_token}`,
         },
