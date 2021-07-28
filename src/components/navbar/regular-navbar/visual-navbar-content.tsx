@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {icons, RocketLogoLight} from '@assets';
 
 function NavbarLogo() {
@@ -28,9 +28,16 @@ function NavbarButton(props: {
     icon: React.ReactNode;
     onClick(): void;
 }) {
+    const ref = useRef<HTMLButtonElement>(null);
+    const handleMouseLeave = () => ref.current?.blur();
+
     return (
         <button
-            onClick={props.onClick}
+            ref={ref}
+            onClick={(e) => {
+                props.onClick();
+            }}
+            onMouseLeave={handleMouseLeave}
             className={
                 'relative h-10 py-0 centering-row my-1 ringable ' +
                 'font-weight-600 text-base rounded cursor-pointer ' +
