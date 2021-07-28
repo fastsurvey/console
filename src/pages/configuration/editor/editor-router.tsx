@@ -1,9 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {useParams} from 'react-router-dom';
+import {useParams, Link} from 'react-router-dom';
 import {reduxUtils} from '@utilities';
 import Editor from './editor';
 import {types} from '@types';
+import {Button} from '@components';
 
 interface Props {
     account: types.Account;
@@ -27,10 +28,17 @@ function EditorRouter(props: Props) {
 
     if (filteredConfigs.length === 0) {
         return (
-            <div className='box-border w-screen h-screen centering-col lg:pl-104 xl:pl-124 2xl:pl-144'>
-                <div className='text-lg text-gray-900 font-weight-700'>
+            <div className='box-border w-screen h-screen px-8 centering-col'>
+                <div className='mb-2 text-lg text-gray-900 font-weight-600'>
                     404: Nothing here
                 </div>
+
+                <Link to='/configuration' className='rounded ringable'>
+                    <Button
+                        text='Back to survey list'
+                        variant='flat-light-blue'
+                    />
+                </Link>
             </div>
         );
     }
