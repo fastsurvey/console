@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {types} from '@types';
 import {TimePill} from '@components';
 import {backend} from '@utilities';
+import {isEmpty, filter} from 'lodash';
 
 interface Props {
     account: types.Account;
@@ -12,7 +13,10 @@ function VisualConfigPanel(props: Props) {
     const {title, survey_name} = props.config;
     const {username} = props.account;
 
-    const [results, setResults] = useState({});
+    const [results, setResults] = useState<types.SurveyResults>({
+        count: 0,
+        data: [],
+    });
     const [fetching, setFetching] = useState(true);
 
     useEffect(() => {
@@ -28,6 +32,10 @@ function VisualConfigPanel(props: Props) {
         );
         // eslint-disable-next-line
     }, []);
+
+    const usesAuthentication = !isEmpty(
+        filter(props.config.fields, (f) => f.type === 'email' && f.verify),
+    );
 
     return (
         <div
@@ -55,8 +63,12 @@ function VisualConfigPanel(props: Props) {
                     /{username}/{survey_name}
                 </div>
                 <div className='mt-3 text-sm text-gray-600 truncate font-weight-500 no-selection'>
-                    {fetching && 'fetching'}
-                    {!fetching && results}
+                    {fetching && '...'}
+                    {!fetching &&
+                        `${results.count}/${props.config.limit} submissions`}
+                    {!fetching && usesAuthentication
+                        ? ', Email Verification'
+                        : ''}
                 </div>
             </div>
             <div

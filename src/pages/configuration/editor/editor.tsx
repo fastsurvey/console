@@ -119,6 +119,7 @@ function ConfigEditor(props: {
 
         const fieldsAreValid = every(fieldValidation.map((r) => r.valid));
         const fieldCountIsValid = localConfig.fields.length > 0;
+        console.log({localConfig});
         const authModeIsValid =
             formUtils.validators.authMode(localConfig).valid;
 

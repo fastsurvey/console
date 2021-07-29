@@ -52,7 +52,7 @@ function VisualConfigList(props: {
 
                 {props.configs.length === 0 && (
                     <p className='w-full my-4 text-center text-gray-600 font-weight-500'>
-                        No surveys yet
+                        No survey results yet
                     </p>
                 )}
             </div>

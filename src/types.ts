@@ -68,6 +68,11 @@ export declare namespace types {
         hint: string;
     }
 
+    export interface SurveyResults {
+        count: number;
+        data: any[];
+    }
+
     export type Color = 'red' | 'orange' | 'yellow' | 'green' | 'teal' | 'gray';
 
     export interface ReduxState {

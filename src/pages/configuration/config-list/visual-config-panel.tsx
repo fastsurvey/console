@@ -1,7 +1,7 @@
 import React from 'react';
 import {types} from '@types';
 import {TimePill} from '@components';
-import {filter, isNull} from 'lodash';
+import {filter, isEmpty} from 'lodash';
 
 interface Props {
     account: types.Account;
@@ -11,7 +11,7 @@ function VisualConfigPanel(props: Props) {
     const {title, survey_name, limit} = props.config;
     const {username} = props.account;
 
-    const usesAuthentication = !isNull(
+    const usesAuthentication = !isEmpty(
         filter(props.config.fields, (f) => f.type === 'email' && f.verify),
     );
 

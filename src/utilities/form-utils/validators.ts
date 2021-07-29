@@ -1,4 +1,5 @@
 import {types} from '@types';
+import {filter} from 'lodash';
 
 const genericTitle =
     (variant: 'Title' | 'Field title' | 'Option name') =>
@@ -36,8 +37,8 @@ export const validators = {
 
     authMode: (config: types.SurveyConfig): types.ValidationResult => {
         if (
-            config.fields.filter((f) => f.type === 'email' && f.verify)
-                .length <= 1
+            filter(config.fields, (f) => f.type === 'email' && f.verify)
+                .length > 1
         ) {
             return {
                 valid: false,
