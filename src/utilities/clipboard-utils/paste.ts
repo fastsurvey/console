@@ -1,5 +1,6 @@
 import {types} from '@types';
 import validateFormat from './validate-format';
+
 export function paste(
     success: (fieldConfig: types.SurveyField) => void,
     error: () => void,

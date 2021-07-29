@@ -2,8 +2,13 @@ import Cookies from 'js-cookie';
 import {cloneDeep, unionBy} from 'lodash';
 import {reduxUtils, localIdUtils} from '@utilities';
 import {types} from '@types';
-import assert from 'assert';
 import constants from '../constants/index';
+
+function assert(condition: boolean) {
+    if (!condition) {
+        throw Error;
+    }
+}
 
 function updateState(state: types.ReduxState, action: types.ReduxAction) {
     const newState = cloneDeep(state);
@@ -68,7 +73,7 @@ function updateState(state: types.ReduxState, action: types.ReduxAction) {
             break;
 
         case 'ADD_CONFIG':
-            assert(newState.configs);
+            assert(newState.configs !== undefined);
             newState.configs = [
                 ...newState.configs,
                 localIdUtils.initialize.survey(
@@ -79,14 +84,14 @@ function updateState(state: types.ReduxState, action: types.ReduxAction) {
             break;
 
         case 'REMOVE_CONFIG':
-            assert(newState.configs);
+            assert(newState.configs !== undefined);
             newState.configs = newState.configs.filter(
                 (config) => config.survey_name !== action.surveyName,
             );
             break;
 
         case 'SET_CENTRAL_CONFIG':
-            assert(newState.configs);
+            assert(newState.configs !== undefined);
             newState.configs = newState.configs.map((c) =>
                 c.local_id === action.config.local_id ? action.config : c,
             );
