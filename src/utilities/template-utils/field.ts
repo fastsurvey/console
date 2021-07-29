@@ -14,6 +14,7 @@ export const field = (
                 title: '',
                 description: '',
                 regex: '.*',
+                verify: false,
                 hint: 'Any email address',
             };
         case 'option':

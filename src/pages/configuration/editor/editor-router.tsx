@@ -33,7 +33,7 @@ function EditorRouter(props: Props) {
                     404: Nothing here
                 </div>
 
-                <Link to='/configuration' className='rounded ringable'>
+                <Link to='/configurations' className='rounded ringable'>
                     <Button
                         text='Back to survey list'
                         variant='flat-light-blue'

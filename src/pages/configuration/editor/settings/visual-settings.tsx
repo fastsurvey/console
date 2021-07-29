@@ -143,25 +143,6 @@ const VisualSettings = (props: Props) => {
             />
 
             <div className='w-full centering-col gap-y-0.5'>
-                <Label text='Authentication Mode' />
-                <DropDown
-                    value={props.config.authentication === 'open' ? 0 : 1}
-                    setValue={(newValue: 0 | 1) => {
-                        props.updateConfig(
-                            {
-                                ...props.config,
-                                authentication:
-                                    newValue === 0 ? 'open' : 'email',
-                            },
-                            false,
-                        );
-                    }}
-                    options={constants.formOptions.AUTH_MODE}
-                    disabled={!props.config.draft || collapse}
-                />
-            </div>
-
-            <div className='w-full centering-col gap-y-0.5'>
                 <Label text='Limit to' />
                 <TextInput
                     value={props.config.limit.toString()}

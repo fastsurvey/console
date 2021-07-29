@@ -8,6 +8,7 @@
     },
     "scripts": {
         "develop": "vite",
+        "check-ts": "tsc --noEmit",
         "build": "tsc && vite build",
         "serve": "vite preview",
         "analyze": "source-map-explorer 'dist/assets/*.js'",

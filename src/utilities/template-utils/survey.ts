@@ -11,7 +11,6 @@ export const survey = (configs: types.SurveyConfig[]): types.SurveyConfig => {
         survey_name: newSurveyName,
         start: now,
         end: now + 3600 * 24,
-        authentication: 'open',
         draft: true,
         limit: 100,
         title: 'We need more surveys!',

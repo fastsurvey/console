@@ -36,19 +36,8 @@ export const validators = {
 
     authMode: (config: types.SurveyConfig): types.ValidationResult => {
         if (
-            config.authentication === 'open' &&
-            config.fields.filter((fieldConfig) => fieldConfig.type === 'email')
-                .length !== 0
-        ) {
-            // Will be changed upon API change of the authentication stuff
-            return {
-                valid: false,
-                message: `No Authentication selected, but email field present`,
-            };
-        } else if (
-            config.authentication === 'email' &&
-            config.fields.filter((fieldConfig) => fieldConfig.type === 'email')
-                .length !== 1
+            config.fields.filter((f) => f.type === 'email' && f.verify)
+                .length <= 1
         ) {
             return {
                 valid: false,
