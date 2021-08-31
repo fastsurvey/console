@@ -10,6 +10,7 @@ import {
 } from '@components';
 import {icons} from '@assets';
 import {types} from '@types';
+import Button from '../../../../components/buttons/button';
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ');
@@ -34,7 +35,7 @@ const VisualSettings = (props: Props) => {
     ];
 
     return (
-        <div className='bg-white rounded shadow flex-col-center'>
+        <div className='mt-4 bg-white rounded shadow flex-col-center'>
             <div className='sm:hidden'>
                 <label htmlFor='tabs' className='sr-only'>
                     Select a tab
@@ -80,7 +81,7 @@ const VisualSettings = (props: Props) => {
                     </nav>
                 </div>
             </div>
-            <div className='w-full px-4 pt-4 pb-6 space-y-6 flex-col-center'>
+            <div className='w-full px-4 pt-4 pb-6 space-y-6 flex-col-left'>
                 {tabIndex === 0 && (
                     <>
                         <div className='w-full centering-col gap-y-0.5'>
@@ -155,6 +156,25 @@ const VisualSettings = (props: Props) => {
                             />
                         </div>
                     </>
+                )}
+                {tabIndex === 2 && (
+                    <div className='w-full flex-col-left gap-y-0.5'>
+                        <Label text='Survey Actions' />
+                        <div className='w-full gap-x-2 flex-row-left'>
+                            <Button
+                                text='duplicate'
+                                variant='flat-light-blue'
+                                icon={icons.duplicate}
+                                onClick={props.openDuplicateModal}
+                            />
+                            <Button
+                                text='delete'
+                                variant='flat-light-red'
+                                icon={icons.trash}
+                                onClick={props.openRemoveModal}
+                            />
+                        </div>
+                    </div>
                 )}
             </div>
             {props.validation && (
