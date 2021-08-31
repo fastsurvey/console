@@ -41,7 +41,7 @@ function VisualConfigPanel(props: Props) {
                     /{username}/{survey_name}
                 </div>
                 <div className='mt-3 text-sm text-gray-600 truncate font-weight-500 no-selection'>
-                    {props.config.fields.length} Field
+                    {props.config.fields.length} Question
                     {props.config.fields.length === 1 ? '' : 's'}
                     {usesAuthentication ? ', Email Verification' : ''}
                 </div>

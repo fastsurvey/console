@@ -64,10 +64,15 @@ function VisualConfigPanel(props: Props) {
                 </div>
                 <div className='mt-3 text-sm text-gray-600 truncate font-weight-500 no-selection'>
                     {fetching && '...'}
-                    {!fetching && `${results.count} submissions`}
-                    {!fetching && usesAuthentication
-                        ? ', Email Verification'
-                        : ''}
+                    {!fetching && (
+                        <>
+                            {props.config.fields.length} Question
+                            {props.config.fields.length === 1 ? '' : 's'},
+                            {results.count} Submission
+                            {results.count === 1 ? '' : 's'}
+                            {usesAuthentication ? ', Email Verification' : ''}
+                        </>
+                    )}
                 </div>
             </div>
             <div
