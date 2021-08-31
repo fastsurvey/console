@@ -3,8 +3,10 @@ import {icons} from '@assets';
 import {EditorFormCard, Label, TextInput, TextArea} from '@components';
 import {types} from '@types';
 import {styleUtils} from '@utilities';
+import {tail} from 'lodash';
 
 interface Props {
+    fieldIndex: number;
     fieldConfig: types.SurveyField;
     disabled: boolean;
     setLocalFieldConfig(fieldConfigChanges: object): void;
@@ -52,7 +54,7 @@ function VisualField(props: Props) {
 
     return (
         <EditorFormCard
-            label={props.fieldConfig.type}
+            label={`field ${props.fieldIndex + 1} (${props.fieldConfig.type})`}
             icon={styleUtils.icons.fieldTypeToIcon(props.fieldConfig.type)}
             fieldType={props.fieldConfig.type}
             collapse={collapse}

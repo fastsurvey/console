@@ -54,6 +54,9 @@ const VisualSettings = (props: Props) => {
             <div className='hidden w-full sm:block'>
                 <div className='w-full border-b-2 border-gray-200'>
                     <nav className='px-4 mb-[-2px] space-x-4 flex-row-left pt-0.5'>
+                        <div className='text-gray-900 font-weight-600'>
+                            General Survey Settings:{' '}
+                        </div>
                         {tabs.map((tab, index) => (
                             <button
                                 key={tab.name}

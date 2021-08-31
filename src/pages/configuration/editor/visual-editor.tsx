@@ -49,6 +49,7 @@ function VisualEditor(props: {
                             disabled={!props.localConfig.draft}
                         />
                         <Field
+                            fieldIndex={index}
                             fieldConfig={fieldConfig}
                             setLocalFieldConfig={(newFieldConfig: object) =>
                                 props.setLocalFieldConfig(newFieldConfig, index)
