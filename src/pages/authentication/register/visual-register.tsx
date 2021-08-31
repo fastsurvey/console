@@ -77,8 +77,8 @@ export default function VisualRegister(props: {
             </div>
             <div
                 className={
-                    'w-full p-3 pr-6 text-justify flex-row-top space-x-2 ' +
-                    'border-t-[3px] rounded-b ' +
+                    'w-full px-3 text-justify flex-row-left space-x-2 ' +
+                    'border-t-2 h-10 rounded-b ' +
                     (props.entryIsValid
                         ? 'text-green-500 bg-green-50 border-green-100 '
                         : 'text-red-400 bg-red-50 border-red-100 ')
@@ -86,13 +86,13 @@ export default function VisualRegister(props: {
             >
                 <div
                     className={
-                        'flex-shrink-0 w-6 h-6 ' +
+                        'flex-shrink-0 w-5 h-5 ' +
                         (props.entryIsValid ? 'icon-green ' : 'icon-red ')
                     }
                 >
                     {props.entryIsValid ? icons.checkCircle : icons.closeCirlce}
                 </div>
-                <div className='text-left flex-max font-weight-600 text-md'>
+                <div className='text-sm text-left font-weight-600'>
                     {props.validationMessage}
                 </div>
             </div>

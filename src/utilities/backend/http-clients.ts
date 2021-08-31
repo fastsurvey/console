@@ -1,8 +1,8 @@
 import axios from 'axios';
 import {types} from '@types';
 
-const API_URL = 'http://localhost:8000';
-// const API_URL = 'https://api.dev.fastsurvey.de';
+// const API_URL = 'http://localhost:8000';
+const API_URL = 'https://api.dev.fastsurvey.de';
 
 export function httpPost(url: string, data: any, auth_token?: types.AuthToken) {
     if (auth_token) {

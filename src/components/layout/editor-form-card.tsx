@@ -104,11 +104,11 @@ function EditorFormCard(props: Props) {
                 {props.validation && (
                     <div
                         className={
-                            'w-full pr-6 mt-3 flex-row-top space-x-2 ' +
+                            'w-full px-3 flex-row-left space-x-2 ' +
                             'rounded-b text-justify ' +
-                            (props.collapse && props.validation.valid
-                                ? 'h-0 overflow-hidden '
-                                : 'border-t-[3px] p-3 ') +
+                            (props.collapse || props.validation.valid
+                                ? 'h-0 overflow-hidden mt-2 '
+                                : 'border-t-2 h-10 mt-3 ') +
                             (props.validation.valid
                                 ? 'text-green-500 bg-green-50 border-green-100 '
                                 : 'text-red-400 bg-red-50 border-red-100 ')
@@ -116,7 +116,7 @@ function EditorFormCard(props: Props) {
                     >
                         <div
                             className={
-                                'flex-shrink-0 w-6 h-6 ' +
+                                'flex-shrink-0 w-5 h-5 ' +
                                 (props.validation.valid
                                     ? 'icon-green '
                                     : 'icon-red ')
@@ -126,7 +126,7 @@ function EditorFormCard(props: Props) {
                                 ? icons.checkCircle
                                 : icons.closeCirlce}
                         </div>
-                        <div className='text-left flex-max font-weight-600 text-md'>
+                        <div className='text-sm text-left font-weight-600'>
                             {props.validation.valid
                                 ? 'Valid'
                                 : props.validation.message}

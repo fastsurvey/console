@@ -35,7 +35,7 @@ const VisualSettings = (props: Props) => {
     ];
 
     return (
-        <div className='mt-4 bg-white rounded shadow flex-col-center'>
+        <div className='mt-4 bg-white rounded shadow-md flex-col-center'>
             <div className='sm:hidden'>
                 <label htmlFor='tabs' className='sr-only'>
                     Select a tab
@@ -84,7 +84,7 @@ const VisualSettings = (props: Props) => {
                     </nav>
                 </div>
             </div>
-            <div className='w-full px-4 pt-4 pb-6 space-y-6 flex-col-left'>
+            <div className='w-full px-4 py-4 space-y-6 flex-col-left'>
                 {tabIndex === 0 && (
                     <>
                         <div className='w-full centering-col gap-y-0.5'>
@@ -161,22 +161,19 @@ const VisualSettings = (props: Props) => {
                     </>
                 )}
                 {tabIndex === 2 && (
-                    <div className='w-full flex-col-left gap-y-0.5'>
-                        <Label text='Survey Actions' />
-                        <div className='w-full gap-x-2 flex-row-left'>
-                            <Button
-                                text='duplicate'
-                                variant='flat-light-blue'
-                                icon={icons.duplicate}
-                                onClick={props.openDuplicateModal}
-                            />
-                            <Button
-                                text='delete'
-                                variant='flat-light-red'
-                                icon={icons.trash}
-                                onClick={props.openRemoveModal}
-                            />
-                        </div>
+                    <div className='w-full gap-x-2 flex-row-left'>
+                        <Button
+                            text='duplicate'
+                            variant='flat-light-blue'
+                            icon={icons.duplicate}
+                            onClick={props.openDuplicateModal}
+                        />
+                        <Button
+                            text='delete'
+                            variant='flat-light-red'
+                            icon={icons.trash}
+                            onClick={props.openRemoveModal}
+                        />
                     </div>
                 )}
             </div>
@@ -184,10 +181,10 @@ const VisualSettings = (props: Props) => {
                 <div
                     className={
                         'w-full px-3 flex-row-left space-x-2 ' +
-                        'rounded-b text-justify border-t-2 h-10 ' +
+                        'rounded-b text-justify ' +
                         (props.validation.valid
-                            ? 'text-green-500 bg-green-50 border-green-100 '
-                            : 'text-red-400 bg-red-50 border-red-100 ')
+                            ? 'h-0 overflow-hidden '
+                            : 'mt-2 border-t-2 text-red-400 bg-red-50 border-red-100 h-10 ')
                     }
                 >
                     <div
