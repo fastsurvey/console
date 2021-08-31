@@ -22,11 +22,6 @@ function VisualConfigList(props: {
             <div className='w-full max-w-4xl centering-col'>
                 <div className='w-full mt-1 mb-6 centering-row gap-x-3'>
                     <SearchBar value={value} setValue={setValue} />
-                    <Button
-                        icon={icons.addSquare}
-                        text='Add Survey'
-                        onClick={props.addSurvey}
-                    />
                 </div>
 
                 <div className='grid w-full grid-cols-2 gap-3'>
@@ -53,13 +48,15 @@ function VisualConfigList(props: {
                             />
                         </Link>
                     ))}
+                    <button
+                        type='button'
+                        className='relative w-full h-full p-12 text-center border-2 border-gray-400 border-dashed rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 icon-blue flex-row-center opacity-60 hover:opacity-100'
+                    >
+                        <div className='mx-1 text-base text-blue-900 font-weight-600'>
+                            New Survey
+                        </div>
+                    </button>
                 </div>
-
-                {props.configs.length === 0 && (
-                    <p className='w-full my-4 text-center text-gray-600 font-weight-500'>
-                        No surveys yet
-                    </p>
-                )}
             </div>
         </div>
     );
