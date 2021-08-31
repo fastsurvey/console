@@ -7,6 +7,7 @@ import {formUtils, reduxUtils, backend} from '@utilities';
 import VisualSettings from './visual-settings';
 import RemoveSurveyPopup from './remove-survey-popup';
 import DuplicateSurveyPopup from './duplicate-survey-popup';
+import VisualSettingsOld from './visual-settings-old';
 
 interface Props {
     account: types.Account;
@@ -104,19 +105,34 @@ function Settings(props: Props) {
     }
 
     return (
-        <VisualSettings
-            updateConfig={updateConfig}
-            config={props.config}
-            commonProps={{
-                updateConfig,
-                disabled: !props.config.draft,
-                config: props.config,
-            }}
-            disabled={!props.config.draft}
-            openRemoveModal={openRemoveModal}
-            openDuplicateModal={openDuplicateModal}
-            validation={props.validation}
-        />
+        <>
+            <VisualSettings
+                updateConfig={updateConfig}
+                config={props.config}
+                commonProps={{
+                    updateConfig,
+                    disabled: !props.config.draft,
+                    config: props.config,
+                }}
+                disabled={!props.config.draft}
+                openRemoveModal={openRemoveModal}
+                openDuplicateModal={openDuplicateModal}
+                validation={props.validation}
+            />
+            <VisualSettingsOld
+                updateConfig={updateConfig}
+                config={props.config}
+                commonProps={{
+                    updateConfig,
+                    disabled: !props.config.draft,
+                    config: props.config,
+                }}
+                disabled={!props.config.draft}
+                openRemoveModal={openRemoveModal}
+                openDuplicateModal={openDuplicateModal}
+                validation={props.validation}
+            />
+        </>
     );
 }
 const mapStateToProps = (state: types.ReduxState) => ({
