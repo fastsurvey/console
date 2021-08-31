@@ -50,11 +50,17 @@ function VisualConfigList(props: {
                     ))}
                     <button
                         type='button'
-                        className='relative w-full h-full p-12 text-center border-2 border-gray-400 border-dashed rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 icon-blue flex-row-center opacity-60 hover:opacity-100'
+                        className={
+                            'relative w-full h-full px-2 py-6 flex-row-center ' +
+                            'border-2 border-gray-400 border-dashed rounded ' +
+                            'text-opacity-60 border-gray-300 ringable ' +
+                            'hover:text-opacity-100 hover:border-gray-400 ' +
+                            'focus:text-opacity-100 focus:hover:border-gray-400 ' +
+                            'text-base text-blue-900 font-weight-600'
+                        }
+                        onClick={props.addSurvey}
                     >
-                        <div className='mx-1 text-base text-blue-900 font-weight-600'>
-                            New Survey
-                        </div>
+                        New Survey
                     </button>
                 </div>
             </div>
