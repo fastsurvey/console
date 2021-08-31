@@ -34,7 +34,7 @@ const VisualSettings = (props: Props) => {
     ];
 
     return (
-        <div className='pb-2 bg-white rounded shadow flex-col-center'>
+        <div className='bg-white rounded shadow flex-col-center'>
             <div className='sm:hidden'>
                 <label htmlFor='tabs' className='sr-only'>
                     Select a tab
@@ -80,6 +80,112 @@ const VisualSettings = (props: Props) => {
                     </nav>
                 </div>
             </div>
+            <div className='w-full px-4 pt-4 pb-6 space-y-6 flex-col-center'>
+                {tabIndex === 0 && (
+                    <>
+                        <div className='w-full centering-col gap-y-0.5'>
+                            <Label text='Title' />
+                            <TextInput
+                                value={props.config.title}
+                                setValue={(newValue: string) => {
+                                    props.updateConfig({
+                                        ...props.config,
+                                        title: newValue,
+                                    });
+                                }}
+                                disabled={!props.config.draft}
+                            />
+                        </div>
+                        <div className='w-full centering-col gap-y-0.5'>
+                            <Label text='URL conform identifier' />
+                            <TextInput
+                                value={props.config.survey_name}
+                                setValue={(newValue: string) => {
+                                    props.updateConfig({
+                                        ...props.config,
+                                        survey_name: newValue,
+                                    });
+                                }}
+                                disabled={!props.config.draft}
+                            />
+                        </div>
+
+                        <div className='w-full centering-col gap-y-0.5'>
+                            <Label text='Description' />
+                            <TextArea
+                                value={props.config.description}
+                                setValue={(newValue: string) => {
+                                    props.updateConfig({
+                                        ...props.config,
+                                        description: newValue,
+                                    });
+                                }}
+                                disabled={!props.config.draft}
+                            />
+                        </div>
+                    </>
+                )}
+                {tabIndex === 1 && (
+                    <>
+                        <div className='w-full flex-col-left gap-y-0.5'>
+                            <Label text='Start survey at' />
+                            <DatePicker
+                                timestamp={props.config.start}
+                                setTimestamp={(timestamp: number) => {
+                                    props.updateConfig({
+                                        ...props.config,
+                                        start: timestamp,
+                                    });
+                                }}
+                                disabled={!props.config.draft}
+                            />
+                        </div>
+
+                        <div className='w-full flex-col-left gap-y-0.5'>
+                            <Label text='End survey by' />
+                            <DatePicker
+                                timestamp={props.config.end}
+                                setTimestamp={(timestamp: number) => {
+                                    props.updateConfig({
+                                        ...props.config,
+                                        end: timestamp,
+                                    });
+                                }}
+                                disabled={!props.config.draft}
+                            />
+                        </div>
+                    </>
+                )}
+            </div>
+            {props.validation && (
+                <div
+                    className={
+                        'w-full px-3 flex-row-left space-x-2 ' +
+                        'rounded-b text-justify border-t-2 h-10 ' +
+                        (props.validation.valid
+                            ? 'text-green-500 bg-green-50 border-green-100 '
+                            : 'text-red-400 bg-red-50 border-red-100 ')
+                    }
+                >
+                    <div
+                        className={
+                            'flex-shrink-0 w-5 h-5 ' +
+                            (props.validation.valid
+                                ? 'icon-green '
+                                : 'icon-red ')
+                        }
+                    >
+                        {props.validation.valid
+                            ? icons.checkCircle
+                            : icons.closeCirlce}
+                    </div>
+                    <div className='text-sm text-left font-weight-600'>
+                        {props.validation.valid
+                            ? 'Valid'
+                            : props.validation.message}
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
