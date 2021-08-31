@@ -136,26 +136,6 @@ const VisualSettings = (props: Props) => {
                     disabled={!props.config.draft || collapse}
                 />
             </div>
-
-            <div
-                className={'h-0.5 bg-gray-300'}
-                style={{width: 'calc(100% + 1.5rem)'}}
-            />
-
-            <div className='w-full centering-col gap-y-0.5'>
-                <Label text='Limit to' />
-                <TextInput
-                    value={props.config.limit.toString()}
-                    setValue={(newValue: string) => {
-                        props.updateConfig({
-                            ...props.config,
-                            limit: formUtils.formatters.atoi(newValue),
-                        });
-                    }}
-                    disabled={!props.config.draft || collapse}
-                    postfix=' submissions'
-                />
-            </div>
         </EditorFormCard>
     );
 };

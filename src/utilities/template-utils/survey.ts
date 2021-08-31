@@ -12,7 +12,6 @@ export const survey = (configs: types.SurveyConfig[]): types.SurveyConfig => {
         start: now,
         end: now + 3600 * 24,
         draft: true,
-        limit: 100,
         title: 'We need more surveys!',
         description: '',
         fields: [

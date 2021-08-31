@@ -8,7 +8,7 @@ interface Props {
     config: types.SurveyConfig;
 }
 function VisualConfigPanel(props: Props) {
-    const {title, survey_name, limit} = props.config;
+    const {title, survey_name} = props.config;
     const {username} = props.account;
 
     const usesAuthentication = !isEmpty(
@@ -41,8 +41,9 @@ function VisualConfigPanel(props: Props) {
                     /{username}/{survey_name}
                 </div>
                 <div className='mt-3 text-sm text-gray-600 truncate font-weight-500 no-selection'>
-                    {usesAuthentication ? 'Email Verification, ' : ''}
-                    Max. {limit} submissions
+                    {props.config.fields.length} Field
+                    {props.config.fields.length === 1 ? '' : 's'}
+                    {usesAuthentication ? ', Email Verification' : ''}
                 </div>
             </div>
             <div

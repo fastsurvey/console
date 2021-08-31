@@ -4,11 +4,7 @@ import {types} from '@types';
 const API_URL = 'http://localhost:8000';
 // const API_URL = 'https://api.dev.fastsurvey.de';
 
-export function httpPost(
-    url: string,
-    data: {[key: string]: any},
-    auth_token?: types.AuthToken,
-) {
+export function httpPost(url: string, data: any, auth_token?: types.AuthToken) {
     if (auth_token) {
         return axios.post(API_URL + url, data, {
             headers: {
@@ -20,14 +16,11 @@ export function httpPost(
     }
 }
 
-export function httpPut(
-    url: string,
-    data: {[key: string]: any},
-    auth_token: types.AuthToken,
-) {
+export function httpPut(url: string, data: any, auth_token: types.AuthToken) {
     return axios.put(API_URL + url, data, {
         headers: {
             Authorization: `${auth_token.token_type} ${auth_token.access_token}`,
+            'Content-Type': 'application/json',
         },
     });
 }

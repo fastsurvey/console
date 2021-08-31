@@ -64,8 +64,7 @@ function VisualConfigPanel(props: Props) {
                 </div>
                 <div className='mt-3 text-sm text-gray-600 truncate font-weight-500 no-selection'>
                     {fetching && '...'}
-                    {!fetching &&
-                        `${results.count}/${props.config.limit} submissions`}
+                    {!fetching && `${results.count} submissions`}
                     {!fetching && usesAuthentication
                         ? ', Email Verification'
                         : ''}

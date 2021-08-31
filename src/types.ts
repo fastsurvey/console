@@ -5,7 +5,6 @@ export declare namespace types {
         start: number;
         end: number;
         draft: boolean;
-        limit: number;
         title: string;
         description: string;
         fields: SurveyField[];

@@ -13,7 +13,7 @@ async function updateSurvey(
     try {
         await httpPut(
             `/users/${account.username}/surveys/${centralConfigName}`,
-            localIdUtils.remove.survey(config),
+            JSON.stringify(localIdUtils.remove.survey(config)),
             authToken,
         ).catch((response: {statusCode: 400 | 401 | 422 | 500}) => {
             throw response.statusCode;

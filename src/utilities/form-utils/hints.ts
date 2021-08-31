@@ -24,10 +24,6 @@ export const hints = {
             `characters (${120 - newSurveyName.length} left)`,
         fulfilled: surveyNameIsValid(newSurveyName),
     }),
-    submissionLimit: (config: types.SurveyConfig) => ({
-        text: '1 - 10.000',
-        fulfilled: validators.submissionLimit(config.limit),
-    }),
     regex: (fieldConfig: types.EmailField) => ({
         text: `<= 250 Characters (${250 - fieldConfig.hint.length} left)`,
         fulfilled: validators.regex(fieldConfig.regex),
