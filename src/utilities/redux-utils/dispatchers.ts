@@ -4,13 +4,13 @@ const dispatchers = {
     logIn:
         (dispatch: any) =>
         (
-            authToken: types.AuthToken,
+            accessToken: types.AccessToken,
             account: types.Account,
             configs: types.SurveyConfig[],
         ): void =>
             dispatch({
                 type: 'LOG_IN',
-                authToken,
+                accessToken,
                 account,
                 configs,
             }),

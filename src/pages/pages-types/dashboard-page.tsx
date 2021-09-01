@@ -10,7 +10,7 @@ function DashBoardPage(props: {
     children: React.ReactNode;
     navbarState: types.NavbarState;
     loggedIn: boolean;
-    authToken: types.AuthToken | undefined;
+    accessToken: types.AccessToken | undefined;
 }) {
     return (
         <React.Fragment>
@@ -32,7 +32,7 @@ function DashBoardPage(props: {
 const mapStateToProps = (state: types.ReduxState) => ({
     navbarState: state.navbarState,
     loggedIn: state.loggedIn,
-    authToken: state.authToken,
+    accessToken: state.accessToken,
 });
 const mapDispatchToProps = (dispatch: any) => ({});
 export default connect(mapStateToProps, mapDispatchToProps)(DashBoardPage);

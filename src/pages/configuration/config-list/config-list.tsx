@@ -6,7 +6,7 @@ import {types} from '@types';
 import VisualConfigList from './visual-config-list';
 interface Props {
     account: types.Account;
-    authToken: types.AuthToken;
+    accessToken: types.AccessToken;
 
     configs: types.SurveyConfig[];
     openMessage(messageId: types.MessageId): void;
@@ -29,7 +29,7 @@ function ConfigList(props: Props) {
 
         backend.createSurvey(
             props.account,
-            props.authToken,
+            props.accessToken,
             newConfig,
             success,
             error,
@@ -47,7 +47,7 @@ function ConfigList(props: Props) {
 
 const mapStateToProps = (state: types.ReduxState) => ({
     configs: state.configs,
-    authToken: state.authToken,
+    accessToken: state.accessToken,
     account: state.account,
 });
 const mapDispatchToProps = (dispatch: any) => ({

@@ -7,7 +7,7 @@ import VisualVerifyForm from './visual-verify';
 
 interface Props {
     logIn(
-        authToken: types.AuthToken,
+        accessToken: types.AccessToken,
         account: types.Account,
         configs: types.SurveyConfig[],
     ): void;

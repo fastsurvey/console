@@ -7,7 +7,7 @@ import {filter} from 'lodash';
 function ResultsList(props: {
     configs: types.SurveyConfig[];
     account: types.Account;
-    authToken: types.AuthToken;
+    accessToken: types.AccessToken;
 }) {
     const configsWithResults = filter(props.configs, (c) => !c.draft);
     return <VisualResultsList {...props} configs={configsWithResults} />;
@@ -16,7 +16,7 @@ function ResultsList(props: {
 const mapStateToProps = (state: types.ReduxState) => ({
     configs: state.configs,
     account: state.account,
-    authToken: state.authToken,
+    accessToken: state.accessToken,
 });
 const mapDispatchToProps = () => ({});
 export default connect(mapStateToProps, mapDispatchToProps)(ResultsList);

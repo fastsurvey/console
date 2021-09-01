@@ -4,7 +4,7 @@ import {httpPut} from '../http-clients';
 
 async function updateSurvey(
     account: types.Account,
-    authToken: types.AuthToken,
+    accessToken: types.AccessToken,
     centralConfigName: string,
     config: types.SurveyConfig,
     success: () => void,
@@ -14,7 +14,7 @@ async function updateSurvey(
         await httpPut(
             `/users/${account.username}/surveys/${centralConfigName}`,
             JSON.stringify(localIdUtils.remove.survey(config)),
-            authToken,
+            accessToken,
         ).catch((response: {statusCode: 400 | 401 | 422 | 500}) => {
             throw response.statusCode;
         });

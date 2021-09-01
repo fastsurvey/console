@@ -14,7 +14,7 @@ async function verifyAccount(
         });
 
         success();
-    } catch (code) {
+    } catch (code: any) {
         error(code);
     }
 }

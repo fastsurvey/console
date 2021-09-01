@@ -14,7 +14,7 @@ import {types} from '@types';
 
 function ConfigEditor(props: {
     account: types.Account;
-    authToken: types.AuthToken;
+    accessToken: types.AccessToken;
 
     configs: types.SurveyConfig[];
     centralConfig: types.SurveyConfig;
@@ -138,7 +138,7 @@ function ConfigEditor(props: {
         if (fieldsAreValid && fieldCountIsValid && authModeIsValid) {
             backend.updateSurvey(
                 props.account,
-                props.authToken,
+                props.accessToken,
                 props.centralConfig.survey_name,
                 combinedConfig,
                 success,

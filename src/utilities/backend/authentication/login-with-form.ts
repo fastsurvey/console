@@ -7,14 +7,14 @@ async function loginWithForm(
         password: string;
     },
     login: (
-        authToken: types.AuthToken,
+        authToken: types.AccessToken,
         account: types.Account,
         configs: types.SurveyConfig[],
     ) => void,
     abort: (statusCode: 401 | 500) => void,
 ) {
     try {
-        const authToken: types.AuthToken = (
+        const {username, access_token: accessToken}: any = (
             await httpPost('/authentication', data).catch((error) => {
                 console.log({data});
                 console.log({error});
@@ -22,27 +22,24 @@ async function loginWithForm(
             })
         ).data;
 
-        let username: string;
-        if (data.identifier.includes('@')) {
-            username = (await httpGet('/authentication', authToken)).data;
-        } else {
-            username = data.identifier;
-        }
-
-        const email_address: string = (
-            await httpGet(`/users/${username}`, authToken)
-        ).data.email_address;
-        const account = {
+        let account: {username: string; email: string} = {
             username,
-            email_address,
-            verified: true,
+            email: '',
         };
 
+        if (!data.identifier.includes('@')) {
+            account.email = (
+                await httpGet(`/users/${data.identifier}`, accessToken)
+            ).data.email;
+        } else {
+            account.email = data.identifier;
+        }
+
         const configs: types.SurveyConfig[] = (
-            await httpGet(`/users/${username}/surveys`, authToken)
+            await httpGet(`/users/${username}/surveys`, accessToken)
         ).data;
 
-        login(authToken, account, configs);
+        login(accessToken, account, configs);
     } catch (code) {
         console.log({code});
         abort(code === 401 ? 401 : 500);

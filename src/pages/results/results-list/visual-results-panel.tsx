@@ -7,7 +7,7 @@ import {isEmpty, filter} from 'lodash';
 interface Props {
     account: types.Account;
     config: types.SurveyConfig;
-    authToken: types.AuthToken;
+    accessToken: types.AccessToken;
 }
 function VisualConfigPanel(props: Props) {
     const {title, survey_name} = props.config;
@@ -22,7 +22,7 @@ function VisualConfigPanel(props: Props) {
     useEffect(() => {
         backend.fetchResults(
             props.account,
-            props.authToken,
+            props.accessToken,
             props.config.survey_name,
             (r) => {
                 setResults(r);

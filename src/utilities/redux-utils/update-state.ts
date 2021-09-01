@@ -18,16 +18,20 @@ function updateState(state: types.ReduxState, action: types.ReduxAction) {
         case 'LOG_IN':
             newState.loggingIn = false;
             newState.loggedIn = true;
-            newState.authToken = action.authToken;
+            newState.accessToken = action.accessToken;
             newState.account = action.account;
             newState.configs = localIdUtils.initialize.surveys(action.configs);
-            Cookies.set('authToken', JSON.stringify(action.authToken), {
+            Cookies.set('accessToken', action.accessToken, {
+                expires: 7,
+            });
+            Cookies.set('username', action.account.username, {
                 expires: 7,
             });
             break;
 
         case 'LOG_OUT':
-            Cookies.remove('authToken');
+            Cookies.remove('accessToken');
+            Cookies.remove('username');
             return {...cloneDeep(reduxUtils.initialState), loggingIn: false};
 
         case 'OPEN_MESSAGE':

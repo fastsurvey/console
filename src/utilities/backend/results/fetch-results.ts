@@ -3,7 +3,7 @@ import {httpGet} from '../http-clients';
 
 async function fetchResults(
     account: types.Account,
-    authToken: types.AuthToken,
+    accessToken: types.AccessToken,
     centralConfigName: string,
     success: (results: any) => void,
     error: (code: any) => void,
@@ -11,7 +11,7 @@ async function fetchResults(
     try {
         const response = await httpGet(
             `/users/${account.username}/surveys/${centralConfigName}/results`,
-            authToken,
+            accessToken,
         ).catch((error: any) => {
             throw error.response.status;
         });

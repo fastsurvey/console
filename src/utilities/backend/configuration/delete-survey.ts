@@ -3,7 +3,7 @@ import {httpDelete} from '../http-clients';
 
 async function deleteSurvey(
     account: types.Account,
-    authToken: types.AuthToken,
+    accessToken: types.AccessToken,
     centralConfigName: string,
     success: () => void,
     error: (code: any) => void,
@@ -11,7 +11,7 @@ async function deleteSurvey(
     try {
         await httpDelete(
             `/users/${account.username}/surveys/${centralConfigName}`,
-            authToken,
+            accessToken,
         ).catch((error) => {
             throw error.response.status;
         });

@@ -77,7 +77,7 @@ export declare namespace types {
     export interface ReduxState {
         loggingIn: boolean;
         loggedIn: boolean;
-        authToken: types.AuthToken;
+        accessToken: types.AccessToken;
         account: types.Account;
         messages: types.Message[];
         navbarState: NavbarState;
@@ -86,15 +86,11 @@ export declare namespace types {
         configIsDiffering: boolean;
     }
 
-    export interface AuthToken {
-        access_token: string;
-        token_type: string;
-    }
+    export type AccessToken = string;
 
     export interface Account {
-        email_address: string;
+        email: string;
         username: string;
-        verified: boolean;
     }
 
     // TODO: Add fix message versions (Message is union of those types)
@@ -137,7 +133,7 @@ export declare namespace types {
     export type ReduxAction =
         | {
               type: 'LOG_IN';
-              authToken: types.AuthToken;
+              accessToken: types.AccessToken;
               account: types.Account;
               configs: types.SurveyConfig[];
           }

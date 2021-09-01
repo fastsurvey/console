@@ -1,5 +1,4 @@
 export {default as backend} from './backend';
-export {authPostRequest} from './backend/axios-clients';
 export {default as constants} from './constants';
 
 export {default as reduxUtils} from './redux-utils';

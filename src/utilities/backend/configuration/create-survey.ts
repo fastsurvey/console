@@ -4,7 +4,7 @@ import {httpPost} from '../http-clients';
 
 async function createSurvey(
     account: types.Account,
-    authToken: types.AuthToken,
+    accessToken: types.AccessToken,
     config: types.SurveyConfig,
     success: () => void,
     error: (code: any) => void,
@@ -13,7 +13,7 @@ async function createSurvey(
         await httpPost(
             `/users/${account.username}/surveys/${config.survey_name}`,
             localIdUtils.remove.survey(config),
-            authToken,
+            accessToken,
         ).catch((error) => {
             throw error.response.status;
         });

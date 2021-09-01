@@ -10,37 +10,30 @@ function assert(condition: boolean) {
 
 async function loginWithCookie(
     login: (
-        authToken: types.AuthToken,
+        accessToken: types.AccessToken,
         account: types.Account,
         configs: types.SurveyConfig[],
     ) => void,
     abort: () => void,
 ) {
     try {
-        const authTokenCookie = Cookies.get('authToken');
-        assert(authTokenCookie !== undefined);
+        const accessToken: any = Cookies.get('accessToken');
+        const username: any = Cookies.get('username');
+        assert(accessToken !== undefined);
+        assert(username !== undefined);
 
-        //@ts-ignore
-        const authToken = JSON.parse(authTokenCookie);
-        assert(authToken.access_token !== undefined);
-        assert(authToken.token_type !== undefined);
-
-        const username: string = (await httpGet('/authentication', authToken))
-            .data;
-        const email_address: string = (
-            await httpGet(`/users/${username}`, authToken)
-        ).data.email_address;
+        const email: string = (await httpGet(`/users/${username}`, accessToken))
+            .data.email_address;
         const account = {
             username,
-            email_address,
-            verified: true,
+            email,
         };
 
         const configs: types.SurveyConfig[] = (
-            await httpGet(`/users/${username}/surveys`, authToken)
+            await httpGet(`/users/${username}/surveys`, accessToken)
         ).data;
 
-        login(authToken, account, configs);
+        login(accessToken, account, configs);
     } catch {
         abort();
     }

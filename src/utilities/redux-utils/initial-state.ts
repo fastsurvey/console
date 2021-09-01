@@ -4,14 +4,10 @@ import {types} from '@types';
 const initialState: types.ReduxState = {
     loggingIn: true,
     loggedIn: false,
-    authToken: {
-        access_token: '',
-        token_type: '',
-    },
+    accessToken: '',
     account: {
-        email_address: '',
+        email: '',
         username: '',
-        verified: false,
     },
 
     configs: [],

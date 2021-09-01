@@ -8,7 +8,7 @@ import {Button} from '@components';
 
 interface Props {
     account: types.Account;
-    authToken: types.AuthToken;
+    accessToken: types.AccessToken;
 
     configs: types.SurveyConfig[];
     setCentralConfig(config: types.SurveyConfig): void;
@@ -46,7 +46,7 @@ function EditorRouter(props: Props) {
     return (
         <Editor
             account={props.account}
-            authToken={props.authToken}
+            accessToken={props.accessToken}
             configs={props.configs}
             centralConfig={filteredConfigs[0]}
             setCentralConfig={props.setCentralConfig}
@@ -60,7 +60,7 @@ function EditorRouter(props: Props) {
 
 const mapStateToProps = (state: types.ReduxState) => ({
     account: state.account,
-    authToken: state.authToken,
+    accessToken: state.accessToken,
     configs: state.configs,
     configIsDiffering: state.configIsDiffering,
 });

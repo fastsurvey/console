@@ -4,17 +4,15 @@ import {reduxUtils, backend} from '@utilities';
 import {types} from '@types';
 import VisualLogin from './visual-login';
 
-interface Props {
+function LoginForm(props: {
     logIn(
-        authToken: types.AuthToken,
+        accessToken: types.AccessToken,
         account: types.Account,
         configs: types.SurveyConfig[],
     ): void;
     openMessage(messageId: types.MessageId): void;
     closeAllMessages(): void;
-}
-
-function LoginForm(props: Props) {
+}) {
     const [identifier, setIdentifier] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [submitting, setSubmitting] = useState<boolean>(false);
