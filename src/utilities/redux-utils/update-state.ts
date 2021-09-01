@@ -3,6 +3,7 @@ import {cloneDeep, unionBy} from 'lodash';
 import {reduxUtils, localIdUtils} from '@utilities';
 import {types} from '@types';
 import constants from '../constants/index';
+import logout from '../backend/authentication/logout';
 
 function assert(condition: boolean) {
     if (!condition) {
@@ -32,6 +33,7 @@ function updateState(state: types.ReduxState, action: types.ReduxAction) {
         case 'LOG_OUT':
             Cookies.remove('accessToken');
             Cookies.remove('username');
+            logout(newState.accessToken);
             return {...cloneDeep(reduxUtils.initialState), loggingIn: false};
 
         case 'OPEN_MESSAGE':
