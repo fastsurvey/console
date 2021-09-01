@@ -10,6 +10,7 @@ import {ConfigList, EditorRouter} from '@pages/configuration';
 import {LoaderOverlay, MessageQueue, Modal, MainWrapper} from '@components';
 
 import {ResultsList} from '@pages/results';
+import {AccountPage} from '@pages/account';
 
 interface RouterProps {
     loggingIn: boolean;
@@ -44,7 +45,7 @@ function PageRouter(props: RouterProps) {
                                         <ResultsList />
                                     </Route>
                                     <Route exact path='/account'>
-                                        <h3>Account</h3>
+                                        <AccountPage />
                                     </Route>
                                 </Switch>
                             </DashboardPage>
