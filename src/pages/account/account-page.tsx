@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {types} from '@types';
 import {icons} from '@assets';
-import {Label, TextInput} from '@components';
+import {Button, Label, TextInput} from '@components';
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ');
@@ -13,6 +13,33 @@ function AccountPage(props: {
     accessToken: types.AccessToken;
 }) {
     const [tabIndex, setTabIndex] = useState(0);
+    const [password, setPassword] = useState('');
+    const [passwordConfirmation, setPasswordConfirmation] = useState('');
+
+    function showValidation() {
+        return password.length > 0 || passwordConfirmation.length > 0;
+    }
+
+    function validate() {
+        if (password.length < 8) {
+            return {
+                valid: false,
+                message: 'Password too short (< 8 characters)',
+            };
+        } else if (password !== passwordConfirmation) {
+            return {
+                valid: false,
+                message: 'Password and confirmation do not match',
+            };
+        } else {
+            return {
+                valid: true,
+                message: 'New password valid',
+            };
+        }
+    }
+
+    const validation = validate();
 
     const tabs = [
         {name: 'Identification', href: '#', icon: icons.userCircle},
@@ -80,7 +107,7 @@ function AccountPage(props: {
                         {tabIndex === 0 && (
                             <>
                                 <div className='w-full centering-col gap-y-0.5'>
-                                    <Label text='Email' />
+                                    <Label text='Email (cannot be modified yet)' />
                                     <TextInput
                                         value={props.account.email}
                                         setValue={() => {}}
@@ -89,7 +116,7 @@ function AccountPage(props: {
                                 </div>
 
                                 <div className='w-full centering-col gap-y-0.5'>
-                                    <Label text='Username' />
+                                    <Label text='Username (cannot be modified yet)' />
                                     <TextInput
                                         value={props.account.username}
                                         setValue={() => {}}
@@ -98,31 +125,69 @@ function AccountPage(props: {
                                 </div>
                             </>
                         )}
-                        {tabIndex === 1 && <>passwords</>}
+                        {tabIndex === 1 && (
+                            <>
+                                <div className='w-full space-y-3 flex-col-left'>
+                                    <div className='w-full centering-col gap-y-0.5'>
+                                        <Label text='New Password' />
+                                        <TextInput
+                                            value={password}
+                                            setValue={setPassword}
+                                            disabled={false}
+                                        />
+                                    </div>
+
+                                    <div className='w-full centering-col gap-y-0.5'>
+                                        <Label text='Confirm New Password' />
+                                        <TextInput
+                                            value={passwordConfirmation}
+                                            setValue={setPasswordConfirmation}
+                                            disabled={false}
+                                        />
+                                    </div>
+                                </div>
+                                <div className='w-full gap-x-2 flex-row-right'>
+                                    <Button
+                                        text='cancel'
+                                        variant='flat-light-red'
+                                        onClick={() => {}}
+                                        disabled={!showValidation()}
+                                    />
+                                    <Button
+                                        text='change password'
+                                        variant='flat-light-blue'
+                                        onClick={() => {}}
+                                        disabled={!showValidation()}
+                                    />
+                                </div>
+                            </>
+                        )}
                     </div>
-                    {true && (
+                    <div
+                        className={
+                            'w-full px-3 flex-row-left space-x-2 ' +
+                            'rounded-b text-justify ' +
+                            (!showValidation()
+                                ? 'h-0 overflow-hidden '
+                                : validation.valid
+                                ? 'mt-2 border-t-2 text-green-400 bg-green-50 border-green-100 h-10 '
+                                : 'mt-2 border-t-2 text-red-400 bg-red-50 border-red-100 h-10 ')
+                        }
+                    >
                         <div
                             className={
-                                'w-full px-3 flex-row-left space-x-2 ' +
-                                'rounded-b text-justify ' +
-                                (true
-                                    ? 'h-0 overflow-hidden '
-                                    : 'mt-2 border-t-2 text-red-400 bg-red-50 border-red-100 h-10 ')
+                                'flex-shrink-0 w-5 h-5 ' +
+                                (validation.valid ? 'icon-green ' : 'icon-red ')
                             }
                         >
-                            <div
-                                className={
-                                    'flex-shrink-0 w-5 h-5 ' +
-                                    (true ? 'icon-green ' : 'icon-red ')
-                                }
-                            >
-                                {true ? icons.checkCircle : icons.closeCirlce}
-                            </div>
-                            <div className='text-sm text-left font-weight-600'>
-                                {true ? 'Valid' : 'Passwords do not match'}
-                            </div>
+                            {validation.valid
+                                ? icons.checkCircle
+                                : icons.closeCirlce}
                         </div>
-                    )}
+                        <div className='text-sm text-left font-weight-600'>
+                            {validation.message}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
