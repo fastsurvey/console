@@ -67,7 +67,7 @@ function VisualConfigPanel(props: Props) {
                     {!fetching && (
                         <>
                             {props.config.fields.length} Question
-                            {props.config.fields.length === 1 ? '' : 's'},
+                            {props.config.fields.length === 1 ? '' : 's'},{' '}
                             {results.count} Submission
                             {results.count === 1 ? '' : 's'}
                             {usesAuthentication ? ', Email Verification' : ''}
