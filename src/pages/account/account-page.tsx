@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {types} from '@types';
 import {icons} from '@assets';
 import {Button, Label, TextInput} from '@components';
+import {backend} from '@utilities';
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ');
@@ -15,6 +16,7 @@ function AccountPage(props: {
     const [tabIndex, setTabIndex] = useState(0);
     const [password, setPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
+    const [pending, setPending] = useState(false);
 
     function showValidation() {
         return password.length > 0 || passwordConfirmation.length > 0;
@@ -40,6 +42,27 @@ function AccountPage(props: {
     }
 
     const validation = validate();
+
+    function submitNewPassword() {
+        function success() {
+            console.log('success');
+            setPassword('');
+            setPasswordConfirmation('');
+            setPending(false);
+        }
+        function error() {
+            console.log('error');
+            setPending(false);
+        }
+        setPending(true);
+        backend.updateAccount(
+            props.account,
+            props.accessToken,
+            password,
+            success,
+            error,
+        );
+    }
 
     const tabs = [
         {name: 'Identification', href: '#', icon: icons.userCircle},
@@ -133,7 +156,8 @@ function AccountPage(props: {
                                         <TextInput
                                             value={password}
                                             setValue={setPassword}
-                                            disabled={false}
+                                            disabled={pending}
+                                            type='password'
                                         />
                                     </div>
 
@@ -142,7 +166,8 @@ function AccountPage(props: {
                                         <TextInput
                                             value={passwordConfirmation}
                                             setValue={setPasswordConfirmation}
-                                            disabled={false}
+                                            disabled={pending}
+                                            type='password'
                                         />
                                     </div>
                                 </div>
@@ -150,14 +175,17 @@ function AccountPage(props: {
                                     <Button
                                         text='cancel'
                                         variant='flat-light-red'
-                                        onClick={() => {}}
-                                        disabled={!showValidation()}
+                                        onClick={() => {
+                                            setPassword('');
+                                            setPasswordConfirmation('');
+                                        }}
+                                        disabled={!showValidation() || pending}
                                     />
                                     <Button
                                         text='change password'
                                         variant='flat-light-blue'
-                                        onClick={() => {}}
-                                        disabled={!showValidation()}
+                                        onClick={submitNewPassword}
+                                        disabled={!showValidation() || pending}
                                     />
                                 </div>
                             </>
