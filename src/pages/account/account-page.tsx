@@ -15,8 +15,8 @@ function AccountPage(props: {
     const [tabIndex, setTabIndex] = useState(0);
 
     const tabs = [
-        {name: 'Identification', href: '#', icon: icons.textCursor},
-        {name: 'Security', href: '#', icon: icons.time},
+        {name: 'Identification', href: '#', icon: icons.userCircle},
+        {name: 'Password', href: '#', icon: icons.key},
     ];
 
     return (
@@ -26,7 +26,7 @@ function AccountPage(props: {
                 'overflow-y-scroll overflow-x-hidden bg-gray-100'
             }
         >
-            <div className='w-full max-w-xl centering-col'>
+            <div className='w-full max-w-2xl centering-col'>
                 <div className='w-full mt-4 bg-white rounded shadow-md flex-col-center'>
                     <div className='sm:hidden'>
                         <label htmlFor='tabs' className='sr-only'>

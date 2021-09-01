@@ -268,6 +268,32 @@ const icons = {
             />
         </SVG>
     ),
+    key: (
+        <SVG>
+            <path
+                className='secondary'
+                d='M8.23 10.77a7.01 7.01 0 1 1 5 5L11 18H9v2H7v2.03H2V17l6.23-6.23zM17 9a2 2 0 1 0 0-4 2 2 0 0 0 0 4z'
+            />
+            <path
+                className='primary'
+                d='M6.2 18.7a1 1 0 1 1-1.4-1.4l4-4a1 1 0 1 1 1.4 1.4l-4 4z'
+            />
+        </SVG>
+    ),
+    userCircle: (
+        <SVG>
+            <g>
+                <path
+                    className='primary'
+                    d='M3.66 17.52a10 10 0 1 1 16.68 0C19.48 16.02 17.86 16 16 16H8c-1.86 0-3.48.01-4.34 1.52z'
+                />
+                <path
+                    className='secondary'
+                    d='M3.66 17.52A5 5 0 0 1 8 15h8a5 5 0 0 1 4.34 2.52 10 10 0 0 1-16.68 0zM12 13a4 4 0 1 1 0-8 4 4 0 0 1 0 8z'
+                />
+            </g>
+        </SVG>
+    ),
 
     vote: (
         <SVG>
