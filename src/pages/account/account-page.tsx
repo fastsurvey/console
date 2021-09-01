@@ -4,6 +4,7 @@ import {types} from '@types';
 import {icons} from '@assets';
 import {Button, Label, TextInput} from '@components';
 import {backend} from '@utilities';
+import dispatchers from '../../utilities/redux-utils/dispatchers';
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ');
@@ -12,6 +13,7 @@ function classNames(...classes: string[]) {
 function AccountPage(props: {
     account: types.Account;
     accessToken: types.AccessToken;
+    openMessage: (messageId: types.MessageId) => void;
 }) {
     const [tabIndex, setTabIndex] = useState(0);
     const [password, setPassword] = useState('');
@@ -45,13 +47,13 @@ function AccountPage(props: {
 
     function submitNewPassword() {
         function success() {
-            console.log('success');
+            props.openMessage('success-password-changed');
             setPassword('');
             setPasswordConfirmation('');
             setPending(false);
         }
         function error() {
-            console.log('error');
+            props.openMessage('error-server');
             setPending(false);
         }
         setPending(true);
@@ -226,5 +228,7 @@ const mapStateToProps = (state: types.ReduxState) => ({
     account: state.account,
     accessToken: state.accessToken,
 });
-const mapDispatchToProps = () => ({});
+const mapDispatchToProps = (dispatch: any) => ({
+    openMessage: dispatchers.openMessage(dispatch),
+});
 export default connect(mapStateToProps, mapDispatchToProps)(AccountPage);

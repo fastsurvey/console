@@ -109,6 +109,7 @@ export declare namespace types {
         | 'error-email-invalid'
         | 'error-link-invalid'
         | 'success-redirect-to-login'
+        | 'success-password-changed'
         | 'warning-clipboard'
         | 'editor-warning-validators'
         | 'editor-warning-field-count'
