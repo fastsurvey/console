@@ -33,7 +33,7 @@ export const field = (
 
                 title: '',
                 description: '',
-                fields: [],
+                options: [],
             };
         case 'selection':
             return {
@@ -44,7 +44,7 @@ export const field = (
                 description: '',
                 min_select: 0,
                 max_select: 0,
-                fields: [],
+                options: [],
             };
         case 'text':
             return {

@@ -50,7 +50,7 @@ export const hints = {
         fulfilled: validators.minSelect(fieldConfig),
     }),
     maxSelect: (fieldConfig: types.SelectionField) => ({
-        text: `<= ${fieldConfig.fields.length}`,
+        text: `<= ${fieldConfig.options.length}`,
         fulfilled: validators.maxSelect(fieldConfig),
     }),
     password: (password: string) => ({

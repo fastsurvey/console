@@ -176,6 +176,7 @@ function ConfigEditor(props: {
     }
 
     function setLocalFieldConfig(fieldConfigChanges: object, newIndex: number) {
+        console.log({fieldConfigChanges, newIndex});
         const newConfig = {
             ...localConfig,
         };

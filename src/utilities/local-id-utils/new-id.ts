@@ -5,7 +5,7 @@ function fieldOption(
     fieldConfig: types.RadioField | types.SelectionField,
 ): number {
     const maxId = max(
-        fieldConfig.fields.map(
+        fieldConfig.options.map(
             (optionConfig: types.FieldOption) => optionConfig.local_id,
         ),
     );

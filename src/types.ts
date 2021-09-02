@@ -39,19 +39,19 @@ export declare namespace types {
 
     export interface RadioField extends GeneralSurveyField {
         type: 'radio';
-        fields: FieldOption[];
+        options: FieldOption[];
     }
 
     export interface SelectionField extends GeneralSurveyField {
         type: 'selection';
         min_select: number;
         max_select: number;
-        fields: FieldOption[];
+        options: FieldOption[];
     }
 
-    export interface FieldOption extends GeneralSurveyField {
-        type: 'option';
-        required: boolean;
+    export interface FieldOption {
+        title: string;
+        local_id: number;
     }
 
     export interface TextField extends GeneralSurveyField {

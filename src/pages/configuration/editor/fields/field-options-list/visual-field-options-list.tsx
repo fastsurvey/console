@@ -18,7 +18,7 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
     return (
         <div className='w-full flex-col-right gap-y-1'>
             <Label text='Options to select' />
-            {props.fieldConfig.fields.map((optionConfig, optionIndex) => (
+            {props.fieldConfig.options.map((optionConfig, optionIndex) => (
                 <div
                     className='w-full flex-row-left gap-x-2'
                     key={optionConfig.local_id}
@@ -27,7 +27,7 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
                         value={optionConfig.title}
                         setValue={(newValue: string) =>
                             props.setLocalFieldConfig({
-                                fields: props.fieldConfig.fields.map(
+                                options: props.fieldConfig.options.map(
                                     (oldOptionField, oldIndex) =>
                                         optionIndex === oldIndex
                                             ? {
@@ -49,7 +49,7 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
                         }
                         onClick={() =>
                             props.setLocalFieldConfig({
-                                fields: props.fieldConfig.fields.filter(
+                                options: props.fieldConfig.options.filter(
                                     (oldOptionField, oldIndex) =>
                                         optionIndex !== oldIndex,
                                 ),

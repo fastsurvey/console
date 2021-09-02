@@ -19,9 +19,9 @@ function survey(config: types.SurveyConfig, configId: number) {
 function field(field: types.SurveyField, fieldId: number) {
     field.local_id = fieldId;
     if (field.type === 'radio' || field.type === 'selection') {
-        field.fields = field.fields.map(
-            (fieldOption: types.FieldOption, subSubIndex: number) => ({
-                ...fieldOption,
+        field.options = field.options.map(
+            (fieldOption: any, subSubIndex: number) => ({
+                title: fieldOption,
                 local_id: 1000 * fieldId + subSubIndex,
             }),
         );

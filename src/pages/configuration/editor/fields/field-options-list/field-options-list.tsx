@@ -11,11 +11,11 @@ interface Props {
 }
 function FieldOptionsList(props: Props) {
     const [optionsVisible, setOptionsVisible] = useState(
-        props.fieldConfig.fields.map(() => true),
+        props.fieldConfig.options.map(() => true),
     );
     useEffect(
-        () => setOptionsVisible(props.fieldConfig.fields.map(() => true)),
-        [props.fieldConfig.fields],
+        () => setOptionsVisible(props.fieldConfig.options.map(() => true)),
+        [props.fieldConfig.options],
     );
 
     const nextRowRef: any = useRef(null);
