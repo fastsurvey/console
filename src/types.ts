@@ -69,7 +69,9 @@ export declare namespace types {
 
     export interface SurveyResults {
         count: number;
-        data: any[];
+        aggregation: {
+            [key: string]: null | number | {[key: string]: number};
+        };
     }
 
     export type Color = 'red' | 'orange' | 'yellow' | 'green' | 'teal' | 'gray';

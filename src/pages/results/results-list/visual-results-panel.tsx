@@ -15,7 +15,7 @@ function VisualConfigPanel(props: Props) {
 
     const [results, setResults] = useState<types.SurveyResults>({
         count: 0,
-        data: [],
+        aggregation: {},
     });
     const [fetching, setFetching] = useState(true);
 

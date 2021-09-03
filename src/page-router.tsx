@@ -5,12 +5,12 @@ import {types} from '@types';
 
 import {NotFoundPage, DashboardPage} from '@pages';
 import {Login, Register, Verify} from '@pages/authentication';
+
 import {ConfigList, EditorRouter} from '@pages/configuration';
+import {ResultsList, SummaryRouter} from '@pages/results';
+import {AccountPage} from '@pages/account';
 
 import {LoaderOverlay, MessageQueue, Modal, MainWrapper} from '@components';
-
-import {ResultsList} from '@pages/results';
-import {AccountPage} from '@pages/account';
 
 interface RouterProps {
     loggingIn: boolean;
@@ -43,6 +43,9 @@ function PageRouter(props: RouterProps) {
                                     </Route>
                                     <Route exact path='/results'>
                                         <ResultsList />
+                                    </Route>
+                                    <Route exact path='/results/:survey_name'>
+                                        <SummaryRouter />
                                     </Route>
                                     <Route exact path='/account'>
                                         <AccountPage />
