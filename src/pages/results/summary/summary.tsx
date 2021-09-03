@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {types} from '@types';
 import SummaryHeader from './summary-header/summary-header';
 import {backend} from '@utilities';
+import Field from './fields/field';
 
 function Summary(props: {
     config: types.SurveyConfig;
@@ -30,12 +31,17 @@ function Summary(props: {
         <div className={'w-full py-16 min-h-screen bg-gray-100 flex-col-top'}>
             <div className={'w-full max-w-3xl '}>
                 <SummaryHeader config={props.config} results={results} />
-                {props.config.fields.map((fieldConfig, index) => (
-                    <div className='w-full' key={fieldConfig.local_id}>
-                        Result for field {JSON.stringify(fieldConfig)}
-                    </div>
-                ))}
-                {!fetching && JSON.stringify(results)}
+                {results !== undefined && (
+                    <>
+                        {props.config.fields.map((fieldConfig, index) => (
+                            <Field
+                                key={fieldConfig.local_id}
+                                fieldConfig={fieldConfig}
+                                fieldResults={results?.aggregation[index]}
+                            />
+                        ))}
+                    </>
+                )}
             </div>
         </div>
     );
