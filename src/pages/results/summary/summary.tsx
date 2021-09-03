@@ -29,7 +29,7 @@ function Summary(props: {
 
     return (
         <div className={'w-full py-16 min-h-screen bg-gray-100 flex-col-top'}>
-            <div className={'w-full max-w-3xl '}>
+            <div className={'w-full max-w-3xl flex-col-center space-y-4'}>
                 <SummaryHeader config={props.config} results={results} />
                 {results !== undefined && (
                     <>
