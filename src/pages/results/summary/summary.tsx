@@ -8,10 +8,9 @@ function Summary(props: {
     account: types.Account;
     accessToken: types.AccessToken;
 }) {
-    const [results, setResults] = useState<types.SurveyResults>({
-        count: 0,
-        aggregation: {},
-    });
+    const [results, setResults] = useState<types.SurveyResults | undefined>(
+        undefined,
+    );
     const [fetching, setFetching] = useState(true);
 
     useEffect(() => {
@@ -30,7 +29,7 @@ function Summary(props: {
     return (
         <div className={'w-full py-16 min-h-screen bg-gray-100 flex-col-top'}>
             <div className={'w-full max-w-3xl '}>
-                <SummaryHeader config={props.config} />
+                <SummaryHeader config={props.config} results={results} />
                 {props.config.fields.map((fieldConfig, index) => (
                     <div className='w-full' key={fieldConfig.local_id}>
                         Result for field {JSON.stringify(fieldConfig)}

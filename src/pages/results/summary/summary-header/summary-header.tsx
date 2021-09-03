@@ -6,19 +6,9 @@ import VisualSummaryHeader from './visual-summary-header';
 function SummaryHeader(props: {
     account: types.Account;
     config: types.SurveyConfig;
+    results: types.SurveyResults | undefined;
 }) {
-    const [results, setResults] = useState<types.SurveyResults>({
-        count: 0,
-        aggregation: {},
-    });
-
-    return (
-        <VisualSummaryHeader
-            {...props}
-            results={results}
-            refreshResults={() => {}}
-        />
-    );
+    return <VisualSummaryHeader {...props} refreshResults={() => {}} />;
 }
 
 const mapStateToProps = (state: types.ReduxState) => ({

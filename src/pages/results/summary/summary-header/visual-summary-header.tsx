@@ -7,10 +7,10 @@ import {Button, TimePill} from '@components';
 function VisualSummaryHeader(props: {
     account: types.Account;
     config: types.SurveyConfig;
-    results: types.SurveyResults;
+    results: types.SurveyResults | undefined;
     refreshResults(): void;
 }) {
-    const {title, survey_name, start, end, draft} = props.config;
+    const {title, survey_name} = props.config;
     const {username} = props.account;
 
     const linkContent = (
@@ -37,7 +37,10 @@ function VisualSummaryHeader(props: {
                         'pr-4 text-xl text-gray-800 font-weight-600 truncate'
                     }
                 >
-                    {title}
+                    {title}{' '}
+                    {props.results === undefined
+                        ? '(... submissions)'
+                        : `(${props.results.count} submissions)`}
                 </div>
                 <div className='flex-max' />
                 <Button
