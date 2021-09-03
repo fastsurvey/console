@@ -36,8 +36,9 @@ function Summary(props: {
                         {props.config.fields.map((fieldConfig, index) => (
                             <Field
                                 key={fieldConfig.local_id}
+                                fieldIndex={index}
                                 fieldConfig={fieldConfig}
-                                fieldResults={results?.aggregation[index]}
+                                results={results}
                             />
                         ))}
                     </>
