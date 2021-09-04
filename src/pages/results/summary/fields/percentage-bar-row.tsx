@@ -44,8 +44,7 @@ export default function PercentageBarRow(props: {
             >
                 {title}:{' '}
                 <span className='font-weight-500'>
-                    {count} vote
-                    {count !== 1 ? 's' : ''}, {(count / total) * 100 + 0}%
+                    {count} {count !== 0 && `(${(count / total) * 100 + 0}%)`}
                 </span>
             </div>
         </div>

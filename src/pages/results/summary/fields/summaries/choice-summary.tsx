@@ -2,7 +2,7 @@ import React from 'react';
 import {types} from '@types';
 import PercentageBarRow from '../percentage-bar-row';
 
-export default function SelectionSummary(props: {
+export default function ChoiceSummary(props: {
     fieldConfig: types.SelectionField;
     fieldResults: any;
     count: number;

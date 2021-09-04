@@ -1,7 +1,7 @@
 import React from 'react';
 import {types} from '@types';
 import OptionSummary from './summaries/option-summary';
-import SelectionSummary from './summaries/selection-summary';
+import ChoiceSummary from './summaries/choice-summary';
 
 interface Props {
     fieldIndex: number;
@@ -40,10 +40,11 @@ function Field(props: Props) {
                     <OptionSummary {...summaryProps} />
                 </VisualField>
             );
+        case 'radio':
         case 'selection':
             return (
                 <VisualField>
-                    <SelectionSummary {...summaryProps} />
+                    <ChoiceSummary {...summaryProps} />
                 </VisualField>
             );
         default:
