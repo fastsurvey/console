@@ -48,6 +48,7 @@ export default function VisualLogin(props: {
                     variant='flat-light-blue'
                     onClick={props.handleLogin}
                     disabled={props.disabled}
+                    loading={props.submitting}
                 />
                 <div className='flex-max' />
                 <Link

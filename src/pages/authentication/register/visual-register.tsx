@@ -65,6 +65,7 @@ export default function VisualRegister(props: {
                         variant='flat-light-blue'
                         onClick={props.handleRegistration}
                         disabled={props.disabled}
+                        loading={props.submitting}
                     />
                     <div className='flex-max' />
                     <Link
