@@ -1,5 +1,6 @@
 import React from 'react';
 import {types} from '@types';
+import OptionSummary from './summaries/option-summary';
 
 interface Props {
     fieldIndex: number;
@@ -10,47 +11,33 @@ function Field(props: Props) {
     const {fieldIndex, fieldConfig, results} = props;
     const fieldResults: any = results.aggregation[fieldIndex];
 
+    const summaryProps = {
+        fieldConfig: fieldConfig,
+        fieldResults: fieldResults,
+        count: results.count,
+    };
+
+    const VisualField = (props: any) => (
+        <div
+            className={
+                'w-full bg-white rounded shadow px-4 py-2.5 flex-row-center space-x-4'
+            }
+        >
+            <div className='w-50% mb-3 text-base text-gray-900 font-weight-700'>
+                {fieldIndex + 1}. {fieldConfig.title}
+            </div>
+            <div className='w-50% mb-1 space-x-3 text-sm flex-row-left font-weight-700'>
+                {props.children}
+            </div>
+        </div>
+    );
+
     switch (fieldConfig.type) {
         case 'option':
             return (
-                <div
-                    className={
-                        'w-full bg-white rounded shadow px-4 py-2.5 flex-row-center space-x-4'
-                    }
-                >
-                    <div className='w-50% mb-3 text-base text-gray-900 font-weight-700'>
-                        {fieldIndex + 1}. {fieldConfig.title}
-                    </div>
-                    <div className='w-50% mb-1 space-x-3 text-sm flex-row-left font-weight-700'>
-                        <div className='text-green-700'>
-                            Yes ({fieldResults})
-                        </div>
-                        <div className='flex-grow h-2 max-w-full overflow-hidden rounded-sm flex-row-center'>
-                            <div
-                                className='h-full bg-green-200'
-                                style={{
-                                    width: `${
-                                        (fieldResults / results.count) * 100 + 0
-                                    }%`,
-                                }}
-                            />
-                            <div
-                                className='h-full bg-red-200'
-                                style={{
-                                    width: `${
-                                        ((results.count - fieldResults) /
-                                            results.count) *
-                                            100 +
-                                        0
-                                    }%`,
-                                }}
-                            />
-                        </div>
-                        <div className='text-red-700'>
-                            No ({results.count - fieldResults})
-                        </div>
-                    </div>
-                </div>
+                <VisualField>
+                    <OptionSummary {...summaryProps} />
+                </VisualField>
             );
         default:
             return (
