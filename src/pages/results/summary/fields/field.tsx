@@ -18,14 +18,22 @@ function Field(props: Props) {
         count: results.count,
     };
 
-    const VisualField = (props: any) => (
+    const VisualField = (props: {
+        children: React.ReactNode;
+        subtitle: string;
+    }) => (
         <div
             className={
                 'w-full bg-white rounded shadow px-4 py-3 flex-row-center space-x-4'
             }
         >
-            <div className='w-50% text-base text-gray-900 font-weight-700'>
-                {fieldIndex + 1}. {fieldConfig.title}
+            <div className='w-50% flex-col-left space-y-0.5'>
+                <div className='text-base text-gray-900 font-weight-700'>
+                    {fieldIndex + 1}. {fieldConfig.title}
+                </div>
+                <div className='text-sm text-gray-600 font-weight-500'>
+                    {props.subtitle}
+                </div>
             </div>
             <div className='w-50% space-y-4 text-sm flex-col-left font-weight-700'>
                 {props.children}
@@ -36,14 +44,21 @@ function Field(props: Props) {
     switch (fieldConfig.type) {
         case 'option':
             return (
-                <VisualField>
+                <VisualField subtitle='yes/no'>
                     <OptionSummary {...summaryProps} />
                 </VisualField>
             );
         case 'radio':
+            return (
+                <VisualField subtitle={`choose 1 option`}>
+                    <ChoiceSummary {...summaryProps} />
+                </VisualField>
+            );
         case 'selection':
             return (
-                <VisualField>
+                <VisualField
+                    subtitle={`choose between ${fieldConfig.min_select} and ${fieldConfig.max_select} options`}
+                >
                     <ChoiceSummary {...summaryProps} />
                 </VisualField>
             );
@@ -60,9 +75,9 @@ function Field(props: Props) {
                     </div>
                     <div
                         className={
-                            'flex-row-left px-4 text-transparent group-hover:text-gray-900 ' +
-                            'absolute top-0 left-0 w-full h-full bg-gray-100 bg-opacity-0 group-hover:bg-opacity-75 ' +
-                            'group-hover:backdrop-filter group-hover:backdrop-blur-[2.5px] z-10 ' +
+                            'flex-row-left px-4 text-transparent group-hover:text-gray-900 z-10 ' +
+                            'absolute top-0 left-0 w-full h-full ' +
+                            'bg-gray-100 bg-opacity-0 group-hover:bg-opacity-100 ' +
                             'font-weight-500 text-sm rounded-sm'
                         }
                     >
