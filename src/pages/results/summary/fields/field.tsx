@@ -1,6 +1,7 @@
 import React from 'react';
 import {types} from '@types';
 import OptionSummary from './summaries/option-summary';
+import SelectionSummary from './summaries/selection-summary';
 
 interface Props {
     fieldIndex: number;
@@ -11,7 +12,7 @@ function Field(props: Props) {
     const {fieldIndex, fieldConfig, results} = props;
     const fieldResults: any = results.aggregation[fieldIndex];
 
-    const summaryProps = {
+    const summaryProps: any = {
         fieldConfig: fieldConfig,
         fieldResults: fieldResults,
         count: results.count,
@@ -20,13 +21,13 @@ function Field(props: Props) {
     const VisualField = (props: any) => (
         <div
             className={
-                'w-full bg-white rounded shadow px-4 py-2.5 flex-row-center space-x-4'
+                'w-full bg-white rounded shadow px-4 py-3 flex-row-center space-x-4'
             }
         >
-            <div className='w-50% mb-3 text-base text-gray-900 font-weight-700'>
+            <div className='w-50% text-base text-gray-900 font-weight-700'>
                 {fieldIndex + 1}. {fieldConfig.title}
             </div>
-            <div className='w-50% mb-1 space-x-3 text-sm flex-row-left font-weight-700'>
+            <div className='w-50% space-y-4 text-sm flex-col-left font-weight-700'>
                 {props.children}
             </div>
         </div>
@@ -37,6 +38,12 @@ function Field(props: Props) {
             return (
                 <VisualField>
                     <OptionSummary {...summaryProps} />
+                </VisualField>
+            );
+        case 'selection':
+            return (
+                <VisualField>
+                    <SelectionSummary {...summaryProps} />
                 </VisualField>
             );
         default:
