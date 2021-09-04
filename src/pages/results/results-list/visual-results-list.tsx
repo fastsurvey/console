@@ -18,8 +18,11 @@ function VisualConfigList(props: {
                 'overflow-y-scroll overflow-x-hidden bg-gray-100'
             }
         >
-            <div className='w-full max-w-4xl centering-col'>
-                <div className='w-full mt-1 mb-6 centering-row gap-x-3'>
+            <div className='w-full max-w-4xl flex-col-center'>
+                <h1 className='w-full mb-4 text-2xl text-blue-900 font-weight-700'>
+                    Analyze Survey Results
+                </h1>
+                <div className='w-full mb-6'>
                     <SearchBar value={value} setValue={setValue} />
                 </div>
 
