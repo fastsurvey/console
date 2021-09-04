@@ -12,7 +12,7 @@ function Summary(props: {
     const [results, setResults] = useState<types.SurveyResults | undefined>(
         undefined,
     );
-    const [fetching, setFetching] = useState(true);
+    const [isFetching, setIsFetching] = useState(true);
 
     useEffect(() => {
         backend.fetchResults(
@@ -21,16 +21,35 @@ function Summary(props: {
             props.config.survey_name,
             (r) => {
                 setResults(r);
-                setFetching(false);
+                setIsFetching(false);
             },
             console.log,
         );
     }, []);
 
+    function fetch() {
+        setIsFetching(true);
+        backend.fetchResults(
+            props.account,
+            props.accessToken,
+            props.config.survey_name,
+            (r) => {
+                setResults(r);
+                setIsFetching(false);
+            },
+            console.log,
+        );
+    }
+
     return (
         <div className={'w-full py-16 min-h-screen bg-gray-100 flex-col-top'}>
             <div className={'w-full max-w-3xl flex-col-center space-y-4'}>
-                <SummaryHeader config={props.config} results={results} />
+                <SummaryHeader
+                    config={props.config}
+                    results={results}
+                    isFetching={isFetching}
+                    fetch={fetch}
+                />
                 {results !== undefined && (
                     <>
                         {props.config.fields.map((fieldConfig, index) => (

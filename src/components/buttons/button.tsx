@@ -6,8 +6,9 @@ export default function Button(props: {
     onClick?(): void;
     variant?: 'flat-light-blue' | 'flat-light-red';
     disabled?: boolean;
+    loading?: boolean;
 }) {
-    const {text, icon, onClick, variant, disabled} = props;
+    const {text, icon, onClick, variant, disabled, loading} = props;
 
     let variantClasses: string;
     switch (variant) {
@@ -30,16 +31,28 @@ export default function Button(props: {
     return (
         <button
             className={
-                'p-0.5 rounded centering-row h-8 ' +
-                'no-selection ringable ' +
+                'p-0.5 rounded flex-row-center h-8 ' +
+                'no-selection ringable relative overflow-hidden ' +
                 variantClasses
             }
             onClick={onClick && !disabled ? onClick : () => {}}
-            disabled={disabled ? disabled : false}
+            disabled={disabled || loading ? disabled || loading : false}
         >
-            {icon && <div className='p-1 -mr-1.5 w-7 h-7'>{icon}</div>}
+            {icon && <div className='p-1 -mr-1.5 w-7 h-7 z-0'>{icon}</div>}
+            {loading && (
+                <div
+                    className={
+                        'flex-row-center text-gray-900 font-weight-600 ' +
+                        'absolute top-0 left-0 w-full h-full bg-white ' +
+                        'backdrop-filter backdrop-blur-[2.5px] z-10 ' +
+                        'space-x-0.5 '
+                    }
+                >
+                    ...
+                </div>
+            )}
 
-            <div className={'font-weight-600 px-2.5'}>{text}</div>
+            <div className={'font-weight-600 px-2.5 z-0'}>{text}</div>
         </button>
     );
 }
