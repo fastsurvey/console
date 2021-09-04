@@ -42,8 +42,11 @@ function VisualAccountPage(props: {
                 'overflow-y-scroll overflow-x-hidden bg-gray-100'
             }
         >
-            <div className='w-full max-w-2xl centering-col'>
-                <div className='w-full mt-4 bg-white rounded shadow-md flex-col-center'>
+            <div className='w-full max-w-4xl space-y-4 flex-col-center'>
+                <h1 className='w-full text-2xl text-blue-900 font-weight-700'>
+                    Modify your Account
+                </h1>
+                <div className='w-full bg-white rounded shadow flex-col-center'>
                     <div className='sm:hidden'>
                         <label htmlFor='tabs' className='sr-only'>
                             Select a tab
@@ -181,6 +184,17 @@ function VisualAccountPage(props: {
                         <div className='text-sm text-left font-weight-600'>
                             {validation.message}
                         </div>
+                    </div>
+                </div>
+                <div className='p-4 border-[2px] border-dashed border-gray-300 rounded w-full'>
+                    <h3 className='text-base leading-6 text-blue-900 opacity-80 font-weight-600'>
+                        Payment Information
+                    </h3>
+                    <div className='mt-2 text-sm text-gray-900 opacity-60 font-weight-400'>
+                        Right now, our tool is still completely free to use. We
+                        want to see how people use it and implement important
+                        features before spending time on implementing payment
+                        logic.
                     </div>
                 </div>
             </div>
