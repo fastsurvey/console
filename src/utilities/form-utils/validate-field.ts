@@ -1,5 +1,5 @@
+import {types} from '@types';
 import {validators} from './validators';
-import {types} from 'types';
 
 export function validateField(
     fieldConfig: types.SurveyField,
@@ -20,7 +20,7 @@ export function validateField(
             break;
         case 'radio':
             results.push(
-                ...fieldConfig.fields.map((c) =>
+                ...fieldConfig.options.map((c) =>
                     validators.optionTitle(c.title),
                 ),
                 validators.fieldOptions(fieldConfig),
@@ -28,7 +28,7 @@ export function validateField(
             break;
         case 'selection':
             results.push(
-                ...fieldConfig.fields.map((c) =>
+                ...fieldConfig.options.map((c) =>
                     validators.optionTitle(c.title),
                 ),
                 validators.fieldOptions(fieldConfig),

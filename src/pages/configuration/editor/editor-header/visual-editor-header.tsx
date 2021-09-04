@@ -1,8 +1,8 @@
 import React from 'react';
-import {types} from 'types';
-import icons from 'assets/icons/icons';
-import {Button, ButtonGroup, TimePill} from 'components';
 import {Link} from 'react-router-dom';
+import {types} from '@types';
+import icons from '@assets/icons/icons';
+import {Button, ButtonGroup, TimePill} from '@components';
 
 function VisualEditorHeader(props: {
     configIsDiffering: boolean;

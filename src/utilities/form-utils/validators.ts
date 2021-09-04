@@ -1,4 +1,5 @@
-import {types} from 'types';
+import {types} from '@types';
+import {filter} from 'lodash';
 
 const genericTitle =
     (variant: 'Title' | 'Field title' | 'Option name') =>
@@ -24,7 +25,7 @@ export const validators = {
     fieldOptions: (
         fieldConfig: types.RadioField | types.SelectionField,
     ): types.ValidationResult => {
-        if (fieldConfig.fields.length < 2) {
+        if (fieldConfig.options.length < 2) {
             return {
                 valid: false,
                 message: `There have to be at least 2 options`,
@@ -36,19 +37,8 @@ export const validators = {
 
     authMode: (config: types.SurveyConfig): types.ValidationResult => {
         if (
-            config.authentication === 'open' &&
-            config.fields.filter((fieldConfig) => fieldConfig.type === 'email')
-                .length !== 0
-        ) {
-            // Will be changed upon API change of the authentication stuff
-            return {
-                valid: false,
-                message: `No Authentication selected, but email field present`,
-            };
-        } else if (
-            config.authentication === 'email' &&
-            config.fields.filter((fieldConfig) => fieldConfig.type === 'email')
-                .length !== 1
+            filter(config.fields, (f) => f.type === 'email' && f.verify)
+                .length > 1
         ) {
             return {
                 valid: false,
@@ -219,7 +209,7 @@ export const validators = {
         }
     },
     maxSelect: (fieldConfig: types.SelectionField): types.ValidationResult => {
-        if (fieldConfig.max_select > fieldConfig.fields.length) {
+        if (fieldConfig.max_select > fieldConfig.options.length) {
             return {
                 valid: false,
                 message: `Maximum is larger than the number of fields`,

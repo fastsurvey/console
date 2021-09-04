@@ -1,5 +1,5 @@
+import {types} from '@types';
 import {validators} from './validators';
-import {types} from 'types';
 
 export function validateSettings(
     configs: types.SurveyConfig[],
@@ -10,7 +10,6 @@ export function validateSettings(
         validators.surveyName(configs, thisConfig),
         validators.description(thisConfig.description),
         validators.timing(thisConfig),
-        validators.submissionLimit(thisConfig.limit),
     ];
 
     // @ts-ignore

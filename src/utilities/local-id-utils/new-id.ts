@@ -1,11 +1,11 @@
-import {types} from 'types';
+import {types} from '@types';
 import {max} from 'lodash';
 
 function fieldOption(
     fieldConfig: types.RadioField | types.SelectionField,
 ): number {
     const maxId = max(
-        fieldConfig.fields.map(
+        fieldConfig.options.map(
             (optionConfig: types.FieldOption) => optionConfig.local_id,
         ),
     );

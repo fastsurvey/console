@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {reduxUtils, backend} from 'utilities';
-import VisualVerifyForm from './visual-verify';
-import {types} from 'types';
+import {reduxUtils, backend} from '@utilities';
+import {types} from '@types';
 import {useHistory} from 'react-router-dom';
+import VisualVerifyForm from './visual-verify';
 
 interface Props {
     logIn(
-        authToken: types.AuthToken,
+        accessToken: types.AccessToken,
         account: types.Account,
         configs: types.SurveyConfig[],
     ): void;

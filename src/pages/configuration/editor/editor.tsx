@@ -8,13 +8,13 @@ import {
     clipboardUtils,
     dataUtils,
     backend,
-} from 'utilities';
+} from '@utilities';
 import VisualEditor from './visual-editor';
-import {types} from 'types';
+import {types} from '@types';
 
 function ConfigEditor(props: {
     account: types.Account;
-    authToken: types.AuthToken;
+    accessToken: types.AccessToken;
 
     configs: types.SurveyConfig[];
     centralConfig: types.SurveyConfig;
@@ -119,6 +119,7 @@ function ConfigEditor(props: {
 
         const fieldsAreValid = every(fieldValidation.map((r) => r.valid));
         const fieldCountIsValid = localConfig.fields.length > 0;
+        console.log({localConfig});
         const authModeIsValid =
             formUtils.validators.authMode(localConfig).valid;
 
@@ -137,7 +138,7 @@ function ConfigEditor(props: {
         if (fieldsAreValid && fieldCountIsValid && authModeIsValid) {
             backend.updateSurvey(
                 props.account,
-                props.authToken,
+                props.accessToken,
                 props.centralConfig.survey_name,
                 combinedConfig,
                 success,
@@ -175,6 +176,7 @@ function ConfigEditor(props: {
     }
 
     function setLocalFieldConfig(fieldConfigChanges: object, newIndex: number) {
+        console.log({fieldConfigChanges, newIndex});
         const newConfig = {
             ...localConfig,
         };

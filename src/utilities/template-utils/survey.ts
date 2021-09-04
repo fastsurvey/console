@@ -1,5 +1,5 @@
 import {max} from 'lodash';
-import {types} from 'types';
+import {types} from '@types';
 import surveyName from './survey-name';
 
 export const survey = (configs: types.SurveyConfig[]): types.SurveyConfig => {
@@ -11,9 +11,7 @@ export const survey = (configs: types.SurveyConfig[]): types.SurveyConfig => {
         survey_name: newSurveyName,
         start: now,
         end: now + 3600 * 24,
-        authentication: 'open',
         draft: true,
-        limit: 100,
         title: 'We need more surveys!',
         description: '',
         fields: [

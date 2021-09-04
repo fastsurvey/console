@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextInput, Label, Button} from 'components';
+import {TextInput, Label, Button} from '@components';
 import {Link} from 'react-router-dom';
 
 export default function VisualLogin(props: {
@@ -48,6 +48,7 @@ export default function VisualLogin(props: {
                     variant='flat-light-blue'
                     onClick={props.handleLogin}
                     disabled={props.disabled}
+                    loading={props.submitting}
                 />
                 <div className='flex-max' />
                 <Link

@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {types} from 'types';
-import 'styles/loader.css';
+import {types} from '@types';
+import '@styles/loader.css';
 
 interface Props {
     loggingIn: boolean;
@@ -24,7 +24,7 @@ function LoaderOverlay(props: Props) {
                     (props.loggingIn ? 'opacity-100' : 'opacity-0')
                 }
             >
-                <div className='transform scale-[40%] lds-spinner'>
+                <div className='transform scale-[32%] lds-spinner'>
                     {[...Array(12).keys()].map((n: number) => (
                         <div key={n} />
                     ))}

@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {reduxUtils, backend} from 'utilities';
+import {reduxUtils, backend} from '@utilities';
+import {types} from '@types';
 import VisualRegister from './visual-register';
-import {types} from 'types';
 
 interface Props {
     openMessage(messageId: types.MessageId): void;
@@ -12,15 +12,10 @@ function RegisterForm(props: Props) {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const [submitting, setSubmitting] = useState(false);
 
     function disabled() {
-        return (
-            username.length < 3 ||
-            password.length < 8 ||
-            password !== passwordConfirmation
-        );
+        return username.length < 3 || password.length < 8;
     }
 
     function validateEntry() {
@@ -46,13 +41,10 @@ function RegisterForm(props: Props) {
         if (password.length > 64) {
             return disprove('Password too long (≤ 64 characters)');
         }
-        if (password !== passwordConfirmation) {
-            return disprove("passwords don't match");
-        }
 
         return {
             entryIsValid: true,
-            validationMessage: 'valid registration data',
+            validationMessage: 'Valid',
         };
     }
 
@@ -93,8 +85,6 @@ function RegisterForm(props: Props) {
                 setUsername,
                 password,
                 setPassword,
-                passwordConfirmation,
-                setPasswordConfirmation,
             }}
             closeAllMessages={props.closeAllMessages}
             handleRegistration={handleRegistration}

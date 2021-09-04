@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {sortBy} from 'lodash';
 import {Link} from 'react-router-dom';
-import {types} from 'types';
+import {types} from '@types';
+import {Button, SearchBar} from '@components';
+import {icons} from '@assets';
 import VisualConfigPanel from './visual-config-panel';
-import {Button, SearchBar} from 'components';
-import {icons} from 'assets';
 
 function VisualConfigList(props: {
     configs: types.SurveyConfig[];
@@ -19,14 +19,12 @@ function VisualConfigList(props: {
                 'overflow-y-scroll overflow-x-hidden bg-gray-100'
             }
         >
-            <div className='w-full max-w-4xl centering-col'>
-                <div className='w-full mt-1 mb-6 centering-row gap-x-3'>
+            <div className='w-full max-w-4xl flex-col-center'>
+                <h1 className='w-full mb-4 text-2xl text-blue-900 font-weight-700'>
+                    Edit & Create Surveys
+                </h1>
+                <div className='w-full mb-6'>
                     <SearchBar value={value} setValue={setValue} />
-                    <Button
-                        icon={icons.addSquare}
-                        text='Add Survey'
-                        onClick={props.addSurvey}
-                    />
                 </div>
 
                 <div className='grid w-full grid-cols-2 gap-3'>
@@ -53,13 +51,21 @@ function VisualConfigList(props: {
                             />
                         </Link>
                     ))}
+                    <button
+                        type='button'
+                        className={
+                            'relative w-full h-full px-2 py-6 flex-row-center ' +
+                            'border-2 border-gray-400 border-dashed rounded ' +
+                            'text-opacity-60 border-gray-300 ringable ' +
+                            'hover:text-opacity-100 hover:border-gray-400 ' +
+                            'focus:text-opacity-100 focus:hover:border-gray-400 ' +
+                            'text-base text-blue-900 font-weight-600'
+                        }
+                        onClick={props.addSurvey}
+                    >
+                        New Survey
+                    </button>
                 </div>
-
-                {props.configs.length === 0 && (
-                    <p className='w-full my-4 text-center text-gray-600 font-weight-500'>
-                        No surveys yet
-                    </p>
-                )}
             </div>
         </div>
     );

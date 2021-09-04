@@ -1,21 +1,16 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Switch, Route, BrowserRouter, Redirect} from 'react-router-dom';
-import {types} from 'types';
+import {types} from '@types';
 
-import {NotFoundPage, DashboardPage} from 'pages';
-import {
-    Login,
-    Register,
-    RequestPassword,
-    SetPassword,
-    Verify,
-} from 'pages/authentication';
-import {ConfigList, EditorRouter} from 'pages/configuration';
+import {NotFoundPage, DashboardPage} from '@pages';
+import {Login, Register, Verify} from '@pages/authentication';
 
-import {LoaderOverlay, MessageQueue, Modal} from 'components';
+import {ConfigList, EditorRouter} from '@pages/configuration';
+import {ResultsList, SummaryRouter} from '@pages/results';
+import {AccountPage} from '@pages/account';
 
-import MainWrapper from './components/wrapper/main-wrapper';
+import {LoaderOverlay, MessageQueue, Modal, MainWrapper} from '@components';
 
 interface RouterProps {
     loggingIn: boolean;
@@ -35,29 +30,28 @@ function PageRouter(props: RouterProps) {
                     </Route>
                     <Route path='(/configurations|/results|/account|/configuration)'>
                         {!props.loggingIn && props.loggedIn && (
-                            <React.Fragment>
-                                {props.account?.verified && (
-                                    <DashboardPage>
-                                        <Switch>
-                                            <Route exact path='/configurations'>
-                                                <ConfigList />
-                                            </Route>
-                                            <Route
-                                                exact
-                                                path='/configuration/:survey_name'
-                                            >
-                                                <EditorRouter />
-                                            </Route>
-                                            <Route exact path='/results'>
-                                                <h3>Results</h3>
-                                            </Route>
-                                            <Route exact path='/account'>
-                                                <h3>Account</h3>
-                                            </Route>
-                                        </Switch>
-                                    </DashboardPage>
-                                )}
-                            </React.Fragment>
+                            <DashboardPage>
+                                <Switch>
+                                    <Route exact path='/configurations'>
+                                        <ConfigList />
+                                    </Route>
+                                    <Route
+                                        exact
+                                        path='/configuration/:survey_name'
+                                    >
+                                        <EditorRouter />
+                                    </Route>
+                                    <Route exact path='/results'>
+                                        <ResultsList />
+                                    </Route>
+                                    <Route exact path='/results/:survey_name'>
+                                        <SummaryRouter />
+                                    </Route>
+                                    <Route exact path='/account'>
+                                        <AccountPage />
+                                    </Route>
+                                </Switch>
+                            </DashboardPage>
                         )}
                         {!props.loggingIn && !props.loggedIn && (
                             <Redirect to='/login' />
@@ -83,18 +77,6 @@ function PageRouter(props: RouterProps) {
                     <Route path='/verify'>
                         <MainWrapper>
                             <Verify />
-                        </MainWrapper>
-                    </Route>
-                    <Route path='(/request-password|/set-password)'>
-                        <MainWrapper>
-                            <Switch>
-                                <Route exact path='/request-password'>
-                                    <RequestPassword />
-                                </Route>
-                                <Route exact path='/set-password'>
-                                    <SetPassword />
-                                </Route>
-                            </Switch>
                         </MainWrapper>
                     </Route>
                     <Route>

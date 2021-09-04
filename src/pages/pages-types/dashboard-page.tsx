@@ -1,14 +1,16 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {types} from 'types';
-import {Navbar} from 'components';
-import 'styles/dashboard-page.css';
+import {types} from '@types';
+import {Navbar} from '@components';
+
+// TODO: Avoid plain css
+import '@styles/dashboard-page.css';
 
 function DashBoardPage(props: {
     children: React.ReactNode;
     navbarState: types.NavbarState;
     loggedIn: boolean;
-    authToken: types.AuthToken | undefined;
+    accessToken: types.AccessToken | undefined;
 }) {
     return (
         <React.Fragment>
@@ -30,7 +32,7 @@ function DashBoardPage(props: {
 const mapStateToProps = (state: types.ReduxState) => ({
     navbarState: state.navbarState,
     loggedIn: state.loggedIn,
-    authToken: state.authToken,
+    accessToken: state.accessToken,
 });
 const mapDispatchToProps = (dispatch: any) => ({});
 export default connect(mapStateToProps, mapDispatchToProps)(DashBoardPage);

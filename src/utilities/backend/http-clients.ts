@@ -1,55 +1,43 @@
 import axios from 'axios';
-import {types} from 'types';
+import {types} from '@types';
 
-const API_URL = 'http://localhost:8000';
-// const API_URL = 'https://backend.dev.fastsurvey.io';
+// const API_URL = 'http://localhost:8000';
+const API_URL = 'https://api.dev.fastsurvey.de';
+// const API_URL = 'https://commit-a4f154a---backend-dev-gz5l57j4mq-ew.a.run.app';
 
 export function httpPost(
     url: string,
-    dataObject: {[key: string]: any},
-    auth_token?: types.AuthToken,
+    data: any,
+    accessToken?: types.AccessToken,
 ) {
-    const data = JSON.stringify(dataObject);
-
-    if (auth_token) {
-        return axios.post(API_URL + url, data, {
-            headers: {
-                Authorization: `${auth_token.token_type} ${auth_token.access_token}`,
-            },
-        });
-    } else {
-        return axios.post(API_URL + url, data);
-    }
+    return axios.post(API_URL + url, data, headers(accessToken));
 }
 
 export function httpPut(
     url: string,
-    dataObject: {[key: string]: any},
-    auth_token: types.AuthToken,
+    data: any,
+    accessToken: types.AccessToken,
 ) {
-    return axios.put(API_URL + url, JSON.stringify(dataObject), {
-        headers: {
-            Authorization: `${auth_token.token_type} ${auth_token.access_token}`,
-        },
-    });
+    return axios.put(API_URL + url, data, headers(accessToken));
 }
 
-export function httpGet(url: string, auth_token?: types.AuthToken) {
-    if (auth_token) {
-        return axios.get(API_URL + url, {
+export function httpGet(url: string, accessToken?: types.AccessToken) {
+    return axios.get(API_URL + url, headers(accessToken));
+}
+
+export function httpDelete(url: string, accessToken: types.AccessToken) {
+    return axios.delete(API_URL + url, headers(accessToken));
+}
+
+function headers(accessToken?: types.AccessToken) {
+    if (accessToken) {
+        return {
             headers: {
-                Authorization: `${auth_token.token_type} ${auth_token.access_token}`,
+                Authorization: `bearer ${accessToken}`,
+                'Content-Type': 'application/json',
             },
-        });
+        };
     } else {
-        return axios.get(API_URL + url);
+        return {};
     }
-}
-
-export function httpDelete(url: string, auth_token: types.AuthToken) {
-    return axios.delete(API_URL + url, {
-        headers: {
-            Authorization: `${auth_token.token_type} ${auth_token.access_token}`,
-        },
-    });
 }

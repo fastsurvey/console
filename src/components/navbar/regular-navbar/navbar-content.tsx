@@ -1,9 +1,9 @@
 import React from 'react';
 import {useHistory, useLocation} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {reduxUtils} from 'utilities';
+import {reduxUtils} from '@utilities';
+import {types} from '@types';
 import VisualNavbarContent from './visual-navbar-content';
-import {types} from 'types';
 
 interface Props {
     logOut(): void;

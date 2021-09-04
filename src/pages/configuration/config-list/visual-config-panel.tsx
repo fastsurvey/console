@@ -1,14 +1,19 @@
 import React from 'react';
-import {types} from 'types';
-import {TimePill} from 'components';
+import {types} from '@types';
+import {TimePill} from '@components';
+import {filter, isEmpty} from 'lodash';
 
 interface Props {
     account: types.Account;
     config: types.SurveyConfig;
 }
 function VisualConfigPanel(props: Props) {
-    const {title, survey_name, limit, authentication} = props.config;
+    const {title, survey_name} = props.config;
     const {username} = props.account;
+
+    const usesAuthentication = !isEmpty(
+        filter(props.config.fields, (f) => f.type === 'email' && f.verify),
+    );
 
     return (
         <div
@@ -36,8 +41,9 @@ function VisualConfigPanel(props: Props) {
                     /{username}/{survey_name}
                 </div>
                 <div className='mt-3 text-sm text-gray-600 truncate font-weight-500 no-selection'>
-                    {authentication === 'email' ? 'Email Verification, ' : ''}
-                    Max. {limit} submissions
+                    {props.config.fields.length} Question
+                    {props.config.fields.length === 1 ? '' : 's'}
+                    {usesAuthentication ? ', Email Verification' : ''}
                 </div>
             </div>
             <div

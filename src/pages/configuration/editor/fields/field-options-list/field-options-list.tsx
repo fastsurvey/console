@@ -1,8 +1,8 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {animateScroll} from 'react-scroll';
-import {templateUtils} from 'utilities';
+import {templateUtils} from '@utilities';
 import VisualFieldOptionsList from './visual-field-options-list';
-import {types} from 'types';
+import {types} from '@types';
 
 interface Props {
     fieldConfig: types.RadioField | types.SelectionField;
@@ -11,11 +11,11 @@ interface Props {
 }
 function FieldOptionsList(props: Props) {
     const [optionsVisible, setOptionsVisible] = useState(
-        props.fieldConfig.fields.map(() => true),
+        props.fieldConfig.options.map(() => true),
     );
     useEffect(
-        () => setOptionsVisible(props.fieldConfig.fields.map(() => true)),
-        [props.fieldConfig.fields],
+        () => setOptionsVisible(props.fieldConfig.options.map(() => true)),
+        [props.fieldConfig.options],
     );
 
     const nextRowRef: any = useRef(null);

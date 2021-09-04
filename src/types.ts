@@ -4,9 +4,7 @@ export declare namespace types {
         survey_name: string;
         start: number;
         end: number;
-        authentication: 'email' | 'open';
         draft: boolean;
-        limit: number;
         title: string;
         description: string;
         fields: SurveyField[];
@@ -30,6 +28,7 @@ export declare namespace types {
     export interface EmailField extends GeneralSurveyField {
         type: 'email';
         regex: string;
+        verify: boolean;
         hint: string;
     }
 
@@ -40,19 +39,19 @@ export declare namespace types {
 
     export interface RadioField extends GeneralSurveyField {
         type: 'radio';
-        fields: FieldOption[];
+        options: FieldOption[];
     }
 
     export interface SelectionField extends GeneralSurveyField {
         type: 'selection';
         min_select: number;
         max_select: number;
-        fields: FieldOption[];
+        options: FieldOption[];
     }
 
-    export interface FieldOption extends GeneralSurveyField {
-        type: 'option';
-        required: boolean;
+    export interface FieldOption {
+        title: string;
+        local_id: number;
     }
 
     export interface TextField extends GeneralSurveyField {
@@ -68,12 +67,19 @@ export declare namespace types {
         hint: string;
     }
 
+    export interface SurveyResults {
+        count: number;
+        aggregation: {
+            [key: string]: null | number | {[key: string]: number};
+        };
+    }
+
     export type Color = 'red' | 'orange' | 'yellow' | 'green' | 'teal' | 'gray';
 
     export interface ReduxState {
         loggingIn: boolean;
         loggedIn: boolean;
-        authToken: types.AuthToken;
+        accessToken: types.AccessToken;
         account: types.Account;
         messages: types.Message[];
         navbarState: NavbarState;
@@ -82,15 +88,11 @@ export declare namespace types {
         configIsDiffering: boolean;
     }
 
-    export interface AuthToken {
-        access_token: string;
-        token_type: string;
-    }
+    export type AccessToken = string;
 
     export interface Account {
-        email_address: string;
+        email: string;
         username: string;
-        verified: boolean;
     }
 
     // TODO: Add fix message versions (Message is union of those types)
@@ -109,6 +111,7 @@ export declare namespace types {
         | 'error-email-invalid'
         | 'error-link-invalid'
         | 'success-redirect-to-login'
+        | 'success-password-changed'
         | 'warning-clipboard'
         | 'editor-warning-validators'
         | 'editor-warning-field-count'
@@ -133,7 +136,7 @@ export declare namespace types {
     export type ReduxAction =
         | {
               type: 'LOG_IN';
-              authToken: types.AuthToken;
+              accessToken: types.AccessToken;
               account: types.Account;
               configs: types.SurveyConfig[];
           }

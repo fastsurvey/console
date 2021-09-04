@@ -1,9 +1,10 @@
 import React from 'react';
+import {reduxUtils} from '@utilities';
+import {connect} from 'react-redux';
+import {types} from '@types';
 import VisualRegularNavbar from './visual-regular-navbar';
 import VisualMobileNavbar from './visual-mobile-navbar';
-import {reduxUtils} from 'utilities';
-import {connect} from 'react-redux';
-import {types} from 'types';
+
 interface Props {
     logOut(): void;
     navbarState: types.NavbarState;

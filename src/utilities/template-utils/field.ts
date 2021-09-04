@@ -1,5 +1,5 @@
-import {localIdUtils} from 'utilities';
-import {types} from 'types';
+import {localIdUtils} from '@utilities';
+import {types} from '@types';
 
 export const field = (
     fieldType: types.FieldType,
@@ -14,6 +14,7 @@ export const field = (
                 title: '',
                 description: '',
                 regex: '.*',
+                verify: false,
                 hint: 'Any email address',
             };
         case 'option':
@@ -32,7 +33,7 @@ export const field = (
 
                 title: '',
                 description: '',
-                fields: [],
+                options: [],
             };
         case 'selection':
             return {
@@ -43,7 +44,7 @@ export const field = (
                 description: '',
                 min_select: 0,
                 max_select: 0,
-                fields: [],
+                options: [],
             };
         case 'text':
             return {

@@ -1,6 +1,6 @@
 import React from 'react';
 import VisualOptionSettings from './visual-option-settings';
-import {types} from 'types';
+import {types} from '@types';
 
 interface Props {
     fieldConfig: types.OptionField;

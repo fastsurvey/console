@@ -1,9 +1,15 @@
 import Cookies from 'js-cookie';
 import {cloneDeep, unionBy} from 'lodash';
-import {reduxUtils, localIdUtils} from 'utilities';
-import {types} from 'types';
-import assert from 'assert';
+import {reduxUtils, localIdUtils} from '@utilities';
+import {types} from '@types';
 import constants from '../constants/index';
+import logout from '../backend/authentication/logout';
+
+function assert(condition: boolean) {
+    if (!condition) {
+        throw Error;
+    }
+}
 
 function updateState(state: types.ReduxState, action: types.ReduxAction) {
     const newState = cloneDeep(state);
@@ -13,16 +19,21 @@ function updateState(state: types.ReduxState, action: types.ReduxAction) {
         case 'LOG_IN':
             newState.loggingIn = false;
             newState.loggedIn = true;
-            newState.authToken = action.authToken;
+            newState.accessToken = action.accessToken;
             newState.account = action.account;
             newState.configs = localIdUtils.initialize.surveys(action.configs);
-            Cookies.set('authToken', JSON.stringify(action.authToken), {
+            Cookies.set('accessToken', action.accessToken, {
+                expires: 7,
+            });
+            Cookies.set('username', action.account.username, {
                 expires: 7,
             });
             break;
 
         case 'LOG_OUT':
-            Cookies.remove('authToken');
+            Cookies.remove('accessToken');
+            Cookies.remove('username');
+            logout(newState.accessToken);
             return {...cloneDeep(reduxUtils.initialState), loggingIn: false};
 
         case 'OPEN_MESSAGE':
@@ -68,7 +79,7 @@ function updateState(state: types.ReduxState, action: types.ReduxAction) {
             break;
 
         case 'ADD_CONFIG':
-            assert(newState.configs);
+            assert(newState.configs !== undefined);
             newState.configs = [
                 ...newState.configs,
                 localIdUtils.initialize.survey(
@@ -79,14 +90,14 @@ function updateState(state: types.ReduxState, action: types.ReduxAction) {
             break;
 
         case 'REMOVE_CONFIG':
-            assert(newState.configs);
+            assert(newState.configs !== undefined);
             newState.configs = newState.configs.filter(
                 (config) => config.survey_name !== action.surveyName,
             );
             break;
 
         case 'SET_CENTRAL_CONFIG':
-            assert(newState.configs);
+            assert(newState.configs !== undefined);
             newState.configs = newState.configs.map((c) =>
                 c.local_id === action.config.local_id ? action.config : c,
             );

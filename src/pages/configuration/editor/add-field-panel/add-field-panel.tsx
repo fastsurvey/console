@@ -1,10 +1,10 @@
 import React from 'react';
-import icons from 'assets/icons/icons';
+import {connect} from 'react-redux';
+import {icons} from '@assets';
+import {types} from '@types';
+import {reduxUtils} from '@utilities';
 import AddFieldButton from './add-field-button';
 import AddFieldPopup from './add-field-popup';
-import {types} from 'types';
-import dispatchers from '../../../../utilities/redux-utils/dispatchers';
-import {connect} from 'react-redux';
 
 interface Props {
     insertField(fieldType: types.FieldType): void;
@@ -54,7 +54,7 @@ function AddFieldPanel(props: Props) {
 
 const mapStateToProps = (state: types.ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
-    openModal: dispatchers.openModal(dispatch),
-    closeModal: dispatchers.closeModal(dispatch),
+    openModal: reduxUtils.dispatchers.openModal(dispatch),
+    closeModal: reduxUtils.dispatchers.closeModal(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(AddFieldPanel);

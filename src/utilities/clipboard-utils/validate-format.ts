@@ -1,10 +1,9 @@
-import {AssertionError} from 'assert';
 import {isEqual} from 'lodash';
-import {types} from 'types';
+import {types} from '@types';
 
 function assert(condition: boolean) {
     if (!condition) {
-        throw AssertionError;
+        throw Error;
     }
 }
 
@@ -48,15 +47,15 @@ const validateFormat = {
                     return true;
                 case 'radio':
                     checkKeys(['fields']);
-                    checkTypes(config.fields, [{}]);
-                    assert(validateFormat.fieldOptionsList(config.fields));
+                    checkTypes(config.options, [{}]);
+                    assert(validateFormat.fieldOptionsList(config.options));
                     return true;
                 case 'selection':
                     checkKeys(['fields', 'min_select', 'max_select']);
-                    checkTypes(config.fields, [{}]);
+                    checkTypes(config.options, [{}]);
                     checkTypes(config.min_select, 2);
                     checkTypes(config.max_select, 2);
-                    assert(validateFormat.fieldOptionsList(config.fields));
+                    assert(validateFormat.fieldOptionsList(config.options));
                     return true;
                 case 'text':
                     checkKeys(['min_chars', 'max_chars']);
@@ -72,8 +71,6 @@ const validateFormat = {
         try {
             fieldOptions.forEach((fieldOption) => {
                 checkTypes(fieldOption.title, 's');
-                assert(fieldOption.description === '');
-                assert(fieldOption.required === false);
             });
             return true;
         } catch {

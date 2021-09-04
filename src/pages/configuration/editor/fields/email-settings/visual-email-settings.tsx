@@ -1,7 +1,7 @@
 import React from 'react';
-import {constants} from 'utilities';
-import {Label, DropDown, TextInput} from 'components';
-import {types} from 'types';
+import {constants} from '@utilities';
+import {Label, DropDown, TextInput, Toggle} from '@components';
+import {types} from '@types';
 
 interface Props {
     setupValue: number;
@@ -53,6 +53,19 @@ function VisualEmailSettings(props: Props) {
                     setValue={(newValue: string) =>
                         props.setLocalFieldConfig({
                             hint: newValue,
+                        })
+                    }
+                    disabled={props.disabled}
+                />
+            </div>
+
+            <div className='w-full centering-col gap-y-0.5 mt-2'>
+                <Label text='Hint' />
+                <Toggle
+                    value={props.fieldConfig.verify}
+                    setValue={(newValue: boolean) =>
+                        props.setLocalFieldConfig({
+                            verify: newValue,
                         })
                     }
                     disabled={props.disabled}

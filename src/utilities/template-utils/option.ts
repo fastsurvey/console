@@ -1,4 +1,4 @@
-import {types} from 'types';
+import {types} from '@types';
 import localIdUtils from '../local-id-utils/index';
 
 export const option = (
@@ -7,14 +7,11 @@ export const option = (
 ): types.RadioField | types.SelectionField => {
     return {
         ...fieldConfig,
-        fields: [
-            ...fieldConfig.fields,
+        options: [
+            ...fieldConfig.options,
             {
-                type: 'option',
                 local_id: localIdUtils.newId.fieldOption(fieldConfig),
                 title: newTitle,
-                description: '',
-                required: false,
             },
         ],
     };

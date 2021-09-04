@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextInput, Button, Label} from 'components';
+import {TextInput, Button, Label} from '@components';
 import {Link} from 'react-router-dom';
 
 export default function VisualVerifyForm(props: {

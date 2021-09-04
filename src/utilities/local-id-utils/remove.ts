@@ -1,4 +1,4 @@
-import {types} from 'types';
+import {types} from '@types';
 import {cloneDeep} from 'lodash';
 
 /*
@@ -19,16 +19,15 @@ function survey(config: types.SurveyConfig) {
     return newConfig;
 }
 
-function field(config: types.SurveyField) {
+function field(fieldConfig: types.SurveyField) {
     // @ts-ignore
-    delete config.local_id;
-    if (config.type === 'radio' || config.type === 'selection') {
-        config.fields.forEach((field: types.FieldOption) => {
-            // @ts-ignore
-            delete field.local_id;
-        });
+    delete fieldConfig.local_id;
+
+    if (fieldConfig.type === 'radio' || fieldConfig.type === 'selection') {
+        // @ts-ignore
+        fieldConfig.options = fieldConfig.options.map((f) => f.title);
     }
-    return config;
+    return fieldConfig;
 }
 
 export const remove = {

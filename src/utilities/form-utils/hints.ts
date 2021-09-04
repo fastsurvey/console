@@ -1,5 +1,5 @@
+import {types} from '@types';
 import {validators} from './validators';
-import {types} from 'types';
 
 export const hints = {
     title: (title: string) => ({
@@ -23,10 +23,6 @@ export const hints = {
             'URL-safe, unique, 3-120 ' +
             `characters (${120 - newSurveyName.length} left)`,
         fulfilled: surveyNameIsValid(newSurveyName),
-    }),
-    submissionLimit: (config: types.SurveyConfig) => ({
-        text: '1 - 10.000',
-        fulfilled: validators.submissionLimit(config.limit),
     }),
     regex: (fieldConfig: types.EmailField) => ({
         text: `<= 250 Characters (${250 - fieldConfig.hint.length} left)`,
@@ -54,7 +50,7 @@ export const hints = {
         fulfilled: validators.minSelect(fieldConfig),
     }),
     maxSelect: (fieldConfig: types.SelectionField) => ({
-        text: `<= ${fieldConfig.fields.length}`,
+        text: `<= ${fieldConfig.options.length}`,
         fulfilled: validators.maxSelect(fieldConfig),
     }),
     password: (password: string) => ({

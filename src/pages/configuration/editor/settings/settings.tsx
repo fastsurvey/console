@@ -1,15 +1,16 @@
-import RemoveSurveyPopup from './remove-survey-popup';
-import DuplicateSurveyPopup from './duplicate-survey-popup';
 import React from 'react';
 import {connect} from 'react-redux';
-import {formUtils, reduxUtils, backend} from 'utilities';
-import VisualSettings from './visual-settings';
 import {useHistory} from 'react-router-dom';
-import {types} from 'types';
+import {types} from '@types';
+import {formUtils, reduxUtils, backend} from '@utilities';
+
+import VisualSettings from './visual-settings';
+import RemoveSurveyPopup from './remove-survey-popup';
+import DuplicateSurveyPopup from './duplicate-survey-popup';
 
 interface Props {
     account: types.Account;
-    authToken: types.AuthToken;
+    accessToken: types.AccessToken;
     centralConfigName: string;
     openMessage(messageId: types.MessageId): void;
     configIsDiffering: boolean;
@@ -61,7 +62,7 @@ function Settings(props: Props) {
 
         backend.deleteSurvey(
             props.account,
-            props.authToken,
+            props.accessToken,
             props.centralConfigName,
             success,
             error,
@@ -95,7 +96,7 @@ function Settings(props: Props) {
 
         backend.createSurvey(
             props.account,
-            props.authToken,
+            props.accessToken,
             newConfig,
             success,
             error,
@@ -120,7 +121,7 @@ function Settings(props: Props) {
 }
 const mapStateToProps = (state: types.ReduxState) => ({
     account: state.account,
-    authToken: state.authToken,
+    accessToken: state.accessToken,
     configs: state.configs,
     configIsDiffering: state.configIsDiffering,
 });

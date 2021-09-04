@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
-import {clipboardUtils, formUtils, localIdUtils} from 'utilities';
-import {types} from 'types';
+import {clipboardUtils, formUtils, localIdUtils} from '@utilities';
+import {types} from '@types';
 
 import VisualField from './visual-field';
 import TextSettings from './text-settings/text-settings';
@@ -10,6 +10,7 @@ import SelectionSettings from './selection-settings/selection-settings';
 import EmailSettings from './email-settings/email-settings';
 
 interface Props {
+    fieldIndex: number;
     fieldConfig: types.SurveyField;
     setLocalFieldConfig(fieldConfigChanges: object): void;
     disabled: boolean;
@@ -99,6 +100,7 @@ function Field(props: Props) {
 
     return (
         <VisualField
+            fieldIndex={props.fieldIndex}
             fieldConfig={props.fieldConfig}
             setLocalFieldConfig={updateLocalFieldConfig}
             disabled={props.disabled}
