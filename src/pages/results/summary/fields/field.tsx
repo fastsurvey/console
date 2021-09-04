@@ -52,16 +52,26 @@ function Field(props: Props) {
             return (
                 <div
                     className={
-                        'w-full px-4 py-2.5 text-gray-700 rounded ' +
+                        'w-full px-4 py-2.5 text-gray-800 rounded relative group cursor-not-allowed ' +
                         'border-2 border-gray-200 border-dashed flex-col-left text-left'
                     }
                 >
-                    <div className='w-full mb-1.5 text-base text-gray-600 font-weight-700'>
+                    <div className='w-full text-base text-gray-500 font-weight-700'>
                         {fieldIndex + 1}. {fieldConfig.title}
                     </div>
-                    <div className='w-full text-sm text-gray-500 font-weight-400'>
-                        No aggregation for <strong>{fieldConfig.type}</strong>{' '}
-                        fields yet, raw data download coming very soon!
+                    <div
+                        className={
+                            'flex-row-left px-4 text-transparent group-hover:text-gray-900 ' +
+                            'absolute top-0 left-0 w-full h-full bg-gray-100 bg-opacity-0 group-hover:bg-opacity-75 ' +
+                            'group-hover:backdrop-filter group-hover:backdrop-blur-[2.5px] z-10 ' +
+                            'font-weight-500 text-sm rounded-sm'
+                        }
+                    >
+                        <div>
+                            No aggregation for{' '}
+                            <strong>{fieldConfig.type}</strong> fields yet, raw
+                            data download coming very soon!
+                        </div>
                     </div>
                 </div>
             );

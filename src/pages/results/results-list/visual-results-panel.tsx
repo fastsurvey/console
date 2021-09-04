@@ -13,26 +13,6 @@ function VisualConfigPanel(props: Props) {
     const {title, survey_name} = props.config;
     const {username} = props.account;
 
-    const [results, setResults] = useState<types.SurveyResults>({
-        count: 0,
-        aggregation: {},
-    });
-    const [fetching, setFetching] = useState(true);
-
-    useEffect(() => {
-        backend.fetchResults(
-            props.account,
-            props.accessToken,
-            props.config.survey_name,
-            (r) => {
-                setResults(r);
-                setFetching(false);
-            },
-            console.log,
-        );
-        // eslint-disable-next-line
-    }, []);
-
     const usesAuthentication = !isEmpty(
         filter(props.config.fields, (f) => f.type === 'email' && f.verify),
     );
@@ -63,16 +43,9 @@ function VisualConfigPanel(props: Props) {
                     /{username}/{survey_name}
                 </div>
                 <div className='mt-3 text-sm text-gray-600 truncate font-weight-500 no-selection'>
-                    {fetching && '...'}
-                    {!fetching && (
-                        <>
-                            {props.config.fields.length} Question
-                            {props.config.fields.length === 1 ? '' : 's'},{' '}
-                            {results.count} Submission
-                            {results.count === 1 ? '' : 's'}
-                            {usesAuthentication ? ', Email Verification' : ''}
-                        </>
-                    )}
+                    {props.config.fields.length} Question
+                    {props.config.fields.length === 1 ? '' : 's'}
+                    {usesAuthentication ? ', Email Verification' : ''}
                 </div>
             </div>
             <div
