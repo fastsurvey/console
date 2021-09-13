@@ -60,10 +60,10 @@ function VisualDatePicker(props: {
         return (
             <button
                 className={
-                    'w-6 -mx-0.5 px-0.5 text-center rounded-sm ringable ' +
+                    'py-1 md:py-0 w-7 md:w-6 -mx-0.5 px-0.5 text-center rounded-sm ringable ' +
                     (selectedDay
-                        ? 'bg-red-500 text-red-50 z-0 font-weight-600 '
-                        : 'hover:text-white z-10 font-weight-500 ')
+                        ? 'bg-red-500 text-red-50 z-0 font-weight-700 '
+                        : 'hover:text-white z-10 font-weight-600 ')
                 }
                 onClick={() => {
                     if (open && !disabled) {
@@ -149,7 +149,7 @@ function VisualDatePicker(props: {
     ];
 
     return (
-        <div className={' flex-col-left ' + (!open ? 'h-9 ' : ' ')}>
+        <div className={'flex-col-left ' + (!open ? 'h-9 ' : ' ')}>
             <button
                 ref={ref}
                 className={

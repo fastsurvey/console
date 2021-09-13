@@ -54,7 +54,12 @@ function DatePicker(props: Props) {
     }
 
     return (
-        <div className='flex-row-left-top gap-x-2'>
+        <div
+            className={
+                'w-full flex items-start justify-start ' +
+                'flex-col md:flex-row gap-y-1.5 md:gap-y-0 md:gap-x-2'
+            }
+        >
             <VisualDatePicker
                 disabled={props.disabled === true}
                 {...{
