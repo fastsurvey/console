@@ -15,6 +15,7 @@
         "start": "node server.js"
     },
     "dependencies": {
+        "@headlessui/react": "^1.4.1",
         "@heroicons/react": "^1.0.4",
         "axios": "^0.21.1",
         "express": "^4.17.1",
