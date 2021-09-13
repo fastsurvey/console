@@ -38,6 +38,6 @@ function headers(accessToken?: types.AccessToken) {
             },
         };
     } else {
-        return {};
+        return {headers: {'Content-Type': 'application/json'}};
     }
 }

@@ -8,7 +8,7 @@ function MainWrapper(props: {children: React.ReactNode; className?: string}) {
                 <Logo />
             </header>
             <main
-                className={`w-screen min-h-screen centering-col bg-gray-100 ${props.className}`}
+                className={`w-screen px-2 min-h-screen centering-col bg-gray-100 ${props.className}`}
             >
                 {props.children}
             </main>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {reduxUtils, backend} from '@utilities';
 import {types} from '@types';
@@ -15,67 +15,57 @@ interface Props {
     closeAllMessages(): void;
 }
 function VerifyForm(props: Props) {
-    const [password, setPassword] = useState('');
     const [verificationSuccessful, setSuccess] = useState(false);
     const [submitting, setSubmitting] = useState(false);
+    const [tried, setTried] = useState(false);
     let history = useHistory();
-
-    function disabled() {
-        return password.length < 8;
-    }
 
     const token = new URLSearchParams(window.location.search).get('token');
 
-    function handleVerify() {
-        function success() {
-            setSuccess(true);
-            setSubmitting(false);
+    function success() {
+        setSuccess(true);
+        setSubmitting(false);
 
-            props.openMessage('success-redirect-to-login');
-            setTimeout(() => {
-                history.push('/login');
-                props.closeAllMessages();
-            }, 4000);
+        props.openMessage('success-redirect-to-login');
+        setTimeout(() => {
+            history.push('/login');
+            props.closeAllMessages();
+        }, 4000);
+    }
+
+    function error(code: 400 | 401 | 500) {
+        setSubmitting(false);
+        if (code === 401) {
+            props.openMessage('error-link-invalid');
+        } else if (code === 400) {
+            // email has already been verified
+            success();
+        } else {
+            props.openMessage('error-server');
         }
+    }
 
-        function error(code: 400 | 401 | 500) {
-            setSubmitting(false);
-            if (code === 401) {
-                props.openMessage('error-link-invalid');
-            } else if (code === 400) {
-                // email has already been verified but
-                // token and password are correct
-                success();
-            } else {
-                props.openMessage('error-server');
-            }
-        }
-
-        if (!disabled() && token !== null) {
+    useEffect(() => {
+        if (token !== null && tried === false) {
             setSubmitting(true);
+            setTried(true);
             backend.verifyAccount(
                 {
                     verification_token: token,
-                    password,
                 },
                 success,
                 error,
             );
         }
-    }
+    }, [token, submitting]);
 
     return (
         <VisualVerifyForm
             {...{
-                password,
-                setPassword,
                 verificationSuccessful,
                 submitting,
-                handleVerify,
-                history,
             }}
             tokenExists={token !== null}
-            disabled={disabled()}
         />
     );
 }

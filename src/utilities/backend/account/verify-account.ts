@@ -3,13 +3,15 @@ import {httpPost} from '../http-clients';
 async function verifyAccount(
     verificationObject: {
         verification_token: string;
-        password: string;
     },
     success: () => void,
     error: (code: 400 | 401 | 500) => void,
 ) {
     try {
-        await httpPost(`/verification`, verificationObject).catch((error) => {
+        await httpPost(
+            `/verification`,
+            JSON.stringify(verificationObject),
+        ).catch((error) => {
             throw error.response.status;
         });
 
