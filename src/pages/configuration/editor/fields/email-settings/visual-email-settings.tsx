@@ -59,8 +59,8 @@ function VisualEmailSettings(props: Props) {
                 />
             </div>
 
-            <div className='w-full centering-col gap-y-0.5 mt-2'>
-                <Label text='Hint' />
+            <div className='w-full flex-col-left gap-y-0.5 mt-2'>
+                <Label text='Verify Email Address (email with confirmation link sent out)' />
                 <Toggle
                     value={props.fieldConfig.verify}
                     setValue={(newValue: boolean) =>

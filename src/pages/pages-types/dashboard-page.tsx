@@ -14,10 +14,10 @@ function DashBoardPage(props: {
 }) {
     return (
         <React.Fragment>
-            <header>
+            <header className='relative z-10 block'>
                 <Navbar />
             </header>
-            <main>
+            <main className='relative z-0 block'>
                 <div id='RegularContent' className={'hidden lg:block'}>
                     {props.children}
                 </div>
