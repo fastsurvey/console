@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import {Label, TextArea, DatePicker, TextInput, Button} from '@components';
 import {icons} from '@assets';
 import {types} from '@types';
+import {Menu, Transition} from '@headlessui/react';
+import {ChevronDownIcon} from '@heroicons/react/solid';
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ');
@@ -21,26 +23,62 @@ const VisualSettings = (props: Props) => {
 
     const tabs = [
         {name: 'About', href: '#', icon: icons.textCursor},
-        {name: 'Time', href: '#', icon: icons.time},
+        {name: 'Timing', href: '#', icon: icons.time},
         {name: 'Actions', href: '#', icon: icons.gear},
     ];
 
     return (
         <div className='mt-4 bg-white rounded shadow-md flex-col-center'>
-            <div className='sm:hidden'>
-                <label htmlFor='tabs' className='sr-only'>
-                    Select a tab
-                </label>
-                <select
-                    id='tabs'
-                    name='tabs'
-                    className='block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500'
-                    defaultValue={tabs[tabIndex].name}
-                >
-                    {tabs.map((tab) => (
-                        <option key={tab.name}>{tab.name}</option>
-                    ))}
-                </select>
+            <div className='z-10 w-full px-4 py-1.5 border-b border-gray-200 md:hidden flex-row-left'>
+                <div className='mr-2 text-base text-gray-900 font-weight-700'>
+                    {tabs[tabIndex].name}
+                </div>
+                <div className='flex-grow' />
+                <Menu as='div' className='relative inline-block text-left'>
+                    <div>
+                        <Menu.Button className='inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-50 ringable'>
+                            Options
+                            <ChevronDownIcon
+                                className='w-5 h-5 ml-2 -mr-1'
+                                aria-hidden='true'
+                            />
+                        </Menu.Button>
+                    </div>
+
+                    <Transition
+                        as={React.Fragment}
+                        enter='transition ease-out duration-100'
+                        enterFrom='transform opacity-0 scale-95'
+                        enterTo='transform opacity-100 scale-100'
+                        leave='transition ease-in duration-75'
+                        leaveFrom='transform opacity-100 scale-100'
+                        leaveTo='transform opacity-0 scale-95'
+                    >
+                        <Menu.Items className='absolute right-0 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+                            <div className='py-1'>
+                                {tabs.map((tab, index) => (
+                                    <Menu.Item>
+                                        {({active}) => (
+                                            <div
+                                                onClick={() =>
+                                                    setTabIndex(index)
+                                                }
+                                                className={classNames(
+                                                    active
+                                                        ? 'bg-gray-100 text-gray-900 '
+                                                        : 'text-gray-700 ',
+                                                    'block px-4 py-2 text-sm font-weight-600',
+                                                )}
+                                            >
+                                                {tab.name}
+                                            </div>
+                                        )}
+                                    </Menu.Item>
+                                ))}
+                            </div>
+                        </Menu.Items>
+                    </Transition>
+                </Menu>
             </div>
             <div className='hidden w-full sm:block'>
                 <div className='w-full border-b-2 border-gray-200'>
