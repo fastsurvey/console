@@ -206,25 +206,27 @@ function VisualAccountPage(props: {
                     <div
                         className={
                             'w-full px-3 flex-row-left space-x-2 ' +
-                            'rounded-b text-justify ' +
+                            'rounded-b text-justify bg-gray-50 border-gray-200 ' +
                             (!showValidation || tabIndex !== 1
                                 ? 'h-0 overflow-hidden '
                                 : validation.valid
-                                ? 'mt-2 border-t-2 text-green-400 bg-green-50 border-green-100 h-10 '
-                                : 'mt-2 border-t-2 text-red-400 bg-red-50 border-red-100 h-10 ')
+                                ? 'mt-2 border-t-2 text-green-900 h-10 '
+                                : 'mt-2 border-t-2 text-red-900 h-10 ')
                         }
                     >
                         <div
                             className={
                                 'flex-shrink-0 w-5 h-5 ' +
-                                (validation.valid ? 'icon-green ' : 'icon-red ')
+                                (validation.valid
+                                    ? 'icon-dark-green '
+                                    : 'icon-dark-red ')
                             }
                         >
                             {validation.valid
                                 ? icons.checkCircle
-                                : icons.closeCirlce}
+                                : icons.closeCircle}
                         </div>
-                        <div className='text-sm text-left font-weight-600'>
+                        <div className='text-base text-left md:text-sm font-weight-600'>
                             {validation.message}
                         </div>
                     </div>

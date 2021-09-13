@@ -107,7 +107,7 @@ function EditorFormCard(props: Props) {
                 <div
                     className={
                         'w-full centering-col gap-y-6 px-3 ' +
-                        (props.collapse ? 'h-0 overflow-hidden ' : ' ')
+                        (props.collapse ? 'h-0 overflow-hidden ' : 'py-2 ')
                     }
                 >
                     {props.children}
@@ -115,29 +115,26 @@ function EditorFormCard(props: Props) {
                 {props.validation && (
                     <div
                         className={
-                            'w-full px-3 flex-row-left space-x-2 ' +
-                            'rounded-b text-justify ' +
+                            'w-full px-3 text-justify flex-row-left space-x-2 ' +
+                            'rounded-b bg-gray-50 border-gray-200 ' +
                             (props.validation.valid
-                                ? 'h-0 overflow-hidden mt-2 '
-                                : 'border-t-2 h-10 mt-3 ') +
-                            (props.validation.valid
-                                ? 'text-green-500 bg-green-50 border-green-100 '
-                                : 'text-red-400 bg-red-50 border-red-100 ')
+                                ? 'text-green-900 h-0 overflow-hidden border-0 '
+                                : 'text-red-900 h-12 md:h-10 border-t-2 ')
                         }
                     >
                         <div
                             className={
                                 'flex-shrink-0 w-5 h-5 ' +
                                 (props.validation.valid
-                                    ? 'icon-green '
-                                    : 'icon-red ')
+                                    ? 'icon-dark-green '
+                                    : 'icon-dark-red ')
                             }
                         >
                             {props.validation.valid
                                 ? icons.checkCircle
-                                : icons.closeCirlce}
+                                : icons.closeCircle}
                         </div>
-                        <div className='text-sm text-left font-weight-600'>
+                        <div className='text-base text-left md:text-sm font-weight-600'>
                             {props.validation.valid
                                 ? 'Valid'
                                 : props.validation.message}

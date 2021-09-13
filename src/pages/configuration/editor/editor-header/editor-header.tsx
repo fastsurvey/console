@@ -44,7 +44,7 @@ function EditorHeader(props: {
     let buttons = draft
         ? [
               {
-                  icon: icons.closeCirlce,
+                  icon: icons.closeCircle,
                   text: 'undo',
                   onClick: () => props.revertState(),
                   disabled: !props.configIsDiffering,

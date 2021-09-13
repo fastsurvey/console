@@ -25,7 +25,7 @@ function MessageQueue(props: Props) {
                 >
                     <div>close all</div>
                     <div className='flex-shrink-0 w-10 h-10 p-2 icon-gray'>
-                        {icons.closeCirlce}
+                        {icons.closeCircle}
                     </div>
                 </button>
             )}
