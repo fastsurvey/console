@@ -17,16 +17,15 @@ async function updateSurvey(
             accessToken,
         ).catch((response) => {
             if (response.response.data.detail === 'submissions exist') {
-                error('error-submissions-exist');
-                return;
+                throw 'error-submissions-exist';
             } else {
-                throw response.statusCode;
+                throw 'error-server';
             }
         });
 
         success();
-    } catch {
-        error('error-server');
+    } catch (m: any) {
+        error(m);
     }
 }
 
