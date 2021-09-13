@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import {types} from '@types';
 import {icons} from '@assets';
 import {Button, Label, TextInput} from '@components';
+import {Menu, Transition} from '@headlessui/react';
+import {ChevronDownIcon} from '@heroicons/react/solid';
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ');
@@ -38,7 +40,8 @@ function VisualAccountPage(props: {
     return (
         <div
             className={
-                'py-32 min-h-screen w-full z-0 flex-col-top ' +
+                'px-4 lg:px-0 py-20 md:py-32 ' +
+                'min-h-screen w-full z-0 flex-col-top ' +
                 'overflow-y-scroll overflow-x-hidden bg-gray-100'
             }
         >
@@ -46,23 +49,63 @@ function VisualAccountPage(props: {
                 <h1 className='w-full text-2xl text-blue-900 font-weight-700'>
                     Modify your Account
                 </h1>
-                <div className='w-full bg-white rounded shadow flex-col-center'>
-                    <div className='sm:hidden'>
-                        <label htmlFor='tabs' className='sr-only'>
-                            Select a tab
-                        </label>
-                        <select
-                            id='tabs'
-                            name='tabs'
-                            className='block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500'
-                            defaultValue={tabs[tabIndex].name}
+                <div className='w-full bg-white rounded shadow flex-col-left'>
+                    <div className='z-10 w-full px-4 py-1.5 border-b border-gray-200 md:hidden flex-row-left'>
+                        <div className='mr-2 text-base text-gray-900 font-weight-700'>
+                            {tabs[tabIndex].name}{' '}
+                            <span className='font-weight-500'>Settings</span>
+                        </div>
+                        <div className='flex-grow' />
+                        <Menu
+                            as='div'
+                            className='relative inline-block text-left'
                         >
-                            {tabs.map((tab) => (
-                                <option key={tab.name}>{tab.name}</option>
-                            ))}
-                        </select>
+                            <div>
+                                <Menu.Button className='inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-50 ringable'>
+                                    Categories
+                                    <ChevronDownIcon
+                                        className='w-5 h-5 ml-2 -mr-1'
+                                        aria-hidden='true'
+                                    />
+                                </Menu.Button>
+                            </div>
+
+                            <Transition
+                                as={React.Fragment}
+                                enter='transition ease-out duration-100'
+                                enterFrom='transform opacity-0 scale-95'
+                                enterTo='transform opacity-100 scale-100'
+                                leave='transition ease-in duration-75'
+                                leaveFrom='transform opacity-100 scale-100'
+                                leaveTo='transform opacity-0 scale-95'
+                            >
+                                <Menu.Items className='absolute right-0 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+                                    <div className='py-1'>
+                                        {tabs.map((tab, index) => (
+                                            <Menu.Item>
+                                                {({active}) => (
+                                                    <div
+                                                        onClick={() =>
+                                                            setTabIndex(index)
+                                                        }
+                                                        className={classNames(
+                                                            active
+                                                                ? 'bg-gray-100 text-gray-900 '
+                                                                : 'text-gray-700 ',
+                                                            'block px-4 py-2 text-sm font-weight-600',
+                                                        )}
+                                                    >
+                                                        {tab.name}
+                                                    </div>
+                                                )}
+                                            </Menu.Item>
+                                        ))}
+                                    </div>
+                                </Menu.Items>
+                            </Transition>
+                        </Menu>
                     </div>
-                    <div className='hidden w-full sm:block'>
+                    <div className='hidden w-full md:z-10 md:block'>
                         <div className='w-full border-b-2 border-gray-200'>
                             <nav className='px-4 mb-[-2px] space-x-4 flex-row-left pt-0.5'>
                                 <div className='text-gray-900 font-weight-600'>
@@ -95,7 +138,7 @@ function VisualAccountPage(props: {
                             </nav>
                         </div>
                     </div>
-                    <div className='w-full px-4 py-4 space-y-6 flex-col-left'>
+                    <div className='z-0 w-full px-4 py-4 space-y-6 flex-col-left'>
                         {tabIndex === 0 && (
                             <>
                                 <div className='w-full centering-col gap-y-0.5'>
@@ -163,25 +206,27 @@ function VisualAccountPage(props: {
                     <div
                         className={
                             'w-full px-3 flex-row-left space-x-2 ' +
-                            'rounded-b text-justify ' +
-                            (!showValidation
+                            'rounded-b text-justify bg-gray-50 border-gray-200 ' +
+                            (!showValidation || tabIndex !== 1
                                 ? 'h-0 overflow-hidden '
                                 : validation.valid
-                                ? 'mt-2 border-t-2 text-green-400 bg-green-50 border-green-100 h-10 '
-                                : 'mt-2 border-t-2 text-red-400 bg-red-50 border-red-100 h-10 ')
+                                ? 'mt-2 border-t-2 text-green-900 h-10 '
+                                : 'mt-2 border-t-2 text-red-900 h-10 ')
                         }
                     >
                         <div
                             className={
                                 'flex-shrink-0 w-5 h-5 ' +
-                                (validation.valid ? 'icon-green ' : 'icon-red ')
+                                (validation.valid
+                                    ? 'icon-dark-green '
+                                    : 'icon-dark-red ')
                             }
                         >
                             {validation.valid
                                 ? icons.checkCircle
-                                : icons.closeCirlce}
+                                : icons.closeCircle}
                         </div>
-                        <div className='text-sm text-left font-weight-600'>
+                        <div className='text-base text-left md:text-sm font-weight-600'>
                             {validation.message}
                         </div>
                     </div>

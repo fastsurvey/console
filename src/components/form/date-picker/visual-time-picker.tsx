@@ -52,7 +52,7 @@ export default function VisualTimePicker(props: {
                     <div className='bg-gray-700 rounded centering-col'>
                         <button
                             className={
-                                'w-7 h-7 p-0.5 transform rotate-180 icon-light-gray ' +
+                                'w-10 h-10 md:w-7 md:h-7 p-2 md:p-0.5 transform rotate-180 icon-light-gray ' +
                                 'rounded ringable cursor-pointer'
                             }
                             onClick={() =>
@@ -74,7 +74,7 @@ export default function VisualTimePicker(props: {
                         </div>
                         <button
                             className={
-                                'w-7 h-7 p-0.5 transform icon-light-gray ' +
+                                'w-10 h-10 md:w-7 md:h-7 p-2 md:p-0.5 transform icon-light-gray ' +
                                 'rounded ringable cursor-pointer'
                             }
                             onClick={() => {
@@ -90,7 +90,7 @@ export default function VisualTimePicker(props: {
                     <div className='bg-gray-700 rounded centering-col'>
                         <button
                             className={
-                                'w-7 h-7 p-0.5 transform rotate-180 icon-light-gray ' +
+                                'w-10 h-10 md:w-7 md:h-7 p-2 md:p-0.5 transform rotate-180 icon-light-gray ' +
                                 'rounded ringable cursor-pointer'
                             }
                             onClick={() =>
@@ -107,7 +107,7 @@ export default function VisualTimePicker(props: {
                         </div>
                         <button
                             className={
-                                'w-7 h-7 p-0.5 transform icon-light-gray ' +
+                                'w-10 h-10 md:w-7 md:h-7 p-2 md:p-0.5 transform icon-light-gray ' +
                                 'rounded ringable cursor-pointer'
                             }
                             onClick={() => {

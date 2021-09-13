@@ -1,5 +1,5 @@
 import React from 'react';
-import NavbarContent from './regular-navbar/navbar-content';
+import NavbarContent from './navbar-content/navbar-content';
 
 interface Props {
     logOut(): void;

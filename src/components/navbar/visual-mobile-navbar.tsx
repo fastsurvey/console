@@ -37,7 +37,7 @@ function VisualMobileNavbar(props: Props) {
             <div
                 onClick={props.openNavbar}
                 className={
-                    'fixed top-0 left-0 z-30 w-16 h-16 p-3 m-1 ' +
+                    'fixed top-0 left-0 z-30 w-16 h-16 p-4 m-1 ' +
                     'text-gray-900 pointer-events-auto'
                 }
             >
@@ -46,9 +46,9 @@ function VisualMobileNavbar(props: Props) {
             <div
                 className={
                     'fixed shadow z-50 left-0 top-0 pt-4 pb-1 h-full ' +
-                    'bg-gray-900 flex flex-col transition-width ' +
+                    'bg-gray-900 flex flex-col transition-all ' +
                     'duration-300 overflow-hidden ' +
-                    (props.navbarState.open ? 'w-64' : 'w-0')
+                    (props.navbarState.open ? 'w-64 px-2' : 'w-0')
                 }
             >
                 <NavbarContent

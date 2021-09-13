@@ -3,9 +3,6 @@ import {connect} from 'react-redux';
 import {types} from '@types';
 import {Navbar} from '@components';
 
-// TODO: Avoid plain css
-import '@styles/dashboard-page.css';
-
 function DashBoardPage(props: {
     children: React.ReactNode;
     navbarState: types.NavbarState;
@@ -14,17 +11,10 @@ function DashBoardPage(props: {
 }) {
     return (
         <React.Fragment>
-            <header>
+            <header className='relative z-10 block'>
                 <Navbar />
             </header>
-            <main>
-                <div id='RegularContent' className={'hidden lg:block'}>
-                    {props.children}
-                </div>
-                <div id='MobileContent' className={'block lg:hidden '}>
-                    {props.children}
-                </div>
-            </main>
+            <main className='relative z-0 block'>{props.children}</main>
         </React.Fragment>
     );
 }

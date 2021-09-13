@@ -14,7 +14,8 @@ function VisualConfigList(props: {
     return (
         <div
             className={
-                'py-32 min-h-screen w-full z-0 flex-col-top ' +
+                'px-4 lg:px-0 py-20 md:py-32 ' +
+                'min-h-screen w-full z-0 flex-col-top ' +
                 'overflow-y-scroll overflow-x-hidden bg-gray-100'
             }
         >
@@ -26,7 +27,7 @@ function VisualConfigList(props: {
                     <SearchBar value={value} setValue={setValue} />
                 </div>
 
-                <div className='grid w-full grid-cols-2 gap-3'>
+                <div className='grid w-full grid-cols-1 gap-3 md:grid-cols-2'>
                     {sortBy(
                         props.configs.filter(
                             (c) =>

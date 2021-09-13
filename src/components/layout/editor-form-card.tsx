@@ -46,18 +46,29 @@ function EditorFormCard(props: Props) {
                 }
             >
                 <div
-                    className='flex flex-row self-stretch flex-grow cursor-pointer'
+                    className={
+                        'flex-row-center cursor-pointer leading-tight py-2 ' +
+                        'pointer-events-none md:pointer-events-auto'
+                    }
                     onClick={toggle}
                 >
-                    <div className='w-10 h-10 p-2 ml-1'>{props.icon}</div>
-                    <div className=''>{props.label}</div>
-                    {props.longLabel && (
-                        <div className='pl-2 opacity-70 font-weight-500'>
-                            - {props.longLabel}
+                    <div className='w-6 h-6 p-0.5 ml-2 mr-2 flex-shrink-0'>
+                        {props.icon}
+                    </div>
+                    <div className='flex flex-col items-start justify-start md:flex-row'>
+                        <div className='mb-0.5 font-weight-700'>
+                            {props.label}
                         </div>
-                    )}
-                    <div className='self-stretch flex-grow' />
+                        {props.longLabel && (
+                            <div className='leading-tight opacity-70 font-weight-500'>
+                                <span className='hidden md:inline'>{' -'}</span>
+                                {props.longLabel}
+                            </div>
+                        )}
+                    </div>
                 </div>
+
+                <div className='flex-grow' />
 
                 <div className={'relative flex flex-row group '}>
                     <div
@@ -65,7 +76,7 @@ function EditorFormCard(props: Props) {
                             'absolute top-0 left-0 transform -translate-x-full ' +
                             'h-10 pr-2 text-sm leading-10 font-weight-600 ' +
                             'pointer-events-none whitespace-nowrap opacity-0 ' +
-                            'group-hover:opacity-100 group-focus-within:opacity-100'
+                            'md:group-hover:opacity-100 md:group-focus-within:opacity-100'
                         }
                     >
                         {props.actionLabel}
@@ -96,7 +107,7 @@ function EditorFormCard(props: Props) {
                 <div
                     className={
                         'w-full centering-col gap-y-6 px-3 ' +
-                        (props.collapse ? 'h-0 overflow-hidden ' : ' ')
+                        (props.collapse ? 'h-0 overflow-hidden ' : 'py-2 ')
                     }
                 >
                     {props.children}
@@ -104,29 +115,26 @@ function EditorFormCard(props: Props) {
                 {props.validation && (
                     <div
                         className={
-                            'w-full px-3 flex-row-left space-x-2 ' +
-                            'rounded-b text-justify ' +
-                            (props.collapse || props.validation.valid
-                                ? 'h-0 overflow-hidden mt-2 '
-                                : 'border-t-2 h-10 mt-3 ') +
+                            'w-full px-3 text-justify flex-row-left space-x-2 ' +
+                            'rounded-b bg-gray-50 border-gray-200 ' +
                             (props.validation.valid
-                                ? 'text-green-500 bg-green-50 border-green-100 '
-                                : 'text-red-400 bg-red-50 border-red-100 ')
+                                ? 'text-green-900 h-0 overflow-hidden border-0 '
+                                : 'text-red-900 h-12 md:h-10 border-t-2 ')
                         }
                     >
                         <div
                             className={
                                 'flex-shrink-0 w-5 h-5 ' +
                                 (props.validation.valid
-                                    ? 'icon-green '
-                                    : 'icon-red ')
+                                    ? 'icon-dark-green '
+                                    : 'icon-dark-red ')
                             }
                         >
                             {props.validation.valid
                                 ? icons.checkCircle
-                                : icons.closeCirlce}
+                                : icons.closeCircle}
                         </div>
-                        <div className='text-sm text-left font-weight-600'>
+                        <div className='text-base text-left md:text-sm font-weight-600'>
                             {props.validation.valid
                                 ? 'Valid'
                                 : props.validation.message}

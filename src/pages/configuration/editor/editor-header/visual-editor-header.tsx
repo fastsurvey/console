@@ -26,14 +26,27 @@ function VisualEditorHeader(props: {
     const {username} = props.account;
 
     const linkContent = (
-        <div className='text-sm text-gray-600 truncate font-weight-500'>
-            dev.fastsurvey.io/{username}/{survey_name}
+        <div className='text-sm text-blue-700 underline md:truncate font-weight-600'>
+            fastsurvey.de/{username}/{survey_name}
         </div>
     );
 
     return (
-        <div className={'w-full flex-col-left mb-1'}>
-            <div className='relative w-full centering-row '>
+        <div className={'w-full pl-2 flex-col-left mb-1'}>
+            <div className='relative block w-full my-2 flex-row-right md:hidden'>
+                <ButtonGroup buttons={props.buttons} />
+                <div className='flex-shrink-0 w-2 md:w-4' />
+                <Button
+                    icon={draft ? icons.uploadCloud : icons.edit}
+                    text={draft ? 'publish' : 'edit'}
+                    onClick={() => {
+                        props.saveState({
+                            draft: !draft,
+                        });
+                    }}
+                />
+            </div>
+            <div className={'relative w-full flex-row-top'}>
                 {!props.configIsDiffering && (
                     <Link
                         to='/configurations'
@@ -65,17 +78,23 @@ function VisualEditorHeader(props: {
                     {title}
                 </div>
                 <div className='flex-max' />
-                <ButtonGroup buttons={props.buttons} />
-                <div className='w-4' />
-                <Button
-                    icon={draft ? icons.uploadCloud : icons.edit}
-                    text={draft ? 'publish' : 'edit'}
-                    onClick={() => {
-                        props.saveState({
-                            draft: !draft,
-                        });
-                    }}
-                />
+                <div
+                    className={
+                        'relative hidden md:flex flex-row items-start justify-start'
+                    }
+                >
+                    <ButtonGroup buttons={props.buttons} />
+                    <div className='flex-shrink-0 w-2' />
+                    <Button
+                        icon={draft ? icons.uploadCloud : icons.edit}
+                        text={draft ? 'publish' : 'edit'}
+                        onClick={() => {
+                            props.saveState({
+                                draft: !draft,
+                            });
+                        }}
+                    />
+                </div>
             </div>
             {draft && (
                 <div className='px-1.5 py-0.5 transform -translate-x-1.5 cursor-not-allowed opacity-70'>
@@ -84,7 +103,7 @@ function VisualEditorHeader(props: {
             )}
             {!draft && (
                 <a
-                    href={`https://dev.fastsurvey.io/${username}/${survey_name}`}
+                    href={`https://fastsurvey.de/${username}/${survey_name}`}
                     className='px-1.5 py-0.5 transform -translate-x-1.5 rounded ringable'
                     target='_blank'
                     rel='noopener noreferrer'

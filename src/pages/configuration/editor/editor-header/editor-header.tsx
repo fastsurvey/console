@@ -44,7 +44,7 @@ function EditorHeader(props: {
     let buttons = draft
         ? [
               {
-                  icon: icons.closeCirlce,
+                  icon: icons.closeCircle,
                   text: 'undo',
                   onClick: () => props.revertState(),
                   disabled: !props.configIsDiffering,
@@ -57,7 +57,7 @@ function EditorHeader(props: {
               },
           ]
         : [
-              {
+              /*{
                   icon: icons.play,
                   text: now() < end ? 'start now' : 'reopen now',
                   onClick: now() < end ? startNow : reopenNow,
@@ -68,7 +68,7 @@ function EditorHeader(props: {
                   text: 'end now',
                   onClick: endNow,
                   disabled: now() < start || end < now(),
-              },
+              },*/
           ];
 
     return <VisualEditorHeader {...props} {...{buttons}} />;

@@ -68,11 +68,20 @@
         @apply fill-blue-700;
     }
 
+    .icon-dark-green .primary {
+        @apply fill-green-400;
+    }
+
+    .icon-dark-green .secondary {
+        @apply fill-green-800;
+    }
+
     .icon-dark-red .primary {
         @apply fill-red-300;
     }
+
     .icon-dark-red .secondary {
-        @apply fill-red-600;
+        @apply fill-red-800;
     }
 
     .icon-dark-orange .primary {
@@ -87,13 +96,6 @@
     }
     .icon-dark-yellow .secondary {
         @apply fill-yellow-700;
-    }
-
-    .icon-dark-green .primary {
-        @apply fill-green-300;
-    }
-    .icon-dark-green .secondary {
-        @apply fill-green-600;
     }
 
     .icon-dark-teal .primary {

@@ -8,21 +8,24 @@ async function updateSurvey(
     centralConfigName: string,
     config: types.SurveyConfig,
     success: () => void,
-    error: (code: 400 | 401 | 422 | 500) => void,
+    error: (message: 'error-submissions-exist' | 'error-server') => void,
 ) {
     try {
         await httpPut(
             `/users/${account.username}/surveys/${centralConfigName}`,
             JSON.stringify(localIdUtils.remove.survey(config)),
             accessToken,
-        ).catch((response: {statusCode: 400 | 401 | 422 | 500}) => {
-            throw response.statusCode;
+        ).catch((response) => {
+            if (response.response.data.detail === 'submissions exist') {
+                throw 'error-submissions-exist';
+            } else {
+                throw 'error-server';
+            }
         });
 
         success();
-    } catch (code) {
-        // @ts-ignore
-        error(code);
+    } catch (m: any) {
+        error(m);
     }
 }
 
