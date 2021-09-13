@@ -29,7 +29,7 @@ function VisualConfigPanel(props: Props) {
                     <div
                         className={
                             'pr-4 text-lg text-gray-800 font-weight-600 ' +
-                            'truncate'
+                            'mb-1 md:mb-0 md:truncate leading-tight'
                         }
                     >
                         {title}
@@ -39,7 +39,7 @@ function VisualConfigPanel(props: Props) {
                         <TimePill config={props.config} flat />
                     </div>
                 </div>
-                <div className='text-sm text-gray-600 truncate font-weight-500'>
+                <div className='text-sm text-blue-700 underline truncate font-weight-600'>
                     /{username}/{survey_name}
                 </div>
                 <div className='mt-3 text-sm text-gray-600 truncate font-weight-500 no-selection'>
