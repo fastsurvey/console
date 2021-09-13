@@ -2,7 +2,7 @@ import axios from 'axios';
 import {types} from '@types';
 
 // const API_URL = 'http://localhost:8000';
-const API_URL = 'https://api.dev.fastsurvey.de';
+const API_URL = 'https://api.fastsurvey.de';
 // const API_URL = 'https://commit-a4f154a---backend-dev-gz5l57j4mq-ew.a.run.app';
 
 export function httpPost(
