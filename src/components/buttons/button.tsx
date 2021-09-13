@@ -35,7 +35,7 @@ export default function Button(props: {
     return (
         <button
             className={
-                'p-0.5 rounded flex-row-center h-8 ' +
+                'p-0.5 rounded flex-row-center h-8 flex-shrink-0 ' +
                 'no-selection ringable relative overflow-hidden ' +
                 variantClasses
             }

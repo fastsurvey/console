@@ -24,10 +24,11 @@ function Field(props: Props) {
     }) => (
         <div
             className={
-                'w-full bg-white rounded shadow px-4 py-3 flex-row-center space-x-4'
+                'w-full bg-white rounded shadow px-4 py-3 ' +
+                'flex-col-center md:flex-row space-y-4 md:space-y-0 md:space-x-4'
             }
         >
-            <div className='w-50% flex-col-left space-y-0.5'>
+            <div className='w-full md:w-50% flex-col-left space-y-0.5'>
                 <div className='text-base text-gray-900 font-weight-700'>
                     {fieldIndex + 1}. {fieldConfig.title}
                 </div>
@@ -35,7 +36,7 @@ function Field(props: Props) {
                     {props.subtitle}
                 </div>
             </div>
-            <div className='w-50% space-y-4 text-sm flex-col-left font-weight-700'>
+            <div className='w-full md:w-50% space-y-3 text-sm flex-col-left font-weight-700'>
                 {props.children}
             </div>
         </div>
@@ -76,7 +77,7 @@ function Field(props: Props) {
                     <div
                         className={
                             'flex-row-left px-4 text-transparent group-hover:text-gray-900 z-10 ' +
-                            'absolute top-0 left-0 w-full h-full ' +
+                            'absolute top-0 left-0 w-full h-full leading-tight ' +
                             'bg-gray-100 bg-opacity-0 group-hover:bg-opacity-100 ' +
                             'font-weight-500 text-sm rounded-sm'
                         }

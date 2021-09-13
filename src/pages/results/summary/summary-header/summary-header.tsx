@@ -16,17 +16,18 @@ function SummaryHeader(props: {
     const {username} = props.account;
 
     const linkContent = (
-        <div className='text-sm text-gray-600 truncate font-weight-500'>
+        <div className='text-sm text-blue-700 underline md:truncate font-weight-600'>
             dev.fastsurvey.io/{username}/{survey_name}
         </div>
     );
 
     return (
         <div className={'w-full flex-col-left mb-1'}>
-            <div className='relative w-full centering-row '>
+            <div className='relative w-full flex-row-top '>
                 <Link
                     to='/results'
                     className={
+                        'block md:hidden ' +
                         'w-10 h-10 m-1 p-2 ringable rounded icon-gray ' +
                         'absolute -left-14 top-50% transform -translate-y-50% '
                     }
@@ -36,13 +37,16 @@ function SummaryHeader(props: {
 
                 <div
                     className={
-                        'pr-4 text-xl text-gray-800 font-weight-600 truncate'
+                        'pr-4 text-xl text-gray-800 font-weight-700 ' +
+                        'md:truncate'
                     }
                 >
                     {title}{' '}
-                    {props.results === undefined
-                        ? '(... submissions)'
-                        : `(${props.results.count} submissions)`}
+                    <span className='font-weight-500'>
+                        {props.results === undefined
+                            ? '(... submissions)'
+                            : `(${props.results.count} submissions)`}
+                    </span>
                 </div>
                 <div className='flex-max' />
                 <Button
@@ -59,7 +63,7 @@ function SummaryHeader(props: {
             >
                 {linkContent}
             </a>
-            <div className='flex-shrink-0 mt-2'>
+            <div className='flex-shrink-0 mt-2 mb-2 md:mb-0'>
                 <TimePill config={props.config} flat />
             </div>
         </div>
