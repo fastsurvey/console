@@ -46,18 +46,28 @@ function EditorFormCard(props: Props) {
                 }
             >
                 <div
-                    className='flex flex-row self-stretch flex-grow cursor-pointer'
+                    className={
+                        'flex-row-center cursor-pointer ' + 'leading-tight py-2'
+                    }
                     onClick={toggle}
                 >
-                    <div className='w-10 h-10 p-2 ml-1'>{props.icon}</div>
-                    <div className=''>{props.label}</div>
-                    {props.longLabel && (
-                        <div className='pl-2 opacity-70 font-weight-500'>
-                            - {props.longLabel}
+                    <div className='w-6 h-6 p-0.5 ml-2 mr-2 flex-shrink-0'>
+                        {props.icon}
+                    </div>
+                    <div className='flex flex-col items-start justify-start md:flex-row'>
+                        <div className='mb-0.5 font-weight-700'>
+                            {props.label}
                         </div>
-                    )}
-                    <div className='self-stretch flex-grow' />
+                        {props.longLabel && (
+                            <div className='leading-tight opacity-70 font-weight-500'>
+                                <span className='hidden md:inline'>{' -'}</span>
+                                {props.longLabel}
+                            </div>
+                        )}
+                    </div>
                 </div>
+
+                <div className='flex-grow' />
 
                 <div className={'relative flex flex-row group '}>
                     <div
