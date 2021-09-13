@@ -17,7 +17,7 @@ function SummaryHeader(props: {
 
     const linkContent = (
         <div className='text-sm text-blue-700 underline md:truncate font-weight-600'>
-            dev.fastsurvey.io/{username}/{survey_name}
+            fastsurvey.de/{username}/{survey_name}
         </div>
     );
 
@@ -56,7 +56,7 @@ function SummaryHeader(props: {
                 />
             </div>
             <a
-                href={`https://dev.fastsurvey.de/${username}/${survey_name}`}
+                href={`https://fastsurvey.de/${username}/${survey_name}`}
                 className='px-1.5 py-0.5 transform -translate-x-1.5 rounded ringable'
                 target='_blank'
                 rel='noopener noreferrer'

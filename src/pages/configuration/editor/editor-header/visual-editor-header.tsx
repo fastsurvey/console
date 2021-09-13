@@ -26,8 +26,8 @@ function VisualEditorHeader(props: {
     const {username} = props.account;
 
     const linkContent = (
-        <div className='text-sm text-gray-600 truncate font-weight-500'>
-            dev.fastsurvey.io/{username}/{survey_name}
+        <div className='text-sm text-blue-700 underline md:truncate font-weight-600'>
+            fastsurvey.de/{username}/{survey_name}
         </div>
     );
 
@@ -103,7 +103,7 @@ function VisualEditorHeader(props: {
             )}
             {!draft && (
                 <a
-                    href={`https://dev.fastsurvey.io/${username}/${survey_name}`}
+                    href={`https://fastsurvey.de/${username}/${survey_name}`}
                     className='px-1.5 py-0.5 transform -translate-x-1.5 rounded ringable'
                     target='_blank'
                     rel='noopener noreferrer'

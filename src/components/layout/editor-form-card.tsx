@@ -47,7 +47,8 @@ function EditorFormCard(props: Props) {
             >
                 <div
                     className={
-                        'flex-row-center cursor-pointer ' + 'leading-tight py-2'
+                        'flex-row-center cursor-pointer leading-tight py-2 ' +
+                        'pointer-events-none md:pointer-events-auto'
                     }
                     onClick={toggle}
                 >
@@ -75,7 +76,7 @@ function EditorFormCard(props: Props) {
                             'absolute top-0 left-0 transform -translate-x-full ' +
                             'h-10 pr-2 text-sm leading-10 font-weight-600 ' +
                             'pointer-events-none whitespace-nowrap opacity-0 ' +
-                            'group-hover:opacity-100 group-focus-within:opacity-100'
+                            'md:group-hover:opacity-100 md:group-focus-within:opacity-100'
                         }
                     >
                         {props.actionLabel}
@@ -116,7 +117,7 @@ function EditorFormCard(props: Props) {
                         className={
                             'w-full px-3 flex-row-left space-x-2 ' +
                             'rounded-b text-justify ' +
-                            (props.collapse || props.validation.valid
+                            (props.validation.valid
                                 ? 'h-0 overflow-hidden mt-2 '
                                 : 'border-t-2 h-10 mt-3 ') +
                             (props.validation.valid

@@ -23,8 +23,8 @@ function VisualMessage(props: Props) {
     return (
         <div
             className={
-                'centering-row pl-3 pr-1 m-2 bg-gray-900 ' +
-                'font-weight-500 rounded shadow-lg w-full ' +
+                'flex-row-center pl-3 pr-1 m-2 bg-gray-900 ' +
+                'font-weight-500 rounded shadow-lg flex-grow max-w-full ' +
                 `${colors}`
             }
         >

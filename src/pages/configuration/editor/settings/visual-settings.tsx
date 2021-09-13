@@ -37,7 +37,7 @@ const VisualSettings = (props: Props) => {
                 <Menu as='div' className='relative inline-block text-left'>
                     <div>
                         <Menu.Button className='inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-50 ringable'>
-                            Options
+                            Categories
                             <ChevronDownIcon
                                 className='w-5 h-5 ml-2 -mr-1'
                                 aria-hidden='true'
