@@ -131,8 +131,9 @@ function ConfigEditor(props: {
             }
         }
 
-        function error() {
-            props.openMessage('error-server');
+        function error(message: 'error-submissions-exist' | 'error-server') {
+            console.log({message});
+            props.openMessage(message);
         }
 
         if (fieldsAreValid && fieldCountIsValid && authModeIsValid) {

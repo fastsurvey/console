@@ -11,6 +11,11 @@ export const messages: {[key in types.MessageId]: types.Message} = {
         text: 'Invalid credentials',
         type: 'error',
     },
+    'error-submissions-exist': {
+        id: 'error-submissions-exist',
+        text: 'Valid submissions already exist - survey cannot be edited anymore',
+        type: 'error',
+    },
     'error-server': {
         id: 'error-server',
         text: 'Server error. Please try again later',
