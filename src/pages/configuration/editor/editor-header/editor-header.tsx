@@ -57,7 +57,7 @@ function EditorHeader(props: {
               },
           ]
         : [
-              {
+              /*{
                   icon: icons.play,
                   text: now() < end ? 'start now' : 'reopen now',
                   onClick: now() < end ? startNow : reopenNow,
@@ -68,7 +68,7 @@ function EditorHeader(props: {
                   text: 'end now',
                   onClick: endNow,
                   disabled: now() < start || end < now(),
-              },
+              },*/
           ];
 
     return <VisualEditorHeader {...props} {...{buttons}} />;

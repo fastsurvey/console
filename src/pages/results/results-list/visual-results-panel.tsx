@@ -55,7 +55,7 @@ function VisualConfigPanel(props: Props) {
                     'text-center text-blue-900 font-weight-600'
                 }
             >
-                Edit Survey
+                View Results
             </div>
         </div>
     );

@@ -164,7 +164,7 @@ function VisualAccountPage(props: {
                         className={
                             'w-full px-3 flex-row-left space-x-2 ' +
                             'rounded-b text-justify ' +
-                            (!showValidation
+                            (!showValidation || tabIndex !== 1
                                 ? 'h-0 overflow-hidden '
                                 : validation.valid
                                 ? 'mt-2 border-t-2 text-green-400 bg-green-50 border-green-100 h-10 '
