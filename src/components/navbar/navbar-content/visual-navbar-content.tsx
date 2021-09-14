@@ -49,7 +49,7 @@ function NavbarButton(props: {
             </div>
             <div
                 className={
-                    'w-full md:w-0 md:group-hover:w-36 md:group-focus-within:w-36 ' +
+                    'w-full lg:w-0 lg:group-hover:w-36 lg:group-focus-within:w-36 ' +
                     'transform translate-x-2 text-left ' +
                     'transition-width duration-150 overflow-hidden'
                 }
