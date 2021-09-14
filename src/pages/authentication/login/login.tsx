@@ -21,9 +21,20 @@ function LoginForm(props: {
         return identifier.length < 3 || password.length < 8;
     }
 
-    function abortLogin(code: 401 | 500) {
+    function abortLogin(code: 401 | 403 | 404 | 500) {
         setSubmitting(false);
-        props.openMessage(code === 401 ? 'error-credentials' : 'error-server');
+        switch (code) {
+            case 401:
+            case 404:
+                props.openMessage('error-credentials');
+                break;
+            case 403:
+                props.openMessage('warning-account-not-verified');
+                break;
+            default:
+                props.openMessage('error-server');
+                break;
+        }
     }
 
     function handleLogin() {

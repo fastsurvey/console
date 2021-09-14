@@ -105,6 +105,7 @@ export declare namespace types {
     export type MessageId =
         | 'warning-unsaved'
         | 'error-credentials'
+        | 'warning-account-not-verified'
         | 'error-submissions-exist'
         | 'error-server'
         | 'success-account-created'

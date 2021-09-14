@@ -11,13 +11,11 @@ async function loginWithForm(
         account: types.Account,
         configs: types.SurveyConfig[],
     ) => void,
-    abort: (statusCode: 401 | 500) => void,
+    abort: (statusCode: 401 | 403 | 404 | 500) => void,
 ) {
     try {
         const {username, access_token: accessToken}: any = (
             await httpPost('/authentication', data).catch((error) => {
-                console.log({data});
-                console.log({error});
                 throw error.response.status;
             })
         ).data;
@@ -40,9 +38,8 @@ async function loginWithForm(
         ).data;
 
         login(accessToken, account, configs);
-    } catch (code) {
-        console.log({code});
-        abort(code === 401 ? 401 : 500);
+    } catch (code: any) {
+        abort([401, 403, 404, 500].includes(code) ? code : 500);
     }
 }
 

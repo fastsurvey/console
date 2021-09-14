@@ -11,6 +11,11 @@ export const messages: {[key in types.MessageId]: types.Message} = {
         text: 'Invalid credentials',
         type: 'error',
     },
+    'warning-account-not-verified': {
+        id: 'warning-account-not-verified',
+        text: 'id/password valid, but email not verified yet',
+        type: 'warning',
+    },
     'error-submissions-exist': {
         id: 'error-submissions-exist',
         text: 'Valid submissions already exist - survey cannot be edited anymore',
