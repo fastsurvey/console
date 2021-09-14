@@ -28,7 +28,7 @@ async function loginWithForm(
         if (!data.identifier.includes('@')) {
             account.email = (
                 await httpGet(`/users/${data.identifier}`, accessToken)
-            ).data.email;
+            ).data.email_address;
         } else {
             account.email = data.identifier;
         }
