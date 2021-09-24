@@ -47,7 +47,7 @@ export default function Button(props: {
                 <div
                     className={
                         'flex-row-center space-x-0.5 font-weight-600 ' +
-                        'absolute top-0 left-0 w-full h-full ' +
+                        'absolute top-0 left-0 w-full h-full rounded ' +
                         'backdrop-filter backdrop-blur-[2.5px] z-10 ' +
                         loadingClasses
                     }

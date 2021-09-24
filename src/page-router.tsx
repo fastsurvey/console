@@ -10,7 +10,7 @@ import {ConfigList, EditorRouter} from '@pages/configuration';
 import {ResultsList, SummaryRouter} from '@pages/results';
 import {AccountPage} from '@pages/account';
 
-import {LoaderOverlay, MessageQueue, Modal, MainWrapper} from '@components';
+import {MessageQueue, Modal, MainWrapper} from '@components';
 
 interface RouterProps {
     loggingIn: boolean;
@@ -20,7 +20,6 @@ interface RouterProps {
 function PageRouter(props: RouterProps) {
     return (
         <BrowserRouter>
-            <LoaderOverlay />
             <MessageQueue />
             <Modal />
             <Route>
