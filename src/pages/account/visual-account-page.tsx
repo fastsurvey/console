@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {types} from '@types';
 import {icons} from '@assets';
-import {Button, Label, TextInput} from '@components';
+import {Button, Label, TextInput, ValidationBar} from '@components';
 import {Menu, Transition} from '@headlessui/react';
 import {ChevronDownIcon} from '@heroicons/react/solid';
 
@@ -12,7 +12,6 @@ function classNames(...classes: string[]) {
 function VisualAccountPage(props: {
     account: types.Account;
     validation: {valid: boolean; message: string};
-    showValidation: boolean;
     password: string;
     passwordConfirmation: string;
     setPassword(p: string): void;
@@ -22,7 +21,6 @@ function VisualAccountPage(props: {
 }) {
     const {
         validation,
-        showValidation,
         password,
         passwordConfirmation,
         setPassword,
@@ -30,6 +28,9 @@ function VisualAccountPage(props: {
         pending,
         submitNewPassword,
     } = props;
+
+    const anyPasswordEmpty =
+        password.length === 0 || passwordConfirmation.length === 0;
 
     const [tabIndex, setTabIndex] = useState(0);
     const tabs = [
@@ -180,45 +181,21 @@ function VisualAccountPage(props: {
                                             setPassword('');
                                             setPasswordConfirmation('');
                                         }}
-                                        disabled={!showValidation || pending}
+                                        disabled={anyPasswordEmpty || pending}
                                     />
                                     <Button
                                         text='change password'
                                         variant='flat-light-blue'
                                         onClick={submitNewPassword}
-                                        disabled={!showValidation || pending}
+                                        disabled={anyPasswordEmpty || pending}
                                     />
                                 </div>
                             </>
                         )}
                     </div>
-                    <div
-                        className={
-                            'w-full px-3 flex-row-left space-x-2 ' +
-                            'rounded-b text-justify bg-gray-50 border-gray-200 ' +
-                            (!showValidation || tabIndex !== 1
-                                ? 'h-0 overflow-hidden '
-                                : validation.valid
-                                ? 'mt-2 border-t-2 text-green-900 h-10 '
-                                : 'mt-2 border-t-2 text-red-900 h-10 ')
-                        }
-                    >
-                        <div
-                            className={
-                                'flex-shrink-0 w-5 h-5 ' +
-                                (validation.valid
-                                    ? 'icon-dark-green '
-                                    : 'icon-dark-red ')
-                            }
-                        >
-                            {validation.valid
-                                ? icons.checkCircle
-                                : icons.closeCircle}
-                        </div>
-                        <div className='text-base text-left md:text-sm font-weight-600'>
-                            {validation.message}
-                        </div>
-                    </div>
+                    {!anyPasswordEmpty && tabIndex === 1 && (
+                        <ValidationBar validation={validation} />
+                    )}
                 </div>
                 <div className='p-4 border-[2px] border-dashed border-gray-300 rounded w-full'>
                     <h3 className='text-base leading-6 text-blue-900 opacity-80 font-weight-600'>
