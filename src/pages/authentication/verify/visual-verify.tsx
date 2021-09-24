@@ -1,12 +1,13 @@
+import {Button} from '@components';
 import React from 'react';
 import {Link} from 'react-router-dom';
 
 export default function VisualVerifyForm(props: {
-    verificationSuccessful: boolean;
+    verificationState: 'not-started' | 'submitting' | 'successful' | 'failed';
     tokenExists: boolean;
-    submitting: boolean;
+    triggerVerification(): void;
 }) {
-    const {verificationSuccessful, submitting, tokenExists} = props;
+    const {verificationState, tokenExists} = props;
     return (
         <div
             className={
@@ -14,7 +15,7 @@ export default function VisualVerifyForm(props: {
                 'gap-y-4 centering-col'
             }
         >
-            {!verificationSuccessful && (
+            {verificationState !== 'successful' && (
                 <>
                     <h1
                         className={
@@ -24,16 +25,12 @@ export default function VisualVerifyForm(props: {
                     >
                         Verify your Email
                     </h1>
-                    {tokenExists && submitting && (
-                        <p className='text-gray-700 font-weight-500'>
-                            processing ...
-                        </p>
-                    )}
-                    {tokenExists && !submitting && (
-                        <p className='text-gray-700 font-weight-500'>
-                            verification failed
-                        </p>
-                    )}
+                    <Button
+                        text='Verify Email'
+                        disabled={verificationState === 'submitting'}
+                        variant='flat-light-blue'
+                        onClick={props.triggerVerification}
+                    />
                     {!tokenExists && (
                         <>
                             <p className='text-left text-gray-800 font-weight-500'>
@@ -55,7 +52,7 @@ export default function VisualVerifyForm(props: {
                     )}
                 </>
             )}
-            {verificationSuccessful && (
+            {verificationState === 'successful' && (
                 <h1
                     className={
                         'w-full text-2xl text-center no-selection ' +

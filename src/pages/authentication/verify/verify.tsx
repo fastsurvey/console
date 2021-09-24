@@ -15,16 +15,15 @@ interface Props {
     closeAllMessages(): void;
 }
 function VerifyForm(props: Props) {
-    const [verificationSuccessful, setSuccess] = useState(false);
-    const [submitting, setSubmitting] = useState(false);
-    const [tried, setTried] = useState(false);
+    const [verificationState, setVerificationState] = useState<
+        'not-started' | 'submitting' | 'successful' | 'failed'
+    >('not-started');
     let history = useHistory();
 
     const token = new URLSearchParams(window.location.search).get('token');
 
     function success() {
-        setSuccess(true);
-        setSubmitting(false);
+        setVerificationState('successful');
 
         props.openMessage('success-redirect-to-login');
         setTimeout(() => {
@@ -33,9 +32,9 @@ function VerifyForm(props: Props) {
         }, 4000);
     }
 
-    function error(code: 400 | 401 | 500) {
-        setSubmitting(false);
-        if (code === 401) {
+    function error(code: 400 | 401 | 500 | 422) {
+        setVerificationState('failed');
+        if (code === 401 || code === 422) {
             props.openMessage('error-link-invalid');
         } else if (code === 400) {
             // email has already been verified
@@ -45,10 +44,9 @@ function VerifyForm(props: Props) {
         }
     }
 
-    useEffect(() => {
-        if (token !== null && tried === false) {
-            setSubmitting(true);
-            setTried(true);
+    function triggerVerification() {
+        if (token !== null && verificationState === 'not-started') {
+            setVerificationState('submitting');
             backend.verifyAccount(
                 {
                     verification_token: token,
@@ -57,14 +55,11 @@ function VerifyForm(props: Props) {
                 error,
             );
         }
-    }, [token, submitting]);
+    }
 
     return (
         <VisualVerifyForm
-            {...{
-                verificationSuccessful,
-                submitting,
-            }}
+            {...{verificationState, triggerVerification}}
             tokenExists={token !== null}
         />
     );
