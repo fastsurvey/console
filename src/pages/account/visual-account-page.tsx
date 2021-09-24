@@ -52,8 +52,7 @@ function VisualAccountPage(props: {
                 <div className='w-full bg-white rounded shadow flex-col-left'>
                     <div className='z-10 w-full px-4 py-1.5 border-b border-gray-200 md:hidden flex-row-left'>
                         <div className='mr-2 text-base text-gray-900 font-weight-700'>
-                            {tabs[tabIndex].name}{' '}
-                            <span className='font-weight-500'>Settings</span>
+                            {tabs[tabIndex].name}
                         </div>
                         <div className='flex-grow' />
                         <Menu
@@ -62,7 +61,7 @@ function VisualAccountPage(props: {
                         >
                             <div>
                                 <Menu.Button className='inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-50 ringable'>
-                                    Categories
+                                    More Settings
                                     <ChevronDownIcon
                                         className='w-5 h-5 ml-2 -mr-1'
                                         aria-hidden='true'

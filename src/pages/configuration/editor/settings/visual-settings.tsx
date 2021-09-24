@@ -39,7 +39,7 @@ const VisualSettings = (props: Props) => {
                 <Menu as='div' className='relative inline-block text-left'>
                     <div>
                         <Menu.Button className='inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-50 ringable'>
-                            Categories
+                            More Settings
                             <ChevronDownIcon
                                 className='w-5 h-5 ml-2 -mr-1'
                                 aria-hidden='true'
@@ -227,11 +227,11 @@ const VisualSettings = (props: Props) => {
             {props.validation && (
                 <div
                     className={
-                        'w-full px-3 text-justify flex-row-left space-x-2 ' +
+                        'w-full px-3 text-justify flex-row-left space-x-3 ' +
                         'rounded-b bg-gray-50 border-gray-200 ' +
                         (props.validation.valid
                             ? 'text-green-900 h-0 overflow-hidden border-0 '
-                            : 'text-red-900 h-12 md:h-10 border-t-2 ')
+                            : 'text-red-900 min-h-12 md:min-h-[2.5rem] border-t-2 py-2 ')
                     }
                 >
                     <div
