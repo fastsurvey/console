@@ -4,6 +4,8 @@ import {types} from '@types';
 import icons from '@assets/icons/icons';
 import {Button, ButtonGroup, TimePill} from '@components';
 
+const frontendURL = 'fastsurvey.de';
+
 function VisualEditorHeader(props: {
     configIsDiffering: boolean;
     account: types.Account;
@@ -27,7 +29,7 @@ function VisualEditorHeader(props: {
 
     const linkContent = (
         <div className='text-sm text-blue-700 underline md:truncate font-weight-600'>
-            fastsurvey.de/{username}/{survey_name}
+            {frontendURL}/{username}/{survey_name}
         </div>
     );
 
@@ -103,7 +105,7 @@ function VisualEditorHeader(props: {
             )}
             {!draft && (
                 <a
-                    href={`https://fastsurvey.de/${username}/${survey_name}`}
+                    href={`https://${frontendURL}/${username}/${survey_name}`}
                     className='px-1.5 py-0.5 transform -translate-x-1.5 rounded ringable'
                     target='_blank'
                     rel='noopener noreferrer'

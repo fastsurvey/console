@@ -4,12 +4,14 @@ import {icons} from '@assets';
 import {types} from '@types';
 import {Menu, Transition} from '@headlessui/react';
 import {ChevronDownIcon} from '@heroicons/react/solid';
+import {templateUtils} from '@utilities';
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ');
 }
 
 interface Props {
+    configs: types.SurveyConfig[];
     config: types.SurveyConfig;
     updateConfig(config: types.SurveyConfig, skipValidation?: boolean): void;
     commonProps: any;
@@ -131,16 +133,32 @@ const VisualSettings = (props: Props) => {
                         </div>
                         <div className='w-full centering-col gap-y-0.5'>
                             <Label text='URL conform identifier' />
-                            <TextInput
-                                value={props.config.survey_name}
-                                setValue={(newValue: string) => {
-                                    props.updateConfig({
-                                        ...props.config,
-                                        survey_name: newValue,
-                                    });
-                                }}
-                                disabled={!props.config.draft}
-                            />
+                            <div className='w-full flex-row-center gap-x-1'>
+                                <TextInput
+                                    value={props.config.survey_name}
+                                    setValue={(newValue: string) => {
+                                        props.updateConfig({
+                                            ...props.config,
+                                            survey_name: newValue,
+                                        });
+                                    }}
+                                    disabled={!props.config.draft}
+                                />
+                                <button
+                                    className='w-8 h-8 p-1 mx-0.5 rounded icon-blue ringable'
+                                    onClick={() => {
+                                        props.updateConfig({
+                                            ...props.config,
+                                            survey_name:
+                                                templateUtils.surveyName(
+                                                    props.configs,
+                                                ),
+                                        });
+                                    }}
+                                >
+                                    {icons.refresh}
+                                </button>
+                            </div>
                         </div>
 
                         <div className='w-full centering-col gap-y-0.5'>

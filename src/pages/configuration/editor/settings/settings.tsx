@@ -15,7 +15,7 @@ interface Props {
     openMessage(messageId: types.MessageId): void;
     configIsDiffering: boolean;
 
-    configs: types.SurveyConfig[] | undefined;
+    configs: types.SurveyConfig[];
     config: types.SurveyConfig;
     setLocalConfig(config: object): void;
     updateValidation(newState: types.ValidationResult): void;
@@ -106,6 +106,7 @@ function Settings(props: Props) {
     return (
         <VisualSettings
             updateConfig={updateConfig}
+            configs={props.configs}
             config={props.config}
             commonProps={{
                 updateConfig,
