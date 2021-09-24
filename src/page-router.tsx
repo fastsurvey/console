@@ -4,7 +4,7 @@ import {Switch, Route, BrowserRouter, Redirect} from 'react-router-dom';
 import {types} from '@types';
 
 import {NotFoundPage, DashboardPage} from '@pages';
-import {Login, Register, Verify} from '@pages/authentication';
+import {Login, Register, Verify, ForgotPassword} from '@pages/authentication';
 
 import {ConfigList, EditorRouter} from '@pages/configuration';
 import {ResultsList, SummaryRouter} from '@pages/results';
@@ -57,7 +57,7 @@ function PageRouter(props: RouterProps) {
                             <Redirect to='/login' />
                         )}
                     </Route>
-                    <Route path='(/login|/register)'>
+                    <Route path='(/login|/register|/forgot-password)'>
                         <MainWrapper>
                             {!props.loggingIn && !props.loggedIn && (
                                 <Switch>
@@ -66,6 +66,9 @@ function PageRouter(props: RouterProps) {
                                     </Route>
                                     <Route exact path='/register'>
                                         <Register />
+                                    </Route>
+                                    <Route exact path='/forgot-password'>
+                                        <ForgotPassword />
                                     </Route>
                                 </Switch>
                             )}
