@@ -179,7 +179,8 @@ function VisualDatePicker(props: {
                 <div className='mb-1.5 centering-row'>
                     <button
                         className={
-                            'w-7 h-7 p-0.5 transform rotate-90 icon-light-gray ' +
+                            'w-10 h-10 p-1.5 md:w-7 md:h-7 md:p-0.5 ' +
+                            'transform rotate-90 icon-light-gray ' +
                             'rounded ringable cursor-pointer'
                         }
                         onClick={prevMonth}
@@ -202,7 +203,8 @@ function VisualDatePicker(props: {
                     </div>
                     <button
                         className={
-                            'w-7 h-7 p-0.5 transform -rotate-90 icon-light-gray ' +
+                            'w-10 h-10 p-1.5 md:w-7 md:h-7 md:p-0.5 ' +
+                            'transform -rotate-90 icon-light-gray ' +
                             'rounded ringable cursor-pointer'
                         }
                         onClick={nextMonth}

@@ -35,8 +35,8 @@ function VisualEditorHeader(props: {
 
     return (
         <div className={'w-full pl-2 flex-col-left mb-1'}>
-            <div className='relative block w-full my-2 flex-row-right md:hidden'>
-                <ButtonGroup buttons={props.buttons} />
+            <div className='relative block w-full mb-8 md:mb-2 flex-row-right md:hidden'>
+                <ButtonGroup buttons={props.buttons} hideIconsOnMobile />
                 <div className='flex-shrink-0 w-2 md:w-4' />
                 <Button
                     icon={draft ? icons.uploadCloud : icons.edit}
@@ -74,7 +74,7 @@ function VisualEditorHeader(props: {
 
                 <div
                     className={
-                        'pr-4 text-xl text-gray-800 font-weight-600 truncate'
+                        'pr-4 text-2xl md:text-xl text-gray-800 font-weight-700 truncate'
                     }
                 >
                     {title}

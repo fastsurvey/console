@@ -7,6 +7,7 @@ export default function ButtonGroup(props: {
         onClick?(): void;
         disabled?: boolean;
     }[];
+    hideIconsOnMobile?: boolean;
 }) {
     const first = (index: number) => index === 0;
     const last = (index: number) => index === props.buttons.length - 1;
@@ -17,7 +18,7 @@ export default function ButtonGroup(props: {
                 <button
                     key={index}
                     className={
-                        'p-0.5 centering-row ' +
+                        'p-0.5 centering-row h-10 md:h-8 ' +
                         ' no-selection ringable rounded-sm ' +
                         (first(index) ? 'rounded-l ' : ' ') +
                         (last(index) ? 'rounded-r ' : ' ') +
@@ -28,8 +29,29 @@ export default function ButtonGroup(props: {
                     onClick={b.onClick && !b.disabled ? b.onClick : () => {}}
                     disabled={b.disabled ? b.disabled : false}
                 >
-                    <div className='p-1 w-7 h-7'>{b.icon}</div>
-                    <div className={'font-weight-600 pl-1 pr-2 '}>{b.text}</div>
+                    {' '}
+                    {props.hideIconsOnMobile && (
+                        <>
+                            <div className='hidden p-1 md:block w-7 h-7'>
+                                {b.icon}
+                            </div>
+                            <div
+                                className={
+                                    'font-weight-600 px-3 md:pl-1 md:pr-2 '
+                                }
+                            >
+                                {b.text}
+                            </div>
+                        </>
+                    )}
+                    {!props.hideIconsOnMobile && (
+                        <>
+                            <div className='p-1 w-7 h-7'>{b.icon}</div>
+                            <div className={'font-weight-600 pl-1 pr-2 '}>
+                                {b.text}
+                            </div>
+                        </>
+                    )}
                 </button>
             ))}
         </div>
