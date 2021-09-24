@@ -61,7 +61,9 @@ function EditorFormCard(props: Props) {
                         </div>
                         {props.longLabel && (
                             <div className='leading-tight opacity-70 font-weight-500'>
-                                <span className='hidden md:inline'>{' -'}</span>
+                                <span className='hidden px-1 md:inline'>
+                                    {'-'}
+                                </span>
                                 {props.longLabel}
                             </div>
                         )}

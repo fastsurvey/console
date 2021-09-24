@@ -105,9 +105,9 @@ function VisualAccountPage(props: {
                         </Menu>
                     </div>
                     <div className='hidden w-full md:z-10 md:block'>
-                        <div className='w-full border-b-2 border-gray-200'>
-                            <nav className='px-4 mb-[-2px] space-x-4 flex-row-left pt-0.5'>
-                                <div className='text-gray-900 font-weight-600'>
+                        <div className='w-full border-b border-gray-200'>
+                            <nav className='px-4 py-2 space-x-2 flex-row-left'>
+                                <div className='pr-2 text-gray-900 font-weight-600'>
                                     Account Settings:{' '}
                                 </div>
                                 {tabs.map((tab, index) => (
@@ -116,22 +116,12 @@ function VisualAccountPage(props: {
                                         onClick={() => setTabIndex(index)}
                                         className={classNames(
                                             index == tabIndex
-                                                ? 'border-blue-500 text-blue-800'
-                                                : 'border-transparent text-gray-500 hover:text-gray-600 hover:border-gray-500',
-                                            'group inline-flex items-center py-2 px-3 border-b-2 font-weight-600 text-base',
+                                                ? 'bg-blue-50 text-blue-800'
+                                                : 'hover:bg-gray-100 text-gray-500 hover:text-gray-700',
+                                            'py-1 px-3 font-weight-600 text-base rounded',
                                         )}
                                     >
-                                        <div
-                                            className={classNames(
-                                                index == tabIndex
-                                                    ? 'text-blue-700 icon-blue '
-                                                    : 'text-gray-400 group-hover:text-gray-600 icon-gray ',
-                                                '-ml-0.5 mr-2 h-5 w-5',
-                                            )}
-                                        >
-                                            {tab.icon}
-                                        </div>
-                                        <span>{tab.name}</span>
+                                        {tab.name}
                                     </button>
                                 ))}
                             </nav>
