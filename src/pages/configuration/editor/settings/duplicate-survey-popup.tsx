@@ -4,18 +4,19 @@ import {connect} from 'react-redux';
 import {Label, TextInput, Button} from '@components';
 import {types} from '@types';
 
-interface Props {
+function DuplicateSurveyPopup(props: {
     configs: types.SurveyConfig[] | undefined;
-    originalSurveyName: string;
+    thisConfig: types.SurveyConfig;
     closeModal(): void;
     duplicateSurvey(surveyName: string): void;
-}
-function DuplicateSurveyPopup(props: Props) {
-    const [surveyName, setSurveyName] = useState(props.originalSurveyName);
+}) {
+    const [surveyName, setSurveyName] = useState(props.thisConfig.survey_name);
 
-    const isValid = formUtils.validators.newSurveyName(props.configs)(
-        surveyName,
-    );
+    const validationMessage = formUtils.validators.surveyName(props.configs, {
+        ...props.thisConfig,
+        survey_name: surveyName,
+        local_id: -1,
+    });
 
     if (props.configs) {
         return (
@@ -24,6 +25,11 @@ function DuplicateSurveyPopup(props: Props) {
                     <Label text='New URL conform identifier' />
                     <TextInput value={surveyName} setValue={setSurveyName} />
                 </div>
+                {!validationMessage.valid && (
+                    <div className='w-full px-3 mb-1 -mt-1 text-xs leading-tight text-red-500 font-weight-600'>
+                        {validationMessage.message}
+                    </div>
+                )}
                 <div className='w-full flex-row-right gap-x-2'>
                     <Button
                         text='Cancel'
@@ -36,7 +42,7 @@ function DuplicateSurveyPopup(props: Props) {
                     <Button
                         text='Duplicate'
                         variant='flat-light-blue'
-                        disabled={!isValid}
+                        disabled={!validationMessage.valid}
                         onClick={() => props.duplicateSurvey(surveyName)}
                     />
                 </div>

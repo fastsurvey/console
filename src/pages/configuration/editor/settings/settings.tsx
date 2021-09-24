@@ -74,7 +74,7 @@ function Settings(props: Props) {
             props.openModal(
                 'Duplicate this survey',
                 <DuplicateSurveyPopup
-                    originalSurveyName={props.config.survey_name}
+                    thisConfig={props.config}
                     duplicateSurvey={duplicateSurvey}
                 />,
             );
@@ -86,6 +86,7 @@ function Settings(props: Props) {
         const newConfig = {
             ...props.config,
             survey_name: newSurveyName,
+            draft: true,
         };
         const success = () => {
             props.addConfig(newConfig);
