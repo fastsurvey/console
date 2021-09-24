@@ -1,7 +1,8 @@
 import React from 'react';
-import {Label, TextInput, Button} from '@components';
+import {Label, TextInput, Button, ValidationBar} from '@components';
 import {Link} from 'react-router-dom';
 import {icons} from '@assets';
+import {types} from 'types';
 
 export default function VisualRegister(props: {
     email: string;
@@ -11,8 +12,7 @@ export default function VisualRegister(props: {
     password: string;
     setPassword(newPassword: string): void;
 
-    entryIsValid: boolean;
-    validationMessage: string;
+    validation: types.ValidationResult;
 
     disabled: boolean;
     submitting: boolean;
@@ -76,27 +76,7 @@ export default function VisualRegister(props: {
                     </Link>
                 </div>
             </div>
-            <div
-                className={
-                    'w-full px-3 text-justify flex-row-left space-x-2 ' +
-                    'border-t-2 h-12 md:h-10 rounded-b bg-gray-50 border-gray-200 ' +
-                    (props.entryIsValid ? 'text-green-900 ' : 'text-red-900 ')
-                }
-            >
-                <div
-                    className={
-                        'flex-shrink-0 w-5 h-5 ' +
-                        (props.entryIsValid
-                            ? 'icon-dark-green '
-                            : 'icon-dark-red ')
-                    }
-                >
-                    {props.entryIsValid ? icons.checkCircle : icons.closeCircle}
-                </div>
-                <div className='text-base text-left md:text-sm font-weight-600'>
-                    {props.validationMessage}
-                </div>
-            </div>
+            <ValidationBar validation={props.validation} />
         </div>
     );
 }

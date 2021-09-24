@@ -18,11 +18,11 @@ function RegisterForm(props: Props) {
         return username.length < 3 || password.length < 8;
     }
 
-    function validateEntry() {
+    function validateEntry(): types.ValidationResult {
         function disprove(message: string) {
             return {
-                entryIsValid: false,
-                validationMessage: message,
+                valid: false,
+                message: message,
             };
         }
 
@@ -43,8 +43,7 @@ function RegisterForm(props: Props) {
         }
 
         return {
-            entryIsValid: true,
-            validationMessage: 'Valid',
+            valid: true,
         };
     }
 
@@ -90,7 +89,7 @@ function RegisterForm(props: Props) {
             handleRegistration={handleRegistration}
             disabled={disabled()}
             submitting={submitting}
-            {...validateEntry()}
+            validation={validateEntry()}
         />
     );
 }
