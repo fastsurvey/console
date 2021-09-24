@@ -42,7 +42,7 @@ export default function VisualLogin(props: {
                 />
             </div>
 
-            <div className='w-full gap-y-0.5 flex flex-row-reverse items-center justify-center'>
+            <div className='w-full gap-y-0.5 flex flex-row-reverse items-start justify-center'>
                 <Button
                     text='Login'
                     variant='flat-light-blue'
@@ -51,12 +51,20 @@ export default function VisualLogin(props: {
                     loading={props.submitting}
                 />
                 <div className='flex-max' />
-                <Link
-                    to='/register'
-                    className='px-1.5 py-0.5 -mx-1.5 text-sm text-gray-400 rounded font-weight-600 ringable'
-                >
-                    Don't have an account yet?
-                </Link>
+                <div className='flex-col-left'>
+                    <Link
+                        to='/register'
+                        className='px-1.5 py-0.5 -mx-1.5 text-sm text-gray-400 rounded font-weight-600 ringable'
+                    >
+                        Don't have an account yet?
+                    </Link>
+                    <Link
+                        to='/forgot-password'
+                        className='px-1.5 py-0.5 -mx-1.5 text-sm text-gray-400 rounded font-weight-600 ringable'
+                    >
+                        Forgot your password?
+                    </Link>
+                </div>
             </div>
         </div>
     );
