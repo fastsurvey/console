@@ -5,7 +5,7 @@ async function verifyAccount(
         verification_token: string;
     },
     success: () => void,
-    error: (code: 400 | 401 | 500) => void,
+    error: (code: 400 | 401 | 500 | 422) => void,
 ) {
     try {
         await httpPost(

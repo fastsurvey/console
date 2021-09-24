@@ -4,13 +4,13 @@ import {Switch, Route, BrowserRouter, Redirect} from 'react-router-dom';
 import {types} from '@types';
 
 import {NotFoundPage, DashboardPage} from '@pages';
-import {Login, Register, Verify} from '@pages/authentication';
+import {Login, Register, Verify, ForgotPassword} from '@pages/authentication';
 
 import {ConfigList, EditorRouter} from '@pages/configuration';
 import {ResultsList, SummaryRouter} from '@pages/results';
 import {AccountPage} from '@pages/account';
 
-import {LoaderOverlay, MessageQueue, Modal, MainWrapper} from '@components';
+import {MessageQueue, Modal, MainWrapper} from '@components';
 
 interface RouterProps {
     loggingIn: boolean;
@@ -20,7 +20,6 @@ interface RouterProps {
 function PageRouter(props: RouterProps) {
     return (
         <BrowserRouter>
-            <LoaderOverlay />
             <MessageQueue />
             <Modal />
             <Route>
@@ -57,7 +56,7 @@ function PageRouter(props: RouterProps) {
                             <Redirect to='/login' />
                         )}
                     </Route>
-                    <Route path='(/login|/register)'>
+                    <Route path='(/login|/register|/forgot-password)'>
                         <MainWrapper>
                             {!props.loggingIn && !props.loggedIn && (
                                 <Switch>
@@ -66,6 +65,9 @@ function PageRouter(props: RouterProps) {
                                     </Route>
                                     <Route exact path='/register'>
                                         <Register />
+                                    </Route>
+                                    <Route exact path='/forgot-password'>
+                                        <ForgotPassword />
                                     </Route>
                                 </Switch>
                             )}

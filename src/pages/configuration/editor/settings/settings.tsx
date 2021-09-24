@@ -15,7 +15,7 @@ interface Props {
     openMessage(messageId: types.MessageId): void;
     configIsDiffering: boolean;
 
-    configs: types.SurveyConfig[] | undefined;
+    configs: types.SurveyConfig[];
     config: types.SurveyConfig;
     setLocalConfig(config: object): void;
     updateValidation(newState: types.ValidationResult): void;
@@ -74,7 +74,7 @@ function Settings(props: Props) {
             props.openModal(
                 'Duplicate this survey',
                 <DuplicateSurveyPopup
-                    originalSurveyName={props.config.survey_name}
+                    thisConfig={props.config}
                     duplicateSurvey={duplicateSurvey}
                 />,
             );
@@ -86,6 +86,7 @@ function Settings(props: Props) {
         const newConfig = {
             ...props.config,
             survey_name: newSurveyName,
+            draft: true,
         };
         const success = () => {
             props.addConfig(newConfig);
@@ -106,6 +107,7 @@ function Settings(props: Props) {
     return (
         <VisualSettings
             updateConfig={updateConfig}
+            configs={props.configs}
             config={props.config}
             commonProps={{
                 updateConfig,

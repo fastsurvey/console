@@ -84,7 +84,7 @@ export const validators = {
             return {
                 valid: false,
                 message:
-                    `Description too long (≤ 120 characters, ` +
+                    `URL conform identifier too long (≤ 120 characters, ` +
                     `currently: ${thisConfig.survey_name.length})`,
             };
         } else if (

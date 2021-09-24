@@ -3,8 +3,7 @@
 node_modules
 .vscode
 tailwind.out.css
-build
-scripts
+dist
 **/icons/src
 
 # Created by https://www.toptal.com/developers/gitignore/api/node,vscode,react,git,macos,linux,yarn

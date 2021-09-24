@@ -55,7 +55,7 @@ function VisualConfigList(props: {
                     <button
                         type='button'
                         className={
-                            'relative w-full h-full px-2 py-6 flex-row-center ' +
+                            'relative w-full px-2 py-6 flex-row-center min-h-[8.75rem] ' +
                             'border-2 border-gray-400 border-dashed rounded ' +
                             'text-opacity-60 border-gray-300 ringable ' +
                             'hover:text-opacity-100 hover:border-gray-400 ' +

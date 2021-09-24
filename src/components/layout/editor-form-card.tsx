@@ -2,6 +2,7 @@ import React, {useRef} from 'react';
 import {icons} from '@assets';
 import {styleUtils} from '@utilities';
 import {types} from '@types';
+import {ValidationBar} from '@components';
 
 interface Props {
     label: string;
@@ -61,7 +62,9 @@ function EditorFormCard(props: Props) {
                         </div>
                         {props.longLabel && (
                             <div className='leading-tight opacity-70 font-weight-500'>
-                                <span className='hidden md:inline'>{' -'}</span>
+                                <span className='hidden px-1 md:inline'>
+                                    {'-'}
+                                </span>
                                 {props.longLabel}
                             </div>
                         )}
@@ -113,33 +116,7 @@ function EditorFormCard(props: Props) {
                     {props.children}
                 </div>
                 {props.validation && (
-                    <div
-                        className={
-                            'w-full px-3 text-justify flex-row-left space-x-2 ' +
-                            'rounded-b bg-gray-50 border-gray-200 ' +
-                            (props.validation.valid
-                                ? 'text-green-900 h-0 overflow-hidden border-0 '
-                                : 'text-red-900 h-12 md:h-10 border-t-2 ')
-                        }
-                    >
-                        <div
-                            className={
-                                'flex-shrink-0 w-5 h-5 ' +
-                                (props.validation.valid
-                                    ? 'icon-dark-green '
-                                    : 'icon-dark-red ')
-                            }
-                        >
-                            {props.validation.valid
-                                ? icons.checkCircle
-                                : icons.closeCircle}
-                        </div>
-                        <div className='text-base text-left md:text-sm font-weight-600'>
-                            {props.validation.valid
-                                ? 'Valid'
-                                : props.validation.message}
-                        </div>
-                    </div>
+                    <ValidationBar validation={props.validation} />
                 )}
             </div>
         </div>

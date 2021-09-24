@@ -61,6 +61,11 @@
         @apply fill-blue-900;
     }
 
+    .icon-white .primary,
+    .icon-white .secondary {
+        fill: white;
+    }
+
     .icon-dark-blue .primary {
         @apply fill-blue-200;
     }

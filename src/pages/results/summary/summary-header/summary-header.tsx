@@ -45,7 +45,9 @@ function SummaryHeader(props: {
                     <span className='font-weight-500'>
                         {props.results === undefined
                             ? '(... submissions)'
-                            : `(${props.results.count} submissions)`}
+                            : `(${props.results.count} submission${
+                                  props.results.count !== 1 ? 's' : ''
+                              })`}
                     </span>
                 </div>
                 <div className='flex-max' />

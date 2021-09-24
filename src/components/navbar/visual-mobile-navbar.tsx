@@ -25,7 +25,7 @@ function VisualMobileNavbar(props: Props) {
             <div
                 onClick={props.closeNavbar}
                 className={
-                    'fixed top-0 right-0 z-40 w-16 h-16 p-3 m-1 ' +
+                    'fixed top-0 right-0 z-40 w-16 h-16 p-4 m-1 ' +
                     'transition-opacity duration-300 text-white ' +
                     (props.navbarState.open
                         ? 'opacity-100 pointer-events-auto'
@@ -37,8 +37,9 @@ function VisualMobileNavbar(props: Props) {
             <div
                 onClick={props.openNavbar}
                 className={
-                    'fixed top-0 left-0 z-30 w-16 h-16 p-4 m-1 ' +
-                    'text-gray-900 pointer-events-auto'
+                    'fixed top-0 left-0 z-30 w-16 h-16 p-4 icon-white ' +
+                    'text-gray-900 pointer-events-auto ' +
+                    'rounded-br bg-gray-900 shadow '
                 }
             >
                 {icons.menu}

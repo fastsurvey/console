@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {types} from '@types';
 import {icons} from '@assets';
-import {Button, Label, TextInput} from '@components';
+import {Button, Label, TextInput, ValidationBar} from '@components';
 import {Menu, Transition} from '@headlessui/react';
 import {ChevronDownIcon} from '@heroicons/react/solid';
 
@@ -12,7 +12,6 @@ function classNames(...classes: string[]) {
 function VisualAccountPage(props: {
     account: types.Account;
     validation: {valid: boolean; message: string};
-    showValidation: boolean;
     password: string;
     passwordConfirmation: string;
     setPassword(p: string): void;
@@ -22,7 +21,6 @@ function VisualAccountPage(props: {
 }) {
     const {
         validation,
-        showValidation,
         password,
         passwordConfirmation,
         setPassword,
@@ -30,6 +28,9 @@ function VisualAccountPage(props: {
         pending,
         submitNewPassword,
     } = props;
+
+    const anyPasswordEmpty =
+        password.length === 0 || passwordConfirmation.length === 0;
 
     const [tabIndex, setTabIndex] = useState(0);
     const tabs = [
@@ -52,8 +53,7 @@ function VisualAccountPage(props: {
                 <div className='w-full bg-white rounded shadow flex-col-left'>
                     <div className='z-10 w-full px-4 py-1.5 border-b border-gray-200 md:hidden flex-row-left'>
                         <div className='mr-2 text-base text-gray-900 font-weight-700'>
-                            {tabs[tabIndex].name}{' '}
-                            <span className='font-weight-500'>Settings</span>
+                            {tabs[tabIndex].name}
                         </div>
                         <div className='flex-grow' />
                         <Menu
@@ -62,7 +62,7 @@ function VisualAccountPage(props: {
                         >
                             <div>
                                 <Menu.Button className='inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-50 ringable'>
-                                    Categories
+                                    More Settings
                                     <ChevronDownIcon
                                         className='w-5 h-5 ml-2 -mr-1'
                                         aria-hidden='true'
@@ -106,9 +106,9 @@ function VisualAccountPage(props: {
                         </Menu>
                     </div>
                     <div className='hidden w-full md:z-10 md:block'>
-                        <div className='w-full border-b-2 border-gray-200'>
-                            <nav className='px-4 mb-[-2px] space-x-4 flex-row-left pt-0.5'>
-                                <div className='text-gray-900 font-weight-600'>
+                        <div className='w-full border-b border-gray-200'>
+                            <nav className='px-4 py-2 space-x-2 flex-row-left'>
+                                <div className='pr-2 text-gray-900 font-weight-600'>
                                     Account Settings:{' '}
                                 </div>
                                 {tabs.map((tab, index) => (
@@ -117,22 +117,12 @@ function VisualAccountPage(props: {
                                         onClick={() => setTabIndex(index)}
                                         className={classNames(
                                             index == tabIndex
-                                                ? 'border-blue-500 text-blue-800'
-                                                : 'border-transparent text-gray-500 hover:text-gray-600 hover:border-gray-500',
-                                            'group inline-flex items-center py-2 px-3 border-b-2 font-weight-600 text-base',
+                                                ? 'bg-blue-50 text-blue-800'
+                                                : 'hover:bg-gray-100 text-gray-500 hover:text-gray-700',
+                                            'py-1 px-3 font-weight-600 text-base rounded',
                                         )}
                                     >
-                                        <div
-                                            className={classNames(
-                                                index == tabIndex
-                                                    ? 'text-blue-700 icon-blue '
-                                                    : 'text-gray-400 group-hover:text-gray-600 icon-gray ',
-                                                '-ml-0.5 mr-2 h-5 w-5',
-                                            )}
-                                        >
-                                            {tab.icon}
-                                        </div>
-                                        <span>{tab.name}</span>
+                                        {tab.name}
                                     </button>
                                 ))}
                             </nav>
@@ -191,45 +181,21 @@ function VisualAccountPage(props: {
                                             setPassword('');
                                             setPasswordConfirmation('');
                                         }}
-                                        disabled={!showValidation || pending}
+                                        disabled={anyPasswordEmpty || pending}
                                     />
                                     <Button
                                         text='change password'
                                         variant='flat-light-blue'
                                         onClick={submitNewPassword}
-                                        disabled={!showValidation || pending}
+                                        disabled={anyPasswordEmpty || pending}
                                     />
                                 </div>
                             </>
                         )}
                     </div>
-                    <div
-                        className={
-                            'w-full px-3 flex-row-left space-x-2 ' +
-                            'rounded-b text-justify bg-gray-50 border-gray-200 ' +
-                            (!showValidation || tabIndex !== 1
-                                ? 'h-0 overflow-hidden '
-                                : validation.valid
-                                ? 'mt-2 border-t-2 text-green-900 h-10 '
-                                : 'mt-2 border-t-2 text-red-900 h-10 ')
-                        }
-                    >
-                        <div
-                            className={
-                                'flex-shrink-0 w-5 h-5 ' +
-                                (validation.valid
-                                    ? 'icon-dark-green '
-                                    : 'icon-dark-red ')
-                            }
-                        >
-                            {validation.valid
-                                ? icons.checkCircle
-                                : icons.closeCircle}
-                        </div>
-                        <div className='text-base text-left md:text-sm font-weight-600'>
-                            {validation.message}
-                        </div>
-                    </div>
+                    {!anyPasswordEmpty && tabIndex === 1 && (
+                        <ValidationBar validation={validation} />
+                    )}
                 </div>
                 <div className='p-4 border-[2px] border-dashed border-gray-300 rounded w-full'>
                     <h3 className='text-base leading-6 text-blue-900 opacity-80 font-weight-600'>

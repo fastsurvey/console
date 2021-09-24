@@ -2,11 +2,11 @@ FROM node:12
 
 COPY package.json package.json
 COPY yarn.lock yarn.lock
-RUN yarn install
+
+RUN yarn install --production=true
+
+COPY server.js server.js
+COPY dist dist
 
 EXPOSE 8080
-
-COPY . .
-RUN yarn build
-
 CMD [ "node", "server.js" ]

@@ -33,8 +33,6 @@ function AccountPage(props: {
     }
 
     const validation = validate();
-    const showValidation =
-        password.length > 0 || passwordConfirmation.length > 0;
 
     function submitNewPassword() {
         function success() {
@@ -62,7 +60,6 @@ function AccountPage(props: {
             account={props.account}
             {...{
                 validation,
-                showValidation,
                 submitNewPassword,
                 pending,
                 password,

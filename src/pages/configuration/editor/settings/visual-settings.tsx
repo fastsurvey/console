@@ -4,12 +4,14 @@ import {icons} from '@assets';
 import {types} from '@types';
 import {Menu, Transition} from '@headlessui/react';
 import {ChevronDownIcon} from '@heroicons/react/solid';
+import {templateUtils} from '@utilities';
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ');
 }
 
 interface Props {
+    configs: types.SurveyConfig[];
     config: types.SurveyConfig;
     updateConfig(config: types.SurveyConfig, skipValidation?: boolean): void;
     commonProps: any;
@@ -37,7 +39,7 @@ const VisualSettings = (props: Props) => {
                 <Menu as='div' className='relative inline-block text-left'>
                     <div>
                         <Menu.Button className='inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-50 ringable'>
-                            Categories
+                            More Settings
                             <ChevronDownIcon
                                 className='w-5 h-5 ml-2 -mr-1'
                                 aria-hidden='true'
@@ -81,9 +83,9 @@ const VisualSettings = (props: Props) => {
                 </Menu>
             </div>
             <div className='hidden w-full sm:block'>
-                <div className='w-full border-b-2 border-gray-200'>
-                    <nav className='px-4 mb-[-2px] space-x-4 flex-row-left pt-0.5'>
-                        <div className='text-gray-900 font-weight-600'>
+                <div className='w-full border-b border-gray-200'>
+                    <nav className='px-4 py-2 space-x-2 flex-row-left'>
+                        <div className='pr-2 text-gray-900 font-weight-600'>
                             General Survey Settings:{' '}
                         </div>
                         {tabs.map((tab, index) => (
@@ -92,22 +94,12 @@ const VisualSettings = (props: Props) => {
                                 onClick={() => setTabIndex(index)}
                                 className={classNames(
                                     index == tabIndex
-                                        ? 'border-blue-500 text-blue-800'
-                                        : 'border-transparent text-gray-500 hover:text-gray-600 hover:border-gray-500',
-                                    'group inline-flex items-center py-2 px-3 border-b-2 font-weight-600 text-base',
+                                        ? 'bg-blue-50 text-blue-800'
+                                        : 'hover:bg-gray-100 text-gray-500 hover:text-gray-700',
+                                    'py-1 px-3 font-weight-600 text-base rounded',
                                 )}
                             >
-                                <div
-                                    className={classNames(
-                                        index == tabIndex
-                                            ? 'text-blue-700 icon-blue '
-                                            : 'text-gray-400 group-hover:text-gray-600 icon-gray ',
-                                        '-ml-0.5 mr-2 h-5 w-5',
-                                    )}
-                                >
-                                    {tab.icon}
-                                </div>
-                                <span>{tab.name}</span>
+                                {tab.name}
                             </button>
                         ))}
                     </nav>
@@ -131,16 +123,32 @@ const VisualSettings = (props: Props) => {
                         </div>
                         <div className='w-full centering-col gap-y-0.5'>
                             <Label text='URL conform identifier' />
-                            <TextInput
-                                value={props.config.survey_name}
-                                setValue={(newValue: string) => {
-                                    props.updateConfig({
-                                        ...props.config,
-                                        survey_name: newValue,
-                                    });
-                                }}
-                                disabled={!props.config.draft}
-                            />
+                            <div className='w-full flex-row-center gap-x-1'>
+                                <TextInput
+                                    value={props.config.survey_name}
+                                    setValue={(newValue: string) => {
+                                        props.updateConfig({
+                                            ...props.config,
+                                            survey_name: newValue,
+                                        });
+                                    }}
+                                    disabled={!props.config.draft}
+                                />
+                                <button
+                                    className='w-8 h-8 p-1 mx-0.5 rounded icon-blue ringable'
+                                    onClick={() => {
+                                        props.updateConfig({
+                                            ...props.config,
+                                            survey_name:
+                                                templateUtils.surveyName(
+                                                    props.configs,
+                                                ),
+                                        });
+                                    }}
+                                >
+                                    {icons.refresh}
+                                </button>
+                            </div>
                         </div>
 
                         <div className='w-full centering-col gap-y-0.5'>
@@ -209,11 +217,11 @@ const VisualSettings = (props: Props) => {
             {props.validation && (
                 <div
                     className={
-                        'w-full px-3 text-justify flex-row-left space-x-2 ' +
+                        'w-full px-3 text-justify flex-row-left space-x-3 ' +
                         'rounded-b bg-gray-50 border-gray-200 ' +
                         (props.validation.valid
                             ? 'text-green-900 h-0 overflow-hidden border-0 '
-                            : 'text-red-900 h-12 md:h-10 border-t-2 ')
+                            : 'text-red-900 min-h-12 md:min-h-[2.5rem] border-t-2 py-2 ')
                     }
                 >
                     <div

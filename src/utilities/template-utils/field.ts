@@ -54,7 +54,7 @@ export const field = (
                 title: '',
                 description: '',
                 min_chars: 0,
-                max_chars: 0,
+                max_chars: 2000,
             };
     }
 };
