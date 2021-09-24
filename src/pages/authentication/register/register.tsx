@@ -53,11 +53,15 @@ function RegisterForm(props: Props) {
             props.openMessage('success-account-created');
         }
 
-        function error(code: 400 | 500) {
+        function error(code: 400 | 500 | 422) {
             setSubmitting(false);
-            props.openMessage(
-                code === 400 ? 'error-email-taken' : 'error-server',
-            );
+            let messageId: types.MessageId = 'error-server';
+            if (code === 400) {
+                messageId = 'error-email-taken';
+            } else if (code === 422) {
+                messageId = 'error-email-invalid';
+            }
+            props.openMessage(messageId);
         }
 
         if (!disabled()) {
