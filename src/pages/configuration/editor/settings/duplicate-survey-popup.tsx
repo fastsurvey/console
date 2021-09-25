@@ -27,7 +27,10 @@ function DuplicateSurveyPopup(props: {
                 </div>
                 {!validationMessage.valid && (
                     <div className='w-full px-3 mb-1 -mt-1 text-xs leading-tight text-red-500 font-weight-600'>
-                        {validationMessage.message}
+                        {validationMessage.message.replace(
+                            'URL conform identifier ',
+                            '',
+                        )}
                     </div>
                 )}
                 <div className='w-full flex-row-right gap-x-2'>

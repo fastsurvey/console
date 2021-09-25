@@ -76,4 +76,14 @@ export const messages: {[key in types.MessageId]: types.Message} = {
         text: 'Email-authentication requires unique email field',
         type: 'warning',
     },
+    'success-survey-duplicated': {
+        id: 'success-survey-duplicated',
+        text: 'Success: You are now viewing the created copy',
+        type: 'success',
+    },
+    'success-survey-removed': {
+        id: 'success-survey-removed',
+        text: 'Success: Survey has been removed',
+        type: 'success',
+    },
 };

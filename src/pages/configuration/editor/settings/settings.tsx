@@ -53,6 +53,7 @@ function Settings(props: Props) {
             props.removeConfig(props.config.survey_name);
             props.closeModal();
             history.push('/configurations');
+            props.openMessage('success-survey-removed');
         }
 
         function error() {
@@ -92,6 +93,7 @@ function Settings(props: Props) {
             props.addConfig(newConfig);
             props.closeModal();
             history.push(`/configuration/${newSurveyName}`);
+            props.openMessage('success-survey-duplicated');
         };
         const error = (code: 400 | 401 | 422 | 500) => {};
 

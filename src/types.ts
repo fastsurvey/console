@@ -117,7 +117,9 @@ export declare namespace types {
         | 'warning-clipboard'
         | 'editor-warning-validators'
         | 'editor-warning-field-count'
-        | 'editor-warning-authentication';
+        | 'editor-warning-authentication'
+        | 'success-survey-duplicated'
+        | 'success-survey-removed';
 
     export type ValidationResult =
         | {

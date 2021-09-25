@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Label, TextArea, DatePicker, TextInput, Button} from '@components';
 import {icons} from '@assets';
 import {types} from '@types';
@@ -22,6 +22,7 @@ interface Props {
 }
 const VisualSettings = (props: Props) => {
     const [tabIndex, setTabIndex] = useState(0);
+    useEffect(() => setTabIndex(0), [props.config.local_id]);
 
     const tabs = [
         {name: 'About', href: '#', icon: icons.textCursor},
