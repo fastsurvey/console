@@ -25,7 +25,7 @@ function VisualConfigPanel(props: Props) {
             }
         >
             <div className={'w-full p-3 bg-white rounded-t flex-col-left'}>
-                <div className='w-full mb-0.5 flex-row-top'>
+                <div className='w-full flex-row-top md:h-6'>
                     <div
                         className={
                             'pr-4 text-lg text-gray-800 font-weight-600 ' +
@@ -39,10 +39,10 @@ function VisualConfigPanel(props: Props) {
                         <TimePill config={props.config} flat />
                     </div>
                 </div>
-                <div className='text-sm text-blue-700 underline truncate font-weight-600'>
+                <div className='text-sm text-blue-700 underline md:h-5 md:truncate font-weight-600'>
                     /{username}/{survey_name}
                 </div>
-                <div className='mt-3 text-sm text-gray-600 truncate font-weight-500 no-selection'>
+                <div className='mt-3 text-sm text-gray-600 md:h-5 md:truncate font-weight-500 no-selection'>
                     {props.config.fields.length} Question
                     {props.config.fields.length === 1 ? '' : 's'}
                     {usesAuthentication ? ', Email Verification' : ''}
@@ -50,7 +50,7 @@ function VisualConfigPanel(props: Props) {
             </div>
             <div
                 className={
-                    'w-full px-3 py-2 bg-gray-100 rounded-b no-selection ' +
+                    'w-full px-3 py-2 h-10 bg-gray-100 rounded-b no-selection ' +
                     'group-hover:bg-gray-200 group-focus:bg-gray-200 ' +
                     'text-center text-blue-900 font-weight-600'
                 }
