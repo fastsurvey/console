@@ -136,16 +136,24 @@ const VisualSettings = (props: Props) => {
                                     disabled={!props.config.draft}
                                 />
                                 <button
-                                    className='w-8 h-8 p-1 mx-0.5 rounded icon-blue ringable'
+                                    className={
+                                        'w-8 h-8 p-1 mx-0.5 rounded ringable ' +
+                                        (props.config.draft
+                                            ? 'icon-blue '
+                                            : 'icon-gray cursor-not-allowed ')
+                                    }
                                     onClick={() => {
-                                        props.updateConfig({
-                                            ...props.config,
-                                            survey_name:
-                                                templateUtils.surveyName(
-                                                    props.configs,
-                                                ),
-                                        });
+                                        if (props.config.draft) {
+                                            props.updateConfig({
+                                                ...props.config,
+                                                survey_name:
+                                                    templateUtils.surveyName(
+                                                        props.configs,
+                                                    ),
+                                            });
+                                        }
                                     }}
+                                    disabled={!props.config.draft}
                                 >
                                     {icons.refresh}
                                 </button>
