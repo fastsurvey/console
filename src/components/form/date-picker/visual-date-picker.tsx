@@ -162,7 +162,9 @@ function VisualDatePicker(props: {
                 onClick={() => setOpen(!open)}
                 disabled={props.disabled}
             >
-                <div className='p-1 w-7 h-7 icon-gray'>{icons.calendar}</div>
+                <div className='p-1 w-7 h-7 icon-dark-gray'>
+                    {icons.calendar}
+                </div>
                 <div className='px-1'>
                     {date.getDate().toString().padStart(2, '0')}.
                     {(date.getMonth() + 1).toString().padStart(2, '0')}.
@@ -180,7 +182,7 @@ function VisualDatePicker(props: {
                     <button
                         className={
                             'w-10 h-10 p-1.5 md:w-7 md:h-7 md:p-0.5 ' +
-                            'transform rotate-90 icon-light-gray ' +
+                            'transform rotate-90 icon-white ' +
                             'rounded ringable cursor-pointer'
                         }
                         onClick={prevMonth}
@@ -204,7 +206,7 @@ function VisualDatePicker(props: {
                     <button
                         className={
                             'w-10 h-10 p-1.5 md:w-7 md:h-7 md:p-0.5 ' +
-                            'transform -rotate-90 icon-light-gray ' +
+                            'transform -rotate-90 icon-white ' +
                             'rounded ringable cursor-pointer'
                         }
                         onClick={nextMonth}

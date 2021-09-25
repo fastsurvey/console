@@ -30,7 +30,7 @@ export default function VisualTimePicker(props: {
                 onClick={() => setOpen(!open)}
                 disabled={props.disabled}
             >
-                <div className='p-1 w-7 h-7 icon-gray'>{icons.time}</div>
+                <div className='p-1 w-7 h-7 icon-dark-gray'>{icons.time}</div>
                 <div className='flex-shrink-0 w-5 text-center'>
                     {date.getHours().toString().padStart(2, '0')}
                 </div>
@@ -53,7 +53,7 @@ export default function VisualTimePicker(props: {
                         <button
                             className={
                                 'w-10 h-10 p-1.5 md:w-7 md:h-7 md:p-0.5 ' +
-                                'transform rotate-180 icon-light-gray ' +
+                                'transform rotate-180 icon-white ' +
                                 'rounded ringable cursor-pointer'
                             }
                             onClick={() =>
@@ -76,7 +76,7 @@ export default function VisualTimePicker(props: {
                         <button
                             className={
                                 'w-10 h-10 p-1.5 md:w-7 md:h-7 md:p-0.5 ' +
-                                'transform icon-light-gray ' +
+                                'transform icon-white ' +
                                 'rounded ringable cursor-pointer'
                             }
                             onClick={() => {
@@ -93,7 +93,7 @@ export default function VisualTimePicker(props: {
                         <button
                             className={
                                 'w-10 h-10 p-1.5 md:w-7 md:h-7 md:p-0.5 ' +
-                                'transform rotate-180 icon-light-gray ' +
+                                'transform rotate-180 icon-white ' +
                                 'rounded ringable cursor-pointer'
                             }
                             onClick={() =>
@@ -111,7 +111,7 @@ export default function VisualTimePicker(props: {
                         <button
                             className={
                                 'w-10 h-10 p-1.5 md:w-7 md:h-7 md:p-0.5 ' +
-                                'transform icon-light-gray ' +
+                                'transform icon-white ' +
                                 'rounded ringable cursor-pointer'
                             }
                             onClick={() => {
