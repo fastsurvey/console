@@ -114,6 +114,7 @@ export declare namespace types {
         | 'error-link-invalid'
         | 'success-redirect-to-login'
         | 'success-password-changed'
+        | 'success-username-changed'
         | 'warning-clipboard'
         | 'editor-warning-validators'
         | 'editor-warning-field-count'

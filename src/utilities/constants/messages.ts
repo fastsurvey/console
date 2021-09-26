@@ -36,6 +36,11 @@ export const messages: {[key in types.MessageId]: types.Message} = {
         text: 'Success: Password has been changed',
         type: 'success',
     },
+    'success-username-changed': {
+        id: 'success-username-changed',
+        text: 'Success: Username has been changed',
+        type: 'success',
+    },
     'error-email-taken': {
         id: 'error-email-taken',
         text: 'Email format invalid or email is already taken',

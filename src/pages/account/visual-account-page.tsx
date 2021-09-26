@@ -12,15 +12,19 @@ function classNames(...classes: string[]) {
 function VisualAccountPage(props: {
     account: types.Account;
 
-    validatePassword(): {valid: boolean; message: string};
-
+    validatePassword(): types.ValidationResult;
     password: string;
     passwordConfirmation: string;
     setPassword(p: string): void;
     setPasswordConfirmation(p: string): void;
-
     passwordPending: boolean;
     submitPassword(): void;
+
+    validateUsername(): types.ValidationResult;
+    username: string;
+    setUsername(p: string): void;
+    usernamePending: boolean;
+    submitUsername(): void;
 }) {
     const {
         validatePassword,
@@ -30,6 +34,12 @@ function VisualAccountPage(props: {
         setPasswordConfirmation,
         passwordPending,
         submitPassword,
+
+        validateUsername,
+        username,
+        setUsername,
+        usernamePending,
+        submitUsername,
     } = props;
 
     const anyPasswordEmpty =
@@ -134,25 +144,52 @@ function VisualAccountPage(props: {
                     <div className='z-0 w-full px-4 py-4 space-y-6 flex-col-left'>
                         {tabIndex === 0 && (
                             <>
-                                <div className='w-full centering-col gap-y-0.5'>
-                                    <Label text='Email (cannot be modified yet)' />
-                                    <TextInput
-                                        value={props.account.email}
-                                        setValue={() => {}}
-                                        disabled={true}
-                                        autoComplete='email'
-                                    />
-                                </div>
+                                <div className='w-full space-y-3 flex-col-left'>
+                                    <div className='w-full centering-col gap-y-0.5'>
+                                        <Label text='Email (cannot be modified yet)' />
+                                        <TextInput
+                                            value={props.account.email}
+                                            setValue={() => {}}
+                                            disabled={true}
+                                            autoComplete='email'
+                                        />
+                                    </div>
 
-                                <div className='w-full centering-col gap-y-0.5'>
-                                    <Label text='Username (cannot be modified yet)' />
-                                    <TextInput
-                                        value={props.account.username}
-                                        setValue={() => {}}
-                                        disabled={true}
-                                        autoComplete='username'
-                                    />
+                                    <div className='w-full centering-col gap-y-0.5'>
+                                        <Label text='Username (cannot be modified yet)' />
+                                        <TextInput
+                                            value={props.account.username}
+                                            setValue={() => {}}
+                                            disabled={true}
+                                            autoComplete='username'
+                                        />
+                                    </div>
                                 </div>
+                                {/* 
+                                <div className='w-full gap-x-2 flex-row-right'>
+                                    <Button
+                                        text='cancel'
+                                        variant='flat-light-red'
+                                        onClick={() => {
+                                            setUsername(props.account.username);
+                                        }}
+                                        disabled={
+                                            username ===
+                                                props.account.username ||
+                                            usernamePending
+                                        }
+                                    />
+                                    <Button
+                                        text='change password'
+                                        variant='flat-light-blue'
+                                        onClick={submitUsername}
+                                        disabled={
+                                            username ===
+                                                props.account.username ||
+                                            usernamePending
+                                        }
+                                    />
+                                </div>*/}
                             </>
                         )}
                         {tabIndex === 1 && (
@@ -204,6 +241,9 @@ function VisualAccountPage(props: {
                             </>
                         )}
                     </div>
+                    {username !== props.account.username && tabIndex === 0 && (
+                        <ValidationBar validation={validateUsername()} />
+                    )}
                     {!anyPasswordEmpty && tabIndex === 1 && (
                         <ValidationBar validation={validatePassword()} />
                     )}

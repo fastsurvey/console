@@ -29,6 +29,7 @@ function RegisterForm(props: Props) {
         if (!email.includes('@')) {
             return disprove('email format invalid');
         }
+
         if (username.length < 3) {
             return disprove('username too short (≥ 3 characters)');
         }

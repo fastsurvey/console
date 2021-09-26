@@ -28,7 +28,7 @@ export const validators = {
         if (fieldConfig.options.length < 2) {
             return {
                 valid: false,
-                message: `There have to be at least 2 options`,
+                message: 'There have to be at least 2 options',
             };
         } else {
             return {valid: true};
@@ -42,7 +42,8 @@ export const validators = {
         ) {
             return {
                 valid: false,
-                message: `Email authentication requires exactaly one email field`,
+                message:
+                    'Email authentication requires exactaly one email field',
             };
         } else {
             return {valid: true};
@@ -53,7 +54,7 @@ export const validators = {
         if (config.start > config.end) {
             return {
                 valid: false,
-                message: `Start time has to be before end time`,
+                message: 'Start time has to be before end time',
             };
         } else {
             return {valid: true};
@@ -72,19 +73,20 @@ export const validators = {
             return {
                 valid: false,
                 message:
-                    `URL conform identifier can only include letters, ` +
-                    `numbers and '-' signs`,
+                    'URL conform identifier can only include letters, ' +
+                    'numbers and ' -
+                    ' signs',
             };
         } else if (thisConfig.survey_name.length < 3) {
             return {
                 valid: false,
-                message: `URL conform identifier too short (≥ 3 characters)`,
+                message: 'URL conform identifier too short (≥ 3 characters)',
             };
         } else if (thisConfig.survey_name.length > 120) {
             return {
                 valid: false,
                 message:
-                    `URL conform identifier too long (≤ 120 characters, ` +
+                    'URL conform identifier too long (≤ 120 characters, ' +
                     `currently: ${thisConfig.survey_name.length})`,
             };
         } else if (
@@ -97,7 +99,7 @@ export const validators = {
             return {
                 valid: false,
                 message:
-                    `URL conform identifier has to be unique, you ` +
+                    'URL conform identifier has to be unique, you ' +
                     `already have survey '${thisConfig.survey_name}'`,
             };
         } else {
@@ -118,7 +120,7 @@ export const validators = {
             return {
                 valid: false,
                 message:
-                    `Description too long (≤ 2000 characters, ` +
+                    'Description too long (≤ 2000 characters, ' +
                     `currently: ${description.length})`,
             };
         } else {
@@ -130,12 +132,13 @@ export const validators = {
         if (submission_limit < 0) {
             return {
                 valid: false,
-                message: `Submission limit is negative`,
+                message: 'Submission limit is negative',
             };
-        } else if (submission_limit > 100) {
+        } else if (submission_limit > 1000) {
             return {
                 valid: false,
-                message: `Submission limit is currently limited to 100 submissions`,
+                message:
+                    'Submission limit is currently limited to 1000 submissions',
             };
         } else {
             return {valid: true};
@@ -147,7 +150,7 @@ export const validators = {
             return {
                 valid: false,
                 message:
-                    `Hint too long (≤ 250 characters, ` +
+                    'Hint too long (≤ 250 characters, ' +
                     `currently: ${regex.length})`,
             };
         } else {
@@ -159,7 +162,7 @@ export const validators = {
             return {
                 valid: false,
                 message:
-                    `Hint too long (≤ 120 characters, ` +
+                    'Hint too long (≤ 120 characters, ' +
                     `currently: ${hint.length})`,
             };
         } else {
@@ -171,12 +174,12 @@ export const validators = {
         if (fieldConfig.min_chars < 0) {
             return {
                 valid: false,
-                message: `Minimum is negative`,
+                message: 'Minimum is negative',
             };
         } else if (fieldConfig.min_chars > fieldConfig.max_chars) {
             return {
                 valid: false,
-                message: `Minimum has to be less than maximum`,
+                message: 'Minimum has to be less than maximum',
             };
         } else {
             return {valid: true};
@@ -186,7 +189,7 @@ export const validators = {
         if (max_chars > 2000) {
             return {
                 valid: false,
-                message: `Maximum has to be no more than 2000 characters`,
+                message: 'Maximum has to be no more than 2000 characters',
             };
         } else {
             return {valid: true};
@@ -197,12 +200,12 @@ export const validators = {
         if (fieldConfig.min_select < 0) {
             return {
                 valid: false,
-                message: `Minimum is negative`,
+                message: 'Minimum is negative',
             };
         } else if (fieldConfig.min_select > fieldConfig.max_select) {
             return {
                 valid: false,
-                message: `Minimum has to be less than maximum`,
+                message: 'Minimum has to be less than maximum',
             };
         } else {
             return {valid: true};
@@ -212,7 +215,23 @@ export const validators = {
         if (fieldConfig.max_select > fieldConfig.options.length) {
             return {
                 valid: false,
-                message: `Maximum is larger than the number of fields`,
+                message: 'Maximum is larger than the number of fields',
+            };
+        } else {
+            return {valid: true};
+        }
+    },
+
+    username: (newUserName: string): types.ValidationResult => {
+        if (newUserName.length < 3) {
+            return {
+                valid: false,
+                message: 'username too short (≥ 3 characters)',
+            };
+        } else if (newUserName.length > 20) {
+            return {
+                valid: false,
+                message: 'username too long (≤ 20 characters)',
             };
         } else {
             return {valid: true};

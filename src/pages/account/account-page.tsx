@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {types} from '@types';
-import {backend, reduxUtils} from '@utilities';
+import {backend, reduxUtils, formUtils} from '@utilities';
 import VisualAccountPage from './visual-account-page';
 
 function AccountPage(props: {
@@ -13,7 +13,10 @@ function AccountPage(props: {
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const [passwordPending, setPasswordPending] = useState(false);
 
-    function validatePassword() {
+    const [username, setUsername] = useState(props.account.username);
+    const [usernamePending, setUsernamePending] = useState(false);
+
+    function validatePassword(): types.ValidationResult {
         if (password.length < 8) {
             return {
                 valid: false,
@@ -27,10 +30,11 @@ function AccountPage(props: {
         } else {
             return {
                 valid: true,
-                message: 'New password valid',
             };
         }
     }
+
+    const validateUsername = () => formUtils.validators.username(username);
 
     function submitPassword() {
         function success() {
@@ -48,7 +52,28 @@ function AccountPage(props: {
         backend.updateAccount(
             props.account,
             props.accessToken,
-            password,
+            {password},
+            success,
+            error,
+        );
+    }
+
+    function submitUsername() {
+        function success() {
+            props.openMessage('success-username-changed');
+            setUsername('');
+            setUsernamePending(false);
+        }
+        function error() {
+            props.openMessage('error-server');
+            setUsernamePending(false);
+        }
+
+        setUsernamePending(true);
+        backend.updateAccount(
+            props.account,
+            props.accessToken,
+            {username},
             success,
             error,
         );
@@ -65,6 +90,13 @@ function AccountPage(props: {
                 passwordConfirmation,
                 setPassword,
                 setPasswordConfirmation,
+            }}
+            {...{
+                validateUsername,
+                submitUsername,
+                usernamePending,
+                username,
+                setUsername,
             }}
         />
     );
