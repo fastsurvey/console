@@ -11,9 +11,9 @@ function AccountPage(props: {
 }) {
     const [password, setPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
-    const [pending, setPending] = useState(false);
+    const [passwordPending, setPasswordPending] = useState(false);
 
-    function validate() {
+    function validatePassword() {
         if (password.length < 8) {
             return {
                 valid: false,
@@ -32,20 +32,19 @@ function AccountPage(props: {
         }
     }
 
-    const validation = validate();
-
-    function submitNewPassword() {
+    function submitPassword() {
         function success() {
             props.openMessage('success-password-changed');
             setPassword('');
             setPasswordConfirmation('');
-            setPending(false);
+            setPasswordPending(false);
         }
         function error() {
             props.openMessage('error-server');
-            setPending(false);
+            setPasswordPending(false);
         }
-        setPending(true);
+
+        setPasswordPending(true);
         backend.updateAccount(
             props.account,
             props.accessToken,
@@ -59,9 +58,9 @@ function AccountPage(props: {
         <VisualAccountPage
             account={props.account}
             {...{
-                validation,
-                submitNewPassword,
-                pending,
+                validatePassword,
+                submitPassword,
+                passwordPending,
                 password,
                 passwordConfirmation,
                 setPassword,

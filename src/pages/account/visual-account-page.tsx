@@ -11,22 +11,25 @@ function classNames(...classes: string[]) {
 
 function VisualAccountPage(props: {
     account: types.Account;
-    validation: {valid: boolean; message: string};
+
+    validatePassword(): {valid: boolean; message: string};
+
     password: string;
     passwordConfirmation: string;
     setPassword(p: string): void;
     setPasswordConfirmation(p: string): void;
-    pending: boolean;
-    submitNewPassword(): void;
+
+    passwordPending: boolean;
+    submitPassword(): void;
 }) {
     const {
-        validation,
+        validatePassword,
         password,
         passwordConfirmation,
         setPassword,
         setPasswordConfirmation,
-        pending,
-        submitNewPassword,
+        passwordPending,
+        submitPassword,
     } = props;
 
     const anyPasswordEmpty =
@@ -160,7 +163,7 @@ function VisualAccountPage(props: {
                                         <TextInput
                                             value={password}
                                             setValue={setPassword}
-                                            disabled={pending}
+                                            disabled={passwordPending}
                                             type='password'
                                             autoComplete='new-password'
                                         />
@@ -171,7 +174,7 @@ function VisualAccountPage(props: {
                                         <TextInput
                                             value={passwordConfirmation}
                                             setValue={setPasswordConfirmation}
-                                            disabled={pending}
+                                            disabled={passwordPending}
                                             type='password'
                                             autoComplete='new-password'
                                         />
@@ -185,20 +188,24 @@ function VisualAccountPage(props: {
                                             setPassword('');
                                             setPasswordConfirmation('');
                                         }}
-                                        disabled={anyPasswordEmpty || pending}
+                                        disabled={
+                                            anyPasswordEmpty || passwordPending
+                                        }
                                     />
                                     <Button
                                         text='change password'
                                         variant='flat-light-blue'
-                                        onClick={submitNewPassword}
-                                        disabled={anyPasswordEmpty || pending}
+                                        onClick={submitPassword}
+                                        disabled={
+                                            anyPasswordEmpty || passwordPending
+                                        }
                                     />
                                 </div>
                             </>
                         )}
                     </div>
                     {!anyPasswordEmpty && tabIndex === 1 && (
-                        <ValidationBar validation={validation} />
+                        <ValidationBar validation={validatePassword()} />
                     )}
                 </div>
                 <div className='p-4 border-[2px] border-dashed border-gray-300 rounded w-full'>
