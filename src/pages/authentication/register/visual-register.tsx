@@ -36,6 +36,7 @@ export default function VisualRegister(props: {
                             props.closeAllMessages();
                             props.setEmail(newValue);
                         }}
+                        autoComplete='email'
                     />
                 </div>
                 <div className='w-full centering-col gap-y-0.5'>
@@ -46,6 +47,7 @@ export default function VisualRegister(props: {
                             props.closeAllMessages();
                             props.setUsername(newValue);
                         }}
+                        autoComplete='username'
                     />
                 </div>
                 <div className='w-full centering-col gap-y-0.5'>
@@ -57,6 +59,7 @@ export default function VisualRegister(props: {
                             props.closeAllMessages();
                             props.setPassword(newValue);
                         }}
+                        autoComplete='new-password'
                     />
                 </div>
 

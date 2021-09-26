@@ -137,6 +137,7 @@ function VisualAccountPage(props: {
                                         value={props.account.email}
                                         setValue={() => {}}
                                         disabled={true}
+                                        autoComplete='email'
                                     />
                                 </div>
 
@@ -146,6 +147,7 @@ function VisualAccountPage(props: {
                                         value={props.account.username}
                                         setValue={() => {}}
                                         disabled={true}
+                                        autoComplete='username'
                                     />
                                 </div>
                             </>
@@ -160,6 +162,7 @@ function VisualAccountPage(props: {
                                             setValue={setPassword}
                                             disabled={pending}
                                             type='password'
+                                            autoComplete='new-password'
                                         />
                                     </div>
 
@@ -170,6 +173,7 @@ function VisualAccountPage(props: {
                                             setValue={setPasswordConfirmation}
                                             disabled={pending}
                                             type='password'
+                                            autoComplete='new-password'
                                         />
                                     </div>
                                 </div>
