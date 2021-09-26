@@ -1,7 +1,6 @@
 import React from 'react';
 import {Label, TextInput, Button, ValidationBar} from '@components';
 import {Link} from 'react-router-dom';
-import {icons} from '@assets';
 import {types} from 'types';
 
 export default function VisualRegister(props: {
@@ -20,6 +19,8 @@ export default function VisualRegister(props: {
     closeAllMessages(): void;
     handleRegistration(): void;
 }) {
+    const {email, username, password} = props;
+
     return (
         <div className='w-full max-w-sm bg-white rounded shadow centering-col'>
             <div className='w-full p-4 centering-col gap-y-4'>
@@ -30,7 +31,7 @@ export default function VisualRegister(props: {
                     <Label text='Email' />
                     <TextInput
                         autoFocus
-                        value={props.email}
+                        value={email}
                         setValue={(newValue) => {
                             props.closeAllMessages();
                             props.setEmail(newValue);
@@ -40,7 +41,7 @@ export default function VisualRegister(props: {
                 <div className='w-full centering-col gap-y-0.5'>
                     <Label text='Username' />
                     <TextInput
-                        value={props.username}
+                        value={username}
                         setValue={(newValue) => {
                             props.closeAllMessages();
                             props.setUsername(newValue);
@@ -51,7 +52,7 @@ export default function VisualRegister(props: {
                     <Label text='Password' />
                     <TextInput
                         type='password'
-                        value={props.password}
+                        value={password}
                         setValue={(newValue) => {
                             props.closeAllMessages();
                             props.setPassword(newValue);
@@ -76,7 +77,7 @@ export default function VisualRegister(props: {
                     </Link>
                 </div>
             </div>
-            <ValidationBar validation={props.validation} />
+            <ValidationBar validation={props.validation} showValidState />
         </div>
     );
 }

@@ -4,15 +4,19 @@ import {icons} from '@assets';
 
 export default function ValidationBar(props: {
     validation: types.ValidationResult;
+    showValidState?: boolean;
 }) {
     return (
         <div
             className={
                 'w-full px-2.5 text-justify flex-row-left space-x-3 md:space-x-2 ' +
-                'rounded-b bg-gray-50 border-gray-200 ' +
+                'rounded-b bg-gray-50 border-gray-200 overflow-hidden ' +
                 (props.validation.valid
-                    ? 'text-green-900 h-0 overflow-hidden border-0 '
-                    : 'text-red-900 min-h-12 md:min-h-[2.5rem] border-t-2 py-2 ')
+                    ? 'text-green-900 '
+                    : 'text-red-900 min-h-12 md:min-h-[2.5rem] border-t-2 py-2 ') +
+                (props.showValidState !== true
+                    ? 'h-0 border-0 '
+                    : 'min-h-12 md:min-h-[2.5rem] border-t-2 py-2 ')
             }
         >
             <div
