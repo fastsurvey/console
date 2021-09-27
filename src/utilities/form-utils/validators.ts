@@ -74,8 +74,7 @@ export const validators = {
                 valid: false,
                 message:
                     'URL conform identifier can only include letters, ' +
-                    'numbers and ' -
-                    ' signs',
+                    'numbers and signs',
             };
         } else if (thisConfig.survey_name.length < 3) {
             return {

@@ -1,14 +1,16 @@
 import axios from 'axios';
 import {types} from '@types';
 
-let API_URL: string;
-switch (import.meta.env.MODE) {
-    case 'development':
-        API_URL = 'https://api.dev.fastsurvey.de';
-        break;
-    case 'production':
-        API_URL = 'https://api.fastsurvey.de';
-        break;
+let API_URL: any = import.meta.env.VITE_API_URL;
+if (API_URL === undefined) {
+    switch (import.meta.env.MODE) {
+        case 'development':
+            API_URL = 'https://api.dev.fastsurvey.de';
+            break;
+        case 'production':
+            API_URL = 'https://api.fastsurvey.de';
+            break;
+    }
 }
 
 export function httpPost(
