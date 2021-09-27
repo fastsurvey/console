@@ -20,7 +20,7 @@ function DuplicateSurveyPopup(props: {
 
     if (props.configs) {
         return (
-            <>
+            <div className='w-full p-3 pt-1 flex-col-center gap-y-2 '>
                 <div className='w-full max-w-2xl centering-col gap-y-0.5'>
                     <Label text='New URL conform identifier' />
                     <TextInput value={surveyName} setValue={setSurveyName} />
@@ -49,7 +49,7 @@ function DuplicateSurveyPopup(props: {
                         onClick={() => props.duplicateSurvey(surveyName)}
                     />
                 </div>
-            </>
+            </div>
         );
     } else {
         return <div />;

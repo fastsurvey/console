@@ -44,8 +44,8 @@ function Modal(props: Props) {
                 className='absolute top-0 left-0 z-0 w-full h-full bg-gray-800 opacity-70'
                 onClick={props.closeModal}
             />
-            <div className='z-10 w-full max-w-lg p-2 m-2 bg-white rounded shadow centering-col gap-y-2'>
-                <div className='mt-1 text-xl text-gray-800 font-weight-600'>
+            <div className='z-10 w-full max-w-lg bg-white rounded shadow flex-col-center'>
+                <div className='p-2 mt-2 text-xl text-gray-800 font-weight-600'>
                     {props.modalState.title}
                 </div>
                 {props.modalState.children}
