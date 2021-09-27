@@ -70,9 +70,9 @@ export declare namespace types {
     }
 
     export interface SurveyResults {
-        count: number;
-        aggregation: {
-            [key: string]: null | number | {[key: string]: number};
+        [key: string]: {
+            count: number;
+            value: null | number | {[key: string]: number};
         };
     }
 

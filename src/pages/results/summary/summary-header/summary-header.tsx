@@ -8,7 +8,6 @@ import {connect} from 'react-redux';
 function SummaryHeader(props: {
     account: types.Account;
     config: types.SurveyConfig;
-    results: types.SurveyResults | undefined;
     fetch(): void;
     isFetching: boolean;
 }) {
@@ -41,14 +40,7 @@ function SummaryHeader(props: {
                         'md:truncate'
                     }
                 >
-                    {title}{' '}
-                    <span className='font-weight-500'>
-                        {props.results === undefined
-                            ? '(... submissions)'
-                            : `(${props.results.count} submission${
-                                  props.results.count !== 1 ? 's' : ''
-                              })`}
-                    </span>
+                    {title}
                 </div>
                 <div className='flex-max' />
                 <Button

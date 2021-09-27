@@ -50,7 +50,6 @@ function Summary(props: {
             <div className={'w-full max-w-3xl flex-col-center space-y-4'}>
                 <SummaryHeader
                     config={props.config}
-                    results={results}
                     isFetching={isFetching}
                     fetch={fetch}
                 />
