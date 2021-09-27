@@ -26,7 +26,6 @@ function SummaryHeader(props: {
                 <Link
                     to='/results'
                     className={
-                        'block md:hidden ' +
                         'w-10 h-10 m-1 p-2 ringable rounded icon-gray ' +
                         'absolute -left-14 top-50% transform -translate-y-50% '
                     }
