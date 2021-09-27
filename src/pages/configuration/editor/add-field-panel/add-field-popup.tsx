@@ -228,7 +228,7 @@ function AddFieldPopup(props: Props) {
                 </div>
             </div>
 
-            <div className='w-full p-2 mx-4 border-t border-white rounded-b flex-row-right gap-x-2'>
+            <div className='w-full p-3 mx-4 border-t border-white rounded-b flex-row-right gap-x-2'>
                 <Button
                     text='cancel'
                     variant='flat-light-blue'

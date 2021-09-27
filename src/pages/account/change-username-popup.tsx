@@ -16,7 +16,7 @@ export default function ChangeUsernamePopup(props: Props) {
                     <strong>links to all of your surveys will change</strong>
                 </p>
                 <p className='w-full mb-2 flex-row-center whitespace-nowrap gap-x-2'>
-                    Old locations:{' '}
+                    <span className='w-10'>Old:</span>{' '}
                     <div
                         className={
                             'flex-grow p-2 overflow-x-scroll text-sm ' +
@@ -32,7 +32,7 @@ export default function ChangeUsernamePopup(props: Props) {
                     </div>
                 </p>
                 <p className='w-full mb-2 flex-row-center whitespace-nowrap gap-x-2'>
-                    New locations:{' '}
+                    <span className='w-10'>New:</span>{' '}
                     <div
                         className={
                             'flex-grow p-2 overflow-x-scroll text-sm ' +
