@@ -30,11 +30,11 @@ function RegisterForm(props: Props) {
             return disprove('email format invalid');
         }
 
-        if (username.length < 3) {
-            return disprove('username too short (≥ 3 characters)');
+        if (username.length < 1) {
+            return disprove('username too short (≥ 1 characters)');
         }
-        if (username.length > 20) {
-            return disprove('username too long (≤ 20 characters)');
+        if (username.length > 32) {
+            return disprove('username too long (≤ 32 characters)');
         }
         if (password.length < 8) {
             return disprove('Password too short (≥ 8 characters)');

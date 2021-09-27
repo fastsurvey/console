@@ -3,10 +3,14 @@ import {connect} from 'react-redux';
 import {types} from '@types';
 import {backend, reduxUtils, formUtils} from '@utilities';
 import VisualAccountPage from './visual-account-page';
+import ChangeUsernamePopup from '@pages/account/change-username-popup';
 
 function AccountPage(props: {
     account: types.Account;
     accessToken: types.AccessToken;
+
+    openModal(title: string, children: React.ReactNode): void;
+    closeModal(): void;
     openMessage(messageId: types.MessageId): void;
     updateUsername(username: string): void;
 }) {
@@ -60,6 +64,8 @@ function AccountPage(props: {
     }
 
     function submitUsername() {
+        props.closeModal();
+
         function success() {
             props.openMessage('success-username-changed');
             props.updateUsername(username);
@@ -84,6 +90,21 @@ function AccountPage(props: {
         );
     }
 
+    function openUsernameModal() {
+        props.openModal(
+            'Change username?',
+            <ChangeUsernamePopup
+                oldUsername={props.account.username}
+                newUsername={username}
+                cancel={() => {
+                    setUsername(props.account.username);
+                    props.closeModal();
+                }}
+                submit={submitUsername}
+            />,
+        );
+    }
+
     return (
         <VisualAccountPage
             account={props.account}
@@ -98,7 +119,7 @@ function AccountPage(props: {
             }}
             {...{
                 validateUsername,
-                submitUsername,
+                openUsernameModal,
                 usernamePending,
                 username,
                 setUsername,
@@ -112,6 +133,8 @@ const mapStateToProps = (state: types.ReduxState) => ({
     accessToken: state.accessToken,
 });
 const mapDispatchToProps = (dispatch: any) => ({
+    openModal: reduxUtils.dispatchers.openModal(dispatch),
+    closeModal: reduxUtils.dispatchers.closeModal(dispatch),
     openMessage: reduxUtils.dispatchers.openMessage(dispatch),
     updateUsername: reduxUtils.dispatchers.updateUsername(dispatch),
 });

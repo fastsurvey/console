@@ -35,7 +35,7 @@ function DuplicateSurveyPopup(props: {
                 )}
                 <div className='w-full flex-row-right gap-x-2'>
                     <Button
-                        text='Cancel'
+                        text='cancel'
                         variant='flat-light-blue'
                         onClick={() => {
                             props.closeModal();
@@ -43,7 +43,7 @@ function DuplicateSurveyPopup(props: {
                         }}
                     />
                     <Button
-                        text='Duplicate'
+                        text='duplicate survey'
                         variant='flat-light-blue'
                         disabled={!validationMessage.valid}
                         onClick={() => props.duplicateSurvey(surveyName)}

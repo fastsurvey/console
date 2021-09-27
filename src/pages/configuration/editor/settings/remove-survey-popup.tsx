@@ -14,12 +14,12 @@ function RemoveSurveyPopup(props: Props) {
             </div>
             <div className='w-full flex-row-right gap-x-2'>
                 <Button
-                    text='Cancel'
+                    text='cancel'
                     variant='flat-light-blue'
                     onClick={props.closeModal}
                 />
                 <Button
-                    text='Remove Survey'
+                    text='remove survey'
                     variant='flat-light-blue'
                     onClick={props.removeSurvey}
                 />

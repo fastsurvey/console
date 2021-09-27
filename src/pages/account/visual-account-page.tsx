@@ -24,7 +24,7 @@ function VisualAccountPage(props: {
     username: string;
     setUsername(p: string): void;
     usernamePending: boolean;
-    submitUsername(): void;
+    openUsernameModal(): void;
 }) {
     const {
         validatePassword,
@@ -39,7 +39,7 @@ function VisualAccountPage(props: {
         username,
         setUsername,
         usernamePending,
-        submitUsername,
+        openUsernameModal,
     } = props;
 
     const anyPasswordEmpty =
@@ -50,6 +50,9 @@ function VisualAccountPage(props: {
         {name: 'Identification', href: '#', icon: icons.userCircle},
         {name: 'Password', href: '#', icon: icons.key},
     ];
+
+    const usernameValidation = validateUsername();
+    const passwordValidation = validatePassword();
 
     return (
         <div
@@ -182,11 +185,12 @@ function VisualAccountPage(props: {
                                     <Button
                                         text='change username'
                                         variant='flat-light-blue'
-                                        onClick={submitUsername}
+                                        onClick={openUsernameModal}
                                         disabled={
                                             username ===
                                                 props.account.username ||
-                                            usernamePending
+                                            usernamePending ||
+                                            !usernameValidation.valid
                                         }
                                     />
                                 </div>
@@ -234,7 +238,9 @@ function VisualAccountPage(props: {
                                         variant='flat-light-blue'
                                         onClick={submitPassword}
                                         disabled={
-                                            anyPasswordEmpty || passwordPending
+                                            anyPasswordEmpty ||
+                                            passwordPending ||
+                                            !passwordValidation.valid
                                         }
                                     />
                                 </div>
@@ -242,10 +248,10 @@ function VisualAccountPage(props: {
                         )}
                     </div>
                     {username !== props.account.username && tabIndex === 0 && (
-                        <ValidationBar validation={validateUsername()} />
+                        <ValidationBar validation={usernameValidation} />
                     )}
                     {!anyPasswordEmpty && tabIndex === 1 && (
-                        <ValidationBar validation={validatePassword()} />
+                        <ValidationBar validation={passwordValidation} />
                     )}
                 </div>
                 <div className='p-4 border-[2px] border-dashed border-gray-300 rounded w-full'>

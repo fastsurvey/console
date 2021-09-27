@@ -222,15 +222,15 @@ export const validators = {
     },
 
     username: (newUserName: string): types.ValidationResult => {
-        if (newUserName.length < 3) {
+        if (newUserName.length < 1) {
             return {
                 valid: false,
-                message: 'username too short (≥ 3 characters)',
+                message: 'username too short (≥ 1 characters)',
             };
-        } else if (newUserName.length > 20) {
+        } else if (newUserName.length > 32) {
             return {
                 valid: false,
-                message: 'username too long (≤ 20 characters)',
+                message: 'username too long (≤ 32 characters)',
             };
         } else {
             return {valid: true};
