@@ -102,11 +102,25 @@ function ConfigEditor(props: {
     }
 
     function removeField(index: number) {
+        const fieldIdentifier = localConfig.fields[index].identifier;
+        const maxIdentifier = localConfig.max_identifier;
+        let newFields: types.SurveyField[] = dataUtils.array.remove(
+            localConfig.fields,
+            index,
+        );
+
+        if (fieldIdentifier > maxIdentifier) {
+            newFields = newFields.map((f: types.SurveyField) => ({
+                ...f,
+                identifier:
+                    f.identifier > fieldIdentifier
+                        ? f.identifier - 1
+                        : f.identifier,
+            }));
+        }
+
         setFieldValidation(dataUtils.array.remove(fieldValidation, index + 1));
-        setLocalConfig({
-            ...localConfig,
-            fields: dataUtils.array.remove(localConfig.fields, index),
-        });
+        setLocalConfig({...localConfig, fields: newFields});
     }
 
     function saveState(configChanges?: object) {
