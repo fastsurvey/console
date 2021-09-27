@@ -60,7 +60,8 @@ const customColors = {
 
     orange: colors.orange,
     teal: colors.teal,
-    rose: colors.rose
+    rose: colors.rose,
+    cyan: colors.cyan
 };
 
 module.exports = {

@@ -57,7 +57,7 @@ function EditorFormCard(props: Props) {
                         {props.icon}
                     </div>
                     <div className='flex flex-col items-start justify-start md:flex-row'>
-                        <div className='mb-0.5 font-weight-700'>
+                        <div className='mb-0.5 font-weight-600'>
                             {props.label}
                         </div>
                         {props.longLabel && (
