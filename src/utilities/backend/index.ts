@@ -6,6 +6,7 @@ import updateSurvey from './configuration/update-survey';
 import createAccount from './account/create-account';
 import verifyAccount from './account/verify-account';
 import updateAccount from './account/update-account';
+import removeAccount from './account/remove-account';
 import fetchResults from './results/fetch-results';
 
 const backend = {
@@ -17,6 +18,7 @@ const backend = {
     createAccount,
     verifyAccount,
     updateAccount,
+    removeAccount,
     fetchResults,
 };
 

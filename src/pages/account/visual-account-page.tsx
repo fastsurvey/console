@@ -25,6 +25,9 @@ function VisualAccountPage(props: {
     setUsername(p: string): void;
     usernamePending: boolean;
     openUsernameModal(): void;
+
+    openDeleteUserModal(): void;
+    removeUserPending: boolean;
 }) {
     const {
         validatePassword,
@@ -159,7 +162,7 @@ function VisualAccountPage(props: {
                                     </div>
 
                                     <div className='w-full centering-col gap-y-0.5'>
-                                        <Label text='Username (cannot be modified yet)' />
+                                        <Label text='Username' />
                                         <TextInput
                                             value={username}
                                             setValue={setUsername}
@@ -253,6 +256,23 @@ function VisualAccountPage(props: {
                     {!anyPasswordEmpty && tabIndex === 1 && (
                         <ValidationBar validation={passwordValidation} />
                     )}
+                </div>
+                <div className='w-full bg-white rounded shadow flex-col-left'>
+                    <div className='w-full border-b border-gray-200'>
+                        <nav className='px-4 py-2 space-x-2 flex-row-left'>
+                            <div className='pr-2 text-gray-500 font-weight-600'>
+                                Delete your account forever{' '}
+                            </div>
+                        </nav>
+                    </div>
+                    <div className='w-full p-3 flex-row-left'>
+                        <Button
+                            text='delete'
+                            variant='flat-light-red'
+                            icon={icons.trash}
+                            onClick={props.openDeleteUserModal}
+                        />
+                    </div>
                 </div>
                 <div className='p-4 border-[2px] border-dashed border-gray-300 rounded w-full'>
                     <h3 className='text-base leading-6 text-blue-900 opacity-80 font-weight-600'>
