@@ -15,6 +15,7 @@ rest of the codebase way simpler.
 function survey(config: types.SurveyConfig) {
     const newConfig: any = cloneDeep(config);
     delete newConfig.local_id;
+    delete newConfig.max_identifier;
     newConfig.fields = newConfig.fields.map(remove.field);
     return newConfig;
 }

@@ -7,6 +7,7 @@ export const survey = (configs: types.SurveyConfig[]): types.SurveyConfig => {
     const newLocalId: any = max(configs.map((c) => c.local_id));
     const newSurveyName: string = surveyName(configs);
     return {
+        max_identifier: 0,
         local_id: newLocalId,
         survey_name: newSurveyName,
         start: now,
@@ -16,6 +17,7 @@ export const survey = (configs: types.SurveyConfig[]): types.SurveyConfig => {
         description: '',
         fields: [
             {
+                identifier: 0,
                 type: 'option',
                 local_id: newLocalId * 1000,
                 title: 'Data Privacy',

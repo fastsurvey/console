@@ -1,6 +1,7 @@
 export declare namespace types {
     export interface SurveyConfig {
         local_id: number;
+        max_identifier: number;
         survey_name: string;
         start: number;
         end: number;
@@ -18,6 +19,7 @@ export declare namespace types {
         | TextField;
 
     interface GeneralSurveyField {
+        identifier: number;
         local_id: number;
         title: string;
         description: string;
