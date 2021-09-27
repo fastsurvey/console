@@ -3,6 +3,11 @@ import {reduxUtils, styleUtils} from '@utilities';
 import {types} from '@types';
 import {Button} from '@components';
 import {connect} from 'react-redux';
+import emailImage from '@assets/images/field-examples/field-example-email.png';
+import optionImage from '@assets/images/field-examples/field-example-option.png';
+import radioImage from '@assets/images/field-examples/field-example-radio.png';
+import selectionImage from '@assets/images/field-examples/field-example-selection.png';
+import textImage from '@assets/images/field-examples/field-example-text.png';
 
 const fields: types.FieldType[] = [
     'email',
@@ -30,7 +35,8 @@ function AddFieldPopup(props: Props) {
                         <button
                             key={fieldType}
                             className={
-                                'w-full h-8 rounded outline-none px-6 ' +
+                                'w-full rounded outline-none ' +
+                                'h-10 md:h-8 px-2 md:px-6 ' +
                                 'font-weight-600 text-base text-center ' +
                                 'border border-dashed ' +
                                 (selectedIndex === i
@@ -50,10 +56,10 @@ function AddFieldPopup(props: Props) {
                 </div>
                 <div
                     className={
-                        'flex-grow overflow-y-scroll px-4 ' +
+                        'flex-grow overflow-y-scroll ' +
+                        'px-2 md:px-4 h-80 md:h-64 ' +
                         'text-justify text-sm text-gray-700 '
                     }
-                    style={{height: '14rem'}}
                 >
                     {fields[selectedIndex] === 'email' && (
                         <>
@@ -65,6 +71,11 @@ function AddFieldPopup(props: Props) {
                                 requires the respondent to enter his email -
                                 obviously.
                             </p>
+                            <img
+                                className='w-full mb-3'
+                                src={emailImage}
+                                alt='how an email field looks like'
+                            />
                             <p className='mb-3'>
                                 Optional: You can use this email to{' '}
                                 <strong className='text-gray-900'>
@@ -77,7 +88,7 @@ function AddFieldPopup(props: Props) {
                                 included in the raw data download (with a column
                                 "verified = true/false").
                             </p>
-                            <p>
+                            <p className='mb-3'>
                                 Optional: You can specify a{' '}
                                 <strong className='text-gray-900'>
                                     format-regex
@@ -106,7 +117,12 @@ function AddFieldPopup(props: Props) {
                                 to only allow submissions with a selected
                                 checkbox.
                             </p>
-                            <p>
+                            <img
+                                className='w-full mb-3'
+                                src={optionImage}
+                                alt='how an option field looks like'
+                            />
+                            <p className='mb-3'>
                                 If you leave the{' '}
                                 <strong className='text-gray-900'>
                                     description
@@ -126,6 +142,11 @@ function AddFieldPopup(props: Props) {
                                 is a single-choice question. The respondent has
                                 to select exactly one option.
                             </p>
+                            <img
+                                className='w-full mb-3'
+                                src={radioImage}
+                                alt='how a radio field looks like'
+                            />
                         </>
                     )}
                     {fields[selectedIndex] === 'selection' && (
@@ -147,6 +168,11 @@ function AddFieldPopup(props: Props) {
                                 number of options, the respondent is allowed to
                                 select.
                             </p>
+                            <img
+                                className='w-full mb-3'
+                                src={selectionImage}
+                                alt='how a selection field looks like'
+                            />
                         </>
                     )}
                     {fields[selectedIndex] === 'text' && (
@@ -168,6 +194,11 @@ function AddFieldPopup(props: Props) {
                                 number of characters, this answer is allowed to
                                 have.
                             </p>
+                            <img
+                                className='w-full mb-3'
+                                src={textImage}
+                                alt='how a text field looks like'
+                            />
                         </>
                     )}
                 </div>
