@@ -7,7 +7,8 @@ import VisualAccountPage from './visual-account-page';
 function AccountPage(props: {
     account: types.Account;
     accessToken: types.AccessToken;
-    openMessage: (messageId: types.MessageId) => void;
+    openMessage(messageId: types.MessageId): void;
+    updateUsername(username: string): void;
 }) {
     const [password, setPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
@@ -61,11 +62,15 @@ function AccountPage(props: {
     function submitUsername() {
         function success() {
             props.openMessage('success-username-changed');
-            setUsername('');
+            props.updateUsername(username);
             setUsernamePending(false);
         }
-        function error() {
-            props.openMessage('error-server');
+        function error(code: number) {
+            if (code === 400) {
+                props.openMessage('error-username-taken');
+            } else {
+                props.openMessage('error-server');
+            }
             setUsernamePending(false);
         }
 
@@ -108,5 +113,6 @@ const mapStateToProps = (state: types.ReduxState) => ({
 });
 const mapDispatchToProps = (dispatch: any) => ({
     openMessage: reduxUtils.dispatchers.openMessage(dispatch),
+    updateUsername: reduxUtils.dispatchers.updateUsername(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(AccountPage);

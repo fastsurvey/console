@@ -95,7 +95,7 @@ function VisualAccountPage(props: {
                                 <Menu.Items className='absolute right-0 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
                                     <div className='py-1'>
                                         {tabs.map((tab, index) => (
-                                            <Menu.Item>
+                                            <Menu.Item key={index}>
                                                 {({active}) => (
                                                     <div
                                                         onClick={() =>
@@ -158,14 +158,14 @@ function VisualAccountPage(props: {
                                     <div className='w-full centering-col gap-y-0.5'>
                                         <Label text='Username (cannot be modified yet)' />
                                         <TextInput
-                                            value={props.account.username}
-                                            setValue={() => {}}
-                                            disabled={true}
+                                            value={username}
+                                            setValue={setUsername}
+                                            disabled={usernamePending}
                                             autoComplete='username'
                                         />
                                     </div>
                                 </div>
-                                {/* 
+
                                 <div className='w-full gap-x-2 flex-row-right'>
                                     <Button
                                         text='cancel'
@@ -180,7 +180,7 @@ function VisualAccountPage(props: {
                                         }
                                     />
                                     <Button
-                                        text='change password'
+                                        text='change username'
                                         variant='flat-light-blue'
                                         onClick={submitUsername}
                                         disabled={
@@ -189,7 +189,7 @@ function VisualAccountPage(props: {
                                             usernamePending
                                         }
                                     />
-                                </div>*/}
+                                </div>
                             </>
                         )}
                         {tabIndex === 1 && (

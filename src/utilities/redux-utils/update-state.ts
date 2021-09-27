@@ -29,6 +29,12 @@ function updateState(state: types.ReduxState, action: types.ReduxAction) {
                 expires: 7,
             });
             break;
+        case 'UPDATE_USERNAME':
+            newState.account.username = action.username;
+            Cookies.set('username', action.username, {
+                expires: 7,
+            });
+            break;
 
         case 'LOG_OUT':
             Cookies.remove('accessToken');

@@ -115,6 +115,7 @@ export declare namespace types {
         | 'success-redirect-to-login'
         | 'success-password-changed'
         | 'success-username-changed'
+        | 'error-username-taken'
         | 'warning-clipboard'
         | 'editor-warning-validators'
         | 'editor-warning-field-count'
@@ -144,6 +145,10 @@ export declare namespace types {
               accessToken: types.AccessToken;
               account: types.Account;
               configs: types.SurveyConfig[];
+          }
+        | {
+              type: 'UPDATE_USERNAME';
+              username: string;
           }
         | {
               type: 'OPEN_MESSAGE';

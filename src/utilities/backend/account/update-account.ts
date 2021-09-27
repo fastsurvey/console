@@ -20,8 +20,8 @@ async function updateAccount(
                 ...accountUpdate,
             }),
             accessToken,
-        ).catch((response: {statusCode: 400 | 401 | 422 | 500}) => {
-            throw response.statusCode;
+        ).catch((response: {response: {status: 400 | 401 | 422 | 500}}) => {
+            throw response.response.status;
         });
 
         success();
