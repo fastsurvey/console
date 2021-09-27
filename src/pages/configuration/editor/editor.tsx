@@ -1,4 +1,4 @@
-import {constant, every, times} from 'lodash';
+import {constant, every, max, times} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {
@@ -109,12 +109,15 @@ function ConfigEditor(props: {
         });
     }
 
-    // modifyDraft = true -> convert drafts to published surveys and vice versa
     function saveState(configChanges?: object) {
-        const combinedConfig = {
+        let combinedConfig: types.SurveyConfig = {
             ...localConfig,
             ...configChanges,
         };
+        // @ts-ignore
+        combinedConfig.max_identifier = max(
+            combinedConfig.fields.map((f) => f.identifier),
+        );
         props.closeAllMessages();
 
         const fieldsAreValid = every(fieldValidation.map((r) => r.valid));
