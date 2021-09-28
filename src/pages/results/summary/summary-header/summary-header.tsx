@@ -9,7 +9,9 @@ function SummaryHeader(props: {
     account: types.Account;
     config: types.SurveyConfig;
     fetch(): void;
+    download(): void;
     isFetching: boolean;
+    isDownloading: boolean;
 }) {
     const {title, survey_name} = props.config;
     const {username} = props.account;
@@ -42,6 +44,11 @@ function SummaryHeader(props: {
                     {title}
                 </div>
                 <div className='flex-max' />
+                <Button
+                    text={'download'}
+                    onClick={props.download}
+                    loading={props.isDownloading}
+                />
                 <Button
                     text={'refresh'}
                     onClick={props.fetch}

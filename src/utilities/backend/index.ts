@@ -8,6 +8,7 @@ import verifyAccount from './account/verify-account';
 import updateAccount from './account/update-account';
 import removeAccount from './account/remove-account';
 import fetchResults from './results/fetch-results';
+import fetchSubmissions from './results/fetch-submissions';
 
 const backend = {
     loginWithCookie,
@@ -20,6 +21,7 @@ const backend = {
     updateAccount,
     removeAccount,
     fetchResults,
+    fetchSubmissions,
 };
 
 export default backend;

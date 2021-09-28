@@ -13,6 +13,7 @@ function Summary(props: {
         undefined,
     );
     const [isFetching, setIsFetching] = useState(true);
+    const [isDownloading, setIsDownloading] = useState(false);
 
     useEffect(() => {
         backend.fetchResults(
@@ -41,6 +42,20 @@ function Summary(props: {
         );
     }
 
+    function download() {
+        setIsDownloading(true);
+        backend.fetchSubmissions(
+            props.account,
+            props.accessToken,
+            props.config.survey_name,
+            (r) => {
+                console.log(r);
+                setIsDownloading(false);
+            },
+            console.log,
+        );
+    }
+
     return (
         <div
             className={
@@ -51,7 +66,9 @@ function Summary(props: {
                 <SummaryHeader
                     config={props.config}
                     isFetching={isFetching}
+                    isDownloading={isDownloading}
                     fetch={fetch}
+                    download={download}
                 />
                 {results !== undefined && (
                     <>
