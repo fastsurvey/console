@@ -38,9 +38,7 @@ export default function PercentageBarRow(props: {
                         <div
                             className='h-full bg-gray-200'
                             style={{
-                                width: `${
-                                    ((total - count) / total) * 100 + 0
-                                }%`,
+                                width: `${((total - count) / total) * 100}%`,
                             }}
                         />
                     </>
@@ -51,7 +49,8 @@ export default function PercentageBarRow(props: {
             >
                 {title}:{' '}
                 <span className='font-weight-500'>
-                    {count} {count !== 0 && `(${(count / total) * 100 + 0}%)`}
+                    {count}{' '}
+                    {count !== 0 && `(${Math.round((count / total) * 100)}%)`}
                 </span>
             </div>
         </div>

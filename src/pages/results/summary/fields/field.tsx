@@ -16,7 +16,7 @@ function Field(props: Props) {
     const summaryProps: any = {
         fieldConfig: fieldConfig,
         fieldResults: fieldResults,
-        count: results.count,
+        count: fieldCount,
     };
 
     const VisualField = (props: {
