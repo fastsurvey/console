@@ -1,26 +1,33 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import {MainWrapper} from '@components';
-import EmptyImage from '@assets/images/empty.svg';
+import {Button, MainWrapper} from '@components';
+import Gif from '@assets/gifs/computer.webp';
+import {useHistory} from 'react-router';
 
 function NotFoundPage() {
+    const history = useHistory();
     return (
         <MainWrapper>
-            <h3 className='text-center'>Oops! Nothing here ...</h3>
-            <div className='mt-12 mb-8 center-content w-35vw'>
-                <div className='w-20vw no-selection'>
-                    <img src={EmptyImage} alt='Not Found' />
-                </div>
-            </div>
-            <Link
-                to='/'
+            <h1
                 className={
-                    'w-full text-center text-gray-500 ' +
-                    'font-weight-500 no-selection cursor-pointer '
+                    'centering-row font-weight-600 text-lg text-gray-900 dark:text-gray-100 ' +
+                    'no-selection mb-3'
                 }
             >
-                Return to main page
-            </Link>
+                404: Page not found
+            </h1>
+            <div className='w-full max-w-md mx-auto mb-5 overflow-hidden rounded-lg shadow-md'>
+                <img
+                    src={Gif}
+                    className='w-full h-auto'
+                    alt='Monkey with a cash'
+                />
+            </div>
+            <Button
+                text='Back to Landing Page'
+                onClick={() => {
+                    history.push('/');
+                }}
+            />
         </MainWrapper>
     );
 }
