@@ -5,6 +5,11 @@ import icons from '@assets/icons/icons';
 import {Button, TimePill} from '@components';
 import {connect} from 'react-redux';
 
+const frontendUrl =
+    import.meta.env.VITE_ENV === 'development'
+        ? 'dev.fastsurvey.de'
+        : 'fastsurvey.de';
+
 function SummaryHeader(props: {
     account: types.Account;
     config: types.SurveyConfig;
@@ -18,7 +23,7 @@ function SummaryHeader(props: {
 
     const linkContent = (
         <div className='text-sm text-blue-700 underline md:truncate font-weight-600'>
-            fastsurvey.de/{username}/{survey_name}
+            {frontendUrl}/{username}/{survey_name}
         </div>
     );
 
@@ -49,6 +54,7 @@ function SummaryHeader(props: {
                     onClick={props.download}
                     loading={props.isDownloading}
                 />
+                <div className='w-2' />
                 <Button
                     text={'refresh'}
                     onClick={props.fetch}
@@ -56,7 +62,7 @@ function SummaryHeader(props: {
                 />
             </div>
             <a
-                href={`https://fastsurvey.de/${username}/${survey_name}`}
+                href={`https://${frontendUrl}/${username}/${survey_name}`}
                 className='px-1.5 py-0.5 transform -translate-x-1.5 rounded ringable'
                 target='_blank'
                 rel='noopener noreferrer'

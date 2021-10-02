@@ -4,7 +4,10 @@ import {types} from '@types';
 import icons from '@assets/icons/icons';
 import {Button, ButtonGroup, TimePill} from '@components';
 
-const frontendURL = 'fastsurvey.de';
+const frontendUrl =
+    import.meta.env.VITE_ENV === 'development'
+        ? 'dev.fastsurvey.de'
+        : 'fastsurvey.de';
 
 function VisualEditorHeader(props: {
     configIsDiffering: boolean;
@@ -29,7 +32,7 @@ function VisualEditorHeader(props: {
 
     const linkContent = (
         <div className='text-sm text-blue-700 underline md:truncate font-weight-600'>
-            {frontendURL}/{username}/{survey_name}
+            {frontendUrl}/{username}/{survey_name}
         </div>
     );
 
@@ -105,7 +108,7 @@ function VisualEditorHeader(props: {
             )}
             {!draft && (
                 <a
-                    href={`https://${frontendURL}/${username}/${survey_name}`}
+                    href={`https://${frontendUrl}/${username}/${survey_name}`}
                     className='px-1.5 py-0.5 transform -translate-x-1.5 rounded ringable'
                     target='_blank'
                     rel='noopener noreferrer'
