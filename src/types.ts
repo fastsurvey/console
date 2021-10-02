@@ -77,6 +77,7 @@ export declare namespace types {
     }
 
     export type Color = 'red' | 'orange' | 'yellow' | 'green' | 'teal' | 'gray';
+    export type DownloadFormat = 'json' | 'csv';
 
     export interface ReduxState {
         loggingIn: boolean;

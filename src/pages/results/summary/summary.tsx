@@ -42,28 +42,135 @@ function Summary(props: {
         );
     }
 
-    function download() {
-        function generateJSON(data: {[key: string]: any}[]) {
-            const outputJSON = [];
-            for (let i = 0; i < data.length; i++) {
-                let outputSubmission: {
-                    [key: string]: any;
-                } = {};
-                props.config.fields.forEach((f) => {
-                    outputSubmission[f.title] = data[i][f.identifier];
-                });
-                outputJSON.push(outputSubmission);
+    function generateJSONuri(data: {[key: string]: any}[]) {
+        const outputJSON = [];
+        for (let i = 0; i < data.length; i++) {
+            let outputSubmission: {
+                [key: string]: any;
+            } = {};
+            props.config.fields.forEach((f) => {
+                outputSubmission[f.title] = data[i][f.identifier];
+            });
+            outputJSON.push(outputSubmission);
+        }
+
+        return encodeURI(
+            'data:text/json;charset=utf-8,' +
+                JSON.stringify(outputJSON, null, '\t'),
+        );
+    }
+
+    function generateCSVuri(data: {[key: string]: any}[]) {
+        let outputRows: string[][] = [];
+
+        let headerRow: string[] = [];
+        props.config.fields.forEach((f) => {
+            switch (f.type) {
+                case 'email':
+                    headerRow.push(`"${f.title}"`);
+                    if (f.verify) {
+                        headerRow.push(`"${f.title} (verified)"`);
+                    }
+                    break;
+                case 'text':
+                case 'option':
+                    headerRow.push(`"${f.title}"`);
+                    break;
+                case 'radio':
+                case 'selection':
+                    f.options.forEach((o) => {
+                        headerRow.push(`${f.title} (${o.title})`);
+                    });
+                    break;
+            }
+        });
+
+        outputRows.push(headerRow);
+
+        for (let i = 0; i < data.length; i++) {
+            let outputRow: string[] = [];
+            props.config.fields.forEach((f) => {
+                const fieldData = data[i][f.identifier];
+                switch (f.type) {
+                    case 'email':
+                        if (fieldData?.email_address) {
+                            outputRow.push(`"${fieldData.email_address}"`);
+                        } else {
+                            outputRow.push('');
+                        }
+                        if (f.verify) {
+                            console.log({fd: fieldData?.verified});
+                            if (fieldData?.verified !== undefined) {
+                                outputRow.push(`${fieldData.verified}`);
+                            } else {
+                                outputRow.push('');
+                            }
+                        }
+                        break;
+                    case 'text':
+                        if (fieldData !== null) {
+                            outputRow.push(`"${fieldData}"`);
+                        } else {
+                            outputRow.push('');
+                        }
+                        break;
+                    case 'option':
+                        if (fieldData !== null) {
+                            outputRow.push(`${fieldData}`);
+                        } else {
+                            outputRow.push('');
+                        }
+                        break;
+                    case 'radio':
+                        if (fieldData !== null) {
+                            f.options.forEach((o) =>
+                                outputRow.push(`${fieldData === o.title}`),
+                            );
+                        } else {
+                            f.options.forEach(() => outputRow.push(''));
+                        }
+                        break;
+                    case 'selection':
+                        if (fieldData !== null) {
+                            f.options.forEach((o) =>
+                                outputRow.push(
+                                    `${fieldData.includes(o.title)}`,
+                                ),
+                            );
+                        } else {
+                            f.options.forEach(() => outputRow.push(''));
+                        }
+                        break;
+                }
+            });
+            outputRows.push(outputRow);
+        }
+
+        return encodeURI(
+            'data:text/json;charset=utf-8,' +
+                outputRows.map((row) => row.join(',')).join('\n'),
+        );
+    }
+
+    function download(format: types.DownloadFormat) {
+        function success(data: {[key: string]: any}[]) {
+            let encodedUri: string = '';
+            switch (format) {
+                case 'json':
+                    encodedUri = generateJSONuri(data);
+                    break;
+                case 'csv':
+                    encodedUri = generateCSVuri(data);
+                    break;
+                default:
+                    throw 'Unknown format';
             }
 
-            var encodedUri = encodeURI(
-                'data:text/json;charset=utf-8,' +
-                    JSON.stringify(outputJSON, null, '\t'),
-            );
             var link = document.createElement('a');
             link.setAttribute('href', encodedUri);
             link.setAttribute(
                 'download',
-                `${props.account.username}_${props.config.survey_name}_submissions.json`,
+                `${props.account.username}_${props.config.survey_name}_submissions.${format}`,
             );
             document.body.appendChild(link);
             link.click();
@@ -77,7 +184,7 @@ function Summary(props: {
             props.account,
             props.accessToken,
             props.config.survey_name,
-            generateJSON,
+            success,
             console.log,
         );
     }

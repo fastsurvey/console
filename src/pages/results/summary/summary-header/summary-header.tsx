@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import {types} from '@types';
 import icons from '@assets/icons/icons';
@@ -14,7 +14,7 @@ function SummaryHeader(props: {
     account: types.Account;
     config: types.SurveyConfig;
     fetch(): void;
-    download(): void;
+    download(format: types.DownloadFormat): void;
     isFetching: boolean;
     isDownloading: boolean;
 }) {
@@ -27,8 +27,10 @@ function SummaryHeader(props: {
         </div>
     );
 
+    const [showDownloadOptions, setShowDownloadOptions] = useState(false);
+
     return (
-        <div className={'w-full flex-col-left mb-1'}>
+        <div className={'w-full flex-col-left mb-1 z-10'}>
             <div className='relative w-full flex-row-top '>
                 <Link
                     to='/results'
@@ -49,11 +51,40 @@ function SummaryHeader(props: {
                     {title}
                 </div>
                 <div className='flex-max' />
-                <Button
-                    text={'download'}
-                    onClick={props.download}
-                    loading={props.isDownloading}
-                />
+                <div className='relative'>
+                    <Button
+                        text={showDownloadOptions ? 'hide' : 'download'}
+                        loading={props.isDownloading}
+                        onClick={() =>
+                            setShowDownloadOptions(!showDownloadOptions)
+                        }
+                    />
+                    {showDownloadOptions && (
+                        <div
+                            className={
+                                'absolute right-0 -bottom-2 translate-y-full ' +
+                                'rounded shadow flex-col-center overflow-hidden ' +
+                                'bg-gray-900 text-gray-200 text-base '
+                            }
+                        >
+                            {['json', 'csv'].map((format: any) => (
+                                <button
+                                    key={format}
+                                    className={
+                                        'w-full px-6 h-8 font-weight-600 ' +
+                                        'hover:bg-gray-600 hover:text-white '
+                                    }
+                                    onClick={() => {
+                                        props.download(format);
+                                        setShowDownloadOptions(false);
+                                    }}
+                                >
+                                    {format}
+                                </button>
+                            ))}
+                        </div>
+                    )}
+                </div>
                 <div className='w-2' />
                 <Button
                     text={'refresh'}
