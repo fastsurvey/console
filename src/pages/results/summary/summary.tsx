@@ -43,15 +43,41 @@ function Summary(props: {
     }
 
     function download() {
+        function generateJSON(data: {[key: string]: any}[]) {
+            const outputJSON = [];
+            for (let i = 0; i < data.length; i++) {
+                let outputSubmission: {
+                    [key: string]: any;
+                } = {};
+                props.config.fields.forEach((f) => {
+                    outputSubmission[f.title] = data[i][f.identifier];
+                });
+                outputJSON.push(outputSubmission);
+            }
+
+            var encodedUri = encodeURI(
+                'data:text/json;charset=utf-8,' +
+                    JSON.stringify(outputJSON, null, '\t'),
+            );
+            var link = document.createElement('a');
+            link.setAttribute('href', encodedUri);
+            link.setAttribute(
+                'download',
+                `${props.account.username}_${props.config.survey_name}_submissions.json`,
+            );
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            setIsDownloading(false);
+        }
+
         setIsDownloading(true);
         backend.fetchSubmissions(
             props.account,
             props.accessToken,
             props.config.survey_name,
-            (r) => {
-                console.log(r);
-                setIsDownloading(false);
-            },
+            generateJSON,
             console.log,
         );
     }
