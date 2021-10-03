@@ -100,6 +100,7 @@ function updateState(state: types.ReduxState, action: types.ReduxAction) {
             newState.configs = newState.configs.filter(
                 (config) => config.survey_name !== action.surveyName,
             );
+            newState.configIsDiffering = false;
             break;
 
         case 'SET_CENTRAL_CONFIG':
