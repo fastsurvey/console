@@ -240,6 +240,38 @@ export const validators = {
                 valid: false,
                 message: 'username too long (≤ 32 characters)',
             };
+        } else if (!new RegExp('^[a-z0-9-]{1,32}$').test(newUserName)) {
+            return {
+                valid: false,
+                message:
+                    "only lowercase letters, numbers and hypens ('-') allowed",
+            };
+        } else {
+            return {valid: true};
+        }
+    },
+
+    email: (newEmail: string): types.ValidationResult => {
+        if (!new RegExp('^.+@.+$').test(newEmail)) {
+            return {
+                valid: false,
+                message: 'email invalid',
+            };
+        } else {
+            return {valid: true};
+        }
+    },
+    password: (newPassword: string): types.ValidationResult => {
+        if (newPassword.length < 8) {
+            return {
+                valid: false,
+                message: 'password too short (≥ 8 characters)',
+            };
+        } else if (newPassword.length > 256) {
+            return {
+                valid: false,
+                message: 'password too long (≤ 256 characters)',
+            };
         } else {
             return {valid: true};
         }

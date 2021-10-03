@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {reduxUtils, backend} from '@utilities';
+import {reduxUtils, backend, formUtils} from '@utilities';
 import {types} from '@types';
 import VisualRegister from './visual-register';
 
@@ -19,33 +19,14 @@ function RegisterForm(props: Props) {
     }
 
     function validateEntry(): types.ValidationResult {
-        function disprove(message: string) {
-            return {
-                valid: false,
-                message: message,
-            };
-        }
+        let results: types.ValidationResult[] = [
+            formUtils.validators.email(email),
+            formUtils.validators.username(username),
+            formUtils.validators.password(password),
+        ];
 
-        if (!email.includes('@')) {
-            return disprove('email format invalid');
-        }
-
-        if (username.length < 1) {
-            return disprove('username too short (≥ 1 characters)');
-        }
-        if (username.length > 32) {
-            return disprove('username too long (≤ 32 characters)');
-        }
-        if (password.length < 8) {
-            return disprove('Password too short (≥ 8 characters)');
-        }
-        if (password.length > 64) {
-            return disprove('Password too long (≤ 64 characters)');
-        }
-
-        return {
-            valid: true,
-        };
+        // @ts-ignore
+        return [...results.filter((r) => !r.valid), {valid: true}][0];
     }
 
     function handleRegistration() {

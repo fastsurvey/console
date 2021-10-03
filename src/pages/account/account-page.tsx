@@ -18,26 +18,13 @@ function AccountPage(props: {
     updateUsername(username: string): void;
 }) {
     const [password, setPassword] = useState('');
-    const [passwordPending, setPasswordPending] = useState(false);
-
     const [username, setUsername] = useState(props.account.username);
-    const [usernamePending, setUsernamePending] = useState(false);
 
+    const [passwordPending, setPasswordPending] = useState(false);
+    const [usernamePending, setUsernamePending] = useState(false);
     const [removeUserPending, setRemoveUserPending] = useState(false);
 
-    function validatePassword(): types.ValidationResult {
-        if (password.length < 8) {
-            return {
-                valid: false,
-                message: 'Password too short (< 8 characters)',
-            };
-        } else {
-            return {
-                valid: true,
-            };
-        }
-    }
-
+    const validatePassword = () => formUtils.validators.password(password);
     const validateUsername = () => formUtils.validators.username(username);
 
     function submitPassword() {
