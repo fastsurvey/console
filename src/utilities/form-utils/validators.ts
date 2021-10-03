@@ -1,5 +1,6 @@
 import {types} from '@types';
 import {filter, uniq} from 'lodash';
+import {formUtils} from '@utilities';
 
 const genericTitle =
     (variant: 'Title' | 'Field title' | 'Option name') =>
@@ -73,29 +74,37 @@ export const validators = {
     fieldTitle: genericTitle('Field title'),
     optionTitle: genericTitle('Option name'),
 
-    surveyName: (
+    surveyName: (survey_name: string): types.ValidationResult => {
+        if (survey_name.length < 1) {
+            return {
+                valid: false,
+                message: 'URL conform identifier too short (≥ 1 characters)',
+            };
+        } else if (survey_name.length > 32) {
+            return {
+                valid: false,
+                message: 'URL conform identifier too long (≤ 32 characters)',
+            };
+        } else if (!new RegExp('^[a-z0-9-]{1,32}$').test(survey_name)) {
+            return {
+                valid: false,
+                message:
+                    "only lowercase letters, numbers and hypens ('-') allowed in URL conform identifier",
+            };
+        } else {
+            return {valid: true};
+        }
+    },
+
+    newSurveyName: (
         configs: types.SurveyConfig[] | undefined,
         thisConfig: types.SurveyConfig,
     ): types.ValidationResult => {
-        if (!thisConfig.survey_name.match(/^[a-zA-Z0-9-_]*$/)) {
-            return {
-                valid: false,
-                message:
-                    'URL conform identifier can only include letters, ' +
-                    'numbers and signs',
-            };
-        } else if (thisConfig.survey_name.length < 3) {
-            return {
-                valid: false,
-                message: 'URL conform identifier too short (≥ 3 characters)',
-            };
-        } else if (thisConfig.survey_name.length > 120) {
-            return {
-                valid: false,
-                message:
-                    'URL conform identifier too long (≤ 120 characters, ' +
-                    `currently: ${thisConfig.survey_name.length})`,
-            };
+        const surveyNameValidation = formUtils.validators.surveyName(
+            thisConfig.survey_name,
+        );
+        if (!surveyNameValidation.valid) {
+            return surveyNameValidation;
         } else if (
             configs?.filter(
                 (c) =>
@@ -113,14 +122,6 @@ export const validators = {
             return {valid: true};
         }
     },
-
-    newSurveyName:
-        (configs: types.SurveyConfig[] | undefined) => (survey_name: string) =>
-            survey_name.match(/^[a-zA-Z0-9-_]*$/) !== null &&
-            3 <= survey_name.length &&
-            survey_name.length <= 120 &&
-            configs?.filter((config) => config.survey_name === survey_name)
-                .length === 0,
 
     description: (description: string): types.ValidationResult => {
         if (description.length > 2000) {
@@ -244,7 +245,7 @@ export const validators = {
             return {
                 valid: false,
                 message:
-                    "only lowercase letters, numbers and hypens ('-') allowed",
+                    "only lowercase letters, numbers and hypens ('-') allowed in username",
             };
         } else {
             return {valid: true};

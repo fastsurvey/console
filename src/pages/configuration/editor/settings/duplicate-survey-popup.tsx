@@ -12,11 +12,14 @@ function DuplicateSurveyPopup(props: {
 }) {
     const [surveyName, setSurveyName] = useState(props.thisConfig.survey_name);
 
-    const validationMessage = formUtils.validators.surveyName(props.configs, {
-        ...props.thisConfig,
-        survey_name: surveyName,
-        local_id: -1,
-    });
+    const validationMessage = formUtils.validators.newSurveyName(
+        props.configs,
+        {
+            ...props.thisConfig,
+            survey_name: surveyName,
+            local_id: -1,
+        },
+    );
 
     if (props.configs) {
         return (
@@ -27,10 +30,9 @@ function DuplicateSurveyPopup(props: {
                 </div>
                 {!validationMessage.valid && (
                     <div className='w-full px-3 mb-1 -mt-1 text-xs leading-tight text-red-500 font-weight-600'>
-                        {validationMessage.message.replace(
-                            'URL conform identifier ',
-                            '',
-                        )}
+                        {validationMessage.message
+                            .replace('URL conform identifier ', '')
+                            .replace(' in URL conform identifier', '')}
                     </div>
                 )}
                 <div className='w-full flex-row-right gap-x-2'>
