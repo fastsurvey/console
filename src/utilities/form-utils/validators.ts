@@ -1,5 +1,5 @@
 import {types} from '@types';
-import {filter} from 'lodash';
+import {filter, uniq} from 'lodash';
 
 const genericTitle =
     (variant: 'Title' | 'Field title' | 'Option name') =>
@@ -29,6 +29,14 @@ export const validators = {
             return {
                 valid: false,
                 message: 'There have to be at least 2 options',
+            };
+        } else if (
+            uniq(fieldConfig.options.map((o) => o.title)).length !==
+            fieldConfig.options.length
+        ) {
+            return {
+                valid: false,
+                message: '2 options cannot have the same name',
             };
         } else {
             return {valid: true};
