@@ -5,6 +5,7 @@ import {types} from '@types';
 import {Menu, Transition} from '@headlessui/react';
 import {ChevronDownIcon} from '@heroicons/react/solid';
 import {templateUtils} from '@utilities';
+import Toggle from '../../../../components/form/toggle';
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ');
@@ -26,7 +27,7 @@ const VisualSettings = (props: Props) => {
 
     const tabs = [
         {name: 'About', href: '#', icon: icons.textCursor},
-        {name: 'Timing', href: '#', icon: icons.time},
+        {name: 'Visibility', href: '#', icon: icons.time},
         {name: 'Actions', href: '#', icon: icons.gear},
     ];
 
@@ -119,7 +120,6 @@ const VisualSettings = (props: Props) => {
                                         title: newValue,
                                     });
                                 }}
-                                disabled={!props.config.draft}
                             />
                         </div>
                         <div className='w-full centering-col gap-y-0.5'>
@@ -133,7 +133,6 @@ const VisualSettings = (props: Props) => {
                                             survey_name: newValue,
                                         });
                                     }}
-                                    disabled={!props.config.draft}
                                 />
                                 <button
                                     className={
@@ -153,7 +152,6 @@ const VisualSettings = (props: Props) => {
                                             });
                                         }
                                     }}
-                                    disabled={!props.config.draft}
                                 >
                                     {icons.refresh}
                                 </button>
@@ -170,13 +168,24 @@ const VisualSettings = (props: Props) => {
                                         description: newValue,
                                     });
                                 }}
-                                disabled={!props.config.draft}
                             />
                         </div>
                     </>
                 )}
                 {tabIndex === 1 && (
                     <>
+                        <div className='w-full flex-col-left gap-y-0.5'>
+                            <Label text='Publicly visible (survey link works)' />
+                            <Toggle
+                                value={!props.config.draft}
+                                setValue={(newValue: boolean) => {
+                                    props.updateConfig({
+                                        ...props.config,
+                                        draft: !newValue,
+                                    });
+                                }}
+                            />
+                        </div>
                         <div className='w-full flex-col-left gap-y-0.5'>
                             <Label text='Start survey at' />
                             <DatePicker
@@ -187,7 +196,6 @@ const VisualSettings = (props: Props) => {
                                         start: timestamp,
                                     });
                                 }}
-                                disabled={!props.config.draft}
                             />
                         </div>
 
@@ -201,7 +209,6 @@ const VisualSettings = (props: Props) => {
                                         end: timestamp,
                                     });
                                 }}
-                                disabled={!props.config.draft}
                             />
                         </div>
                     </>

@@ -50,7 +50,7 @@ function VisualEditor(props: {
                                 props.insertField(index, fieldType)
                             }
                             pasteField={() => props.pasteField(index)}
-                            disabled={!props.localConfig.draft}
+                            disabled={false}
                         />
                         <Field
                             fieldIndex={index}
@@ -58,7 +58,7 @@ function VisualEditor(props: {
                             setLocalFieldConfig={(newFieldConfig: object) =>
                                 props.setLocalFieldConfig(newFieldConfig, index)
                             }
-                            disabled={!props.localConfig.draft}
+                            disabled={false}
                             updateValidation={(
                                 newState: types.ValidationResult,
                             ) => props.updateValidation(index + 1, newState)}
@@ -77,7 +77,7 @@ function VisualEditor(props: {
                     pasteField={() =>
                         props.pasteField(props.localConfig.fields.length)
                     }
-                    disabled={!props.localConfig.draft}
+                    disabled={false}
                 />
             </div>
         </div>

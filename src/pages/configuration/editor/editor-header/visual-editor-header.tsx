@@ -20,12 +20,21 @@ function VisualEditorHeader(props: {
     revertState(): void;
     openMessage(messageId: types.MessageId): void;
 
-    buttons: {
+    saveButtons: {
         icon: React.ReactNode;
         text: string;
         onClick(): void;
-        disabled?: boolean;
     }[];
+    timeButton: {
+        icon: React.ReactNode;
+        text: string;
+        onClick(): void;
+    };
+    publishButton: {
+        icon: React.ReactNode;
+        text: string;
+        onClick(): void;
+    };
 }) {
     const {title, survey_name, draft} = props.localConfig;
     const {username} = props.account;
@@ -39,17 +48,27 @@ function VisualEditorHeader(props: {
     return (
         <div className={'w-full pl-2 flex-col-left mb-1'}>
             <div className='relative block w-full mb-8 md:mb-2 flex-row-right md:hidden'>
-                <ButtonGroup buttons={props.buttons} hideIconsOnMobile />
-                <div className='flex-shrink-0 w-2 md:w-4' />
-                <Button
-                    icon={draft ? icons.uploadCloud : icons.edit}
-                    text={draft ? 'publish' : 'edit'}
-                    onClick={() => {
-                        props.saveState({
-                            draft: !draft,
-                        });
-                    }}
-                />
+                {props.saveButtons.length > 0 && (
+                    <>
+                        <ButtonGroup
+                            buttons={props.saveButtons}
+                            hideIconsOnMobile
+                        />
+                        <div className='flex-shrink-0 w-2 md:w-4' />
+                    </>
+                )}
+                {props.localConfig.draft && (
+                    <Button
+                        {...props.publishButton}
+                        disabled={props.configIsDiffering}
+                    />
+                )}
+                {!props.localConfig.draft && (
+                    <Button
+                        {...props.timeButton}
+                        disabled={props.configIsDiffering}
+                    />
+                )}
             </div>
             <div className={'relative w-full flex-row-top'}>
                 {!props.configIsDiffering && (
@@ -88,17 +107,27 @@ function VisualEditorHeader(props: {
                         'relative hidden md:flex flex-row items-start justify-start'
                     }
                 >
-                    <ButtonGroup buttons={props.buttons} />
-                    <div className='flex-shrink-0 w-2' />
-                    <Button
-                        icon={draft ? icons.uploadCloud : icons.edit}
-                        text={draft ? 'publish' : 'edit'}
-                        onClick={() => {
-                            props.saveState({
-                                draft: !draft,
-                            });
-                        }}
-                    />
+                    {props.saveButtons.length > 0 && (
+                        <>
+                            <ButtonGroup
+                                buttons={props.saveButtons}
+                                hideIconsOnMobile
+                            />
+                            <div className='flex-shrink-0 w-2 md:w-4' />
+                        </>
+                    )}
+                    {props.localConfig.draft && (
+                        <Button
+                            {...props.publishButton}
+                            disabled={props.configIsDiffering}
+                        />
+                    )}
+                    {!props.localConfig.draft && (
+                        <Button
+                            {...props.timeButton}
+                            disabled={props.configIsDiffering}
+                        />
+                    )}
                 </div>
             </div>
             {draft && (

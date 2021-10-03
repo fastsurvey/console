@@ -26,8 +26,9 @@ export default function Button(props: {
             loadingClasses = 'bg-red-100 text-red-900 icon-dark-red';
             break;
         default:
-            variantClasses =
-                'bg-white hover:bg-gray-100 shadow text-blue-900 icon-blue';
+            variantClasses = disabled
+                ? 'bg-gray-50 shadow text-gray-700 icon-gray cursor-not-allowed '
+                : 'bg-white hover:bg-gray-100 shadow text-blue-900 icon-blue';
             loadingClasses = 'bg-gray-50 shadow text-blue-900 icon-blue';
             break;
     }
