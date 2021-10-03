@@ -77,8 +77,13 @@ function Field(props: Props) {
                         'border-2 border-gray-200 border-dashed flex-col-left text-left'
                     }
                 >
-                    <div className='w-full text-base text-gray-500 font-weight-700'>
-                        {fieldIndex + 1}. {fieldConfig.title}
+                    <div className='w-full text-base text-gray-600 font-weight-700'>
+                        {fieldIndex + 1}. {fieldConfig.title}{' '}
+                        <span className='font-weight-500 opacity-70'>
+                            {`(${fieldCount} submission${
+                                fieldCount !== 1 ? 's' : ''
+                            })`}
+                        </span>
                     </div>
                     <div
                         className={
@@ -90,7 +95,7 @@ function Field(props: Props) {
                     >
                         <div>
                             No summary for <strong>{fieldConfig.type}</strong>{' '}
-                            fields yet, raw data download coming very soon!
+                            fields
                         </div>
                     </div>
                 </div>
