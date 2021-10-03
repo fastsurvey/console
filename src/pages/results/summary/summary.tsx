@@ -63,23 +63,27 @@ function Summary(props: {
     function generateCSVuri(data: {[key: string]: any}[]) {
         let outputRows: string[][] = [];
 
+        function escapeQuotes(text: string | number) {
+            return '"' + `${text}`.replaceAll('"', "'") + '"';
+        }
+
         let headerRow: string[] = [];
         props.config.fields.forEach((f) => {
             switch (f.type) {
                 case 'email':
-                    headerRow.push(`"${f.title}"`);
+                    headerRow.push(escapeQuotes(f.title));
                     if (f.verify) {
-                        headerRow.push(`"${f.title} (verified)"`);
+                        headerRow.push(escapeQuotes(`${f.title} (verified)`));
                     }
                     break;
                 case 'text':
                 case 'option':
-                    headerRow.push(`"${f.title}"`);
+                    headerRow.push(escapeQuotes(f.title));
                     break;
                 case 'radio':
                 case 'selection':
                     f.options.forEach((o) => {
-                        headerRow.push(`${f.title} (${o.title})`);
+                        headerRow.push(escapeQuotes(`${f.title} (${o.title})`));
                     });
                     break;
             }
@@ -93,14 +97,15 @@ function Summary(props: {
                 const fieldData = data[i][f.identifier];
                 switch (f.type) {
                     case 'email':
-                        if (fieldData?.email_address) {
-                            outputRow.push(`"${fieldData.email_address}"`);
+                        if (fieldData.email_address !== null) {
+                            outputRow.push(
+                                escapeQuotes(fieldData.email_address),
+                            );
                         } else {
                             outputRow.push('');
                         }
                         if (f.verify) {
-                            console.log({fd: fieldData?.verified});
-                            if (fieldData?.verified !== undefined) {
+                            if (fieldData.verified !== null) {
                                 outputRow.push(`${fieldData.verified}`);
                             } else {
                                 outputRow.push('');
@@ -109,14 +114,14 @@ function Summary(props: {
                         break;
                     case 'text':
                         if (fieldData !== null) {
-                            outputRow.push(`"${fieldData}"`);
+                            outputRow.push(escapeQuotes(fieldData));
                         } else {
                             outputRow.push('');
                         }
                         break;
                     case 'option':
                         if (fieldData !== null) {
-                            outputRow.push(`${fieldData}`);
+                            outputRow.push(escapeQuotes(fieldData));
                         } else {
                             outputRow.push('');
                         }
