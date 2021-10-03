@@ -46,12 +46,12 @@ const validateFormat = {
                     checkTypes(config.required, true);
                     return true;
                 case 'radio':
-                    checkKeys(['fields']);
+                    checkKeys(['options']);
                     checkTypes(config.options, [{}]);
                     assert(validateFormat.fieldOptionsList(config.options));
                     return true;
                 case 'selection':
-                    checkKeys(['fields', 'min_select', 'max_select']);
+                    checkKeys(['options', 'min_select', 'max_select']);
                     checkTypes(config.options, [{}]);
                     checkTypes(config.min_select, 2);
                     checkTypes(config.max_select, 2);
@@ -70,7 +70,7 @@ const validateFormat = {
     fieldOptionsList: (fieldOptions: types.FieldOption[]) => {
         try {
             fieldOptions.forEach((fieldOption) => {
-                checkTypes(fieldOption.title, 's');
+                checkTypes(fieldOption, 's');
             });
             return true;
         } catch {

@@ -12,7 +12,6 @@ export function paste(
             if (!validateFormat.fieldConfig(newField)) {
                 throw Error;
             }
-
             success(newField);
         } catch {
             error();

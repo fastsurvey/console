@@ -1,16 +1,12 @@
 import {localIdUtils} from '@utilities';
 import {types} from '@types';
-import {max} from 'lodash';
+import {fieldIdentifier} from './field-identifier';
 
 export const field = (
     fieldType: types.FieldType,
     config: types.SurveyConfig,
 ): types.SurveyField => {
-    const maxBackendId: number = config.max_identifier;
-    const maxFieldId: any =
-        config.fields.length > 0
-            ? max(config.fields.map((f) => f.identifier))
-            : -1;
+    const newFieldIdentifier: number = fieldIdentifier(config);
 
     const commonAttributes: {
         identifier: number;
@@ -18,7 +14,7 @@ export const field = (
         title: string;
         description: '';
     } = {
-        identifier: max([maxBackendId, maxFieldId]) + 1,
+        identifier: newFieldIdentifier,
         local_id: localIdUtils.newId.field(config),
         title: '',
         description: '',

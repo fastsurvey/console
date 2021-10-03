@@ -73,6 +73,13 @@ function ConfigEditor(props: {
 
     function pasteField(index: number) {
         function success(newFieldConfig: types.SurveyField) {
+            newFieldConfig = localIdUtils.initialize.field(
+                newFieldConfig,
+                localIdUtils.newId.field(localConfig),
+            );
+            newFieldConfig.identifier =
+                templateUtils.fieldIdentifier(localConfig);
+
             setFieldValidation(
                 dataUtils.array.insert(
                     fieldValidation,
@@ -80,19 +87,15 @@ function ConfigEditor(props: {
                     formUtils.validateField(newFieldConfig),
                 ),
             );
-
-            const newConfig = {
+            const newFields = dataUtils.array.insert(
+                localConfig.fields,
+                index,
+                newFieldConfig,
+            );
+            setLocalConfig({
                 ...localConfig,
-                fields: dataUtils.array.insert(
-                    localConfig.fields,
-                    index,
-                    localIdUtils.initialize.field(
-                        newFieldConfig,
-                        localIdUtils.newId.field(localConfig),
-                    ),
-                ),
-            };
-            setLocalConfig(newConfig);
+                fields: newFields,
+            });
         }
 
         function error() {
