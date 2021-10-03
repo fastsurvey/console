@@ -18,7 +18,6 @@ function AccountPage(props: {
     updateUsername(username: string): void;
 }) {
     const [password, setPassword] = useState('');
-    const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const [passwordPending, setPasswordPending] = useState(false);
 
     const [username, setUsername] = useState(props.account.username);
@@ -31,11 +30,6 @@ function AccountPage(props: {
             return {
                 valid: false,
                 message: 'Password too short (< 8 characters)',
-            };
-        } else if (password !== passwordConfirmation) {
-            return {
-                valid: false,
-                message: 'Password and confirmation do not match',
             };
         } else {
             return {
@@ -50,7 +44,6 @@ function AccountPage(props: {
         function success() {
             props.openMessage('success-password-changed');
             setPassword('');
-            setPasswordConfirmation('');
             setPasswordPending(false);
         }
         function error() {
@@ -142,9 +135,7 @@ function AccountPage(props: {
                 submitPassword,
                 passwordPending,
                 password,
-                passwordConfirmation,
                 setPassword,
-                setPasswordConfirmation,
             }}
             {...{
                 validateUsername,

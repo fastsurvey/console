@@ -14,9 +14,7 @@ function VisualAccountPage(props: {
 
     validatePassword(): types.ValidationResult;
     password: string;
-    passwordConfirmation: string;
     setPassword(p: string): void;
-    setPasswordConfirmation(p: string): void;
     passwordPending: boolean;
     submitPassword(): void;
 
@@ -32,9 +30,7 @@ function VisualAccountPage(props: {
     const {
         validatePassword,
         password,
-        passwordConfirmation,
         setPassword,
-        setPasswordConfirmation,
         passwordPending,
         submitPassword,
 
@@ -44,9 +40,6 @@ function VisualAccountPage(props: {
         usernamePending,
         openUsernameModal,
     } = props;
-
-    const anyPasswordEmpty =
-        password.length === 0 || passwordConfirmation.length === 0;
 
     const [tabIndex, setTabIndex] = useState(0);
     const tabs = [
@@ -212,17 +205,6 @@ function VisualAccountPage(props: {
                                             autoComplete='new-password'
                                         />
                                     </div>
-
-                                    <div className='w-full centering-col gap-y-0.5'>
-                                        <Label text='Confirm New Password' />
-                                        <TextInput
-                                            value={passwordConfirmation}
-                                            setValue={setPasswordConfirmation}
-                                            disabled={passwordPending}
-                                            type='password'
-                                            autoComplete='new-password'
-                                        />
-                                    </div>
                                 </div>
                                 <div className='w-full gap-x-2 flex-row-right'>
                                     <Button
@@ -230,10 +212,10 @@ function VisualAccountPage(props: {
                                         variant='flat-light-red'
                                         onClick={() => {
                                             setPassword('');
-                                            setPasswordConfirmation('');
                                         }}
                                         disabled={
-                                            anyPasswordEmpty || passwordPending
+                                            password.length === 0 ||
+                                            passwordPending
                                         }
                                     />
                                     <Button
@@ -241,7 +223,7 @@ function VisualAccountPage(props: {
                                         variant='flat-light-blue'
                                         onClick={submitPassword}
                                         disabled={
-                                            anyPasswordEmpty ||
+                                            password.length === 0 ||
                                             passwordPending ||
                                             !passwordValidation.valid
                                         }
@@ -253,7 +235,7 @@ function VisualAccountPage(props: {
                     {username !== props.account.username && tabIndex === 0 && (
                         <ValidationBar validation={usernameValidation} />
                     )}
-                    {!anyPasswordEmpty && tabIndex === 1 && (
+                    {password.length > 0 && tabIndex === 1 && (
                         <ValidationBar validation={passwordValidation} />
                     )}
                 </div>
