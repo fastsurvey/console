@@ -15,6 +15,7 @@ rest of the codebase way simpler.
 function survey(config: types.SurveyConfig) {
     const newConfig: any = cloneDeep(config);
     delete newConfig.local_id;
+    delete newConfig.max_identifier;
     newConfig.fields = newConfig.fields.map(remove.field);
     return newConfig;
 }
@@ -30,7 +31,28 @@ function field(fieldConfig: types.SurveyField) {
     return fieldConfig;
 }
 
+function fieldForClipboard(fieldConfig: types.SurveyField) {
+    const newFieldConfig: types.SurveyField = JSON.parse(
+        JSON.stringify(fieldConfig),
+    );
+
+    // @ts-ignore
+    delete newFieldConfig.local_id;
+    // @ts-ignore
+    delete newFieldConfig.identifier;
+
+    if (
+        newFieldConfig.type === 'radio' ||
+        newFieldConfig.type === 'selection'
+    ) {
+        // @ts-ignore
+        newFieldConfig.options = newFieldConfig.options.map((f) => f.title);
+    }
+    return newFieldConfig;
+}
+
 export const remove = {
     survey,
     field,
+    fieldForClipboard,
 };

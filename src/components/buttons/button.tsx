@@ -15,19 +15,20 @@ export default function Button(props: {
     switch (variant) {
         case 'flat-light-blue':
             variantClasses = disabled
-                ? 'bg-gray-200 text-gray-400 icon-gray cursor-not-allowed '
+                ? 'bg-gray-200 text-gray-400 icon-dark-gray cursor-not-allowed '
                 : 'bg-blue-50 text-blue-900 icon-dark-blue hover:bg-blue-100';
             loadingClasses = 'bg-blue-100 text-blue-900 icon-dark-blue';
             break;
         case 'flat-light-red':
             variantClasses = disabled
-                ? 'bg-gray-200 text-gray-400 icon-gray cursor-not-allowed '
+                ? 'bg-gray-200 text-gray-400 icon-dark-gray cursor-not-allowed '
                 : 'bg-red-50 text-red-900 icon-dark-red hover:bg-red-100';
             loadingClasses = 'bg-red-100 text-red-900 icon-dark-red';
             break;
         default:
-            variantClasses =
-                'bg-white hover:bg-gray-100 shadow text-blue-900 icon-blue';
+            variantClasses = disabled
+                ? 'bg-gray-50 shadow text-gray-700 icon-gray cursor-not-allowed '
+                : 'bg-white hover:bg-gray-100 shadow text-blue-900 icon-blue';
             loadingClasses = 'bg-gray-50 shadow text-blue-900 icon-blue';
             break;
     }

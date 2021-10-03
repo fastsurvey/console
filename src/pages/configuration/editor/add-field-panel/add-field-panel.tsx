@@ -10,20 +10,11 @@ interface Props {
     insertField(fieldType: types.FieldType): void;
     pasteField(): void;
     openModal(title: string, children: React.ReactNode): void;
-    closeModal(): void;
     disabled: boolean;
 }
 function AddFieldPanel(props: Props) {
     function openAddFieldModal() {
-        props.openModal(
-            'Add a new field',
-            <AddFieldPopup
-                insertField={(fieldType: types.FieldType) => {
-                    props.closeModal();
-                    props.insertField(fieldType);
-                }}
-            />,
-        );
+        props.openModal('Add a new field', <AddFieldPopup {...props} />);
     }
 
     return (
@@ -55,6 +46,5 @@ function AddFieldPanel(props: Props) {
 const mapStateToProps = (state: types.ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
     openModal: reduxUtils.dispatchers.openModal(dispatch),
-    closeModal: reduxUtils.dispatchers.closeModal(dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(AddFieldPanel);

@@ -8,6 +8,7 @@ export default function TextInput(props: {
     type?: 'text' | 'password';
     disabled?: boolean;
     postfix?: string;
+    autoComplete?: string;
 }) {
     const {value, setValue, autoFocus, type, disabled, postfix} = props;
     const [plainText, setPlainText] = useState(type !== 'password');
@@ -34,6 +35,7 @@ export default function TextInput(props: {
                 }
                 type={plainText ? 'text' : 'password'}
                 disabled={disabled === true}
+                autoComplete={props.autoComplete}
             />
             {postfix && (
                 <div

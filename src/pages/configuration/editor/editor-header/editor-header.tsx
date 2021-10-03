@@ -41,37 +41,58 @@ function EditorHeader(props: {
         });
     }
 
-    let buttons = draft
+    const saveButtons = props.configIsDiffering
         ? [
               {
                   icon: icons.closeCircle,
                   text: 'undo',
                   onClick: () => props.revertState(),
-                  disabled: !props.configIsDiffering,
               },
               {
                   icon: icons.checkCircle,
                   text: 'save',
                   onClick: () => props.saveState(),
-                  disabled: !props.configIsDiffering,
               },
           ]
-        : [
-              /*{
-                  icon: icons.play,
-                  text: now() < end ? 'start now' : 'reopen now',
-                  onClick: now() < end ? startNow : reopenNow,
-                  disabled: start < now() && now() < end,
-              },
-              {
-                  icon: icons.pause,
-                  text: 'end now',
-                  onClick: endNow,
-                  disabled: now() < start || end < now(),
-              },*/
-          ];
+        : [];
 
-    return <VisualEditorHeader {...props} {...{buttons}} />;
+    const publishButton = {
+        icon: icons.uploadCloud,
+        text: 'publish',
+        onClick: () => {
+            props.saveState({
+                draft: !draft,
+            });
+        },
+    };
+
+    let timeButton: any;
+    if (start < now() && now() < end) {
+        timeButton = {
+            icon: icons.pause,
+            text: 'end now',
+            onClick: endNow,
+        };
+    } else if (now() < start) {
+        timeButton = {
+            icon: icons.play,
+            text: 'start now',
+            onClick: startNow,
+        };
+    } else {
+        timeButton = {
+            icon: icons.play,
+            text: 'reopen now',
+            onClick: reopenNow,
+        };
+    }
+
+    return (
+        <VisualEditorHeader
+            {...props}
+            {...{saveButtons, timeButton, publishButton}}
+        />
+    );
 }
 
 const mapStateToProps = (state: types.ReduxState) => ({

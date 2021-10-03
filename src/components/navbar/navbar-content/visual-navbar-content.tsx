@@ -78,7 +78,7 @@ function NavbarContent(props: {
                 onClick={() => props.openLink('/results')}
                 text='Results'
                 icon={icons.collection}
-                active={props.location.pathname === '/results'}
+                active={props.location.pathname.startsWith('/result')}
             />
             <NavbarButton
                 onClick={() => props.openLink('/account')}

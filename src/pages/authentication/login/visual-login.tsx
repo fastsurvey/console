@@ -28,6 +28,7 @@ export default function VisualLogin(props: {
                         props.closeAllMessages();
                         props.setIdentifier(newValue);
                     }}
+                    autoComplete='email'
                 />
             </div>
             <div className='w-full centering-col gap-y-0.5'>
@@ -39,6 +40,7 @@ export default function VisualLogin(props: {
                         props.closeAllMessages();
                         props.setPassword(newValue);
                     }}
+                    autoComplete='current-password'
                 />
             </div>
 

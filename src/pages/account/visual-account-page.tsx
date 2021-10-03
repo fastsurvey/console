@@ -11,32 +11,44 @@ function classNames(...classes: string[]) {
 
 function VisualAccountPage(props: {
     account: types.Account;
-    validation: {valid: boolean; message: string};
+
+    validatePassword(): types.ValidationResult;
     password: string;
-    passwordConfirmation: string;
     setPassword(p: string): void;
-    setPasswordConfirmation(p: string): void;
-    pending: boolean;
-    submitNewPassword(): void;
+    passwordPending: boolean;
+    submitPassword(): void;
+
+    validateUsername(): types.ValidationResult;
+    username: string;
+    setUsername(p: string): void;
+    usernamePending: boolean;
+    openUsernameModal(): void;
+
+    openDeleteUserModal(): void;
+    removeUserPending: boolean;
 }) {
     const {
-        validation,
+        validatePassword,
         password,
-        passwordConfirmation,
         setPassword,
-        setPasswordConfirmation,
-        pending,
-        submitNewPassword,
-    } = props;
+        passwordPending,
+        submitPassword,
 
-    const anyPasswordEmpty =
-        password.length === 0 || passwordConfirmation.length === 0;
+        validateUsername,
+        username,
+        setUsername,
+        usernamePending,
+        openUsernameModal,
+    } = props;
 
     const [tabIndex, setTabIndex] = useState(0);
     const tabs = [
         {name: 'Identification', href: '#', icon: icons.userCircle},
         {name: 'Password', href: '#', icon: icons.key},
     ];
+
+    const usernameValidation = validateUsername();
+    const passwordValidation = validatePassword();
 
     return (
         <div
@@ -82,7 +94,7 @@ function VisualAccountPage(props: {
                                 <Menu.Items className='absolute right-0 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
                                     <div className='py-1'>
                                         {tabs.map((tab, index) => (
-                                            <Menu.Item>
+                                            <Menu.Item key={index}>
                                                 {({active}) => (
                                                     <div
                                                         onClick={() =>
@@ -131,21 +143,51 @@ function VisualAccountPage(props: {
                     <div className='z-0 w-full px-4 py-4 space-y-6 flex-col-left'>
                         {tabIndex === 0 && (
                             <>
-                                <div className='w-full centering-col gap-y-0.5'>
-                                    <Label text='Email (cannot be modified yet)' />
-                                    <TextInput
-                                        value={props.account.email}
-                                        setValue={() => {}}
-                                        disabled={true}
-                                    />
+                                <div className='w-full space-y-3 flex-col-left'>
+                                    <div className='w-full centering-col gap-y-0.5'>
+                                        <Label text='Email (cannot be modified yet)' />
+                                        <TextInput
+                                            value={props.account.email}
+                                            setValue={() => {}}
+                                            disabled={true}
+                                            autoComplete='email'
+                                        />
+                                    </div>
+
+                                    <div className='w-full centering-col gap-y-0.5'>
+                                        <Label text='Username' />
+                                        <TextInput
+                                            value={username}
+                                            setValue={setUsername}
+                                            disabled={usernamePending}
+                                            autoComplete='username'
+                                        />
+                                    </div>
                                 </div>
 
-                                <div className='w-full centering-col gap-y-0.5'>
-                                    <Label text='Username (cannot be modified yet)' />
-                                    <TextInput
-                                        value={props.account.username}
-                                        setValue={() => {}}
-                                        disabled={true}
+                                <div className='w-full gap-x-2 flex-row-right'>
+                                    <Button
+                                        text='cancel'
+                                        variant='flat-light-red'
+                                        onClick={() => {
+                                            setUsername(props.account.username);
+                                        }}
+                                        disabled={
+                                            username ===
+                                                props.account.username ||
+                                            usernamePending
+                                        }
+                                    />
+                                    <Button
+                                        text='change username'
+                                        variant='flat-light-blue'
+                                        onClick={openUsernameModal}
+                                        disabled={
+                                            username ===
+                                                props.account.username ||
+                                            usernamePending ||
+                                            !usernameValidation.valid
+                                        }
                                     />
                                 </div>
                             </>
@@ -158,18 +200,9 @@ function VisualAccountPage(props: {
                                         <TextInput
                                             value={password}
                                             setValue={setPassword}
-                                            disabled={pending}
+                                            disabled={passwordPending}
                                             type='password'
-                                        />
-                                    </div>
-
-                                    <div className='w-full centering-col gap-y-0.5'>
-                                        <Label text='Confirm New Password' />
-                                        <TextInput
-                                            value={passwordConfirmation}
-                                            setValue={setPasswordConfirmation}
-                                            disabled={pending}
-                                            type='password'
+                                            autoComplete='new-password'
                                         />
                                     </div>
                                 </div>
@@ -179,23 +212,49 @@ function VisualAccountPage(props: {
                                         variant='flat-light-red'
                                         onClick={() => {
                                             setPassword('');
-                                            setPasswordConfirmation('');
                                         }}
-                                        disabled={anyPasswordEmpty || pending}
+                                        disabled={
+                                            password.length === 0 ||
+                                            passwordPending
+                                        }
                                     />
                                     <Button
                                         text='change password'
                                         variant='flat-light-blue'
-                                        onClick={submitNewPassword}
-                                        disabled={anyPasswordEmpty || pending}
+                                        onClick={submitPassword}
+                                        disabled={
+                                            password.length === 0 ||
+                                            passwordPending ||
+                                            !passwordValidation.valid
+                                        }
                                     />
                                 </div>
                             </>
                         )}
                     </div>
-                    {!anyPasswordEmpty && tabIndex === 1 && (
-                        <ValidationBar validation={validation} />
+                    {username !== props.account.username && tabIndex === 0 && (
+                        <ValidationBar validation={usernameValidation} />
                     )}
+                    {password.length > 0 && tabIndex === 1 && (
+                        <ValidationBar validation={passwordValidation} />
+                    )}
+                </div>
+                <div className='w-full bg-white rounded shadow flex-col-left'>
+                    <div className='w-full border-b border-gray-200'>
+                        <nav className='px-4 py-2 space-x-2 flex-row-left'>
+                            <div className='pr-2 text-gray-500 font-weight-600'>
+                                Delete your account forever{' '}
+                            </div>
+                        </nav>
+                    </div>
+                    <div className='w-full p-3 flex-row-left'>
+                        <Button
+                            text='delete'
+                            variant='flat-light-red'
+                            icon={icons.trash}
+                            onClick={props.openDeleteUserModal}
+                        />
+                    </div>
                 </div>
                 <div className='p-4 border-[2px] border-dashed border-gray-300 rounded w-full'>
                     <h3 className='text-base leading-6 text-blue-900 opacity-80 font-weight-600'>

@@ -9,8 +9,9 @@ export default function ChoiceSummary(props: {
 }) {
     return (
         <>
-            {props.fieldConfig.options.map((option) => (
+            {props.fieldConfig.options.map((option, index) => (
                 <PercentageBarRow
+                    key={index}
                     total={props.count}
                     count={props.fieldResults[option.title]}
                     title={option.title}

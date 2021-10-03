@@ -10,12 +10,13 @@ interface Props {
 }
 function Field(props: Props) {
     const {fieldIndex, fieldConfig, results} = props;
-    const fieldResults: any = results.aggregation[fieldIndex];
+    const fieldResults: any = results[fieldConfig.identifier].value;
+    const fieldCount: any = results[fieldConfig.identifier].count;
 
     const summaryProps: any = {
         fieldConfig: fieldConfig,
         fieldResults: fieldResults,
-        count: results.count,
+        count: fieldCount,
     };
 
     const VisualField = (props: {
@@ -30,7 +31,12 @@ function Field(props: Props) {
         >
             <div className='w-full md:w-50% flex-col-left space-y-0.5'>
                 <div className='text-base text-gray-900 font-weight-700'>
-                    {fieldIndex + 1}. {fieldConfig.title}
+                    {fieldIndex + 1}. {fieldConfig.title}{' '}
+                    <span className='font-weight-500 opacity-70'>
+                        {`(${fieldCount} submission${
+                            fieldCount !== 1 ? 's' : ''
+                        })`}
+                    </span>
                 </div>
                 <div className='text-sm text-gray-600 font-weight-500'>
                     {props.subtitle}
@@ -71,8 +77,13 @@ function Field(props: Props) {
                         'border-2 border-gray-200 border-dashed flex-col-left text-left'
                     }
                 >
-                    <div className='w-full text-base text-gray-500 font-weight-700'>
-                        {fieldIndex + 1}. {fieldConfig.title}
+                    <div className='w-full text-base text-gray-600 font-weight-700'>
+                        {fieldIndex + 1}. {fieldConfig.title}{' '}
+                        <span className='font-weight-500 opacity-70'>
+                            {`(${fieldCount} submission${
+                                fieldCount !== 1 ? 's' : ''
+                            })`}
+                        </span>
                     </div>
                     <div
                         className={
@@ -84,7 +95,7 @@ function Field(props: Props) {
                     >
                         <div>
                             No summary for <strong>{fieldConfig.type}</strong>{' '}
-                            fields yet, raw data download coming very soon!
+                            fields
                         </div>
                     </div>
                 </div>

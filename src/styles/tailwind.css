@@ -103,11 +103,11 @@
         @apply fill-yellow-700;
     }
 
-    .icon-dark-teal .primary {
-        @apply fill-teal-300;
+    .icon-dark-cyan .primary {
+        @apply fill-cyan-400;
     }
-    .icon-dark-green .secondary {
-        @apply fill-teal-600;
+    .icon-dark-cyan .secondary {
+        @apply fill-cyan-800;
     }
 
     .icon-light-gray .primary {

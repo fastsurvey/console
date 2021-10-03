@@ -38,7 +38,9 @@ function Field(props: Props) {
 
     function copyField() {
         clipboardUtils.copy(
-            JSON.stringify(localIdUtils.remove.field(props.fieldConfig)),
+            JSON.stringify(
+                localIdUtils.remove.fieldForClipboard(props.fieldConfig),
+            ),
         );
     }
 

@@ -4,7 +4,10 @@ import {httpPut} from '../http-clients';
 async function updateAccount(
     account: types.Account,
     accessToken: types.AccessToken,
-    newPassword: string,
+    accountUpdate: {
+        password?: string;
+        username?: string;
+    },
     success: () => void,
     error: (code: 400 | 401 | 422 | 500) => void,
 ) {
@@ -14,11 +17,11 @@ async function updateAccount(
             JSON.stringify({
                 username: account.username,
                 email_address: account.email,
-                password: newPassword,
+                ...accountUpdate,
             }),
             accessToken,
-        ).catch((response: {statusCode: 400 | 401 | 422 | 500}) => {
-            throw response.statusCode;
+        ).catch((response: {response: {status: 400 | 401 | 422 | 500}}) => {
+            throw response.response.status;
         });
 
         success();

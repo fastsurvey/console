@@ -12,30 +12,32 @@ function DuplicateSurveyPopup(props: {
 }) {
     const [surveyName, setSurveyName] = useState(props.thisConfig.survey_name);
 
-    const validationMessage = formUtils.validators.surveyName(props.configs, {
-        ...props.thisConfig,
-        survey_name: surveyName,
-        local_id: -1,
-    });
+    const validationMessage = formUtils.validators.newSurveyName(
+        props.configs,
+        {
+            ...props.thisConfig,
+            survey_name: surveyName,
+            local_id: -1,
+        },
+    );
 
     if (props.configs) {
         return (
-            <>
+            <div className='w-full p-3 pt-1 flex-col-center gap-y-2 '>
                 <div className='w-full max-w-2xl centering-col gap-y-0.5'>
                     <Label text='New URL conform identifier' />
                     <TextInput value={surveyName} setValue={setSurveyName} />
                 </div>
                 {!validationMessage.valid && (
                     <div className='w-full px-3 mb-1 -mt-1 text-xs leading-tight text-red-500 font-weight-600'>
-                        {validationMessage.message.replace(
-                            'URL conform identifier ',
-                            '',
-                        )}
+                        {validationMessage.message
+                            .replace('URL conform identifier ', '')
+                            .replace(' in URL conform identifier', '')}
                     </div>
                 )}
                 <div className='w-full flex-row-right gap-x-2'>
                     <Button
-                        text='Cancel'
+                        text='cancel'
                         variant='flat-light-blue'
                         onClick={() => {
                             props.closeModal();
@@ -43,13 +45,13 @@ function DuplicateSurveyPopup(props: {
                         }}
                     />
                     <Button
-                        text='Duplicate'
+                        text='duplicate survey'
                         variant='flat-light-blue'
                         disabled={!validationMessage.valid}
                         onClick={() => props.duplicateSurvey(surveyName)}
                     />
                 </div>
-            </>
+            </div>
         );
     } else {
         return <div />;

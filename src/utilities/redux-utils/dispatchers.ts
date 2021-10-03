@@ -14,6 +14,13 @@ const dispatchers = {
                 account,
                 configs,
             }),
+    updateUsername:
+        (dispatch: any) =>
+        (username: string): void =>
+            dispatch({
+                type: 'UPDATE_USERNAME',
+                username,
+            }),
     logOut: (dispatch: any) => (): void =>
         dispatch({
             type: 'LOG_OUT',

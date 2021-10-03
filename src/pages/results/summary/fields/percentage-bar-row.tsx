@@ -26,25 +26,31 @@ export default function PercentageBarRow(props: {
     return (
         <div className='w-full space-y-[0.1875rem] flex-col-left first:pt-2'>
             <div className='w-full h-2 overflow-hidden rounded-sm flex-row-center'>
-                <div
-                    className={`h-full ${barColor}`}
-                    style={{
-                        width: `${(count / total) * 100 + 0}%`,
-                    }}
-                />
-                <div
-                    className='h-full bg-gray-200'
-                    style={{
-                        width: `${((total - count) / total) * 100 + 0}%`,
-                    }}
-                />
+                {total === 0 && <div className={`h-full w-full bg-gray-100`} />}
+                {total !== 0 && (
+                    <>
+                        <div
+                            className={`h-full ${barColor}`}
+                            style={{
+                                width: `${(count / total) * 100 + 0}%`,
+                            }}
+                        />
+                        <div
+                            className='h-full bg-gray-200'
+                            style={{
+                                width: `${((total - count) / total) * 100}%`,
+                            }}
+                        />
+                    </>
+                )}
             </div>
             <div
                 className={`text-sm leading-tight font-weight-700 ${textColor}`}
             >
                 {title}:{' '}
                 <span className='font-weight-500'>
-                    {count} {count !== 0 && `(${(count / total) * 100 + 0}%)`}
+                    {count}{' '}
+                    {count !== 0 && `(${Math.round((count / total) * 100)}%)`}
                 </span>
             </div>
         </div>

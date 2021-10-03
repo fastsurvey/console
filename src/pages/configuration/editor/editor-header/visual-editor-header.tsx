@@ -4,7 +4,10 @@ import {types} from '@types';
 import icons from '@assets/icons/icons';
 import {Button, ButtonGroup, TimePill} from '@components';
 
-const frontendURL = 'fastsurvey.de';
+const frontendUrl =
+    import.meta.env.VITE_ENV === 'development'
+        ? 'dev.fastsurvey.de'
+        : 'fastsurvey.de';
 
 function VisualEditorHeader(props: {
     configIsDiffering: boolean;
@@ -17,36 +20,55 @@ function VisualEditorHeader(props: {
     revertState(): void;
     openMessage(messageId: types.MessageId): void;
 
-    buttons: {
+    saveButtons: {
         icon: React.ReactNode;
         text: string;
         onClick(): void;
-        disabled?: boolean;
     }[];
+    timeButton: {
+        icon: React.ReactNode;
+        text: string;
+        onClick(): void;
+    };
+    publishButton: {
+        icon: React.ReactNode;
+        text: string;
+        onClick(): void;
+    };
 }) {
     const {title, survey_name, draft} = props.localConfig;
     const {username} = props.account;
 
     const linkContent = (
         <div className='text-sm text-blue-700 underline md:truncate font-weight-600'>
-            {frontendURL}/{username}/{survey_name}
+            {frontendUrl}/{username}/{survey_name}
         </div>
     );
 
     return (
         <div className={'w-full pl-2 flex-col-left mb-1'}>
             <div className='relative block w-full mb-8 md:mb-2 flex-row-right md:hidden'>
-                <ButtonGroup buttons={props.buttons} hideIconsOnMobile />
-                <div className='flex-shrink-0 w-2 md:w-4' />
-                <Button
-                    icon={draft ? icons.uploadCloud : icons.edit}
-                    text={draft ? 'publish' : 'edit'}
-                    onClick={() => {
-                        props.saveState({
-                            draft: !draft,
-                        });
-                    }}
-                />
+                {props.saveButtons.length > 0 && (
+                    <>
+                        <ButtonGroup
+                            buttons={props.saveButtons}
+                            hideIconsOnMobile
+                        />
+                        <div className='flex-shrink-0 w-2 md:w-4' />
+                    </>
+                )}
+                {props.localConfig.draft && (
+                    <Button
+                        {...props.publishButton}
+                        disabled={props.configIsDiffering}
+                    />
+                )}
+                {!props.localConfig.draft && (
+                    <Button
+                        {...props.timeButton}
+                        disabled={props.configIsDiffering}
+                    />
+                )}
             </div>
             <div className={'relative w-full flex-row-top'}>
                 {!props.configIsDiffering && (
@@ -85,17 +107,27 @@ function VisualEditorHeader(props: {
                         'relative hidden md:flex flex-row items-start justify-start'
                     }
                 >
-                    <ButtonGroup buttons={props.buttons} />
-                    <div className='flex-shrink-0 w-2' />
-                    <Button
-                        icon={draft ? icons.uploadCloud : icons.edit}
-                        text={draft ? 'publish' : 'edit'}
-                        onClick={() => {
-                            props.saveState({
-                                draft: !draft,
-                            });
-                        }}
-                    />
+                    {props.saveButtons.length > 0 && (
+                        <>
+                            <ButtonGroup
+                                buttons={props.saveButtons}
+                                hideIconsOnMobile
+                            />
+                            <div className='flex-shrink-0 w-2 md:w-4' />
+                        </>
+                    )}
+                    {props.localConfig.draft && (
+                        <Button
+                            {...props.publishButton}
+                            disabled={props.configIsDiffering}
+                        />
+                    )}
+                    {!props.localConfig.draft && (
+                        <Button
+                            {...props.timeButton}
+                            disabled={props.configIsDiffering}
+                        />
+                    )}
                 </div>
             </div>
             {draft && (
@@ -105,7 +137,7 @@ function VisualEditorHeader(props: {
             )}
             {!draft && (
                 <a
-                    href={`https://${frontendURL}/${username}/${survey_name}`}
+                    href={`https://${frontendUrl}/${username}/${survey_name}`}
                     className='px-1.5 py-0.5 transform -translate-x-1.5 rounded ringable'
                     target='_blank'
                     rel='noopener noreferrer'

@@ -1,4 +1,4 @@
-import {constant, every, times} from 'lodash';
+import {constant, every, max, times} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {
@@ -26,6 +26,7 @@ function ConfigEditor(props: {
     openMessage(messageId: types.MessageId): void;
     closeAllMessages(): void;
 }) {
+    const [submittingConfig, setSubmittingConfig] = useState(false);
     const [localConfig, setLocalConfigState] = useState(props.centralConfig);
     const [fieldValidation, setFieldValidation] = useState<
         types.ValidationResult[]
@@ -73,6 +74,13 @@ function ConfigEditor(props: {
 
     function pasteField(index: number) {
         function success(newFieldConfig: types.SurveyField) {
+            newFieldConfig = localIdUtils.initialize.field(
+                newFieldConfig,
+                localIdUtils.newId.field(localConfig),
+            );
+            newFieldConfig.identifier =
+                templateUtils.fieldIdentifier(localConfig);
+
             setFieldValidation(
                 dataUtils.array.insert(
                     fieldValidation,
@@ -80,19 +88,15 @@ function ConfigEditor(props: {
                     formUtils.validateField(newFieldConfig),
                 ),
             );
-
-            const newConfig = {
+            const newFields = dataUtils.array.insert(
+                localConfig.fields,
+                index,
+                newFieldConfig,
+            );
+            setLocalConfig({
                 ...localConfig,
-                fields: dataUtils.array.insert(
-                    localConfig.fields,
-                    index,
-                    localIdUtils.initialize.field(
-                        newFieldConfig,
-                        localIdUtils.newId.field(localConfig),
-                    ),
-                ),
-            };
-            setLocalConfig(newConfig);
+                fields: newFields,
+            });
         }
 
         function error() {
@@ -102,19 +106,37 @@ function ConfigEditor(props: {
     }
 
     function removeField(index: number) {
+        const fieldIdentifier = localConfig.fields[index].identifier;
+        const maxIdentifier = localConfig.max_identifier;
+        let newFields: types.SurveyField[] = dataUtils.array.remove(
+            localConfig.fields,
+            index,
+        );
+
+        if (fieldIdentifier > maxIdentifier) {
+            newFields = newFields.map((f: types.SurveyField) => ({
+                ...f,
+                identifier:
+                    f.identifier > fieldIdentifier
+                        ? f.identifier - 1
+                        : f.identifier,
+            }));
+        }
+
         setFieldValidation(dataUtils.array.remove(fieldValidation, index + 1));
-        setLocalConfig({
-            ...localConfig,
-            fields: dataUtils.array.remove(localConfig.fields, index),
-        });
+        setLocalConfig({...localConfig, fields: newFields});
     }
 
-    // modifyDraft = true -> convert drafts to published surveys and vice versa
     function saveState(configChanges?: object) {
-        const combinedConfig = {
+        setSubmittingConfig(true);
+        let combinedConfig: types.SurveyConfig = {
             ...localConfig,
             ...configChanges,
         };
+        // @ts-ignore
+        combinedConfig.max_identifier = max(
+            combinedConfig.fields.map((f) => f.identifier),
+        );
         props.closeAllMessages();
 
         const fieldsAreValid = every(fieldValidation.map((r) => r.valid));
@@ -145,6 +167,7 @@ function ConfigEditor(props: {
                 success,
                 error,
             );
+            setSubmittingConfig(false);
         } else {
             if (!fieldsAreValid) {
                 props.openMessage('editor-warning-validators');
@@ -155,6 +178,7 @@ function ConfigEditor(props: {
             if (!authModeIsValid) {
                 props.openMessage('editor-warning-authentication');
             }
+            setSubmittingConfig(false);
         }
     }
 
@@ -203,6 +227,7 @@ function ConfigEditor(props: {
                 removeField,
                 saveState,
                 revertState,
+                submittingConfig,
             }}
         />
     );

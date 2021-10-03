@@ -1,6 +1,7 @@
 export declare namespace types {
     export interface SurveyConfig {
         local_id: number;
+        max_identifier: number;
         survey_name: string;
         start: number;
         end: number;
@@ -18,6 +19,7 @@ export declare namespace types {
         | TextField;
 
     interface GeneralSurveyField {
+        identifier: number;
         local_id: number;
         title: string;
         description: string;
@@ -68,13 +70,14 @@ export declare namespace types {
     }
 
     export interface SurveyResults {
-        count: number;
-        aggregation: {
-            [key: string]: null | number | {[key: string]: number};
+        [key: string]: {
+            count: number;
+            value: null | number | {[key: string]: number};
         };
     }
 
     export type Color = 'red' | 'orange' | 'yellow' | 'green' | 'teal' | 'gray';
+    export type DownloadFormat = 'json' | 'csv';
 
     export interface ReduxState {
         loggingIn: boolean;
@@ -114,6 +117,8 @@ export declare namespace types {
         | 'error-link-invalid'
         | 'success-redirect-to-login'
         | 'success-password-changed'
+        | 'success-username-changed'
+        | 'error-username-taken'
         | 'warning-clipboard'
         | 'editor-warning-validators'
         | 'editor-warning-field-count'
@@ -143,6 +148,10 @@ export declare namespace types {
               accessToken: types.AccessToken;
               account: types.Account;
               configs: types.SurveyConfig[];
+          }
+        | {
+              type: 'UPDATE_USERNAME';
+              username: string;
           }
         | {
               type: 'OPEN_MESSAGE';

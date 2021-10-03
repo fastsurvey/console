@@ -6,7 +6,9 @@ import updateSurvey from './configuration/update-survey';
 import createAccount from './account/create-account';
 import verifyAccount from './account/verify-account';
 import updateAccount from './account/update-account';
+import removeAccount from './account/remove-account';
 import fetchResults from './results/fetch-results';
+import fetchSubmissions from './results/fetch-submissions';
 
 const backend = {
     loginWithCookie,
@@ -17,7 +19,9 @@ const backend = {
     createAccount,
     verifyAccount,
     updateAccount,
+    removeAccount,
     fetchResults,
+    fetchSubmissions,
 };
 
 export default backend;
