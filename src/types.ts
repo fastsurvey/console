@@ -120,6 +120,7 @@ export declare namespace types {
         | 'success-username-changed'
         | 'error-username-taken'
         | 'warning-clipboard'
+        | 'warning-clipboard-support'
         | 'editor-warning-validators'
         | 'editor-warning-field-count'
         | 'editor-warning-authentication'

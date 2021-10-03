@@ -99,8 +99,12 @@ function ConfigEditor(props: {
             });
         }
 
-        function error() {
-            props.openMessage('warning-clipboard');
+        function error(code: 'format' | 'support') {
+            if (code === 'support') {
+                props.openMessage('warning-clipboard-support');
+            } else {
+                props.openMessage('warning-clipboard');
+            }
         }
         clipboardUtils.paste(success, error);
     }

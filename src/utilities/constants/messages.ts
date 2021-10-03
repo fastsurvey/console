@@ -71,6 +71,11 @@ export const messages: {[key in types.MessageId]: types.Message} = {
         text: 'Invalid text format on clipboard',
         type: 'warning',
     },
+    'warning-clipboard-support': {
+        id: 'warning-clipboard-support',
+        text: 'Copy-Paste is not supported for your browser yet',
+        type: 'warning',
+    },
     'editor-warning-validators': {
         id: 'editor-warning-validators',
         text: 'Invalid fields: Please check all red hints',

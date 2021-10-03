@@ -3,18 +3,22 @@ import validateFormat from './validate-format';
 
 export function paste(
     success: (fieldConfig: types.SurveyField) => void,
-    error: () => void,
+    error: (code: 'format' | 'support') => void,
 ) {
-    navigator.clipboard.readText().then((text: string) => {
-        try {
-            const newField = JSON.parse(text);
+    try {
+        navigator.clipboard.readText().then((text: string) => {
+            try {
+                const newField = JSON.parse(text);
 
-            if (!validateFormat.fieldConfig(newField)) {
-                throw Error;
+                if (!validateFormat.fieldConfig(newField)) {
+                    throw Error;
+                }
+                success(newField);
+            } catch {
+                error('format');
             }
-            success(newField);
-        } catch {
-            error();
-        }
-    });
+        });
+    } catch {
+        error('support');
+    }
 }
