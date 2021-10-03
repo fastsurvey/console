@@ -139,12 +139,12 @@ const VisualSettings = (props: Props) => {
                                 <button
                                     className={
                                         'w-8 h-8 p-1 mx-0.5 rounded ringable ' +
-                                        (props.config.draft
+                                        (!props.disabled
                                             ? 'icon-blue '
                                             : 'icon-gray cursor-not-allowed ')
                                     }
                                     onClick={() => {
-                                        if (props.config.draft) {
+                                        if (!props.disabled) {
                                             props.updateConfig({
                                                 ...props.config,
                                                 survey_name:
