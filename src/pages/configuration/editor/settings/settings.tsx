@@ -88,6 +88,7 @@ function Settings(props: Props) {
             ...props.config,
             survey_name: newSurveyName,
             draft: true,
+            fields: props.config.fields.map((f, i) => ({...f, identifier: i})),
         };
         const success = () => {
             props.addConfig(newConfig);
