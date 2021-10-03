@@ -20,6 +20,8 @@ function VisualEditor(props: {
 
     saveState(configChanges?: object): void;
     revertState(): void;
+
+    submittingConfig: boolean;
 }) {
     return (
         <div
@@ -42,6 +44,7 @@ function VisualEditor(props: {
                         props.updateValidation(0, newState)
                     }
                     validation={props.fieldValidation[0]}
+                    disabled={props.submittingConfig}
                 />
                 {props.localConfig.fields.map((fieldConfig, index) => (
                     <div className='w-full' key={fieldConfig.local_id}>
@@ -50,7 +53,7 @@ function VisualEditor(props: {
                                 props.insertField(index, fieldType)
                             }
                             pasteField={() => props.pasteField(index)}
-                            disabled={false}
+                            disabled={props.submittingConfig}
                         />
                         <Field
                             fieldIndex={index}
@@ -58,7 +61,7 @@ function VisualEditor(props: {
                             setLocalFieldConfig={(newFieldConfig: object) =>
                                 props.setLocalFieldConfig(newFieldConfig, index)
                             }
-                            disabled={false}
+                            disabled={props.submittingConfig}
                             updateValidation={(
                                 newState: types.ValidationResult,
                             ) => props.updateValidation(index + 1, newState)}
@@ -77,7 +80,7 @@ function VisualEditor(props: {
                     pasteField={() =>
                         props.pasteField(props.localConfig.fields.length)
                     }
-                    disabled={false}
+                    disabled={props.submittingConfig}
                 />
             </div>
         </div>

@@ -26,6 +26,7 @@ function ConfigEditor(props: {
     openMessage(messageId: types.MessageId): void;
     closeAllMessages(): void;
 }) {
+    const [submittingConfig, setSubmittingConfig] = useState(false);
     const [localConfig, setLocalConfigState] = useState(props.centralConfig);
     const [fieldValidation, setFieldValidation] = useState<
         types.ValidationResult[]
@@ -127,6 +128,7 @@ function ConfigEditor(props: {
     }
 
     function saveState(configChanges?: object) {
+        setSubmittingConfig(true);
         let combinedConfig: types.SurveyConfig = {
             ...localConfig,
             ...configChanges,
@@ -165,6 +167,7 @@ function ConfigEditor(props: {
                 success,
                 error,
             );
+            setSubmittingConfig(false);
         } else {
             if (!fieldsAreValid) {
                 props.openMessage('editor-warning-validators');
@@ -175,6 +178,7 @@ function ConfigEditor(props: {
             if (!authModeIsValid) {
                 props.openMessage('editor-warning-authentication');
             }
+            setSubmittingConfig(false);
         }
     }
 
@@ -223,6 +227,7 @@ function ConfigEditor(props: {
                 removeField,
                 saveState,
                 revertState,
+                submittingConfig,
             }}
         />
     );

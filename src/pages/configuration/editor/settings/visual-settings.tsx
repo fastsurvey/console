@@ -120,6 +120,7 @@ const VisualSettings = (props: Props) => {
                                         title: newValue,
                                     });
                                 }}
+                                disabled={props.disabled}
                             />
                         </div>
                         <div className='w-full centering-col gap-y-0.5'>
@@ -133,6 +134,7 @@ const VisualSettings = (props: Props) => {
                                             survey_name: newValue,
                                         });
                                     }}
+                                    disabled={props.disabled}
                                 />
                                 <button
                                     className={
@@ -152,6 +154,7 @@ const VisualSettings = (props: Props) => {
                                             });
                                         }
                                     }}
+                                    disabled={props.disabled}
                                 >
                                     {icons.refresh}
                                 </button>
@@ -168,6 +171,7 @@ const VisualSettings = (props: Props) => {
                                         description: newValue,
                                     });
                                 }}
+                                disabled={props.disabled}
                             />
                         </div>
                     </>
@@ -184,6 +188,7 @@ const VisualSettings = (props: Props) => {
                                         draft: !newValue,
                                     });
                                 }}
+                                disabled={props.disabled}
                             />
                         </div>
                         <div className='w-full flex-col-left gap-y-0.5'>
@@ -196,6 +201,7 @@ const VisualSettings = (props: Props) => {
                                         start: timestamp,
                                     });
                                 }}
+                                disabled={props.disabled}
                             />
                         </div>
 
@@ -209,6 +215,7 @@ const VisualSettings = (props: Props) => {
                                         end: timestamp,
                                     });
                                 }}
+                                disabled={props.disabled}
                             />
                         </div>
                     </>
@@ -220,12 +227,14 @@ const VisualSettings = (props: Props) => {
                             variant='flat-light-blue'
                             icon={icons.duplicate}
                             onClick={props.openDuplicateModal}
+                            disabled={props.disabled}
                         />
                         <Button
                             text='delete'
                             variant='flat-light-red'
                             icon={icons.trash}
                             onClick={props.openRemoveModal}
+                            disabled={props.disabled}
                         />
                     </div>
                 )}

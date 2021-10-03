@@ -25,6 +25,8 @@ interface Props {
     closeModal(): void;
     removeConfig(surveyName: string): void;
     addConfig(newConfig: types.SurveyConfig): void;
+
+    disabled: boolean;
 }
 function Settings(props: Props) {
     let history = useHistory();
@@ -114,10 +116,10 @@ function Settings(props: Props) {
             config={props.config}
             commonProps={{
                 updateConfig,
-                disabled: !props.config.draft,
+                disabled: props.disabled,
                 config: props.config,
             }}
-            disabled={!props.config.draft}
+            disabled={props.disabled}
             openRemoveModal={openRemoveModal}
             openDuplicateModal={openDuplicateModal}
             validation={props.validation}
