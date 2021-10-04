@@ -49,7 +49,7 @@ function EditorFormCard(props: Props) {
                 <div
                     className={
                         'flex-row-center cursor-pointer leading-tight py-2 ' +
-                        'pointer-events-none md:pointer-events-auto flex-grow-0'
+                        'pointer-events-none md:pointer-events-auto flex-grow'
                     }
                     onClick={toggle}
                 >
@@ -59,7 +59,7 @@ function EditorFormCard(props: Props) {
                     <div
                         className={
                             'flex flex-col items-start justify-start md:flex-row md:items-center ' +
-                            'flex-grow-0 mr-4 md:mr-20 '
+                            'flex-grow mr-4 md:mr-20 '
                         }
                     >
                         <div className='flex-shrink-0 mb-2 mr-3 md:mb-0 font-weight-600 whitespace-nowrap'>
@@ -72,8 +72,6 @@ function EditorFormCard(props: Props) {
                         )}
                     </div>
                 </div>
-
-                <div className='flex-grow' />
 
                 <div className={'relative flex flex-row group '}>
                     <div

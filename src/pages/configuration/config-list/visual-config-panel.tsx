@@ -80,7 +80,7 @@ function VisualConfigPanel(props: Props) {
                             'rounded-bl group-focus:rounded ' +
                             'group-hover:bg-gray-200 group-focus:bg-gray-200 ' +
                             'text-center text-sm text-gray-700 font-weight-600 ' +
-                            'group-hover:text-gray-900 group-focus:text-gray-900 '
+                            'group-hover:text-black group-focus:text-black '
                         }
                     >
                         edit
@@ -89,8 +89,9 @@ function VisualConfigPanel(props: Props) {
                 <div className={'relative h-9'}>
                     <button
                         className={
-                            'p-2 h-9 rounded-br focus:rounded ringable icon-gray ' +
-                            'bg-gray-100 hover:bg-gray-200 focus:bg-gray-200'
+                            'p-2 h-9 rounded-br focus:rounded ringable fill-current ' +
+                            'bg-gray-100 hover:bg-gray-200 focus:bg-gray-200 ' +
+                            'text-gray-700 hover:text-black focus:text-black '
                         }
                         onClick={() => setDropDownIsVisible(!dropDownIsVisible)}
                     >
