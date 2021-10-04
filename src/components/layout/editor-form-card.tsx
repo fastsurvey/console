@@ -110,7 +110,7 @@ function EditorFormCard(props: Props) {
                 <div
                     className={
                         'w-full centering-col gap-y-6 px-3 ' +
-                        (props.collapse ? 'h-0 overflow-hidden ' : 'py-2 ')
+                        (props.collapse ? 'h-0 overflow-hidden ' : 'pt-2 pb-3 ')
                     }
                 >
                     {props.children}

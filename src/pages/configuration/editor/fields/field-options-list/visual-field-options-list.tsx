@@ -61,7 +61,7 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
                     </button>
                 </div>
             ))}
-            <div className={'w-full pr-[2.375rem] h-9 mb-2'}>
+            <div className={'w-full pr-[2.375rem] h-9 mb-1'}>
                 <button
                     onClick={props.addFieldOption}
                     className={
