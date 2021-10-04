@@ -1,9 +1,7 @@
 import React, {useState} from 'react';
 import {sortBy} from 'lodash';
-import {Link} from 'react-router-dom';
 import {types} from '@types';
-import {Button, SearchBar} from '@components';
-import {icons} from '@assets';
+import {SearchBar} from '@components';
 import VisualConfigPanel from './visual-config-panel';
 
 function VisualConfigList(props: {
@@ -41,16 +39,11 @@ function VisualConfigList(props: {
                         ),
                         ['survey_name'],
                     ).map((config) => (
-                        <Link
-                            to={`/configuration/${config.survey_name}`}
+                        <VisualConfigPanel
+                            config={config}
                             key={config.local_id}
-                            className='rounded ringable group'
-                        >
-                            <VisualConfigPanel
-                                config={config}
-                                account={props.account}
-                            />
-                        </Link>
+                            account={props.account}
+                        />
                     ))}
                     <button
                         type='button'
