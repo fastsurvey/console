@@ -73,7 +73,8 @@ function SummaryHeader(props: {
                                     key={format}
                                     className={
                                         'w-full px-6 h-8 font-weight-600 ' +
-                                        'hover:bg-gray-600 hover:text-white '
+                                        'hover:bg-gray-600 hover:text-white ' +
+                                        'focus:bg-gray-600 focus:text-white focus:outline-none '
                                     }
                                     onClick={() => {
                                         props.download(format);

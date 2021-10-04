@@ -34,17 +34,23 @@ function VisualConfigPanel(props: Props) {
             }
         >
             <div className={'w-full p-3 bg-white rounded-t flex-col-left'}>
-                <div className='w-full flex-row-top md:h-6'>
+                <div
+                    className={
+                        'w-full flex md:h-6 ' +
+                        'flex-col-reverse items-center justify-center ' +
+                        'sm:flex-row sm:items-center sm:justify-center '
+                    }
+                >
                     <div
                         className={
-                            'pr-4 text-base text-gray-900 font-weight-600 ' +
-                            'mb-1 md:mb-0 md:truncate leading-tight'
+                            'pr-4 text-base text-gray-800 font-weight-600 ' +
+                            'mb-1 md:mb-0 md:truncate leading-tight ' +
+                            'w-full sm:w-auto sm:flex-grow'
                         }
                     >
                         {title}
                     </div>
-                    <div className='flex-max' />
-                    <div className='flex-shrink-0'>
+                    <div className='flex-shrink-0 w-full pb-1.5 sm:w-auto flex-row-right sm:pb-0'>
                         <TimePill config={props.config} flat />
                     </div>
                 </div>
@@ -55,15 +61,17 @@ function VisualConfigPanel(props: Props) {
                             : `https://${baseUrl}/${username}/${survey_name}`
                     }
                     className={
-                        'text-sm underline md:h-5 md:truncate font-weight-600 text-blue-800  ' +
+                        'text-sm underline md:h-5 md:truncate font-weight-600 ' +
+                        'text-blue-800 mt-1 ' +
                         (props.config.draft
                             ? 'cursor-not-allowed opacity-70'
-                            : 'hover:text-blue-500')
+                            : 'hover:text-blue-500 focus:text-blue-500 px-1 -mx-1 ringable rounded-sm mt-1')
                     }
+                    target='_blank'
                 >
-                    /{username}/{survey_name}
+                    {baseUrl}/{username}/{survey_name}
                 </a>
-                <div className='mt-3 text-sm text-gray-600 md:h-5 md:truncate font-weight-500 no-selection'>
+                <div className='mt-1 text-sm text-gray-600 md:h-5 md:truncate font-weight-500 no-selection'>
                     {props.config.fields.length} Question
                     {props.config.fields.length === 1 ? '' : 's'}
                     {usesAuthentication ? ', Email Verification' : ''}
@@ -112,7 +120,8 @@ function VisualConfigPanel(props: Props) {
                                     key={format}
                                     className={
                                         'w-full px-6 h-8 font-weight-600 ' +
-                                        'hover:bg-gray-600 hover:text-white '
+                                        'hover:bg-gray-600 hover:text-white ' +
+                                        'focus:bg-gray-600 focus:text-white focus:outline-none '
                                     }
                                     onClick={
                                         format === 'duplicate'
