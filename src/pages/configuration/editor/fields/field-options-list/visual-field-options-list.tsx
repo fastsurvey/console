@@ -20,7 +20,7 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
             <Label text='Options to select' />
             {props.fieldConfig.options.map((optionConfig, optionIndex) => (
                 <div
-                    className='w-full flex-row-left gap-x-2'
+                    className='w-full text-sm flex-row-left gap-x-2'
                     key={optionConfig.local_id}
                 >
                     <TextInput
@@ -42,7 +42,7 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
                     />
                     <button
                         className={
-                            'w-8 h-8 p-1 rounded icon-blue ringable ' +
+                            'w-8 h-8 p-1.5 rounded icon-blue ringable ' +
                             (props.disabled
                                 ? 'opacity-60 cursor-not-allowed '
                                 : ' ')
@@ -61,14 +61,27 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
                     </button>
                 </div>
             ))}
-            <div className='w-full pr-[2.375rem] flex-row-right'>
-                <Button
+            <div className={'w-full pr-[2.375rem] h-9 mb-2'}>
+                <button
+                    onClick={props.addFieldOption}
+                    className={
+                        'w-full h-full rounded flex-row-left px-3 ringable ' +
+                        'text-sm font-weight-500 text-gray-700 cursor-pointer ' +
+                        'border border-dashed border-gray-300 bg-gray-50 text-gray-300 ' +
+                        'hover:border-gray-500 hover:bg-gray-100 hover:text-gray-500 ' +
+                        'focus:border-transparent focus:bg-gray-100 focus:text-gray-500 '
+                    }
+                >
+                    add option
+                </button>
+
+                {/*<Button
                     text='Add Option'
                     onClick={props.addFieldOption}
                     icon={icons.addSquare}
                     variant='flat-light-blue'
                     disabled={props.disabled}
-                />
+                />*/}
             </div>
         </div>
     );
