@@ -8,6 +8,8 @@ function VisualConfigList(props: {
     configs: types.SurveyConfig[];
     addSurvey(): void;
     account: types.Account;
+    openRemoveModal(config: types.SurveyConfig): () => void;
+    openDuplicateModal(config: types.SurveyConfig): () => void;
 }) {
     const [value, setValue] = useState('');
     return (
@@ -43,6 +45,10 @@ function VisualConfigList(props: {
                             config={config}
                             key={config.local_id}
                             account={props.account}
+                            openRemoveModal={props.openRemoveModal(config)}
+                            openDuplicateModal={props.openDuplicateModal(
+                                config,
+                            )}
                         />
                     ))}
                     <button

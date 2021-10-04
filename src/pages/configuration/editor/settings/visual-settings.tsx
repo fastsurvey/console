@@ -1,11 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {Label, TextArea, DatePicker, TextInput, Button} from '@components';
+import {Label, TextArea, DatePicker, TextInput, Toggle} from '@components';
 import {icons} from '@assets';
 import {types} from '@types';
 import {Menu, Transition} from '@headlessui/react';
 import {ChevronDownIcon} from '@heroicons/react/solid';
 import {templateUtils} from '@utilities';
-import Toggle from '../../../../components/form/toggle';
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ');
@@ -17,8 +16,6 @@ interface Props {
     updateConfig(config: types.SurveyConfig, skipValidation?: boolean): void;
     commonProps: any;
     disabled: boolean;
-    openRemoveModal(): void;
-    openDuplicateModal(): void;
     validation: types.ValidationResult;
 }
 const VisualSettings = (props: Props) => {
@@ -28,7 +25,6 @@ const VisualSettings = (props: Props) => {
     const tabs = [
         {name: 'About', href: '#', icon: icons.textCursor},
         {name: 'Visibility', href: '#', icon: icons.time},
-        {name: 'Actions', href: '#', icon: icons.gear},
     ];
 
     return (
@@ -219,24 +215,6 @@ const VisualSettings = (props: Props) => {
                             />
                         </div>
                     </>
-                )}
-                {tabIndex === 2 && (
-                    <div className='w-full gap-x-2 flex-row-left'>
-                        <Button
-                            text='duplicate'
-                            variant='flat-light-blue'
-                            icon={icons.duplicate}
-                            onClick={props.openDuplicateModal}
-                            disabled={props.disabled}
-                        />
-                        <Button
-                            text='delete'
-                            variant='flat-light-red'
-                            icon={icons.trash}
-                            onClick={props.openRemoveModal}
-                            disabled={props.disabled}
-                        />
-                    </div>
                 )}
             </div>
             {props.validation && (

@@ -13,6 +13,8 @@ let baseUrl =
 interface Props {
     account: types.Account;
     config: types.SurveyConfig;
+    openRemoveModal(): void;
+    openDuplicateModal(): void;
 }
 function VisualConfigPanel(props: Props) {
     const {title, survey_name} = props.config;
@@ -111,7 +113,11 @@ function VisualConfigPanel(props: Props) {
                                         'w-full px-6 h-8 font-weight-600 ' +
                                         'hover:bg-gray-600 hover:text-white '
                                     }
-                                    onClick={() => {}}
+                                    onClick={
+                                        format === 'duplicate'
+                                            ? props.openDuplicateModal
+                                            : props.openRemoveModal
+                                    }
                                 >
                                     {format}
                                 </button>
