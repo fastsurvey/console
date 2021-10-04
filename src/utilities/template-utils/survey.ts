@@ -2,13 +2,10 @@ import {max} from 'lodash';
 import {types} from '@types';
 import surveyName from './survey-name';
 
-export const survey = (configs: types.SurveyConfig[]): types.SurveyConfig => {
+export const survey = (configs: types.SurveyConfig[]): any => {
     const now = Math.floor(Date.now() / 1000);
-    const newLocalId: any = max(configs.map((c) => c.local_id));
     const newSurveyName: string = surveyName(configs);
     return {
-        max_identifier: 0,
-        local_id: newLocalId,
         survey_name: newSurveyName,
         start: now,
         end: now + 3600 * 24,
@@ -19,7 +16,6 @@ export const survey = (configs: types.SurveyConfig[]): types.SurveyConfig => {
             {
                 identifier: 0,
                 type: 'option',
-                local_id: newLocalId * 1000,
                 title: 'Data Privacy',
                 description: 'I accept the terms and conditions',
                 required: true,

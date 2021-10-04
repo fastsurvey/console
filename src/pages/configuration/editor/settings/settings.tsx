@@ -7,6 +7,8 @@ import {formUtils, reduxUtils, backend} from '@utilities';
 import VisualSettings from './visual-settings';
 import RemoveSurveyPopup from './remove-survey-popup';
 import DuplicateSurveyPopup from './duplicate-survey-popup';
+import {O_TRUNC} from 'constants';
+import localIdUtils from '../../../../utilities/local-id-utils/index';
 
 interface Props {
     account: types.Account;
@@ -86,12 +88,13 @@ function Settings(props: Props) {
         }
     }
     function duplicateSurvey(newSurveyName: string) {
-        const newConfig = {
+        const newConfig = localIdUtils.remove.survey({
             ...props.config,
             survey_name: newSurveyName,
             draft: true,
             fields: props.config.fields.map((f, i) => ({...f, identifier: i})),
-        };
+        });
+
         const success = () => {
             props.addConfig(newConfig);
             props.closeModal();
