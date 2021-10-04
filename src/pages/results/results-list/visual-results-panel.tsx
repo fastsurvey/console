@@ -3,6 +3,7 @@ import {types} from '@types';
 import {TimePill} from '@components';
 import {backend} from '@utilities';
 import {isEmpty, filter} from 'lodash';
+import {Link} from 'react-router-dom';
 
 interface Props {
     account: types.Account;
@@ -28,7 +29,7 @@ function VisualConfigPanel(props: Props) {
                 <div className='w-full flex-row-top md:h-6'>
                     <div
                         className={
-                            'pr-4 text-lg text-gray-800 font-weight-600 ' +
+                            'pr-4 text-base text-gray-800 font-weight-600 ' +
                             'mb-1 md:mb-0 md:truncate leading-tight'
                         }
                     >
@@ -48,15 +49,22 @@ function VisualConfigPanel(props: Props) {
                     {usesAuthentication ? ', Email Verification' : ''}
                 </div>
             </div>
-            <div
-                className={
-                    'w-full px-3 py-2 h-10 bg-gray-100 rounded-b no-selection ' +
-                    'group-hover:bg-gray-200 group-focus:bg-gray-200 ' +
-                    'text-center text-blue-900 font-weight-600'
-                }
+            <Link
+                to={`/results/${survey_name}`}
+                className='flex-grow w-full rounded ringable'
             >
-                View Results
-            </div>
+                <div
+                    className={
+                        'px-3 h-9 bg-gray-100 no-selection flex-row-center ' +
+                        'rounded-b group-focus:rounded w-full ' +
+                        'group-hover:bg-gray-200 group-focus:bg-gray-200 ' +
+                        'text-center text-sm text-gray-700 font-weight-600 ' +
+                        'group-hover:text-black group-focus:text-black '
+                    }
+                >
+                    view results
+                </div>
+            </Link>
         </div>
     );
 }

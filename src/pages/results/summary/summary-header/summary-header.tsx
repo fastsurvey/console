@@ -53,7 +53,8 @@ function SummaryHeader(props: {
                 <div className='flex-max' />
                 <div className='relative'>
                     <Button
-                        text={showDownloadOptions ? 'hide' : 'download'}
+                        text={showDownloadOptions ? undefined : 'download'}
+                        icon={showDownloadOptions ? icons.close : undefined}
                         loading={props.isDownloading}
                         onClick={() =>
                             setShowDownloadOptions(!showDownloadOptions)

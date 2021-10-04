@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function Button(props: {
-    text: string;
+    text?: string;
     icon?: React.ReactNode;
     onClick?(): void;
     variant?: 'flat-light-blue' | 'flat-light-red';
@@ -43,7 +43,16 @@ export default function Button(props: {
             onClick={onClick && !disabled ? onClick : () => {}}
             disabled={disabled || loading ? disabled || loading : false}
         >
-            {icon && <div className='p-1 -mr-1.5 w-7 h-7 z-0'>{icon}</div>}
+            {icon && (
+                <div
+                    className={
+                        'p-1 w-7 h-7 z-0  ' +
+                        (text !== undefined ? '-mr-1.5 ' : ' ')
+                    }
+                >
+                    {icon}
+                </div>
+            )}
             {loading && (
                 <div
                     className={
@@ -56,8 +65,9 @@ export default function Button(props: {
                     ...
                 </div>
             )}
-
-            <div className={'font-weight-600 px-2.5 z-0'}>{text}</div>
+            {text !== undefined && (
+                <div className={'font-weight-600 px-2.5 z-0'}>{text}</div>
+            )}
         </button>
     );
 }
