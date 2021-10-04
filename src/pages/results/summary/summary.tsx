@@ -121,7 +121,7 @@ function Summary(props: {
                         break;
                     case 'option':
                         if (fieldData !== null) {
-                            outputRow.push(escapeQuotes(fieldData));
+                            outputRow.push(`${fieldData}`);
                         } else {
                             outputRow.push('');
                         }
