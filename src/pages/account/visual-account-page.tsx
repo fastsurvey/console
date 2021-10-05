@@ -63,7 +63,7 @@ function VisualAccountPage(props: {
                     Modify your Account
                 </h1>
                 <div className='w-full bg-white rounded shadow flex-col-left'>
-                    <div className='z-10 w-full px-4 py-1.5 border-b border-gray-200 md:hidden flex-row-left'>
+                    <div className='z-10 w-full px-4 py-1.5 border-b border-gray-200 md:hidden flex flex-row items-center justify-center'>
                         <div className='mr-2 text-base text-gray-900 font-weight-700'>
                             {tabs[tabIndex].name}
                         </div>

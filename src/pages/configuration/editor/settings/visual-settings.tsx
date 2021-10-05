@@ -29,7 +29,7 @@ const VisualSettings = (props: Props) => {
 
     return (
         <div className='mt-4 bg-white rounded shadow-md flex-col-center'>
-            <div className='z-10 w-full px-4 py-1.5 border-b border-gray-200 md:hidden flex-row-left'>
+            <div className='z-10 w-full px-4 py-1.5 border-b border-gray-200 md:hidden flex flex-row items-center justify-center'>
                 <div className='mr-2 text-base text-gray-900 font-weight-700'>
                     {tabs[tabIndex].name}
                 </div>
@@ -80,7 +80,7 @@ const VisualSettings = (props: Props) => {
                     </Transition>
                 </Menu>
             </div>
-            <div className='hidden w-full sm:block'>
+            <div className='hidden w-full md:block'>
                 <div className='w-full border-b border-gray-200'>
                     <nav className='px-4 py-2 space-x-2 flex-row-left'>
                         <div className='pr-2 text-gray-900 font-weight-600'>
