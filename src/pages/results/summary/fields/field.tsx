@@ -26,13 +26,14 @@ function Field(props: Props) {
         <div
             className={
                 'w-full bg-white rounded shadow px-4 py-3 ' +
-                'flex-col-center md:flex-row space-y-4 md:space-y-0 md:space-x-4'
+                'flex flex-col md:flex-row items-start justify-start ' +
+                'space-y-4 md:space-y-0 md:space-x-4'
             }
         >
             <div className='w-full md:w-50% flex-col-left space-y-0.5'>
                 <div className='text-base text-gray-900 font-weight-700'>
                     {fieldIndex + 1}. {fieldConfig.title}{' '}
-                    <span className='font-weight-500 opacity-70'>
+                    <span className='font-weight-500 opacity-70 whitespace-nowrap'>
                         {`(${fieldCount} submission${
                             fieldCount !== 1 ? 's' : ''
                         })`}
@@ -79,7 +80,7 @@ function Field(props: Props) {
                 >
                     <div className='w-full text-base text-gray-600 font-weight-700'>
                         {fieldIndex + 1}. {fieldConfig.title}{' '}
-                        <span className='font-weight-500 opacity-70'>
+                        <span className='font-weight-500 opacity-70 whitespace-nowrap'>
                             {`(${fieldCount} submission${
                                 fieldCount !== 1 ? 's' : ''
                             })`}

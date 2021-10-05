@@ -1,5 +1,4 @@
 import {types} from '@types';
-import {localIdUtils} from '@utilities';
 import {httpPost} from '../http-clients';
 
 async function createSurvey(
@@ -12,7 +11,7 @@ async function createSurvey(
     try {
         await httpPost(
             `/users/${account.username}/surveys/${config.survey_name}`,
-            localIdUtils.remove.survey(config),
+            config,
             accessToken,
         ).catch((error) => {
             throw error.response.status;

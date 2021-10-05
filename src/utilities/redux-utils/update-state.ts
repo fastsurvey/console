@@ -86,12 +86,14 @@ function updateState(state: types.ReduxState, action: types.ReduxAction) {
 
         case 'ADD_CONFIG':
             assert(newState.configs !== undefined);
+            const newSurvey = localIdUtils.initialize.survey(
+                action.config,
+                newState.configs.length,
+            );
+
             newState.configs = [
                 ...newState.configs,
-                localIdUtils.initialize.survey(
-                    action.config,
-                    newState.configs.length,
-                ),
+                {...newSurvey, max_identifier: newSurvey.fields.length - 1},
             ];
             break;
 

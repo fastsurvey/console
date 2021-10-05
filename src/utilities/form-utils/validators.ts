@@ -220,7 +220,12 @@ export const validators = {
         }
     },
     maxSelect: (fieldConfig: types.SelectionField): types.ValidationResult => {
-        if (fieldConfig.max_select > fieldConfig.options.length) {
+        if (fieldConfig.max_select === 0) {
+            return {
+                valid: false,
+                message: 'Maximum has to be greater than 0',
+            };
+        } else if (fieldConfig.max_select > fieldConfig.options.length) {
             return {
                 valid: false,
                 message: 'Maximum is larger than the number of fields',

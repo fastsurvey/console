@@ -40,17 +40,11 @@ function VisualConfigList(props: {
                         ),
                         ['survey_name'],
                     ).map((config) => (
-                        <Link
-                            to={`/results/${config.survey_name}`}
-                            key={config.local_id}
-                            className='rounded ringable group'
-                        >
-                            <VisualResultsPanel
-                                config={config}
-                                account={props.account}
-                                accessToken={props.accessToken}
-                            />
-                        </Link>
+                        <VisualResultsPanel
+                            config={config}
+                            account={props.account}
+                            accessToken={props.accessToken}
+                        />
                     ))}
                 </div>
 

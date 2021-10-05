@@ -1,15 +1,15 @@
 import React, {useState} from 'react';
 import {sortBy} from 'lodash';
-import {Link} from 'react-router-dom';
 import {types} from '@types';
-import {Button, SearchBar} from '@components';
-import {icons} from '@assets';
+import {SearchBar} from '@components';
 import VisualConfigPanel from './visual-config-panel';
 
 function VisualConfigList(props: {
     configs: types.SurveyConfig[];
     addSurvey(): void;
     account: types.Account;
+    openRemoveModal(config: types.SurveyConfig): () => void;
+    openDuplicateModal(config: types.SurveyConfig): () => void;
 }) {
     const [value, setValue] = useState('');
     return (
@@ -41,21 +41,20 @@ function VisualConfigList(props: {
                         ),
                         ['survey_name'],
                     ).map((config) => (
-                        <Link
-                            to={`/configuration/${config.survey_name}`}
+                        <VisualConfigPanel
+                            config={config}
                             key={config.local_id}
-                            className='rounded ringable group'
-                        >
-                            <VisualConfigPanel
-                                config={config}
-                                account={props.account}
-                            />
-                        </Link>
+                            account={props.account}
+                            openRemoveModal={props.openRemoveModal(config)}
+                            openDuplicateModal={props.openDuplicateModal(
+                                config,
+                            )}
+                        />
                     ))}
                     <button
                         type='button'
                         className={
-                            'relative w-full px-2 py-6 flex-row-center min-h-[8.75rem] ' +
+                            'relative w-full px-2 py-6 flex-row-center min-h-[8.25rem] ' +
                             'border-2 border-gray-400 border-dashed rounded ' +
                             'text-opacity-60 border-gray-300 ringable ' +
                             'hover:text-opacity-100 hover:border-gray-400 ' +

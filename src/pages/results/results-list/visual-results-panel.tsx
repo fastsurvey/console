@@ -1,8 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {types} from '@types';
 import {TimePill} from '@components';
-import {backend} from '@utilities';
 import {isEmpty, filter} from 'lodash';
+import {Link} from 'react-router-dom';
+
+const VITE_ENV = import.meta.env.VITE_ENV;
+
+let baseUrl =
+    VITE_ENV === 'development' ? 'dev.fastsurvey.de' : 'fastsurvey.de';
 
 interface Props {
     account: types.Account;
@@ -18,45 +23,61 @@ function VisualConfigPanel(props: Props) {
     );
 
     return (
-        <div
-            className={
-                'w-full rounded shadow centering-col ' +
-                'cursor-pointer bg-white '
-            }
-        >
+        <div className={'w-full rounded shadow centering-col bg-white '}>
             <div className={'w-full p-3 bg-white rounded-t flex-col-left'}>
-                <div className='w-full flex-row-top md:h-6'>
+                <div
+                    className={
+                        'w-full flex md:h-6 ' +
+                        'flex-col-reverse items-center justify-center ' +
+                        'sm:flex-row sm:items-center sm:justify-center '
+                    }
+                >
                     <div
                         className={
-                            'pr-4 text-lg text-gray-800 font-weight-600 ' +
-                            'mb-1 md:mb-0 md:truncate leading-tight'
+                            'pr-4 text-base text-gray-800 font-weight-600 ' +
+                            'mb-1 md:mb-0 md:truncate leading-tight ' +
+                            'w-full sm:w-auto sm:flex-grow'
                         }
                     >
                         {title}
                     </div>
-                    <div className='flex-max' />
-                    <div className='flex-shrink-0'>
+                    <div className='flex-shrink-0 w-full pb-1.5 sm:w-auto flex-row-right sm:pb-0'>
                         <TimePill config={props.config} flat />
                     </div>
                 </div>
-                <div className='text-sm text-blue-700 underline md:h-5 md:truncate font-weight-600'>
-                    /{username}/{survey_name}
-                </div>
-                <div className='mt-3 text-sm text-gray-600 md:h-5 md:truncate font-weight-500 no-selection'>
+                <a
+                    href={`https://${baseUrl}/${username}/${survey_name}`}
+                    className={
+                        'text-sm underline md:h-5 md:truncate font-weight-600 ' +
+                        'text-blue-800 hover:text-blue-500 break-all ' +
+                        'px-1 -mx-1 ringable rounded-sm mt-1 focus:text-blue-500'
+                    }
+                    target='_blank'
+                >
+                    {baseUrl}/{username}/{survey_name}
+                </a>
+                <div className='mt-1 text-sm text-gray-600 md:h-5 md:truncate font-weight-500 no-selection'>
                     {props.config.fields.length} Question
                     {props.config.fields.length === 1 ? '' : 's'}
                     {usesAuthentication ? ', Email Verification' : ''}
                 </div>
             </div>
-            <div
-                className={
-                    'w-full px-3 py-2 h-10 bg-gray-100 rounded-b no-selection ' +
-                    'group-hover:bg-gray-200 group-focus:bg-gray-200 ' +
-                    'text-center text-blue-900 font-weight-600'
-                }
+            <Link
+                to={`/results/${survey_name}`}
+                className='flex-grow w-full rounded ringable group'
             >
-                View Results
-            </div>
+                <div
+                    className={
+                        'px-3 h-9 bg-gray-100 no-selection flex-row-center ' +
+                        'rounded-b group-focus:rounded w-full ' +
+                        'group-hover:bg-gray-200 group-focus:bg-gray-200 ' +
+                        'text-center text-sm text-gray-700 font-weight-600 ' +
+                        'group-hover:text-black group-focus:text-black '
+                    }
+                >
+                    view results
+                </div>
+            </Link>
         </div>
     );
 }

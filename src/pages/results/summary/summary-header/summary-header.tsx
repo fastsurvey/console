@@ -53,7 +53,8 @@ function SummaryHeader(props: {
                 <div className='flex-max' />
                 <div className='relative'>
                     <Button
-                        text={showDownloadOptions ? 'hide' : 'download'}
+                        text={showDownloadOptions ? undefined : 'download'}
+                        icon={showDownloadOptions ? icons.close : undefined}
                         loading={props.isDownloading}
                         onClick={() =>
                             setShowDownloadOptions(!showDownloadOptions)
@@ -72,7 +73,8 @@ function SummaryHeader(props: {
                                     key={format}
                                     className={
                                         'w-full px-6 h-8 font-weight-600 ' +
-                                        'hover:bg-gray-600 hover:text-white '
+                                        'hover:bg-gray-600 hover:text-white ' +
+                                        'focus:bg-gray-600 focus:text-white focus:outline-none '
                                     }
                                     onClick={() => {
                                         props.download(format);

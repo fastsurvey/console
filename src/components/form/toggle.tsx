@@ -18,7 +18,7 @@ export default function Toggle(props: {
             : ' text-gray-500');
 
     return (
-        <div className='relative my-1 bg-gray-100 rounded centering-row gap-x-1'>
+        <div className='relative mt-1 bg-gray-100 rounded centering-row gap-x-1'>
             <button
                 className={sharedClasses(value)}
                 onClick={!props.disabled ? () => setValue(true) : () => {}}
