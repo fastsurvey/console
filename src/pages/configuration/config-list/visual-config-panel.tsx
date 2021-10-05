@@ -57,7 +57,7 @@ function VisualConfigPanel(props: Props) {
                     }
                     className={
                         'text-sm underline md:h-5 md:truncate font-weight-600 ' +
-                        'text-blue-800 mt-1 ' +
+                        'text-blue-800 mt-1 break-all ' +
                         (props.config.draft
                             ? 'cursor-not-allowed opacity-70'
                             : 'hover:text-blue-500 focus:text-blue-500 px-1 -mx-1 ringable rounded-sm mt-1')
