@@ -27,12 +27,7 @@ function VisualConfigPanel(props: Props) {
     const [dropDownIsVisible, setDropDownIsVisible] = useState(false);
 
     return (
-        <div
-            className={
-                'w-full rounded shadow centering-col ' +
-                'cursor-pointer bg-white '
-            }
-        >
+        <div className={'w-full rounded shadow centering-col bg-white '}>
             <div className={'w-full p-3 bg-white rounded-t flex-col-left'}>
                 <div
                     className={
