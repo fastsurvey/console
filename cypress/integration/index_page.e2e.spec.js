@@ -1,5 +1,5 @@
-describe('The Landing Page', () => {
-    it('redirect to login works', () => {
+describe('The Index Page', () => {
+    it('redirect correctly to login', () => {
         cy.visit('/');
         cy.url().should('eq', 'http://localhost:3000/login');
     });
