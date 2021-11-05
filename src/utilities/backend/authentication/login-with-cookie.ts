@@ -39,9 +39,4 @@ async function loginWithCookie(
     }
 }
 
-// Libraries 'node-jsonwebtoken' and 'node-jose' do not work
-// https://github.com/auth0/node-jsonwebtoken/issues/668
-// I'll postpone this - but it would be way more elegant
-// I mean that is the whole point of oauth2_token isn't it!?
-
 export default loginWithCookie;
