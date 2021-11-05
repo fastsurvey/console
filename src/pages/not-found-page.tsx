@@ -23,7 +23,7 @@ function NotFoundPage() {
                 />
             </div>
             <Button
-                text='Back to Landing Page'
+                text='Back to Main Page'
                 onClick={() => {
                     history.push('/');
                 }}

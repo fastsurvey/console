@@ -9,7 +9,7 @@ describe('The Not Found Page', () => {
             .find('button')
             .should('have.length', 1)
             .first()
-            .should('have.text', 'Back to Landing Page')
+            .should('have.text', 'Back to Main Page')
             .click();
         cy.url().should('eq', 'http://localhost:3000/login');
     });
