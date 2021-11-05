@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import {reduxUtils, formUtils} from '@utilities';
+import {reduxUtils, formUtils} from '/src/utilities';
 import {connect} from 'react-redux';
-import {Label, TextInput, Button} from '@components';
-import {types} from '@types';
+import {Label, TextInput, Button} from '/src/components';
+import {types} from '/src/types';
 
 function DuplicateSurveyPopup(props: {
     configs: types.SurveyConfig[] | undefined;

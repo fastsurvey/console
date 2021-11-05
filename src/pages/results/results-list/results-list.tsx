@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import VisualResultsList from './visual-results-list';
-import {types} from '@types';
+import {types} from '/src/types';
 import {filter} from 'lodash';
 
 function ResultsList(props: {

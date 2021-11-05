@@ -1,8 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {useParams, Link} from 'react-router-dom';
-import {types} from '@types';
-import {Button} from '@components';
+import {types} from '/src/types';
+import {Button} from '/src/components';
 import Summary from './summary';
 
 interface Props {

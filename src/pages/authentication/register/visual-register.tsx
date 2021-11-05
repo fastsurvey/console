@@ -1,5 +1,5 @@
 import React from 'react';
-import {Label, TextInput, Button, ValidationBar} from '@components';
+import {Label, TextInput, Button, ValidationBar} from '/src/components';
 import {Link} from 'react-router-dom';
 import {types} from 'types';
 

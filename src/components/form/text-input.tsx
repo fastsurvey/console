@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {icons} from '@assets';
+import {icons} from '/src/assets';
 
 export default function TextInput(props: {
     value: string;

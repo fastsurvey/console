@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {Label, TextArea, DatePicker, TextInput, Toggle} from '@components';
-import {icons} from '@assets';
-import {types} from '@types';
+import {Label, TextArea, DatePicker, TextInput, Toggle} from '/src/components';
+import {icons} from '/src/assets';
+import {types} from '/src/types';
 import {Menu, Transition} from '@headlessui/react';
 import {ChevronDownIcon} from '@heroicons/react/solid';
-import {templateUtils} from '@utilities';
+import {templateUtils} from '/src/utilities';
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ');

@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {types} from '@types';
-import {formUtils, reduxUtils} from '@utilities';
+import {types} from '/src/types';
+import {formUtils, reduxUtils} from '/src/utilities';
 
 import VisualSettings from './visual-settings';
 

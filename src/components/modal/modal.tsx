@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
-import {hookUtils, reduxUtils} from '@utilities';
+import {hookUtils, reduxUtils} from '/src/utilities';
 import {connect} from 'react-redux';
-import {types} from '@types';
+import {types} from '/src/types';
 
 interface Props {
     modalState: types.ModalState;

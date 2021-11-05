@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
 import {sortBy} from 'lodash';
-import {Link} from 'react-router-dom';
-import {types} from '@types';
-import {SearchBar} from '@components';
+import {types} from '/src/types';
+import {SearchBar} from '/src/components';
 import VisualResultsPanel from './visual-results-panel';
 
 function VisualConfigList(props: {

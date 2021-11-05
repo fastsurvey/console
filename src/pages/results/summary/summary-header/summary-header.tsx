@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
-import {types} from '@types';
-import icons from '@assets/icons/icons';
-import {Button, TimePill} from '@components';
+import {types} from '/src/types';
+import icons from '/src/assets/icons/icons';
+import {Button, TimePill} from '/src/components';
 import {connect} from 'react-redux';
 
 const frontendUrl =

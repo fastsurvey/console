@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import {icons, RocketLogoLight} from '@assets';
+import {icons, RocketLogoLight} from '/src/assets';
 
 function NavbarLogo() {
     return (

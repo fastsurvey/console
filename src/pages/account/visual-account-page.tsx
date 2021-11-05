@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import {types} from '@types';
-import {icons} from '@assets';
-import {Button, Label, TextInput, ValidationBar} from '@components';
+import {types} from '/src/types';
+import {icons} from '/src/assets';
+import {Button, Label, TextInput, ValidationBar} from '/src/components';
 import {Menu, Transition} from '@headlessui/react';
 import {ChevronDownIcon} from '@heroicons/react/solid';
 

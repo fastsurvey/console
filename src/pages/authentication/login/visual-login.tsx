@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextInput, Label, Button} from '@components';
+import {TextInput, Label, Button} from '/src/components';
 import {Link} from 'react-router-dom';
 
 export default function VisualLogin(props: {

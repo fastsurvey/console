@@ -1,8 +1,8 @@
 import React, {useRef} from 'react';
-import {icons} from '@assets';
-import {styleUtils} from '@utilities';
-import {types} from '@types';
-import {ValidationBar} from '@components';
+import {icons} from '/src/assets';
+import {styleUtils} from '/src/utilities';
+import {types} from '/src/types';
+import {ValidationBar} from '/src/components';
 
 interface Props {
     label: string;

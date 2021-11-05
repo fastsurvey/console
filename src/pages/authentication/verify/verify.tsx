@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
-import {reduxUtils, backend} from '@utilities';
-import {types} from '@types';
+import {reduxUtils, backend} from '/src/utilities';
+import {types} from '/src/types';
 import {useHistory} from 'react-router-dom';
 import VisualVerifyForm from './visual-verify';
 

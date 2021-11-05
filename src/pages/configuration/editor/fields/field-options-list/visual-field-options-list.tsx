@@ -1,7 +1,7 @@
 import React from 'react';
-import {icons} from '@assets';
-import {Label, TextInput, Button} from '@components';
-import {types} from '@types';
+import {icons} from '/src/assets';
+import {Label, TextInput} from '/src/components';
+import {types} from '/src/types';
 
 interface Props {
     fieldConfig: types.RadioField | types.SelectionField;

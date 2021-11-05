@@ -1,7 +1,7 @@
 import React from 'react';
-import {formUtils} from '@utilities';
-import {Label, TextInput} from '@components';
-import {types} from '@types';
+import {formUtils} from '/src/utilities';
+import {Label, TextInput} from '/src/components';
+import {types} from '/src/types';
 
 interface Props {
     fieldConfig: types.TextField;

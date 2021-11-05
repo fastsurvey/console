@@ -1,8 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {reduxUtils} from '@utilities';
-import {types} from '@types';
-import {icons} from '@assets';
+import {reduxUtils} from '/src/utilities';
+import {types} from '/src/types';
+import {icons} from '/src/assets';
 import VisualMessage from './visual-message';
 
 interface Props {

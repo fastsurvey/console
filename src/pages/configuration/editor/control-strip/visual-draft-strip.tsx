@@ -1,5 +1,5 @@
 import React from 'react';
-import icons from 'assets/icons/icons';
+import icons from '/src/assets/icons/icons';
 import ControlStripUI from './visual-strip';
 import ControlStripButton from './visual-button';
 

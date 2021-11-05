@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {reduxUtils} from 'utilities';
-import {types} from 'types';
+import {reduxUtils} from '/src/utilities';
+import {types} from '/src/types';
 import VisualDraftStrip from './visual-draft-strip';
 import VisualPublishedStrip from './visual-published-strip';
 

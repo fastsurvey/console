@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import {reduxUtils, styleUtils} from '@utilities';
-import {types} from '@types';
-import {Button} from '@components';
+import {reduxUtils, styleUtils} from '/src/utilities';
+import {types} from '/src/types';
+import {Button} from '/src/components';
 import {connect} from 'react-redux';
-import emailImage from '@assets/images/field-examples/field-example-email.png';
-import optionImage from '@assets/images/field-examples/field-example-option.png';
-import radioImage from '@assets/images/field-examples/field-example-radio.png';
-import selectionImage from '@assets/images/field-examples/field-example-selection.png';
-import textImage from '@assets/images/field-examples/field-example-text.png';
+import emailImage from '/src/assets/images/field-examples/field-example-email.png';
+import optionImage from '/src/assets/images/field-examples/field-example-option.png';
+import radioImage from '/src/assets/images/field-examples/field-example-radio.png';
+import selectionImage from '/src/assets/images/field-examples/field-example-selection.png';
+import textImage from '/src/assets/images/field-examples/field-example-text.png';
 
 const fields: types.FieldType[] = [
     'email',

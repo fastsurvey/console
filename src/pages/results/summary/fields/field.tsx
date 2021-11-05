@@ -1,5 +1,5 @@
 import React from 'react';
-import {types} from '@types';
+import {types} from '/src/types';
 import OptionSummary from './summaries/option-summary';
 import ChoiceSummary from './summaries/choice-summary';
 

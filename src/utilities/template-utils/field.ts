@@ -1,5 +1,5 @@
-import {localIdUtils} from '@utilities';
-import {types} from '@types';
+import {localIdUtils} from '/src/utilities';
+import {types} from '/src/types';
 import {fieldIdentifier} from './field-identifier';
 
 export const field = (

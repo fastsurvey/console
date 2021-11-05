@@ -1,5 +1,5 @@
 import {isEqual} from 'lodash';
-import {types} from '@types';
+import {types} from '/src/types';
 
 function assert(condition: boolean) {
     if (!condition) {

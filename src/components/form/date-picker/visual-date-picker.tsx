@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {icons} from '@assets';
-import {constants} from '@utilities';
+import {icons} from '/src/assets';
+import {constants} from '/src/utilities';
 import {range} from 'lodash';
 
 function VisualDatePicker(props: {

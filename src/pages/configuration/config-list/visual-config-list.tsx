@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {sortBy} from 'lodash';
-import {types} from '@types';
-import {SearchBar} from '@components';
+import {types} from '/src/types';
+import {SearchBar} from '/src/components';
 import VisualConfigPanel from './visual-config-panel';
 
 function VisualConfigList(props: {

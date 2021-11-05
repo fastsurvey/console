@@ -1,5 +1,5 @@
-import {types} from '@types';
-import {localIdUtils} from '@utilities';
+import {types} from '/src/types';
+import {localIdUtils} from '/src/utilities';
 import {httpPut} from '../http-clients';
 
 async function updateSurvey(

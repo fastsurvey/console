@@ -1,4 +1,4 @@
-import {types} from '@types';
+import {types} from '/src/types';
 import {httpPut} from '../http-clients';
 
 async function updateAccount(

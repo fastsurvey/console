@@ -1,5 +1,5 @@
 import React from 'react';
-import {types} from '@types';
+import {types} from '/src/types';
 import PercentageBarRow from '../percentage-bar-row';
 
 export default function ChoiceSummary(props: {

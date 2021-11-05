@@ -1,5 +1,5 @@
 import React from 'react';
-import {types} from '@types';
+import {types} from '/src/types';
 import VisualTimePill from './visual-time-pill';
 
 const diffToPhrase = (diff: number): string => {

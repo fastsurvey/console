@@ -17,17 +17,16 @@
         "downlevelIteration": true,
         "baseUrl": "src",
         "paths": {
-            "@assets/*": ["assets/*"],
-            "@components/*": ["components/*"],
-            "@pages/*": ["pages/*"],
-            "@styles/*": ["styles/*"],
-            "@utilities/*": ["utilities/*"],
+            "/src/assets": ["assets"],
+            "/src/components": ["components"],
+            "/src/pages": ["pages"],
+            "/src/styles": ["styles"],
+            "/src/utilities": ["utilities"],
+            "/src/types": ["types.ts"],
 
-            "@types": ["types.ts"],
-            "@assets": ["assets"],
-            "@pages": ["pages"],
-            "@utilities": ["utilities"],
-            "@components": ["components"]
+            "/src/assets/*": ["assets/*"],
+            "/src/components/*": ["components/*"],
+            "/src/pages/*": ["pages/*"]
         }
     },
     "include": ["src"],

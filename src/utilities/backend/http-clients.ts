@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {types} from '@types';
+import {types} from '/src/types';
 
 const VITE_ENV = import.meta.env.VITE_ENV;
 const VITE_API_URL = import.meta.env.VITE_API_URL;

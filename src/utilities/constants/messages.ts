@@ -1,4 +1,4 @@
-import {types} from '@types';
+import {types} from '/src/types';
 
 export const messages: {[key in types.MessageId]: types.Message} = {
     'warning-unsaved': {

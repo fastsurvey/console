@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import {types} from '@types';
-import {TimePill} from '@components';
+import {types} from '/src/types';
+import {TimePill} from '/src/components';
 import {filter, isEmpty} from 'lodash';
-import {icons} from '@assets';
+import {icons} from '/src/assets';
 import {Link} from 'react-router-dom';
 
 const VITE_ENV = import.meta.env.VITE_ENV;

@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {icons} from '@assets';
-import {EditorFormCard, Label, TextInput, TextArea} from '@components';
-import {types} from '@types';
-import {styleUtils} from '@utilities';
-import {tail} from 'lodash';
+import {icons} from '/src/assets';
+import {EditorFormCard, Label, TextInput, TextArea} from '/src/components';
+import {types} from '/src/types';
+import {styleUtils} from '/src/utilities';
 
 interface Props {
     fieldIndex: number;

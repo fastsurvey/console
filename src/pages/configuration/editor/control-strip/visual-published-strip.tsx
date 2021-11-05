@@ -1,6 +1,6 @@
 import React from 'react';
-import {types} from 'types';
-import icons from 'assets/icons/icons';
+import {types} from '/src/types';
+import icons from '/src/assets/icons/icons';
 import ControlStripUI from './visual-strip';
 import ControlStripButton from './visual-button';
 

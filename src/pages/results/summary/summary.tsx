@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {types} from '@types';
+import {types} from '/src/types';
 import SummaryHeader from './summary-header/summary-header';
-import {backend} from '@utilities';
+import {backend} from '/src/utilities';
 import Field from './fields/field';
 
 function Summary(props: {

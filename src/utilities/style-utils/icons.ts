@@ -1,5 +1,5 @@
-import {types} from '@types';
-import {icons as iconAssets} from '@assets';
+import {types} from '/src/types';
+import {icons as iconAssets} from '/src/assets';
 
 export const icons = {
     fieldTypeToIcon: (fieldType: types.FieldType | undefined) => {

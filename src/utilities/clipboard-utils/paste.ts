@@ -1,4 +1,4 @@
-import {types} from '@types';
+import {types} from '/src/types';
 import validateFormat from './validate-format';
 
 export function paste(

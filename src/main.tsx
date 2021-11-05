@@ -4,8 +4,8 @@ import ReduxStore from './redux-store';
 import PageRouter from './page-router';
 
 import 'typeface-quicksand';
-import '@styles/tailwind.css';
-import '@styles/fixes.css';
+import '/src/styles/tailwind.css';
+import '/src/styles/fixes.css';
 
 ReactDOM.render(
     <React.StrictMode>

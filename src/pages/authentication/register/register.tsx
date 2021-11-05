@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {reduxUtils, backend, formUtils} from '@utilities';
-import {types} from '@types';
+import {reduxUtils, backend, formUtils} from '/src/utilities';
+import {types} from '/src/types';
 import VisualRegister from './visual-register';
 
 interface Props {

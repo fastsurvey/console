@@ -1,4 +1,4 @@
-import {types} from '@types';
+import {types} from '/src/types';
 import {httpPost} from '../http-clients';
 
 async function createSurvey(

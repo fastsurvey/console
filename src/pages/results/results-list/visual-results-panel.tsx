@@ -1,6 +1,6 @@
 import React from 'react';
-import {types} from '@types';
-import {TimePill} from '@components';
+import {types} from '/src/types';
+import {TimePill} from '/src/components';
 import {isEmpty, filter} from 'lodash';
 import {Link} from 'react-router-dom';
 

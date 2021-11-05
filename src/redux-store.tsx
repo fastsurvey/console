@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
-import {backend, reduxUtils} from '@utilities';
-import {types} from '@types';
+import {backend, reduxUtils} from '/src/utilities';
+import {types} from '/src/types';
 
 const store = createStore(
     (

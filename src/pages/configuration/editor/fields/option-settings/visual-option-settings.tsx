@@ -1,6 +1,6 @@
 import React from 'react';
-import {Label, Toggle} from '@components';
-import {types} from '@types';
+import {Label, Toggle} from '/src/components';
+import {types} from '/src/types';
 
 interface Props {
     fieldConfig: types.OptionField;

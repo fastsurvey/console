@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {types} from '@types';
-import {backend, reduxUtils, formUtils} from '@utilities';
+import {types} from '/src/types';
+import {backend, reduxUtils, formUtils} from '/src/utilities';
 import VisualAccountPage from './visual-account-page';
-import ChangeUsernamePopup from '@pages/account/change-username-popup';
+import ChangeUsernamePopup from '/src/pages/account/change-username-popup';
 import DeleteUserPopup from './delete-user-popup';
-import removeAccount from '../../utilities/backend/account/remove-account';
 
 function AccountPage(props: {
     account: types.Account;

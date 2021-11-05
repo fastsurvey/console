@@ -1,8 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {icons} from '@assets';
-import {types} from '@types';
-import {reduxUtils} from '@utilities';
+import {icons} from '/src/assets';
+import {types} from '/src/types';
+import {reduxUtils} from '/src/utilities';
 import AddFieldButton from './add-field-button';
 import AddFieldPopup from './add-field-popup';
 

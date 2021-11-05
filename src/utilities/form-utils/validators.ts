@@ -1,6 +1,6 @@
-import {types} from '@types';
+import {types} from '/src/types';
 import {filter, uniq} from 'lodash';
-import {formUtils} from '@utilities';
+import {formUtils} from '/src/utilities';
 
 const genericTitle =
     (variant: 'Title' | 'Field title' | 'Option name') =>

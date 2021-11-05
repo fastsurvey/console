@@ -1,6 +1,6 @@
 import React from 'react';
-import {types} from '@types';
-import {icons} from '@assets';
+import {types} from '/src/types';
+import {icons} from '/src/assets';
 
 export default function ValidationBar(props: {
     validation: types.ValidationResult;
