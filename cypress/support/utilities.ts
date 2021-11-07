@@ -1,0 +1,32 @@
+export function logout() {
+    cy.get('button')
+        .contains('Logout')
+        .should('have.length', 1)
+        .parents('button')
+        .should('not.be.disabled')
+        .click({force: true});
+    cy.url().should('eq', 'http://localhost:3000/login');
+}
+
+export function login(username: string, password: string) {
+    cy.visit('/login');
+    cy.url().should('eq', 'http://localhost:3000/login');
+    cy.get('input').first().type(username);
+    cy.get('input').last().type(password);
+    cy.get('button').contains('Login').click();
+    cy.url().should('eq', 'http://localhost:3000/configurations');
+
+    // go to account page
+    cy.get('button')
+        .contains('Account')
+        .should('have.length', 1)
+        .parents('button')
+        .should('not.be.disabled')
+        .click({force: true});
+    cy.url().should('eq', 'http://localhost:3000/account');
+}
+
+export function reload() {
+    cy.visit('/account');
+    cy.url().should('eq', 'http://localhost:3000/account');
+}

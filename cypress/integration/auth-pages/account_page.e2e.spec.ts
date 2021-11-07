@@ -1,21 +1,9 @@
-function logout() {
-    cy.get('button')
-        .contains('Logout')
-        .should('have.length', 1)
-        .parents('button')
-        .should('not.be.disabled')
-        .click({force: true});
-    cy.url().should('eq', 'http://localhost:3000/login');
-}
+import * as utilities from '../../support/utilities';
+
+const {logout, reload} = utilities;
 
 function login(username: string, password: string) {
-    // login with username/password
-    cy.visit('/login');
-    cy.url().should('eq', 'http://localhost:3000/login');
-    cy.get('input').first().type(username);
-    cy.get('input').last().type(password);
-    cy.get('button').contains('Login').click();
-    cy.url().should('eq', 'http://localhost:3000/configurations');
+    utilities.login(username, password);
 
     // go to account page
     cy.get('button')
@@ -24,11 +12,6 @@ function login(username: string, password: string) {
         .parents('button')
         .should('not.be.disabled')
         .click({force: true});
-    cy.url().should('eq', 'http://localhost:3000/account');
-}
-
-function reload() {
-    cy.visit('/account');
     cy.url().should('eq', 'http://localhost:3000/account');
 }
 
