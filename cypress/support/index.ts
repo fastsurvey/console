@@ -64,3 +64,61 @@ Cypress.Commands.add('seedAccountData', () => {
         });
     });
 });
+
+Cypress.Commands.add('seedConfigData', () => {
+    cy.fixture('account.json').then((accountJSON: any) => {
+        cy.fixture('configs.json').then((configsJSON: any) => {
+            console.log('SEED BLUEBERRY CONFIGS', accountJSON, configsJSON);
+
+            cy.request({
+                method: 'POST',
+                url: 'https://api.dev.fastsurvey.de/authentication',
+                body: {
+                    identifier: accountJSON.username,
+                    password: accountJSON.password,
+                },
+            }).then((authResponse) => {
+                expect(authResponse.status).to.equal(200);
+                expect(authResponse.body).to.have.property(
+                    'username',
+                    accountJSON.username,
+                );
+                expect(authResponse.body).to.have.property('access_token');
+
+                cy.request({
+                    method: 'GET',
+                    url: `https://api.dev.fastsurvey.de/users/${accountJSON.username}/surveys`,
+                    headers: {
+                        Authorization: `Bearer ${authResponse.body.access_token}`,
+                        'Content-Type': 'application/json',
+                    },
+                }).then((configsResponse) => {
+                    expect(configsResponse.status).to.equal(200);
+                    expect(configsResponse.body).to.have.length.gte(2);
+
+                    const surveyToDelete = configsResponse.body
+                        .map((c: any) => c['survey_name'])
+                        .filter(
+                            (s: string) =>
+                                !configsJSON.surveysToKeep.includes(s),
+                        );
+
+                    console.log(
+                        `DELETE SURVEYS '${JSON.stringify(surveyToDelete)}'`,
+                    );
+
+                    surveyToDelete.forEach((s: string) => {
+                        cy.request({
+                            method: 'DELETE',
+                            url: `https://api.dev.fastsurvey.de/users/${accountJSON.username}/surveys/${s}`,
+                            headers: {
+                                Authorization: `Bearer ${authResponse.body.access_token}`,
+                                'Content-Type': 'application/json',
+                            },
+                        });
+                    });
+                });
+            });
+        });
+    });
+});
