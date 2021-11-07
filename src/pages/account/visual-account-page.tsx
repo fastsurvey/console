@@ -120,9 +120,9 @@ function VisualAccountPage(props: {
                     <div className='hidden w-full md:z-10 md:block'>
                         <div className='w-full border-b border-gray-200'>
                             <nav className='px-4 py-2 space-x-2 flex-row-left'>
-                                <div className='pr-2 text-gray-900 font-weight-600'>
+                                <h2 className='pr-2 text-gray-900 font-weight-600'>
                                     Account Settings:{' '}
-                                </div>
+                                </h2>
                                 {tabs.map((tab, index) => (
                                     <button
                                         key={tab.name}
@@ -242,9 +242,9 @@ function VisualAccountPage(props: {
                 <div className='w-full bg-white rounded shadow flex-col-left'>
                     <div className='w-full border-b border-gray-200'>
                         <nav className='px-4 py-2 space-x-2 flex-row-left'>
-                            <div className='pr-2 text-gray-500 font-weight-600'>
+                            <h2 className='pr-2 text-gray-500 font-weight-600'>
                                 Delete your account forever{' '}
-                            </div>
+                            </h2>
                         </nav>
                     </div>
                     <div className='w-full p-3 flex-row-left'>
@@ -257,9 +257,9 @@ function VisualAccountPage(props: {
                     </div>
                 </div>
                 <div className='p-4 border-[2px] border-dashed border-gray-300 rounded w-full'>
-                    <h3 className='text-base leading-6 text-blue-900 opacity-80 font-weight-600'>
+                    <h2 className='text-base leading-6 text-blue-900 opacity-80 font-weight-600'>
                         Payment Information
-                    </h3>
+                    </h2>
                     <div className='mt-2 text-sm text-gray-900 opacity-60 font-weight-400'>
                         Right now, our tool is still completely free to use. We
                         want to see how people use it and implement important
