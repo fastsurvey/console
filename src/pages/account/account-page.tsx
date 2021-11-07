@@ -48,11 +48,10 @@ function AccountPage(props: {
     }
 
     function submitUsername() {
-        props.closeModal();
-
         function success() {
             props.openMessage('success-username-changed');
             props.updateUsername(username);
+            props.closeModal();
             setUsernamePending(false);
         }
         function error(code: number) {
@@ -61,6 +60,7 @@ function AccountPage(props: {
             } else {
                 props.openMessage('error-server');
             }
+            props.closeModal();
             setUsernamePending(false);
         }
 

@@ -78,7 +78,7 @@ export const validators = {
         if (survey_name.length < 1) {
             return {
                 valid: false,
-                message: 'URL conform identifier too short (≥ 1 characters)',
+                message: 'URL conform identifier too short (≥ 1 character)',
             };
         } else if (survey_name.length > 32) {
             return {
@@ -239,7 +239,7 @@ export const validators = {
         if (newUserName.length < 1) {
             return {
                 valid: false,
-                message: 'username too short (≥ 1 characters)',
+                message: 'username too short (≥ 1 character)',
             };
         } else if (newUserName.length > 32) {
             return {
