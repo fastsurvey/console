@@ -62,7 +62,7 @@ function VisualAccountPage(props: {
                 <h1 className='w-full text-2xl text-blue-900 font-weight-700'>
                     Modify your Account
                 </h1>
-                <div className='w-full bg-white rounded shadow flex-col-left'>
+                <section className='w-full bg-white rounded shadow flex-col-left'>
                     <div className='z-10 w-full px-4 py-1.5 border-b border-gray-200 md:hidden flex flex-row items-center justify-center'>
                         <div className='mr-2 text-base text-gray-900 font-weight-700'>
                             {tabs[tabIndex].name}
@@ -238,8 +238,8 @@ function VisualAccountPage(props: {
                     {password.length > 0 && tabIndex === 1 && (
                         <ValidationBar validation={passwordValidation} />
                     )}
-                </div>
-                <div className='w-full bg-white rounded shadow flex-col-left'>
+                </section>
+                <section className='w-full bg-white rounded shadow flex-col-left'>
                     <div className='w-full border-b border-gray-200'>
                         <nav className='px-4 py-2 space-x-2 flex-row-left'>
                             <h2 className='pr-2 text-gray-500 font-weight-600'>
@@ -255,8 +255,8 @@ function VisualAccountPage(props: {
                             onClick={props.openDeleteUserModal}
                         />
                     </div>
-                </div>
-                <div className='p-4 border-[2px] border-dashed border-gray-300 rounded w-full'>
+                </section>
+                <section className='p-4 border-[2px] border-dashed border-gray-300 rounded w-full'>
                     <h2 className='text-base leading-6 text-blue-900 opacity-80 font-weight-600'>
                         Payment Information
                     </h2>
@@ -266,7 +266,7 @@ function VisualAccountPage(props: {
                         features before spending time on implementing payment
                         logic.
                     </div>
-                </div>
+                </section>
             </div>
         </div>
     );

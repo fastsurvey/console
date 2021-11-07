@@ -1,6 +1,6 @@
 {
     "baseUrl": "http://localhost:3000",
-    "testFiles": "**/*.e2e.spec.js",
+    "testFiles": "**/*.e2e.spec.{js,ts}",
     "component": {
         "testFiles": "**/*.ct.spec.{js,ts,jsx,tsx}",
         "componentFolder": "src",
