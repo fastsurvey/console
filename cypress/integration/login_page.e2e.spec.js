@@ -63,6 +63,10 @@ describe('The Login Page', () => {
 
         cy.url().should('eq', 'http://localhost:3000/configurations');
 
+        // refresh the page (test the api-key stored in a cookie)
+        cy.visit('/login');
+        cy.url().should('eq', 'http://localhost:3000/configurations');
+
         cy.get('button')
             .contains('Logout')
             .should('have.length', 1)
