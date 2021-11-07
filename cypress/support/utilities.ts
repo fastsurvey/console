@@ -15,15 +15,6 @@ export function login(username: string, password: string) {
     cy.get('input').last().type(password);
     cy.get('button').contains('Login').click();
     cy.url().should('eq', 'http://localhost:3000/configurations');
-
-    // go to account page
-    cy.get('button')
-        .contains('Account')
-        .should('have.length', 1)
-        .parents('button')
-        .should('not.be.disabled')
-        .click({force: true});
-    cy.url().should('eq', 'http://localhost:3000/account');
 }
 
 export function reload() {
