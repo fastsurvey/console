@@ -1,8 +1,8 @@
-describe('logged in user', () => {
+describe('The Account Page', () => {
     Cypress.Cookies.debug(true);
 
     // @ts-ignore
-    afterEach(cy.seedAccountData);
+    after(cy.seedAccountData);
 
     function assertTabState(selectedTab: 'identification' | 'password') {
         cy.get('@settingsSection')
@@ -105,7 +105,6 @@ describe('logged in user', () => {
         valid: boolean;
         contains: string;
     }) {
-        // TODO: Test the validation message text, not only the color
         cy.get(props.parentSection)
             .find('div')
             .contains(props.contains)
