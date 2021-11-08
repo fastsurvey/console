@@ -198,7 +198,6 @@ Cypress.Commands.add('seedDuplicationData', () => {
                     identifier: accountJSON.username,
                     password: accountJSON.password,
                 },
-                failOnStatusCode: false,
             };
 
             const duplicationRequest = (

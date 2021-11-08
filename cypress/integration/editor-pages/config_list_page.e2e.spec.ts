@@ -1,4 +1,4 @@
-import {last} from 'lodash';
+import {first, last} from 'lodash';
 import * as utilities from '../../support/utilities';
 
 const {login, reloadConfigurations} = utilities;
@@ -73,7 +73,7 @@ describe('The Config List Page', () => {
         });
     });
 
-    /*it('seed surveys are present', () => {
+    it('seed surveys are present', () => {
         cy.get('a:visible').should('have.length', 4);
 
         cy.fixture('configs.json').then((configJSON: any) => {
@@ -148,11 +148,11 @@ describe('The Config List Page', () => {
                     .contains('cancel')
                     .should('have.length', 1)
                     .click();
-                
+
                 // Remove modal is closed
-                cy.get('h2:visible')
+                cy.get('h2')
                     .contains('Remove this survey permanently?')
-                     .should('not.be.visible');
+                    .should('not.be.visible');
 
                 configListPanelIsWorking(newSurveyName);
                 reloadConfigurations();
@@ -178,7 +178,7 @@ describe('The Config List Page', () => {
                 // Remove modal is closed
                 cy.get('h2')
                     .contains('Remove this survey permanently?')
-                     .should('not.be.visible');
+                    .should('not.be.visible');
 
                 // Success message is visible
                 cy.get('div')
@@ -189,9 +189,8 @@ describe('The Config List Page', () => {
                 reloadConfigurations();
                 configListPanelIsAbsent(newSurveyName);
             });
-    });*/
+    });
 
-    // TODO: test "duplicate survey"
     it('duplicating a survey works', () => {
         // @ts-ignore
         cy.seedDuplicationData();
@@ -309,6 +308,45 @@ describe('The Config List Page', () => {
             reloadConfigurations();
             configListPanelIsWorking(originalSurveyName);
             configListPanelIsWorking(duplicateSurveyName);
+
+            cy.fixture('account.json').then((accountJSON: any) => {
+                const authRequest = {
+                    method: 'POST',
+                    url: 'https://api.dev.fastsurvey.de/authentication',
+                    body: {
+                        identifier: accountJSON.username,
+                        password: accountJSON.password,
+                    },
+                };
+                const duplicationRequest = (
+                    authResponse: Cypress.Response<any>,
+                ) => ({
+                    method: 'GET',
+                    url: `https://api.dev.fastsurvey.de/users/${accountJSON.username}/surveys`,
+                    headers: {
+                        Authorization: `Bearer ${authResponse.body['access_token']}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+                cy.request(authRequest).then((authResponse) => {
+                    expect(authResponse.status).to.equal(200);
+                    cy.request(duplicationRequest(authResponse)).then(
+                        (getResponse) => {
+                            expect(getResponse.status).to.equal(200);
+                            const duplicateSurveyOnServer = first(
+                                getResponse.body.filter(
+                                    (c: any) =>
+                                        c['survey_name'] ===
+                                        duplicateSurveyName,
+                                ),
+                            );
+                            expect(duplicateSurveyOnServer).to.deep.equal(
+                                duplicateSurvey,
+                            );
+                        },
+                    );
+                });
+            });
         });
 
         // - [x] make manual api request to create a specific survey
@@ -324,9 +362,9 @@ describe('The Config List Page', () => {
         // - [x]  5. check if new duplicated config is in the config list
         // - [x]  6. reload page
         // - [x]  7. check again if new duplicated config is present
-        // - [ ]  8. Manuall load config.json from backend and:
-        // - [ ]      8.1 check if identifiers are sequential
-        // - [ ]      8.2 do a deep comparison for everything else
+        // - [x]  8. Manuall load config.json from backend and:
+        // - [x]      8.1 check if identifiers are sequential
+        // - [x]      8.2 do a deep comparison for everything else
     });
 
     // I skip testing the search bar for now
