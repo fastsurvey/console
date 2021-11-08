@@ -1,6 +1,6 @@
 import * as utilities from '../../support/utilities';
 
-const {logout, reload} = utilities;
+const {logout, reloadAccount} = utilities;
 
 function login(username: string, password: string) {
     utilities.login(username, password);
@@ -258,7 +258,7 @@ describe('The Account Page', () => {
             assertUsernameState(TMP_USERNAME, false, false);
 
             // refresh the page
-            reload();
+            reloadAccount();
 
             initUsernameSection();
             assertUsernameState(TMP_USERNAME, false, false);
@@ -290,7 +290,7 @@ describe('The Account Page', () => {
 
             assertUsernameState(USERNAME, false, false);
 
-            reload();
+            reloadAccount();
 
             initUsernameSection();
             assertUsernameState(USERNAME, false, false);
@@ -389,7 +389,7 @@ describe('The Account Page', () => {
                 .contains('Success: Password has been changed')
                 .should('have.length', 1);
 
-            reload();
+            reloadAccount();
             logout();
             login(USERNAME, TMP_PASSWORD);
             initPasswordSection();
@@ -402,7 +402,7 @@ describe('The Account Page', () => {
                 .contains('Success: Password has been changed')
                 .should('have.length', 1);
 
-            reload();
+            reloadAccount();
             logout();
             login(USERNAME, PASSWORD);
         });

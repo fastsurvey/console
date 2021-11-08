@@ -1,11 +1,11 @@
 import {last} from 'lodash';
 import * as utilities from '../../support/utilities';
 
-const {login, logout, reload} = utilities;
+const {login, reloadConfigurations} = utilities;
 
 function configListPanelIsWorking(surveyName: string) {
     cy.fixture('account.json').then((accountJSON) => {
-        cy.get('div', {timeout: 10000})
+        cy.get('div')
             .contains(`dev.fastsurvey.de/${accountJSON.username}/${surveyName}`)
             .should('have.length', 1)
             .parents('section')
@@ -49,6 +49,17 @@ function configListPanelIsWorking(surveyName: string) {
         });
     });
 }
+
+function configListPanelIsAbsent(surveyName: string) {
+    cy.get('h1').contains('Edit & Create Surveys').should('have.length', 1);
+
+    cy.fixture('account.json').then((accountJSON) => {
+        cy.get('div')
+            .contains(`dev.fastsurvey.de/${accountJSON.username}/${surveyName}`)
+            .should('have.length', 0);
+    });
+}
+
 describe('The Config List Page', () => {
     // @ts-ignore
     before(cy.seedConfigData);
@@ -70,7 +81,6 @@ describe('The Config List Page', () => {
         });
     });
 
-    // TODO: test "create survey"
     it('creating a survey works', () => {
         cy.get('button')
             .contains('New Survey')
@@ -91,14 +101,80 @@ describe('The Config List Page', () => {
                 cy.url().should('eq', 'http://localhost:3000/configurations');
                 configListPanelIsWorking(newSurveyName);
 
-                // revisit the page /configurations
-                cy.reload();
+                reloadConfigurations();
                 configListPanelIsWorking(newSurveyName);
             });
     });
 
-    // TODO: test "duplicate survey"
-    // TODO: test "remove survey"
+    it('removing a survey works', () => {
+        cy.get('button')
+            .contains('New Survey')
+            .should('have.length', 1)
+            .click();
 
-    // TODO: Test search bar
+        cy.url()
+            .should('match', /.*configuration\/.+/)
+            .then((url) => {
+                const newSurveyName: any = last(url.split('/'));
+
+                // revisit the page /configurations
+                reloadConfigurations();
+                configListPanelIsWorking(newSurveyName);
+
+                cy.get(`@configListPanel-${newSurveyName}`)
+                    .find('button > svg')
+                    .should('have.length', 1)
+                    .parents('button')
+                    .click();
+
+                cy.get(`@configListPanel-${newSurveyName}`)
+                    .find('button:visible')
+                    .contains('remove')
+                    .should('have.length', 1)
+                    .click();
+
+                cy.get('button:visible')
+                    .contains('remove survey')
+                    .should('have.length', 1)
+                    .parents('section')
+                    .as('removeModal');
+
+                cy.get('@removeModal')
+                    .find('button:visible')
+                    .should('have.length', 2)
+                    .contains('cancel')
+                    .should('have.length', 1)
+                    .click();
+
+                configListPanelIsWorking(newSurveyName);
+                reloadConfigurations();
+                configListPanelIsWorking(newSurveyName);
+
+                cy.get(`@configListPanel-${newSurveyName}`)
+                    .find('button > svg')
+                    .should('have.length', 1)
+                    .parents('button')
+                    .click();
+
+                cy.get(`@configListPanel-${newSurveyName}`)
+                    .find('button:visible')
+                    .contains('remove')
+                    .should('have.length', 1)
+                    .click();
+
+                cy.get('button:visible')
+                    .contains('remove survey')
+                    .should('have.length', 1)
+                    .click();
+
+                configListPanelIsAbsent(newSurveyName);
+                reloadConfigurations();
+                configListPanelIsAbsent(newSurveyName);
+            });
+    });
+
+    // TODO: test "duplicate survey"
+    it('duplicating a survey works', () => {});
+
+    // I skip testing the search bar for now
 });

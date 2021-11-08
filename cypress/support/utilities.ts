@@ -17,7 +17,12 @@ export function login(username: string, password: string) {
     cy.url().should('eq', 'http://localhost:3000/configurations');
 }
 
-export function reload() {
+export function reloadConfigurations() {
+    cy.visit('/configurations');
+    cy.url().should('eq', 'http://localhost:3000/configurations');
+}
+
+export function reloadAccount() {
     cy.visit('/account');
     cy.url().should('eq', 'http://localhost:3000/account');
 }
