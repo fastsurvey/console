@@ -13,6 +13,6 @@ describe('The Forgot Password Page', () => {
             .contains('Go back to login')
             .should('have.length', 1)
             .click();
-        cy.url().should('eq', 'http://localhost:3000/login');
+        cy.url().should('include', '/login');
     });
 });

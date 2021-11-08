@@ -91,14 +91,11 @@ describe('The Config List Page', () => {
             .should('match', /.*configuration\/.+/)
             .then((url) => {
                 const newSurveyName: any = last(url.split('/'));
-                cy.url().should(
-                    'eq',
-                    `http://localhost:3000/configuration/${newSurveyName}`,
-                );
+                cy.url().should('include', `/configuration/${newSurveyName}`);
 
                 // use back button
                 cy.go('back');
-                cy.url().should('eq', 'http://localhost:3000/configurations');
+                cy.url().should('include', '/configurations');
                 configListPanelIsWorking(newSurveyName);
 
                 reloadConfigurations();
@@ -301,10 +298,7 @@ describe('The Config List Page', () => {
                 .contains('Success: You are now viewing the created copy')
                 .should('have.length', 1);
 
-            cy.url().should(
-                'eq',
-                `http://localhost:3000/configuration/${duplicateSurveyName}`,
-            );
+            cy.url().should('include', `/configuration/${duplicateSurveyName}`);
             reloadConfigurations();
             configListPanelIsWorking(originalSurveyName);
             configListPanelIsWorking(duplicateSurveyName);

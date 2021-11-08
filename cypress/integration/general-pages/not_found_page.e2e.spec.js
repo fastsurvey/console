@@ -11,6 +11,6 @@ describe('The Not Found Page', () => {
             .first()
             .should('have.text', 'Back to Main Page')
             .click();
-        cy.url().should('eq', 'http://localhost:3000/login');
+        cy.url().should('include', '/login');
     });
 });

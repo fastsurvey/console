@@ -6,13 +6,13 @@ describe('The Login Page', () => {
             .contains("Don't have an account yet?")
             .should('have.length', 1)
             .click();
-        cy.url().should('eq', 'http://localhost:3000/register');
+        cy.url().should('include', '/register');
         cy.visit('/login');
         cy.get('a')
             .contains('Forgot your password?')
             .should('have.length', 1)
             .click();
-        cy.url().should('eq', 'http://localhost:3000/forgot-password');
+        cy.url().should('include', '/forgot-password');
     });
 
     it('has expected inputs/labels and working password-visibility toggle', () => {
@@ -63,11 +63,11 @@ describe('The Login Page', () => {
                 .should('not.be.disabled')
                 .click();
 
-            cy.url().should('eq', 'http://localhost:3000/configurations');
+            cy.url().should('include', '/configurations');
 
             // refresh the page (test the api-key stored in a cookie)
             cy.visit('/login');
-            cy.url().should('eq', 'http://localhost:3000/configurations');
+            cy.url().should('include', '/configurations');
 
             cy.get('button')
                 .contains('Logout')
@@ -76,7 +76,7 @@ describe('The Login Page', () => {
                 .should('not.be.disabled')
                 .click({force: true});
 
-            cy.url().should('eq', 'http://localhost:3000/login');
+            cy.url().should('include', '/login');
             cy.get('input').should('have.length', 2);
             cy.get('input').first().should('have.value', '');
             cy.get('input').last().should('have.value', '');
@@ -105,7 +105,7 @@ describe('The Login Page', () => {
                 .should('not.be.disabled')
                 .click();
 
-            cy.url().should('eq', 'http://localhost:3000/login');
+            cy.url().should('include', '/login');
 
             // message colors will be tested in a component test
             cy.get('div')
@@ -125,7 +125,7 @@ describe('The Login Page', () => {
                 .should('not.be.disabled')
                 .click();
 
-            cy.url().should('eq', 'http://localhost:3000/configurations');
+            cy.url().should('include', '/configurations');
         });
     });
 });

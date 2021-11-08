@@ -12,7 +12,7 @@ function login(username: string, password: string) {
         .parents('button')
         .should('not.be.disabled')
         .click({force: true});
-    cy.url().should('eq', 'http://localhost:3000/account');
+    cy.url().should('include', '/account');
 }
 
 describe('The Account Page', () => {

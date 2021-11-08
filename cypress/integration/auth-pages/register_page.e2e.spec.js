@@ -6,6 +6,6 @@ describe('The Register Page', () => {
             .contains('Already have an account?')
             .should('have.length', 1)
             .click();
-        cy.url().should('eq', 'http://localhost:3000/login');
+        cy.url().should('include', '/login');
     });
 });
