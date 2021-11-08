@@ -174,7 +174,23 @@ describe('The Config List Page', () => {
     });
 
     // TODO: test "duplicate survey"
-    it('duplicating a survey works', () => {});
+    it('duplicating a survey works', () => {
+        // make manual api request to create a specific survey
+        // load that complex config from fixtures/
+        // in that config:
+        //   * include every field type
+        //   * use non-sequential field identifiers
+        // Afterwards:
+        //  1. reload page
+        //  2. check if the new config is in the config list
+        //  3. duplicate (also check modal)
+        //  4. check if new duplicated config is in the config list
+        //  5. reload page
+        //  6. check again if new duplicated config is present
+        //  7. Manuall load config.json from backend and:
+        //      7.1 check if identifiers are sequential
+        //      7.2 do a deep comparison for everything else
+    });
 
     // I skip testing the search bar for now
 });
