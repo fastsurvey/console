@@ -187,3 +187,73 @@ Cypress.Commands.add('seedAccountData', () => {
         });
     });
 });
+
+Cypress.Commands.add('seedDuplicationData', () => {
+    cy.fixture('account.json').then((accountJSON: any) => {
+        cy.fixture('configs.json').then((configsJSON: any) => {
+            const authRequest = {
+                method: 'POST',
+                url: 'https://api.dev.fastsurvey.de/authentication',
+                body: {
+                    identifier: accountJSON.username,
+                    password: accountJSON.password,
+                },
+                failOnStatusCode: false,
+            };
+
+            const duplicationRequest = (
+                method: 'GET' | 'POST' | 'PUT',
+                authResponse: Cypress.Response<any>,
+            ) => {
+                const config =
+                    configsJSON.duplication[
+                        method === 'POST' ? 'original' : 'updated_original'
+                    ];
+                return {
+                    method: method,
+                    url: `https://api.dev.fastsurvey.de/users/${accountJSON.username}/surveys/${config['survey_name']}`,
+                    body: method === 'GET' ? undefined : config,
+                    headers: {
+                        Authorization: `Bearer ${authResponse.body['access_token']}`,
+                        'Content-Type': 'application/json',
+                    },
+                };
+            };
+
+            cy.request(authRequest).then((authResponse) => {
+                expect(authResponse.status).to.equal(200);
+                expect(authResponse.body).to.have.property('access_token');
+
+                cy.request(duplicationRequest('POST', authResponse)).then(
+                    (duplicationResponse) => {
+                        expect(duplicationResponse.status).to.equal(200);
+                        cy.request(
+                            duplicationRequest('PUT', authResponse),
+                        ).then((duplicationResponse2) => {
+                            expect(duplicationResponse2.status).to.equal(200);
+
+                            cy.request(
+                                duplicationRequest('GET', authResponse),
+                            ).then((duplicationResponse3) => {
+                                expect(duplicationResponse3.status).to.equal(
+                                    200,
+                                );
+                                expect(duplicationResponse3.body).to.deep.equal(
+                                    {
+                                        ...configsJSON.duplication[
+                                            'updated_original'
+                                        ],
+                                        max_identifier:
+                                            configsJSON.duplication[
+                                                'updated_max_identifier'
+                                            ],
+                                    },
+                                );
+                            });
+                        });
+                    },
+                );
+            });
+        });
+    });
+});

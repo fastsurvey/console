@@ -1,3 +1,196 @@
 {
-    "surveysToKeep": ["simple", "complex"]
+    "surveysToKeep": ["simple", "complex"],
+    "duplication": {
+        "original": {
+            "survey_name": "simply-complex",
+            "title": "Very Good Sample Title",
+            "description": "Enneapuses are the new octopuses, and other wisdoms.",
+            "start": 1636244487,
+            "end": 1636330889,
+            "draft": false,
+            "fields": [
+                {
+                    "identifier": 0,
+                    "title": "...",
+                    "description": "",
+                    "type": "option",
+                    "required": true
+                },
+                {
+                    "identifier": 1,
+                    "title": "How do you feel about apples?",
+                    "description": "",
+                    "type": "text",
+                    "min_chars": 10,
+                    "max_chars": 1000
+                },
+                {
+                    "identifier": 2,
+                    "title": "...",
+                    "description": "",
+                    "type": "option",
+                    "required": true
+                },
+                {
+                    "identifier": 3,
+                    "title": "What's your email address?",
+                    "description": "",
+                    "type": "email",
+                    "hint": "YOUR EMAIL ADDRESS HERE",
+                    "regex": ".*",
+                    "verify": true
+                },
+                {
+                    "identifier": 4,
+                    "title": "What are your favorite pizza toppings?",
+                    "description": "",
+                    "type": "selection",
+                    "options": [
+                        "Quattro Stagioni",
+                        "Prosciutto",
+                        "Margherita",
+                        "Quattro Formaggi",
+                        "Capricciosa"
+                    ],
+                    "min_select": 2,
+                    "max_select": 5
+                },
+                {
+                    "identifier": 6,
+                    "title": "...",
+                    "description": "",
+                    "type": "option",
+                    "required": true
+                },
+                {
+                    "identifier": 7,
+                    "title": "What's your favorite letter of the alphabet?",
+                    "description": "",
+                    "type": "radio",
+                    "options": ["A", "B", "C"]
+                },
+                {
+                    "identifier": 5,
+                    "title": "I am a big fan of carrots.",
+                    "description": "",
+                    "type": "option",
+                    "required": true
+                }
+            ]
+        },
+        "updated_original": {
+            "survey_name": "simply-complex",
+            "title": "Very Good Sample Title",
+            "description": "Enneapuses are the new octopuses, and other wisdoms.",
+            "start": 1636244487,
+            "end": 1636330889,
+            "draft": false,
+            "fields": [
+                {
+                    "identifier": 1,
+                    "title": "How do you feel about apples?",
+                    "description": "",
+                    "type": "text",
+                    "min_chars": 10,
+                    "max_chars": 1000
+                },
+                {
+                    "identifier": 3,
+                    "title": "What's your email address?",
+                    "description": "",
+                    "type": "email",
+                    "hint": "YOUR EMAIL ADDRESS HERE",
+                    "regex": ".*",
+                    "verify": true
+                },
+                {
+                    "identifier": 4,
+                    "title": "What are your favorite pizza toppings?",
+                    "description": "",
+                    "type": "selection",
+                    "options": [
+                        "Quattro Stagioni",
+                        "Prosciutto",
+                        "Margherita",
+                        "Quattro Formaggi",
+                        "Capricciosa"
+                    ],
+                    "min_select": 2,
+                    "max_select": 5
+                },
+                {
+                    "identifier": 7,
+                    "title": "What's your favorite letter of the alphabet?",
+                    "description": "",
+                    "type": "radio",
+                    "options": ["A", "B", "C"]
+                },
+                {
+                    "identifier": 5,
+                    "title": "I am a big fan of carrots.",
+                    "description": "",
+                    "type": "option",
+                    "required": true
+                }
+            ]
+        },
+        "updated_max_identifier": 7,
+        "duplicate": {
+            "max_identifier": 4,
+            "survey_name": "a-different-kind-of-complex",
+            "title": "Very Good Sample Title",
+            "description": "Enneapuses are the new octopuses, and other wisdoms.",
+            "start": 1636244487,
+            "end": 1636330889,
+            "draft": true,
+            "fields": [
+                {
+                    "identifier": 0,
+                    "title": "How do you feel about apples?",
+                    "description": "",
+                    "type": "text",
+                    "min_chars": 10,
+                    "max_chars": 1000
+                },
+                {
+                    "identifier": 1,
+                    "title": "What's your email address?",
+                    "description": "",
+                    "type": "email",
+                    "hint": "YOUR EMAIL ADDRESS HERE",
+                    "regex": ".*",
+                    "verify": true
+                },
+                {
+                    "identifier": 2,
+                    "title": "What are your favorite pizza toppings?",
+                    "description": "",
+                    "type": "selection",
+                    "options": [
+                        "Quattro Stagioni",
+                        "Prosciutto",
+                        "Margherita",
+                        "Quattro Formaggi",
+                        "Capricciosa"
+                    ],
+                    "min_select": 2,
+                    "max_select": 5
+                },
+                {
+                    "identifier": 3,
+                    "title": "What's your favorite letter of the alphabet?",
+                    "description": "",
+                    "type": "radio",
+                    "options": ["A", "B", "C"]
+                },
+                {
+                    "identifier": 4,
+                    "title": "I am a big fan of carrots.",
+                    "description": "",
+                    "type": "option",
+                    "required": true
+                }
+            ]
+        }
+    }
 }

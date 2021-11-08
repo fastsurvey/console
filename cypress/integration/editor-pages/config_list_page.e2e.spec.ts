@@ -73,7 +73,7 @@ describe('The Config List Page', () => {
         });
     });
 
-    it('seed surveys are present', () => {
+    /*it('seed surveys are present', () => {
         cy.get('a:visible').should('have.length', 4);
 
         cy.fixture('configs.json').then((configJSON: any) => {
@@ -104,6 +104,8 @@ describe('The Config List Page', () => {
                 reloadConfigurations();
                 configListPanelIsWorking(newSurveyName);
             });
+
+        // survey will be remove by teardown: `after(...)`
     });
 
     it('removing a survey works', () => {
@@ -133,8 +135,9 @@ describe('The Config List Page', () => {
                     .should('have.length', 1)
                     .click();
 
-                cy.get('button:visible')
-                    .contains('remove survey')
+                // Remove modal is visible
+                cy.get('h2:visible')
+                    .contains('Remove this survey permanently?')
                     .should('have.length', 1)
                     .parents('section')
                     .as('removeModal');
@@ -145,6 +148,11 @@ describe('The Config List Page', () => {
                     .contains('cancel')
                     .should('have.length', 1)
                     .click();
+                
+                // Remove modal is closed
+                cy.get('h2:visible')
+                    .contains('Remove this survey permanently?')
+                     .should('not.be.visible');
 
                 configListPanelIsWorking(newSurveyName);
                 reloadConfigurations();
@@ -167,29 +175,158 @@ describe('The Config List Page', () => {
                     .should('have.length', 1)
                     .click();
 
+                // Remove modal is closed
+                cy.get('h2')
+                    .contains('Remove this survey permanently?')
+                     .should('not.be.visible');
+
+                // Success message is visible
+                cy.get('div')
+                    .contains('Success: Survey has been removed')
+                    .should('have.length', 1);
+
                 configListPanelIsAbsent(newSurveyName);
                 reloadConfigurations();
                 configListPanelIsAbsent(newSurveyName);
             });
-    });
+    });*/
 
     // TODO: test "duplicate survey"
     it('duplicating a survey works', () => {
-        // make manual api request to create a specific survey
-        // load that complex config from fixtures/
-        // in that config:
-        //   * include every field type
-        //   * use non-sequential field identifiers
-        // Afterwards:
-        //  1. reload page
-        //  2. check if the new config is in the config list
-        //  3. duplicate (also check modal)
-        //  4. check if new duplicated config is in the config list
-        //  5. reload page
-        //  6. check again if new duplicated config is present
-        //  7. Manuall load config.json from backend and:
-        //      7.1 check if identifiers are sequential
-        //      7.2 do a deep comparison for everything else
+        // @ts-ignore
+        cy.seedDuplicationData();
+        reloadConfigurations();
+
+        cy.fixture('configs.json').then((configsJSON: any) => {
+            const originalSurvey = configsJSON.duplication.original;
+            const originalSurveyName =
+                configsJSON.duplication.original['survey_name'];
+            const duplicateSurvey = configsJSON.duplication.duplicate;
+            const duplicateSurveyName =
+                configsJSON.duplication.duplicate['survey_name'];
+            configListPanelIsWorking(originalSurvey['survey_name']);
+
+            cy.get(`@configListPanel-${originalSurveyName}`)
+                .find('button > svg')
+                .should('have.length', 1)
+                .parents('button')
+                .click();
+
+            cy.get(`@configListPanel-${originalSurveyName}`)
+                .find('button:visible')
+                .contains('duplicate')
+                .should('have.length', 1)
+                .click();
+
+            // Duplicate modal is visible
+            cy.get('h2:visible')
+                .contains('Duplicate this survey?')
+                .should('have.length', 1)
+                .parents('section')
+                .as('duplicateModal');
+
+            cy.get('@duplicateModal')
+                .find('button:visible')
+                .should('have.length', 2)
+                .contains('cancel')
+                .should('have.length', 1)
+                .click();
+
+            // Duplicate modal is closed
+            cy.get('h2')
+                .contains('Duplicate this survey?')
+                .should('not.be.visible');
+
+            configListPanelIsWorking(originalSurveyName);
+            reloadConfigurations();
+            configListPanelIsWorking(originalSurveyName);
+
+            cy.get(`@configListPanel-${originalSurveyName}`)
+                .find('button > svg')
+                .should('have.length', 1)
+                .parents('button')
+                .click();
+
+            cy.get(`@configListPanel-${originalSurveyName}`)
+                .find('button:visible')
+                .contains('duplicate')
+                .should('have.length', 1)
+                .click();
+
+            cy.get('h2:visible')
+                .contains('Duplicate this survey?')
+                .should('have.length', 1)
+                .parents('section')
+                .as('duplicateModal');
+
+            cy.get('@duplicateModal')
+                .find('button:visible')
+                .contains('duplicate survey')
+                .should('have.length', 1)
+                .parents('button')
+                .should('be.disabled');
+
+            cy.get('@duplicateModal')
+                .find('input')
+                .should('have.length', 1)
+                .should('not.be.disabled')
+                .should('have.value', originalSurveyName);
+
+            cy.get('@duplicateModal')
+                .find('div')
+                .contains(
+                    `has to be unique, you already have a survey \'${originalSurveyName}\'`,
+                )
+                .should('have.length', 1);
+
+            cy.get('@duplicateModal')
+                .find('input')
+                .clear()
+                .type(duplicateSurveyName)
+                .should('have.value', duplicateSurveyName);
+
+            cy.get('@duplicateModal')
+                .find('button')
+                .contains('duplicate survey')
+                .parents('button')
+                .should('not.be.disabled')
+                .click();
+
+            // Duplicate modal has been closed
+            cy.get('h2')
+                .contains('Duplicate this survey?')
+                .should('not.be.visible');
+
+            // Success message is visible
+            cy.get('div')
+                .contains('Success: You are now viewing the created copy')
+                .should('have.length', 1);
+
+            cy.url().should(
+                'eq',
+                `http://localhost:3000/configuration/${duplicateSurveyName}`,
+            );
+            reloadConfigurations();
+            configListPanelIsWorking(originalSurveyName);
+            configListPanelIsWorking(duplicateSurveyName);
+        });
+
+        // - [x] make manual api request to create a specific survey
+        // - [x] load that complex config from fixtures/
+        // - [x] in that config:
+        // - [x]   * include every field type
+        // - [x]   * use non-sequential field identifiers
+        // - [x] Afterwards:
+        // - [x]  1. reload page
+        // - [x]  2. check if the new config is in the config list
+        // - [x]  3. duplicate (also check modal)
+        // - [x]  4. check of new route is correct
+        // - [x]  5. check if new duplicated config is in the config list
+        // - [x]  6. reload page
+        // - [x]  7. check again if new duplicated config is present
+        // - [ ]  8. Manuall load config.json from backend and:
+        // - [ ]      8.1 check if identifiers are sequential
+        // - [ ]      8.2 do a deep comparison for everything else
     });
 
     // I skip testing the search bar for now

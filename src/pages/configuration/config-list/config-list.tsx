@@ -100,7 +100,7 @@ function ConfigList(props: Props) {
 
     const openDuplicateModal = (config: types.SurveyConfig) => () => {
         props.openModal(
-            'Duplicate this survey',
+            'Duplicate this survey?',
             <DuplicateSurveyPopup
                 thisConfig={config}
                 duplicateSurvey={duplicateSurvey(config)}

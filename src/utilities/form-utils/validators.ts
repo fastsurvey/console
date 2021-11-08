@@ -116,7 +116,7 @@ export const validators = {
                 valid: false,
                 message:
                     'URL conform identifier has to be unique, you ' +
-                    `already have survey '${thisConfig.survey_name}'`,
+                    `already have a survey '${thisConfig.survey_name}'`,
             };
         } else {
             return {valid: true};
