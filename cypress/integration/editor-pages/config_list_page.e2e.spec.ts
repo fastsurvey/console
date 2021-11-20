@@ -17,17 +17,23 @@ const toggleActions = (surveyName: string) =>
     panel(surveyName)
         .find('[data-cy="button-to-toggle-actions-dropdown"]')
         .should('have.length', 1);
-
 const actionsDropdown = (surveyName: string, state: 'visible' | 'invisible') =>
     panel(surveyName)
         .find('[data-cy="actions-dropdown"]')
         .should('have.length', state === 'visible' ? 1 : 0);
-
 const actionsButton = (surveyName: string, type: 'remove' | 'duplicate') =>
     panel(surveyName)
         .find('[data-cy="actions-dropdown"]')
         .find(`[data-cy="button-${type}"]`)
         .should('have.length', 1);
+
+// POPUP
+const popupPanel = () => getByDataCy('popup-panel', {count: 1});
+const popupDuplicateInput = () => getByDataCy('duplicate-input', {count: 1});
+const popupDuplicateCancel = () => getByDataCy('duplicate-button-cancel', {count: 1});
+const popupDuplicateSubmit = () => getByDataCy('duplicate-button-submit', {count: 1});
+const popupRemoveCancel = () => getByDataCy('remove-button-cancel', {count: 1});
+const popupRemoveSubmit = () => getByDataCy('remove-button-submit', {count: 1});
 
 describe('The Config List Page', () => {
     // @ts-ignore
@@ -120,60 +126,36 @@ describe('The Config List Page', () => {
             .should('match', /.*configuration\/.+/)
             .then((url) => {
                 const newSurveyName: any = last(url.split('/'));
-                const listPanelIsWorking = () =>
-                    configListPanelIsWorking(USERNAME, newSurveyName);
-                const listPanelIsAbsent = () => configListPanelIsAbsent(newSurveyName);
 
                 reloadConfigurationsPage();
-                listPanelIsWorking();
+                configListPanelIsWorking(USERNAME, newSurveyName);
+
+                // cancel button on removal popup
                 toggleActions(newSurveyName).click();
                 actionsDropdown(newSurveyName, 'visible');
                 actionsButton(newSurveyName, 'remove').click();
+                popupPanel().should('be.visible');
+                popupRemoveCancel().click();
+                popupPanel().should('not.be.visible');
+                actionsDropdown(newSurveyName, 'visible');
 
-                // TODO: refactor modal tests
-                // Remove modal is visible
-                cy.get('h2:visible')
-                    .contains('Remove this survey permanently?')
-                    .should('have.length', 1)
-                    .parents('section')
-                    .as('removeModal');
-
-                cy.get('@removeModal')
-                    .find('button:visible')
-                    .should('have.length', 2)
-                    .contains('cancel')
-                    .should('have.length', 1)
-                    .click();
-
-                // Remove modal is closed
-                cy.get('h2')
-                    .contains('Remove this survey permanently?')
-                    .should('not.be.visible');
-
-                listPanelIsWorking();
+                // config did not change
+                configListPanelIsWorking(USERNAME, newSurveyName);
                 reloadConfigurationsPage();
-                listPanelIsWorking();
+                configListPanelIsWorking(USERNAME, newSurveyName);
 
+                // removal popup
                 toggleActions(newSurveyName).click();
                 actionsButton(newSurveyName, 'remove').click();
-
-                // TODO: refactor modal tests
-                cy.get('button:visible')
-                    .contains('remove survey')
-                    .should('have.length', 1)
-                    .click();
-
-                // Remove modal is closed
-                cy.get('h2')
-                    .contains('Remove this survey permanently?')
-                    .should('not.be.visible');
-
-                // Success message is visible
+                popupPanel().should('be.visible');
+                popupRemoveSubmit().click();
+                popupPanel().should('not.be.visible');
                 successMessage();
 
-                listPanelIsAbsent();
+                // config is gone
+                configListPanelIsAbsent(newSurveyName);
                 reloadConfigurationsPage();
-                listPanelIsAbsent();
+                configListPanelIsAbsent(newSurveyName);
             });
     });
 
@@ -189,86 +171,42 @@ describe('The Config List Page', () => {
         const DUPLICATE_SURVEY_NAME = DUPLICATE_SURVEY['survey_name'];
         configListPanelIsWorking(USERNAME, ORIGINAL_SURVEY_NAME);
 
+        // cancel button on duplication popup
         toggleActions(ORIGINAL_SURVEY_NAME).click();
         actionsButton(ORIGINAL_SURVEY_NAME, 'duplicate').click();
-
-        // TODO: refactor modal tests
-        // Duplicate modal is visible
-        cy.get('h2:visible')
-            .contains('Duplicate this survey?')
-            .should('have.length', 1)
-            .parents('section')
-            .as('duplicateModal');
-
-        cy.get('@duplicateModal')
-            .find('button:visible')
-            .should('have.length', 2)
-            .contains('cancel')
-            .should('have.length', 1)
-            .click();
-
-        // Duplicate modal is closed
-        cy.get('h2').contains('Duplicate this survey?').should('not.be.visible');
+        popupPanel().should('be.visible');
+        popupDuplicateCancel().click();
+        popupPanel().should('not.be.visible');
         actionsDropdown(ORIGINAL_SURVEY_NAME, 'visible');
 
+        // config did not change
         configListPanelIsWorking(USERNAME, ORIGINAL_SURVEY_NAME);
         reloadConfigurationsPage();
         configListPanelIsWorking(USERNAME, ORIGINAL_SURVEY_NAME);
 
+        // duplication popup
         toggleActions(ORIGINAL_SURVEY_NAME).click();
         actionsButton(ORIGINAL_SURVEY_NAME, 'duplicate').click();
-
-        // TODO: refactor modal tests
-        cy.get('h2:visible')
-            .contains('Duplicate this survey?')
-            .should('have.length', 1)
-            .parents('section')
-            .as('duplicateModal');
-
-        cy.get('@duplicateModal')
-            .find('button:visible')
-            .contains('duplicate survey')
-            .should('have.length', 1)
-            .parents('button')
-            .should('be.disabled');
-
-        cy.get('@duplicateModal')
-            .find('input')
-            .should('have.length', 1)
-            .should('not.be.disabled')
-            .should('have.value', ORIGINAL_SURVEY_NAME);
-
-        cy.get('@duplicateModal')
+        popupPanel()
             .find('div')
-            .contains(
-                `has to be unique, you already have a survey \'${ORIGINAL_SURVEY_NAME}\'`,
-            )
+            .contains(`you already have a survey \'${ORIGINAL_SURVEY_NAME}\'`)
             .should('have.length', 1);
-
-        cy.get('@duplicateModal')
-            .find('input')
+        popupDuplicateSubmit().should('be.disabled');
+        popupDuplicateInput().should('have.value', ORIGINAL_SURVEY_NAME);
+        popupDuplicateInput()
             .clear()
             .type(DUPLICATE_SURVEY_NAME)
             .should('have.value', DUPLICATE_SURVEY_NAME);
+        popupDuplicateSubmit().click();
 
-        cy.get('@duplicateModal')
-            .find('button')
-            .contains('duplicate survey')
-            .parents('button')
-            .should('not.be.disabled')
-            .click();
-
-        // Duplicate modal has been closed
-        cy.get('h2').contains('Duplicate this survey?').should('not.be.visible');
-
-        // Success message is visible
+        // duplication has workes -> on new page with success message
         successMessage();
-
         cy.url().should('include', `/configuration/${DUPLICATE_SURVEY_NAME}`);
         reloadConfigurationsPage();
         configListPanelIsWorking(USERNAME, ORIGINAL_SURVEY_NAME);
         configListPanelIsWorking(USERNAME, DUPLICATE_SURVEY_NAME);
 
+        // deepCompare the config-json in database
         cy.request({
             method: 'POST',
             url: 'https://api.dev.fastsurvey.de/authentication',
@@ -295,23 +233,6 @@ describe('The Config List Page', () => {
                 expect(duplicateSurveyOnServer).to.deep.equal(DUPLICATE_SURVEY);
             });
         });
-
-        // - [x] make manual api request to create a specific survey
-        // - [x] load that complex config from fixtures/
-        // - [x] in that config:
-        // - [x]   * include every field type
-        // - [x]   * use non-sequential field identifiers
-        // - [x] Afterwards:
-        // - [x]  1. reload page
-        // - [x]  2. check if the new config is in the config list
-        // - [x]  3. duplicate (also check modal)
-        // - [x]  4. check of new route is correct
-        // - [x]  5. check if new duplicated config is in the config list
-        // - [x]  6. reload page
-        // - [x]  7. check again if new duplicated config is present
-        // - [x]  8. Manuall load config.json from backend and:
-        // - [x]      8.1 check if identifiers are sequential
-        // - [x]      8.2 do a deep comparison for everything else
     });
 
     // I skip testing the search bar for now
