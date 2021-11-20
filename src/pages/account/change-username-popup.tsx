@@ -25,10 +25,8 @@ export default function ChangeUsernamePopup(props: Props) {
                         }
                     >
                         fastsurvey.de/
-                        <span className='font-weight-700'>
-                            {props.oldUsername}
-                        </span>
-                        /{'<survey-id>'}
+                        <span className='font-weight-700'>{props.oldUsername}</span>/
+                        {'<survey-id>'}
                     </div>
                 </div>
                 <div className='w-full mb-2 flex-row-center whitespace-nowrap gap-x-2'>
@@ -41,10 +39,8 @@ export default function ChangeUsernamePopup(props: Props) {
                         }
                     >
                         fastsurvey.de/
-                        <span className='font-weight-700'>
-                            {props.newUsername}
-                        </span>
-                        /{'<survey-id>'}
+                        <span className='font-weight-700'>{props.newUsername}</span>/
+                        {'<survey-id>'}
                     </div>
                 </div>
             </div>
@@ -53,11 +49,13 @@ export default function ChangeUsernamePopup(props: Props) {
                     text='cancel'
                     variant='flat-light-red'
                     onClick={props.cancel}
+                    data-cy='account-username-confirm-cancel'
                 />
                 <Button
                     text='confirm'
                     variant='flat-light-blue'
                     onClick={props.submit}
+                    data-cy='account-username-confirm-submit'
                 />
             </div>
         </div>

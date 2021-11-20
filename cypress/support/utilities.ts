@@ -22,7 +22,25 @@ export function reloadConfigurations() {
     cy.url().should('include', '/configurations');
 }
 
-export function reloadAccount() {
+export function reloadAccountPage() {
     cy.visit('/account');
     cy.url().should('include', '/account');
+}
+
+export function getByDataCy(dataCyContains: string, props?: {count?: number}) {
+    if (props === undefined) {
+        return cy.root().get(`[data-cy*="${dataCyContains}"]`);
+    } else {
+        return cy
+            .root()
+            .get(`[data-cy*="${dataCyContains}"]`)
+            .should('have.length', props.count);
+    }
+}
+
+export function assertDataCy(
+    element: Cypress.Chainable<JQuery<HTMLElement>>,
+    dataCy: string,
+) {
+    element.should('have.attr', 'data-cy').and('include', dataCy);
 }

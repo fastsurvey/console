@@ -27,10 +27,9 @@ function VisualMessage(props: Props) {
                 'font-weight-500 rounded shadow-lg flex-grow max-w-full ' +
                 `${colors}`
             }
+            data-cy={`message-panel-${props.message.type}`}
         >
-            <div className='py-2.5 text-base leading-6'>
-                {props.message.text}
-            </div>
+            <div className='py-2.5 text-base leading-6'>{props.message.text}</div>
             <div className='flex-max' />
             <button
                 className={

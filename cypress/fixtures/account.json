@@ -1,7 +1,7 @@
 {
-    "email": "test+blueberry@fastsurvey.de",
-    "username": "blueberry",
-    "password": "12345678",
-    "tmpUsername": "a-different-blueberry",
-    "tmpPassword": "123456789"
+    "EMAIL": "test+blueberry@fastsurvey.de",
+    "USERNAME": "blueberry",
+    "PASSWORD": "12345678",
+    "TMP_USERNAME": "a-different-blueberry",
+    "TMP_PASSWORD": "123456789"
 }

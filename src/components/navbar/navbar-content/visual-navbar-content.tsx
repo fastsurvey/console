@@ -43,6 +43,7 @@ function NavbarButton(props: {
                 'font-weight-700 md:font-weight-600 text-base rounded cursor-pointer ' +
                 (props.active ? 'text-white bg-gray-700' : 'text-gray-200')
             }
+            data-cy={`navbar-button-${props.text.toLowerCase()}`}
         >
             <div className={'h-10 w-10 p-2 icon-light-blue flex-shrink-0'}>
                 {props.icon}

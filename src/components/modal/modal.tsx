@@ -44,8 +44,14 @@ function Modal(props: Props) {
                 className='absolute top-0 left-0 z-0 w-full h-full bg-gray-800 opacity-70'
                 onClick={props.closeModal}
             />
-            <section className='z-10 flex-grow-0 w-full max-w-lg bg-white rounded shadow flex-col-center'>
-                <h2 className='p-2 mt-2 text-xl text-gray-800 font-weight-600'>
+            <section
+                className='z-10 flex-grow-0 w-full max-w-lg bg-white rounded shadow flex-col-center'
+                data-cy='popup-panel'
+            >
+                <h2
+                    className='p-2 mt-2 text-xl text-gray-800 font-weight-600'
+                    data-cy='popup-heading'
+                >
                     {props.modalState.title}
                 </h2>
                 {props.modalState.children}

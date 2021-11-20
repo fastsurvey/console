@@ -1,16 +1,14 @@
 /// <reference types="cypress" />
 
 Cypress.Commands.add('seedAccountData', () => {
-    cy.fixture('account.json').then((json: any) => {
-        console.log('SEED BLUEBERRY ACCOUNT', json);
+    cy.fixture('account.json').then((accountJSON: any) => {
+        console.log('SEED BLUEBERRY ACCOUNT', accountJSON);
+        const {EMAIL, USERNAME, PASSWORD, TMP_USERNAME, TMP_PASSWORD} = accountJSON;
 
         const reqData = (username: string, password: string) => ({
             method: 'POST',
             url: 'https://api.dev.fastsurvey.de/authentication',
-            body: {
-                identifier: username,
-                password: password,
-            },
+            body: {identifier: username, password},
             failOnStatusCode: false,
         });
 
@@ -18,9 +16,9 @@ Cypress.Commands.add('seedAccountData', () => {
             method: 'PUT',
             url: `https://api.dev.fastsurvey.de/users/${username}`,
             body: {
-                username: json.username,
-                email_address: json.email,
-                password: json.password,
+                username: USERNAME,
+                email_address: EMAIL,
+                password: PASSWORD,
             },
             headers: {
                 Authorization: `Bearer ${access_token}`,
@@ -28,7 +26,7 @@ Cypress.Commands.add('seedAccountData', () => {
             },
         });
 
-        const expectBody = (
+        const expectBodyFormat = (
             response: Cypress.Response<any>,
             username: string,
         ) => {
@@ -36,30 +34,24 @@ Cypress.Commands.add('seedAccountData', () => {
             expect(response.body).to.have.property('access_token');
         };
 
-        cy.request(reqData(json.username, json.password)).then((r1) => {
+        cy.request(reqData(USERNAME, PASSWORD)).then((r1) => {
             if (r1.status === 200) {
-                expectBody(r1, json.username);
+                expectBodyFormat(r1, USERNAME);
                 return;
             }
 
-            cy.request(reqData(json.tmpUsername, json.password)).then((r2) => {
+            cy.request(reqData(TMP_USERNAME, PASSWORD)).then((r2) => {
                 if (r2.status === 200) {
-                    expectBody(r2, json.tmpUsername);
-                    cy.request(
-                        seedData(json.tmpUsername, r2.body.access_token),
-                    );
+                    expectBodyFormat(r2, TMP_USERNAME);
+                    cy.request(seedData(TMP_USERNAME, r2.body.access_token));
                     return;
                 }
 
-                cy.request(reqData(json.username, json.tmpPassword)).then(
-                    (r3) => {
-                        expect(r3.status).to.equal(200);
-                        expectBody(r3, json.username);
-                        cy.request(
-                            seedData(json.username, r3.body.access_token),
-                        );
-                    },
-                );
+                cy.request(reqData(USERNAME, TMP_PASSWORD)).then((r3) => {
+                    expect(r3.status).to.equal(200);
+                    expectBodyFormat(r3, USERNAME);
+                    cy.request(seedData(USERNAME, r3.body.access_token));
+                });
             });
         });
     });
@@ -69,25 +61,23 @@ Cypress.Commands.add('seedConfigData', () => {
     cy.fixture('account.json').then((accountJSON: any) => {
         cy.fixture('configs.json').then((configsJSON: any) => {
             console.log('SEED BLUEBERRY CONFIGS', accountJSON, configsJSON);
+            const {USERNAME, PASSWORD} = accountJSON;
 
             cy.request({
                 method: 'POST',
                 url: 'https://api.dev.fastsurvey.de/authentication',
                 body: {
-                    identifier: accountJSON.username,
-                    password: accountJSON.password,
+                    identifier: USERNAME,
+                    password: PASSWORD,
                 },
             }).then((authResponse) => {
                 expect(authResponse.status).to.equal(200);
-                expect(authResponse.body).to.have.property(
-                    'username',
-                    accountJSON.username,
-                );
+                expect(authResponse.body).to.have.property('username', USERNAME);
                 expect(authResponse.body).to.have.property('access_token');
 
                 cy.request({
                     method: 'GET',
-                    url: `https://api.dev.fastsurvey.de/users/${accountJSON.username}/surveys`,
+                    url: `https://api.dev.fastsurvey.de/users/${USERNAME}/surveys`,
                     headers: {
                         Authorization: `Bearer ${authResponse.body.access_token}`,
                         'Content-Type': 'application/json',
@@ -98,19 +88,14 @@ Cypress.Commands.add('seedConfigData', () => {
 
                     const surveyToDelete = configsResponse.body
                         .map((c: any) => c['survey_name'])
-                        .filter(
-                            (s: string) =>
-                                !configsJSON.surveysToKeep.includes(s),
-                        );
+                        .filter((s: string) => !configsJSON.surveysToKeep.includes(s));
 
-                    console.log(
-                        `DELETE SURVEYS ${JSON.stringify(surveyToDelete)}`,
-                    );
+                    console.log(`DELETE SURVEYS ${JSON.stringify(surveyToDelete)}`);
 
                     surveyToDelete.forEach((s: string) => {
                         cy.request({
                             method: 'DELETE',
-                            url: `https://api.dev.fastsurvey.de/users/${accountJSON.username}/surveys/${s}`,
+                            url: `https://api.dev.fastsurvey.de/users/${USERNAME}/surveys/${s}`,
                             headers: {
                                 Authorization: `Bearer ${authResponse.body.access_token}`,
                                 'Content-Type': 'application/json',
@@ -118,71 +103,6 @@ Cypress.Commands.add('seedConfigData', () => {
                         });
                     });
                 });
-            });
-        });
-    });
-});
-
-Cypress.Commands.add('seedAccountData', () => {
-    cy.fixture('account.json').then((json: any) => {
-        console.log('SEED BLUEBERRY ACCOUNT', json);
-
-        const reqData = (username: string, password: string) => ({
-            method: 'POST',
-            url: 'https://api.dev.fastsurvey.de/authentication',
-            body: {
-                identifier: username,
-                password: password,
-            },
-            failOnStatusCode: false,
-        });
-
-        const seedData = (username: string, access_token: string) => ({
-            method: 'PUT',
-            url: `https://api.dev.fastsurvey.de/users/${username}`,
-            body: {
-                username: json.username,
-                email_address: json.email,
-                password: json.password,
-            },
-            headers: {
-                Authorization: `Bearer ${access_token}`,
-                'Content-Type': 'application/json',
-            },
-        });
-
-        const expectBody = (
-            response: Cypress.Response<any>,
-            username: string,
-        ) => {
-            expect(response.body).to.have.property('username', username);
-            expect(response.body).to.have.property('access_token');
-        };
-
-        cy.request(reqData(json.username, json.password)).then((r1) => {
-            if (r1.status === 200) {
-                expectBody(r1, json.username);
-                return;
-            }
-
-            cy.request(reqData(json.tmpUsername, json.password)).then((r2) => {
-                if (r2.status === 200) {
-                    expectBody(r2, json.tmpUsername);
-                    cy.request(
-                        seedData(json.tmpUsername, r2.body.access_token),
-                    );
-                    return;
-                }
-
-                cy.request(reqData(json.username, json.tmpPassword)).then(
-                    (r3) => {
-                        expect(r3.status).to.equal(200);
-                        expectBody(r3, json.username);
-                        cy.request(
-                            seedData(json.username, r3.body.access_token),
-                        );
-                    },
-                );
             });
         });
     });
@@ -226,30 +146,24 @@ Cypress.Commands.add('seedDuplicationData', () => {
                 cy.request(duplicationRequest('POST', authResponse)).then(
                     (duplicationResponse) => {
                         expect(duplicationResponse.status).to.equal(200);
-                        cy.request(
-                            duplicationRequest('PUT', authResponse),
-                        ).then((duplicationResponse2) => {
-                            expect(duplicationResponse2.status).to.equal(200);
+                        cy.request(duplicationRequest('PUT', authResponse)).then(
+                            (duplicationResponse2) => {
+                                expect(duplicationResponse2.status).to.equal(200);
 
-                            cy.request(
-                                duplicationRequest('GET', authResponse),
-                            ).then((duplicationResponse3) => {
-                                expect(duplicationResponse3.status).to.equal(
-                                    200,
-                                );
-                                expect(duplicationResponse3.body).to.deep.equal(
-                                    {
-                                        ...configsJSON.duplication[
-                                            'updated_original'
-                                        ],
+                                cy.request(
+                                    duplicationRequest('GET', authResponse),
+                                ).then((duplicationResponse3) => {
+                                    expect(duplicationResponse3.status).to.equal(200);
+                                    expect(duplicationResponse3.body).to.deep.equal({
+                                        ...configsJSON.duplication['updated_original'],
                                         max_identifier:
                                             configsJSON.duplication[
                                                 'updated_max_identifier'
                                             ],
-                                    },
-                                );
-                            });
-                        });
+                                    });
+                                });
+                            },
+                        );
                     },
                 );
             });
