@@ -1,7 +1,7 @@
 {
-    "surveysToKeep": ["simple", "complex"],
-    "duplication": {
-        "original": {
+    "SURVEYS_TO_KEEP": ["simple", "complex"],
+    "DUPLICATION": {
+        "ORIGINAL_SURVEY": {
             "survey_name": "simply-complex",
             "title": "Very Good Sample Title",
             "description": "Enneapuses are the new octopuses, and other wisdoms.",
@@ -78,7 +78,7 @@
                 }
             ]
         },
-        "updated_original": {
+        "UPDATED_ORIGINAL": {
             "survey_name": "simply-complex",
             "title": "Very Good Sample Title",
             "description": "Enneapuses are the new octopuses, and other wisdoms.",
@@ -134,8 +134,8 @@
                 }
             ]
         },
-        "updated_max_identifier": 7,
-        "duplicate": {
+        "UPDATED_MAX_IDENTIFIER": 7,
+        "DUPLICATE_SURVEY": {
             "max_identifier": 4,
             "survey_name": "a-different-kind-of-complex",
             "title": "Very Good Sample Title",

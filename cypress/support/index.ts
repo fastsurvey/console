@@ -1,30 +1,41 @@
 /// <reference types="cypress" />
 
+const requestAuthentication = (identifier: string, password: string) =>
+    cy.request({
+        method: 'POST',
+        url: 'https://api.dev.fastsurvey.de/authentication',
+        body: {
+            identifier,
+            password,
+        },
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        failOnStatusCode: false,
+    });
+
 Cypress.Commands.add('seedAccountData', () => {
     cy.fixture('account.json').then((accountJSON: any) => {
         console.log('SEED BLUEBERRY ACCOUNT', accountJSON);
         const {EMAIL, USERNAME, PASSWORD, TMP_USERNAME, TMP_PASSWORD} = accountJSON;
 
-        const reqData = (username: string, password: string) => ({
-            method: 'POST',
-            url: 'https://api.dev.fastsurvey.de/authentication',
-            body: {identifier: username, password},
-            failOnStatusCode: false,
-        });
-
-        const seedData = (username: string, access_token: string) => ({
-            method: 'PUT',
-            url: `https://api.dev.fastsurvey.de/users/${username}`,
-            body: {
-                username: USERNAME,
-                email_address: EMAIL,
-                password: PASSWORD,
-            },
-            headers: {
-                Authorization: `Bearer ${access_token}`,
-                'Content-Type': 'application/json',
-            },
-        });
+        const requestAccountUpdate = (
+            authResponse: Cypress.Response<any>,
+            username: string,
+        ) =>
+            cy.request({
+                method: 'PUT',
+                url: `https://api.dev.fastsurvey.de/users/${username}`,
+                body: {
+                    username: USERNAME,
+                    email_address: EMAIL,
+                    password: PASSWORD,
+                },
+                headers: {
+                    Authorization: `Bearer ${authResponse.body.access_token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
 
         const expectBodyFormat = (
             response: Cypress.Response<any>,
@@ -34,23 +45,23 @@ Cypress.Commands.add('seedAccountData', () => {
             expect(response.body).to.have.property('access_token');
         };
 
-        cy.request(reqData(USERNAME, PASSWORD)).then((r1) => {
+        requestAuthentication(USERNAME, PASSWORD).then((r1) => {
             if (r1.status === 200) {
                 expectBodyFormat(r1, USERNAME);
                 return;
             }
 
-            cy.request(reqData(TMP_USERNAME, PASSWORD)).then((r2) => {
+            requestAuthentication(TMP_USERNAME, PASSWORD).then((r2) => {
                 if (r2.status === 200) {
                     expectBodyFormat(r2, TMP_USERNAME);
-                    cy.request(seedData(TMP_USERNAME, r2.body.access_token));
+                    requestAccountUpdate(r2, TMP_USERNAME);
                     return;
                 }
 
-                cy.request(reqData(USERNAME, TMP_PASSWORD)).then((r3) => {
+                requestAuthentication(USERNAME, TMP_PASSWORD).then((r3) => {
                     expect(r3.status).to.equal(200);
                     expectBodyFormat(r3, USERNAME);
-                    cy.request(seedData(USERNAME, r3.body.access_token));
+                    requestAccountUpdate(r3, USERNAME);
                 });
             });
         });
@@ -62,19 +73,9 @@ Cypress.Commands.add('seedConfigData', () => {
         cy.fixture('configs.json').then((configsJSON: any) => {
             console.log('SEED BLUEBERRY CONFIGS', accountJSON, configsJSON);
             const {USERNAME, PASSWORD} = accountJSON;
+            const {SURVEYS_TO_KEEP} = configsJSON;
 
-            cy.request({
-                method: 'POST',
-                url: 'https://api.dev.fastsurvey.de/authentication',
-                body: {
-                    identifier: USERNAME,
-                    password: PASSWORD,
-                },
-            }).then((authResponse) => {
-                expect(authResponse.status).to.equal(200);
-                expect(authResponse.body).to.have.property('username', USERNAME);
-                expect(authResponse.body).to.have.property('access_token');
-
+            const requestConfigs = (authResponse: Cypress.Response<any>) =>
                 cy.request({
                     method: 'GET',
                     url: `https://api.dev.fastsurvey.de/users/${USERNAME}/surveys`,
@@ -82,26 +83,34 @@ Cypress.Commands.add('seedConfigData', () => {
                         Authorization: `Bearer ${authResponse.body.access_token}`,
                         'Content-Type': 'application/json',
                     },
-                }).then((configsResponse) => {
+                });
+
+            const requestDelete =
+                (authResponse: Cypress.Response<any>) => (surveyName: string) =>
+                    cy.request({
+                        method: 'DELETE',
+                        url: `https://api.dev.fastsurvey.de/users/${USERNAME}/surveys/${surveyName}`,
+                        headers: {
+                            Authorization: `Bearer ${authResponse.body.access_token}`,
+                            'Content-Type': 'application/json',
+                        },
+                    });
+
+            requestAuthentication(USERNAME, PASSWORD).then((authResponse) => {
+                expect(authResponse.status).to.equal(200);
+                expect(authResponse.body).to.have.property('username', USERNAME);
+                expect(authResponse.body).to.have.property('access_token');
+
+                requestConfigs(authResponse).then((configsResponse) => {
                     expect(configsResponse.status).to.equal(200);
                     expect(configsResponse.body).to.have.length.gte(2);
 
                     const surveyToDelete = configsResponse.body
                         .map((c: any) => c['survey_name'])
-                        .filter((s: string) => !configsJSON.surveysToKeep.includes(s));
+                        .filter((s: string) => !SURVEYS_TO_KEEP.includes(s));
 
                     console.log(`DELETE SURVEYS ${JSON.stringify(surveyToDelete)}`);
-
-                    surveyToDelete.forEach((s: string) => {
-                        cy.request({
-                            method: 'DELETE',
-                            url: `https://api.dev.fastsurvey.de/users/${USERNAME}/surveys/${s}`,
-                            headers: {
-                                Authorization: `Bearer ${authResponse.body.access_token}`,
-                                'Content-Type': 'application/json',
-                            },
-                        });
-                    });
+                    surveyToDelete.map(requestDelete(authResponse));
                 });
             });
         });
@@ -111,61 +120,50 @@ Cypress.Commands.add('seedConfigData', () => {
 Cypress.Commands.add('seedDuplicationData', () => {
     cy.fixture('account.json').then((accountJSON: any) => {
         cy.fixture('configs.json').then((configsJSON: any) => {
-            const authRequest = {
-                method: 'POST',
-                url: 'https://api.dev.fastsurvey.de/authentication',
-                body: {
-                    identifier: accountJSON.username,
-                    password: accountJSON.password,
-                },
-            };
+            const {USERNAME, PASSWORD} = accountJSON;
+            const {ORIGINAL_SURVEY, UPDATED_ORIGINAL, UPDATED_MAX_IDENTIFIER} =
+                configsJSON.DUPLICATION;
 
-            const duplicationRequest = (
+            const requestDuplication = (
                 method: 'GET' | 'POST' | 'PUT',
                 authResponse: Cypress.Response<any>,
             ) => {
-                const config =
-                    configsJSON.duplication[
-                        method === 'POST' ? 'original' : 'updated_original'
-                    ];
-                return {
-                    method: method,
-                    url: `https://api.dev.fastsurvey.de/users/${accountJSON.username}/surveys/${config['survey_name']}`,
+                let config = ORIGINAL_SURVEY;
+                let url = `https://api.dev.fastsurvey.de/users/${USERNAME}/surveys`;
+                if (method !== 'POST') {
+                    config = UPDATED_ORIGINAL;
+                    url += `/${config['survey_name']}`;
+                }
+                return cy.request({
+                    method,
+                    url,
                     body: method === 'GET' ? undefined : config,
                     headers: {
                         Authorization: `Bearer ${authResponse.body['access_token']}`,
                         'Content-Type': 'application/json',
                     },
-                };
+                });
             };
 
-            cy.request(authRequest).then((authResponse) => {
+            requestAuthentication(USERNAME, PASSWORD).then((authResponse) => {
                 expect(authResponse.status).to.equal(200);
                 expect(authResponse.body).to.have.property('access_token');
 
-                cy.request(duplicationRequest('POST', authResponse)).then(
-                    (duplicationResponse) => {
-                        expect(duplicationResponse.status).to.equal(200);
-                        cy.request(duplicationRequest('PUT', authResponse)).then(
-                            (duplicationResponse2) => {
-                                expect(duplicationResponse2.status).to.equal(200);
+                requestDuplication('POST', authResponse).then((r1) => {
+                    expect(r1.status).to.equal(200);
 
-                                cy.request(
-                                    duplicationRequest('GET', authResponse),
-                                ).then((duplicationResponse3) => {
-                                    expect(duplicationResponse3.status).to.equal(200);
-                                    expect(duplicationResponse3.body).to.deep.equal({
-                                        ...configsJSON.duplication['updated_original'],
-                                        max_identifier:
-                                            configsJSON.duplication[
-                                                'updated_max_identifier'
-                                            ],
-                                    });
-                                });
-                            },
-                        );
-                    },
-                );
+                    requestDuplication('PUT', authResponse).then((r2) => {
+                        expect(r2.status).to.equal(200);
+
+                        requestDuplication('GET', authResponse).then((r3) => {
+                            expect(r3.status).to.equal(200);
+                            expect(r3.body).to.deep.equal({
+                                ...UPDATED_ORIGINAL,
+                                max_identifier: UPDATED_MAX_IDENTIFIER,
+                            });
+                        });
+                    });
+                });
             });
         });
     });

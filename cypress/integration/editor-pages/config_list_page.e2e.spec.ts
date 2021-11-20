@@ -1,64 +1,33 @@
 import {first, last} from 'lodash';
 import * as utilities from '../../support/utilities';
 
-const {login, reloadConfigurations} = utilities;
+const {login, reloadConfigurationsPage, getByDataCy, assertDataCy} = utilities;
 
-function configListPanelIsWorking(surveyName: string) {
-    cy.fixture('account.json').then((accountJSON) => {
-        cy.get('div')
-            .contains(`dev.fastsurvey.de/${accountJSON.username}/${surveyName}`)
-            .should('have.length', 1)
-            .parents('section')
-            .as(`configListPanel-${surveyName}`);
+const buttonNew = () => getByDataCy('config-list-button-new', {count: 1});
+const successMessage = () => getByDataCy('message-panel-success', {count: 1});
 
-        cy.get(`@configListPanel-${surveyName}`).then(($panel) => {
-            if ($panel.find('a').first().attr('href') !== undefined) {
-                // not a draft
-                cy.get('a:visible')
-                    .contains(
-                        `dev.fastsurvey.de/${accountJSON.username}/${surveyName}`,
-                    )
-                    .should('have.length', 1)
-                    .should('have.attr', 'href')
-                    .and(
-                        'include',
-                        `https://dev.fastsurvey.de/${accountJSON.username}/${surveyName}`,
-                    );
-            } else {
-                // a draft
-                cy.get('a:visible')
-                    .contains(
-                        `dev.fastsurvey.de/${accountJSON.username}/${surveyName}`,
-                    )
-                    .should('have.length', 1)
-                    .should('not.have.attr', 'href');
-            }
+const panel = (surveyName: string) =>
+    getByDataCy(`config-list-panel-${surveyName}`, {count: 1});
+const linkToFrontend = (surveyName: string) =>
+    panel(surveyName).find('[data-cy="link-to-frontend"]').should('have.length', 1);
+const linkToEditor = (surveyName: string) =>
+    panel(surveyName).find('[data-cy="link-to-editor"]').should('have.length', 1);
 
-            cy.get(`@configListPanel-${surveyName}`)
-                .find('a:visible')
-                .contains('edit')
-                .parents('a')
-                .should('have.length', 1)
-                .should('have.attr', 'href')
-                .and('eq', `/configuration/${surveyName}`);
+const toggleActions = (surveyName: string) =>
+    panel(surveyName)
+        .find('[data-cy="button-to-toggle-actions-dropdown"]')
+        .should('have.length', 1);
 
-            cy.get(`@configListPanel-${surveyName}`).contains('edit').click();
-            cy.url().should('include', `/configuration/${surveyName}`);
-            cy.go('back');
-            cy.url().should('include', '/configurations');
-        });
-    });
-}
+const actionsDropdown = (surveyName: string, state: 'visible' | 'invisible') =>
+    panel(surveyName)
+        .find('[data-cy="actions-dropdown"]')
+        .should('have.length', state === 'visible' ? 1 : 0);
 
-function configListPanelIsAbsent(surveyName: string) {
-    cy.get('h1').contains('Edit & Create Surveys').should('have.length', 1);
-
-    cy.fixture('account.json').then((accountJSON) => {
-        cy.get('div')
-            .contains(`dev.fastsurvey.de/${accountJSON.username}/${surveyName}`)
-            .should('have.length', 0);
-    });
-}
+const actionsButton = (surveyName: string, type: 'remove' | 'duplicate') =>
+    panel(surveyName)
+        .find('[data-cy="actions-dropdown"]')
+        .find(`[data-cy="button-${type}"]`)
+        .should('have.length', 1);
 
 describe('The Config List Page', () => {
     // @ts-ignore
@@ -68,24 +37,63 @@ describe('The Config List Page', () => {
     after(cy.seedConfigData);
 
     beforeEach(() => {
-        cy.fixture('account.json').then((accountJSON: any) => {
-            login(accountJSON.username, accountJSON.password);
-        });
+        cy.fixture('account.json')
+            .as('accountJSON')
+            .then((accountJSON: any) => {
+                login(accountJSON.USERNAME, accountJSON.PASSWORD);
+            });
+        cy.fixture('configs.json').as('configsJSON');
     });
 
-    it('seed surveys are present', () => {
-        cy.get('a:visible').should('have.length', 4);
+    function configListPanelIsWorking(username: string, surveyName: string) {
+        const frontentLink = `dev.fastsurvey.de/${username}/${surveyName}`;
 
-        cy.fixture('configs.json').then((configJSON: any) => {
-            configJSON.surveysToKeep.forEach(configListPanelIsWorking);
+        linkToFrontend(surveyName).should('have.text', frontentLink);
+
+        panel(surveyName).then(($panel) => {
+            if ($panel.attr('data-cy')?.includes('published')) {
+                // not a draft
+                linkToFrontend(surveyName)
+                    .should('have.attr', 'href')
+                    .and('eq', `https://${frontentLink}`);
+            } else {
+                // a draft
+                linkToFrontend(surveyName).should('not.have.attr', 'href');
+            }
         });
+
+        linkToEditor(surveyName)
+            .should('have.attr', 'href')
+            .and('eq', `/configuration/${surveyName}`);
+
+        linkToEditor(surveyName).click();
+        cy.url().should('include', `/configuration/${surveyName}`);
+        cy.go('back');
+        cy.url().should('include', '/configurations');
+
+        actionsDropdown(surveyName, 'invisible');
+        toggleActions(surveyName).click();
+        actionsDropdown(surveyName, 'visible');
+        actionsButton(surveyName, 'remove');
+        actionsButton(surveyName, 'duplicate');
+        toggleActions(surveyName).click();
+        actionsDropdown(surveyName, 'invisible');
+    }
+
+    const configListPanelIsAbsent = (surveyName: string) => {
+        getByDataCy(`config-list-panel-${surveyName}`, {count: 0});
+    };
+
+    it('seed surveys are present', function () {
+        const {USERNAME} = this.accountJSON;
+        const {SURVEYS_TO_KEEP} = this.configsJSON;
+        SURVEYS_TO_KEEP.forEach((s: string) => configListPanelIsWorking(USERNAME, s));
     });
 
-    it('creating a survey works', () => {
-        cy.get('button')
-            .contains('New Survey')
-            .should('have.length', 1)
-            .click();
+    it('creating a survey works', function () {
+        const {USERNAME} = this.accountJSON;
+
+        buttonNew().click();
 
         cy.url()
             .should('match', /.*configuration\/.+/)
@@ -96,42 +104,33 @@ describe('The Config List Page', () => {
                 // use back button
                 cy.go('back');
                 cy.url().should('include', '/configurations');
-                configListPanelIsWorking(newSurveyName);
+                configListPanelIsWorking(USERNAME, newSurveyName);
 
-                reloadConfigurations();
-                configListPanelIsWorking(newSurveyName);
+                reloadConfigurationsPage();
+                configListPanelIsWorking(USERNAME, newSurveyName);
             });
-
-        // survey will be remove by teardown: `after(...)`
     });
 
-    it('removing a survey works', () => {
-        cy.get('button')
-            .contains('New Survey')
-            .should('have.length', 1)
-            .click();
+    it('removing a survey works', function () {
+        const {USERNAME} = this.accountJSON;
+
+        buttonNew().click();
 
         cy.url()
             .should('match', /.*configuration\/.+/)
             .then((url) => {
                 const newSurveyName: any = last(url.split('/'));
+                const listPanelIsWorking = () =>
+                    configListPanelIsWorking(USERNAME, newSurveyName);
+                const listPanelIsAbsent = () => configListPanelIsAbsent(newSurveyName);
 
-                // revisit the page /configurations
-                reloadConfigurations();
-                configListPanelIsWorking(newSurveyName);
+                reloadConfigurationsPage();
+                listPanelIsWorking();
+                toggleActions(newSurveyName).click();
+                actionsDropdown(newSurveyName, 'visible');
+                actionsButton(newSurveyName, 'remove').click();
 
-                cy.get(`@configListPanel-${newSurveyName}`)
-                    .find('button > svg')
-                    .should('have.length', 1)
-                    .parents('button')
-                    .click();
-
-                cy.get(`@configListPanel-${newSurveyName}`)
-                    .find('button:visible')
-                    .contains('remove')
-                    .should('have.length', 1)
-                    .click();
-
+                // TODO: refactor modal tests
                 // Remove modal is visible
                 cy.get('h2:visible')
                     .contains('Remove this survey permanently?')
@@ -151,22 +150,14 @@ describe('The Config List Page', () => {
                     .contains('Remove this survey permanently?')
                     .should('not.be.visible');
 
-                configListPanelIsWorking(newSurveyName);
-                reloadConfigurations();
-                configListPanelIsWorking(newSurveyName);
+                listPanelIsWorking();
+                reloadConfigurationsPage();
+                listPanelIsWorking();
 
-                cy.get(`@configListPanel-${newSurveyName}`)
-                    .find('button > svg')
-                    .should('have.length', 1)
-                    .parents('button')
-                    .click();
+                toggleActions(newSurveyName).click();
+                actionsButton(newSurveyName, 'remove').click();
 
-                cy.get(`@configListPanel-${newSurveyName}`)
-                    .find('button:visible')
-                    .contains('remove')
-                    .should('have.length', 1)
-                    .click();
-
+                // TODO: refactor modal tests
                 cy.get('button:visible')
                     .contains('remove survey')
                     .should('have.length', 1)
@@ -178,168 +169,130 @@ describe('The Config List Page', () => {
                     .should('not.be.visible');
 
                 // Success message is visible
-                cy.get('div')
-                    .contains('Success: Survey has been removed')
-                    .should('have.length', 1);
+                successMessage();
 
-                configListPanelIsAbsent(newSurveyName);
-                reloadConfigurations();
-                configListPanelIsAbsent(newSurveyName);
+                listPanelIsAbsent();
+                reloadConfigurationsPage();
+                listPanelIsAbsent();
             });
     });
 
-    it('duplicating a survey works', () => {
+    it('duplicating a survey works', function () {
         // @ts-ignore
         cy.seedDuplicationData();
-        reloadConfigurations();
+        reloadConfigurationsPage();
 
-        cy.fixture('configs.json').then((configsJSON: any) => {
-            const originalSurvey = configsJSON.duplication.original;
-            const originalSurveyName =
-                configsJSON.duplication.original['survey_name'];
-            const duplicateSurvey = configsJSON.duplication.duplicate;
-            const duplicateSurveyName =
-                configsJSON.duplication.duplicate['survey_name'];
-            configListPanelIsWorking(originalSurvey['survey_name']);
+        const {ORIGINAL_SURVEY, DUPLICATE_SURVEY} = this.configsJSON.DUPLICATION;
+        const {USERNAME, PASSWORD} = this.accountJSON;
 
-            cy.get(`@configListPanel-${originalSurveyName}`)
-                .find('button > svg')
-                .should('have.length', 1)
-                .parents('button')
-                .click();
+        const ORIGINAL_SURVEY_NAME = ORIGINAL_SURVEY['survey_name'];
+        const DUPLICATE_SURVEY_NAME = DUPLICATE_SURVEY['survey_name'];
+        configListPanelIsWorking(USERNAME, ORIGINAL_SURVEY_NAME);
 
-            cy.get(`@configListPanel-${originalSurveyName}`)
-                .find('button:visible')
-                .contains('duplicate')
-                .should('have.length', 1)
-                .click();
+        toggleActions(ORIGINAL_SURVEY_NAME).click();
+        actionsButton(ORIGINAL_SURVEY_NAME, 'duplicate').click();
 
-            // Duplicate modal is visible
-            cy.get('h2:visible')
-                .contains('Duplicate this survey?')
-                .should('have.length', 1)
-                .parents('section')
-                .as('duplicateModal');
+        // TODO: refactor modal tests
+        // Duplicate modal is visible
+        cy.get('h2:visible')
+            .contains('Duplicate this survey?')
+            .should('have.length', 1)
+            .parents('section')
+            .as('duplicateModal');
 
-            cy.get('@duplicateModal')
-                .find('button:visible')
-                .should('have.length', 2)
-                .contains('cancel')
-                .should('have.length', 1)
-                .click();
+        cy.get('@duplicateModal')
+            .find('button:visible')
+            .should('have.length', 2)
+            .contains('cancel')
+            .should('have.length', 1)
+            .click();
 
-            // Duplicate modal is closed
-            cy.get('h2')
-                .contains('Duplicate this survey?')
-                .should('not.be.visible');
+        // Duplicate modal is closed
+        cy.get('h2').contains('Duplicate this survey?').should('not.be.visible');
+        actionsDropdown(ORIGINAL_SURVEY_NAME, 'visible');
 
-            configListPanelIsWorking(originalSurveyName);
-            reloadConfigurations();
-            configListPanelIsWorking(originalSurveyName);
+        configListPanelIsWorking(USERNAME, ORIGINAL_SURVEY_NAME);
+        reloadConfigurationsPage();
+        configListPanelIsWorking(USERNAME, ORIGINAL_SURVEY_NAME);
 
-            cy.get(`@configListPanel-${originalSurveyName}`)
-                .find('button > svg')
-                .should('have.length', 1)
-                .parents('button')
-                .click();
+        toggleActions(ORIGINAL_SURVEY_NAME).click();
+        actionsButton(ORIGINAL_SURVEY_NAME, 'duplicate').click();
 
-            cy.get(`@configListPanel-${originalSurveyName}`)
-                .find('button:visible')
-                .contains('duplicate')
-                .should('have.length', 1)
-                .click();
+        // TODO: refactor modal tests
+        cy.get('h2:visible')
+            .contains('Duplicate this survey?')
+            .should('have.length', 1)
+            .parents('section')
+            .as('duplicateModal');
 
-            cy.get('h2:visible')
-                .contains('Duplicate this survey?')
-                .should('have.length', 1)
-                .parents('section')
-                .as('duplicateModal');
+        cy.get('@duplicateModal')
+            .find('button:visible')
+            .contains('duplicate survey')
+            .should('have.length', 1)
+            .parents('button')
+            .should('be.disabled');
 
-            cy.get('@duplicateModal')
-                .find('button:visible')
-                .contains('duplicate survey')
-                .should('have.length', 1)
-                .parents('button')
-                .should('be.disabled');
+        cy.get('@duplicateModal')
+            .find('input')
+            .should('have.length', 1)
+            .should('not.be.disabled')
+            .should('have.value', ORIGINAL_SURVEY_NAME);
 
-            cy.get('@duplicateModal')
-                .find('input')
-                .should('have.length', 1)
-                .should('not.be.disabled')
-                .should('have.value', originalSurveyName);
+        cy.get('@duplicateModal')
+            .find('div')
+            .contains(
+                `has to be unique, you already have a survey \'${ORIGINAL_SURVEY_NAME}\'`,
+            )
+            .should('have.length', 1);
 
-            cy.get('@duplicateModal')
-                .find('div')
-                .contains(
-                    `has to be unique, you already have a survey \'${originalSurveyName}\'`,
-                )
-                .should('have.length', 1);
+        cy.get('@duplicateModal')
+            .find('input')
+            .clear()
+            .type(DUPLICATE_SURVEY_NAME)
+            .should('have.value', DUPLICATE_SURVEY_NAME);
 
-            cy.get('@duplicateModal')
-                .find('input')
-                .clear()
-                .type(duplicateSurveyName)
-                .should('have.value', duplicateSurveyName);
+        cy.get('@duplicateModal')
+            .find('button')
+            .contains('duplicate survey')
+            .parents('button')
+            .should('not.be.disabled')
+            .click();
 
-            cy.get('@duplicateModal')
-                .find('button')
-                .contains('duplicate survey')
-                .parents('button')
-                .should('not.be.disabled')
-                .click();
+        // Duplicate modal has been closed
+        cy.get('h2').contains('Duplicate this survey?').should('not.be.visible');
 
-            // Duplicate modal has been closed
-            cy.get('h2')
-                .contains('Duplicate this survey?')
-                .should('not.be.visible');
+        // Success message is visible
+        successMessage();
 
-            // Success message is visible
-            cy.get('div')
-                .contains('Success: You are now viewing the created copy')
-                .should('have.length', 1);
+        cy.url().should('include', `/configuration/${DUPLICATE_SURVEY_NAME}`);
+        reloadConfigurationsPage();
+        configListPanelIsWorking(USERNAME, ORIGINAL_SURVEY_NAME);
+        configListPanelIsWorking(USERNAME, DUPLICATE_SURVEY_NAME);
 
-            cy.url().should('include', `/configuration/${duplicateSurveyName}`);
-            reloadConfigurations();
-            configListPanelIsWorking(originalSurveyName);
-            configListPanelIsWorking(duplicateSurveyName);
-
-            cy.fixture('account.json').then((accountJSON: any) => {
-                const authRequest = {
-                    method: 'POST',
-                    url: 'https://api.dev.fastsurvey.de/authentication',
-                    body: {
-                        identifier: accountJSON.username,
-                        password: accountJSON.password,
-                    },
-                };
-                const duplicationRequest = (
-                    authResponse: Cypress.Response<any>,
-                ) => ({
-                    method: 'GET',
-                    url: `https://api.dev.fastsurvey.de/users/${accountJSON.username}/surveys`,
-                    headers: {
-                        Authorization: `Bearer ${authResponse.body['access_token']}`,
-                        'Content-Type': 'application/json',
-                    },
-                });
-                cy.request(authRequest).then((authResponse) => {
-                    expect(authResponse.status).to.equal(200);
-                    cy.request(duplicationRequest(authResponse)).then(
-                        (getResponse) => {
-                            expect(getResponse.status).to.equal(200);
-                            const duplicateSurveyOnServer = first(
-                                getResponse.body.filter(
-                                    (c: any) =>
-                                        c['survey_name'] ===
-                                        duplicateSurveyName,
-                                ),
-                            );
-                            expect(duplicateSurveyOnServer).to.deep.equal(
-                                duplicateSurvey,
-                            );
-                        },
-                    );
-                });
+        cy.request({
+            method: 'POST',
+            url: 'https://api.dev.fastsurvey.de/authentication',
+            body: {
+                identifier: USERNAME,
+                password: PASSWORD,
+            },
+        }).then((authResponse) => {
+            expect(authResponse.status).to.equal(200);
+            cy.request({
+                method: 'GET',
+                url: `https://api.dev.fastsurvey.de/users/${USERNAME}/surveys`,
+                headers: {
+                    Authorization: `Bearer ${authResponse.body['access_token']}`,
+                    'Content-Type': 'application/json',
+                },
+            }).then((getResponse) => {
+                expect(getResponse.status).to.equal(200);
+                const duplicateSurveyOnServer = first(
+                    getResponse.body.filter(
+                        (c: any) => c['survey_name'] === DUPLICATE_SURVEY_NAME,
+                    ),
+                );
+                expect(duplicateSurveyOnServer).to.deep.equal(DUPLICATE_SURVEY);
             });
         });
 

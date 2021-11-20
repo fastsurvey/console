@@ -17,7 +17,7 @@ export function login(username: string, password: string) {
     cy.url().should('include', '/configurations');
 }
 
-export function reloadConfigurations() {
+export function reloadConfigurationsPage() {
     cy.visit('/configurations');
     cy.url().should('include', '/configurations');
 }

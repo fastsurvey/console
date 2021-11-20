@@ -32,9 +32,7 @@ function VisualConfigList(props: {
                     {sortBy(
                         props.configs.filter(
                             (c) =>
-                                c.title
-                                    .toLowerCase()
-                                    .includes(value.toLowerCase()) ||
+                                c.title.toLowerCase().includes(value.toLowerCase()) ||
                                 c.survey_name
                                     .toLowerCase()
                                     .includes(value.toLowerCase()),
@@ -46,9 +44,7 @@ function VisualConfigList(props: {
                             key={config.local_id}
                             account={props.account}
                             openRemoveModal={props.openRemoveModal(config)}
-                            openDuplicateModal={props.openDuplicateModal(
-                                config,
-                            )}
+                            openDuplicateModal={props.openDuplicateModal(config)}
                         />
                     ))}
                     <button
@@ -62,6 +58,7 @@ function VisualConfigList(props: {
                             'text-base text-blue-900 font-weight-600'
                         }
                         onClick={props.addSurvey}
+                        data-cy='config-list-button-new'
                     >
                         New Survey
                     </button>

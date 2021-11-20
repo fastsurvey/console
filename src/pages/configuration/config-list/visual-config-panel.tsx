@@ -7,8 +7,7 @@ import {Link} from 'react-router-dom';
 
 const VITE_ENV = import.meta.env.VITE_ENV;
 
-let baseUrl =
-    VITE_ENV === 'development' ? 'dev.fastsurvey.de' : 'fastsurvey.de';
+let baseUrl = VITE_ENV === 'development' ? 'dev.fastsurvey.de' : 'fastsurvey.de';
 
 interface Props {
     account: types.Account;
@@ -17,7 +16,7 @@ interface Props {
     openDuplicateModal(): void;
 }
 function VisualConfigPanel(props: Props) {
-    const {title, survey_name} = props.config;
+    const {title, survey_name, draft} = props.config;
     const {username} = props.account;
 
     const usesAuthentication = !isEmpty(
@@ -27,7 +26,12 @@ function VisualConfigPanel(props: Props) {
     const [dropDownIsVisible, setDropDownIsVisible] = useState(false);
 
     return (
-        <section className={'w-full rounded shadow centering-col bg-white '}>
+        <section
+            className={'w-full rounded shadow centering-col bg-white '}
+            data-cy={`config-list-panel-${survey_name} ${
+                draft ? 'draft' : 'published'
+            }`}
+        >
             <div className={'w-full p-3 bg-white rounded-t flex-col-left'}>
                 <div
                     className={
@@ -63,6 +67,7 @@ function VisualConfigPanel(props: Props) {
                             : 'hover:text-blue-500 focus:text-blue-500 px-1 -mx-1 ringable rounded-sm mt-1')
                     }
                     target='_blank'
+                    data-cy='link-to-frontend'
                 >
                     {baseUrl}/{username}/{survey_name}
                 </a>
@@ -76,6 +81,7 @@ function VisualConfigPanel(props: Props) {
                 <Link
                     to={`/configuration/${survey_name}`}
                     className='flex-grow rounded ringable group'
+                    data-cy='link-to-editor'
                 >
                     <div
                         className={
@@ -97,10 +103,9 @@ function VisualConfigPanel(props: Props) {
                             'text-gray-700 hover:text-black focus:text-black '
                         }
                         onClick={() => setDropDownIsVisible(!dropDownIsVisible)}
+                        data-cy='button-to-toggle-actions-dropdown'
                     >
-                        {dropDownIsVisible
-                            ? icons.close
-                            : icons.chevronSelection}
+                        {dropDownIsVisible ? icons.close : icons.chevronSelection}
                     </button>
                     {dropDownIsVisible && (
                         <div
@@ -109,22 +114,24 @@ function VisualConfigPanel(props: Props) {
                                 'rounded shadow flex-col-center overflow-hidden ' +
                                 'bg-gray-900 text-gray-300 text-sm '
                             }
+                            data-cy='actions-dropdown'
                         >
-                            {['duplicate', 'remove'].map((format: any) => (
+                            {['duplicate', 'remove'].map((action: any) => (
                                 <button
-                                    key={format}
+                                    key={action}
                                     className={
                                         'w-full px-6 h-8 font-weight-600 ' +
                                         'hover:bg-gray-600 hover:text-white ' +
                                         'focus:bg-gray-600 focus:text-white focus:outline-none '
                                     }
                                     onClick={
-                                        format === 'duplicate'
+                                        action === 'duplicate'
                                             ? props.openDuplicateModal
                                             : props.openRemoveModal
                                     }
+                                    data-cy={`button-${action}`}
                                 >
-                                    {format}
+                                    {action}
                                 </button>
                             ))}
                         </div>

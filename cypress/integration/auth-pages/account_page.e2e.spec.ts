@@ -6,6 +6,7 @@ const {logout, reloadAccountPage, getByDataCy, assertDataCy} = utilities;
 const sectionSettings = () => getByDataCy('account-section-settings', {count: 1});
 const sectionDelete = () => getByDataCy('account-section-delete', {count: 1});
 const sectionPayment = () => getByDataCy('account-section-payment', {count: 1});
+const successMessage = () => getByDataCy('message-panel-success', {count: 1});
 
 // EMAIL/USERNAME FORM
 const emailInput = () => getByDataCy('settings-email-input', {count: 1});
@@ -199,7 +200,7 @@ describe('The Account Page', function () {
         assertPasswordState(TMP_PASSWORD, true, true);
 
         passwordSubmit().click();
-        getByDataCy('message-panel-success', {count: 1});
+        successMessage();
 
         reloadAccountPage();
         logout();
@@ -211,7 +212,7 @@ describe('The Account Page', function () {
         passwordInput().type(PASSWORD);
         assertPasswordState(PASSWORD, true, true);
         passwordSubmit().click();
-        getByDataCy('message-panel-success', {count: 1});
+        successMessage();
 
         reloadAccountPage();
         logout();
