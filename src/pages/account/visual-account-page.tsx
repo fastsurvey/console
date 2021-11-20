@@ -63,7 +63,7 @@ function VisualAccountPage(props: {
                     className='w-full bg-white rounded shadow flex-col-left'
                     data-cy='account-section-settings'
                 >
-                    <div className='z-10 w-full px-4 py-1.5 border-b border-gray-200 md:hidden flex flex-row items-center justify-center'>
+                    <div className='z-10 w-full px-4 py-1.5 border-b border-gray-300 md:hidden flex flex-row items-center justify-center'>
                         <div className='mr-2 text-base text-gray-900 font-weight-700'>
                             {tabs[tabIndex]}
                         </div>
@@ -115,7 +115,7 @@ function VisualAccountPage(props: {
                         </Menu>
                     </div>
                     <div className='hidden w-full md:z-10 md:block'>
-                        <div className='w-full border-b border-gray-200'>
+                        <div className='w-full border-b border-gray-300'>
                             <nav className='px-4 py-2 space-x-2 flex-row-left'>
                                 <h2 className='pr-2 text-gray-900 font-weight-600'>
                                     Account Settings:{' '}
@@ -255,7 +255,7 @@ function VisualAccountPage(props: {
                     className='w-full bg-white rounded shadow flex-col-left'
                     data-cy='account-section-delete'
                 >
-                    <div className='w-full border-b border-gray-200'>
+                    <div className='w-full border-b border-gray-300'>
                         <nav className='px-4 py-2 space-x-2 flex-row-left'>
                             <h2 className='pr-2 text-gray-500 font-weight-600'>
                                 Delete your account forever{' '}

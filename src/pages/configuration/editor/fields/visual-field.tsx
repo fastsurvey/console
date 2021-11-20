@@ -88,7 +88,7 @@ function VisualField(props: Props) {
             </div>
 
             <div
-                className={'h-0.5 bg-gray-300'}
+                className={'h-px bg-gray-300'}
                 style={{width: 'calc(100% + 1.5rem)'}}
             />
 

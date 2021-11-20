@@ -18,7 +18,7 @@ function VisualSelectionSettings(props: Props) {
                 setLocalFieldConfig={props.setLocalFieldConfig}
             />
             <div
-                className={'h-0.5 bg-gray-300'}
+                className={'h-px bg-gray-300'}
                 style={{width: 'calc(100% + 1.5rem)'}}
             />
             <div className='w-full centering-col gap-y-0.5'>
