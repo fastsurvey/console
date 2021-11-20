@@ -56,17 +56,13 @@ describe('The Account Page', function () {
         ).map((x) => x.should('be.visible'));
     }
 
-    function assertValidation(props: {valid: boolean; contains: string}) {
-        getByDataCy('account-section-settings')
-            .find('div:visible')
-            .contains(props.contains)
-            .should('have.length', 1)
-            .parent()
-            .should('have.class', props.valid ? 'text-green-900' : 'text-red-900')
-            .find('svg')
-            .should('have.length', 1)
-            .parent()
-            .should('have.class', props.valid ? 'icon-dark-green' : 'icon-dark-red');
+    function assertValidation(valid: boolean) {
+        assertDataCy(
+            getByDataCy('account-section-settings')
+                .find('[data-cy*="validation-bar"]')
+                .should('have.length', 1),
+            valid ? 'isvalid' : 'isinvalid',
+        );
     }
 
     it('account page looks as expected, navigation works', function () {
@@ -111,10 +107,7 @@ describe('The Account Page', function () {
         // valid state for empty usernameInput
         usernameInput().clear();
         assertUsernameState('', true, false);
-        assertValidation({
-            contains: 'username too short (≥ 1 character)',
-            valid: false,
-        });
+        assertValidation(false);
 
         // usernameCancel button works
         usernameInput().clear().type(TMP_USERNAME);
@@ -194,10 +187,7 @@ describe('The Account Page', function () {
         passwordInput().type('1');
 
         assertPasswordState('1', true, false);
-        assertValidation({
-            contains: 'password too short (≥ 8 characters)',
-            valid: false,
-        });
+        assertValidation(false);
 
         passwordInput().clear().type(TMP_PASSWORD);
         assertPasswordState(TMP_PASSWORD, true, true);
