@@ -10,7 +10,7 @@ async function createSurvey(
 ) {
     try {
         await httpPost(
-            `/users/${account.username}/surveys/${config.survey_name}`,
+            `/users/${account.username}/surveys`,
             config,
             accessToken,
         ).catch((error) => {
