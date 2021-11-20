@@ -29,6 +29,7 @@ export default function VisualLogin(props: {
                         props.setIdentifier(newValue);
                     }}
                     autoComplete='email'
+                    data-cy='login-input-email'
                 />
             </div>
             <div className='w-full centering-col gap-y-0.5'>
@@ -41,6 +42,7 @@ export default function VisualLogin(props: {
                         props.setPassword(newValue);
                     }}
                     autoComplete='current-password'
+                    data-cy='login-input-password'
                 />
             </div>
 
@@ -51,18 +53,21 @@ export default function VisualLogin(props: {
                     onClick={props.handleLogin}
                     disabled={props.disabled}
                     loading={props.submitting}
+                    data-cy='login-button-submit'
                 />
                 <div className='flex-max' />
                 <div className='flex-col-left'>
                     <Link
                         to='/register'
                         className='px-1.5 py-0.5 -mx-1.5 text-sm text-gray-400 rounded font-weight-600 ringable'
+                        data-cy='login-link-register'
                     >
                         Don't have an account yet?
                     </Link>
                     <Link
                         to='/forgot-password'
                         className='px-1.5 py-0.5 -mx-1.5 text-sm text-gray-400 rounded font-weight-600 ringable'
+                        data-cy='login-link-forgot'
                     >
                         Forgot your password?
                     </Link>
