@@ -1,3 +1,5 @@
+import {join} from 'lodash';
+
 export function logout() {
     cy.get('button')
         .contains('Logout')
@@ -36,6 +38,22 @@ export function getByDataCy(dataCyContains: string, props?: {count?: number}) {
             .get(`[data-cy*="${dataCyContains}"]`)
             .should('have.length', props.count);
     }
+}
+
+export function getCySelector(
+    selectors: string[],
+    props?: {count?: number},
+): Cypress.Chainable<JQuery<HTMLElement>> {
+    const grab = () =>
+        cy.root().get(
+            join(
+                selectors.map((s) => `[data-cy*="${s}"]`),
+                ' ',
+            ),
+        );
+    return props?.count !== undefined
+        ? grab().should('have.length', props.count)
+        : grab();
 }
 
 export function assertDataCy(
