@@ -4,6 +4,7 @@ export default function TextArea(props: {
     value: string;
     setValue(v: string): void;
     disabled?: boolean;
+    'data-cy'?: string;
 }) {
     const {value, setValue} = props;
 
@@ -27,6 +28,7 @@ export default function TextArea(props: {
                     : 'bg-gray-100 text-gray-800 ')
             }
             disabled={props.disabled === true}
+            data-cy={props['data-cy']}
         />
     );
 }

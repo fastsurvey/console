@@ -3,9 +3,9 @@ import {connect} from 'react-redux';
 import {types} from '/src/types';
 import {formUtils, reduxUtils} from '/src/utilities';
 
-import VisualSettings from './visual-settings';
+import VisualSettings from './visual-editor-settings';
 
-interface Props {
+function EditorSettings(props: {
     account: types.Account;
     accessToken: types.AccessToken;
     centralConfigName: string;
@@ -22,8 +22,7 @@ interface Props {
     closeModal(): void;
 
     disabled: boolean;
-}
-function Settings(props: Props) {
+}) {
     function updateConfig(newConfig: types.SurveyConfig) {
         if (props.configs) {
             props.updateValidation(
@@ -59,4 +58,4 @@ const mapDispatchToProps = (dispatch: any) => ({
     openModal: reduxUtils.dispatchers.openModal(dispatch),
     closeModal: reduxUtils.dispatchers.closeModal(dispatch),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(Settings);
+export default connect(mapStateToProps, mapDispatchToProps)(EditorSettings);

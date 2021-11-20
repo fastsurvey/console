@@ -6,11 +6,10 @@ interface Props {
     timestamp: number;
     setTimestamp(timestamp: number): void;
     disabled?: boolean;
+    'data-cy': string;
 }
 function DatePicker(props: Props) {
-    const [dateStore, setDateStore] = useState(
-        new Date(props.timestamp * 1000),
-    );
+    const [dateStore, setDateStore] = useState(new Date(props.timestamp * 1000));
     useEffect(() => {
         setDateStore(new Date(props.timestamp * 1000));
     }, [props.timestamp]);
@@ -46,9 +45,7 @@ function DatePicker(props: Props) {
             dateStore.getMonth(),
             dateStore.getDate(),
             t.hour === undefined ? dateStore.getHours() : ranged(t.hour, 24),
-            t.minute === undefined
-                ? dateStore.getMinutes()
-                : ranged(t.minute, 60),
+            t.minute === undefined ? dateStore.getMinutes() : ranged(t.minute, 60),
         );
         props.setTimestamp(newDate.getTime() / 1000);
     }
@@ -68,6 +65,7 @@ function DatePicker(props: Props) {
                     getFirstWeekday,
                     setDateTimestamp,
                 }}
+                data-cy={`datepicker-${props['data-cy']}`}
             />
             <VisualTimePicker
                 disabled={props.disabled === true}
@@ -75,6 +73,7 @@ function DatePicker(props: Props) {
                     dateStore,
                     setHourTimestamp,
                 }}
+                data-cy={`timepicker-${props['data-cy']}`}
             />
         </div>
     );

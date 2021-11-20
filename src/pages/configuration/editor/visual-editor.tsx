@@ -1,6 +1,6 @@
 import React from 'react';
 import {types} from '/src/types';
-import Settings from './settings/settings';
+import EditorSettings from './editor-settings/editor-settings';
 import Field from './fields/field';
 import AddFieldPanel from './add-field-panel/add-field-panel';
 import EditorHeader from './editor-header/editor-header';
@@ -36,7 +36,7 @@ function VisualEditor(props: {
                     revertState={props.revertState}
                     setLocalConfig={props.setLocalConfig}
                 />
-                <Settings
+                <EditorSettings
                     centralConfigName={props.centralConfigName}
                     config={props.localConfig}
                     setLocalConfig={props.setLocalConfig}
@@ -62,9 +62,9 @@ function VisualEditor(props: {
                                 props.setLocalFieldConfig(newFieldConfig, index)
                             }
                             disabled={props.submittingConfig}
-                            updateValidation={(
-                                newState: types.ValidationResult,
-                            ) => props.updateValidation(index + 1, newState)}
+                            updateValidation={(newState: types.ValidationResult) =>
+                                props.updateValidation(index + 1, newState)
+                            }
                             removeField={() => props.removeField(index)}
                             validation={props.fieldValidation[index + 1]}
                         />
@@ -72,14 +72,9 @@ function VisualEditor(props: {
                 ))}
                 <AddFieldPanel
                     insertField={(fieldType: types.FieldType) =>
-                        props.insertField(
-                            props.localConfig.fields.length,
-                            fieldType,
-                        )
+                        props.insertField(props.localConfig.fields.length, fieldType)
                     }
-                    pasteField={() =>
-                        props.pasteField(props.localConfig.fields.length)
-                    }
+                    pasteField={() => props.pasteField(props.localConfig.fields.length)}
                     disabled={props.submittingConfig}
                 />
             </div>

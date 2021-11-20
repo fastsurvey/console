@@ -10,28 +10,26 @@ function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ');
 }
 
-interface Props {
+const VisualEditorSettings = (props: {
     configs: types.SurveyConfig[];
     config: types.SurveyConfig;
     updateConfig(config: types.SurveyConfig, skipValidation?: boolean): void;
     commonProps: any;
     disabled: boolean;
     validation: types.ValidationResult;
-}
-const VisualSettings = (props: Props) => {
+}) => {
     const [tabIndex, setTabIndex] = useState(0);
     useEffect(() => setTabIndex(0), [props.config.local_id]);
-
-    const tabs = [
-        {name: 'About', href: '#', icon: icons.textCursor},
-        {name: 'Visibility', href: '#', icon: icons.time},
-    ];
+    const tabs = ['About', 'Visibility'];
 
     return (
-        <div className='mt-4 bg-white rounded shadow-md flex-col-center'>
+        <div
+            className='mt-4 bg-white rounded shadow-md flex-col-center'
+            data-cy='editor-settings'
+        >
             <div className='z-10 w-full px-4 py-1.5 border-b border-gray-200 md:hidden flex flex-row items-center justify-center'>
                 <div className='mr-2 text-base text-gray-900 font-weight-700'>
-                    {tabs[tabIndex].name}
+                    {tabs[tabIndex]}
                 </div>
                 <div className='flex-grow' />
                 <Menu as='div' className='relative inline-block text-left'>
@@ -60,9 +58,7 @@ const VisualSettings = (props: Props) => {
                                     <Menu.Item key={index}>
                                         {({active}) => (
                                             <div
-                                                onClick={() =>
-                                                    setTabIndex(index)
-                                                }
+                                                onClick={() => setTabIndex(index)}
                                                 className={classNames(
                                                     active
                                                         ? 'bg-gray-100 text-gray-900 '
@@ -70,7 +66,7 @@ const VisualSettings = (props: Props) => {
                                                     'block px-4 py-2 text-sm font-weight-600',
                                                 )}
                                             >
-                                                {tab.name}
+                                                {tab}
                                             </div>
                                         )}
                                     </Menu.Item>
@@ -88,7 +84,7 @@ const VisualSettings = (props: Props) => {
                         </div>
                         {tabs.map((tab, index) => (
                             <button
-                                key={tab.name}
+                                key={tab}
                                 onClick={() => setTabIndex(index)}
                                 className={classNames(
                                     index == tabIndex
@@ -96,8 +92,9 @@ const VisualSettings = (props: Props) => {
                                         : 'hover:bg-gray-100 text-gray-500 hover:text-gray-700',
                                     'py-1 px-3 font-weight-600 text-base rounded',
                                 )}
+                                data-cy={`tab-${tab.toLowerCase()}`}
                             >
-                                {tab.name}
+                                {tab}
                             </button>
                         ))}
                     </nav>
@@ -117,6 +114,7 @@ const VisualSettings = (props: Props) => {
                                     });
                                 }}
                                 disabled={props.disabled}
+                                data-cy='input-title'
                             />
                         </div>
                         <div className='w-full centering-col gap-y-0.5'>
@@ -131,6 +129,7 @@ const VisualSettings = (props: Props) => {
                                         });
                                     }}
                                     disabled={props.disabled}
+                                    data-cy='input-identifier'
                                 />
                                 <button
                                     className={
@@ -143,14 +142,14 @@ const VisualSettings = (props: Props) => {
                                         if (!props.disabled) {
                                             props.updateConfig({
                                                 ...props.config,
-                                                survey_name:
-                                                    templateUtils.surveyName(
-                                                        props.configs,
-                                                    ),
+                                                survey_name: templateUtils.surveyName(
+                                                    props.configs,
+                                                ),
                                             });
                                         }
                                     }}
                                     disabled={props.disabled}
+                                    data-cy='refresh-identifier'
                                 >
                                     {icons.refresh}
                                 </button>
@@ -168,6 +167,7 @@ const VisualSettings = (props: Props) => {
                                     });
                                 }}
                                 disabled={props.disabled}
+                                data-cy='input-description'
                             />
                         </div>
                     </>
@@ -185,6 +185,7 @@ const VisualSettings = (props: Props) => {
                                     });
                                 }}
                                 disabled={props.disabled}
+                                data-cy='toggle-draft'
                             />
                         </div>
                         <div className='w-full flex-col-left gap-y-0.5'>
@@ -198,6 +199,7 @@ const VisualSettings = (props: Props) => {
                                     });
                                 }}
                                 disabled={props.disabled}
+                                data-cy='start'
                             />
                         </div>
 
@@ -212,6 +214,7 @@ const VisualSettings = (props: Props) => {
                                     });
                                 }}
                                 disabled={props.disabled}
+                                data-cy='end'
                             />
                         </div>
                     </>
@@ -235,14 +238,10 @@ const VisualSettings = (props: Props) => {
                                 : 'icon-dark-red ')
                         }
                     >
-                        {props.validation.valid
-                            ? icons.checkCircle
-                            : icons.closeCircle}
+                        {props.validation.valid ? icons.checkCircle : icons.closeCircle}
                     </div>
                     <div className='text-base text-left md:text-sm font-weight-600'>
-                        {props.validation.valid
-                            ? 'Valid'
-                            : props.validation.message}
+                        {props.validation.valid ? 'Valid' : props.validation.message}
                     </div>
                 </div>
             )}
@@ -250,4 +249,4 @@ const VisualSettings = (props: Props) => {
     );
 };
 
-export default VisualSettings;
+export default VisualEditorSettings;

@@ -5,6 +5,7 @@ export default function VisualTimePicker(props: {
     disabled: boolean;
     dateStore: Date;
     setHourTimestamp(t: {hour?: number; minute?: number}): void;
+    'data-cy'?: string;
 }) {
     const {dateStore: date, setHourTimestamp} = props;
     const [open, setOpen] = useState(false);
@@ -17,7 +18,10 @@ export default function VisualTimePicker(props: {
     }, [props.disabled]);
 
     return (
-        <div className={' flex-col-left ' + (!open ? 'h-9 ' : ' ')}>
+        <div
+            className={' flex-col-left ' + (!open ? 'h-9 ' : ' ')}
+            data-cy={props['data-cy']}
+        >
             <button
                 ref={ref}
                 className={
