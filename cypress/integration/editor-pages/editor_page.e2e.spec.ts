@@ -7,6 +7,7 @@ describe('The Editor Page', () => {
     // - [ ] heading
     // - [ ] back-button
     // - [ ] tabs in settings
+    // - [ ] collapsing fields
     //
     // TODO: test publish/visibility logic
     // - [ ] test rendered buttons
