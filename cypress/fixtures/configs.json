@@ -192,5 +192,50 @@
                 }
             ]
         }
+    },
+    "EDITOR": {
+        "INITIAL_SURVEY": {
+            "survey_name": "just-another-randy-bird",
+            "title": "Very Good Sample Title",
+            "description": "Enneapuses are the new octopuses, and other wisdoms.",
+            "start": 1436244487,
+            "end": 1436330889,
+            "draft": false,
+            "fields": [
+                {
+                    "identifier": 0,
+                    "title": "How do you feel about apples?",
+                    "description": "",
+                    "type": "text",
+                    "min_chars": 10,
+                    "max_chars": 1000
+                },
+                {
+                    "identifier": 1,
+                    "title": "What's your email address?",
+                    "description": "",
+                    "type": "email",
+                    "hint": "YOUR EMAIL ADDRESS HERE",
+                    "regex": ".*",
+                    "verify": true
+                },
+                {
+                    "identifier": 2,
+                    "title": "What are your favorite pizza toppings?",
+                    "description": "",
+                    "type": "selection",
+                    "options": [
+                        "Quattro Stagioni",
+                        "Prosciutto",
+                        "Margherita",
+                        "Quattro Formaggi",
+                        "Capricciosa"
+                    ],
+                    "min_select": 2,
+                    "max_select": 5
+                }
+            ]
+        },
+        "INITIAL_MAX_IDENTIFIER": 2
     }
 }

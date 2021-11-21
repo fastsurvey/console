@@ -49,7 +49,7 @@ export function getCySelector(
             join(
                 selectors.map((s) => `[data-cy*="${s}"]`),
                 ' ',
-            ),
+            ) + ':visible',
         );
     return props?.count !== undefined
         ? grab().should('have.length', props.count)

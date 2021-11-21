@@ -168,3 +168,52 @@ Cypress.Commands.add('seedDuplicationData', () => {
         });
     });
 });
+
+Cypress.Commands.add('seedEditorData', () => {
+    cy.fixture('account.json').then((accountJSON: any) => {
+        cy.fixture('configs.json').then((configsJSON: any) => {
+            const {USERNAME, PASSWORD} = accountJSON;
+            const {INITIAL_SURVEY, INITIAL_MAX_IDENTIFIER} = configsJSON.EDITOR;
+
+            const baseUrl = `https://api.dev.fastsurvey.de/users/${USERNAME}`;
+
+            const postConfig = (authResponse: Cypress.Response<any>) =>
+                cy.request({
+                    method: 'POST',
+                    url: `${baseUrl}/surveys`,
+                    body: INITIAL_SURVEY,
+                    headers: {
+                        Authorization: `Bearer ${authResponse.body['access_token']}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+            const getConfig = (authResponse: Cypress.Response<any>) =>
+                cy.request({
+                    method: 'GET',
+                    url: `${baseUrl}/surveys/${INITIAL_SURVEY['survey_name']}`,
+                    headers: {
+                        Authorization: `Bearer ${authResponse.body['access_token']}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+            requestAuthentication(USERNAME, PASSWORD).then((authResponse) => {
+                expect(authResponse.status).to.equal(200);
+                expect(authResponse.body).to.have.property('access_token');
+
+                postConfig(authResponse).then((r1) => {
+                    expect(r1.status).to.equal(200);
+
+                    getConfig(authResponse).then((r2) => {
+                        expect(r2.status).to.equal(200);
+                        expect(r2.body).to.deep.equal({
+                            ...INITIAL_SURVEY,
+                            max_identifier: INITIAL_MAX_IDENTIFIER,
+                        });
+                    });
+                });
+            });
+        });
+    });
+});

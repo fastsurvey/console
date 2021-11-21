@@ -33,12 +33,47 @@ const settings = {
 };
 
 describe('The Editor Page', () => {
+    before(() => {
+        // @ts-ignore
+        cy.seedConfigData();
+
+        // @ts-ignore
+        cy.seedEditorData();
+    });
+
     beforeEach(() => {
         cy.fixture('account.json')
             .as('accountJSON')
             .then((accountJSON) => {
                 login(accountJSON.USERNAME, accountJSON.PASSWORD);
+                cy.fixture('configs.json')
+                    .as('configsJSON')
+                    .then((configsJSON) => {
+                        const s = configsJSON.EDITOR.INITIAL_SURVEY['survey_name'];
+                        cy.visit(`/configuration/${s}`);
+                    });
             });
+    });
+
+    it('header looks as expected', function () {
+        header.title();
+        header.link();
+        header.back();
+        header.reopen();
+    });
+
+    it('settings look as expected', function () {
+        settings.tabAbout();
+        settings.inputTitle();
+        settings.inputIdentifier();
+        settings.inputDescription();
+
+        settings.tabVisibility().click();
+        settings.toggleDraft();
+        settings.startDate();
+        settings.startTime();
+        settings.endDate();
+        settings.endTime();
     });
 
     // TODO: test appearance
