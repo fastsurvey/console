@@ -237,6 +237,48 @@
             ]
         },
         "INITIAL_MAX_IDENTIFIER": 2,
-        "TMP_SURVEY_NAME": "coding-dojo-mit-den-boys"
+        "TMP_SURVEY_NAME": "coding-dojo-mit-den-boys",
+        "MODIFIED_SURVEY": {
+            "survey_name": "just-another-randy-cowboy",
+            "title": "Trust me, it's good!",
+            "description": "Octopusses are not a thing, though!?",
+            "start": 1436244487,
+            "end": 1436330889,
+            "draft": false,
+            "fields": [
+                {
+                    "identifier": 0,
+                    "title": "How do you feel about apples?",
+                    "description": "",
+                    "type": "text",
+                    "min_chars": 10,
+                    "max_chars": 1000
+                },
+                {
+                    "identifier": 1,
+                    "title": "What's your email address?",
+                    "description": "",
+                    "type": "email",
+                    "hint": "YOUR EMAIL ADDRESS HERE",
+                    "regex": ".*",
+                    "verify": true
+                },
+                {
+                    "identifier": 2,
+                    "title": "What are your favorite pizza toppings?",
+                    "description": "",
+                    "type": "selection",
+                    "options": [
+                        "Quattro Stagioni",
+                        "Prosciutto",
+                        "Margherita",
+                        "Quattro Formaggi",
+                        "Capricciosa"
+                    ],
+                    "min_select": 2,
+                    "max_select": 5
+                }
+            ]
+        }
     }
 }

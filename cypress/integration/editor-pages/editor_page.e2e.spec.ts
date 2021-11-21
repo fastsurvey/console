@@ -58,7 +58,7 @@ describe('The Editor Page', () => {
             });
     });
 
-    it('header look, back button', function () {
+    /*it('header look, back button', function () {
         headerElements.title();
         headerElements.link();
         headerElements.reopen();
@@ -146,7 +146,6 @@ describe('The Editor Page', () => {
         // refresh button
         settingsElements.refreshIdentifier().click();
         settingsElements.inputIdentifier().should('not.have.value', SURVEY_NAME);
-        headerElements.undo();
         headerElements.save();
 
         // changing survey name
@@ -164,9 +163,60 @@ describe('The Editor Page', () => {
         cy.reload();
         settingsElements.inputIdentifier().should('have.value', SURVEY_NAME);
         cy.url().should('eq', `http://localhost:3000/configuration/${SURVEY_NAME}`);
-    });
+    });*/
+
+    const assertInitialState = (INITIAL_SURVEY: any) => {
+        settingsElements.inputTitle().should('have.value', INITIAL_SURVEY.title);
+        settingsElements
+            .inputIdentifier()
+            .should('have.value', INITIAL_SURVEY.survey_name);
+        settingsElements
+            .inputDescription()
+            .should('have.value', INITIAL_SURVEY.description);
+    };
 
     // TODO: undo button -> change a bunch of stuff and check whether undo completely undod everything
+    it('undo functionality', function () {
+        const {INITIAL_SURVEY, MODIFIED_SURVEY} = this.configsJSON.EDITOR;
+
+        assertInitialState(INITIAL_SURVEY);
+
+        settingsElements
+            .inputTitle()
+            .clear()
+            .type(MODIFIED_SURVEY.title)
+            .should('have.value', MODIFIED_SURVEY.title);
+        settingsElements
+            .inputIdentifier()
+            .clear()
+            .type(MODIFIED_SURVEY.survey_name)
+            .should('have.value', MODIFIED_SURVEY.survey_name);
+        settingsElements
+            .inputDescription()
+            .clear()
+            .type(MODIFIED_SURVEY.description)
+            .should('have.value', MODIFIED_SURVEY.description);
+
+        headerElements.undo().click();
+        assertInitialState(INITIAL_SURVEY);
+
+        // email field: title
+        // email field: description
+        // email field: hint
+        // email field: regex
+
+        // text field: title
+        // text field: description
+        // text field: min_chars
+        // text field: max_chars
+
+        // text field: title
+        // text field: description
+        // text field: adding one option
+        // text field: removing two options
+        // text field: min_select
+        // text field: max_select
+    });
 
     // TODO: test whether all three fields are there and look as expected
 
