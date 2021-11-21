@@ -135,28 +135,23 @@ describe('The Editor Page', () => {
         assertPillState('draft');
     });
 
-    // TODO: test appearance
-    // - [x] heading
-    // - [x] back-button
-    // - [x] tabs in settings
-    //
-    // TODO: test publish/visibility logic
-    // - [x] test rendered buttons
-    // - [ ] test db state
-    // - [ ] test reachability via link
-    // - [x] test toggle (incl. undo)
+    // TODO: change survey_name
 
-    // TODO: test settings
-    // - [ ] save not possible in invalid state
-    // - [ ] change survey_name
-    //
-    // TODO: test fields
-    // - [ ] fields from fixture-config are rendered correctly
-    // - [ ] save not possible with any invalid field (one of each type, just modify the title, the rest is tested via components)
-    // - [ ] remove field (incl. undo)
-    // - [ ] add field (incl. undo)
-    //
-    // IDEA: transpile UI into JSON object and do asserts on that JSON object
-    // component tests for:
-    // - [ ] collapsing fields
+    // TODO: test whether all three fields are there and look as expected
+
+    // TODO: add an email field
+    // TODO: add a text field
+    // TODO: add a selection field
+
+    // TODO: remove a field (add a seed field before that with the UI)
+
+    // TODO: save not possible when any field is invalid (just test this using empty titles)
+
+    // TODO: copy and paste an email field
+    // TODO: copy and paste a text field
+    // TODO: copy and paste a selection field
+
+    // Test with component test of fields:
+    // - collapsing fields
+    // - all possible error messages
 });
