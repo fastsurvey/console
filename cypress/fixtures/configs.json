@@ -236,6 +236,7 @@
                 }
             ]
         },
-        "INITIAL_MAX_IDENTIFIER": 2
+        "INITIAL_MAX_IDENTIFIER": 2,
+        "TMP_SURVEY_NAME": "coding-dojo-mit-den-boys"
     }
 }

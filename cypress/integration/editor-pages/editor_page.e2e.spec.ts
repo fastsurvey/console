@@ -58,7 +58,7 @@ describe('The Editor Page', () => {
             });
     });
 
-    it('header looks as expected, back button works', function () {
+    it('header look, back button', function () {
         headerElements.title();
         headerElements.link();
         headerElements.reopen();
@@ -67,7 +67,7 @@ describe('The Editor Page', () => {
         cy.url().should('eq', 'http://localhost:3000/configurations');
     });
 
-    it('settings look as expected, tab navigation work', function () {
+    it('settings look, tab navigation', function () {
         settingsElements.tabAbout();
         settingsElements.inputTitle();
         settingsElements.inputIdentifier();
@@ -90,7 +90,7 @@ describe('The Editor Page', () => {
             .and('contains', state === 'draft' ? 'isinactive' : 'isactive');
     };
 
-    it('start/end as expected', function () {
+    it('start/end buttons', function () {
         // assert initial state
         assertPillState('finished');
 
@@ -107,7 +107,7 @@ describe('The Editor Page', () => {
         assertPillState('finished');
     });
 
-    it('draft toggle works as expected', function () {
+    it('draft toggle', function () {
         // assert initial state
         assertPillState('finished');
         settingsElements.tabVisibility().click();
@@ -135,7 +135,38 @@ describe('The Editor Page', () => {
         assertPillState('draft');
     });
 
-    // TODO: change survey_name
+    it('changing a survey name', function () {
+        const {INITIAL_SURVEY, TMP_SURVEY_NAME} = this.configsJSON.EDITOR;
+        const SURVEY_NAME = INITIAL_SURVEY.survey_name;
+
+        // initial state
+        settingsElements.inputIdentifier().should('have.value', SURVEY_NAME);
+        cy.url().should('eq', `http://localhost:3000/configuration/${SURVEY_NAME}`);
+
+        // refresh button
+        settingsElements.refreshIdentifier().click();
+        settingsElements.inputIdentifier().should('not.have.value', SURVEY_NAME);
+        headerElements.undo();
+        headerElements.save();
+
+        // changing survey name
+        settingsElements.inputIdentifier().clear().type(TMP_SURVEY_NAME);
+        headerElements.save().click();
+        cy.url().should('eq', `http://localhost:3000/configuration/${TMP_SURVEY_NAME}`);
+        cy.reload();
+        settingsElements.inputIdentifier().should('have.value', TMP_SURVEY_NAME);
+        cy.url().should('eq', `http://localhost:3000/configuration/${TMP_SURVEY_NAME}`);
+
+        // changing it back
+        settingsElements.inputIdentifier().clear().type(SURVEY_NAME);
+        headerElements.save().click();
+        cy.url().should('eq', `http://localhost:3000/configuration/${SURVEY_NAME}`);
+        cy.reload();
+        settingsElements.inputIdentifier().should('have.value', SURVEY_NAME);
+        cy.url().should('eq', `http://localhost:3000/configuration/${SURVEY_NAME}`);
+    });
+
+    // TODO: undo button -> change a bunch of stuff and check whether undo completely undod everything
 
     // TODO: test whether all three fields are there and look as expected
 
