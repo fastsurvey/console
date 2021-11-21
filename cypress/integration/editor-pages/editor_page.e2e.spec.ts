@@ -3,9 +3,10 @@ import * as utilities from '../../support/utilities';
 const {login, getCySelector} = utilities;
 const get = getCySelector;
 
-const header = {
+const headerElements = {
     title: () => get(['editor-header', 'title'], {count: 1}),
     link: () => get(['editor-header', 'link-to-frontend'], {count: 1}),
+    pill: () => get(['editor-header', 'time-pill'], {count: 1}),
     back: () => get(['editor-header', 'button-back'], {count: 1}),
 
     undo: () => get(['editor-header', 'button-undo'], {count: 1}),
@@ -16,7 +17,7 @@ const header = {
     reopen: () => get(['editor-header', 'button-reopen'], {count: 1}),
 };
 
-const settings = {
+const settingsElements = {
     tabAbout: () => get(['editor-settings', 'tab-about'], {count: 1}),
     tabVisibility: () => get(['editor-settings', 'tab-visibility'], {count: 1}),
 
@@ -25,7 +26,9 @@ const settings = {
     refreshIdentifier: () => get(['editor-settings', 'refresh-identifier'], {count: 1}),
     inputDescription: () => get(['editor-settings', 'input-description'], {count: 1}),
 
-    toggleDraft: () => get(['editor-settings', 'toggle-draft'], {count: 1}),
+    toggleDraftYes: () => get(['editor-settings', 'toggle-draft', 'yes'], {count: 1}),
+    toggleDraftNo: () => get(['editor-settings', 'toggle-draft', 'no'], {count: 1}),
+
     startDate: () => get(['editor-settings', 'datepicker-start'], {count: 1}),
     startTime: () => get(['editor-settings', 'timepicker-start'], {count: 1}),
     endDate: () => get(['editor-settings', 'datepicker-end'], {count: 1}),
@@ -55,38 +58,94 @@ describe('The Editor Page', () => {
             });
     });
 
-    it('header looks as expected', function () {
-        header.title();
-        header.link();
-        header.back();
-        header.reopen();
+    it('header looks as expected, back button works', function () {
+        headerElements.title();
+        headerElements.link();
+        headerElements.reopen();
+
+        headerElements.back().click();
+        cy.url().should('eq', 'http://localhost:3000/configurations');
     });
 
-    it('settings look as expected', function () {
-        settings.tabAbout();
-        settings.inputTitle();
-        settings.inputIdentifier();
-        settings.inputDescription();
+    it('settings look as expected, tab navigation work', function () {
+        settingsElements.tabAbout();
+        settingsElements.inputTitle();
+        settingsElements.inputIdentifier();
+        settingsElements.inputDescription();
 
-        settings.tabVisibility().click();
-        settings.toggleDraft();
-        settings.startDate();
-        settings.startTime();
-        settings.endDate();
-        settings.endTime();
+        settingsElements.tabVisibility().click();
+        settingsElements.toggleDraftYes();
+        settingsElements.toggleDraftNo();
+        settingsElements.startDate();
+        settingsElements.startTime();
+        settingsElements.endDate();
+        settingsElements.endTime();
+    });
+
+    const assertPillState = (state: 'draft' | 'pending' | 'running' | 'finished') => {
+        headerElements.pill().should('have.attr', 'data-cy').and('contain', state);
+        headerElements
+            .link()
+            .should('have.attr', 'data-cy')
+            .and('contains', state === 'draft' ? 'isinactive' : 'isactive');
+    };
+
+    it('start/end as expected', function () {
+        // assert initial state
+        assertPillState('finished');
+
+        // reopen survey
+        headerElements.reopen().click();
+        headerElements.end();
+        assertPillState('running');
+        cy.reload();
+        assertPillState('running');
+
+        // close survey again
+        headerElements.end().click();
+        headerElements.reopen();
+        assertPillState('finished');
+    });
+
+    it('draft toggle works as expected', function () {
+        // assert initial state
+        assertPillState('finished');
+        settingsElements.tabVisibility().click();
+        settingsElements
+            .toggleDraftYes()
+            .should('have.attr', 'data-cy')
+            .and('contain', 'isactive');
+
+        // switch to draft=true but don't save
+        settingsElements.toggleDraftNo().click();
+        assertPillState('draft');
+        headerElements.save();
+        headerElements.undo().click();
+        assertPillState('finished');
+        cy.reload();
+        settingsElements.tabVisibility().click();
+        assertPillState('finished');
+
+        // switch to draft=true and save
+        settingsElements.toggleDraftNo().click();
+        headerElements.save().click();
+        assertPillState('draft');
+        cy.reload();
+        settingsElements.tabVisibility().click();
+        assertPillState('draft');
     });
 
     // TODO: test appearance
-    // - [ ] heading
-    // - [ ] back-button
-    // - [ ] tabs in settings
+    // - [x] heading
+    // - [x] back-button
+    // - [x] tabs in settings
     //
     // TODO: test publish/visibility logic
-    // - [ ] test rendered buttons
+    // - [x] test rendered buttons
     // - [ ] test db state
     // - [ ] test reachability via link
-    // - [ ] test toggle (incl. undo)
-    //
+    // - [x] test toggle (incl. undo)
+
     // TODO: test settings
     // - [ ] save not possible in invalid state
     // - [ ] change survey_name
