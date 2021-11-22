@@ -371,7 +371,7 @@
                 "description": "",
                 "type": "text",
                 "min_chars": 0,
-                "max_chars": 1000
+                "max_chars": 2000
             },
             "SELECTION": {
                 "identifier": 3,

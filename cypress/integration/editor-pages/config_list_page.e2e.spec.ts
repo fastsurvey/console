@@ -98,7 +98,7 @@ describe('The Config List Page', () => {
     }
 
     const configListPanelIsAbsent = (surveyName: string) => {
-        getByDataCy(`config-list-panel-${surveyName}`, {count: 0});
+        getCySelector([`config-list-panel-${surveyName}`], {count: 0});
     };
 
     it('seed surveys are present', function () {

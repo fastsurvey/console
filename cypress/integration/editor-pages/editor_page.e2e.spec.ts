@@ -1,4 +1,4 @@
-import {first, range} from 'lodash';
+import {concat, first, range} from 'lodash';
 import * as utilities from '../../support/utilities';
 import {types} from '/src/types';
 
@@ -84,6 +84,10 @@ const addFieldPopup = {
         getFromPopup([`button-select-${fieldType}`], {count: 1}),
     activeSelect: () => getFromPopup([`isactive`]),
 };
+
+function insertInArray(array: any[], index: number, element: any) {
+    return concat(array.slice(0, index), element, array.slice(index, array.length));
+}
 
 describe('The Editor Page', () => {
     beforeEach(() => {
@@ -433,9 +437,44 @@ describe('The Editor Page', () => {
         get(['message-panel-error']).should('have.length', 0);
     };
 
+    const assertConfigInDB = (
+        username: string,
+        password: string,
+        surveyConfig: types.SurveyConfig,
+    ) => {
+        // deepCompare the config-json in database
+        cy.request({
+            method: 'POST',
+            url: 'https://api.dev.fastsurvey.de/authentication',
+            body: {
+                identifier: username,
+                password: password,
+            },
+        }).then((authResponse) => {
+            expect(authResponse.status).to.equal(200);
+            cy.request({
+                method: 'GET',
+                url: `https://api.dev.fastsurvey.de/users/${username}/surveys`,
+                headers: {
+                    Authorization: `Bearer ${authResponse.body['access_token']}`,
+                    'Content-Type': 'application/json',
+                },
+            }).then((getResponse) => {
+                expect(getResponse.status).to.equal(200);
+                const duplicateSurveyOnServer = first(
+                    getResponse.body.filter(
+                        (c: any) => c['survey_name'] === surveyConfig['survey_name'],
+                    ),
+                );
+                expect(duplicateSurveyOnServer).to.deep.equal(surveyConfig);
+            });
+        });
+    };
+
     it('adding a text field, undo adding', function () {
         const {INITIAL_SURVEY, INITIAL_MAX_IDENTIFIER, ADDED_FIELDS} =
             this.configsJSON.EDITOR;
+        const {USERNAME, PASSWORD} = this.accountJSON;
 
         const assertLocalField = (index: number) => {
             fieldInputs(index).description().should('be.empty');
@@ -457,7 +496,10 @@ describe('The Editor Page', () => {
         headerElements.undo().click();
         assertSyncedHeaderState();
         get([`editor-field-panel`], {count: 3});
-        // TODO: assert that config in db is valid
+        assertConfigInDB(USERNAME, PASSWORD, {
+            ...INITIAL_SURVEY,
+            max_identifier: INITIAL_MAX_IDENTIFIER,
+        });
 
         // edit field to match fixture
         fieldButtons(1).addBefore().click();
@@ -471,12 +513,17 @@ describe('The Editor Page', () => {
         assertSyncedHeaderState();
         fieldInputs(1).title().should('have.value', ADDED_FIELDS.TEXT.title);
         assertLocalField(1);
-        // TODO: assert that config in db is valid
+        assertConfigInDB(USERNAME, PASSWORD, {
+            ...INITIAL_SURVEY,
+            max_identifier: INITIAL_MAX_IDENTIFIER + 1,
+            fields: insertInArray(INITIAL_SURVEY.fields, 1, ADDED_FIELDS.TEXT),
+        });
     });
 
     it('adding an email field', function () {
         const {INITIAL_SURVEY, INITIAL_MAX_IDENTIFIER, ADDED_FIELDS} =
             this.configsJSON.EDITOR;
+        const {USERNAME, PASSWORD} = this.accountJSON;
 
         const assertLocalField = () => {
             fieldInputs(2).description().should('be.empty');
@@ -507,12 +554,17 @@ describe('The Editor Page', () => {
         assertSyncedHeaderState();
         fieldInputs(2).title().should('have.value', ADDED_FIELDS.EMAIL.title);
         assertLocalField();
-        // TODO: assert that config in db is valid
+        assertConfigInDB(USERNAME, PASSWORD, {
+            ...INITIAL_SURVEY,
+            max_identifier: INITIAL_MAX_IDENTIFIER + 1,
+            fields: insertInArray(INITIAL_SURVEY.fields, 2, ADDED_FIELDS.EMAIL),
+        });
     });
 
     it('adding a selection field', function () {
         const {INITIAL_SURVEY, INITIAL_MAX_IDENTIFIER, ADDED_FIELDS} =
             this.configsJSON.EDITOR;
+        const {USERNAME, PASSWORD} = this.accountJSON;
 
         // add selection field at index 3
         fieldButtons(3).addBefore().click();
@@ -546,7 +598,11 @@ describe('The Editor Page', () => {
         fieldInputs(3)
             .maxSelect()
             .should('have.value', ADDED_FIELDS.SELECTION.max_select);
-        // TODO: assert that config in db is valid
+        assertConfigInDB(USERNAME, PASSWORD, {
+            ...INITIAL_SURVEY,
+            max_identifier: INITIAL_MAX_IDENTIFIER + 1,
+            fields: insertInArray(INITIAL_SURVEY.fields, 3, ADDED_FIELDS.SELECTION),
+        });
     });
 
     // TODO: remove a field + undo remove
