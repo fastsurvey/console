@@ -328,12 +328,6 @@ describe('The Editor Page', () => {
         });
     });
 
-    // TODO: save not possible with invalid fields (just test this using empty titles)
-    it('save not possible with invalid fields', () => {
-
-    });*/
-
-    // TODO: page switch not possible with unsaved changes
     it('page switch not possible with unsaved changes', function () {
         const {INITIAL_SURVEY} = this.configsJSON.EDITOR;
         const survey_name = INITIAL_SURVEY.survey_name;
@@ -353,6 +347,26 @@ describe('The Editor Page', () => {
         navbarButtonEditor().click({force: true});
         assertEditorPath(survey_name);
         warningMessage().contains('save or undo');
+    });*/
+
+    it('save not possible with invalid fields', () => {
+        const assertInvalidFieldState = () => {
+            headerElements.reopen().should('be.disabled');
+            headerElements.save().click();
+            warningMessage().contains('Invalid fields');
+            headerElements.undo().click();
+            headerElements.reopen().should('not.be.disabled');
+        };
+        settingsElements.inputTitle().clear();
+        assertInvalidFieldState();
+
+        fieldElements.collapse(0).click();
+        fieldElements.title(0).clear();
+        assertInvalidFieldState();
+
+        fieldElements.collapse(2).click();
+        fieldElements.title(2).clear();
+        assertInvalidFieldState();
     });
 
     // TODO: add an email field
