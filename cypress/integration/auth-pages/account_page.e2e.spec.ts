@@ -1,7 +1,6 @@
 import * as utilities from '../../support/utilities';
 
 const {logout, getCySelector, assertDataCy} = utilities;
-
 const get = getCySelector;
 
 const general = {

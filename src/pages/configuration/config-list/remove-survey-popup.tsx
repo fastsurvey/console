@@ -17,13 +17,13 @@ function RemoveSurveyPopup(props: Props) {
                     text='cancel'
                     variant='flat-light-blue'
                     onClick={props.closeModal}
-                    data-cy='remove-button-cancel'
+                    data-cy='button-cancel-remove'
                 />
                 <Button
                     text='remove survey'
                     variant='flat-light-blue'
                     onClick={props.removeSurvey}
-                    data-cy='remove-button-submit'
+                    data-cy='button-submit-remove'
                 />
             </div>
         </div>

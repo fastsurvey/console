@@ -1,47 +1,46 @@
 import {first, last} from 'lodash';
 import * as utilities from '../../support/utilities';
 
-const {login, getByDataCy, getCySelector} = utilities;
+const {login, getCySelector} = utilities;
+const get = getCySelector;
 
-const buttonNew = () => getByDataCy('config-list-button-new', {count: 1});
-const successMessage = () => getByDataCy('message-panel-success', {count: 1});
-
-// TODO: refactor panel getters
+const buttonNew = () => get(['config-list-button-new'], {count: 1});
+const successMessage = () => get(['message-panel-success'], {count: 1});
 
 const panel = (surveyName: string) => ({
-    container: () => getCySelector([`config-list-panel-${surveyName}`], {count: 1}),
+    container: () => get([`config-list-panel-${surveyName}`], {count: 1}),
     linkToFrontend: () =>
-        getCySelector([`config-list-panel-${surveyName}`, 'link-to-frontend'], {
+        get([`config-list-panel-${surveyName}`, 'link-to-frontend'], {
             count: 1,
         }),
     linkToEditor: () =>
-        getCySelector([`config-list-panel-${surveyName}`, 'link-to-editor'], {
+        get([`config-list-panel-${surveyName}`, 'link-to-editor'], {
             count: 1,
         }),
     toggleActions: () =>
-        getCySelector([`config-list-panel-${surveyName}`, 'button-toggle-actions'], {
+        get([`config-list-panel-${surveyName}`, 'button-toggle-actions'], {
             count: 1,
         }),
     actionsDropdown: () =>
-        getCySelector([`config-list-panel-${surveyName}`, 'actions-dropdown'], {
+        get([`config-list-panel-${surveyName}`, 'actions-dropdown'], {
             invisible: true,
         }),
     actionsButton: (type: 'remove' | 'duplicate') =>
-        getCySelector(
-            [`config-list-panel-${surveyName}`, 'actions-dropdown', `button-${type}`],
-            {
-                count: 1,
-            },
-        ),
+        get([`config-list-panel-${surveyName}`, 'actions-dropdown', `button-${type}`], {
+            count: 1,
+        }),
 });
 
-// POPUP
-const popupPanel = () => getByDataCy('popup-panel', {count: 1});
-const popupDuplicateInput = () => getByDataCy('duplicate-input', {count: 1});
-const popupDuplicateCancel = () => getByDataCy('duplicate-button-cancel', {count: 1});
-const popupDuplicateSubmit = () => getByDataCy('duplicate-button-submit', {count: 1});
-const popupRemoveCancel = () => getByDataCy('remove-button-cancel', {count: 1});
-const popupRemoveSubmit = () => getByDataCy('remove-button-submit', {count: 1});
+const getFromPopup = (selectors: string[]) =>
+    get(['popup-panel', ...selectors], {count: 1});
+const popup = {
+    panel: () => get(['popup-panel'], {count: 1, invisible: true}),
+    duplicateTitle: () => getFromPopup(['input-duplicate-title']),
+    cancelDuplicate: () => getFromPopup(['button-cancel-duplicate']),
+    submitDuplicate: () => getFromPopup(['button-submit-duplicate']),
+    cancelRemove: () => getFromPopup(['button-cancel-remove']),
+    submitRemove: () => getFromPopup(['button-submit-remove']),
+};
 
 describe('The Config List Page', () => {
     // @ts-ignore
@@ -146,9 +145,9 @@ describe('The Config List Page', () => {
                 panel(newSurveyName).toggleActions().click();
                 panel(newSurveyName).actionsDropdown().should('be.visible');
                 panel(newSurveyName).actionsButton('remove').click();
-                popupPanel().should('be.visible');
-                popupRemoveCancel().click();
-                popupPanel().should('not.be.visible');
+                popup.panel().should('be.visible');
+                popup.cancelRemove().click();
+                popup.panel().should('not.be.visible');
                 panel(newSurveyName).actionsDropdown().should('be.visible');
 
                 // config did not change
@@ -159,9 +158,9 @@ describe('The Config List Page', () => {
                 // removal popup
                 panel(newSurveyName).toggleActions().click();
                 panel(newSurveyName).actionsButton('remove').click();
-                popupPanel().should('be.visible');
-                popupRemoveSubmit().click();
-                popupPanel().should('not.be.visible');
+                popup.panel().should('be.visible');
+                popup.submitRemove().click();
+                popup.panel().should('not.be.visible');
                 successMessage();
 
                 // config is gone
@@ -186,9 +185,9 @@ describe('The Config List Page', () => {
         // cancel button on duplication popup
         panel(ORIGINAL_SURVEY_NAME).toggleActions().click();
         panel(ORIGINAL_SURVEY_NAME).actionsButton('duplicate').click();
-        popupPanel().should('be.visible');
-        popupDuplicateCancel().click();
-        popupPanel().should('not.be.visible');
+        popup.panel().should('be.visible');
+        popup.cancelDuplicate().click();
+        popup.panel().should('not.be.visible');
         panel(ORIGINAL_SURVEY_NAME).actionsDropdown().should('be.visible');
 
         // config did not change
@@ -199,17 +198,19 @@ describe('The Config List Page', () => {
         // duplication popup
         panel(ORIGINAL_SURVEY_NAME).toggleActions().click();
         panel(ORIGINAL_SURVEY_NAME).actionsButton('duplicate').click();
-        popupPanel()
+        popup
+            .panel()
             .find('div')
             .contains(`you already have a survey \'${ORIGINAL_SURVEY_NAME}\'`)
             .should('have.length', 1);
-        popupDuplicateSubmit().should('be.disabled');
-        popupDuplicateInput().should('have.value', ORIGINAL_SURVEY_NAME);
-        popupDuplicateInput()
+        popup.submitDuplicate().should('be.disabled');
+        popup.duplicateTitle().should('have.value', ORIGINAL_SURVEY_NAME);
+        popup
+            .duplicateTitle()
             .clear()
             .type(DUPLICATE_SURVEY_NAME)
             .should('have.value', DUPLICATE_SURVEY_NAME);
-        popupDuplicateSubmit().click();
+        popup.submitDuplicate().click();
 
         // duplication has workes -> on new page with success message
         successMessage();

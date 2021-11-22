@@ -26,7 +26,7 @@ function DuplicateSurveyPopup(props: {
                     <TextInput
                         value={surveyName}
                         setValue={setSurveyName}
-                        data-cy='duplicate-input'
+                        data-cy='input-duplicate-title'
                     />
                 </div>
                 {!validationMessage.valid && (
@@ -44,14 +44,14 @@ function DuplicateSurveyPopup(props: {
                             props.closeModal();
                             setTimeout(() => setSurveyName(''), 500);
                         }}
-                        data-cy='duplicate-button-cancel'
+                        data-cy='button-cancel-duplicate'
                     />
                     <Button
                         text='duplicate survey'
                         variant='flat-light-blue'
                         disabled={!validationMessage.valid}
                         onClick={() => props.duplicateSurvey(surveyName)}
-                        data-cy='duplicate-button-submit'
+                        data-cy='button-submit-duplicate'
                     />
                 </div>
             </div>
