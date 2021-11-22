@@ -5,6 +5,9 @@ import {types} from '/src/types';
 const {login, getCySelector} = utilities;
 const get = getCySelector;
 
+const warningMessage = () => get(['message-panel-warning'], {count: 1});
+const navbarButtonEditor = () => get(['navbar', 'button-editor'], {invisible: true});
+
 const headerElements = {
     title: () => get(['editor-header', 'title'], {count: 1}),
     link: () => get(['editor-header', 'link-to-frontend'], {count: 1}),
@@ -101,6 +104,9 @@ describe('The Editor Page', () => {
         fieldElements.title(index).should('have.value', fieldConfig.title);
         fieldElements.description(index).should('have.value', fieldConfig.description);
     };
+
+    const assertEditorPath = (survey_name: string) =>
+        cy.url().should('eq', `http://localhost:3000/configuration/${survey_name}`);
 
     /*it('header look, back button', function () {
         headerElements.title();
@@ -257,7 +263,7 @@ describe('The Editor Page', () => {
         // Whether a change in fields is made to the title, the description or
         // any other parameter, is transparent to the editor -> therefore the
         // other parameters can be tested with component testing on single fields
-    });*/
+    });
 
     it('copy and paste', function () {
         const {INITIAL_SURVEY, COPY_PASTE_SURVEY} = this.configsJSON.EDITOR;
@@ -322,14 +328,38 @@ describe('The Editor Page', () => {
         });
     });
 
+    // TODO: save not possible with invalid fields (just test this using empty titles)
+    it('save not possible with invalid fields', () => {
+
+    });*/
+
+    // TODO: page switch not possible with unsaved changes
+    it('page switch not possible with unsaved changes', function () {
+        const {INITIAL_SURVEY} = this.configsJSON.EDITOR;
+        const survey_name = INITIAL_SURVEY.survey_name;
+
+        assertEditorPath(survey_name);
+        settingsElements.inputTitle().clear();
+        headerElements.undo();
+        headerElements.save();
+
+        headerElements.back().click();
+        assertEditorPath(survey_name);
+        warningMessage().contains('save or undo');
+
+        cy.reload();
+        assertEditorPath(survey_name);
+        settingsElements.inputTitle().clear();
+        navbarButtonEditor().click({force: true});
+        assertEditorPath(survey_name);
+        warningMessage().contains('save or undo');
+    });
+
     // TODO: add an email field
     // TODO: add a text field
     // TODO: add a selection field
 
     // TODO: remove a field (add a seed field before that with the UI)
-
-    // TODO: save not possible when any field is invalid (just test this using empty titles)
-    it('save not possible with invalid fields', () => {});
 
     // Test with component test of fields:
     // - looks as expected

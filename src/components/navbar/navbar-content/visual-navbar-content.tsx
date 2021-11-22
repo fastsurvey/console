@@ -43,7 +43,7 @@ function NavbarButton(props: {
                 'font-weight-700 md:font-weight-600 text-base rounded cursor-pointer ' +
                 (props.active ? 'text-white bg-gray-700' : 'text-gray-200')
             }
-            data-cy={`navbar-button-${props.text.toLowerCase()}`}
+            data-cy={`button-${props.text.toLowerCase()}`}
         >
             <div className={'h-10 w-10 p-2 icon-light-blue flex-shrink-0'}>
                 {props.icon}
@@ -71,7 +71,7 @@ function NavbarContent(props: {
             <NavbarLogo />
             <NavbarButton
                 onClick={() => props.openLink('/configurations')}
-                text='Surveys'
+                text='Editor'
                 icon={icons.survey}
                 active={props.location.pathname.startsWith('/configuration')}
             />
@@ -90,11 +90,7 @@ function NavbarContent(props: {
 
             <div className={'flex-max'} />
 
-            <NavbarButton
-                onClick={props.logOut}
-                text='Logout'
-                icon={icons.exit}
-            />
+            <NavbarButton onClick={props.logOut} text='Logout' icon={icons.exit} />
         </React.Fragment>
     );
 }

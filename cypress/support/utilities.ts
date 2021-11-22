@@ -42,14 +42,14 @@ export function getByDataCy(dataCyContains: string, props?: {count?: number}) {
 
 export function getCySelector(
     selectors: string[],
-    props?: {count?: number},
+    props?: {count?: number; invisible?: boolean},
 ): Cypress.Chainable<JQuery<HTMLElement>> {
     const grab = () =>
         cy.root().get(
             join(
                 selectors.map((s) => `[data-cy*="${s}"]`),
                 ' ',
-            ) + ':visible',
+            ) + (props?.invisible ? '' : ':visible'),
         );
     return props?.count !== undefined
         ? grab().should('have.length', props.count)
