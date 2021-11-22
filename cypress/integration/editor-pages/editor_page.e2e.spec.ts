@@ -55,15 +55,13 @@ const fieldElements = {
 };
 
 describe('The Editor Page', () => {
-    before(() => {
+    beforeEach(() => {
         // @ts-ignore
         cy.seedConfigData();
 
         // @ts-ignore
         cy.seedEditorData();
-    });
 
-    beforeEach(() => {
         cy.fixture('account.json')
             .as('accountJSON')
             .then((accountJSON) => {
@@ -76,6 +74,33 @@ describe('The Editor Page', () => {
                     });
             });
     });
+
+    const assertPillState = (state: 'draft' | 'pending' | 'running' | 'finished') => {
+        headerElements.pill().should('have.attr', 'data-cy').and('contain', state);
+        headerElements
+            .link()
+            .should('have.attr', 'data-cy')
+            .and('contains', state === 'draft' ? 'isinactive' : 'isactive');
+    };
+
+    const assertSurveyState = (surveyConfig: types.SurveyConfig) => {
+        settingsElements.inputTitle().should('have.value', surveyConfig.title);
+        settingsElements
+            .inputIdentifier()
+            .should('have.value', surveyConfig.survey_name);
+        settingsElements
+            .inputDescription()
+            .should('have.value', surveyConfig.description);
+
+        surveyConfig.fields.forEach((fieldConfig, i) => {
+            assertFieldState(fieldConfig, i);
+        });
+    };
+
+    const assertFieldState = (fieldConfig: types.SurveyField, index: number) => {
+        fieldElements.title(index).should('have.value', fieldConfig.title);
+        fieldElements.description(index).should('have.value', fieldConfig.description);
+    };
 
     /*it('header look, back button', function () {
         headerElements.title();
@@ -100,14 +125,6 @@ describe('The Editor Page', () => {
         settingsElements.endDate();
         settingsElements.endTime();
     });
-
-    const assertPillState = (state: 'draft' | 'pending' | 'running' | 'finished') => {
-        headerElements.pill().should('have.attr', 'data-cy').and('contain', state);
-        headerElements
-            .link()
-            .should('have.attr', 'data-cy')
-            .and('contains', state === 'draft' ? 'isinactive' : 'isactive');
-    };
 
     it('start/end buttons', function () {
         // assert initial state
@@ -182,28 +199,9 @@ describe('The Editor Page', () => {
         cy.reload();
         settingsElements.inputIdentifier().should('have.value', SURVEY_NAME);
         cy.url().should('eq', `http://localhost:3000/configuration/${SURVEY_NAME}`);
-    });*/
+    });
 
-    const assertSurveyState = (surveyConfig: types.SurveyConfig) => {
-        settingsElements.inputTitle().should('have.value', surveyConfig.title);
-        settingsElements
-            .inputIdentifier()
-            .should('have.value', surveyConfig.survey_name);
-        settingsElements
-            .inputDescription()
-            .should('have.value', surveyConfig.description);
-
-        surveyConfig.fields.forEach((fieldConfig, i) => {
-            assertFieldState(fieldConfig, i);
-        });
-    };
-
-    const assertFieldState = (fieldConfig: types.SurveyField, index: number) => {
-        fieldElements.title(index).should('have.value', fieldConfig.title);
-        fieldElements.description(index).should('have.value', fieldConfig.description);
-    };
-
-    /*it('fields from fixture are present, undo functionality', function () {
+    it('fields from fixture are present, undo functionality', function () {
         const {INITIAL_SURVEY, MODIFIED_SURVEY} = this.configsJSON.EDITOR;
 
         [0, 1, 2].map((i) => fieldElements.collapse(i).click());
@@ -261,27 +259,21 @@ describe('The Editor Page', () => {
         // other parameters can be tested with component testing on single fields
     });*/
 
-    // copy three fields
-    // expect state from fixture
-    // save
-    // expect state from fixture
-    // reload
-    // expect state from fixture
-    // TODO: copy and paste an email field
-    // TODO: copy and paste a text field
-    // TODO: copy and paste a selection field
     it('copy and paste', function () {
         const {INITIAL_SURVEY, COPY_PASTE_SURVEY} = this.configsJSON.EDITOR;
         const {USERNAME, PASSWORD} = this.accountJSON;
 
-        // undo works
-        fieldElements.copy(0).click();
-        fieldElements.pasteBefore(3).click();
-        fieldElements.copy(2).click();
-        fieldElements.pasteBefore(0).click();
-        fieldElements.copy(2).click();
-        fieldElements.pasteBefore(3).click();
+        const copyPasteSequence = () => {
+            fieldElements.copy(0).click();
+            fieldElements.pasteBefore(3).click();
+            fieldElements.copy(2).click();
+            fieldElements.pasteBefore(0).click();
+            fieldElements.copy(2).click();
+            fieldElements.pasteBefore(3).click();
+        };
 
+        // undo works
+        copyPasteSequence();
         range(6).map((i) => fieldElements.collapse(i).click());
         assertSurveyState(COPY_PASTE_SURVEY);
         headerElements.undo().click();
@@ -292,13 +284,7 @@ describe('The Editor Page', () => {
         range(3).map((i) => fieldElements.collapse(i).click());
 
         // save works
-        fieldElements.copy(0).click();
-        fieldElements.pasteBefore(3).click();
-        fieldElements.copy(2).click();
-        fieldElements.pasteBefore(0).click();
-        fieldElements.copy(2).click();
-        fieldElements.pasteBefore(3).click();
-
+        copyPasteSequence();
         range(6).map((i) => fieldElements.collapse(i).click());
         assertSurveyState(COPY_PASTE_SURVEY);
         headerElements.save().click();
@@ -307,7 +293,6 @@ describe('The Editor Page', () => {
         range(6).map((i) => fieldElements.collapse(i).click());
         assertSurveyState(COPY_PASTE_SURVEY);
 
-        // TODO: Compare with survey in backend
         // deepCompare the config-json in database
         cy.request({
             method: 'POST',
@@ -344,6 +329,7 @@ describe('The Editor Page', () => {
     // TODO: remove a field (add a seed field before that with the UI)
 
     // TODO: save not possible when any field is invalid (just test this using empty titles)
+    it('save not possible with invalid fields', () => {});
 
     // Test with component test of fields:
     // - looks as expected

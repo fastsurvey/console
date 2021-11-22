@@ -95,7 +95,9 @@ function EditorFormCard(props: {
                         onClick={toggle}
                         onMouseEnter={() => updateActionlabel(props.collapse)}
                         onFocus={() => updateActionlabel(props.collapse)}
-                        data-cy='button-collapse'
+                        data-cy={`button-collapse ${
+                            props.collapse ? 'collapsed' : 'expanded'
+                        }`}
                     >
                         {icons.chevronDown}
                     </button>
