@@ -36,6 +36,7 @@ function VisualField(props: Props) {
                 }}
                 onMouseEnter={() => setActionLabel('copy')}
                 onFocus={() => setActionLabel('copy')}
+                data-cy='button-copy'
             >
                 {icons.duplicate}
             </button>
@@ -45,6 +46,7 @@ function VisualField(props: Props) {
                 onMouseEnter={() => setActionLabel('remove')}
                 onFocus={() => setActionLabel('remove')}
                 disabled={props.disabled}
+                data-cy='button-remove'
             >
                 {icons.trash}
             </button>

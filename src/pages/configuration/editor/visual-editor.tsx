@@ -54,6 +54,7 @@ function VisualEditor(props: {
                             }
                             pasteField={() => props.pasteField(index)}
                             disabled={props.submittingConfig}
+                            index={index}
                         />
                         <Field
                             fieldIndex={index}
@@ -76,6 +77,7 @@ function VisualEditor(props: {
                     }
                     pasteField={() => props.pasteField(props.localConfig.fields.length)}
                     disabled={props.submittingConfig}
+                    index={props.localConfig.fields.length}
                 />
             </div>
         </div>

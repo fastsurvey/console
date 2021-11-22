@@ -6,13 +6,13 @@ import {reduxUtils} from '/src/utilities';
 import AddFieldButton from './add-field-button';
 import AddFieldPopup from './add-field-popup';
 
-interface Props {
+function AddFieldPanel(props: {
     insertField(fieldType: types.FieldType): void;
     pasteField(): void;
     openModal(title: string, children: React.ReactNode): void;
     disabled: boolean;
-}
-function AddFieldPanel(props: Props) {
+    index: number;
+}) {
     function openAddFieldModal() {
         props.openModal('Add a new field', <AddFieldPopup {...props} />);
     }
@@ -31,6 +31,7 @@ function AddFieldPanel(props: Props) {
                 icon={icons.widgetAdd}
                 onClick={openAddFieldModal}
                 disabled={props.disabled}
+                data-cy={`add-field-before-${props.index}`}
             />
             <AddFieldButton
                 label='paste field'
@@ -38,6 +39,7 @@ function AddFieldPanel(props: Props) {
                 onClick={props.pasteField}
                 leftIcon
                 disabled={props.disabled}
+                data-cy={`paste-field-before-${props.index}`}
             />
         </div>
     );
