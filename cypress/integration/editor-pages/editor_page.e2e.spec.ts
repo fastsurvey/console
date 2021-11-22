@@ -57,6 +57,17 @@ const fieldElements = {
         getCySelector([`paste-field-before-${index}`], {count: 1}),
 };
 
+const getFromPopup = (selectors: string[], props?: {count?: number}) =>
+    get(['popup-panel', ...selectors]);
+const addFieldPopup = {
+    panel: () => get(['popup-panel'], {count: 1, invisible: true}),
+    cancelAdd: () => getFromPopup(['button-cancel-add'], {count: 1}),
+    submitAdd: () => getFromPopup(['button-submit-add'], {count: 1}),
+    selectField: (fieldType: types.FieldType) =>
+        getFromPopup([`button-select-${fieldType}`], {count: 1}),
+    activeSelect: () => getFromPopup([`isactive`]),
+};
+
 describe('The Editor Page', () => {
     beforeEach(() => {
         // @ts-ignore
@@ -347,7 +358,7 @@ describe('The Editor Page', () => {
         navbarButtonEditor().click({force: true});
         assertEditorPath(survey_name);
         warningMessage().contains('save or undo');
-    });*/
+    });
 
     it('save not possible with invalid fields', () => {
         const assertInvalidFieldState = () => {
@@ -367,9 +378,39 @@ describe('The Editor Page', () => {
         fieldElements.collapse(2).click();
         fieldElements.title(2).clear();
         assertInvalidFieldState();
+    });*/
+
+    it('add field popup', function () {
+        addFieldPopup.panel().should('not.be.visible');
+        fieldElements.addBefore(0).click();
+        addFieldPopup.panel().should('be.visible');
+        addFieldPopup.cancelAdd().click();
+        addFieldPopup.panel().should('not.be.visible');
+
+        fieldElements.addBefore(2).click();
+        addFieldPopup.panel().should('be.visible');
+        addFieldPopup.activeSelect().should('have.length', 0);
+        ['email', 'text', 'selection'].forEach((fieldType: any) => {
+            addFieldPopup
+                .selectField(fieldType)
+                .click()
+                .should('have.attr', 'data-cy')
+                .and('contain', 'isactive');
+            addFieldPopup.submitAdd().should('not.be.disabled');
+            addFieldPopup
+                .selectField(fieldType)
+                .click()
+                .should('have.attr', 'data-cy')
+                .and('contain', 'isinactive');
+            addFieldPopup.submitAdd().should('be.disabled');
+        });
+        addFieldPopup.cancelAdd().click();
+        addFieldPopup.panel().should('not.be.visible');
     });
 
     // TODO: add an email field
+    it('adding an email field', function () {});
+
     // TODO: add a text field
     // TODO: add a selection field
 
