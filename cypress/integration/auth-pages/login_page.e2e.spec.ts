@@ -1,22 +1,27 @@
-import {before} from 'lodash';
 import * as utilities from '../../support/utilities';
 
-const {getByDataCy} = utilities;
+const {getCySelector, logout} = utilities;
 
-// STATIC ELEMENTS
-const inputUsername = () => getByDataCy('login-input-email', {count: 1});
-const inputPassword = () => getByDataCy('login-input-password', {count: 1});
-const linkRegister = () => getByDataCy('login-link-register', {count: 1});
-const linkForgot = () => getByDataCy('login-link-forgot', {count: 1});
-const navbarButtonLogout = () => getByDataCy('navbar-button-logout').first();
+const get = (selectors: string[]) =>
+    getCySelector(['login-panel', ...selectors], {count: 1});
+
+// TODO: refactor getters
+
+const elements = {
+    identifier: () => get(['input-identifier']),
+    password: () => get(['input-password']),
+    submit: () => get(['button-submit']),
+    linkToRegister: () => get(['link-to-register']),
+    linkToForgot: () => get(['link-to-forgot']),
+    errorMessage: () => getCySelector(['message-panel-error']),
+};
 
 // SPECIAL ELEMENTS
-const buttonSubmit = (state: 'not.disabled' | 'disabled') =>
-    getByDataCy('login-button-submit', {count: 1}).should(
-        state.replace('disabled', 'be.disabled'),
-    );
-const messagePanelError = (state: 'visible' | 'invisible') =>
-    getByDataCy('message-panel-error', {count: state === 'visible' ? 1 : 0});
+const assertSubmitState = (submitIsPossible: boolean) =>
+    elements.submit().should((submitIsPossible ? 'not.' : '') + 'be.disabled');
+
+const assertMessageState = (messageIsVisible: boolean) =>
+    elements.errorMessage().should('have.length', messageIsVisible ? 1 : 0);
 
 describe('The Login Page', function () {
     beforeEach(() => {
@@ -27,20 +32,20 @@ describe('The Login Page', function () {
     it('has working links to other auth-pages', function () {
         cy.get('h1').should('have.length', 1).should('have.text', 'Login');
 
-        linkRegister().click();
+        elements.linkToRegister().click();
         cy.url().should('include', '/register');
 
         cy.visit('/login');
-        linkForgot().click();
+        elements.linkToForgot().click();
         cy.url().should('include', '/forgot-password');
     });
 
     it('has expected inputs/labels and working password-visibility toggle', function () {
-        inputUsername().type('abc').should('have.value', 'abc');
-        inputUsername().should('have.attr', 'type').and('eq', 'text');
+        elements.identifier().type('abc').should('have.value', 'abc');
+        elements.identifier().should('have.attr', 'type').and('eq', 'text');
 
-        inputPassword().type('abcde').should('have.value', 'abcde');
-        inputPassword().should('have.attr', 'type').and('eq', 'password');
+        elements.password().type('abcde').should('have.value', 'abcde');
+        elements.password().should('have.attr', 'type').and('eq', 'password');
 
         // TODO: Test that with component testing (password visibility toggle)
         cy.get('svg').should('have.length', 1).click();
@@ -48,18 +53,18 @@ describe('The Login Page', function () {
         cy.get('svg').should('have.length', 1).click();
         cy.get('input').last().should('have.attr', 'type').and('eq', 'password');
 
-        buttonSubmit('disabled');
-        inputPassword().type('fgh').should('have.value', 'abcdefgh');
-        buttonSubmit('not.disabled');
+        assertSubmitState(false);
+        elements.password().type('fgh').should('have.value', 'abcdefgh');
+        assertSubmitState(true);
     });
 
     it('login and logout with blueberry test account works', function () {
         const {USERNAME, PASSWORD} = this.accountJSON;
 
         // logging in
-        inputUsername().type(USERNAME);
-        inputPassword().type(PASSWORD);
-        buttonSubmit('not.disabled').click();
+        elements.identifier().type(USERNAME);
+        elements.password().type(PASSWORD);
+        elements.submit().click();
         cy.url().should('include', '/configurations');
 
         // refresh the page (test the api-key stored in a cookie)
@@ -67,29 +72,28 @@ describe('The Login Page', function () {
         cy.url().should('include', '/configurations');
 
         // logging out
-        navbarButtonLogout().click({force: true});
-        cy.url().should('include', '/login');
-        inputUsername().should('have.value', '');
-        inputPassword().should('have.value', '');
-        buttonSubmit('disabled');
+        logout();
+        elements.identifier().should('have.value', '');
+        elements.password().should('have.value', '');
+        assertSubmitState(false);
     });
 
     it('shows message for invalid credentials', function () {
         const {USERNAME, PASSWORD, TMP_PASSWORD} = this.accountJSON;
 
         // login does not work with invalid password
-        inputUsername().type(USERNAME);
-        inputPassword().type(TMP_PASSWORD);
-        buttonSubmit('not.disabled').click();
+        elements.identifier().type(USERNAME);
+        elements.password().type(TMP_PASSWORD);
+        elements.submit().click();
         cy.url().should('include', '/login');
-        messagePanelError('visible');
+        assertMessageState(true);
 
         // message should disappear after typing again
-        inputPassword().clear().type(PASSWORD);
-        messagePanelError('invisible');
+        elements.password().clear().type(PASSWORD);
+        assertMessageState(false);
 
         // login should work after an unsuccessful attempt
-        buttonSubmit('not.disabled').click();
+        elements.submit().click();
         cy.url().should('include', '/configurations');
     });
 });

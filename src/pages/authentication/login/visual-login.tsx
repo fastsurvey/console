@@ -15,7 +15,10 @@ export default function VisualLogin(props: {
     handleLogin(): void;
 }) {
     return (
-        <div className='w-full max-w-sm p-4 bg-white rounded shadow centering-col gap-y-4'>
+        <section
+            className='w-full max-w-sm p-4 bg-white rounded shadow centering-col gap-y-4'
+            data-cy='login-panel'
+        >
             <h1 className='text-2xl text-center text-gray-800 font-weight-600 no-selection'>
                 Login
             </h1>
@@ -29,7 +32,7 @@ export default function VisualLogin(props: {
                         props.setIdentifier(newValue);
                     }}
                     autoComplete='email'
-                    data-cy='login-input-email'
+                    data-cy='input-identifier'
                 />
             </div>
             <div className='w-full centering-col gap-y-0.5'>
@@ -42,7 +45,7 @@ export default function VisualLogin(props: {
                         props.setPassword(newValue);
                     }}
                     autoComplete='current-password'
-                    data-cy='login-input-password'
+                    data-cy='input-password'
                 />
             </div>
 
@@ -53,26 +56,26 @@ export default function VisualLogin(props: {
                     onClick={props.handleLogin}
                     disabled={props.disabled}
                     loading={props.submitting}
-                    data-cy='login-button-submit'
+                    data-cy='button-submit'
                 />
                 <div className='flex-max' />
                 <div className='flex-col-left'>
                     <Link
                         to='/register'
                         className='px-1.5 py-0.5 -mx-1.5 text-sm text-gray-400 rounded font-weight-600 ringable'
-                        data-cy='login-link-register'
+                        data-cy='link-to-register'
                     >
                         Don't have an account yet?
                     </Link>
                     <Link
                         to='/forgot-password'
                         className='px-1.5 py-0.5 -mx-1.5 text-sm text-gray-400 rounded font-weight-600 ringable'
-                        data-cy='login-link-forgot'
+                        data-cy='link-to-forgot'
                     >
                         Forgot your password?
                     </Link>
                 </div>
             </div>
-        </div>
+        </section>
     );
 }
