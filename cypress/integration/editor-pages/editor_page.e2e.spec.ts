@@ -40,22 +40,36 @@ const settingsElements = {
     endTime: () => get(['editor-settings', 'timepicker-end'], {count: 1}),
 };
 
-const fieldElements = {
-    collapse: (index: number) =>
-        getCySelector([`editor-field-panel-${index}`, 'button-collapse'], {count: 1}),
-    copy: (index: number) =>
-        getCySelector([`editor-field-panel-${index}`, 'button-copy'], {count: 1}),
-    remove: (index: number) =>
-        getCySelector([`editor-field-panel-${index}`, 'button-remove'], {count: 1}),
-    title: (index: number) =>
-        getCySelector([`editor-field-panel-${index}`, 'input-title'], {count: 1}),
-    description: (index: number) =>
-        getCySelector([`editor-field-panel-${index}`, 'input-description'], {count: 1}),
-    addBefore: (index: number) =>
-        getCySelector([`add-field-before-${index}`], {count: 1}),
-    pasteBefore: (index: number) =>
-        getCySelector([`paste-field-before-${index}`], {count: 1}),
-};
+const getFromField =
+    (index: number, selectors: string[], props?: {count?: number; invisible?: true}) =>
+    () =>
+        get([`editor-field-panel-${index}`, ...selectors], props);
+
+const fieldButtons = (index: number) => ({
+    collapse: getFromField(index, ['button-collapse'], {count: 1}),
+    copy: getFromField(index, ['button-copy'], {count: 1}),
+    remove: getFromField(index, ['button-remove'], {count: 1}),
+    addBefore: () => get([`add-field-before-${index}`], {count: 1}),
+    pasteBefore: () => get([`paste-field-before-${index}`], {count: 1}),
+});
+
+const fieldInputs = (index: number) => ({
+    title: getFromField(index, ['input-title'], {count: 1}),
+    description: getFromField(index, ['input-description'], {count: 1}),
+    regex: getFromField(index, ['input-regex'], {count: 1}),
+    hint: getFromField(index, ['input-hint'], {count: 1}),
+    minChars: getFromField(index, ['input-min-chars'], {count: 1}),
+    maxChars: getFromField(index, ['input-max-chars'], {count: 1}),
+    optionList: getFromField(index, ['options-list'], {count: 1}),
+    optionInput: (optionIndex: number) =>
+        get([
+            `editor-field-panel-${index}`,
+            'options-list',
+            `input-option-${optionIndex}`,
+        ]),
+    minSelect: getFromField(index, ['input-min-select'], {count: 1}),
+    maxSelect: getFromField(index, ['input-max-select'], {count: 1}),
+});
 
 const getFromPopup = (selectors: string[], props?: {count?: number}) =>
     get(['popup-panel', ...selectors]);
@@ -112,8 +126,8 @@ describe('The Editor Page', () => {
     };
 
     const assertFieldState = (fieldConfig: types.SurveyField, index: number) => {
-        fieldElements.title(index).should('have.value', fieldConfig.title);
-        fieldElements.description(index).should('have.value', fieldConfig.description);
+        fieldInputs(index).title().should('have.value', fieldConfig.title);
+        fieldInputs(index).description().should('have.value', fieldConfig.description);
     };
 
     const assertEditorPath = (survey_name: string) =>
@@ -221,7 +235,7 @@ describe('The Editor Page', () => {
     it('fields from fixture are present, undo functionality', function () {
         const {INITIAL_SURVEY, MODIFIED_SURVEY} = this.configsJSON.EDITOR;
 
-        [0, 1, 2].map((i) => fieldElements.collapse(i).click());
+        [0, 1, 2].map((i) => fieldButtons(i).collapse().click());
         assertSurveyState(INITIAL_SURVEY);
 
         settingsElements
@@ -231,7 +245,7 @@ describe('The Editor Page', () => {
             .should('have.value', MODIFIED_SURVEY.title);
 
         cy.reload();
-        [0, 1, 2].map((i) => fieldElements.collapse(i).click());
+        [0, 1, 2].map((i) => fieldButtons(i).collapse().click());
         assertSurveyState(INITIAL_SURVEY);
 
         settingsElements
@@ -249,7 +263,7 @@ describe('The Editor Page', () => {
         assertSurveyState(INITIAL_SURVEY);
 
         cy.reload();
-        [0, 1, 2].map((i) => fieldElements.collapse(i).click());
+        [0, 1, 2].map((i) => fieldButtons(i).collapse().click());
 
         // assert the correct order
         expect(INITIAL_SURVEY.fields[0].type).to.equal('text');
@@ -258,8 +272,8 @@ describe('The Editor Page', () => {
 
         MODIFIED_SURVEY.fields.forEach(
             (newFieldConfig: types.SurveyField, i: number) => {
-                fieldElements.title(i).clear().type(newFieldConfig.title);
-                fieldElements.description(i).clear().type(newFieldConfig.description);
+                fieldInputs(i).title().clear().type(newFieldConfig.title);
+                fieldInputs(i).description().clear().type(newFieldConfig.description);
                 assertFieldState(newFieldConfig, i);
             },
         );
@@ -268,7 +282,7 @@ describe('The Editor Page', () => {
         assertSurveyState(INITIAL_SURVEY);
 
         cy.reload();
-        [0, 1, 2].map((i) => fieldElements.collapse(i).click());
+        [0, 1, 2].map((i) => fieldButtons(i).collapse().click());
         assertSurveyState(INITIAL_SURVEY);
 
         // Whether a change in fields is made to the title, the description or
@@ -281,33 +295,33 @@ describe('The Editor Page', () => {
         const {USERNAME, PASSWORD} = this.accountJSON;
 
         const copyPasteSequence = () => {
-            fieldElements.copy(0).click();
-            fieldElements.pasteBefore(3).click();
-            fieldElements.copy(2).click();
-            fieldElements.pasteBefore(0).click();
-            fieldElements.copy(2).click();
-            fieldElements.pasteBefore(3).click();
+            fieldButtons(0).copy().click();
+            fieldButtons(3).pasteBefore().click();
+            fieldButtons(2).copy().click();
+            fieldButtons(0).pasteBefore().click();
+            fieldButtons(2).copy().click();
+            fieldButtons(3).pasteBefore().click();
         };
 
         // undo works
         copyPasteSequence();
-        range(6).map((i) => fieldElements.collapse(i).click());
+        range(6).map((i) => fieldButtons(i).collapse().click());
         assertSurveyState(COPY_PASTE_SURVEY);
         headerElements.undo().click();
         assertSurveyState(INITIAL_SURVEY);
         cy.reload();
-        range(3).map((i) => fieldElements.collapse(i).click());
+        range(3).map((i) => fieldButtons(i).collapse().click());
         assertSurveyState(INITIAL_SURVEY);
-        range(3).map((i) => fieldElements.collapse(i).click());
+        range(3).map((i) => fieldButtons(i).collapse().click());
 
         // save works
         copyPasteSequence();
-        range(6).map((i) => fieldElements.collapse(i).click());
+        range(6).map((i) => fieldButtons(i).collapse().click());
         assertSurveyState(COPY_PASTE_SURVEY);
         headerElements.save().click();
         assertSurveyState(COPY_PASTE_SURVEY);
         cy.reload();
-        range(6).map((i) => fieldElements.collapse(i).click());
+        range(6).map((i) => fieldButtons(i).collapse().click());
         assertSurveyState(COPY_PASTE_SURVEY);
 
         // deepCompare the config-json in database
@@ -371,23 +385,23 @@ describe('The Editor Page', () => {
         settingsElements.inputTitle().clear();
         assertInvalidFieldState();
 
-        fieldElements.collapse(0).click();
-        fieldElements.title(0).clear();
+        fieldButtons(0).collapse().click();
+        fieldInputs(0).title().clear();
         assertInvalidFieldState();
 
-        fieldElements.collapse(2).click();
-        fieldElements.title(2).clear();
+        fieldButtons(2).collapse().click();
+        fieldInputs(2).title().clear();
         assertInvalidFieldState();
     });
 
     it('add field popup', function () {
         addFieldPopup.panel().should('not.be.visible');
-        fieldElements.addBefore(0).click();
+        fieldButtons(0).addBefore().click();
         addFieldPopup.panel().should('be.visible');
         addFieldPopup.cancelAdd().click();
         addFieldPopup.panel().should('not.be.visible');
 
-        fieldElements.addBefore(2).click();
+        fieldButtons(2).addBefore().click();
         addFieldPopup.panel().should('be.visible');
         addFieldPopup.activeSelect().should('have.length', 0);
         ['email', 'text', 'selection'].forEach((fieldType: any) => {
@@ -410,7 +424,7 @@ describe('The Editor Page', () => {
 
     // TODO: add an email field
     it('adding an email field, undo adding', function () {
-        fieldElements.addBefore(0).click();
+        fieldButtons(0).addBefore().click();
         addFieldPopup.selectField('email').click();
         addFieldPopup.submitAdd().click();
         // assert title = ""
@@ -423,7 +437,7 @@ describe('The Editor Page', () => {
         // assert field is not there
         // assert that config in db is valid
 
-        fieldElements.addBefore(0).click();
+        fieldButtons(0).addBefore().click();
         addFieldPopup.selectField('email').click();
         addFieldPopup.submitAdd().click();
         // change title
@@ -434,7 +448,7 @@ describe('The Editor Page', () => {
 
     // TODO: add a text field
     it('adding a text field', function () {
-        fieldElements.addBefore(0).click();
+        fieldButtons(0).addBefore().click();
         addFieldPopup.selectField('text').click();
         addFieldPopup.submitAdd().click();
         // assert title = ""
@@ -449,7 +463,7 @@ describe('The Editor Page', () => {
 
     // TODO: add a selection field
     it('adding a selection field', function () {
-        fieldElements.addBefore(0).click();
+        fieldButtons(0).addBefore().click();
         addFieldPopup.selectField('selection').click();
         addFieldPopup.submitAdd().click();
         // assert title = ""

@@ -31,6 +31,7 @@ function VisualSelectionSettings(props: Props) {
                         });
                     }}
                     disabled={props.disabled}
+                    data-cy='input-min-select'
                 />
             </div>
             <div className='w-full centering-col gap-y-0.5'>
@@ -43,6 +44,7 @@ function VisualSelectionSettings(props: Props) {
                         });
                     }}
                     disabled={props.disabled}
+                    data-cy='input-max-select'
                 />
             </div>
         </>

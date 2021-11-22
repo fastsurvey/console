@@ -22,6 +22,7 @@ function VisualTextSettings(props: Props) {
                     }}
                     disabled={props.disabled}
                     postfix=' characters'
+                    data-cy='input-min-chars'
                 />
             </div>
             <div className='w-full centering-col gap-y-0.5'>
@@ -35,6 +36,7 @@ function VisualTextSettings(props: Props) {
                     }}
                     disabled={props.disabled}
                     postfix=' characters'
+                    data-cy='input-max-chars'
                 />
             </div>
         </>

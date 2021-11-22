@@ -27,10 +27,7 @@ function VisualEmailSettings(props: Props) {
                             hint: setup.hint,
                         });
                     }}
-                    options={[
-                        ...constants.formOptions.EMAIL_REGEX,
-                        props.customSetup,
-                    ]}
+                    options={[...constants.formOptions.EMAIL_REGEX, props.customSetup]}
                     disabled={props.disabled}
                 />
             </div>
@@ -44,6 +41,7 @@ function VisualEmailSettings(props: Props) {
                         })
                     }
                     disabled={props.disabled}
+                    data-cy='input-regex'
                 />
             </div>
             <div className='w-full centering-col gap-y-0.5'>
@@ -56,6 +54,7 @@ function VisualEmailSettings(props: Props) {
                         })
                     }
                     disabled={props.disabled}
+                    data-cy='input-hint'
                 />
             </div>
 
@@ -69,6 +68,7 @@ function VisualEmailSettings(props: Props) {
                         })
                     }
                     disabled={props.disabled}
+                    data-cy='toggle-verify'
                 />
             </div>
         </>
