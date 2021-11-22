@@ -191,10 +191,8 @@ function ConfigEditor(props: {
     }
 
     function setLocalFieldConfig(fieldConfigChanges: object, newIndex: number) {
-        console.log({fieldConfigChanges, newIndex});
-        const newConfig = {
-            ...localConfig,
-        };
+        console.debug({fieldConfigChanges, newIndex});
+        const newConfig = JSON.parse(JSON.stringify(localConfig));
 
         newConfig.fields[newIndex] = {
             ...newConfig.fields[newIndex],
