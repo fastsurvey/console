@@ -1,3 +1,4 @@
+import {range} from 'lodash';
 import * as utilities from '../../support/utilities';
 import {types} from '/src/types';
 
@@ -39,10 +40,18 @@ const settingsElements = {
 const fieldElements = {
     collapse: (index: number) =>
         getCySelector([`editor-field-panel-${index}`, 'button-collapse'], {count: 1}),
+    copy: (index: number) =>
+        getCySelector([`editor-field-panel-${index}`, 'button-copy'], {count: 1}),
+    remove: (index: number) =>
+        getCySelector([`editor-field-panel-${index}`, 'button-remove'], {count: 1}),
     title: (index: number) =>
         getCySelector([`editor-field-panel-${index}`, 'input-title'], {count: 1}),
     description: (index: number) =>
         getCySelector([`editor-field-panel-${index}`, 'input-description'], {count: 1}),
+    addBefore: (index: number) =>
+        getCySelector([`add-field-before-${index}`], {count: 1}),
+    pasteBefore: (index: number) =>
+        getCySelector([`paste-field-before-${index}`], {count: 1}),
 };
 
 describe('The Editor Page', () => {
@@ -194,8 +203,7 @@ describe('The Editor Page', () => {
         fieldElements.description(index).should('have.value', fieldConfig.description);
     };
 
-    // TODO: undo button -> change a bunch of stuff and check whether undo completely undod everything
-    it('undo functionality', function () {
+    /*it('fields from fixture are present, undo functionality', function () {
         const {INITIAL_SURVEY, MODIFIED_SURVEY} = this.configsJSON.EDITOR;
 
         [0, 1, 2].map((i) => fieldElements.collapse(i).click());
@@ -244,19 +252,14 @@ describe('The Editor Page', () => {
         headerElements.undo().click();
         assertSurveyState(INITIAL_SURVEY);
 
-        // text field: min_chars
-        // text field: max_chars
+        cy.reload();
+        [0, 1, 2].map((i) => fieldElements.collapse(i).click());
+        assertSurveyState(INITIAL_SURVEY);
 
-        // email field: hint
-        // email field: regex
-
-        // text field: adding one option
-        // text field: removing two options
-        // text field: min_select
-        // text field: max_select
-    });
-
-    // TODO: test whether all three fields are there and look as expected
+        // Whether a change in fields is made to the title, the description or
+        // any other parameter, is transparent to the editor -> therefore the
+        // other parameters can be tested with component testing on single fields
+    });*/
 
     // TODO: add an email field
     // TODO: add a text field
@@ -266,11 +269,56 @@ describe('The Editor Page', () => {
 
     // TODO: save not possible when any field is invalid (just test this using empty titles)
 
+    // copy three fields
+    // expect state from fixture
+    // save
+    // expect state from fixture
+    // reload
+    // expect state from fixture
     // TODO: copy and paste an email field
     // TODO: copy and paste a text field
     // TODO: copy and paste a selection field
+    it('copy and paste', function () {
+        const {INITIAL_SURVEY, COPY_PASTE_SURVEY} = this.configsJSON.EDITOR;
+
+        // undo works
+        fieldElements.copy(0).click();
+        fieldElements.pasteBefore(3).click();
+        fieldElements.copy(2).click();
+        fieldElements.pasteBefore(0).click();
+        fieldElements.copy(2).click();
+        fieldElements.pasteBefore(3).click();
+
+        range(6).map((i) => fieldElements.collapse(i).click());
+        assertSurveyState(COPY_PASTE_SURVEY);
+        headerElements.undo().click();
+        assertSurveyState(INITIAL_SURVEY);
+        cy.reload();
+        range(3).map((i) => fieldElements.collapse(i).click());
+        assertSurveyState(INITIAL_SURVEY);
+        range(3).map((i) => fieldElements.collapse(i).click());
+
+        // save works
+        fieldElements.copy(0).click();
+        fieldElements.pasteBefore(3).click();
+        fieldElements.copy(2).click();
+        fieldElements.pasteBefore(0).click();
+        fieldElements.copy(2).click();
+        fieldElements.pasteBefore(3).click();
+
+        range(6).map((i) => fieldElements.collapse(i).click());
+        assertSurveyState(COPY_PASTE_SURVEY);
+        headerElements.save().click();
+        assertSurveyState(COPY_PASTE_SURVEY);
+        cy.reload();
+        range(6).map((i) => fieldElements.collapse(i).click());
+        assertSurveyState(COPY_PASTE_SURVEY);
+
+        // TODO: Compare with survey in backend
+    });
 
     // Test with component test of fields:
+    // - looks as expected
     // - collapsing fields
     // - all possible error messages
 });
