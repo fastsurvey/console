@@ -1,31 +1,39 @@
 import {first, last} from 'lodash';
 import * as utilities from '../../support/utilities';
 
-const {login, reloadConfigurationsPage, getByDataCy, assertDataCy} = utilities;
+const {login, getByDataCy, getCySelector} = utilities;
 
 const buttonNew = () => getByDataCy('config-list-button-new', {count: 1});
 const successMessage = () => getByDataCy('message-panel-success', {count: 1});
 
-const panel = (surveyName: string) =>
-    getByDataCy(`config-list-panel-${surveyName}`, {count: 1});
-const linkToFrontend = (surveyName: string) =>
-    panel(surveyName).find('[data-cy="link-to-frontend"]').should('have.length', 1);
-const linkToEditor = (surveyName: string) =>
-    panel(surveyName).find('[data-cy="link-to-editor"]').should('have.length', 1);
+// TODO: refactor panel getters
 
-const toggleActions = (surveyName: string) =>
-    panel(surveyName)
-        .find('[data-cy="button-to-toggle-actions-dropdown"]')
-        .should('have.length', 1);
-const actionsDropdown = (surveyName: string, state: 'visible' | 'invisible') =>
-    panel(surveyName)
-        .find('[data-cy="actions-dropdown"]')
-        .should('have.length', state === 'visible' ? 1 : 0);
-const actionsButton = (surveyName: string, type: 'remove' | 'duplicate') =>
-    panel(surveyName)
-        .find('[data-cy="actions-dropdown"]')
-        .find(`[data-cy="button-${type}"]`)
-        .should('have.length', 1);
+const panel = (surveyName: string) => ({
+    container: () => getCySelector([`config-list-panel-${surveyName}`], {count: 1}),
+    linkToFrontend: () =>
+        getCySelector([`config-list-panel-${surveyName}`, 'link-to-frontend'], {
+            count: 1,
+        }),
+    linkToEditor: () =>
+        getCySelector([`config-list-panel-${surveyName}`, 'link-to-editor'], {
+            count: 1,
+        }),
+    toggleActions: () =>
+        getCySelector([`config-list-panel-${surveyName}`, 'button-toggle-actions'], {
+            count: 1,
+        }),
+    actionsDropdown: () =>
+        getCySelector([`config-list-panel-${surveyName}`, 'actions-dropdown'], {
+            invisible: true,
+        }),
+    actionsButton: (type: 'remove' | 'duplicate') =>
+        getCySelector(
+            [`config-list-panel-${surveyName}`, 'actions-dropdown', `button-${type}`],
+            {
+                count: 1,
+            },
+        ),
+});
 
 // POPUP
 const popupPanel = () => getByDataCy('popup-panel', {count: 1});
@@ -54,36 +62,40 @@ describe('The Config List Page', () => {
     function configListPanelIsWorking(username: string, surveyName: string) {
         const frontentLink = `dev.fastsurvey.de/${username}/${surveyName}`;
 
-        linkToFrontend(surveyName).should('have.text', frontentLink);
+        panel(surveyName).linkToFrontend().should('have.text', frontentLink);
 
-        panel(surveyName).then(($panel) => {
-            if ($panel.attr('data-cy')?.includes('published')) {
-                // not a draft
-                linkToFrontend(surveyName)
-                    .should('have.attr', 'href')
-                    .and('eq', `https://${frontentLink}`);
-            } else {
-                // a draft
-                linkToFrontend(surveyName).should('not.have.attr', 'href');
-            }
-        });
+        panel(surveyName)
+            .container()
+            .then(($panel) => {
+                if ($panel.attr('data-cy')?.includes('published')) {
+                    // not a draft
+                    panel(surveyName)
+                        .linkToFrontend()
+                        .should('have.attr', 'href')
+                        .and('eq', `https://${frontentLink}`);
+                } else {
+                    // a draft
+                    panel(surveyName).linkToFrontend().should('not.have.attr', 'href');
+                }
+            });
 
-        linkToEditor(surveyName)
+        panel(surveyName)
+            .linkToEditor()
             .should('have.attr', 'href')
             .and('eq', `/configuration/${surveyName}`);
 
-        linkToEditor(surveyName).click();
+        panel(surveyName).linkToEditor().click();
         cy.url().should('include', `/configuration/${surveyName}`);
         cy.go('back');
         cy.url().should('include', '/configurations');
 
-        actionsDropdown(surveyName, 'invisible');
-        toggleActions(surveyName).click();
-        actionsDropdown(surveyName, 'visible');
-        actionsButton(surveyName, 'remove');
-        actionsButton(surveyName, 'duplicate');
-        toggleActions(surveyName).click();
-        actionsDropdown(surveyName, 'invisible');
+        panel(surveyName).actionsDropdown().should('have.length', 0);
+        panel(surveyName).toggleActions().click();
+        panel(surveyName).actionsDropdown().should('have.length', 1);
+        panel(surveyName).actionsButton('remove');
+        panel(surveyName).actionsButton('duplicate');
+        panel(surveyName).toggleActions().click();
+        panel(surveyName).actionsDropdown().should('have.length', 0);
     }
 
     const configListPanelIsAbsent = (surveyName: string) => {
@@ -112,7 +124,7 @@ describe('The Config List Page', () => {
                 cy.url().should('include', '/configurations');
                 configListPanelIsWorking(USERNAME, newSurveyName);
 
-                reloadConfigurationsPage();
+                cy.reload();
                 configListPanelIsWorking(USERNAME, newSurveyName);
             });
     });
@@ -127,26 +139,26 @@ describe('The Config List Page', () => {
             .then((url) => {
                 const newSurveyName: any = last(url.split('/'));
 
-                reloadConfigurationsPage();
+                cy.visit('/configurations');
                 configListPanelIsWorking(USERNAME, newSurveyName);
 
                 // cancel button on removal popup
-                toggleActions(newSurveyName).click();
-                actionsDropdown(newSurveyName, 'visible');
-                actionsButton(newSurveyName, 'remove').click();
+                panel(newSurveyName).toggleActions().click();
+                panel(newSurveyName).actionsDropdown().should('be.visible');
+                panel(newSurveyName).actionsButton('remove').click();
                 popupPanel().should('be.visible');
                 popupRemoveCancel().click();
                 popupPanel().should('not.be.visible');
-                actionsDropdown(newSurveyName, 'visible');
+                panel(newSurveyName).actionsDropdown().should('be.visible');
 
                 // config did not change
                 configListPanelIsWorking(USERNAME, newSurveyName);
-                reloadConfigurationsPage();
+                cy.reload();
                 configListPanelIsWorking(USERNAME, newSurveyName);
 
                 // removal popup
-                toggleActions(newSurveyName).click();
-                actionsButton(newSurveyName, 'remove').click();
+                panel(newSurveyName).toggleActions().click();
+                panel(newSurveyName).actionsButton('remove').click();
                 popupPanel().should('be.visible');
                 popupRemoveSubmit().click();
                 popupPanel().should('not.be.visible');
@@ -154,7 +166,7 @@ describe('The Config List Page', () => {
 
                 // config is gone
                 configListPanelIsAbsent(newSurveyName);
-                reloadConfigurationsPage();
+                cy.reload();
                 configListPanelIsAbsent(newSurveyName);
             });
     });
@@ -162,7 +174,7 @@ describe('The Config List Page', () => {
     it('duplicating a survey works', function () {
         // @ts-ignore
         cy.seedDuplicationData();
-        reloadConfigurationsPage();
+        cy.reload();
 
         const {ORIGINAL_SURVEY, DUPLICATE_SURVEY} = this.configsJSON.DUPLICATION;
         const {USERNAME, PASSWORD} = this.accountJSON;
@@ -172,21 +184,21 @@ describe('The Config List Page', () => {
         configListPanelIsWorking(USERNAME, ORIGINAL_SURVEY_NAME);
 
         // cancel button on duplication popup
-        toggleActions(ORIGINAL_SURVEY_NAME).click();
-        actionsButton(ORIGINAL_SURVEY_NAME, 'duplicate').click();
+        panel(ORIGINAL_SURVEY_NAME).toggleActions().click();
+        panel(ORIGINAL_SURVEY_NAME).actionsButton('duplicate').click();
         popupPanel().should('be.visible');
         popupDuplicateCancel().click();
         popupPanel().should('not.be.visible');
-        actionsDropdown(ORIGINAL_SURVEY_NAME, 'visible');
+        panel(ORIGINAL_SURVEY_NAME).actionsDropdown().should('be.visible');
 
         // config did not change
         configListPanelIsWorking(USERNAME, ORIGINAL_SURVEY_NAME);
-        reloadConfigurationsPage();
+        cy.reload();
         configListPanelIsWorking(USERNAME, ORIGINAL_SURVEY_NAME);
 
         // duplication popup
-        toggleActions(ORIGINAL_SURVEY_NAME).click();
-        actionsButton(ORIGINAL_SURVEY_NAME, 'duplicate').click();
+        panel(ORIGINAL_SURVEY_NAME).toggleActions().click();
+        panel(ORIGINAL_SURVEY_NAME).actionsButton('duplicate').click();
         popupPanel()
             .find('div')
             .contains(`you already have a survey \'${ORIGINAL_SURVEY_NAME}\'`)
@@ -202,7 +214,7 @@ describe('The Config List Page', () => {
         // duplication has workes -> on new page with success message
         successMessage();
         cy.url().should('include', `/configuration/${DUPLICATE_SURVEY_NAME}`);
-        reloadConfigurationsPage();
+        cy.visit('/configurations');
         configListPanelIsWorking(USERNAME, ORIGINAL_SURVEY_NAME);
         configListPanelIsWorking(USERNAME, DUPLICATE_SURVEY_NAME);
 

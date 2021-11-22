@@ -10,8 +10,8 @@ export function logout() {
 export function login(username: string, password: string) {
     cy.visit('/login');
     cy.url().should('eq', 'http://localhost:3000/login');
-    getCySelector(['login-input-email']).type(username);
-    getCySelector(['login-input-password']).type(password);
+    getCySelector(['login-panel', 'input-identifier']).type(username);
+    getCySelector(['login-panel', 'input-password']).type(password);
     cy.get('button').contains('Login').click();
     cy.url().should('eq', 'http://localhost:3000/configurations');
 }

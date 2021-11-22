@@ -103,7 +103,7 @@ function VisualConfigPanel(props: Props) {
                             'text-gray-700 hover:text-black focus:text-black '
                         }
                         onClick={() => setDropDownIsVisible(!dropDownIsVisible)}
-                        data-cy='button-to-toggle-actions-dropdown'
+                        data-cy='button-toggle-actions'
                     >
                         {dropDownIsVisible ? icons.close : icons.chevronSelection}
                     </button>
