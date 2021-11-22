@@ -1,4 +1,4 @@
-import {concat, first, range} from 'lodash';
+import {concat, first, pullAllBy, range} from 'lodash';
 import * as utilities from '../../support/utilities';
 import {types} from '/src/types';
 
@@ -140,7 +140,50 @@ describe('The Editor Page', () => {
     const assertEditorPath = (survey_name: string) =>
         cy.url().should('eq', `http://localhost:3000/configuration/${survey_name}`);
 
-    /*it('header look, back button', function () {
+    const assertSyncedHeaderState = () => {
+        get(['editor-header', 'button-undo']).should('have.length', 0);
+        get(['editor-header', 'button-save']).should('have.length', 0);
+        headerElements.reopen().should('not.be.disabled');
+        get(['message-panel-warning']).should('have.length', 0);
+        get(['message-panel-error']).should('have.length', 0);
+    };
+
+    const assertConfigInDB = (
+        username: string,
+        password: string,
+        surveyConfig: types.SurveyConfig,
+    ) => {
+        // deepCompare the config-json in database
+        cy.request({
+            method: 'POST',
+            url: 'https://api.dev.fastsurvey.de/authentication',
+            body: {
+                identifier: username,
+                password: password,
+            },
+        }).then((authResponse) => {
+            expect(authResponse.status).to.equal(200);
+            cy.request({
+                method: 'GET',
+                url: `https://api.dev.fastsurvey.de/users/${username}/surveys`,
+                headers: {
+                    Authorization: `Bearer ${authResponse.body['access_token']}`,
+                    'Content-Type': 'application/json',
+                },
+            }).then((getResponse) => {
+                expect(getResponse.status).to.equal(200);
+                const duplicateSurveyOnServer = first(
+                    getResponse.body.filter(
+                        (c: any) => c['survey_name'] === surveyConfig['survey_name'],
+                    ),
+                );
+                console.log({duplicateSurveyOnServer, surveyConfig});
+                expect(duplicateSurveyOnServer).to.deep.equal(surveyConfig);
+            });
+        });
+    };
+
+    it('header look, back button', function () {
         headerElements.title();
         headerElements.link();
         headerElements.reopen();
@@ -427,49 +470,7 @@ describe('The Editor Page', () => {
         });
         addFieldPopup.cancelAdd().click();
         addFieldPopup.panel().should('not.be.visible');
-    });*/
-
-    const assertSyncedHeaderState = () => {
-        get(['editor-header', 'button-undo']).should('have.length', 0);
-        get(['editor-header', 'button-save']).should('have.length', 0);
-        headerElements.reopen().should('not.be.disabled');
-        get(['message-panel-warning']).should('have.length', 0);
-        get(['message-panel-error']).should('have.length', 0);
-    };
-
-    const assertConfigInDB = (
-        username: string,
-        password: string,
-        surveyConfig: types.SurveyConfig,
-    ) => {
-        // deepCompare the config-json in database
-        cy.request({
-            method: 'POST',
-            url: 'https://api.dev.fastsurvey.de/authentication',
-            body: {
-                identifier: username,
-                password: password,
-            },
-        }).then((authResponse) => {
-            expect(authResponse.status).to.equal(200);
-            cy.request({
-                method: 'GET',
-                url: `https://api.dev.fastsurvey.de/users/${username}/surveys`,
-                headers: {
-                    Authorization: `Bearer ${authResponse.body['access_token']}`,
-                    'Content-Type': 'application/json',
-                },
-            }).then((getResponse) => {
-                expect(getResponse.status).to.equal(200);
-                const duplicateSurveyOnServer = first(
-                    getResponse.body.filter(
-                        (c: any) => c['survey_name'] === surveyConfig['survey_name'],
-                    ),
-                );
-                expect(duplicateSurveyOnServer).to.deep.equal(surveyConfig);
-            });
-        });
-    };
+    });
 
     it('adding a text field, undo adding', function () {
         const {INITIAL_SURVEY, INITIAL_MAX_IDENTIFIER, ADDED_FIELDS} =
@@ -605,7 +606,85 @@ describe('The Editor Page', () => {
         });
     });
 
-    // TODO: remove a field + undo remove
+    it('removing a field', function () {
+        const {INITIAL_SURVEY, INITIAL_MAX_IDENTIFIER} = this.configsJSON.EDITOR;
+        const {USERNAME, PASSWORD} = this.accountJSON;
+
+        // TODO: Wait for Felix to fix bug with max_identifier
+
+        // remove field 1 + undo
+        fieldButtons(1).remove().click();
+        get([`editor-field-panel`], {count: 2});
+        headerElements.undo().click();
+        get([`editor-field-panel`], {count: 3});
+        assertConfigInDB(USERNAME, PASSWORD, {
+            ...INITIAL_SURVEY,
+            max_identifier: INITIAL_MAX_IDENTIFIER,
+        });
+
+        // remove field 2 + save
+        cy.intercept({
+            method: 'PUT',
+            url: `users/${USERNAME}/surveys/${INITIAL_SURVEY.survey_name}`,
+            hostname: 'api.dev.fastsurvey.de',
+        }).as('PUTupdate1');
+
+        fieldButtons(2).remove().click();
+        get([`editor-field-panel`], {count: 2});
+        headerElements.save().click();
+        get([`editor-field-panel`], {count: 2});
+        headerElements.reopen().should('not.be.disabled');
+
+        cy.wait(['@PUTupdate1']);
+        console.log({INITIAL_SURVEY});
+
+        assertConfigInDB(USERNAME, PASSWORD, {
+            ...INITIAL_SURVEY,
+            max_identifier: 1,
+            fields: pullAllBy(
+                JSON.parse(JSON.stringify(INITIAL_SURVEY.fields)),
+                [{identifier: INITIAL_SURVEY.fields[2].identifier}],
+                'identifier',
+            ),
+        });
+
+        // remove field 0 + save
+        cy.intercept({
+            method: 'PUT',
+            url: `users/${USERNAME}/surveys/${INITIAL_SURVEY.survey_name}`,
+            hostname: 'api.dev.fastsurvey.de',
+        }).as('PUTupdate2');
+
+        fieldButtons(0).remove().click();
+        get([`editor-field-panel`], {count: 1});
+        headerElements.save().click();
+        get([`editor-field-panel`], {count: 1});
+
+        cy.wait(['@PUTupdate2']);
+
+        assertConfigInDB(USERNAME, PASSWORD, {
+            ...INITIAL_SURVEY,
+            max_identifier: 1,
+            fields: pullAllBy(
+                JSON.parse(JSON.stringify(INITIAL_SURVEY.fields)),
+                [
+                    {identifier: INITIAL_SURVEY.fields[2].identifier},
+                    {identifier: INITIAL_SURVEY.fields[0].identifier},
+                ],
+                'identifier',
+            ),
+        });
+
+        // remove last field + save (unsuccessful)
+        fieldButtons(0).remove().click();
+        get([`editor-field-panel`], {count: 0});
+        headerElements.save().click();
+        get([`editor-field-panel`], {count: 0});
+        warningMessage().contains('at least one field');
+        headerElements.undo().click();
+        get([`editor-field-panel`], {count: 1});
+        assertSyncedHeaderState();
+    });
 
     // Test with component test of fields:
     // - looks as expected
