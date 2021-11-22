@@ -1,4 +1,4 @@
-import {range} from 'lodash';
+import {first, range} from 'lodash';
 import * as utilities from '../../support/utilities';
 import {types} from '/src/types';
 
@@ -261,14 +261,6 @@ describe('The Editor Page', () => {
         // other parameters can be tested with component testing on single fields
     });*/
 
-    // TODO: add an email field
-    // TODO: add a text field
-    // TODO: add a selection field
-
-    // TODO: remove a field (add a seed field before that with the UI)
-
-    // TODO: save not possible when any field is invalid (just test this using empty titles)
-
     // copy three fields
     // expect state from fixture
     // save
@@ -280,6 +272,7 @@ describe('The Editor Page', () => {
     // TODO: copy and paste a selection field
     it('copy and paste', function () {
         const {INITIAL_SURVEY, COPY_PASTE_SURVEY} = this.configsJSON.EDITOR;
+        const {USERNAME, PASSWORD} = this.accountJSON;
 
         // undo works
         fieldElements.copy(0).click();
@@ -315,7 +308,42 @@ describe('The Editor Page', () => {
         assertSurveyState(COPY_PASTE_SURVEY);
 
         // TODO: Compare with survey in backend
+        // deepCompare the config-json in database
+        cy.request({
+            method: 'POST',
+            url: 'https://api.dev.fastsurvey.de/authentication',
+            body: {
+                identifier: USERNAME,
+                password: PASSWORD,
+            },
+        }).then((authResponse) => {
+            expect(authResponse.status).to.equal(200);
+            cy.request({
+                method: 'GET',
+                url: `https://api.dev.fastsurvey.de/users/${USERNAME}/surveys`,
+                headers: {
+                    Authorization: `Bearer ${authResponse.body['access_token']}`,
+                    'Content-Type': 'application/json',
+                },
+            }).then((getResponse) => {
+                expect(getResponse.status).to.equal(200);
+                const duplicateSurveyOnServer = first(
+                    getResponse.body.filter(
+                        (c: any) => c['survey_name'] === COPY_PASTE_SURVEY.survey_name,
+                    ),
+                );
+                expect(duplicateSurveyOnServer).to.deep.equal(COPY_PASTE_SURVEY);
+            });
+        });
     });
+
+    // TODO: add an email field
+    // TODO: add a text field
+    // TODO: add a selection field
+
+    // TODO: remove a field (add a seed field before that with the UI)
+
+    // TODO: save not possible when any field is invalid (just test this using empty titles)
 
     // Test with component test of fields:
     // - looks as expected
