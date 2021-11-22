@@ -49,13 +49,13 @@ export default function ChangeUsernamePopup(props: Props) {
                     text='cancel'
                     variant='flat-light-red'
                     onClick={props.cancel}
-                    data-cy='account-username-confirm-cancel'
+                    data-cy='button-cancel-username'
                 />
                 <Button
                     text='confirm'
                     variant='flat-light-blue'
                     onClick={props.submit}
-                    data-cy='account-username-confirm-submit'
+                    data-cy='button-submit-username'
                 />
             </div>
         </div>

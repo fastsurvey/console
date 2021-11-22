@@ -1,32 +1,44 @@
 import * as utilities from '../../support/utilities';
 
-const {logout, reloadAccountPage, getByDataCy, assertDataCy} = utilities;
+const {logout, getCySelector, assertDataCy} = utilities;
 
-// PAGESECTIONS
-const sectionSettings = () => getByDataCy('account-section-settings', {count: 1});
-const sectionDelete = () => getByDataCy('account-section-delete', {count: 1});
-const sectionPayment = () => getByDataCy('account-section-payment', {count: 1});
-const successMessage = () => getByDataCy('message-panel-success', {count: 1});
+const get = getCySelector;
 
-// EMAIL/USERNAME FORM
-const emailInput = () => getByDataCy('settings-email-input', {count: 1});
-const usernameInput = () => getByDataCy('settings-username-input', {count: 1});
-const usernameCancel = () => getByDataCy('settings-username-button-cancel', {count: 1});
-const usernameSubmit = () => getByDataCy('settings-username-button-submit', {count: 1});
+const general = {
+    settings: () => get(['account-section-settings'], {count: 1}),
+    delete: () => get(['account-section-delete'], {count: 1}),
+    payment: () => get(['account-section-payment'], {count: 1}),
+    successMessage: () => get(['message-panel-success'], {count: 1}),
+    accountButton: () => get(['navbar', 'button-account'], {count: 1, invisible: true}),
+};
 
-// PASSWORD FORM
-const passwordInput = () => getByDataCy('settings-password-input', {count: 1});
-const passwordCancel = () => getByDataCy('settings-password-button-cancel', {count: 1});
-const passwordSubmit = () => getByDataCy('settings-password-button-submit', {count: 1});
+const getFromSettings = (selectors: string[]) =>
+    get(['account-section-settings', ...selectors], {count: 1});
 
-// TAB BUTTONS
-const tabButtonPw = () => getByDataCy('settings-tab-button-password', {count: 1});
-const tabButtonId = () => getByDataCy('settings-tab-button-identification', {count: 1});
+const settings = {
+    validation: () => getFromSettings(['validation-bar']),
 
-// POPUP
-const popupPanel = () => getByDataCy('popup-panel', {count: 1});
-const popupUsernameCancel = () => getByDataCy('username-confirm-cancel', {count: 1});
-const popupUsernameSubmit = () => getByDataCy('username-confirm-submit', {count: 1});
+    tabId: () => getFromSettings(['tab-identification']),
+    tabPassword: () => getFromSettings(['tab-password']),
+
+    email: () => getFromSettings(['input-email']),
+    username: () => getFromSettings(['input-username']),
+    cancelUsername: () => getFromSettings(['button-cancel-username']),
+    submitUsername: () => getFromSettings(['button-submit-username']),
+
+    password: () => getFromSettings(['input-password']),
+    cancelPassword: () => getFromSettings(['button-cancel-password']),
+    submitPassword: () => getFromSettings(['button-submit-password']),
+};
+
+const getFromPopup = (selectors: string[]) =>
+    get(['popup-panel', ...selectors], {count: 1});
+
+const popup = {
+    panel: () => get(['popup-panel'], {count: 1, invisible: true}),
+    cancelUsername: () => getFromPopup(['button-cancel-username']),
+    submitUsername: () => getFromPopup(['button-submit-username']),
+};
 
 describe('The Account Page', function () {
     // @ts-ignore
@@ -34,7 +46,7 @@ describe('The Account Page', function () {
 
     function loginAndGoToAccountPage(id: string, pw: string) {
         utilities.login(id, pw);
-        getByDataCy('navbar-button-account').first().click({force: true});
+        general.accountButton().click({force: true});
         cy.url().should('include', '/account');
     }
 
@@ -48,37 +60,41 @@ describe('The Account Page', function () {
 
     // Validate that the correct tab is visible
     function assertTabState(selected: 'id' | 'pw') {
-        assertDataCy(tabButtonPw(), selected === 'pw' ? 'active' : 'passive');
-        assertDataCy(tabButtonId(), selected === 'id' ? 'active' : 'passive');
+        assertDataCy(settings.tabPassword(), selected === 'pw' ? 'active' : 'passive');
+        assertDataCy(settings.tabId(), selected === 'id' ? 'active' : 'passive');
 
         (selected === 'id'
-            ? [usernameInput(), emailInput(), usernameCancel(), usernameSubmit()]
-            : [passwordInput(), passwordCancel(), passwordSubmit()]
+            ? [
+                  settings.username(),
+                  settings.email(),
+                  settings.cancelUsername(),
+                  settings.submitUsername(),
+              ]
+            : [
+                  settings.password(),
+                  settings.cancelPassword(),
+                  settings.submitPassword(),
+              ]
         ).map((x) => x.should('be.visible'));
     }
 
     function assertValidation(valid: boolean) {
-        assertDataCy(
-            getByDataCy('account-section-settings')
-                .find('[data-cy*="validation-bar"]')
-                .should('have.length', 1),
-            valid ? 'isvalid' : 'isinvalid',
-        );
+        assertDataCy(settings.validation(), valid ? 'isvalid' : 'isinvalid');
     }
 
     it('account page looks as expected, navigation works', function () {
         // the sections exist
         cy.get('h1').should('have.length', 1);
         cy.get('section:visible').should('have.length', 3);
-        sectionSettings();
-        sectionDelete();
-        sectionPayment();
+        general.settings();
+        general.delete();
+        general.payment();
 
         // tab switching works
         assertTabState('id');
-        tabButtonPw().click();
+        settings.tabPassword().click();
         assertTabState('pw');
-        tabButtonId().click();
+        settings.tabId().click();
         assertTabState('id');
     });
 
@@ -88,12 +104,12 @@ describe('The Account Page', function () {
         changeActive: boolean,
     ) {
         if (value.length > 0) {
-            usernameInput().should('have.value', value);
+            settings.username().should('have.value', value);
         } else {
-            usernameInput().should('be.empty');
+            settings.username().should('be.empty');
         }
-        usernameCancel().should((cancelActive ? 'not.' : '') + 'be.disabled');
-        usernameSubmit().should((changeActive ? 'not.' : '') + 'be.disabled');
+        settings.cancelUsername().should((cancelActive ? 'not.' : '') + 'be.disabled');
+        settings.submitUsername().should((changeActive ? 'not.' : '') + 'be.disabled');
     }
 
     it('username change works as expected', function () {
@@ -101,65 +117,66 @@ describe('The Account Page', function () {
 
         // initial state is correct
         assertTabState('id');
-        emailInput().should('be.disabled');
-        usernameInput().should('not.be.disabled');
+        settings.email().should('be.disabled');
+        settings.username().should('not.be.disabled');
         assertUsernameState(USERNAME, false, false);
 
-        // valid state for empty usernameInput
-        usernameInput().clear();
+        // valid state for empty settings.username
+        settings.username().clear();
         assertUsernameState('', true, false);
         assertValidation(false);
 
-        // usernameCancel button works
-        usernameInput().clear().type(TMP_USERNAME);
+        // settings.cancelUsername button works
+        settings.username().clear().type(TMP_USERNAME);
         assertUsernameState(TMP_USERNAME, true, true);
-        usernameCancel().click();
+        settings.cancelUsername().click();
         assertUsernameState(USERNAME, false, false);
 
         // username popup looks as expected
-        // cancel closes popup and resets usernameInput
-        usernameInput().clear().type(TMP_USERNAME);
-        usernameSubmit().click();
-        popupPanel().should('be.visible');
-        popupPanel()
+        // cancel closes popup and resets settings.username
+        settings.username().clear().type(TMP_USERNAME);
+        settings.submitUsername().click();
+        popup.panel().should('be.visible');
+        popup
+            .panel()
             .find('div')
             .contains(`fastsurvey.de/${USERNAME}/<survey-id>`)
             .should('have.length', 1);
-        popupPanel()
+        popup
+            .panel()
             .find('div')
             .contains(`fastsurvey.de/${TMP_USERNAME}/<survey-id>`)
             .should('have.length', 1);
-        popupUsernameSubmit();
-        popupUsernameCancel().click();
-        popupPanel().should('not.be.visible');
+        popup.submitUsername();
+        popup.cancelUsername().click();
+        popup.panel().should('not.be.visible');
         assertUsernameState(USERNAME, false, false);
 
         // switch from TMP_USERNAME to USERNAME again
-        usernameInput().clear().type(TMP_USERNAME);
-        usernameSubmit().click();
-        popupPanel().should('be.visible');
-        popupUsernameSubmit().click();
-        popupPanel().should('not.be.visible');
+        settings.username().clear().type(TMP_USERNAME);
+        settings.submitUsername().click();
+        popup.panel().should('be.visible');
+        popup.submitUsername().click();
+        popup.panel().should('not.be.visible');
         assertUsernameState(TMP_USERNAME, false, false);
 
         // page reload (cookie login) still works
-        // logout and login with TMP_USERNAME works
-        reloadAccountPage();
+        cy.reload();
         assertUsernameState(TMP_USERNAME, false, false);
         logout();
         loginAndGoToAccountPage(TMP_USERNAME, PASSWORD);
         assertUsernameState(TMP_USERNAME, false, false);
 
         // switch back from USERNAME to TMP_USERNAME
-        usernameInput().clear().type(USERNAME);
-        usernameSubmit().click();
-        popupPanel().should('be.visible');
-        popupUsernameSubmit().click();
-        popupPanel().should('not.be.visible');
+        settings.username().clear().type(USERNAME);
+        settings.submitUsername().click();
+        popup.panel().should('be.visible');
+        popup.submitUsername().click();
+        popup.panel().should('not.be.visible');
         assertUsernameState(USERNAME, false, false);
 
         // page reload (cookie login) still works
-        reloadAccountPage();
+        cy.reload();
         assertUsernameState(USERNAME, false, false);
     });
 
@@ -169,52 +186,52 @@ describe('The Account Page', function () {
         changeActive: boolean,
     ) {
         if (value.length > 0) {
-            passwordInput().should('have.value', value);
+            settings.password().should('have.value', value);
         } else {
-            passwordInput().should('be.empty');
+            settings.password().should('be.empty');
         }
-        passwordCancel().should((cancelActive ? 'not.' : '') + 'be.disabled');
-        passwordSubmit().should((changeActive ? 'not.' : '') + 'be.disabled');
+        settings.cancelPassword().should((cancelActive ? 'not.' : '') + 'be.disabled');
+        settings.submitPassword().should((changeActive ? 'not.' : '') + 'be.disabled');
     }
 
     it('password change works as expected', function () {
         const {USERNAME, TMP_PASSWORD, PASSWORD} = this.accountJSON;
 
-        tabButtonPw().click();
+        settings.tabPassword().click();
 
-        passwordInput().should('not.be.disabled');
+        settings.password().should('not.be.disabled');
         assertPasswordState('', false, false);
 
-        passwordInput().type('1');
+        settings.password().type('1');
 
         assertPasswordState('1', true, false);
         assertValidation(false);
 
-        passwordInput().clear().type(TMP_PASSWORD);
+        settings.password().clear().type(TMP_PASSWORD);
         assertPasswordState(TMP_PASSWORD, true, true);
 
-        passwordCancel().click();
+        settings.cancelPassword().click();
         assertPasswordState('', false, false);
 
-        passwordInput().clear().type(TMP_PASSWORD);
+        settings.password().clear().type(TMP_PASSWORD);
         assertPasswordState(TMP_PASSWORD, true, true);
 
-        passwordSubmit().click();
-        successMessage();
+        settings.submitPassword().click();
+        general.successMessage();
 
-        reloadAccountPage();
+        cy.reload();
         logout();
         loginAndGoToAccountPage(USERNAME, TMP_PASSWORD);
 
-        tabButtonPw().click();
+        settings.tabPassword().click();
 
         assertPasswordState('', false, false);
-        passwordInput().type(PASSWORD);
+        settings.password().type(PASSWORD);
         assertPasswordState(PASSWORD, true, true);
-        passwordSubmit().click();
-        successMessage();
+        settings.submitPassword().click();
+        general.successMessage();
 
-        reloadAccountPage();
+        cy.reload();
         logout();
         loginAndGoToAccountPage(USERNAME, PASSWORD);
     });

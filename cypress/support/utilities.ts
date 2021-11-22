@@ -1,10 +1,7 @@
 import {join} from 'lodash';
 
 export function logout() {
-    cy.get('button')
-        .contains('Logout')
-        .should('have.length', 1)
-        .parents('button')
+    getCySelector(['navbar', 'button-logout'], {count: 1, invisible: true})
         .should('not.be.disabled')
         .click({force: true});
     cy.url().should('include', '/login');
@@ -12,21 +9,11 @@ export function logout() {
 
 export function login(username: string, password: string) {
     cy.visit('/login');
-    cy.url().should('include', '/login');
-    cy.get('input').first().type(username);
-    cy.get('input').last().type(password);
+    cy.url().should('eq', 'http://localhost:3000/login');
+    getCySelector(['login-input-email']).type(username);
+    getCySelector(['login-input-password']).type(password);
     cy.get('button').contains('Login').click();
-    cy.url().should('include', '/configurations');
-}
-
-export function reloadConfigurationsPage() {
-    cy.visit('/configurations');
-    cy.url().should('include', '/configurations');
-}
-
-export function reloadAccountPage() {
-    cy.visit('/account');
-    cy.url().should('include', '/account');
+    cy.url().should('eq', 'http://localhost:3000/configurations');
 }
 
 export function getByDataCy(dataCyContains: string, props?: {count?: number}) {

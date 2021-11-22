@@ -130,7 +130,7 @@ function VisualAccountPage(props: {
                                                 : 'hover:bg-gray-100 text-gray-500 hover:text-gray-700',
                                             'py-1 px-3 font-weight-600 text-base rounded',
                                         )}
-                                        data-cy={`account-settings-tab-button-${tab.toLowerCase()}-${
+                                        data-cy={`tab-${tab.toLowerCase()}-${
                                             index == tabIndex ? 'active' : 'passive'
                                         }`}
                                     >
@@ -151,7 +151,7 @@ function VisualAccountPage(props: {
                                             setValue={() => {}}
                                             disabled={true}
                                             autoComplete='email'
-                                            data-cy={'account-settings-email-input'}
+                                            data-cy='input-email'
                                         />
                                     </div>
 
@@ -162,7 +162,7 @@ function VisualAccountPage(props: {
                                             setValue={setUsername}
                                             disabled={usernamePending}
                                             autoComplete='username'
-                                            data-cy={'account-settings-username-input'}
+                                            data-cy='input-username'
                                         />
                                     </div>
                                 </div>
@@ -178,9 +178,7 @@ function VisualAccountPage(props: {
                                             username === props.account.username ||
                                             usernamePending
                                         }
-                                        data-cy={
-                                            'account-settings-username-button-cancel'
-                                        }
+                                        data-cy='button-cancel-username'
                                     />
                                     <Button
                                         text='change username'
@@ -191,9 +189,7 @@ function VisualAccountPage(props: {
                                             usernamePending ||
                                             !usernameValidation.valid
                                         }
-                                        data-cy={
-                                            'account-settings-username-button-submit'
-                                        }
+                                        data-cy='button-submit-username'
                                     />
                                 </div>
                             </>
@@ -209,7 +205,7 @@ function VisualAccountPage(props: {
                                             disabled={passwordPending}
                                             type='password'
                                             autoComplete='new-password'
-                                            data-cy={'account-settings-password-input'}
+                                            data-cy='input-password'
                                         />
                                     </div>
                                 </div>
@@ -223,9 +219,7 @@ function VisualAccountPage(props: {
                                         disabled={
                                             password.length === 0 || passwordPending
                                         }
-                                        data-cy={
-                                            'account-settings-password-button-cancel'
-                                        }
+                                        data-cy='button-cancel-password'
                                     />
                                     <Button
                                         text='change password'
@@ -236,9 +230,7 @@ function VisualAccountPage(props: {
                                             passwordPending ||
                                             !passwordValidation.valid
                                         }
-                                        data-cy={
-                                            'account-settings-password-button-submit'
-                                        }
+                                        data-cy='button-submit-password'
                                     />
                                 </div>
                             </>
