@@ -58,15 +58,18 @@ const fieldInputs = (index: number) => ({
     description: getFromField(index, ['input-description'], {count: 1}),
     regex: getFromField(index, ['input-regex'], {count: 1}),
     hint: getFromField(index, ['input-hint'], {count: 1}),
+    toggleVerify: getFromField(index, ['toggle-verify'], {count: 1}),
     minChars: getFromField(index, ['input-min-chars'], {count: 1}),
     maxChars: getFromField(index, ['input-max-chars'], {count: 1}),
     optionList: getFromField(index, ['options-list'], {count: 1}),
+    anyOptionInput: getFromField(index, ['options-list', 'input-option']),
     optionInput: (optionIndex: number) =>
         get([
             `editor-field-panel-${index}`,
             'options-list',
             `input-option-${optionIndex}`,
         ]),
+    addOption: getFromField(index, ['options-list', 'button-add'], {count: 1}),
     minSelect: getFromField(index, ['input-min-select'], {count: 1}),
     maxSelect: getFromField(index, ['input-max-select'], {count: 1}),
 });
@@ -422,59 +425,79 @@ describe('The Editor Page', () => {
         addFieldPopup.panel().should('not.be.visible');
     });*/
 
+    const assertHeaderState = () => {
+        get(['editor-header', 'button-undo']).should('have.length', 0);
+        get(['editor-header', 'button-save']).should('have.length', 0);
+        headerElements.reopen().should('not.be.disabled');
+        get(['message-panel-warning']).should('have.length', 0);
+        get(['message-panel-error']).should('have.length', 0);
+    };
+
     // TODO: add an email field
     it('adding an email field, undo adding', function () {
         fieldButtons(0).addBefore().click();
         addFieldPopup.selectField('email').click();
         addFieldPopup.submitAdd().click();
-        // assert title = ""
-        // assert description = ""
-        // assert regex = ".*"
-        // assert hint = "Any email address"
-        // assert verify = false
+        fieldInputs(0).title().should('be.empty');
+        fieldInputs(0).description().should('be.empty');
+        fieldInputs(0).regex().should('have.value', '.*');
+        fieldInputs(0).hint().should('have.value', 'Any email address');
+        fieldInputs(0)
+            .toggleVerify()
+            .find('no')
+            .should('have.attr', 'data-cy')
+            .and('eq', 'isactive');
 
-        // undo adding
-        // assert field is not there
+        headerElements.undo().click();
+        assertHeaderState();
+        get([`editor-field-panel`], {count: 3});
         // assert that config in db is valid
 
-        fieldButtons(0).addBefore().click();
+        fieldButtons(1).addBefore().click();
         addFieldPopup.selectField('email').click();
         addFieldPopup.submitAdd().click();
         // change title
-        // save
+        headerElements.save().click();
+        assertHeaderState();
         // assert title is new title
         // assert that config in db is valid
     });
 
     // TODO: add a text field
     it('adding a text field', function () {
-        fieldButtons(0).addBefore().click();
+        fieldButtons(2).addBefore().click();
         addFieldPopup.selectField('text').click();
         addFieldPopup.submitAdd().click();
-        // assert title = ""
-        // assert description = ""
-        // assert min-chars = "0"
-        // assert max-chars = "2000"
+        fieldInputs(2).title().should('be.empty');
+        fieldInputs(2).description().should('be.empty');
+        fieldInputs(2).minChars().should('have.value', '0');
+        fieldInputs(2).maxChars().should('have.value', '2000');
         // change title
-        // save
+        headerElements.save().click();
+        assertHeaderState();
         // assert title is new title
         // assert that config in db is valid
     });
 
     // TODO: add a selection field
     it('adding a selection field', function () {
-        fieldButtons(0).addBefore().click();
+        fieldButtons(3).addBefore().click();
         addFieldPopup.selectField('selection').click();
         addFieldPopup.submitAdd().click();
-        // assert title = ""
-        // assert description = ""
-        // assert options = []
-        // assert min-select = "0"
-        // assert max-select = "0"
+        fieldInputs(3).title().should('be.empty');
+        fieldInputs(3).description().should('be.empty');
+        fieldInputs(3).anyOptionInput().should('have.length', 0);
+        fieldInputs(3).minSelect().should('have.value', '0');
+        fieldInputs(3).maxSelect().should('have.value', '0');
         // change title
         // add options
+        fieldInputs(3).addOption().click();
+        // change option text
+        fieldInputs(3).addOption().click();
+        // change option text
         // change max-select
-        // save
+        headerElements.save().click();
+        assertHeaderState();
         // assert title
         // assert options
         // assert max-select
