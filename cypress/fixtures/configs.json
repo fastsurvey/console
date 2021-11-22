@@ -248,16 +248,16 @@
             "fields": [
                 {
                     "identifier": 0,
-                    "title": "How do you feel about apples?",
-                    "description": "",
+                    "title": "How do you feel about pampelmusis? buja!",
+                    "description": "cvbnm,cvbnm\"vh\"hj",
                     "type": "text",
                     "min_chars": 10,
                     "max_chars": 1000
                 },
                 {
                     "identifier": 1,
-                    "title": "What's your email address?",
-                    "description": "",
+                    "title": "What's your email",
+                    "description": "asdaa",
                     "type": "email",
                     "hint": "YOUR EMAIL ADDRESS HERE",
                     "regex": ".*",
@@ -265,8 +265,8 @@
                 },
                 {
                     "identifier": 2,
-                    "title": "What are your favorite pizza toppings?",
-                    "description": "",
+                    "title": "What are your favorite pizza toppings",
+                    "description": "vghjk",
                     "type": "selection",
                     "options": [
                         "Quattro Stagioni",

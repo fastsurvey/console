@@ -63,6 +63,7 @@ function VisualField(props: Props) {
             actionLabel={actionLabel}
             setActionLabel={setActionLabel}
             validation={props.validation}
+            data-cy={`editor-field-panel-${props.fieldIndex}`}
         >
             <div className='w-full centering-col gap-y-0.5'>
                 <Label text='Title' />
@@ -74,6 +75,7 @@ function VisualField(props: Props) {
                         });
                     }}
                     disabled={props.disabled || collapse}
+                    data-cy='input-title'
                 />
             </div>
             <div className='w-full centering-col gap-y-0.5'>
@@ -84,6 +86,7 @@ function VisualField(props: Props) {
                         props.setLocalFieldConfig({description: newValue});
                     }}
                     disabled={props.disabled || collapse}
+                    data-cy='input-description'
                 />
             </div>
 

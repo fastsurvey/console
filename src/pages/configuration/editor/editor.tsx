@@ -28,9 +28,9 @@ function ConfigEditor(props: {
 }) {
     const [submittingConfig, setSubmittingConfig] = useState(false);
     const [localConfig, setLocalConfigState] = useState(props.centralConfig);
-    const [fieldValidation, setFieldValidation] = useState<
-        types.ValidationResult[]
-    >([]);
+    const [fieldValidation, setFieldValidation] = useState<types.ValidationResult[]>(
+        [],
+    );
 
     // Used for: survey_name is changed when editing, new survey
     const history = useHistory();
@@ -43,29 +43,19 @@ function ConfigEditor(props: {
     }, [props.centralConfig.survey_name]);
 
     function initValidators(config: types.SurveyConfig) {
-        setFieldValidation(
-            times(config.fields.length + 1, constant({valid: true})),
-        );
+        setFieldValidation(times(config.fields.length + 1, constant({valid: true})));
     }
 
-    function updateValidation(
-        newIndex: number,
-        newState: types.ValidationResult,
-    ) {
+    function updateValidation(newIndex: number, newState: types.ValidationResult) {
         const newValidators = [...fieldValidation];
         newValidators[newIndex] = newState;
         setFieldValidation(newValidators);
     }
 
     function insertField(index: number, fieldType: types.FieldType) {
-        setFieldValidation(
-            dataUtils.array.insert(fieldValidation, index + 1, false),
-        );
+        setFieldValidation(dataUtils.array.insert(fieldValidation, index + 1, false));
 
-        const field: types.SurveyField = templateUtils.field(
-            fieldType,
-            localConfig,
-        );
+        const field: types.SurveyField = templateUtils.field(fieldType, localConfig);
         setLocalConfig({
             ...localConfig,
             fields: dataUtils.array.insert(localConfig.fields, index, field),
@@ -78,8 +68,7 @@ function ConfigEditor(props: {
                 newFieldConfig,
                 localIdUtils.newId.field(localConfig),
             );
-            newFieldConfig.identifier =
-                templateUtils.fieldIdentifier(localConfig);
+            newFieldConfig.identifier = templateUtils.fieldIdentifier(localConfig);
 
             setFieldValidation(
                 dataUtils.array.insert(
@@ -121,9 +110,7 @@ function ConfigEditor(props: {
             newFields = newFields.map((f: types.SurveyField) => ({
                 ...f,
                 identifier:
-                    f.identifier > fieldIdentifier
-                        ? f.identifier - 1
-                        : f.identifier,
+                    f.identifier > fieldIdentifier ? f.identifier - 1 : f.identifier,
             }));
         }
 
@@ -146,8 +133,7 @@ function ConfigEditor(props: {
         const fieldsAreValid = every(fieldValidation.map((r) => r.valid));
         const fieldCountIsValid = localConfig.fields.length > 0;
         console.log({localConfig});
-        const authModeIsValid =
-            formUtils.validators.authMode(localConfig).valid;
+        const authModeIsValid = formUtils.validators.authMode(localConfig).valid;
 
         function success() {
             setLocalConfigState(combinedConfig);

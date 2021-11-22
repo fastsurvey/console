@@ -1,4 +1,5 @@
 import * as utilities from '../../support/utilities';
+import {types} from '/src/types';
 
 const {login, getCySelector} = utilities;
 const get = getCySelector;
@@ -33,6 +34,15 @@ const settingsElements = {
     startTime: () => get(['editor-settings', 'timepicker-start'], {count: 1}),
     endDate: () => get(['editor-settings', 'datepicker-end'], {count: 1}),
     endTime: () => get(['editor-settings', 'timepicker-end'], {count: 1}),
+};
+
+const fieldElements = {
+    collapse: (index: number) =>
+        getCySelector([`editor-field-panel-${index}`, 'button-collapse'], {count: 1}),
+    title: (index: number) =>
+        getCySelector([`editor-field-panel-${index}`, 'input-title'], {count: 1}),
+    description: (index: number) =>
+        getCySelector([`editor-field-panel-${index}`, 'input-description'], {count: 1}),
 };
 
 describe('The Editor Page', () => {
@@ -165,27 +175,42 @@ describe('The Editor Page', () => {
         cy.url().should('eq', `http://localhost:3000/configuration/${SURVEY_NAME}`);
     });*/
 
-    const assertInitialState = (INITIAL_SURVEY: any) => {
-        settingsElements.inputTitle().should('have.value', INITIAL_SURVEY.title);
+    const assertSurveyState = (surveyConfig: types.SurveyConfig) => {
+        settingsElements.inputTitle().should('have.value', surveyConfig.title);
         settingsElements
             .inputIdentifier()
-            .should('have.value', INITIAL_SURVEY.survey_name);
+            .should('have.value', surveyConfig.survey_name);
         settingsElements
             .inputDescription()
-            .should('have.value', INITIAL_SURVEY.description);
+            .should('have.value', surveyConfig.description);
+
+        surveyConfig.fields.forEach((fieldConfig, i) => {
+            assertFieldState(fieldConfig, i);
+        });
+    };
+
+    const assertFieldState = (fieldConfig: types.SurveyField, index: number) => {
+        fieldElements.title(index).should('have.value', fieldConfig.title);
+        fieldElements.description(index).should('have.value', fieldConfig.description);
     };
 
     // TODO: undo button -> change a bunch of stuff and check whether undo completely undod everything
     it('undo functionality', function () {
         const {INITIAL_SURVEY, MODIFIED_SURVEY} = this.configsJSON.EDITOR;
 
-        assertInitialState(INITIAL_SURVEY);
+        [0, 1, 2].map((i) => fieldElements.collapse(i).click());
+        assertSurveyState(INITIAL_SURVEY);
 
         settingsElements
             .inputTitle()
             .clear()
             .type(MODIFIED_SURVEY.title)
             .should('have.value', MODIFIED_SURVEY.title);
+
+        cy.reload();
+        [0, 1, 2].map((i) => fieldElements.collapse(i).click());
+        assertSurveyState(INITIAL_SURVEY);
+
         settingsElements
             .inputIdentifier()
             .clear()
@@ -198,20 +223,33 @@ describe('The Editor Page', () => {
             .should('have.value', MODIFIED_SURVEY.description);
 
         headerElements.undo().click();
-        assertInitialState(INITIAL_SURVEY);
+        assertSurveyState(INITIAL_SURVEY);
 
-        // email field: title
-        // email field: description
-        // email field: hint
-        // email field: regex
+        cy.reload();
+        [0, 1, 2].map((i) => fieldElements.collapse(i).click());
 
-        // text field: title
-        // text field: description
+        // assert the correct order
+        expect(INITIAL_SURVEY.fields[0].type).to.equal('text');
+        expect(INITIAL_SURVEY.fields[1].type).to.equal('email');
+        expect(INITIAL_SURVEY.fields[2].type).to.equal('selection');
+
+        MODIFIED_SURVEY.fields.forEach(
+            (newFieldConfig: types.SurveyField, i: number) => {
+                fieldElements.title(i).clear().type(newFieldConfig.title);
+                fieldElements.description(i).clear().type(newFieldConfig.description);
+                assertFieldState(newFieldConfig, i);
+            },
+        );
+
+        headerElements.undo().click();
+        assertSurveyState(INITIAL_SURVEY);
+
         // text field: min_chars
         // text field: max_chars
 
-        // text field: title
-        // text field: description
+        // email field: hint
+        // email field: regex
+
         // text field: adding one option
         // text field: removing two options
         // text field: min_select
