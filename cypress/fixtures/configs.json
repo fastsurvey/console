@@ -354,6 +354,34 @@
                     "max_chars": 1000
                 }
             ]
+        },
+        "ADDED_FIELDS": {
+            "EMAIL": {
+                "identifier": 3,
+                "title": "What's your email address?",
+                "description": "",
+                "type": "email",
+                "hint": "Any email address",
+                "regex": ".*",
+                "verify": false
+            },
+            "TEXT": {
+                "identifier": 3,
+                "title": "How do you feel about apples?",
+                "description": "",
+                "type": "text",
+                "min_chars": 0,
+                "max_chars": 1000
+            },
+            "SELECTION": {
+                "identifier": 3,
+                "title": "What are your favorite pizza toppings?",
+                "description": "",
+                "type": "selection",
+                "options": ["Quattro Stagioni", "Prosciutto"],
+                "min_select": 0,
+                "max_select": 2
+            }
         }
     }
 }

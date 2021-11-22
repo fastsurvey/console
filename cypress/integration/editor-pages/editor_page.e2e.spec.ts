@@ -425,7 +425,7 @@ describe('The Editor Page', () => {
         addFieldPopup.panel().should('not.be.visible');
     });*/
 
-    const assertHeaderState = () => {
+    const assertSyncedHeaderState = () => {
         get(['editor-header', 'button-undo']).should('have.length', 0);
         get(['editor-header', 'button-save']).should('have.length', 0);
         headerElements.reopen().should('not.be.disabled');
@@ -433,75 +433,120 @@ describe('The Editor Page', () => {
         get(['message-panel-error']).should('have.length', 0);
     };
 
-    // TODO: add an email field
-    it('adding an email field, undo adding', function () {
+    it('adding a text field, undo adding', function () {
+        const {INITIAL_SURVEY, INITIAL_MAX_IDENTIFIER, ADDED_FIELDS} =
+            this.configsJSON.EDITOR;
+
+        const assertLocalField = (index: number) => {
+            fieldInputs(index).description().should('be.empty');
+            fieldInputs(index).minChars().should('have.value', '0');
+            fieldInputs(index).maxChars().should('have.value', '2000');
+        };
+
+        // add text field at index 0
         fieldButtons(0).addBefore().click();
-        addFieldPopup.selectField('email').click();
-        addFieldPopup.submitAdd().click();
-        fieldInputs(0).title().should('be.empty');
-        fieldInputs(0).description().should('be.empty');
-        fieldInputs(0).regex().should('have.value', '.*');
-        fieldInputs(0).hint().should('have.value', 'Any email address');
-        fieldInputs(0)
-            .toggleVerify()
-            .find('no')
-            .should('have.attr', 'data-cy')
-            .and('eq', 'isactive');
-
-        headerElements.undo().click();
-        assertHeaderState();
-        get([`editor-field-panel`], {count: 3});
-        // assert that config in db is valid
-
-        fieldButtons(1).addBefore().click();
-        addFieldPopup.selectField('email').click();
-        addFieldPopup.submitAdd().click();
-        // change title
-        headerElements.save().click();
-        assertHeaderState();
-        // assert title is new title
-        // assert that config in db is valid
-    });
-
-    // TODO: add a text field
-    it('adding a text field', function () {
-        fieldButtons(2).addBefore().click();
         addFieldPopup.selectField('text').click();
         addFieldPopup.submitAdd().click();
-        fieldInputs(2).title().should('be.empty');
-        fieldInputs(2).description().should('be.empty');
-        fieldInputs(2).minChars().should('have.value', '0');
-        fieldInputs(2).maxChars().should('have.value', '2000');
-        // change title
+        fieldButtons(0).collapse().click();
+
+        // assert intial state after adding
+        fieldInputs(0).title().should('be.empty');
+        assertLocalField(0);
+
+        // undo and assert state after save
+        headerElements.undo().click();
+        assertSyncedHeaderState();
+        get([`editor-field-panel`], {count: 3});
+        // TODO: assert that config in db is valid
+
+        // edit field to match fixture
+        fieldButtons(1).addBefore().click();
+        addFieldPopup.selectField('text').click();
+        addFieldPopup.submitAdd().click();
+        fieldButtons(1).collapse().click();
+        fieldInputs(1).title().type(ADDED_FIELDS.TEXT.title);
+
+        // save and assert state after save
         headerElements.save().click();
-        assertHeaderState();
-        // assert title is new title
-        // assert that config in db is valid
+        assertSyncedHeaderState();
+        fieldInputs(1).title().should('have.value', ADDED_FIELDS.TEXT.title);
+        assertLocalField(1);
+        // TODO: assert that config in db is valid
     });
 
-    // TODO: add a selection field
+    it('adding an email field', function () {
+        const {INITIAL_SURVEY, INITIAL_MAX_IDENTIFIER, ADDED_FIELDS} =
+            this.configsJSON.EDITOR;
+
+        const assertLocalField = () => {
+            fieldInputs(2).description().should('be.empty');
+            fieldInputs(2).regex().should('have.value', '.*');
+            fieldInputs(2).hint().should('have.value', 'Any email address');
+            fieldInputs(2)
+                .toggleVerify()
+                .find('[data-cy*="no"]')
+                .should('have.attr', 'data-cy')
+                .and('contain', 'isactive');
+        };
+
+        // add text field at index 2
+        fieldButtons(2).addBefore().click();
+        addFieldPopup.selectField('email').click();
+        addFieldPopup.submitAdd().click();
+        fieldButtons(2).collapse().click();
+
+        // assert intial state after adding
+        fieldInputs(2).title().should('be.empty');
+        assertLocalField();
+
+        // edit field to match fixture
+        fieldInputs(2).title().type(ADDED_FIELDS.EMAIL.title);
+
+        // save and assert state after save
+        headerElements.save().click();
+        assertSyncedHeaderState();
+        fieldInputs(2).title().should('have.value', ADDED_FIELDS.EMAIL.title);
+        assertLocalField();
+        // TODO: assert that config in db is valid
+    });
+
     it('adding a selection field', function () {
+        const {INITIAL_SURVEY, INITIAL_MAX_IDENTIFIER, ADDED_FIELDS} =
+            this.configsJSON.EDITOR;
+
+        // add selection field at index 3
         fieldButtons(3).addBefore().click();
         addFieldPopup.selectField('selection').click();
         addFieldPopup.submitAdd().click();
+        fieldButtons(3).collapse().click();
         fieldInputs(3).title().should('be.empty');
         fieldInputs(3).description().should('be.empty');
         fieldInputs(3).anyOptionInput().should('have.length', 0);
         fieldInputs(3).minSelect().should('have.value', '0');
         fieldInputs(3).maxSelect().should('have.value', '0');
-        // change title
-        // add options
-        fieldInputs(3).addOption().click();
-        // change option text
-        fieldInputs(3).addOption().click();
-        // change option text
+
+        // edit field to match fixture
+        fieldInputs(3).title().type(ADDED_FIELDS.SELECTION.title);
+        ADDED_FIELDS.SELECTION.options.forEach((o: string, i: number) => {
+            fieldInputs(3).addOption().click();
+            fieldInputs(3).optionInput(i).type(o);
+        });
+        fieldInputs(3).maxSelect().type(ADDED_FIELDS.SELECTION.max_select);
+
         // change max-select
         headerElements.save().click();
-        assertHeaderState();
-        // assert title
-        // assert options
-        // assert max-select
-        // assert that config in db is valid
+
+        // save and assert state after save
+        assertSyncedHeaderState();
+        fieldInputs(3).title().should('have.value', ADDED_FIELDS.SELECTION.title);
+        fieldInputs(3).anyOptionInput().should('have.length', 2);
+        ADDED_FIELDS.SELECTION.options.forEach((o: string, i: number) => {
+            fieldInputs(3).optionInput(i).should('have.value', o);
+        });
+        fieldInputs(3)
+            .maxSelect()
+            .should('have.value', ADDED_FIELDS.SELECTION.max_select);
+        // TODO: assert that config in db is valid
     });
 
     // TODO: remove a field + undo remove
