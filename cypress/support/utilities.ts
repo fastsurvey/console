@@ -12,7 +12,13 @@ export function login(username: string, password: string) {
     cy.url().should('eq', 'http://localhost:3000/login');
     getCySelector(['login-panel', 'input-identifier']).type(username);
     getCySelector(['login-panel', 'input-password']).type(password);
+    cy.intercept({
+        method: 'POST',
+        url: '/authentication',
+        hostname: 'api.dev.fastsurvey.de',
+    }).as('POSTauthentication');
     cy.get('button').contains('Login').click();
+    cy.wait(['@POSTauthentication']);
     cy.url().should('eq', 'http://localhost:3000/configurations');
 }
 

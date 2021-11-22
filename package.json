@@ -15,7 +15,8 @@
         "analyze": "source-map-explorer 'dist/assets/*.js'",
         "cypress:integration": "cypress open",
         "cypress:component": "yarn tailwind:build && cypress open-ct",
-        "tailwind:build": "npx tailwindcss -i src/styles/tailwind.css -o src/styles/tailwind.out.css"
+        "tailwind:build": "npx tailwindcss -i src/styles/tailwind.css -o src/styles/tailwind.out.css",
+        "cypress:run": "cypress run"
     },
     "dependencies": {
         "@headlessui/react": "^1.4.1",
