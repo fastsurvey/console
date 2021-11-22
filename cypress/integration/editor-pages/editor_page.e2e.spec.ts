@@ -378,7 +378,7 @@ describe('The Editor Page', () => {
         fieldElements.collapse(2).click();
         fieldElements.title(2).clear();
         assertInvalidFieldState();
-    });*/
+    });
 
     it('add field popup', function () {
         addFieldPopup.panel().should('not.be.visible');
@@ -406,15 +406,68 @@ describe('The Editor Page', () => {
         });
         addFieldPopup.cancelAdd().click();
         addFieldPopup.panel().should('not.be.visible');
-    });
+    });*/
 
     // TODO: add an email field
-    it('adding an email field', function () {});
+    it('adding an email field, undo adding', function () {
+        fieldElements.addBefore(0).click();
+        addFieldPopup.selectField('email').click();
+        addFieldPopup.submitAdd().click();
+        // assert title = ""
+        // assert description = ""
+        // assert regex = ".*"
+        // assert hint = "Any email address"
+        // assert verify = false
+
+        // undo adding
+        // assert field is not there
+        // assert that config in db is valid
+
+        fieldElements.addBefore(0).click();
+        addFieldPopup.selectField('email').click();
+        addFieldPopup.submitAdd().click();
+        // change title
+        // save
+        // assert title is new title
+        // assert that config in db is valid
+    });
 
     // TODO: add a text field
-    // TODO: add a selection field
+    it('adding a text field', function () {
+        fieldElements.addBefore(0).click();
+        addFieldPopup.selectField('text').click();
+        addFieldPopup.submitAdd().click();
+        // assert title = ""
+        // assert description = ""
+        // assert min-chars = "0"
+        // assert max-chars = "2000"
+        // change title
+        // save
+        // assert title is new title
+        // assert that config in db is valid
+    });
 
-    // TODO: remove a field (add a seed field before that with the UI)
+    // TODO: add a selection field
+    it('adding a selection field', function () {
+        fieldElements.addBefore(0).click();
+        addFieldPopup.selectField('selection').click();
+        addFieldPopup.submitAdd().click();
+        // assert title = ""
+        // assert description = ""
+        // assert options = []
+        // assert min-select = "0"
+        // assert max-select = "0"
+        // change title
+        // add options
+        // change max-select
+        // save
+        // assert title
+        // assert options
+        // assert max-select
+        // assert that config in db is valid
+    });
+
+    // TODO: remove a field + undo remove
 
     // Test with component test of fields:
     // - looks as expected
