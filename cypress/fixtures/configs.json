@@ -383,5 +383,88 @@
                 "max_select": 2
             }
         }
+    },
+    "RESULTS": {
+        "SURVEY": {
+            "survey_name": "penguins-are-awesome",
+            "title": "Very Good Sample Title",
+            "description": "Enneapuses are the new octopuses, and other wisdoms.",
+            "start": 1000000000,
+            "end": 2000000000,
+            "draft": false,
+            "fields": [
+                {
+                    "identifier": 0,
+                    "title": "How do you feel about apples?",
+                    "description": "",
+                    "type": "text",
+                    "min_chars": 10,
+                    "max_chars": 1000
+                },
+                {
+                    "identifier": 1,
+                    "title": "What's your email address?",
+                    "description": "",
+                    "type": "email",
+                    "hint": "YOUR EMAIL ADDRESS HERE",
+                    "regex": ".*",
+                    "verify": false
+                },
+                {
+                    "identifier": 2,
+                    "title": "What are your favorite pizza toppings?",
+                    "description": "",
+                    "type": "selection",
+                    "options": [
+                        "Quattro Stagioni",
+                        "Prosciutto",
+                        "Margherita",
+                        "Quattro Formaggi",
+                        "Capricciosa"
+                    ],
+                    "min_select": 2,
+                    "max_select": 5
+                }
+            ]
+        },
+        "INITIAL_SUBMISSIONS": [
+            {
+                "0": "I do like them somewhat",
+                "1": "a@someone.sometld",
+                "2": ["Prosciutto", "Capricciosa"]
+            },
+            {
+                "0": "I do like them somewhat",
+                "1": "b@someone.sometld",
+                "2": ["Prosciutto", "Margherita"]
+            },
+            {
+                "0": "I do like them somewhat",
+                "1": "c@someone.sometld",
+                "2": [
+                    "Quattro Stagioni",
+                    "Margherita",
+                    "Quattro Formaggi",
+                    "Capricciosa"
+                ]
+            },
+            {
+                "0": "I do like them somewhat",
+                "1": "d@someone.sometld",
+                "2": ["Prosciutto", "Margherita"]
+            }
+        ],
+        "UPDATE_SUBMISSIONS": [
+            {
+                "0": "I do like them somewhat",
+                "1": "e@someone.sometld",
+                "2": ["Quattro Formaggi", "Quattro Stagioni"]
+            },
+            {
+                "0": "I do like them somewhat",
+                "1": "f@someone.sometld",
+                "2": ["Prosciutto", "Quattro Formaggi"]
+            }
+        ]
     }
 }
