@@ -40,6 +40,7 @@ function VisualConfigPanel(props: Props) {
                             'mb-1 md:mb-0 md:truncate leading-tight ' +
                             'w-full sm:w-auto sm:flex-grow'
                         }
+                        data-cy='title'
                     >
                         {title}
                     </h2>

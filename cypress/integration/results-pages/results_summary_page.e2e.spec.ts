@@ -43,6 +43,15 @@ const field = (index: number) => ({
         ),
 });
 
+const resultsPanel = (surveyName: string) => ({
+    container: () => get([`results-panel-${surveyName}`], {count: 1}),
+    title: () => get([`results-panel-${surveyName}`, 'title'], {count: 1}),
+    linkToFrontend: () =>
+        get([`results-panel-${surveyName}`, 'link-to-frontend'], {count: 1}),
+    linkToSummary: () =>
+        get([`results-panel-${surveyName}`, 'link-to-summary'], {count: 1}),
+});
+
 describe('The Results Summary Page', () => {
     before(() => {
         // @ts-ignore
@@ -142,11 +151,25 @@ describe('The Results Summary Page', () => {
         const {USERNAME} = this.accountJSON;
         const {SURVEY} = this.configsJSON.RESULTS;
 
-        // TODO: check back icon
-        // TODO: check link to config-list page and back
+        const SURVEY_NAME = SURVEY['survey_name'];
+
+        cy.url().should('eq', `http://localhost:3000/results/${SURVEY_NAME}`);
+        headerElements.back().click();
+        cy.url().should('eq', 'http://localhost:3000/results');
+
+        resultsPanel(SURVEY_NAME).title().should('have.text', SURVEY.title);
+        resultsPanel(SURVEY_NAME)
+            .linkToFrontend()
+            .should('have.text', `dev.fastsurvey.de/${USERNAME}/${SURVEY_NAME}`);
+        resultsPanel(SURVEY_NAME)
+            .linkToFrontend()
+            .should('have.attr', 'href')
+            .and('eq', `https://dev.fastsurvey.de/${USERNAME}/${SURVEY_NAME}`);
+        resultsPanel(SURVEY_NAME).linkToSummary().click();
+
+        cy.url().should('eq', `http://localhost:3000/results/${SURVEY_NAME}`);
     });
 
-    /*
     it('initial submissions', function () {
         const {RESULTS} = this.configsJSON;
         assertSummaryState(RESULTS.INITIAL_SUMMARY, RESULTS.SURVEY.fields);
@@ -167,5 +190,5 @@ describe('The Results Summary Page', () => {
         });
 
         // TODO: download JSON + check correctness
-    });*/
+    });
 });
