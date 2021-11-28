@@ -26,7 +26,7 @@ function Field(props: Props) {
                 'flex flex-col md:flex-row items-start justify-start ' +
                 'space-y-4 md:space-y-0 md:space-x-4'
             }
-            data-cy={'field-container isaggregated'}
+            data-cy={`field-container-${fieldIndex} isaggregated`}
         >
             <div className='w-full md:w-50% flex-col-left space-y-0.5'>
                 <h2 className='text-base text-gray-900 font-weight-700' data-cy='title'>
@@ -76,7 +76,7 @@ function Field(props: Props) {
                         'w-full px-4 py-2.5 text-gray-800 rounded relative group cursor-not-allowed ' +
                         'border-2 border-gray-200 border-dashed flex-col-left text-left'
                     }
-                    data-cy={'field-container isnotaggregated'}
+                    data-cy={`field-container-${fieldIndex} isnotaggregated`}
                 >
                     <h2
                         className='w-full text-base text-gray-600 font-weight-700'

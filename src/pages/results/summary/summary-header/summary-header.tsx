@@ -56,7 +56,7 @@ function SummaryHeader(props: {
                         icon={showDownloadOptions ? icons.close : undefined}
                         loading={props.isDownloading}
                         onClick={() => setShowDownloadOptions(!showDownloadOptions)}
-                        data-cy='button-show-download-options'
+                        data-cy='button-toggle-download-dropdown'
                     />
                     {showDownloadOptions && (
                         <div
@@ -65,7 +65,7 @@ function SummaryHeader(props: {
                                 'rounded shadow flex-col-center overflow-hidden ' +
                                 'bg-gray-900 text-gray-200 text-base '
                             }
-                            data-cy='download-popup'
+                            data-cy='download-dropdown'
                         >
                             {['json', 'csv'].map((format: any) => (
                                 <button
