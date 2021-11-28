@@ -64,22 +64,13 @@ describe('The Results Summary Page', () => {
             });
     });
 
-    it('header', function () {
-        const {SURVEY} = this.configsJSON.RESULTS;
-        // TODO: check title
-        // TODO: check link to frontend
-        // TODO: check link to config-list page and back
-        // TODO: check toggle-download-dropdown
-    });
-
-    it('initial submissions', function () {
-        const {RESULTS} = this.configsJSON;
-        const SUMMARY: (null | {
+    const assertSummaryState = (
+        SUMMARY: (null | {
             total: number;
             results: {[key: string]: number};
-        })[] = RESULTS.INITIAL_SUMMARY;
-        const FIELDS = RESULTS.SURVEY.fields;
-
+        })[],
+        FIELDS: any,
+    ) => {
         SUMMARY.forEach((fieldSummary, fieldIndex) => {
             field(fieldIndex).container();
             field(fieldIndex)
@@ -116,6 +107,19 @@ describe('The Results Summary Page', () => {
 
         // not more fields that expected
         get([`field-container-${SUMMARY.length}`], {count: 0});
+    };
+
+    it('header', function () {
+        const {SURVEY} = this.configsJSON.RESULTS;
+        // TODO: check title
+        // TODO: check link to frontend
+        // TODO: check link to config-list page and back
+        // TODO: check toggle-download-dropdown
+    });
+
+    it('initial submissions', function () {
+        const {RESULTS} = this.configsJSON;
+        assertSummaryState(RESULTS.INITIAL_SUMMARY, RESULTS.SURVEY.fields);
 
         // TODO: download JSON + check correctness
     });
