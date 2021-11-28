@@ -431,7 +431,7 @@
             {
                 "0": "I do like them somewhat",
                 "1": "a@someone.sometld",
-                "2": ["Prosciutto", "Capricciosa"]
+                "2": ["Prosciutto", "Capricciosa", "Margherita"]
             },
             {
                 "0": "I do like them somewhat",
@@ -454,6 +454,17 @@
                 "2": ["Prosciutto", "Margherita"]
             }
         ],
+        "INITIAL_SUMMARY": [
+            null,
+            null,
+            [
+                {"label": "Quattro Stagioni", "value": 1},
+                {"label": "Prosciutto", "value": 3},
+                {"label": "Margherita", "value": 4},
+                {"label": "Quattro Formaggi", "value": 1},
+                {"label": "Capricciosa", "value": 2}
+            ]
+        ],
         "UPDATE_SUBMISSIONS": [
             {
                 "0": "I do like them somewhat",
@@ -463,8 +474,19 @@
             {
                 "0": "I do like them somewhat",
                 "1": "f@someone.sometld",
-                "2": ["Prosciutto", "Quattro Formaggi"]
+                "2": ["Prosciutto", "Quattro Formaggi", "Margherita"]
             }
+        ],
+        "UPDATED_SUMMARY": [
+            null,
+            null,
+            [
+                {"label": "Quattro Stagioni", "value": 2},
+                {"label": "Prosciutto", "value": 4},
+                {"label": "Margherita", "value": 5},
+                {"label": "Quattro Formaggi", "value": 3},
+                {"label": "Capricciosa", "value": 2}
+            ]
         ]
     }
 }

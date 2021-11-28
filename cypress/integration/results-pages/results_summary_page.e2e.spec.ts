@@ -62,14 +62,21 @@ describe('The Results Summary Page', () => {
             });
     });
 
-    it('initial submissions', () => {
+    it('initial submissions', function () {
+        const {RESULTS} = this.configsJSON;
+        const SUMMARY: (null | {label: string; value: number}[])[] =
+            RESULTS.INITIAL_SUMMARY;
+
         // TODO: check if all results panels contain the expected numbers
         // TODO: download JSON + check correctness
-        // TODO (maybe): download CSV + check correctness
     });
 
-    it('more submissions, refresh button', () => {
+    it('more submissions, refresh button', function () {
         // TODO: add submission to survey
+
+        const {RESULTS} = this.configsJSON;
+        const SUMMARY: (null | {label: string; value: number}[])[] =
+            RESULTS.UPDATED_SUMMARY;
         // TODO: expect values to have changed
         // TODO: download JSON + check correctness
     });
