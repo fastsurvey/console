@@ -65,7 +65,7 @@ function SummaryHeader(props: {
                                 'rounded shadow flex-col-center overflow-hidden ' +
                                 'bg-gray-900 text-gray-200 text-base '
                             }
-                            data-cy='download-dropdown'
+                            data-cy='download-dropdown-panel'
                         >
                             {['json', 'csv'].map((format: any) => (
                                 <button

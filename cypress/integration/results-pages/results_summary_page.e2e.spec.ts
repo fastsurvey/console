@@ -11,8 +11,9 @@ const headerElements = {
 
     toggleDownloadDropdown: () =>
         get(['summary-header', 'button-toggle-download-dropdown'], {count: 1}),
-    downloadDropdown: () => get(['summary-header', 'download-dropdown']),
+    downloadDropdown: () => get(['summary-header', 'download-dropdown-panel']),
     downloadJSON: () => get(['summary-header', 'button-download-json'], {count: 1}),
+    downloadCSV: () => get(['summary-header', 'button-download-csv'], {count: 1}),
     refresh: () => get(['summary-header', 'button-refresh'], {count: 1}),
 };
 
@@ -111,13 +112,41 @@ describe('The Results Summary Page', () => {
     };
 
     it('header', function () {
+        const {USERNAME} = this.accountJSON;
         const {SURVEY} = this.configsJSON.RESULTS;
-        // TODO: check title
-        // TODO: check link to frontend
-        // TODO: check link to config-list page and back
-        // TODO: check toggle-download-dropdown
+        headerElements.title().should('have.text', SURVEY.title);
+        headerElements
+            .link()
+            .should(
+                'have.text',
+                `dev.fastsurvey.de/${USERNAME}/${SURVEY['survey_name']}`,
+            );
+        headerElements
+            .link()
+            .should('have.attr', 'href')
+            .and(
+                'eq',
+                `https://dev.fastsurvey.de/${USERNAME}/${SURVEY['survey_name']}`,
+            );
+
+        headerElements.downloadDropdown().should('have.length', 0);
+        headerElements.toggleDownloadDropdown().click();
+        headerElements.downloadDropdown().should('have.length', 1);
+        headerElements.downloadJSON();
+        headerElements.downloadCSV();
+        headerElements.toggleDownloadDropdown().click();
+        headerElements.downloadDropdown().should('have.length', 0);
     });
 
+    it('results-list', function () {
+        const {USERNAME} = this.accountJSON;
+        const {SURVEY} = this.configsJSON.RESULTS;
+
+        // TODO: check back icon
+        // TODO: check link to config-list page and back
+    });
+
+    /*
     it('initial submissions', function () {
         const {RESULTS} = this.configsJSON;
         assertSummaryState(RESULTS.INITIAL_SUMMARY, RESULTS.SURVEY.fields);
@@ -138,5 +167,5 @@ describe('The Results Summary Page', () => {
         });
 
         // TODO: download JSON + check correctness
-    });
+    });*/
 });
