@@ -1,5 +1,7 @@
 import * as utilities from '../../support/utilities';
 import {types} from '/src/types';
+import path from 'path';
+import {sortBy} from 'lodash';
 
 const {login, getCySelector} = utilities;
 const get = getCySelector;
@@ -173,8 +175,6 @@ describe('The Results Summary Page', () => {
     it('initial submissions', function () {
         const {RESULTS} = this.configsJSON;
         assertSummaryState(RESULTS.INITIAL_SUMMARY, RESULTS.SURVEY.fields);
-
-        // TODO: download JSON + check correctness
     });
 
     it('more submissions, refresh button', function () {
@@ -188,7 +188,27 @@ describe('The Results Summary Page', () => {
             headerElements.refresh().click();
             assertSummaryState(RESULTS.UPDATED_SUMMARY, RESULTS.SURVEY.fields);
         });
+    });
 
-        // TODO: download JSON + check correctness
+    it('download JSON', function () {
+        const {USERNAME} = this.accountJSON;
+        const {SURVEY, INITIAL_DOWNLOAD} = this.configsJSON.RESULTS;
+
+        headerElements.toggleDownloadDropdown().click();
+        headerElements.downloadJSON().click();
+
+        const downloadsFolder = Cypress.config('downloadsFolder');
+        const filename = path.join(
+            downloadsFolder,
+            `${USERNAME}_${SURVEY['survey_name']}_submissions.json`,
+        );
+
+        const sortSubmissions = (xs: any[]) =>
+            sortBy(xs, (x) => x["What's your email address?"]['email_address']);
+        cy.readFile(filename, 'utf8').then((fileContent) => {
+            expect(sortSubmissions(fileContent)).to.deep.equal(
+                sortSubmissions(INITIAL_DOWNLOAD),
+            );
+        });
     });
 });
