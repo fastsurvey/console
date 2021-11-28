@@ -6,9 +6,7 @@ import {Button, TimePill} from '/src/components';
 import {connect} from 'react-redux';
 
 const frontendUrl =
-    import.meta.env.VITE_ENV === 'development'
-        ? 'dev.fastsurvey.de'
-        : 'fastsurvey.de';
+    import.meta.env.VITE_ENV === 'development' ? 'dev.fastsurvey.de' : 'fastsurvey.de';
 
 function SummaryHeader(props: {
     account: types.Account;
@@ -30,7 +28,7 @@ function SummaryHeader(props: {
     const [showDownloadOptions, setShowDownloadOptions] = useState(false);
 
     return (
-        <div className={'w-full flex-col-left mb-1 z-10'}>
+        <div className={'w-full flex-col-left mb-1 z-10'} data-cy='summary-header'>
             <div className='relative w-full flex-row-top '>
                 <Link
                     to='/results'
@@ -38,27 +36,27 @@ function SummaryHeader(props: {
                         'w-10 h-10 m-1 p-2 ringable rounded icon-gray ' +
                         'absolute -left-14 top-50% transform -translate-y-50% '
                     }
+                    data-cy='button-back'
                 >
                     {icons.chevronLeftCircle}
                 </Link>
 
-                <div
+                <h1
                     className={
-                        'pr-4 text-xl text-gray-800 font-weight-700 ' +
-                        'md:truncate'
+                        'pr-4 text-xl text-gray-800 font-weight-700 ' + 'md:truncate'
                     }
+                    data-cy='title'
                 >
                     {title}
-                </div>
+                </h1>
                 <div className='flex-max' />
                 <div className='relative'>
                     <Button
                         text={showDownloadOptions ? undefined : 'download'}
                         icon={showDownloadOptions ? icons.close : undefined}
                         loading={props.isDownloading}
-                        onClick={() =>
-                            setShowDownloadOptions(!showDownloadOptions)
-                        }
+                        onClick={() => setShowDownloadOptions(!showDownloadOptions)}
+                        data-cy='button-show-download-options'
                     />
                     {showDownloadOptions && (
                         <div
@@ -67,6 +65,7 @@ function SummaryHeader(props: {
                                 'rounded shadow flex-col-center overflow-hidden ' +
                                 'bg-gray-900 text-gray-200 text-base '
                             }
+                            data-cy='download-popup'
                         >
                             {['json', 'csv'].map((format: any) => (
                                 <button
@@ -80,6 +79,7 @@ function SummaryHeader(props: {
                                         props.download(format);
                                         setShowDownloadOptions(false);
                                     }}
+                                    data-cy={`button-download-${format}`}
                                 >
                                     {format}
                                 </button>
@@ -92,6 +92,7 @@ function SummaryHeader(props: {
                     text={'refresh'}
                     onClick={props.fetch}
                     loading={props.isFetching}
+                    data-cy='button-refresh'
                 />
             </div>
             <a
@@ -99,6 +100,7 @@ function SummaryHeader(props: {
                 className='px-1.5 py-0.5 transform -translate-x-1.5 rounded ringable'
                 target='_blank'
                 rel='noopener noreferrer'
+                data-cy='link-to-frontend'
             >
                 {linkContent}
             </a>
