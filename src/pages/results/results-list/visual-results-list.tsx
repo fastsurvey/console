@@ -26,13 +26,14 @@ function VisualConfigList(props: {
                     <SearchBar value={value} setValue={setValue} />
                 </div>
 
-                <div className='grid w-full grid-cols-1 gap-3 md:grid-cols-2'>
+                <div
+                    className='grid w-full grid-cols-1 gap-3 md:grid-cols-2'
+                    data-cy='results-list'
+                >
                     {sortBy(
                         props.configs.filter(
                             (c) =>
-                                c.title
-                                    .toLowerCase()
-                                    .includes(value.toLowerCase()) ||
+                                c.title.toLowerCase().includes(value.toLowerCase()) ||
                                 c.survey_name
                                     .toLowerCase()
                                     .includes(value.toLowerCase()),
