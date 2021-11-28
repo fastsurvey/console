@@ -48,7 +48,9 @@ describe('The Results Summary Page', () => {
 
         // @ts-ignore
         cy.seedResultsData();
+    });
 
+    beforeEach(() => {
         cy.fixture('account.json')
             .as('accountJSON')
             .then((accountJSON) => {
@@ -62,12 +64,59 @@ describe('The Results Summary Page', () => {
             });
     });
 
+    it('header', function () {
+        const {SURVEY} = this.configsJSON.RESULTS;
+        // TODO: check title
+        // TODO: check link to frontend
+        // TODO: check link to config-list page and back
+        // TODO: check toggle-download-dropdown
+    });
+
     it('initial submissions', function () {
         const {RESULTS} = this.configsJSON;
-        const SUMMARY: (null | {label: string; value: number}[])[] =
-            RESULTS.INITIAL_SUMMARY;
+        const SUMMARY: (null | {
+            total: number;
+            results: {[key: string]: number};
+        })[] = RESULTS.INITIAL_SUMMARY;
+        const FIELDS = RESULTS.SURVEY.fields;
 
-        // TODO: check if all results panels contain the expected numbers
+        SUMMARY.forEach((fieldSummary, fieldIndex) => {
+            field(fieldIndex).container();
+            field(fieldIndex)
+                .title()
+                .should(
+                    'contain.text',
+                    `${fieldIndex + 1}. ${FIELDS[fieldIndex].title}`,
+                );
+            field(fieldIndex)
+                .container()
+                .should('have.attr', 'data-cy')
+                .and(
+                    'contain',
+                    fieldSummary === null ? 'isnotaggregated' : 'isaggregated',
+                );
+
+            if (fieldSummary !== null) {
+                // @ts-ignore
+                const fieldConfig: {options: string[]} = FIELDS[fieldIndex];
+                fieldConfig.options.forEach((optionTitle, optionIndex) => {
+                    field(fieldIndex)
+                        .percentageBar(optionIndex)
+                        .should('have.attr', 'data-cy')
+                        .and(
+                            'contain',
+                            `count-${fieldSummary.results[optionTitle]}-${fieldSummary.total}-`,
+                        );
+                    field(fieldIndex)
+                        .percentageBarLabel(optionIndex)
+                        .should('contain.text', optionTitle);
+                });
+            }
+        });
+
+        // not more fields that expected
+        get([`field-container-${SUMMARY.length}`], {count: 0});
+
         // TODO: download JSON + check correctness
     });
 
@@ -75,8 +124,10 @@ describe('The Results Summary Page', () => {
         // TODO: add submission to survey
 
         const {RESULTS} = this.configsJSON;
-        const SUMMARY: (null | {label: string; value: number}[])[] =
-            RESULTS.UPDATED_SUMMARY;
+        const SUMMARY: (null | {
+            total: number;
+            results: {[key: string]: number};
+        })[] = RESULTS.UPDATED_SUMMARY;
         // TODO: expect values to have changed
         // TODO: download JSON + check correctness
     });

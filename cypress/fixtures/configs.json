@@ -457,13 +457,16 @@
         "INITIAL_SUMMARY": [
             null,
             null,
-            [
-                {"label": "Quattro Stagioni", "value": 1},
-                {"label": "Prosciutto", "value": 3},
-                {"label": "Margherita", "value": 4},
-                {"label": "Quattro Formaggi", "value": 1},
-                {"label": "Capricciosa", "value": 2}
-            ]
+            {
+                "total": 4,
+                "results": {
+                    "Quattro Stagioni": 1,
+                    "Prosciutto": 3,
+                    "Margherita": 4,
+                    "Quattro Formaggi": 1,
+                    "Capricciosa": 2
+                }
+            }
         ],
         "UPDATE_SUBMISSIONS": [
             {
@@ -480,13 +483,16 @@
         "UPDATED_SUMMARY": [
             null,
             null,
-            [
-                {"label": "Quattro Stagioni", "value": 2},
-                {"label": "Prosciutto", "value": 4},
-                {"label": "Margherita", "value": 5},
-                {"label": "Quattro Formaggi", "value": 3},
-                {"label": "Capricciosa", "value": 2}
-            ]
+            {
+                "total": 6,
+                "results": {
+                    "Quattro Stagioni": 2,
+                    "Prosciutto": 4,
+                    "Margherita": 5,
+                    "Quattro Formaggi": 3,
+                    "Capricciosa": 2
+                }
+            }
         ]
     }
 }
