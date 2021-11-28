@@ -10,9 +10,7 @@ describe('The Results Summary Page', () => {
 
         // @ts-ignore
         cy.seedResultsData();
-    });
 
-    it('does something', () => {
         cy.fixture('account.json')
             .as('accountJSON')
             .then((accountJSON) => {
@@ -25,6 +23,8 @@ describe('The Results Summary Page', () => {
                     });
             });
     });
+
+    it('does something', () => {});
 
     // TODO: seed with sample survey
     //

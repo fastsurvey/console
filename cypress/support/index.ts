@@ -224,12 +224,12 @@ Cypress.Commands.add('seedResultsData', () => {
             const {USERNAME, PASSWORD} = accountJSON;
             const {SURVEY, INITIAL_SUBMISSIONS} = configsJSON.RESULTS;
 
-            const baseUrl = `https://api.dev.fastsurvey.de/users/${USERNAME}`;
+            const baseUrl = `https://api.dev.fastsurvey.de/users/${USERNAME}/surveys`;
 
             const postConfig = (authResponse: Cypress.Response<any>) =>
                 cy.request({
                     method: 'POST',
-                    url: `${baseUrl}/surveys`,
+                    url: baseUrl,
                     body: SURVEY,
                     headers: {
                         Authorization: `Bearer ${authResponse.body['access_token']}`,
@@ -237,28 +237,27 @@ Cypress.Commands.add('seedResultsData', () => {
                     },
                 });
 
-            const getConfig = (authResponse: Cypress.Response<any>) =>
+            const postSubmission = (
+                authResponse: Cypress.Response<any>,
+                submission: any,
+            ) =>
                 cy.request({
-                    method: 'GET',
-                    url: `${baseUrl}/surveys/${SURVEY['survey_name']}`,
+                    method: 'POST',
+                    url: `${baseUrl}/${SURVEY['survey_name']}/submissions`,
+                    body: submission,
                     headers: {
                         Authorization: `Bearer ${authResponse.body['access_token']}`,
                         'Content-Type': 'application/json',
                     },
                 });
 
-            requestAuthentication(USERNAME, PASSWORD).then((authResponse) => {
-                expect(authResponse.status).to.equal(200);
-                expect(authResponse.body).to.have.property('access_token');
-
-                postConfig(authResponse).then((r1) => {
-                    expect(r1.status).to.equal(200);
-
-                    getConfig(authResponse).then((r2) => {
-                        expect(r2.status).to.equal(200);
-                        expect(r2.body).to.deep.equal({
-                            ...SURVEY,
-                            max_identifier: SURVEY.fields.length - 1,
+            requestAuthentication(USERNAME, PASSWORD).then((r1: any) => {
+                expect(r1.status).to.equal(200);
+                postConfig(r1).then((r2) => {
+                    expect(r2.status).to.equal(200);
+                    INITIAL_SUBMISSIONS.forEach((s: any) => {
+                        postSubmission(r1, s).then((r3) => {
+                            expect(r3.status).to.equal(200);
                         });
                     });
                 });
