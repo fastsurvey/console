@@ -13,6 +13,7 @@ const headerElements = {
         get(['summary-header', 'button-toggle-download-dropdown'], {count: 1}),
     downloadDropdown: () => get(['summary-header', 'download-dropdown']),
     downloadJSON: () => get(['summary-header', 'button-download-json'], {count: 1}),
+    refresh: () => get(['summary-header', 'button-refresh'], {count: 1}),
 };
 
 const field = (index: number) => ({
@@ -125,14 +126,17 @@ describe('The Results Summary Page', () => {
     });
 
     it('more submissions, refresh button', function () {
-        // TODO: add submission to survey
-
         const {RESULTS} = this.configsJSON;
-        const SUMMARY: (null | {
-            total: number;
-            results: {[key: string]: number};
-        })[] = RESULTS.UPDATED_SUMMARY;
-        // TODO: expect values to have changed
+        assertSummaryState(RESULTS.INITIAL_SUMMARY, RESULTS.SURVEY.fields);
+
+        // @ts-ignore
+        cy.seedUpdatedResultsData();
+
+        cy.wait(3000).then(() => {
+            headerElements.refresh().click();
+            assertSummaryState(RESULTS.UPDATED_SUMMARY, RESULTS.SURVEY.fields);
+        });
+
         // TODO: download JSON + check correctness
     });
 });

@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-const requestAuthentication = (identifier: string, password: string) =>
+export const requestAuthentication = (identifier: string, password: string) =>
     cy.request({
         method: 'POST',
         url: 'https://api.dev.fastsurvey.de/authentication',
@@ -259,6 +259,34 @@ Cypress.Commands.add('seedResultsData', () => {
                         postSubmission(r1, s).then((r3) => {
                             expect(r3.status).to.equal(200);
                         });
+                    });
+                });
+            });
+        });
+    });
+});
+
+Cypress.Commands.add('seedUpdatedResultsData', () => {
+    cy.fixture('account.json').then((accountJSON: any) => {
+        cy.fixture('configs.json').then((configsJSON: any) => {
+            const {USERNAME, PASSWORD} = accountJSON;
+            const {SURVEY, UPDATED_SUBMISSIONS} = configsJSON.RESULTS;
+
+            requestAuthentication(USERNAME, PASSWORD).then((r1: any) => {
+                expect(r1.status).to.equal(200);
+                UPDATED_SUBMISSIONS.forEach((s: any) => {
+                    cy.request({
+                        method: 'POST',
+                        url:
+                            `https://api.dev.fastsurvey.de/users/${USERNAME}/surveys` +
+                            `/${SURVEY['survey_name']}/submissions`,
+                        body: s,
+                        headers: {
+                            Authorization: `Bearer ${r1.body['access_token']}`,
+                            'Content-Type': 'application/json',
+                        },
+                    }).then((r2) => {
+                        expect(r2.status).to.equal(200);
                     });
                 });
             });
