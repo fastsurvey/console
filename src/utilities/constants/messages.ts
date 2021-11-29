@@ -58,7 +58,7 @@ export const messages: {[key in types.MessageId]: types.Message} = {
     },
     'error-link-invalid': {
         id: 'error-link-invalid',
-        text: 'Invalid verification Link',
+        text: 'Invalid verification link',
         type: 'error',
     },
     'success-redirect-to-login': {
