@@ -11,12 +11,7 @@ export declare namespace types {
         fields: SurveyField[];
     }
 
-    export type SurveyField =
-        | EmailField
-        | OptionField
-        | RadioField
-        | SelectionField
-        | TextField;
+    export type SurveyField = EmailField | SelectionField | TextField;
 
     interface GeneralSurveyField {
         identifier: number;
@@ -25,7 +20,7 @@ export declare namespace types {
         description: string;
     }
 
-    export type FieldType = 'email' | 'option' | 'radio' | 'selection' | 'text';
+    export type FieldType = 'email' | 'text' | 'selection';
 
     export interface EmailField extends GeneralSurveyField {
         type: 'email';
@@ -34,14 +29,10 @@ export declare namespace types {
         hint: string;
     }
 
-    export interface OptionField extends GeneralSurveyField {
-        type: 'option';
-        required: boolean;
-    }
-
-    export interface RadioField extends GeneralSurveyField {
-        type: 'radio';
-        options: FieldOption[];
+    export interface TextField extends GeneralSurveyField {
+        type: 'text';
+        min_chars: number;
+        max_chars: number;
     }
 
     export interface SelectionField extends GeneralSurveyField {
@@ -54,12 +45,6 @@ export declare namespace types {
     export interface FieldOption {
         title: string;
         local_id: number;
-    }
-
-    export interface TextField extends GeneralSurveyField {
-        type: 'text';
-        min_chars: number;
-        max_chars: number;
     }
 
     export interface EmailRegexSetup {

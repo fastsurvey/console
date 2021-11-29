@@ -31,22 +31,6 @@ export const field = (
                 },
                 ...commonAttributes,
             };
-        case 'option':
-            return {
-                ...{
-                    type: 'option',
-                    required: false,
-                },
-                ...commonAttributes,
-            };
-        case 'radio':
-            return {
-                ...{
-                    type: 'radio',
-                    options: [],
-                },
-                ...commonAttributes,
-            };
         case 'selection':
             return {
                 ...{

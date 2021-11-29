@@ -4,12 +4,10 @@ import {types} from '/src/types';
 import {Button} from '/src/components';
 import {connect} from 'react-redux';
 import emailImage from '/src/assets/images/field-examples/field-example-email.png';
-import optionImage from '/src/assets/images/field-examples/field-example-option.png';
-import radioImage from '/src/assets/images/field-examples/field-example-radio.png';
 import selectionImage from '/src/assets/images/field-examples/field-example-selection.png';
 import textImage from '/src/assets/images/field-examples/field-example-text.png';
 
-const fields: types.FieldType[] = ['email', 'option', 'radio', 'selection', 'text'];
+const fields: types.FieldType[] = ['email', 'selection', 'text'];
 
 interface Props {
     insertField(fieldType: types.FieldType): void;
@@ -115,50 +113,6 @@ function AddFieldPopup(props: Props) {
                                     sure, every employee only has one vote. We will
                                     publish a guide on this soon.
                                 </p>
-                            </>
-                        )}
-                        {fields[selectedIndex] === 'option' && (
-                            <>
-                                <p className='mb-3'>
-                                    An{' '}
-                                    <strong className='text-gray-900'>
-                                        option field
-                                    </strong>{' '}
-                                    is a single checkbox. Example: "I accept the terms
-                                    and conditions". You can enable the setting{' '}
-                                    <strong className='text-gray-900'>required</strong>{' '}
-                                    to only allow submissions with a selected checkbox.
-                                </p>
-                                <img
-                                    className='w-full mb-3'
-                                    src={optionImage}
-                                    alt='how an option field looks like'
-                                />
-                                <p className='mb-3'>
-                                    If you leave the{' '}
-                                    <strong className='text-gray-900'>
-                                        description
-                                    </strong>{' '}
-                                    empty, the phrase "Yes" will be placed next to the
-                                    checkbox.
-                                </p>
-                            </>
-                        )}
-                        {fields[selectedIndex] === 'radio' && (
-                            <>
-                                <p className='mb-3'>
-                                    A{' '}
-                                    <strong className='text-gray-900'>
-                                        radio field
-                                    </strong>{' '}
-                                    is a single-choice question. The respondent has to
-                                    select exactly one option.
-                                </p>
-                                <img
-                                    className='w-full mb-3'
-                                    src={radioImage}
-                                    alt='how a radio field looks like'
-                                />
                             </>
                         )}
                         {fields[selectedIndex] === 'selection' && (

@@ -21,9 +21,7 @@ const validateFormat = {
             checkTypes(config.title, 's');
             checkTypes(config.description, 's');
 
-            assert(
-                ['email', 'option', 'radio', 'selection', 'text'].includes(config.type),
-            );
+            assert(['email', 'selection', 'text'].includes(config.type));
 
             const commonKeys = ['type', 'title', 'description'];
             const checkKeys = (specificKeys: string[]) => {
@@ -39,15 +37,6 @@ const validateFormat = {
                     checkTypes(config.regex, 's');
                     checkTypes(config.hint, 's');
                     checkTypes(config.verify, true);
-                    return true;
-                case 'option':
-                    checkKeys(['required']);
-                    checkTypes(config.required, true);
-                    return true;
-                case 'radio':
-                    checkKeys(['options']);
-                    checkTypes(config.options, [{}]);
-                    assert(validateFormat.fieldOptionsList(config.options));
                     return true;
                 case 'selection':
                     checkKeys(['options', 'min_select', 'max_select']);

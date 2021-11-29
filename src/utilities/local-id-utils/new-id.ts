@@ -1,9 +1,7 @@
 import {types} from '/src/types';
 import {max} from 'lodash';
 
-function fieldOption(
-    fieldConfig: types.RadioField | types.SelectionField,
-): number {
+function fieldOption(fieldConfig: types.SelectionField): number {
     const maxId = max(
         fieldConfig.options.map(
             (optionConfig: types.FieldOption) => optionConfig.local_id,
@@ -18,9 +16,7 @@ function fieldOption(
 }
 
 function field(config: types.SurveyConfig): number {
-    const maxId = max(
-        config.fields.map((field: types.SurveyField) => field.local_id),
-    );
+    const maxId = max(config.fields.map((field: types.SurveyField) => field.local_id));
     if (maxId !== undefined) {
         return maxId + 1;
     } else {

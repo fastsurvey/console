@@ -4,7 +4,7 @@ import {Label, TextInput} from '/src/components';
 import {types} from '/src/types';
 
 interface Props {
-    fieldConfig: types.RadioField | types.SelectionField;
+    fieldConfig: types.SelectionField;
     disabled: boolean;
     setLocalFieldConfig(fieldConfigChanges: object): void;
 

@@ -14,10 +14,11 @@ export const survey = (configs: types.SurveyConfig[]): any => {
         fields: [
             {
                 identifier: 0,
-                type: 'option',
-                title: 'Data Privacy',
-                description: 'I accept the terms and conditions',
-                required: true,
+                type: 'text',
+                title: 'Do you think, potatoes are a good idea?',
+                description: '',
+                min_chars: 0,
+                max_chars: 2000,
             },
         ],
     };

@@ -5,7 +5,7 @@ import VisualFieldOptionsList from './visual-field-options-list';
 import {types} from '/src/types';
 
 interface Props {
-    fieldConfig: types.RadioField | types.SelectionField;
+    fieldConfig: types.SelectionField;
     setLocalFieldConfig(fieldConfigChanges: object): void;
     disabled: boolean;
 }
@@ -25,9 +25,7 @@ function FieldOptionsList(props: Props) {
         nextRowRef.current?.blur();
         optionsVisible.push(true);
 
-        props.setLocalFieldConfig(
-            templateUtils.option(newOption, props.fieldConfig),
-        );
+        props.setLocalFieldConfig(templateUtils.option(newOption, props.fieldConfig));
 
         // Suitable for 1rem = 16px
         animateScroll.scrollMore(56, {duration: 150});

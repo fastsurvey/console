@@ -9,9 +9,7 @@ function Summary(props: {
     account: types.Account;
     accessToken: types.AccessToken;
 }) {
-    const [results, setResults] = useState<types.SurveyResults | undefined>(
-        undefined,
-    );
+    const [results, setResults] = useState<types.SurveyResults | undefined>(undefined);
     const [isFetching, setIsFetching] = useState(true);
     const [isDownloading, setIsDownloading] = useState(false);
 
@@ -55,8 +53,7 @@ function Summary(props: {
         }
 
         return encodeURI(
-            'data:text/json;charset=utf-8,' +
-                JSON.stringify(outputJSON, null, '\t'),
+            'data:text/json;charset=utf-8,' + JSON.stringify(outputJSON, null, '\t'),
         );
     }
 
@@ -77,10 +74,8 @@ function Summary(props: {
                     }
                     break;
                 case 'text':
-                case 'option':
                     headerRow.push(escapeQuotes(f.title));
                     break;
-                case 'radio':
                 case 'selection':
                     f.options.forEach((o) => {
                         headerRow.push(escapeQuotes(`${f.title} (${o.title})`));
@@ -98,9 +93,7 @@ function Summary(props: {
                 switch (f.type) {
                     case 'email':
                         if (fieldData.email_address !== null) {
-                            outputRow.push(
-                                escapeQuotes(fieldData.email_address),
-                            );
+                            outputRow.push(escapeQuotes(fieldData.email_address));
                         } else {
                             outputRow.push('');
                         }
@@ -119,28 +112,10 @@ function Summary(props: {
                             outputRow.push('');
                         }
                         break;
-                    case 'option':
-                        if (fieldData !== null) {
-                            outputRow.push(`${fieldData}`);
-                        } else {
-                            outputRow.push('');
-                        }
-                        break;
-                    case 'radio':
-                        if (fieldData !== null) {
-                            f.options.forEach((o) =>
-                                outputRow.push(`${fieldData === o.title}`),
-                            );
-                        } else {
-                            f.options.forEach(() => outputRow.push(''));
-                        }
-                        break;
                     case 'selection':
                         if (fieldData !== null) {
                             f.options.forEach((o) =>
-                                outputRow.push(
-                                    `${fieldData.includes(o.title)}`,
-                                ),
+                                outputRow.push(`${fieldData.includes(o.title)}`),
                             );
                         } else {
                             f.options.forEach(() => outputRow.push(''));

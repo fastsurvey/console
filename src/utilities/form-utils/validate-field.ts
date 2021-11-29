@@ -1,9 +1,7 @@
 import {types} from '/src/types';
 import {validators} from './validators';
 
-export function validateField(
-    fieldConfig: types.SurveyField,
-): types.ValidationResult {
+export function validateField(fieldConfig: types.SurveyField): types.ValidationResult {
     const results: types.ValidationResult[] = [
         validators.fieldTitle(fieldConfig.title),
         validators.description(fieldConfig.description),
@@ -16,21 +14,9 @@ export function validateField(
                 validators.regex(fieldConfig.regex),
             );
             break;
-        case 'option':
-            break;
-        case 'radio':
-            results.push(
-                ...fieldConfig.options.map((c) =>
-                    validators.optionTitle(c.title),
-                ),
-                validators.fieldOptions(fieldConfig),
-            );
-            break;
         case 'selection':
             results.push(
-                ...fieldConfig.options.map((c) =>
-                    validators.optionTitle(c.title),
-                ),
+                ...fieldConfig.options.map((c) => validators.optionTitle(c.title)),
                 validators.fieldOptions(fieldConfig),
                 validators.minSelect(fieldConfig),
                 validators.maxSelect(fieldConfig),

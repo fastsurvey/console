@@ -1,6 +1,5 @@
 import React from 'react';
 import {types} from '/src/types';
-import OptionSummary from './summaries/option-summary';
 import ChoiceSummary from './summaries/choice-summary';
 
 interface Props {
@@ -49,18 +48,6 @@ function Field(props: Props) {
     );
 
     switch (fieldConfig.type) {
-        case 'option':
-            return (
-                <VisualField subtitle='yes/no'>
-                    <OptionSummary {...summaryProps} />
-                </VisualField>
-            );
-        case 'radio':
-            return (
-                <VisualField subtitle={`choose 1 option`}>
-                    <ChoiceSummary {...summaryProps} />
-                </VisualField>
-            );
         case 'selection':
             return (
                 <VisualField
@@ -69,7 +56,8 @@ function Field(props: Props) {
                     <ChoiceSummary {...summaryProps} />
                 </VisualField>
             );
-        default:
+        case 'text':
+        case 'email':
             return (
                 <section
                     className={
