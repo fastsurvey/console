@@ -183,16 +183,11 @@ describe('The Editor Page', () => {
         });
     };
 
-    it('header look, back button', function () {
+    it('header look, back button, settings look, tab navigation', function () {
         headerElements.title();
         headerElements.link();
         headerElements.reopen();
 
-        headerElements.back().click();
-        cy.url().should('eq', 'http://localhost:3000/configurations');
-    });
-
-    it('settings look, tab navigation', function () {
         settingsElements.tabAbout();
         settingsElements.inputTitle();
         settingsElements.inputIdentifier();
@@ -205,6 +200,9 @@ describe('The Editor Page', () => {
         settingsElements.startTime();
         settingsElements.endDate();
         settingsElements.endTime();
+
+        headerElements.back().click();
+        cy.url().should('eq', 'http://localhost:3000/configurations');
     });
 
     it('start/end buttons', function () {
@@ -222,11 +220,8 @@ describe('The Editor Page', () => {
         headerElements.end().click();
         headerElements.reopen();
         assertPillState('finished');
-    });
 
-    it('draft toggle', function () {
         // assert initial state
-        assertPillState('finished');
         settingsElements.tabVisibility().click();
         settingsElements
             .toggleDraftYes()
@@ -473,7 +468,7 @@ describe('The Editor Page', () => {
     });
 
     it('adding a text field, undo adding', function () {
-        const {INITIAL_SURVEY, INITIAL_MAX_IDENTIFIER, ADDED_FIELDS} =
+        const {INITIAL_SURVEY, INITIAL_NEXT_IDENTIFIER, ADDED_FIELDS} =
             this.configsJSON.EDITOR;
         const {USERNAME, PASSWORD} = this.accountJSON;
 
@@ -499,7 +494,7 @@ describe('The Editor Page', () => {
         get([`editor-field-panel`], {count: 3});
         assertConfigInDB(USERNAME, PASSWORD, {
             ...INITIAL_SURVEY,
-            max_identifier: INITIAL_MAX_IDENTIFIER,
+            next_identifier: INITIAL_NEXT_IDENTIFIER,
         });
 
         // edit field to match fixture
@@ -516,13 +511,13 @@ describe('The Editor Page', () => {
         assertLocalField(1);
         assertConfigInDB(USERNAME, PASSWORD, {
             ...INITIAL_SURVEY,
-            max_identifier: INITIAL_MAX_IDENTIFIER + 1,
+            next_identifier: INITIAL_NEXT_IDENTIFIER + 1,
             fields: insertInArray(INITIAL_SURVEY.fields, 1, ADDED_FIELDS.TEXT),
         });
     });
 
     it('adding an email field', function () {
-        const {INITIAL_SURVEY, INITIAL_MAX_IDENTIFIER, ADDED_FIELDS} =
+        const {INITIAL_SURVEY, INITIAL_NEXT_IDENTIFIER, ADDED_FIELDS} =
             this.configsJSON.EDITOR;
         const {USERNAME, PASSWORD} = this.accountJSON;
 
@@ -557,13 +552,13 @@ describe('The Editor Page', () => {
         assertLocalField();
         assertConfigInDB(USERNAME, PASSWORD, {
             ...INITIAL_SURVEY,
-            max_identifier: INITIAL_MAX_IDENTIFIER + 1,
+            next_identifier: INITIAL_NEXT_IDENTIFIER + 1,
             fields: insertInArray(INITIAL_SURVEY.fields, 2, ADDED_FIELDS.EMAIL),
         });
     });
 
     it('adding a selection field', function () {
-        const {INITIAL_SURVEY, INITIAL_MAX_IDENTIFIER, ADDED_FIELDS} =
+        const {INITIAL_SURVEY, INITIAL_NEXT_IDENTIFIER, ADDED_FIELDS} =
             this.configsJSON.EDITOR;
         const {USERNAME, PASSWORD} = this.accountJSON;
 
@@ -601,13 +596,13 @@ describe('The Editor Page', () => {
             .should('have.value', ADDED_FIELDS.SELECTION.max_select);
         assertConfigInDB(USERNAME, PASSWORD, {
             ...INITIAL_SURVEY,
-            max_identifier: INITIAL_MAX_IDENTIFIER + 1,
+            next_identifier: INITIAL_NEXT_IDENTIFIER + 1,
             fields: insertInArray(INITIAL_SURVEY.fields, 3, ADDED_FIELDS.SELECTION),
         });
     });
 
     it('removing a field', function () {
-        const {INITIAL_SURVEY, INITIAL_MAX_IDENTIFIER} = this.configsJSON.EDITOR;
+        const {INITIAL_SURVEY, INITIAL_NEXT_IDENTIFIER} = this.configsJSON.EDITOR;
         const {USERNAME, PASSWORD} = this.accountJSON;
 
         // TODO: Wait for Felix to fix bug with max_identifier
@@ -619,7 +614,7 @@ describe('The Editor Page', () => {
         get([`editor-field-panel`], {count: 3});
         assertConfigInDB(USERNAME, PASSWORD, {
             ...INITIAL_SURVEY,
-            max_identifier: INITIAL_MAX_IDENTIFIER,
+            next_identifier: INITIAL_NEXT_IDENTIFIER,
         });
 
         // remove field 2 + save
@@ -640,7 +635,7 @@ describe('The Editor Page', () => {
 
         assertConfigInDB(USERNAME, PASSWORD, {
             ...INITIAL_SURVEY,
-            max_identifier: 1,
+            next_identifier: INITIAL_NEXT_IDENTIFIER,
             fields: pullAllBy(
                 JSON.parse(JSON.stringify(INITIAL_SURVEY.fields)),
                 [{identifier: INITIAL_SURVEY.fields[2].identifier}],
@@ -664,7 +659,7 @@ describe('The Editor Page', () => {
 
         assertConfigInDB(USERNAME, PASSWORD, {
             ...INITIAL_SURVEY,
-            max_identifier: 1,
+            next_identifier: INITIAL_NEXT_IDENTIFIER,
             fields: pullAllBy(
                 JSON.parse(JSON.stringify(INITIAL_SURVEY.fields)),
                 [
@@ -687,7 +682,7 @@ describe('The Editor Page', () => {
     });
 
     // Test with component test of fields:
-    // - looks as expected
-    // - collapsing fields
-    // - all possible error messages
+    // TODO: looks as expected
+    // TODO: collapsing fields
+    // TODO: all possible error messages
 });

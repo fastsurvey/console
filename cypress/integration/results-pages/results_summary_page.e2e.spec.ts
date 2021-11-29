@@ -1,5 +1,4 @@
 import * as utilities from '../../support/utilities';
-import {types} from '/src/types';
 import path from 'path';
 import {sortBy} from 'lodash';
 
@@ -55,15 +54,13 @@ const resultsPanel = (surveyName: string) => ({
 });
 
 describe('The Results Summary Page', () => {
-    before(() => {
+    beforeEach(() => {
         // @ts-ignore
         cy.seedConfigData();
 
         // @ts-ignore
         cy.seedResultsData();
-    });
 
-    beforeEach(() => {
         cy.fixture('account.json')
             .as('accountJSON')
             .then((accountJSON) => {
@@ -122,23 +119,18 @@ describe('The Results Summary Page', () => {
         get([`field-container-${SUMMARY.length}`], {count: 0});
     };
 
-    it('header', function () {
+    it('header, config list', function () {
         const {USERNAME} = this.accountJSON;
         const {SURVEY} = this.configsJSON.RESULTS;
+        const SURVEY_NAME = SURVEY['survey_name'];
         headerElements.title().should('have.text', SURVEY.title);
         headerElements
             .link()
-            .should(
-                'have.text',
-                `dev.fastsurvey.de/${USERNAME}/${SURVEY['survey_name']}`,
-            );
+            .should('have.text', `dev.fastsurvey.de/${USERNAME}/${SURVEY_NAME}`);
         headerElements
             .link()
             .should('have.attr', 'href')
-            .and(
-                'eq',
-                `https://dev.fastsurvey.de/${USERNAME}/${SURVEY['survey_name']}`,
-            );
+            .and('eq', `https://dev.fastsurvey.de/${USERNAME}/${SURVEY_NAME}`);
 
         headerElements.downloadDropdown().should('have.length', 0);
         headerElements.toggleDownloadDropdown().click();
@@ -147,18 +139,13 @@ describe('The Results Summary Page', () => {
         headerElements.downloadCSV();
         headerElements.toggleDownloadDropdown().click();
         headerElements.downloadDropdown().should('have.length', 0);
-    });
 
-    it('results-list', function () {
-        const {USERNAME} = this.accountJSON;
-        const {SURVEY} = this.configsJSON.RESULTS;
-
-        const SURVEY_NAME = SURVEY['survey_name'];
-
+        // back button
         cy.url().should('eq', `http://localhost:3000/results/${SURVEY_NAME}`);
         headerElements.back().click();
         cy.url().should('eq', 'http://localhost:3000/results');
 
+        // config list
         resultsPanel(SURVEY_NAME).title().should('have.text', SURVEY.title);
         resultsPanel(SURVEY_NAME)
             .linkToFrontend()
@@ -172,12 +159,7 @@ describe('The Results Summary Page', () => {
         cy.url().should('eq', `http://localhost:3000/results/${SURVEY_NAME}`);
     });
 
-    it('initial submissions', function () {
-        const {RESULTS} = this.configsJSON;
-        assertSummaryState(RESULTS.INITIAL_SUMMARY, RESULTS.SURVEY.fields);
-    });
-
-    it('more submissions, refresh button', function () {
+    it('initial submissions, more submissions, refresh button', function () {
         const {RESULTS} = this.configsJSON;
         assertSummaryState(RESULTS.INITIAL_SUMMARY, RESULTS.SURVEY.fields);
 
@@ -194,21 +176,28 @@ describe('The Results Summary Page', () => {
         const {USERNAME} = this.accountJSON;
         const {SURVEY, INITIAL_DOWNLOAD} = this.configsJSON.RESULTS;
 
-        headerElements.toggleDownloadDropdown().click();
-        headerElements.downloadJSON().click();
+        cy.wait(3000).then(() => {
+            headerElements.toggleDownloadDropdown().click();
+            headerElements.downloadJSON().click();
 
-        const downloadsFolder = Cypress.config('downloadsFolder');
-        const filename = path.join(
-            downloadsFolder,
-            `${USERNAME}_${SURVEY['survey_name']}_submissions.json`,
-        );
-
-        const sortSubmissions = (xs: any[]) =>
-            sortBy(xs, (x) => x["What's your email address?"]['email_address']);
-        cy.readFile(filename, 'utf8').then((fileContent) => {
-            expect(sortSubmissions(fileContent)).to.deep.equal(
-                sortSubmissions(INITIAL_DOWNLOAD),
+            const downloadsFolder = Cypress.config('downloadsFolder');
+            const filename = path.join(
+                downloadsFolder,
+                `${USERNAME}_${SURVEY['survey_name']}_submissions.json`,
             );
+
+            const sortSubmissions = (xs: any[]) => {
+                cy.log(JSON.stringify({xs}));
+                return sortBy(
+                    xs,
+                    (x) => x["What's your email address?"]['email_address'],
+                );
+            };
+            cy.readFile(filename, 'utf8').then((fileContent) => {
+                expect(sortSubmissions(fileContent)).to.deep.equal(
+                    sortSubmissions(INITIAL_DOWNLOAD),
+                );
+            });
         });
     });
 });
