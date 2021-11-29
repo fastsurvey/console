@@ -1,3 +1,12 @@
+import * as utilities from '../../support/utilities';
+
+const {getCySelector} = utilities;
+const get = getCySelector;
+
+const inputEmail = () => get(['register-panel', 'input-email'], {count: 1});
+const inputUsername = () => get(['register-panel', 'input-username'], {count: 1});
+const inputPassword = () => get(['register-panel', 'input-password'], {count: 1});
+
 describe('The Register Page', () => {
     it('has working links to other auth-pages', () => {
         cy.visit('/register');
