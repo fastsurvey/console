@@ -1,20 +1,29 @@
 import * as utilities from '../../support/utilities';
 
-const {getCySelector} = utilities;
+const {getCySelector, assertDataCy} = utilities;
 const get = getCySelector;
 
 const inputEmail = () => get(['register-panel', 'input-email'], {count: 1});
 const inputUsername = () => get(['register-panel', 'input-username'], {count: 1});
 const inputPassword = () => get(['register-panel', 'input-password'], {count: 1});
+const buttonSubmit = () => get(['register-panel', 'button-submit'], {count: 1});
+const linkToLogin = () => get(['register-panel', 'link-to-login'], {count: 1});
+const validation = () => get(['register-panel', 'validation-bar'], {count: 1});
 
-describe('The Register Page', () => {
-    it('has working links to other auth-pages', () => {
+describe('Register Page', () => {
+    beforeEach(() => {
         cy.visit('/register');
-        cy.get('h1').should('have.length', 1).should('have.text', 'Register');
-        cy.get('a')
-            .contains('Already have an account?')
-            .should('have.length', 1)
-            .click();
+        cy.url().should('eq', 'http://localhost:3000/register');
+    });
+
+    it('initial state', () => {
+        inputEmail().should('be.empty');
+        inputUsername().should('be.empty');
+        inputPassword().should('be.empty');
+        buttonSubmit();
+        assertDataCy(validation(), 'isinvalid');
+
+        linkToLogin().click();
         cy.url().should('include', '/login');
     });
 });
