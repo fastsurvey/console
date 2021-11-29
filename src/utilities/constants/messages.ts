@@ -48,7 +48,7 @@ export const messages: {[key in types.MessageId]: types.Message} = {
     },
     'error-email-taken': {
         id: 'error-email-taken',
-        text: 'Email format invalid or email is already taken',
+        text: 'Email is already taken',
         type: 'error',
     },
     'error-email-invalid': {
