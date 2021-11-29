@@ -20,7 +20,7 @@ function VisualConfigList(props: {
         >
             <div className='w-full max-w-4xl flex-col-center'>
                 <h1 className='w-full mb-4 text-2xl text-blue-900 font-weight-700'>
-                    Analyze Survey Results
+                    Analyze Results
                 </h1>
                 <div className='w-full mb-6'>
                     <SearchBar value={value} setValue={setValue} />

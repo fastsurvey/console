@@ -72,19 +72,19 @@ function NavbarContent(props: {
             <NavbarButton
                 onClick={() => props.openLink('/configurations')}
                 text='Editor'
-                icon={icons.survey}
+                icon={icons.edit}
                 active={props.location.pathname.startsWith('/configuration')}
             />
             <NavbarButton
                 onClick={() => props.openLink('/results')}
                 text='Results'
-                icon={icons.collection}
+                icon={icons.pieChart}
                 active={props.location.pathname.startsWith('/result')}
             />
             <NavbarButton
                 onClick={() => props.openLink('/account')}
                 text='Account'
-                icon={icons.user}
+                icon={icons.gear}
                 active={props.location.pathname === '/account'}
             />
 
