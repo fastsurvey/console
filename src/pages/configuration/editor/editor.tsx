@@ -100,13 +100,12 @@ function ConfigEditor(props: {
 
     function removeField(index: number) {
         const fieldIdentifier = localConfig.fields[index].identifier;
-        const maxIdentifier = localConfig.max_identifier;
         let newFields: types.SurveyField[] = dataUtils.array.remove(
             localConfig.fields,
             index,
         );
 
-        if (fieldIdentifier > maxIdentifier) {
+        if (fieldIdentifier >= localConfig.next_identifier) {
             newFields = newFields.map((f: types.SurveyField) => ({
                 ...f,
                 identifier:
@@ -124,10 +123,9 @@ function ConfigEditor(props: {
             ...localConfig,
             ...configChanges,
         };
-        // @ts-ignore
-        combinedConfig.max_identifier = max(
-            combinedConfig.fields.map((f) => f.identifier),
-        );
+        const combinedMaxId: any = max(combinedConfig.fields.map((f) => f.identifier));
+        combinedConfig.next_identifier = combinedMaxId + 1;
+
         props.closeAllMessages();
 
         const fieldsAreValid = every(fieldValidation.map((r) => r.valid));

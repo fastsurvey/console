@@ -2,11 +2,11 @@ import {types} from '/src/types';
 import {max} from 'lodash';
 
 export const fieldIdentifier = (config: types.SurveyConfig): number => {
-    const maxBackendId: number = config.max_identifier;
-    const maxFieldId: any =
-        config.fields.length > 0
-            ? max(config.fields.map((f) => f.identifier))
-            : -1;
+    // this is necessary in case the user adds fields, removes some and
+    // adds new ones again, all without saving the config
 
-    return max([maxBackendId, maxFieldId]) + 1;
+    const nextBackendId: number = config.next_identifier;
+    const maxLocalId: any = max([...config.fields.map((f) => f.identifier), -1]);
+
+    return max([nextBackendId, maxLocalId + 1]);
 };

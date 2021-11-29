@@ -41,6 +41,7 @@ function VisualConfigList(props: {
                         ['survey_name'],
                     ).map((config) => (
                         <VisualResultsPanel
+                            key={config.local_id}
                             config={config}
                             account={props.account}
                             accessToken={props.accessToken}

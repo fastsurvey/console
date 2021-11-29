@@ -1,7 +1,7 @@
 export declare namespace types {
     export interface SurveyConfig {
         local_id: number;
-        max_identifier: number;
+        next_identifier: number;
         survey_name: string;
         start: number;
         end: number;

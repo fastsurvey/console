@@ -52,9 +52,7 @@ function updateState(state: types.ReduxState, action: types.ReduxAction) {
             break;
 
         case 'CLOSE_MESSAGE':
-            newState.messages = newState.messages.filter(
-                (m) => m.text !== action.text,
-            );
+            newState.messages = newState.messages.filter((m) => m.text !== action.text);
             break;
 
         case 'CLOSE_ALL_MESSAGES':
@@ -93,7 +91,7 @@ function updateState(state: types.ReduxState, action: types.ReduxAction) {
 
             newState.configs = [
                 ...newState.configs,
-                {...newSurvey, max_identifier: newSurvey.fields.length - 1},
+                {...newSurvey, next_identifier: newSurvey.fields.length},
             ];
             break;
 

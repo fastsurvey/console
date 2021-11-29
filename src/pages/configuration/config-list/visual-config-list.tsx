@@ -40,8 +40,8 @@ function VisualConfigList(props: {
                         ['survey_name'],
                     ).map((config) => (
                         <VisualConfigPanel
-                            config={config}
                             key={config.local_id}
+                            config={config}
                             account={props.account}
                             openRemoveModal={props.openRemoveModal(config)}
                             openDuplicateModal={props.openDuplicateModal(config)}
