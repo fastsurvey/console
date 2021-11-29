@@ -1,21 +1,15 @@
 import React, {useState, useEffect} from 'react';
-import {reduxUtils, styleUtils} from '@utilities';
-import {types} from '@types';
-import {Button} from '@components';
+import {reduxUtils, styleUtils} from '/src/utilities';
+import {types} from '/src/types';
+import {Button} from '/src/components';
 import {connect} from 'react-redux';
-import emailImage from '@assets/images/field-examples/field-example-email.png';
-import optionImage from '@assets/images/field-examples/field-example-option.png';
-import radioImage from '@assets/images/field-examples/field-example-radio.png';
-import selectionImage from '@assets/images/field-examples/field-example-selection.png';
-import textImage from '@assets/images/field-examples/field-example-text.png';
+import emailImage from '/src/assets/images/field-examples/field-example-email.png';
+import optionImage from '/src/assets/images/field-examples/field-example-option.png';
+import radioImage from '/src/assets/images/field-examples/field-example-radio.png';
+import selectionImage from '/src/assets/images/field-examples/field-example-selection.png';
+import textImage from '/src/assets/images/field-examples/field-example-text.png';
 
-const fields: types.FieldType[] = [
-    'email',
-    'option',
-    'radio',
-    'selection',
-    'text',
-];
+const fields: types.FieldType[] = ['email', 'option', 'radio', 'selection', 'text'];
 
 interface Props {
     insertField(fieldType: types.FieldType): void;
@@ -40,9 +34,8 @@ function AddFieldPopup(props: Props) {
                                 'font-weight-600 text-base text-center ' +
                                 'border border-dashed ' +
                                 (selectedIndex === i
-                                    ? styleUtils.color.fieldTypeToClasses(
-                                          fieldType,
-                                      ) + ' border-transparent '
+                                    ? styleUtils.color.fieldTypeToClasses(fieldType) +
+                                      ' border-transparent '
                                     : 'bg-gray-100 border-gray-400 text-gray-500 ' +
                                       'focus:bg-gray-200 focus:border-gray-500 focus:text-gray-900 ' +
                                       'hover:bg-gray-200 hover:border-gray-500 hover:text-gray-900 ')
@@ -50,6 +43,9 @@ function AddFieldPopup(props: Props) {
                             onClick={() =>
                                 setSelectedIndex(selectedIndex === i ? -1 : i)
                             }
+                            data-cy={`button-select-${fieldType} ${
+                                selectedIndex === i ? 'isactive' : 'isinactive'
+                            }`}
                         >
                             {fieldType}
                         </button>
@@ -78,8 +74,7 @@ function AddFieldPopup(props: Props) {
                     >
                         {selectedIndex === -1 && (
                             <p className='text-base text-gray-800 font-weight-500'>
-                                <span className='text-lg'>👈</span> select a
-                                field type
+                                <span className='text-lg'>👈</span> select a field type
                             </p>
                         )}
                         {fields[selectedIndex] === 'email' && (
@@ -102,12 +97,11 @@ function AddFieldPopup(props: Props) {
                                     <strong className='text-gray-900'>
                                         verify submissions
                                     </strong>{' '}
-                                    - after submitting, the respondent will be
-                                    sent a verification-link to that email
-                                    address. Only verified emails will count
-                                    towards the final result. But, unverified
-                                    emails will also be included in the raw data
-                                    download (with a column "verified =
+                                    - after submitting, the respondent will be sent a
+                                    verification-link to that email address. Only
+                                    verified emails will count towards the final result.
+                                    But, unverified emails will also be included in the
+                                    raw data download (with a column "verified =
                                     true/false").
                                 </p>
                                 <p className='mb-3'>
@@ -115,12 +109,11 @@ function AddFieldPopup(props: Props) {
                                     <strong className='text-gray-900'>
                                         format-regex
                                     </strong>{' '}
-                                    - how should the email look like? For
-                                    example: someone@yourcompany.com . You can
-                                    use this to: Only allow certain people to
-                                    submit something AND/OR make sure, every
-                                    employee only has one vote. We will publish
-                                    a guide on this soon.
+                                    - how should the email look like? For example:
+                                    someone@yourcompany.com . You can use this to: Only
+                                    allow certain people to submit something AND/OR make
+                                    sure, every employee only has one vote. We will
+                                    publish a guide on this soon.
                                 </p>
                             </>
                         )}
@@ -131,14 +124,10 @@ function AddFieldPopup(props: Props) {
                                     <strong className='text-gray-900'>
                                         option field
                                     </strong>{' '}
-                                    is a single checkbox. Example: "I accept the
-                                    terms and conditions". You can enable the
-                                    setting{' '}
-                                    <strong className='text-gray-900'>
-                                        required
-                                    </strong>{' '}
-                                    to only allow submissions with a selected
-                                    checkbox.
+                                    is a single checkbox. Example: "I accept the terms
+                                    and conditions". You can enable the setting{' '}
+                                    <strong className='text-gray-900'>required</strong>{' '}
+                                    to only allow submissions with a selected checkbox.
                                 </p>
                                 <img
                                     className='w-full mb-3'
@@ -150,8 +139,8 @@ function AddFieldPopup(props: Props) {
                                     <strong className='text-gray-900'>
                                         description
                                     </strong>{' '}
-                                    empty, the phrase "Yes" will be placed next
-                                    to the checkbox.
+                                    empty, the phrase "Yes" will be placed next to the
+                                    checkbox.
                                 </p>
                             </>
                         )}
@@ -162,8 +151,8 @@ function AddFieldPopup(props: Props) {
                                     <strong className='text-gray-900'>
                                         radio field
                                     </strong>{' '}
-                                    is a single-choice question. The respondent
-                                    has to select exactly one option.
+                                    is a single-choice question. The respondent has to
+                                    select exactly one option.
                                 </p>
                                 <img
                                     className='w-full mb-3'
@@ -179,17 +168,12 @@ function AddFieldPopup(props: Props) {
                                     <strong className='text-gray-900'>
                                         selection field
                                     </strong>{' '}
-                                    is a multiple-choice question. You can
-                                    define the{' '}
-                                    <strong className='text-gray-900'>
-                                        minimum
-                                    </strong>{' '}
+                                    is a multiple-choice question. You can define the{' '}
+                                    <strong className='text-gray-900'>minimum</strong>{' '}
                                     and{' '}
-                                    <strong className='text-gray-900'>
-                                        maximum
-                                    </strong>{' '}
-                                    number of options, the respondent is allowed
-                                    to select.
+                                    <strong className='text-gray-900'>maximum</strong>{' '}
+                                    number of options, the respondent is allowed to
+                                    select.
                                 </p>
                                 <img
                                     className='w-full mb-3'
@@ -205,17 +189,13 @@ function AddFieldPopup(props: Props) {
                                     <strong className='text-gray-900'>
                                         text field
                                     </strong>{' '}
-                                    gives the respondent a text area to answer
-                                    your question. You can define the{' '}
-                                    <strong className='text-gray-900'>
-                                        minimum
-                                    </strong>{' '}
+                                    gives the respondent a text area to answer your
+                                    question. You can define the{' '}
+                                    <strong className='text-gray-900'>minimum</strong>{' '}
                                     and{' '}
-                                    <strong className='text-gray-900'>
-                                        maximum
-                                    </strong>{' '}
-                                    number of characters, this answer is allowed
-                                    to have.
+                                    <strong className='text-gray-900'>maximum</strong>{' '}
+                                    number of characters, this answer is allowed to
+                                    have.
                                 </p>
                                 <img
                                     className='w-full mb-3'
@@ -233,6 +213,7 @@ function AddFieldPopup(props: Props) {
                     text='cancel'
                     variant='flat-light-blue'
                     onClick={props.closeModal}
+                    data-cy='button-cancel-add'
                 />
                 <Button
                     text='add field'
@@ -242,6 +223,7 @@ function AddFieldPopup(props: Props) {
                         props.insertField(fields[selectedIndex]);
                         props.closeModal();
                     }}
+                    data-cy='button-submit-add'
                 />
             </div>
         </div>

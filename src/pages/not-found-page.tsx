@@ -1,6 +1,6 @@
 import React from 'react';
-import {Button, MainWrapper} from '@components';
-import Gif from '@assets/gifs/computer.webp';
+import {Button, MainWrapper} from '/src/components';
+import Gif from '/src/assets/gifs/computer.webp';
 import {useHistory} from 'react-router';
 
 function NotFoundPage() {
@@ -23,7 +23,7 @@ function NotFoundPage() {
                 />
             </div>
             <Button
-                text='Back to Landing Page'
+                text='Back to Main Page'
                 onClick={() => {
                     history.push('/');
                 }}

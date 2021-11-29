@@ -1,6 +1,6 @@
 import React from 'react';
-import {icons} from '@assets';
-import {types} from '@types';
+import {icons} from '/src/assets';
+import {types} from '/src/types';
 
 interface Props {
     message: types.Message;
@@ -27,8 +27,9 @@ function VisualMessage(props: Props) {
                 'font-weight-500 rounded shadow-lg flex-grow max-w-full ' +
                 `${colors}`
             }
+            data-cy={`message-panel-${props.message.type}`}
         >
-            <div className='py-2.5 text-base leading-6'>
+            <div className='py-2.5 text-base leading-6' data-cy='message'>
                 {props.message.text}
             </div>
             <div className='flex-max' />

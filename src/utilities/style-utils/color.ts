@@ -1,4 +1,4 @@
-import {types} from '@types';
+import {types} from '/src/types';
 
 export const color = {
     fieldTypeToClasses: (fieldType: types.FieldType | undefined) => {

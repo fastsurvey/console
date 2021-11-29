@@ -7,6 +7,7 @@ export default function Button(props: {
     variant?: 'flat-light-blue' | 'flat-light-red';
     disabled?: boolean;
     loading?: boolean;
+    'data-cy'?: string;
 }) {
     const {text, icon, onClick, variant, disabled, loading} = props;
 
@@ -42,12 +43,12 @@ export default function Button(props: {
             }
             onClick={onClick && !disabled ? onClick : () => {}}
             disabled={disabled || loading ? disabled || loading : false}
+            data-cy={props['data-cy']}
         >
             {icon && (
                 <div
                     className={
-                        'p-1 w-7 h-7 z-0  ' +
-                        (text !== undefined ? '-mr-1.5 ' : ' ')
+                        'p-1 w-7 h-7 z-0  ' + (text !== undefined ? '-mr-1.5 ' : ' ')
                     }
                 >
                     {icon}

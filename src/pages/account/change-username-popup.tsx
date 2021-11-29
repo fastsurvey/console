@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button} from '@components';
+import {Button} from '/src/components';
 
 interface Props {
     oldUsername: string;
@@ -15,7 +15,7 @@ export default function ChangeUsernamePopup(props: Props) {
                     Caution - the{' '}
                     <strong>links to all of your surveys will change</strong>
                 </p>
-                <p className='w-full mb-2 flex-row-center whitespace-nowrap gap-x-2'>
+                <div className='w-full mb-2 flex-row-center whitespace-nowrap gap-x-2'>
                     <span className='w-10'>Old:</span>{' '}
                     <div
                         className={
@@ -25,13 +25,11 @@ export default function ChangeUsernamePopup(props: Props) {
                         }
                     >
                         fastsurvey.de/
-                        <span className='font-weight-700'>
-                            {props.oldUsername}
-                        </span>
-                        /{'<survey-id>'}
+                        <span className='font-weight-700'>{props.oldUsername}</span>/
+                        {'<survey-id>'}
                     </div>
-                </p>
-                <p className='w-full mb-2 flex-row-center whitespace-nowrap gap-x-2'>
+                </div>
+                <div className='w-full mb-2 flex-row-center whitespace-nowrap gap-x-2'>
                     <span className='w-10'>New:</span>{' '}
                     <div
                         className={
@@ -41,23 +39,23 @@ export default function ChangeUsernamePopup(props: Props) {
                         }
                     >
                         fastsurvey.de/
-                        <span className='font-weight-700'>
-                            {props.newUsername}
-                        </span>
-                        /{'<survey-id>'}
+                        <span className='font-weight-700'>{props.newUsername}</span>/
+                        {'<survey-id>'}
                     </div>
-                </p>
+                </div>
             </div>
             <div className='w-full flex-row-right gap-x-2'>
                 <Button
                     text='cancel'
                     variant='flat-light-red'
                     onClick={props.cancel}
+                    data-cy='button-cancel-username'
                 />
                 <Button
                     text='confirm'
                     variant='flat-light-blue'
                     onClick={props.submit}
+                    data-cy='button-submit-username'
                 />
             </div>
         </div>

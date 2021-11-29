@@ -1,8 +1,8 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {animateScroll} from 'react-scroll';
-import {templateUtils} from '@utilities';
+import {templateUtils} from '/src/utilities';
 import VisualFieldOptionsList from './visual-field-options-list';
-import {types} from '@types';
+import {types} from '/src/types';
 
 interface Props {
     fieldConfig: types.RadioField | types.SelectionField;

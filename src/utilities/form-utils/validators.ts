@@ -1,6 +1,6 @@
-import {types} from '@types';
+import {types} from '/src/types';
 import {filter, uniq} from 'lodash';
-import {formUtils} from '@utilities';
+import {formUtils} from '/src/utilities';
 
 const genericTitle =
     (variant: 'Title' | 'Field title' | 'Option name') =>
@@ -78,7 +78,7 @@ export const validators = {
         if (survey_name.length < 1) {
             return {
                 valid: false,
-                message: 'URL conform identifier too short (≥ 1 characters)',
+                message: 'URL conform identifier too short (≥ 1 character)',
             };
         } else if (survey_name.length > 32) {
             return {
@@ -116,7 +116,7 @@ export const validators = {
                 valid: false,
                 message:
                     'URL conform identifier has to be unique, you ' +
-                    `already have survey '${thisConfig.survey_name}'`,
+                    `already have a survey '${thisConfig.survey_name}'`,
             };
         } else {
             return {valid: true};
@@ -239,7 +239,7 @@ export const validators = {
         if (newUserName.length < 1) {
             return {
                 valid: false,
-                message: 'username too short (≥ 1 characters)',
+                message: 'username too short (≥ 1 character)',
             };
         } else if (newUserName.length > 32) {
             return {

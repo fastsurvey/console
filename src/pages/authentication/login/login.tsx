@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {reduxUtils, backend} from '@utilities';
-import {types} from '@types';
+import {reduxUtils, backend} from '/src/utilities';
+import {types} from '/src/types';
 import VisualLogin from './visual-login';
 
 function LoginForm(props: {

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {constants} from '@utilities';
+import {constants} from '/src/utilities';
 import VisualEmailSettings from './visual-email-settings';
-import {types} from '@types';
+import {types} from '/src/types';
 
 interface Props {
     fieldConfig: types.EmailField;

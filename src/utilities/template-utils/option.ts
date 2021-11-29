@@ -1,4 +1,4 @@
-import {types} from '@types';
+import {types} from '/src/types';
 import localIdUtils from '../local-id-utils/index';
 
 export const option = (

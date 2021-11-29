@@ -6,6 +6,7 @@ function AddFieldButton(props: {
     leftIcon?: boolean;
     onClick(): void;
     disabled: boolean;
+    'data-cy': string;
 }) {
     const icon = <div className={'w-6 h-6 p-1'}>{props.icon}</div>;
     return (
@@ -22,6 +23,7 @@ function AddFieldButton(props: {
             }
             onClick={!props.disabled ? props.onClick : () => {}}
             disabled={props.disabled}
+            data-cy={props['data-cy']}
         >
             {props.leftIcon && icon}
             <div className={'px-1 text-sm font-weight-600 leading-8 '}>

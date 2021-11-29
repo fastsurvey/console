@@ -1,6 +1,6 @@
 import React from 'react';
-import {types} from '@types';
-import PercentageBarRow from '../percentage-bar-row';
+import {types} from '/src/types';
+import PercentageBarRow from './percentage-bar-row';
 
 export default function ChoiceSummary(props: {
     fieldConfig: types.SelectionField;
@@ -12,6 +12,7 @@ export default function ChoiceSummary(props: {
             {props.fieldConfig.options.map((option, index) => (
                 <PercentageBarRow
                     key={index}
+                    index={index}
                     total={props.count}
                     count={props.fieldResults[option.title]}
                     title={option.title}

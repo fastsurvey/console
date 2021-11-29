@@ -10,7 +10,7 @@ async function createAccount(
     error: (code: any) => void,
 ) {
     try {
-        await httpPost(`/users/${account.username}`, account).catch((error) => {
+        await httpPost('/users', account).catch((error) => {
             throw error.response.status;
         });
 

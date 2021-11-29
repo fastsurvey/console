@@ -1,7 +1,7 @@
 import React from 'react';
-import {reduxUtils} from '@utilities';
+import {reduxUtils} from '/src/utilities';
 import {connect} from 'react-redux';
-import {types} from '@types';
+import {types} from '/src/types';
 import VisualRegularNavbar from './visual-regular-navbar';
 import VisualMobileNavbar from './visual-mobile-navbar';
 

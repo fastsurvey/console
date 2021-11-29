@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {types} from '@types';
-import {Navbar} from '@components';
+import {types} from '/src/types';
+import {Navbar} from '/src/components';
 
 function DashBoardPage(props: {
     children: React.ReactNode;

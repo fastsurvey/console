@@ -1,5 +1,5 @@
 import React from 'react';
-import {types} from '@types';
+import {types} from '/src/types';
 
 const initialState: types.ReduxState = {
     loggingIn: true,

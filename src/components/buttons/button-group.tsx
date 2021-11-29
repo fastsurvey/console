@@ -6,6 +6,7 @@ export default function ButtonGroup(props: {
         text: string;
         onClick?(): void;
         disabled?: boolean;
+        'data-cy'?: string;
     }[];
     hideIconsOnMobile?: boolean;
 }) {
@@ -28,18 +29,13 @@ export default function ButtonGroup(props: {
                     }
                     onClick={b.onClick && !b.disabled ? b.onClick : () => {}}
                     disabled={b.disabled ? b.disabled : false}
+                    data-cy={b['data-cy']}
                 >
                     {' '}
                     {props.hideIconsOnMobile && (
                         <>
-                            <div className='hidden p-1 md:block w-7 h-7'>
-                                {b.icon}
-                            </div>
-                            <div
-                                className={
-                                    'font-weight-600 px-3 md:pl-1 md:pr-2 '
-                                }
-                            >
+                            <div className='hidden p-1 md:block w-7 h-7'>{b.icon}</div>
+                            <div className={'font-weight-600 px-3 md:pl-1 md:pr-2 '}>
                                 {b.text}
                             </div>
                         </>
@@ -47,9 +43,7 @@ export default function ButtonGroup(props: {
                     {!props.hideIconsOnMobile && (
                         <>
                             <div className='p-1 w-7 h-7'>{b.icon}</div>
-                            <div className={'font-weight-600 pl-1 pr-2 '}>
-                                {b.text}
-                            </div>
+                            <div className={'font-weight-600 pl-1 pr-2 '}>{b.text}</div>
                         </>
                     )}
                 </button>

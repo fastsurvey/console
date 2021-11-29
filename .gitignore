@@ -5,6 +5,10 @@ node_modules
 tailwind.out.css
 dist
 **/icons/src
+cypress/screenshots
+cypress/videos
+cypress/downloads
+scripts/run-cypress.sh
 
 # Created by https://www.toptal.com/developers/gitignore/api/node,vscode,react,git,macos,linux,yarn
 # Edit at https://www.toptal.com/developers/gitignore?templates=node,vscode,react,git,macos,linux,yarn

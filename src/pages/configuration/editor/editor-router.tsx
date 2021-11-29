@@ -1,10 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {useParams, Link} from 'react-router-dom';
-import {reduxUtils} from '@utilities';
+import {reduxUtils} from '/src/utilities';
 import Editor from './editor';
-import {types} from '@types';
-import {Button} from '@components';
+import {types} from '/src/types';
+import {Button} from '/src/components';
 
 interface Props {
     account: types.Account;

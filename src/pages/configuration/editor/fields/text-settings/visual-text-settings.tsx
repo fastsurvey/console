@@ -1,7 +1,7 @@
 import React from 'react';
-import {formUtils} from '@utilities';
-import {Label, TextInput} from '@components';
-import {types} from '@types';
+import {formUtils} from '/src/utilities';
+import {Label, TextInput} from '/src/components';
+import {types} from '/src/types';
 
 interface Props {
     fieldConfig: types.TextField;
@@ -22,6 +22,7 @@ function VisualTextSettings(props: Props) {
                     }}
                     disabled={props.disabled}
                     postfix=' characters'
+                    data-cy='input-min-chars'
                 />
             </div>
             <div className='w-full centering-col gap-y-0.5'>
@@ -35,6 +36,7 @@ function VisualTextSettings(props: Props) {
                     }}
                     disabled={props.disabled}
                     postfix=' characters'
+                    data-cy='input-max-chars'
                 />
             </div>
         </>

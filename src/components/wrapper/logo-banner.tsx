@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {RocketLogo} from '@assets';
+import {RocketLogo} from '/src/assets';
 
 function LogoBanner(props: {slim?: boolean}) {
     return (

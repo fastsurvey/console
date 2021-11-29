@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import {reduxUtils, formUtils} from '@utilities';
+import {reduxUtils, formUtils} from '/src/utilities';
 import {connect} from 'react-redux';
-import {Label, TextInput, Button} from '@components';
-import {types} from '@types';
+import {Label, TextInput, Button} from '/src/components';
+import {types} from '/src/types';
 
 function DuplicateSurveyPopup(props: {
     configs: types.SurveyConfig[] | undefined;
@@ -12,21 +12,22 @@ function DuplicateSurveyPopup(props: {
 }) {
     const [surveyName, setSurveyName] = useState(props.thisConfig.survey_name);
 
-    const validationMessage = formUtils.validators.newSurveyName(
-        props.configs,
-        {
-            ...props.thisConfig,
-            survey_name: surveyName,
-            local_id: -1,
-        },
-    );
+    const validationMessage = formUtils.validators.newSurveyName(props.configs, {
+        ...props.thisConfig,
+        survey_name: surveyName,
+        local_id: -1,
+    });
 
     if (props.configs) {
         return (
             <div className='w-full p-3 pt-1 flex-col-center gap-y-2 '>
                 <div className='w-full max-w-2xl centering-col gap-y-0.5'>
                     <Label text='New URL conform identifier' />
-                    <TextInput value={surveyName} setValue={setSurveyName} />
+                    <TextInput
+                        value={surveyName}
+                        setValue={setSurveyName}
+                        data-cy='input-duplicate-title'
+                    />
                 </div>
                 {!validationMessage.valid && (
                     <div className='w-full px-3 mb-1 -mt-1 text-xs leading-tight text-red-500 font-weight-600'>
@@ -43,12 +44,14 @@ function DuplicateSurveyPopup(props: {
                             props.closeModal();
                             setTimeout(() => setSurveyName(''), 500);
                         }}
+                        data-cy='button-cancel-duplicate'
                     />
                     <Button
                         text='duplicate survey'
                         variant='flat-light-blue'
                         disabled={!validationMessage.valid}
                         onClick={() => props.duplicateSurvey(surveyName)}
+                        data-cy='button-submit-duplicate'
                     />
                 </div>
             </div>
@@ -64,7 +67,4 @@ const mapStateToProps = (state: types.ReduxState) => ({
 const mapDispatchToProps = (dispatch: any) => ({
     closeModal: reduxUtils.dispatchers.closeModal(dispatch),
 });
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(DuplicateSurveyPopup);
+export default connect(mapStateToProps, mapDispatchToProps)(DuplicateSurveyPopup);

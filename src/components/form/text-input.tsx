@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {icons} from '@assets';
+import {icons} from '/src/assets';
 
 export default function TextInput(props: {
     value: string;
@@ -9,6 +9,7 @@ export default function TextInput(props: {
     disabled?: boolean;
     postfix?: string;
     autoComplete?: string;
+    'data-cy'?: string;
 }) {
     const {value, setValue, autoFocus, type, disabled, postfix} = props;
     const [plainText, setPlainText] = useState(type !== 'password');
@@ -36,6 +37,7 @@ export default function TextInput(props: {
                 type={plainText ? 'text' : 'password'}
                 disabled={disabled === true}
                 autoComplete={props.autoComplete}
+                data-cy={props['data-cy']}
             />
             {postfix && (
                 <div

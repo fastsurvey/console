@@ -1,8 +1,8 @@
 import React from 'react';
-import {formUtils} from '@utilities';
-import {Label, TextInput} from '@components';
+import {formUtils} from '/src/utilities';
+import {Label, TextInput} from '/src/components';
 import FieldOptionsList from '../field-options-list/field-options-list';
-import {types} from '@types';
+import {types} from '/src/types';
 
 interface Props {
     fieldConfig: types.SelectionField;
@@ -18,7 +18,7 @@ function VisualSelectionSettings(props: Props) {
                 setLocalFieldConfig={props.setLocalFieldConfig}
             />
             <div
-                className={'h-0.5 bg-gray-300'}
+                className={'h-px bg-gray-300'}
                 style={{width: 'calc(100% + 1.5rem)'}}
             />
             <div className='w-full centering-col gap-y-0.5'>
@@ -31,6 +31,7 @@ function VisualSelectionSettings(props: Props) {
                         });
                     }}
                     disabled={props.disabled}
+                    data-cy='input-min-select'
                 />
             </div>
             <div className='w-full centering-col gap-y-0.5'>
@@ -43,6 +44,7 @@ function VisualSelectionSettings(props: Props) {
                         });
                     }}
                     disabled={props.disabled}
+                    data-cy='input-max-select'
                 />
             </div>
         </>

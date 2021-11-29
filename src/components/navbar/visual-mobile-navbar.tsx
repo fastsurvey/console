@@ -1,6 +1,6 @@
 import React from 'react';
-import {icons} from '@assets';
-import {types} from '@types';
+import {icons} from '/src/assets';
+import {types} from '/src/types';
 import NavbarContent from './navbar-content/navbar-content';
 
 interface Props {

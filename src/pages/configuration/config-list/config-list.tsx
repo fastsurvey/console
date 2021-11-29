@@ -1,8 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {useHistory} from 'react-router-dom';
-import {reduxUtils, templateUtils, localIdUtils, backend} from '@utilities';
-import {types} from '@types';
+import {reduxUtils, templateUtils, localIdUtils, backend} from '/src/utilities';
+import {types} from '/src/types';
 import VisualConfigList from './visual-config-list';
 import RemoveSurveyPopup from './remove-survey-popup';
 import DuplicateSurveyPopup from './duplicate-survey-popup';
@@ -100,7 +100,7 @@ function ConfigList(props: Props) {
 
     const openDuplicateModal = (config: types.SurveyConfig) => () => {
         props.openModal(
-            'Duplicate this survey',
+            'Duplicate this survey?',
             <DuplicateSurveyPopup
                 thisConfig={config}
                 duplicateSurvey={duplicateSurvey(config)}

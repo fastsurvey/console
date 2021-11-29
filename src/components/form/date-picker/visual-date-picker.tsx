@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {icons} from '@assets';
-import {constants} from '@utilities';
+import {icons} from '/src/assets';
+import {constants} from '/src/utilities';
 import {range} from 'lodash';
 
 function VisualDatePicker(props: {
@@ -9,6 +9,7 @@ function VisualDatePicker(props: {
     getDaysInMonth(year: number, month: number): number;
     getFirstWeekday(year: number, month: number): number;
     setDateTimestamp(t: {year: number; month: number; day: number}): void;
+    'data-cy'?: string;
 }) {
     const {dateStore: date, setDateTimestamp, disabled} = props;
 
@@ -77,11 +78,7 @@ function VisualDatePicker(props: {
                     }
                 }}
                 onKeyDown={(e) => {
-                    if (
-                        e.key === 'Tab' &&
-                        props.day === dayCount &&
-                        !e.shiftKey
-                    ) {
+                    if (e.key === 'Tab' && props.day === dayCount && !e.shiftKey) {
                         setOpen(false);
                     }
                 }}
@@ -102,10 +99,7 @@ function VisualDatePicker(props: {
     const dayCount3 = dayCount - dayCount1 - dayCount2;
 
     const dayRows = [
-        <div
-            className='grid w-full grid-cols-7 gap-x-2'
-            key={`datepicker-row-${0}`}
-        >
+        <div className='grid w-full grid-cols-7 gap-x-2' key={`datepicker-row-${0}`}>
             {range(skippedDays).map((i) => (
                 <div className='w-5 text-center' key={`skipped-day-${i + 1}`} />
             ))}
@@ -149,7 +143,10 @@ function VisualDatePicker(props: {
     ];
 
     return (
-        <div className={'flex-col-left ' + (!open ? 'h-9 ' : ' ')}>
+        <div
+            className={'flex-col-left ' + (!open ? 'h-9 ' : ' ')}
+            data-cy={props['data-cy']}
+        >
             <button
                 ref={ref}
                 className={
@@ -162,9 +159,7 @@ function VisualDatePicker(props: {
                 onClick={() => setOpen(!open)}
                 disabled={props.disabled}
             >
-                <div className='p-1 w-7 h-7 icon-dark-gray'>
-                    {icons.calendar}
-                </div>
+                <div className='p-1 w-7 h-7 icon-dark-gray'>{icons.calendar}</div>
                 <div className='px-1'>
                     {date.getDate().toString().padStart(2, '0')}.
                     {(date.getMonth() + 1).toString().padStart(2, '0')}.

@@ -1,4 +1,4 @@
-import {types} from '@types';
+import {types} from '/src/types';
 import {httpGet, httpPost} from '../http-clients';
 
 async function loginWithForm(
@@ -25,7 +25,7 @@ async function loginWithForm(
             email: '',
         };
 
-        if (!data.identifier.includes('@')) {
+        if (!data.identifier.includes('/src/')) {
             account.email = (
                 await httpGet(`/users/${data.identifier}`, accessToken)
             ).data.email_address;

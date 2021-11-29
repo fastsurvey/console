@@ -1,4 +1,4 @@
-import {Button} from '@components';
+import {Button} from '/src/components';
 import React from 'react';
 import {Link} from 'react-router-dom';
 
@@ -11,9 +11,9 @@ export default function VisualVerifyForm(props: {
     return (
         <div
             className={
-                'w-full max-w-sm p-4 bg-white rounded shadow ' +
-                'gap-y-4 centering-col'
+                'w-full max-w-sm p-4 bg-white rounded shadow ' + 'gap-y-4 centering-col'
             }
+            data-cy='verify-email-panel'
         >
             {verificationState !== 'successful' && (
                 <>
@@ -22,21 +22,27 @@ export default function VisualVerifyForm(props: {
                             'w-full text-2xl text-center no-selection ' +
                             'text-gray-800 font-weight-600'
                         }
+                        data-cy='title'
                     >
                         Verify your Email
                     </h1>
-                    <Button
-                        text='Verify Email'
-                        disabled={verificationState === 'submitting'}
-                        variant='flat-light-blue'
-                        onClick={props.triggerVerification}
-                    />
+                    {tokenExists && (
+                        <Button
+                            text='Verify Email'
+                            disabled={verificationState === 'submitting'}
+                            variant='flat-light-blue'
+                            onClick={props.triggerVerification}
+                            data-cy='button-submit'
+                        />
+                    )}
                     {!tokenExists && (
                         <>
-                            <p className='text-left text-gray-800 font-weight-500'>
-                                Sorry, we couldn't find any email token in the
-                                url. Please use exactly the link we've sent to
-                                you.
+                            <p
+                                className='text-left text-gray-800 font-weight-500'
+                                data-cy='paragraph-no-token'
+                            >
+                                Sorry, we couldn't find any email token in the url.
+                                Please use exactly the link we've sent to you.
                             </p>
                             <Link
                                 to='/login'
@@ -45,6 +51,7 @@ export default function VisualVerifyForm(props: {
                                     'rounded ringable text-gray-500 ' +
                                     'font-weight-600'
                                 }
+                                data-cy='link-to-login'
                             >
                                 Return to Login
                             </Link>
@@ -58,6 +65,7 @@ export default function VisualVerifyForm(props: {
                         'w-full text-2xl text-center no-selection ' +
                         'text-gray-800 font-weight-600'
                     }
+                    data-cy='title'
                 >
                     Success!
                 </h1>

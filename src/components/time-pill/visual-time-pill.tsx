@@ -27,6 +27,7 @@ function VisualTimePill(props: {
                 colorClasses +
                 (!props.flat ? 'shadow-md ' : '')
             }
+            data-cy={`time-pill ${props.variant}`}
         >
             {props.phrase}
         </div>

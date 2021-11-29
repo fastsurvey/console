@@ -1,13 +1,12 @@
 import React from 'react';
-import {types} from '@types';
-import {TimePill} from '@components';
+import {types} from '/src/types';
+import {TimePill} from '/src/components';
 import {isEmpty, filter} from 'lodash';
 import {Link} from 'react-router-dom';
 
 const VITE_ENV = import.meta.env.VITE_ENV;
 
-let baseUrl =
-    VITE_ENV === 'development' ? 'dev.fastsurvey.de' : 'fastsurvey.de';
+let baseUrl = VITE_ENV === 'development' ? 'dev.fastsurvey.de' : 'fastsurvey.de';
 
 interface Props {
     account: types.Account;
@@ -23,7 +22,10 @@ function VisualConfigPanel(props: Props) {
     );
 
     return (
-        <div className={'w-full rounded shadow centering-col bg-white '}>
+        <section
+            className={'w-full rounded shadow centering-col bg-white'}
+            data-cy={`results-panel-${props.config.survey_name}`}
+        >
             <div className={'w-full p-3 bg-white rounded-t flex-col-left'}>
                 <div
                     className={
@@ -32,15 +34,16 @@ function VisualConfigPanel(props: Props) {
                         'sm:flex-row sm:items-center sm:justify-center '
                     }
                 >
-                    <div
+                    <h2
                         className={
                             'pr-4 text-base text-gray-800 font-weight-600 ' +
                             'mb-1 md:mb-0 md:truncate leading-tight ' +
                             'w-full sm:w-auto sm:flex-grow'
                         }
+                        data-cy='title'
                     >
                         {title}
-                    </div>
+                    </h2>
                     <div className='flex-shrink-0 w-full pb-1.5 sm:w-auto flex-row-right sm:pb-0'>
                         <TimePill config={props.config} flat />
                     </div>
@@ -53,6 +56,7 @@ function VisualConfigPanel(props: Props) {
                         'px-1 -mx-1 ringable rounded-sm mt-1 focus:text-blue-500'
                     }
                     target='_blank'
+                    data-cy='link-to-frontend'
                 >
                     {baseUrl}/{username}/{survey_name}
                 </a>
@@ -65,6 +69,7 @@ function VisualConfigPanel(props: Props) {
             <Link
                 to={`/results/${survey_name}`}
                 className='flex-grow w-full rounded ringable group'
+                data-cy='link-to-summary'
             >
                 <div
                     className={
@@ -78,7 +83,7 @@ function VisualConfigPanel(props: Props) {
                     view results
                 </div>
             </Link>
-        </div>
+        </section>
     );
 }
 

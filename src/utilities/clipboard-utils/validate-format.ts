@@ -1,5 +1,5 @@
 import {isEqual} from 'lodash';
-import {types} from '@types';
+import {types} from '/src/types';
 
 function assert(condition: boolean) {
     if (!condition) {
@@ -22,9 +22,7 @@ const validateFormat = {
             checkTypes(config.description, 's');
 
             assert(
-                ['email', 'option', 'radio', 'selection', 'text'].includes(
-                    config.type,
-                ),
+                ['email', 'option', 'radio', 'selection', 'text'].includes(config.type),
             );
 
             const commonKeys = ['type', 'title', 'description'];
@@ -37,9 +35,10 @@ const validateFormat = {
 
             switch (config.type) {
                 case 'email':
-                    checkKeys(['regex', 'hint']);
+                    checkKeys(['regex', 'hint', 'verify']);
                     checkTypes(config.regex, 's');
                     checkTypes(config.hint, 's');
+                    checkTypes(config.verify, true);
                     return true;
                 case 'option':
                     checkKeys(['required']);

@@ -1,5 +1,5 @@
 import React from 'react';
-import {types} from '@types';
+import {types} from '/src/types';
 import FieldOptionsList from '../field-options-list/field-options-list';
 
 interface Props {

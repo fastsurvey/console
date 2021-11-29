@@ -1,10 +1,10 @@
 import React, {useRef} from 'react';
-import {icons} from '@assets';
-import {styleUtils} from '@utilities';
-import {types} from '@types';
-import {ValidationBar} from '@components';
+import {icons} from '/src/assets';
+import {styleUtils} from '/src/utilities';
+import {types} from '/src/types';
+import {ValidationBar} from '/src/components';
 
-interface Props {
+function EditorFormCard(props: {
     label: string;
     children: React.ReactNode;
     buttons?: React.ReactNode;
@@ -19,8 +19,8 @@ interface Props {
     setActionLabel(newLabel: string): void;
 
     validation?: types.ValidationResult;
-}
-function EditorFormCard(props: Props) {
+    'data-cy'?: string;
+}) {
     let ref = useRef<HTMLDivElement>(null);
 
     const toggle = () => {
@@ -35,9 +35,9 @@ function EditorFormCard(props: Props) {
     return (
         <div
             className={
-                'relative centering-col w-full shadow-md rounded ' +
-                props.className
+                'relative centering-col w-full shadow-md rounded ' + props.className
             }
+            data-cy={props['data-cy']}
         >
             <div
                 className={
@@ -95,6 +95,9 @@ function EditorFormCard(props: Props) {
                         onClick={toggle}
                         onMouseEnter={() => updateActionlabel(props.collapse)}
                         onFocus={() => updateActionlabel(props.collapse)}
+                        data-cy={`button-collapse ${
+                            props.collapse ? 'collapsed' : 'expanded'
+                        }`}
                     >
                         {icons.chevronDown}
                     </button>
@@ -115,9 +118,7 @@ function EditorFormCard(props: Props) {
                 >
                     {props.children}
                 </div>
-                {props.validation && (
-                    <ValidationBar validation={props.validation} />
-                )}
+                {props.validation && <ValidationBar validation={props.validation} />}
             </div>
         </div>
     );

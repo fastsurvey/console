@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {types} from '@types';
-import {backend, reduxUtils, formUtils} from '@utilities';
+import {types} from '/src/types';
+import {backend, reduxUtils, formUtils} from '/src/utilities';
 import VisualAccountPage from './visual-account-page';
-import ChangeUsernamePopup from '@pages/account/change-username-popup';
+import ChangeUsernamePopup from '/src/pages/account/change-username-popup';
 import DeleteUserPopup from './delete-user-popup';
-import removeAccount from '../../utilities/backend/account/remove-account';
 
 function AccountPage(props: {
     account: types.Account;
@@ -49,11 +48,10 @@ function AccountPage(props: {
     }
 
     function submitUsername() {
-        props.closeModal();
-
         function success() {
             props.openMessage('success-username-changed');
             props.updateUsername(username);
+            props.closeModal();
             setUsernamePending(false);
         }
         function error(code: number) {
@@ -62,6 +60,7 @@ function AccountPage(props: {
             } else {
                 props.openMessage('error-server');
             }
+            props.closeModal();
             setUsernamePending(false);
         }
 

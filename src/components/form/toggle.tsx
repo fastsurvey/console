@@ -4,6 +4,7 @@ export default function Toggle(props: {
     value: boolean;
     setValue(v: boolean): void;
     disabled?: boolean;
+    'data-cy'?: string;
 }) {
     const {value, setValue} = props;
 
@@ -18,11 +19,15 @@ export default function Toggle(props: {
             : ' text-gray-500');
 
     return (
-        <div className='relative mt-1 bg-gray-100 rounded centering-row gap-x-1'>
+        <div
+            className='relative mt-1 bg-gray-100 rounded centering-row gap-x-1'
+            data-cy={props['data-cy']}
+        >
             <button
                 className={sharedClasses(value)}
                 onClick={!props.disabled ? () => setValue(true) : () => {}}
                 disabled={props.disabled === true}
+                data-cy={`yes ${value ? 'isactive' : 'isinactive'}`}
             >
                 Yes
             </button>
@@ -30,6 +35,7 @@ export default function Toggle(props: {
                 className={sharedClasses(!value)}
                 onClick={!props.disabled ? () => setValue(false) : () => {}}
                 disabled={props.disabled === true}
+                data-cy={`no ${!value ? 'isactive' : 'isinactive'}`}
             >
                 No
             </button>

@@ -1,7 +1,7 @@
 import React from 'react';
-import {icons} from '@assets';
-import {Label, TextInput, Button} from '@components';
-import {types} from '@types';
+import {icons} from '/src/assets';
+import {Label, TextInput} from '/src/components';
+import {types} from '/src/types';
 
 interface Props {
     fieldConfig: types.RadioField | types.SelectionField;
@@ -16,7 +16,7 @@ interface Props {
 }
 const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
     return (
-        <div className='w-full flex-col-right gap-y-1'>
+        <div className='w-full flex-col-right gap-y-1' data-cy='options-list'>
             <Label text='Options to select' />
             {props.fieldConfig.options.map((optionConfig, optionIndex) => (
                 <div
@@ -39,13 +39,12 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
                             })
                         }
                         disabled={props.disabled}
+                        data-cy={`input-option-${optionIndex}`}
                     />
                     <button
                         className={
                             'w-8 h-8 p-1.5 rounded icon-blue ringable ' +
-                            (props.disabled
-                                ? 'opacity-60 cursor-not-allowed '
-                                : ' ')
+                            (props.disabled ? 'opacity-60 cursor-not-allowed ' : ' ')
                         }
                         onClick={() =>
                             props.setLocalFieldConfig({
@@ -56,6 +55,7 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
                             })
                         }
                         disabled={props.disabled}
+                        data-cy={`button-remove-${optionIndex}`}
                     >
                         {icons.trash}
                     </button>
@@ -71,17 +71,10 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
                         'hover:border-gray-500 hover:bg-gray-100 hover:text-gray-500 ' +
                         'focus:border-transparent focus:bg-gray-100 focus:text-gray-500 '
                     }
+                    data-cy='button-add'
                 >
                     add option
                 </button>
-
-                {/*<Button
-                    text='Add Option'
-                    onClick={props.addFieldOption}
-                    icon={icons.addSquare}
-                    variant='flat-light-blue'
-                    disabled={props.disabled}
-                />*/}
             </div>
         </div>
     );

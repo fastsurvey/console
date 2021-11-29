@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {icons} from '@assets';
-import {EditorFormCard, Label, TextInput, TextArea} from '@components';
-import {types} from '@types';
-import {styleUtils} from '@utilities';
-import {tail} from 'lodash';
+import {icons} from '/src/assets';
+import {EditorFormCard, Label, TextInput, TextArea} from '/src/components';
+import {types} from '/src/types';
+import {styleUtils} from '/src/utilities';
 
 interface Props {
     fieldIndex: number;
@@ -37,6 +36,7 @@ function VisualField(props: Props) {
                 }}
                 onMouseEnter={() => setActionLabel('copy')}
                 onFocus={() => setActionLabel('copy')}
+                data-cy='button-copy'
             >
                 {icons.duplicate}
             </button>
@@ -46,6 +46,7 @@ function VisualField(props: Props) {
                 onMouseEnter={() => setActionLabel('remove')}
                 onFocus={() => setActionLabel('remove')}
                 disabled={props.disabled}
+                data-cy='button-remove'
             >
                 {icons.trash}
             </button>
@@ -64,6 +65,7 @@ function VisualField(props: Props) {
             actionLabel={actionLabel}
             setActionLabel={setActionLabel}
             validation={props.validation}
+            data-cy={`editor-field-panel-${props.fieldIndex}`}
         >
             <div className='w-full centering-col gap-y-0.5'>
                 <Label text='Title' />
@@ -75,6 +77,7 @@ function VisualField(props: Props) {
                         });
                     }}
                     disabled={props.disabled || collapse}
+                    data-cy='input-title'
                 />
             </div>
             <div className='w-full centering-col gap-y-0.5'>
@@ -85,11 +88,12 @@ function VisualField(props: Props) {
                         props.setLocalFieldConfig({description: newValue});
                     }}
                     disabled={props.disabled || collapse}
+                    data-cy='input-description'
                 />
             </div>
 
             <div
-                className={'h-0.5 bg-gray-300'}
+                className={'h-px bg-gray-300'}
                 style={{width: 'calc(100% + 1.5rem)'}}
             />
 

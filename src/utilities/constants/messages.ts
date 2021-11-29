@@ -1,4 +1,4 @@
-import {types} from '@types';
+import {types} from '/src/types';
 
 export const messages: {[key in types.MessageId]: types.Message} = {
     'warning-unsaved': {
@@ -48,7 +48,7 @@ export const messages: {[key in types.MessageId]: types.Message} = {
     },
     'error-email-taken': {
         id: 'error-email-taken',
-        text: 'Email format invalid or email is already taken',
+        text: 'Email is already taken',
         type: 'error',
     },
     'error-email-invalid': {
@@ -58,7 +58,7 @@ export const messages: {[key in types.MessageId]: types.Message} = {
     },
     'error-link-invalid': {
         id: 'error-link-invalid',
-        text: 'Invalid verification Link',
+        text: 'Invalid verification link',
         type: 'error',
     },
     'success-redirect-to-login': {

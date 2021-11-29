@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import {types} from '@types';
-import {icons} from '@assets';
-import {Button, Label, TextInput, ValidationBar} from '@components';
+import {types} from '/src/types';
+import {icons} from '/src/assets';
+import {Button, Label, TextInput, ValidationBar} from '/src/components';
 import {Menu, Transition} from '@headlessui/react';
 import {ChevronDownIcon} from '@heroicons/react/solid';
 
@@ -42,10 +42,7 @@ function VisualAccountPage(props: {
     } = props;
 
     const [tabIndex, setTabIndex] = useState(0);
-    const tabs = [
-        {name: 'Identification', href: '#', icon: icons.userCircle},
-        {name: 'Password', href: '#', icon: icons.key},
-    ];
+    const tabs = ['Identification', 'Password'];
 
     const usernameValidation = validateUsername();
     const passwordValidation = validatePassword();
@@ -62,16 +59,16 @@ function VisualAccountPage(props: {
                 <h1 className='w-full text-2xl text-blue-900 font-weight-700'>
                     Modify your Account
                 </h1>
-                <div className='w-full bg-white rounded shadow flex-col-left'>
-                    <div className='z-10 w-full px-4 py-1.5 border-b border-gray-200 md:hidden flex flex-row items-center justify-center'>
+                <section
+                    className='w-full bg-white rounded shadow flex-col-left'
+                    data-cy='account-section-settings'
+                >
+                    <div className='z-10 w-full px-4 py-1.5 border-b border-gray-300 md:hidden flex flex-row items-center justify-center'>
                         <div className='mr-2 text-base text-gray-900 font-weight-700'>
-                            {tabs[tabIndex].name}
+                            {tabs[tabIndex]}
                         </div>
                         <div className='flex-grow' />
-                        <Menu
-                            as='div'
-                            className='relative inline-block text-left'
-                        >
+                        <Menu as='div' className='relative inline-block text-left'>
                             <div>
                                 <Menu.Button className='inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-50 ringable'>
                                     More Settings
@@ -107,7 +104,7 @@ function VisualAccountPage(props: {
                                                             'block px-4 py-2 text-sm font-weight-600',
                                                         )}
                                                     >
-                                                        {tab.name}
+                                                        {tab}
                                                     </div>
                                                 )}
                                             </Menu.Item>
@@ -118,14 +115,14 @@ function VisualAccountPage(props: {
                         </Menu>
                     </div>
                     <div className='hidden w-full md:z-10 md:block'>
-                        <div className='w-full border-b border-gray-200'>
+                        <div className='w-full border-b border-gray-300'>
                             <nav className='px-4 py-2 space-x-2 flex-row-left'>
-                                <div className='pr-2 text-gray-900 font-weight-600'>
+                                <h2 className='pr-2 text-gray-900 font-weight-600'>
                                     Account Settings:{' '}
-                                </div>
+                                </h2>
                                 {tabs.map((tab, index) => (
                                     <button
-                                        key={tab.name}
+                                        key={tab}
                                         onClick={() => setTabIndex(index)}
                                         className={classNames(
                                             index == tabIndex
@@ -133,8 +130,11 @@ function VisualAccountPage(props: {
                                                 : 'hover:bg-gray-100 text-gray-500 hover:text-gray-700',
                                             'py-1 px-3 font-weight-600 text-base rounded',
                                         )}
+                                        data-cy={`tab-${tab.toLowerCase()}-${
+                                            index == tabIndex ? 'active' : 'passive'
+                                        }`}
                                     >
-                                        {tab.name}
+                                        {tab}
                                     </button>
                                 ))}
                             </nav>
@@ -151,6 +151,7 @@ function VisualAccountPage(props: {
                                             setValue={() => {}}
                                             disabled={true}
                                             autoComplete='email'
+                                            data-cy='input-email'
                                         />
                                     </div>
 
@@ -161,6 +162,7 @@ function VisualAccountPage(props: {
                                             setValue={setUsername}
                                             disabled={usernamePending}
                                             autoComplete='username'
+                                            data-cy='input-username'
                                         />
                                     </div>
                                 </div>
@@ -173,21 +175,21 @@ function VisualAccountPage(props: {
                                             setUsername(props.account.username);
                                         }}
                                         disabled={
-                                            username ===
-                                                props.account.username ||
+                                            username === props.account.username ||
                                             usernamePending
                                         }
+                                        data-cy='button-cancel-username'
                                     />
                                     <Button
                                         text='change username'
                                         variant='flat-light-blue'
                                         onClick={openUsernameModal}
                                         disabled={
-                                            username ===
-                                                props.account.username ||
+                                            username === props.account.username ||
                                             usernamePending ||
                                             !usernameValidation.valid
                                         }
+                                        data-cy='button-submit-username'
                                     />
                                 </div>
                             </>
@@ -203,6 +205,7 @@ function VisualAccountPage(props: {
                                             disabled={passwordPending}
                                             type='password'
                                             autoComplete='new-password'
+                                            data-cy='input-password'
                                         />
                                     </div>
                                 </div>
@@ -214,9 +217,9 @@ function VisualAccountPage(props: {
                                             setPassword('');
                                         }}
                                         disabled={
-                                            password.length === 0 ||
-                                            passwordPending
+                                            password.length === 0 || passwordPending
                                         }
+                                        data-cy='button-cancel-password'
                                     />
                                     <Button
                                         text='change password'
@@ -227,6 +230,7 @@ function VisualAccountPage(props: {
                                             passwordPending ||
                                             !passwordValidation.valid
                                         }
+                                        data-cy='button-submit-password'
                                     />
                                 </div>
                             </>
@@ -238,13 +242,16 @@ function VisualAccountPage(props: {
                     {password.length > 0 && tabIndex === 1 && (
                         <ValidationBar validation={passwordValidation} />
                     )}
-                </div>
-                <div className='w-full bg-white rounded shadow flex-col-left'>
-                    <div className='w-full border-b border-gray-200'>
+                </section>
+                <section
+                    className='w-full bg-white rounded shadow flex-col-left'
+                    data-cy='account-section-delete'
+                >
+                    <div className='w-full border-b border-gray-300'>
                         <nav className='px-4 py-2 space-x-2 flex-row-left'>
-                            <div className='pr-2 text-gray-500 font-weight-600'>
+                            <h2 className='pr-2 text-gray-500 font-weight-600'>
                                 Delete your account forever{' '}
-                            </div>
+                            </h2>
                         </nav>
                     </div>
                     <div className='w-full p-3 flex-row-left'>
@@ -253,20 +260,23 @@ function VisualAccountPage(props: {
                             variant='flat-light-red'
                             icon={icons.trash}
                             onClick={props.openDeleteUserModal}
+                            data-cy={'account-delete-button-submit'}
                         />
                     </div>
-                </div>
-                <div className='p-4 border-[2px] border-dashed border-gray-300 rounded w-full'>
-                    <h3 className='text-base leading-6 text-blue-900 opacity-80 font-weight-600'>
+                </section>
+                <section
+                    className='p-4 border-[2px] border-dashed border-gray-300 rounded w-full'
+                    data-cy='account-section-payment'
+                >
+                    <h2 className='text-base leading-6 text-blue-900 opacity-80 font-weight-600'>
                         Payment Information
-                    </h3>
+                    </h2>
                     <div className='mt-2 text-sm text-gray-900 opacity-60 font-weight-400'>
-                        Right now, our tool is still completely free to use. We
-                        want to see how people use it and implement important
-                        features before spending time on implementing payment
-                        logic.
+                        Right now, our tool is still completely free to use. We want to
+                        see how people use it and implement important features before
+                        spending time on implementing payment logic.
                     </div>
-                </div>
+                </section>
             </div>
         </div>
     );

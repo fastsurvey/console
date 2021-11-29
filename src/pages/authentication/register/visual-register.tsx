@@ -1,5 +1,5 @@
 import React from 'react';
-import {Label, TextInput, Button, ValidationBar} from '@components';
+import {Label, TextInput, Button, ValidationBar} from '/src/components';
 import {Link} from 'react-router-dom';
 import {types} from 'types';
 
@@ -22,9 +22,15 @@ export default function VisualRegister(props: {
     const {email, username, password} = props;
 
     return (
-        <div className='w-full max-w-sm bg-white rounded shadow centering-col'>
+        <section
+            className='w-full max-w-sm bg-white rounded shadow centering-col'
+            data-cy='register-panel'
+        >
             <div className='w-full p-4 centering-col gap-y-4'>
-                <h1 className='text-2xl text-center text-gray-800 font-weight-600 no-selection'>
+                <h1
+                    className='text-2xl text-center text-gray-800 font-weight-600 no-selection'
+                    data-cy='title'
+                >
                     Register
                 </h1>
                 <div className='w-full centering-col gap-y-0.5'>
@@ -37,6 +43,7 @@ export default function VisualRegister(props: {
                             props.setEmail(newValue);
                         }}
                         autoComplete='email'
+                        data-cy='input-email'
                     />
                 </div>
                 <div className='w-full centering-col gap-y-0.5'>
@@ -48,6 +55,7 @@ export default function VisualRegister(props: {
                             props.setUsername(newValue);
                         }}
                         autoComplete='username'
+                        data-cy='input-username'
                     />
                 </div>
                 <div className='w-full centering-col gap-y-0.5'>
@@ -60,6 +68,7 @@ export default function VisualRegister(props: {
                             props.setPassword(newValue);
                         }}
                         autoComplete='new-password'
+                        data-cy='input-password'
                     />
                 </div>
 
@@ -70,17 +79,19 @@ export default function VisualRegister(props: {
                         onClick={props.handleRegistration}
                         disabled={props.disabled}
                         loading={props.submitting}
+                        data-cy='button-submit'
                     />
                     <div className='flex-max' />
                     <Link
                         to='/login'
                         className='px-1.5 py-0.5 -mx-1.5 text-sm text-gray-400 rounded font-weight-600 ringable'
+                        data-cy='link-to-login'
                     >
                         Already have an account?
                     </Link>
                 </div>
             </div>
             <ValidationBar validation={props.validation} showValidState />
-        </div>
+        </section>
     );
 }

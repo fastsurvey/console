@@ -1,4 +1,4 @@
-import {types} from '@types';
+import {types} from '/src/types';
 import {httpPost} from '../http-clients';
 
 async function createSurvey(
@@ -10,7 +10,7 @@ async function createSurvey(
 ) {
     try {
         await httpPost(
-            `/users/${account.username}/surveys/${config.survey_name}`,
+            `/users/${account.username}/surveys`,
             config,
             accessToken,
         ).catch((error) => {

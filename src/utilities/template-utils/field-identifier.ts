@@ -1,4 +1,4 @@
-import {types} from '@types';
+import {types} from '/src/types';
 import {max} from 'lodash';
 
 export const fieldIdentifier = (config: types.SurveyConfig): number => {

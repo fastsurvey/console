@@ -1,8 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {reduxUtils} from '@utilities';
-import {types} from '@types';
-import {icons} from '@assets';
+import {reduxUtils} from '/src/utilities';
+import {types} from '/src/types';
+import {icons} from '/src/assets';
 import VisualEditorHeader from './visual-editor-header';
 
 function EditorHeader(props: {
@@ -47,11 +47,13 @@ function EditorHeader(props: {
                   icon: icons.closeCircle,
                   text: 'undo',
                   onClick: () => props.revertState(),
+                  'data-cy': 'button-undo',
               },
               {
                   icon: icons.checkCircle,
                   text: 'save',
                   onClick: () => props.saveState(),
+                  'data-cy': 'button-save',
               },
           ]
         : [];
@@ -64,6 +66,7 @@ function EditorHeader(props: {
                 draft: !draft,
             });
         },
+        'data-cy': 'button-publish',
     };
 
     let timeButton: any;
@@ -72,26 +75,26 @@ function EditorHeader(props: {
             icon: icons.pause,
             text: 'end now',
             onClick: endNow,
+            'data-cy': 'button-end',
         };
     } else if (now() < start) {
         timeButton = {
             icon: icons.play,
             text: 'start now',
             onClick: startNow,
+            'data-cy': 'button-start',
         };
     } else {
         timeButton = {
             icon: icons.play,
             text: 'reopen now',
             onClick: reopenNow,
+            'data-cy': 'button-reopen',
         };
     }
 
     return (
-        <VisualEditorHeader
-            {...props}
-            {...{saveButtons, timeButton, publishButton}}
-        />
+        <VisualEditorHeader {...props} {...{saveButtons, timeButton, publishButton}} />
     );
 }
 
