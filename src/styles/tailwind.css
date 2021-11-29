@@ -167,6 +167,8 @@
     }
 }
 
+/* ICON COLORS */
+
 @layer base {
     svg {
         fill: currentColor;
@@ -174,6 +176,52 @@
         width: 100%;
     }
 }
+
+.svg-navbar-active .primary {
+    fill: white;
+}
+.svg-navbar-active .secondary {
+    @apply fill-blue-300;
+}
+.svg-navbar-passive .primary {
+    @apply fill-blue-50;
+}
+.svg-navbar-passive .secondary {
+    @apply fill-blue-200;
+}
+
+.svg-elevated-button-active .primary {
+    @apply fill-blue-50;
+}
+.svg-elevated-button-active .secondary {
+    @apply fill-blue-700;
+}
+.svg-elevated-button-passive .primary {
+    @apply fill-gray-200;
+}
+.svg-elevated-button-passive .secondary {
+    @apply fill-gray-500;
+}
+
+.svg-field-red .primary {
+    @apply fill-red-300;
+}
+.svg-field-red .secondary {
+    @apply fill-red-700;
+}
+.svg-field-green .primary {
+    @apply fill-green-300;
+}
+.svg-field-green .secondary {
+    @apply fill-green-700;
+}
+.svg-field-cyan .primary {
+    @apply fill-cyan-300;
+}
+.svg-field-cyan .secondary {
+    @apply fill-cyan-700;
+}
+/* FLEX LAYOUTS */
 
 .flex-row-left {
     @apply flex;

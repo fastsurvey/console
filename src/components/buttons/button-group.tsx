@@ -24,8 +24,8 @@ export default function ButtonGroup(props: {
                         (first(index) ? 'rounded-l ' : ' ') +
                         (last(index) ? 'rounded-r ' : ' ') +
                         (b.disabled
-                            ? 'bg-gray-100 text-gray-600 cursor-default icon-gray '
-                            : 'bg-white hover:bg-gray-100 text-blue-900 cursor-pointer icon-blue ')
+                            ? 'bg-gray-100 text-gray-700 cursor-default svg-elevated-button-passive '
+                            : 'bg-white hover:bg-gray-100 text-blue-900 cursor-pointer svg-elevated-button-active ')
                     }
                     onClick={b.onClick && !b.disabled ? b.onClick : () => {}}
                     disabled={b.disabled ? b.disabled : false}

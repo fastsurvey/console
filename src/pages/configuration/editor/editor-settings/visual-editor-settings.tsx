@@ -135,8 +135,8 @@ const VisualEditorSettings = (props: {
                                     className={
                                         'w-8 h-8 p-1 mx-0.5 rounded ringable ' +
                                         (!props.disabled
-                                            ? 'icon-blue '
-                                            : 'icon-gray cursor-not-allowed ')
+                                            ? 'svg-elevated-button-active '
+                                            : 'svg-elevated-button-passive cursor-not-allowed ')
                                     }
                                     onClick={() => {
                                         if (!props.disabled) {

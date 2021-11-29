@@ -45,7 +45,12 @@ function NavbarButton(props: {
             }
             data-cy={`button-${props.text.toLowerCase()}`}
         >
-            <div className={'h-10 w-10 p-2 icon-light-blue flex-shrink-0'}>
+            <div
+                className={
+                    'h-10 w-10 p-2 flex-shrink-0 ' +
+                    (props.active ? 'svg-navbar-active' : 'svg-navbar-passive')
+                }
+            >
                 {props.icon}
             </div>
             <div
