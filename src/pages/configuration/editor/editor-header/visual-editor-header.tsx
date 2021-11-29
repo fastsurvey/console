@@ -128,7 +128,7 @@ function VisualEditorHeader(props: {
                     )}
                 </div>
             </div>
-            {draft && (
+            {(draft || props.configIsDiffering) && (
                 <div
                     className={
                         'px-1.5 py-0.5 transform -translate-x-1.5 ' +
@@ -139,7 +139,7 @@ function VisualEditorHeader(props: {
                     {linkContent}
                 </div>
             )}
-            {!draft && (
+            {!(draft || props.configIsDiffering) && (
                 <a
                     href={`https://${frontendUrl}/${username}/${survey_name}`}
                     className='px-1.5 py-0.5 transform -translate-x-1.5 rounded ringable'
