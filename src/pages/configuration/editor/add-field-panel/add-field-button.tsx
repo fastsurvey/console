@@ -13,9 +13,8 @@ function AddFieldButton(props: {
         <button
             className={
                 'centering-row rounded px-1 ringable ' +
-                'icon-dark-gray text-opacity-90 ' +
-                'md:text-gray-400 md:text-opacity-0 ' +
-                'group-hover:text-opacity-100 ' +
+                'icon-dark-gray md:text-gray-400  ' +
+                'text-opacity-60 hover:text-opacity-100 ' +
                 'focus:text-gray-600 focus:text-opacity-100 ' +
                 (props.disabled
                     ? 'cursor-not-allowed text-gray-400 '

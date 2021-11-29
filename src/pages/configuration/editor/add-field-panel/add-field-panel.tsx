@@ -21,7 +21,7 @@ function AddFieldPanel(props: {
         <div
             className={
                 'relative w-full group gap-x-4 ' +
-                'h-10 my-1 no-selection ' +
+                'h-12 md:h-10 my-1 no-selection ' +
                 'transition-size duration-400 ' +
                 'flex flex-row items-center justify-center '
             }
