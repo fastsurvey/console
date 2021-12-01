@@ -25,7 +25,7 @@ function VisualMessage(props: Props) {
             className={
                 'flex-row-center pl-3 pr-1 m-2 bg-gray-900 ' +
                 'font-weight-500 rounded shadow-lg flex-grow max-w-full ' +
-                `${colors}`
+                `${colors} animate-pop`
             }
             data-cy={`message-panel-${props.message.type}`}
         >

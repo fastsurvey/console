@@ -311,3 +311,20 @@
     @apply self-stretch;
     @apply flex-grow;
 }
+
+.animate-pop {
+    animation: pulse 0.5s cubic-bezier(0.4, 0, 0.6, 1);
+    transform-origin: bottom right;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
