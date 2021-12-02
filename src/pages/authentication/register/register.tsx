@@ -14,6 +14,8 @@ function RegisterForm(props: Props) {
     const [password, setPassword] = useState('');
     const [submitting, setSubmitting] = useState(false);
 
+    const [openMessages, setOpenMessages] = useState(false);
+
     function disabled() {
         return username.length < 3 || password.length < 8;
     }
@@ -32,18 +34,27 @@ function RegisterForm(props: Props) {
     function handleRegistration() {
         function success() {
             setSubmitting(false);
+            setOpenMessages(true);
             props.openMessage('success-account-created');
         }
 
-        function error(code: 400 | 500 | 422) {
-            setSubmitting(false);
-            let messageId: types.MessageId = 'error-server';
-            if (code === 400) {
-                messageId = 'error-email-taken';
-            } else if (code === 422) {
-                messageId = 'error-email-invalid';
+        function error(reason: 'email' | 'username' | 'format' | 'server') {
+            switch (reason) {
+                case 'email':
+                    props.openMessage('error-email-taken');
+                    break;
+                case 'username':
+                    props.openMessage('error-username-taken');
+                    break;
+                case 'format':
+                    props.openMessage('error-email-invalid');
+                    break;
+                case 'server':
+                    props.openMessage('error-server');
+                    break;
             }
-            props.openMessage(messageId);
+            setSubmitting(false);
+            setOpenMessages(true);
         }
 
         if (!disabled()) {
@@ -71,7 +82,12 @@ function RegisterForm(props: Props) {
                 password,
                 setPassword,
             }}
-            closeAllMessages={props.closeAllMessages}
+            closeAllMessages={() => {
+                if (openMessages) {
+                    setOpenMessages(false);
+                    props.closeAllMessages();
+                }
+            }}
             handleRegistration={handleRegistration}
             disabled={disabled()}
             submitting={submitting}
