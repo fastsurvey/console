@@ -237,11 +237,13 @@ export const validators = {
                 valid: false,
                 message: 'username too long (≤ 32 characters)',
             };
-        } else if (!new RegExp('^[a-z0-9-]{1,32}$').test(newUserName)) {
+        } else if (
+            !new RegExp('^(?!-)(?!.*--)[a-z0-9-]{1,32}(?<!-)$').test(newUserName)
+        ) {
             return {
                 valid: false,
                 message:
-                    "only lowercase letters, numbers and hypens ('-') allowed in username",
+                    "only lowercase letters, numbers and single hyphens ('-', inbetween other characters) in username",
             };
         } else {
             return {valid: true};
