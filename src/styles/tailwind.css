@@ -313,7 +313,7 @@
 }
 
 .animate-pop {
-    animation: pulse 0.5s cubic-bezier(0.4, 0, 0.6, 1);
+    animation: pulse 0.5s cubic-bezier(0.1, 0, 0.5, 1);
     transform-origin: bottom right;
 }
 
@@ -322,7 +322,7 @@
         transform: scale(1);
     }
     50% {
-        transform: scale(1.2);
+        transform: scale(1.15);
     }
     100% {
         transform: scale(1);

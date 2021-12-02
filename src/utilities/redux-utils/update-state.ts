@@ -13,7 +13,7 @@ function assert(condition: boolean) {
 
 function updateState(state: types.ReduxState, action: types.ReduxAction) {
     const newState = cloneDeep(state);
-    console.debug(action.type);
+    console.debug(action.type, action);
 
     switch (action.type) {
         case 'LOG_IN':
@@ -43,7 +43,6 @@ function updateState(state: types.ReduxState, action: types.ReduxAction) {
             return {...cloneDeep(reduxUtils.initialState), loggingIn: false};
 
         case 'OPEN_MESSAGE':
-            console.debug('OPEN_MESSAGE', action);
             // do not have mutliple messages with the same text
             // increase the randomToken parameter when messages
             // are already there
