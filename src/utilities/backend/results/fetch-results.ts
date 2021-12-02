@@ -13,12 +13,12 @@ async function fetchResults(
             `/users/${account.username}/surveys/${centralConfigName}/results`,
             accessToken,
         ).catch((error: any) => {
-            throw error.response.status;
+            throw error.response;
         });
 
         success(response.data);
-    } catch (code) {
-        error(code);
+    } catch (response: any) {
+        error(response?.status ? response.status : 500);
     }
 }
 

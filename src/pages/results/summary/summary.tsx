@@ -11,32 +11,28 @@ function Summary(props: {
 }) {
     const [results, setResults] = useState<types.SurveyResults | undefined>(undefined);
     const [isFetching, setIsFetching] = useState(true);
+    const [error, setError] = useState(false);
     const [isDownloading, setIsDownloading] = useState(false);
 
-    useEffect(() => {
-        backend.fetchResults(
-            props.account,
-            props.accessToken,
-            props.config.survey_name,
-            (r) => {
-                setResults(r);
-                setIsFetching(false);
-            },
-            console.log,
-        );
-    }, []);
+    useEffect(fetch, []);
 
     function fetch() {
+        const successCallback = (r: any) => {
+            setResults(r);
+            setIsFetching(false);
+        };
+        const errorCallback = () => {
+            setError(true);
+            setIsFetching(false);
+        };
+
         setIsFetching(true);
         backend.fetchResults(
             props.account,
             props.accessToken,
             props.config.survey_name,
-            (r) => {
-                setResults(r);
-                setIsFetching(false);
-            },
-            console.log,
+            successCallback,
+            errorCallback,
         );
     }
 
@@ -194,6 +190,11 @@ function Summary(props: {
                             />
                         ))}
                     </>
+                )}
+                {error && (
+                    <p className='w-full py-4 text-center text-gray-600 font-weight-500'>
+                        Server response invalid, please try again later.
+                    </p>
                 )}
             </div>
         </div>
