@@ -1,9 +1,9 @@
 import Cookies from 'js-cookie';
-import {cloneDeep, unionBy} from 'lodash';
+import {cloneDeep, pullAllBy} from 'lodash';
 import {reduxUtils, localIdUtils} from '/src/utilities';
 import {types} from '/src/types';
-import constants from '../constants/index';
 import logout from '../backend/authentication/logout';
+import constants from '../constants/index';
 
 function assert(condition: boolean) {
     if (!condition) {
@@ -43,16 +43,33 @@ function updateState(state: types.ReduxState, action: types.ReduxAction) {
             return {...cloneDeep(reduxUtils.initialState), loggingIn: false};
 
         case 'OPEN_MESSAGE':
+            console.debug('OPEN_MESSAGE', action);
             // do not have mutliple messages with the same text
-            newState.messages = unionBy(
-                [constants.messages[action.messageId]],
-                newState.messages,
-                'id',
+            // increase the randomToken parameter when messages
+            // are already there
+            const existingMessages = newState.messages.filter(
+                (m) => m.id === action.messageId,
             );
+            if (existingMessages.length > 0) {
+                newState.messages = [
+                    ...pullAllBy(newState.messages, [{id: action.messageId}], 'id'),
+                    {
+                        ...existingMessages[0],
+                        randomToken: existingMessages[0].randomToken + 1,
+                    },
+                ];
+            } else {
+                newState.messages = [
+                    ...newState.messages,
+                    constants.messages[action.messageId],
+                ];
+            }
             break;
 
         case 'CLOSE_MESSAGE':
-            newState.messages = newState.messages.filter((m) => m.text !== action.text);
+            newState.messages = newState.messages.filter(
+                (m) => m.id !== action.messageId,
+            );
             break;
 
         case 'CLOSE_ALL_MESSAGES':

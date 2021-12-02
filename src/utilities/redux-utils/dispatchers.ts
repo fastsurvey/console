@@ -54,10 +54,10 @@ const dispatchers = {
             }),
     closeMessage:
         (dispatch: any) =>
-        (text: string): void =>
+        (messageId: types.MessageId): void =>
             dispatch({
                 type: 'CLOSE_MESSAGE',
-                text,
+                messageId,
             }),
     closeAllMessages: (dispatch: any) => (): void =>
         dispatch({

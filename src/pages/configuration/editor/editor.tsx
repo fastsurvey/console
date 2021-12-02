@@ -126,14 +126,12 @@ function ConfigEditor(props: {
         const combinedMaxId: any = max(combinedConfig.fields.map((f) => f.identifier));
         combinedConfig.next_identifier = combinedMaxId + 1;
 
-        props.closeAllMessages();
-
         const fieldsAreValid = every(fieldValidation.map((r) => r.valid));
         const fieldCountIsValid = localConfig.fields.length > 0;
-        console.log({localConfig});
         const authModeIsValid = formUtils.validators.authMode(localConfig).valid;
 
         function success() {
+            props.closeAllMessages();
             setLocalConfigState(combinedConfig);
             props.setCentralConfig(combinedConfig);
             if (localConfig.survey_name !== props.centralConfig.survey_name) {

@@ -86,6 +86,7 @@ export declare namespace types {
     // TODO: Add fix message versions (Message is union of those types)
     export type Message = {
         id: MessageId;
+        randomToken: number;
         text: string;
         type: 'warning' | 'error' | 'success';
     };
@@ -145,7 +146,7 @@ export declare namespace types {
           }
         | {
               type: 'CLOSE_MESSAGE';
-              text: string;
+              messageId: types.MessageId;
           }
         | {
               type: 'OPEN_MODAL';
