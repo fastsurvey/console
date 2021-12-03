@@ -143,20 +143,7 @@ describe('The Results Summary Page', () => {
         // back button
         cy.url().should('eq', `http://localhost:3000/results/${SURVEY_NAME}`);
         headerElements.back().click();
-        cy.url().should('eq', 'http://localhost:3000/results');
-
-        // config list
-        resultsPanel(SURVEY_NAME).title().should('have.text', SURVEY.title);
-        resultsPanel(SURVEY_NAME)
-            .linkToFrontend()
-            .should('have.text', `dev.fastsurvey.de/${USERNAME}/${SURVEY_NAME}`);
-        resultsPanel(SURVEY_NAME)
-            .linkToFrontend()
-            .should('have.attr', 'href')
-            .and('eq', `https://dev.fastsurvey.de/${USERNAME}/${SURVEY_NAME}`);
-        resultsPanel(SURVEY_NAME).linkToSummary().click();
-
-        cy.url().should('eq', `http://localhost:3000/results/${SURVEY_NAME}`);
+        cy.url().should('eq', 'http://localhost:3000/surveys');
     });
 
     it('initial submissions, more submissions, refresh button', function () {
