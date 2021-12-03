@@ -29,7 +29,7 @@ const panel = (surveyName: string) => ({
         get([`survey-list-panel-${surveyName}`, 'actions-dropdown'], {
             invisible: true,
         }),
-    actionsButton: (type: 'remove' | 'duplicate') =>
+    actionsButton: (type: 'remove-survey' | 'duplicate-survey' | 'reset-submissions') =>
         get([`survey-list-panel-${surveyName}`, 'actions-dropdown', `button-${type}`], {
             count: 1,
         }),
@@ -44,6 +44,8 @@ const popup = {
     submitDuplicate: () => getFromPopup(['button-submit-duplicate']),
     cancelRemove: () => getFromPopup(['button-cancel-remove']),
     submitRemove: () => getFromPopup(['button-submit-remove']),
+    cancelReset: () => getFromPopup(['button-cancel-reset']),
+    submitReset: () => getFromPopup(['button-submit-reset']),
 };
 
 describe('The Survey List Page', () => {
@@ -100,8 +102,9 @@ describe('The Survey List Page', () => {
         panel(surveyName).actionsDropdown().should('have.length', 0);
         panel(surveyName).toggleActions().click();
         panel(surveyName).actionsDropdown().should('have.length', 1);
-        panel(surveyName).actionsButton('remove');
-        panel(surveyName).actionsButton('duplicate');
+        panel(surveyName).actionsButton('remove-survey');
+        panel(surveyName).actionsButton('duplicate-survey');
+        panel(surveyName).actionsButton('reset-submissions');
         panel(surveyName).toggleActions().click();
         panel(surveyName).actionsDropdown().should('have.length', 0);
     }
@@ -153,7 +156,7 @@ describe('The Survey List Page', () => {
                 // cancel button on removal popup
                 panel(newSurveyName).toggleActions().click();
                 panel(newSurveyName).actionsDropdown().should('be.visible');
-                panel(newSurveyName).actionsButton('remove').click();
+                panel(newSurveyName).actionsButton('remove-survey').click();
                 popup.panel().should('be.visible');
                 popup.cancelRemove().click();
                 popup.panel().should('not.be.visible');
@@ -166,7 +169,7 @@ describe('The Survey List Page', () => {
 
                 // removal popup
                 panel(newSurveyName).toggleActions().click();
-                panel(newSurveyName).actionsButton('remove').click();
+                panel(newSurveyName).actionsButton('remove-survey').click();
                 popup.panel().should('be.visible');
                 popup.submitRemove().click();
                 popup.panel().should('not.be.visible');
@@ -193,7 +196,7 @@ describe('The Survey List Page', () => {
 
         // cancel button on duplication popup
         panel(ORIGINAL_SURVEY_NAME).toggleActions().click();
-        panel(ORIGINAL_SURVEY_NAME).actionsButton('duplicate').click();
+        panel(ORIGINAL_SURVEY_NAME).actionsButton('duplicate-survey').click();
         popup.panel().should('be.visible');
         popup.cancelDuplicate().click();
         popup.panel().should('not.be.visible');
@@ -206,7 +209,7 @@ describe('The Survey List Page', () => {
 
         // duplication popup
         panel(ORIGINAL_SURVEY_NAME).toggleActions().click();
-        panel(ORIGINAL_SURVEY_NAME).actionsButton('duplicate').click();
+        panel(ORIGINAL_SURVEY_NAME).actionsButton('duplicate-survey').click();
         popup
             .panel()
             .find('div')
@@ -253,6 +256,78 @@ describe('The Survey List Page', () => {
                     ),
                 );
                 expect(duplicateSurveyOnServer).to.deep.equal(DUPLICATE_SURVEY);
+            });
+        });
+    });
+
+    it('resetting submissions works', function () {
+        // @ts-ignore
+        cy.seedResultsData();
+
+        cy.wait(1000).then(() => {
+            cy.reload();
+
+            const {SURVEY} = this.configsJSON.RESULTS;
+            const {USERNAME, PASSWORD} = this.accountJSON;
+            const SURVEY_NAME = SURVEY['survey_name'];
+
+            const assertSubmissionCount = (count: number) => {
+                cy.request({
+                    method: 'POST',
+                    url: 'https://api.dev.fastsurvey.de/authentication',
+                    body: {
+                        identifier: USERNAME,
+                        password: PASSWORD,
+                    },
+                }).then((authResponse) => {
+                    expect(authResponse.status).to.equal(200);
+                    cy.request({
+                        method: 'GET',
+                        url: `https://api.dev.fastsurvey.de/users/${USERNAME}/surveys/${SURVEY_NAME}/submissions`,
+                        headers: {
+                            Authorization: `Bearer ${authResponse.body['access_token']}`,
+                            'Content-Type': 'application/json',
+                        },
+                    }).then((getResponse) => {
+                        expect(getResponse.status).to.equal(200);
+                        expect(getResponse.body.length).to.equal(count);
+                    });
+                });
+            };
+
+            // assert initial state
+            configListPanelIsWorking(USERNAME, SURVEY_NAME);
+            assertSubmissionCount(4);
+
+            // cancel button on duplication popup
+            panel(SURVEY_NAME).toggleActions().click();
+            panel(SURVEY_NAME).actionsButton('reset-submissions').click();
+            popup.panel().should('be.visible');
+            popup.cancelReset().click();
+            popup.panel().should('not.be.visible');
+            panel(SURVEY_NAME).actionsDropdown().should('be.visible');
+
+            // config did not change
+            configListPanelIsWorking(USERNAME, SURVEY_NAME);
+            cy.reload();
+            configListPanelIsWorking(USERNAME, SURVEY_NAME);
+
+            // there are still 4 submissions
+            assertSubmissionCount(4);
+
+            // duplication popup
+            panel(SURVEY_NAME).toggleActions().click();
+            panel(SURVEY_NAME).actionsButton('reset-submissions').click();
+            popup.submitReset().click();
+
+            cy.wait(1000).then(() => {
+                // duplication has workes -> on new page with success message
+                successMessage();
+                cy.url().should('include', `/surveys`);
+                configListPanelIsWorking(USERNAME, SURVEY_NAME);
+
+                // there are still 0 submissions
+                assertSubmissionCount(0);
             });
         });
     });

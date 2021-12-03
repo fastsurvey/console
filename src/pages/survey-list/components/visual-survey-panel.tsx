@@ -159,7 +159,7 @@ function VisualConfigPanel(props: Props) {
                                                 break;
                                         }
                                     }}
-                                    data-cy={`button-${action}`}
+                                    data-cy={`button-${action.replace(' ', '-')}`}
                                 >
                                     {action}
                                 </button>

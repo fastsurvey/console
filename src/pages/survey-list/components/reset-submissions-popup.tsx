@@ -19,13 +19,13 @@ function ResetSubmissionsPopup(props: Props) {
                     text='cancel'
                     variant='flat-light-blue'
                     onClick={props.closeModal}
-                    data-cy='button-cancel-remove'
+                    data-cy='button-cancel-reset'
                 />
                 <Button
                     text='reset submissions'
                     variant='flat-light-blue'
                     onClick={props.resetSubmissions}
-                    data-cy='button-submit-remove'
+                    data-cy='button-submit-reset'
                 />
             </div>
         </div>
