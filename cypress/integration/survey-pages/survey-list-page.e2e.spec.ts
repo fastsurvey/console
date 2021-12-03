@@ -8,25 +8,29 @@ const buttonNew = () => get(['config-list-button-new'], {count: 1});
 const successMessage = () => get(['message-panel-success'], {count: 1});
 
 const panel = (surveyName: string) => ({
-    container: () => get([`config-list-panel-${surveyName}`], {count: 1}),
+    container: () => get([`survey-list-panel-${surveyName}`], {count: 1}),
     linkToFrontend: () =>
-        get([`config-list-panel-${surveyName}`, 'link-to-frontend'], {
+        get([`survey-list-panel-${surveyName}`, 'link-to-frontend'], {
             count: 1,
         }),
     linkToEditor: () =>
-        get([`config-list-panel-${surveyName}`, 'link-to-editor'], {
+        get([`survey-list-panel-${surveyName}`, 'link-to-editor'], {
+            count: 1,
+        }),
+    linkToResults: () =>
+        get([`survey-list-panel-${surveyName}`, 'link-to-results'], {
             count: 1,
         }),
     toggleActions: () =>
-        get([`config-list-panel-${surveyName}`, 'button-toggle-actions'], {
+        get([`survey-list-panel-${surveyName}`, 'button-toggle-actions'], {
             count: 1,
         }),
     actionsDropdown: () =>
-        get([`config-list-panel-${surveyName}`, 'actions-dropdown'], {
+        get([`survey-list-panel-${surveyName}`, 'actions-dropdown'], {
             invisible: true,
         }),
     actionsButton: (type: 'remove' | 'duplicate') =>
-        get([`config-list-panel-${surveyName}`, 'actions-dropdown', `button-${type}`], {
+        get([`survey-list-panel-${surveyName}`, 'actions-dropdown', `button-${type}`], {
             count: 1,
         }),
 });
@@ -42,7 +46,7 @@ const popup = {
     submitRemove: () => getFromPopup(['button-submit-remove']),
 };
 
-describe('The Config List Page', () => {
+describe('The Survey List Page', () => {
     // @ts-ignore
     before(cy.seedConfigData);
 
@@ -81,12 +85,17 @@ describe('The Config List Page', () => {
         panel(surveyName)
             .linkToEditor()
             .should('have.attr', 'href')
-            .and('eq', `/configuration/${surveyName}`);
+            .and('eq', `/editor/${surveyName}`);
 
         panel(surveyName).linkToEditor().click();
-        cy.url().should('include', `/configuration/${surveyName}`);
+        cy.url().should('include', `/editor/${surveyName}`);
         cy.go('back');
-        cy.url().should('include', '/configurations');
+        cy.url().should('include', '/surveys');
+
+        panel(surveyName).linkToResults().click();
+        cy.url().should('include', `/results/${surveyName}`);
+        cy.go('back');
+        cy.url().should('include', '/surveys');
 
         panel(surveyName).actionsDropdown().should('have.length', 0);
         panel(surveyName).toggleActions().click();
@@ -98,7 +107,7 @@ describe('The Config List Page', () => {
     }
 
     const configListPanelIsAbsent = (surveyName: string) => {
-        getCySelector([`config-list-panel-${surveyName}`], {count: 0});
+        getCySelector([`survey-list-panel-${surveyName}`], {count: 0});
     };
 
     it('seed surveys are present', function () {
@@ -113,14 +122,14 @@ describe('The Config List Page', () => {
         buttonNew().click();
 
         cy.url()
-            .should('match', /.*configuration\/.+/)
+            .should('match', /.*editor\/.+/)
             .then((url) => {
                 const newSurveyName: any = last(url.split('/'));
-                cy.url().should('include', `/configuration/${newSurveyName}`);
+                cy.url().should('include', `/editor/${newSurveyName}`);
 
                 // use back button
                 cy.go('back');
-                cy.url().should('include', '/configurations');
+                cy.url().should('include', '/surveys');
                 configListPanelIsWorking(USERNAME, newSurveyName);
 
                 cy.reload();
@@ -134,11 +143,11 @@ describe('The Config List Page', () => {
         buttonNew().click();
 
         cy.url()
-            .should('match', /.*configuration\/.+/)
+            .should('match', /.*editor\/.+/)
             .then((url) => {
                 const newSurveyName: any = last(url.split('/'));
 
-                cy.visit('/configurations');
+                cy.visit('/surveys');
                 configListPanelIsWorking(USERNAME, newSurveyName);
 
                 // cancel button on removal popup
@@ -214,8 +223,8 @@ describe('The Config List Page', () => {
 
         // duplication has workes -> on new page with success message
         successMessage();
-        cy.url().should('include', `/configuration/${DUPLICATE_SURVEY_NAME}`);
-        cy.visit('/configurations');
+        cy.url().should('include', `/editor/${DUPLICATE_SURVEY_NAME}`);
+        cy.visit('/surveys');
         configListPanelIsWorking(USERNAME, ORIGINAL_SURVEY_NAME);
         configListPanelIsWorking(USERNAME, DUPLICATE_SURVEY_NAME);
 

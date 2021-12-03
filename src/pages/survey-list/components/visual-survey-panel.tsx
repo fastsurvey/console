@@ -28,7 +28,7 @@ function VisualConfigPanel(props: Props) {
     return (
         <section
             className={'w-full rounded shadow centering-col bg-white '}
-            data-cy={`config-list-panel-${survey_name} ${
+            data-cy={`survey-list-panel-${survey_name} ${
                 draft ? 'draft' : 'published'
             }`}
         >
@@ -98,7 +98,7 @@ function VisualConfigPanel(props: Props) {
                 <Link
                     to={`/results/${survey_name}`}
                     className='z-0 flex-grow rounded ringable group focus:z-10'
-                    data-cy='link-to-editor'
+                    data-cy='link-to-results'
                 >
                     <div
                         className={
