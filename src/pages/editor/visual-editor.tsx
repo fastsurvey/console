@@ -1,9 +1,9 @@
 import React from 'react';
 import {types} from '/src/types';
-import EditorSettings from './editor-settings/editor-settings';
-import Field from './fields/field';
-import AddFieldPanel from './add-field-panel/add-field-panel';
-import EditorHeader from './editor-header/editor-header';
+import EditorSettings from './components/editor-settings/editor-settings';
+import Field from './components/fields/field';
+import AddFieldPanel from './components/add-field-panel/add-field-panel';
+import EditorHeader from './components/editor-header/editor-header';
 
 function VisualEditor(props: {
     centralConfigName: string;

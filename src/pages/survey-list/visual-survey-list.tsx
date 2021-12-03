@@ -2,12 +2,14 @@ import React, {useState} from 'react';
 import {sortBy} from 'lodash';
 import {types} from '/src/types';
 import {SearchBar} from '/src/components';
-import VisualResultsPanel from './visual-results-panel';
+import VisualConfigPanel from './components/visual-survey-panel';
 
-function VisualConfigList(props: {
+function VisualSurveyList(props: {
     configs: types.SurveyConfig[];
+    addSurvey(): void;
     account: types.Account;
-    accessToken: types.AccessToken;
+    openRemoveModal(config: types.SurveyConfig): () => void;
+    openDuplicateModal(config: types.SurveyConfig): () => void;
 }) {
     const [value, setValue] = useState('');
     return (
@@ -20,16 +22,13 @@ function VisualConfigList(props: {
         >
             <div className='w-full max-w-4xl flex-col-center'>
                 <h1 className='w-full mb-4 text-2xl text-blue-900 font-weight-700'>
-                    Analyze Results
+                    Edit & Create
                 </h1>
                 <div className='w-full mb-6'>
                     <SearchBar value={value} setValue={setValue} />
                 </div>
 
-                <div
-                    className='grid w-full grid-cols-1 gap-3 md:grid-cols-2'
-                    data-cy='results-list'
-                >
+                <div className='grid w-full grid-cols-1 gap-3 md:grid-cols-2'>
                     {sortBy(
                         props.configs.filter(
                             (c) =>
@@ -40,23 +39,33 @@ function VisualConfigList(props: {
                         ),
                         ['survey_name'],
                     ).map((config) => (
-                        <VisualResultsPanel
+                        <VisualConfigPanel
                             key={config.local_id}
                             config={config}
                             account={props.account}
-                            accessToken={props.accessToken}
+                            openRemoveModal={props.openRemoveModal(config)}
+                            openDuplicateModal={props.openDuplicateModal(config)}
                         />
                     ))}
+                    <button
+                        type='button'
+                        className={
+                            'relative w-full px-2 py-6 flex-row-center min-h-[8.25rem] ' +
+                            'border-2 border-gray-400 border-dashed rounded ' +
+                            'text-opacity-60 border-gray-300 ringable ' +
+                            'hover:text-opacity-100 hover:border-gray-400 ' +
+                            'focus:text-opacity-100 focus:hover:border-gray-400 ' +
+                            'text-base text-blue-900 font-weight-600'
+                        }
+                        onClick={props.addSurvey}
+                        data-cy='config-list-button-new'
+                    >
+                        New Survey
+                    </button>
                 </div>
-
-                {props.configs.length === 0 && (
-                    <p className='w-full my-4 text-center text-gray-600 font-weight-500'>
-                        No survey results yet
-                    </p>
-                )}
             </div>
         </div>
     );
 }
 
-export default VisualConfigList;
+export default VisualSurveyList;

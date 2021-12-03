@@ -3,14 +3,14 @@ import {connect} from 'react-redux';
 import {useParams, Link} from 'react-router-dom';
 import {types} from '/src/types';
 import {Button} from '/src/components';
-import Summary from './summary';
+import Results from './results';
 
 interface Props {
     account: types.Account;
     accessToken: types.AccessToken;
     configs: types.SurveyConfig[];
 }
-function EditorRouter(props: Props) {
+function ResultsRouter(props: Props) {
     let params: any = useParams();
 
     const filteredConfigs = props.configs.filter((config) => {
@@ -25,16 +25,13 @@ function EditorRouter(props: Props) {
                 </div>
 
                 <Link to='/configurations' className='rounded ringable'>
-                    <Button
-                        text='Back to survey list'
-                        variant='flat-light-blue'
-                    />
+                    <Button text='Back to survey list' variant='flat-light-blue' />
                 </Link>
             </div>
         );
     }
 
-    return <Summary config={filteredConfigs[0]} {...props} />;
+    return <Results config={filteredConfigs[0]} {...props} />;
 }
 
 const mapStateToProps = (state: types.ReduxState) => ({
@@ -43,4 +40,4 @@ const mapStateToProps = (state: types.ReduxState) => ({
     configs: state.configs,
 });
 const mapDispatchToProps = (dispatch: any) => ({});
-export default connect(mapStateToProps, mapDispatchToProps)(EditorRouter);
+export default connect(mapStateToProps, mapDispatchToProps)(ResultsRouter);

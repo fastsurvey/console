@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {reduxUtils, backend} from '/src/utilities';
 import {types} from '/src/types';
 import {useHistory} from 'react-router-dom';
-import VisualVerifyForm from './visual-verify';
+import VisualVerifyForm from './components/visual-verify';
 
 interface Props {
     logIn(

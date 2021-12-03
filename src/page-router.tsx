@@ -3,14 +3,19 @@ import {connect} from 'react-redux';
 import {Switch, Route, BrowserRouter, Redirect} from 'react-router-dom';
 import {types} from '/src/types';
 
-import {NotFoundPage, DashboardPage} from '/src/pages';
-import {Login, Register, Verify, ForgotPassword} from '/src/pages/authentication';
+import {NotFoundPage} from '/src/pages';
+import {
+    Login,
+    Register,
+    Verify,
+    ForgotPassword,
+    SurveyList,
+    EditorRouter,
+    ResultsRouter,
+    AccountPage,
+} from '/src/pages';
 
-import {ConfigList, EditorRouter} from '/src/pages/configuration';
-import {SummaryRouter} from '/src/pages/results';
-import {AccountPage} from '/src/pages/account';
-
-import {MessageQueue, Modal, MainWrapper} from '/src/components';
+import {MessageQueue, Modal, MainWrapper, DashboardPage} from '/src/components';
 
 interface RouterProps {
     loggingIn: boolean;
@@ -32,13 +37,13 @@ function PageRouter(props: RouterProps) {
                             <DashboardPage>
                                 <Switch>
                                     <Route exact path='/surveys'>
-                                        <ConfigList />
+                                        <SurveyList />
                                     </Route>
                                     <Route exact path='/editor/:survey_name'>
                                         <EditorRouter />
                                     </Route>
                                     <Route exact path='/results/:survey_name'>
-                                        <SummaryRouter />
+                                        <ResultsRouter />
                                     </Route>
                                     <Route exact path='/account'>
                                         <AccountPage />

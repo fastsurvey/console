@@ -159,6 +159,11 @@
         @apply focus:ring-blue-200;
     }
 
+    .not-ringable {
+        @apply ring-transparent;
+        @apply outline-none;
+    }
+
     .ringable-dark {
         @apply ring-[2.5px];
         @apply ring-transparent;

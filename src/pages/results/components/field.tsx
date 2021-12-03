@@ -1,6 +1,6 @@
 import React from 'react';
 import {types} from '/src/types';
-import ChoiceSummary from './summaries/choice-summary';
+import SelectionResults from './field-results/selection-results';
 
 interface Props {
     fieldIndex: number;
@@ -53,7 +53,7 @@ function Field(props: Props) {
                 <VisualField
                     subtitle={`choose between ${fieldConfig.min_select} and ${fieldConfig.max_select} options`}
                 >
-                    <ChoiceSummary {...summaryProps} />
+                    <SelectionResults {...summaryProps} />
                 </VisualField>
             );
         case 'text':

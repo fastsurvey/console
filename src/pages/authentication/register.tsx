@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {reduxUtils, backend, formUtils} from '/src/utilities';
 import {types} from '/src/types';
-import VisualRegister from './visual-register';
+import VisualRegister from './components/visual-register';
 
 interface Props {
     openMessage(messageId: types.MessageId): void;

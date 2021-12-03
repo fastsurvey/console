@@ -77,19 +77,19 @@ function VisualConfigPanel(props: Props) {
                     {usesAuthentication ? ', Email Verification' : ''}
                 </div>
             </div>
-            <div className='w-full space-x-px bg-gray-300 border-t border-gray-300 rounded-b flex-row-center'>
+            <div className='w-full space-x-px bg-gray-200 border-t border-gray-300 rounded-b flex-row-center'>
                 <Link
                     to={`/editor/${survey_name}`}
-                    className='flex-grow rounded ringable group'
+                    className='z-0 flex-grow rounded group ringable focus:z-10'
                     data-cy='link-to-editor'
                 >
                     <div
                         className={
                             'px-3 h-9 bg-gray-100 no-selection flex-row-center ' +
                             'rounded-bl group-focus:rounded ' +
-                            'group-hover:bg-gray-200 group-focus:bg-gray-200 ' +
+                            'group-hover:bg-blue-50 group-focus:bg-blue-50 ' +
                             'text-center text-sm text-gray-700 font-weight-600 ' +
-                            'group-hover:text-black group-focus:text-black '
+                            'group-hover:text-blue-900 group-focus:text-blue-900 '
                         }
                     >
                         Editor
@@ -97,16 +97,16 @@ function VisualConfigPanel(props: Props) {
                 </Link>
                 <Link
                     to={`/results/${survey_name}`}
-                    className='flex-grow rounded ringable group'
+                    className='z-0 flex-grow rounded ringable group focus:z-10'
                     data-cy='link-to-editor'
                 >
                     <div
                         className={
                             'px-3 h-9 bg-gray-100 no-selection flex-row-center ' +
-                            'group-focus:rounded ' +
-                            'group-hover:bg-gray-200 group-focus:bg-gray-200 ' +
+                            'rounded-bl group-focus:rounded ' +
+                            'group-hover:bg-blue-50 group-focus:bg-blue-50 ' +
                             'text-center text-sm text-gray-700 font-weight-600 ' +
-                            'group-hover:text-black group-focus:text-black '
+                            'group-hover:text-blue-900 group-focus:text-blue-900 '
                         }
                     >
                         Results
@@ -116,8 +116,8 @@ function VisualConfigPanel(props: Props) {
                     <button
                         className={
                             'p-2 h-9 rounded-br focus:rounded ringable fill-current ' +
-                            'bg-gray-100 hover:bg-gray-200 focus:bg-gray-200 ' +
-                            'text-gray-700 hover:text-black focus:text-black '
+                            'bg-gray-100 hover:bg-blue-50 focus:bg-blue-50 ' +
+                            'text-gray-700 hover:text-blue-900 focus:text-blue-900 '
                         }
                         onClick={() => setDropDownIsVisible(!dropDownIsVisible)}
                         data-cy='button-toggle-actions'

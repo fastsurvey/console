@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {types} from '/src/types';
-import SummaryHeader from './summary-header/summary-header';
+import SummaryHeader from './components/results-header';
 import {backend} from '/src/utilities';
-import Field from './fields/field';
+import Field from './components/field';
 
-function Summary(props: {
+function Results(props: {
     config: types.SurveyConfig;
     account: types.Account;
     accessToken: types.AccessToken;
@@ -201,4 +201,4 @@ function Summary(props: {
     );
 }
 
-export default Summary;
+export default Results;

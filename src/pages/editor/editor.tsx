@@ -12,7 +12,7 @@ import {
 import VisualEditor from './visual-editor';
 import {types} from '/src/types';
 
-function ConfigEditor(props: {
+function Editor(props: {
     account: types.Account;
     accessToken: types.AccessToken;
 
@@ -217,4 +217,4 @@ function ConfigEditor(props: {
     );
 }
 
-export default ConfigEditor;
+export default Editor;

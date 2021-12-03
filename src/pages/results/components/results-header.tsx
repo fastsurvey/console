@@ -8,7 +8,7 @@ import {connect} from 'react-redux';
 const frontendUrl =
     import.meta.env.VITE_ENV === 'development' ? 'dev.fastsurvey.de' : 'fastsurvey.de';
 
-function SummaryHeader(props: {
+function ResultsHeader(props: {
     account: types.Account;
     config: types.SurveyConfig;
     fetch(): void;
@@ -114,4 +114,4 @@ const mapStateToProps = (state: types.ReduxState) => ({
     account: state.account,
 });
 const mapDispatchToProps = (dispatch: any) => ({});
-export default connect(mapStateToProps, mapDispatchToProps)(SummaryHeader);
+export default connect(mapStateToProps, mapDispatchToProps)(ResultsHeader);

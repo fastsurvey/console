@@ -3,9 +3,9 @@ import {connect} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import {reduxUtils, templateUtils, localIdUtils, backend} from '/src/utilities';
 import {types} from '/src/types';
-import VisualConfigList from './visual-config-list';
-import RemoveSurveyPopup from './remove-survey-popup';
-import DuplicateSurveyPopup from './duplicate-survey-popup';
+import VisualConfigList from './visual-survey-list';
+import RemoveSurveyPopup from './components/remove-survey-popup';
+import DuplicateSurveyPopup from './components/duplicate-survey-popup';
 
 interface Props {
     account: types.Account;
@@ -18,7 +18,7 @@ interface Props {
     removeConfig(surveyName: string): void;
     addConfig(config: types.SurveyConfig): void;
 }
-function ConfigList(props: Props) {
+function SurveyList(props: Props) {
     let history = useHistory();
 
     function addSurvey() {
@@ -129,4 +129,4 @@ const mapDispatchToProps = (dispatch: any) => ({
     removeConfig: reduxUtils.dispatchers.removeConfig(dispatch),
     addConfig: reduxUtils.dispatchers.addConfig(dispatch),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(ConfigList);
+export default connect(mapStateToProps, mapDispatchToProps)(SurveyList);
