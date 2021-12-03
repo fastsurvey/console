@@ -16,11 +16,7 @@ function NotFoundPage() {
                 404: Page not found
             </h1>
             <div className='w-full max-w-md mx-auto mb-5 overflow-hidden rounded-lg shadow-md'>
-                <img
-                    src={Gif}
-                    className='w-full h-auto'
-                    alt='Monkey with a cash'
-                />
+                <img src={Gif} className='w-full h-auto' alt='Monkey with a cash' />
             </div>
             <Button
                 text='Back to Main Page'

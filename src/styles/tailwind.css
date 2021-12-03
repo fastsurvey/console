@@ -159,6 +159,11 @@
         @apply focus:ring-blue-200;
     }
 
+    .not-ringable {
+        @apply ring-transparent;
+        @apply outline-none;
+    }
+
     .ringable-dark {
         @apply ring-[2.5px];
         @apply ring-transparent;
@@ -167,6 +172,8 @@
     }
 }
 
+/* ICON COLORS */
+
 @layer base {
     svg {
         fill: currentColor;
@@ -174,6 +181,72 @@
         width: 100%;
     }
 }
+
+.svg-navbar-active .primary {
+    fill: white;
+}
+.svg-navbar-active .secondary {
+    @apply fill-blue-300;
+}
+.svg-navbar-passive .primary {
+    @apply fill-blue-50;
+}
+.svg-navbar-passive .secondary {
+    @apply fill-blue-200;
+}
+
+.svg-elevated-button-active .primary {
+    @apply fill-blue-100;
+}
+.svg-elevated-button-active .secondary {
+    @apply fill-blue-700;
+}
+.svg-elevated-button-passive .primary {
+    @apply fill-gray-200;
+}
+.svg-elevated-button-passive .secondary {
+    @apply fill-gray-500;
+}
+
+.svg-field-red .primary {
+    @apply fill-red-300;
+}
+.svg-field-red .secondary {
+    @apply fill-red-700;
+}
+.svg-field-green .primary {
+    @apply fill-green-300;
+}
+.svg-field-green .secondary {
+    @apply fill-green-700;
+}
+.svg-field-cyan .primary {
+    @apply fill-cyan-300;
+}
+.svg-field-cyan .secondary {
+    @apply fill-cyan-700;
+}
+
+.svg-search-bar .primary {
+    @apply fill-blue-100;
+}
+.svg-search-bar .secondary {
+    @apply fill-blue-500;
+}
+
+.svg-label-info .primary {
+    @apply fill-gray-300;
+}
+.svg-label-info .secondary {
+    @apply fill-gray-600;
+}
+
+.svg-white .primary,
+.svg-white .secondary {
+    fill: white;
+}
+
+/* FLEX LAYOUTS */
 
 .flex-row-left {
     @apply flex;
@@ -262,4 +335,21 @@
 .flex-max {
     @apply self-stretch;
     @apply flex-grow;
+}
+
+.animate-pop {
+    animation: pulse 0.5s cubic-bezier(0.1, 0, 0.5, 1);
+    transform-origin: bottom right;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.15);
+    }
+    100% {
+        transform: scale(1);
+    }
 }

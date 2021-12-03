@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {icons} from '/src/assets';
 import {types} from '/src/types';
 
@@ -7,6 +7,13 @@ interface Props {
     close(): void;
 }
 function VisualMessage(props: Props) {
+    const [animate, setAnimate] = useState(false);
+
+    useEffect(() => {
+        setAnimate(true);
+        setTimeout(() => setAnimate(false), 450);
+    }, [props.message.randomToken]);
+
     let colors: string;
     switch (props.message.type) {
         case 'error':
@@ -25,7 +32,7 @@ function VisualMessage(props: Props) {
             className={
                 'flex-row-center pl-3 pr-1 m-2 bg-gray-900 ' +
                 'font-weight-500 rounded shadow-lg flex-grow max-w-full ' +
-                `${colors}`
+                `${colors} ${animate ? 'animate-pop' : ''}`
             }
             data-cy={`message-panel-${props.message.type}`}
         >

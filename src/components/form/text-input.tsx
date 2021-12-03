@@ -22,7 +22,7 @@ export default function TextInput(props: {
     }
 
     return (
-        <div className='relative w-full '>
+        <div className='relative z-0 w-full'>
             <input
                 value={value}
                 onChange={(e) => setValue(e.target.value)}

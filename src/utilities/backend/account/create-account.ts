@@ -7,16 +7,24 @@ async function createAccount(
         password: string;
     },
     success: () => void,
-    error: (code: any) => void,
+    error: (reason: 'email' | 'username' | 'format' | 'server') => void,
 ) {
     try {
         await httpPost('/users', account).catch((error) => {
-            throw error.response.status;
+            throw error.response;
         });
 
         success();
-    } catch (code) {
-        error(code);
+    } catch (response: any) {
+        if (response.status === 500) {
+            error('server');
+        } else if (response.status === 422) {
+            error('format');
+        } else if (response.data.detail === 'username already taken') {
+            error('username');
+        } else {
+            error('email');
+        }
     }
 }
 

@@ -6,7 +6,6 @@ const get = getCySelector;
 const general = {
     settings: () => get(['account-section-settings'], {count: 1}),
     delete: () => get(['account-section-delete'], {count: 1}),
-    payment: () => get(['account-section-payment'], {count: 1}),
     successMessage: () => get(['message-panel-success'], {count: 1}),
     accountButton: () => get(['navbar', 'button-account'], {count: 1, invisible: true}),
 };
@@ -87,7 +86,6 @@ describe('The Account Page', function () {
         cy.get('section:visible').should('have.length', 3);
         general.settings();
         general.delete();
-        general.payment();
 
         // tab switching works
         assertTabState('id');

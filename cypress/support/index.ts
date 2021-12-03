@@ -121,23 +121,19 @@ Cypress.Commands.add('seedDuplicationData', () => {
     cy.fixture('account.json').then((accountJSON: any) => {
         cy.fixture('configs.json').then((configsJSON: any) => {
             const {USERNAME, PASSWORD} = accountJSON;
-            const {ORIGINAL_SURVEY, UPDATED_ORIGINAL, UPDATED_MAX_IDENTIFIER} =
+            const {ORIGINAL_SURVEY, UPDATED_ORIGINAL, UPDATED_NEXT_IDENTIFIER} =
                 configsJSON.DUPLICATION;
 
-            const requestDuplication = (
+            const request = (
                 method: 'GET' | 'POST' | 'PUT',
+                url: string,
+                body: any,
                 authResponse: Cypress.Response<any>,
             ) => {
-                let config = ORIGINAL_SURVEY;
-                let url = `https://api.dev.fastsurvey.de/users/${USERNAME}/surveys`;
-                if (method !== 'POST') {
-                    config = UPDATED_ORIGINAL;
-                    url += `/${config['survey_name']}`;
-                }
                 return cy.request({
                     method,
                     url,
-                    body: method === 'GET' ? undefined : config,
+                    body,
                     headers: {
                         Authorization: `Bearer ${authResponse.body['access_token']}`,
                         'Content-Type': 'application/json',
@@ -149,17 +145,49 @@ Cypress.Commands.add('seedDuplicationData', () => {
                 expect(authResponse.status).to.equal(200);
                 expect(authResponse.body).to.have.property('access_token');
 
-                requestDuplication('POST', authResponse).then((r1) => {
+                const postInitialConfig = () =>
+                    request(
+                        'POST',
+                        `https://api.dev.fastsurvey.de/users/${USERNAME}/surveys`,
+                        ORIGINAL_SURVEY,
+                        authResponse,
+                    );
+
+                const putUpdatedConfig = () =>
+                    request(
+                        'PUT',
+                        `https://api.dev.fastsurvey.de/users/${USERNAME}/surveys/${UPDATED_ORIGINAL['survey_name']}`,
+                        UPDATED_ORIGINAL,
+                        authResponse,
+                    );
+
+                const getConfig = () =>
+                    request(
+                        'GET',
+                        `https://api.dev.fastsurvey.de/users/${USERNAME}/surveys/${UPDATED_ORIGINAL['survey_name']}`,
+                        undefined,
+                        authResponse,
+                    );
+
+                postInitialConfig().then((r1) => {
                     expect(r1.status).to.equal(200);
 
-                    requestDuplication('PUT', authResponse).then((r2) => {
+                    getConfig().then((r2) => {
                         expect(r2.status).to.equal(200);
+                        expect(r2.body).to.deep.equal({
+                            ...ORIGINAL_SURVEY,
+                            next_identifier: UPDATED_NEXT_IDENTIFIER,
+                        });
 
-                        requestDuplication('GET', authResponse).then((r3) => {
+                        putUpdatedConfig().then((r3) => {
                             expect(r3.status).to.equal(200);
-                            expect(r3.body).to.deep.equal({
-                                ...UPDATED_ORIGINAL,
-                                max_identifier: UPDATED_MAX_IDENTIFIER,
+
+                            getConfig().then((r4) => {
+                                expect(r4.status).to.equal(200);
+                                expect(r4.body).to.deep.equal({
+                                    ...UPDATED_ORIGINAL,
+                                    next_identifier: UPDATED_NEXT_IDENTIFIER,
+                                });
                             });
                         });
                     });
@@ -173,7 +201,7 @@ Cypress.Commands.add('seedEditorData', () => {
     cy.fixture('account.json').then((accountJSON: any) => {
         cy.fixture('configs.json').then((configsJSON: any) => {
             const {USERNAME, PASSWORD} = accountJSON;
-            const {INITIAL_SURVEY, INITIAL_MAX_IDENTIFIER} = configsJSON.EDITOR;
+            const {INITIAL_SURVEY, INITIAL_NEXT_IDENTIFIER} = configsJSON.EDITOR;
 
             const baseUrl = `https://api.dev.fastsurvey.de/users/${USERNAME}`;
 
@@ -209,7 +237,7 @@ Cypress.Commands.add('seedEditorData', () => {
                         expect(r2.status).to.equal(200);
                         expect(r2.body).to.deep.equal({
                             ...INITIAL_SURVEY,
-                            max_identifier: INITIAL_MAX_IDENTIFIER,
+                            next_identifier: INITIAL_NEXT_IDENTIFIER,
                         });
                     });
                 });

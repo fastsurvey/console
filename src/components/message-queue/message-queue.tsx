@@ -7,7 +7,7 @@ import VisualMessage from './visual-message';
 
 interface Props {
     messages: types.Message[];
-    closeMessage(text: string): void;
+    closeMessage(messageId: types.MessageId): void;
     closeAllMessages(): void;
 }
 function MessageQueue(props: Props) {
@@ -33,7 +33,7 @@ function MessageQueue(props: Props) {
                 <VisualMessage
                     key={message.text}
                     message={message}
-                    close={() => props.closeMessage(message.text)}
+                    close={() => props.closeMessage(message.id)}
                 />
             ))}
         </div>

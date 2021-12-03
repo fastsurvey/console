@@ -3,8 +3,8 @@ import localIdUtils from '../local-id-utils/index';
 
 export const option = (
     newTitle: string,
-    fieldConfig: types.RadioField | types.SelectionField,
-): types.RadioField | types.SelectionField => {
+    fieldConfig: types.SelectionField,
+): types.SelectionField => {
     return {
         ...fieldConfig,
         options: [

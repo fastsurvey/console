@@ -12,6 +12,7 @@ export {default as Toggle} from './form/toggle';
 
 export {default as EditorFormCard} from './layout/editor-form-card';
 export {default as ValidationBar} from './layout/validation-bar';
+export {default as DashboardPage} from './layout/dashboard-page';
 
 export {default as MessageQueue} from './message-queue/message-queue';
 export {default as Modal} from './modal/modal';

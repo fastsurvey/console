@@ -11,13 +11,6 @@
             "fields": [
                 {
                     "identifier": 0,
-                    "title": "...",
-                    "description": "",
-                    "type": "option",
-                    "required": true
-                },
-                {
-                    "identifier": 1,
                     "title": "How do you feel about apples?",
                     "description": "",
                     "type": "text",
@@ -26,13 +19,15 @@
                 },
                 {
                     "identifier": 2,
-                    "title": "...",
+                    "title": "What's your email address???",
                     "description": "",
-                    "type": "option",
-                    "required": true
+                    "type": "email",
+                    "hint": "YOUR EMAIL ADDRESS HERE",
+                    "regex": ".*",
+                    "verify": false
                 },
                 {
-                    "identifier": 3,
+                    "identifier": 1,
                     "title": "What's your email address?",
                     "description": "",
                     "type": "email",
@@ -41,7 +36,7 @@
                     "verify": true
                 },
                 {
-                    "identifier": 4,
+                    "identifier": 3,
                     "title": "What are your favorite pizza toppings?",
                     "description": "",
                     "type": "selection",
@@ -56,25 +51,13 @@
                     "max_select": 5
                 },
                 {
-                    "identifier": 6,
-                    "title": "...",
+                    "identifier": 4,
+                    "title": "What's your email address??????",
                     "description": "",
-                    "type": "option",
-                    "required": true
-                },
-                {
-                    "identifier": 7,
-                    "title": "What's your favorite letter of the alphabet?",
-                    "description": "",
-                    "type": "radio",
-                    "options": ["A", "B", "C"]
-                },
-                {
-                    "identifier": 5,
-                    "title": "I am a big fan of carrots.",
-                    "description": "",
-                    "type": "option",
-                    "required": true
+                    "type": "email",
+                    "hint": "YOUR EMAIL ADDRESS HERE",
+                    "regex": ".*",
+                    "verify": false
                 }
             ]
         },
@@ -87,7 +70,7 @@
             "draft": false,
             "fields": [
                 {
-                    "identifier": 1,
+                    "identifier": 0,
                     "title": "How do you feel about apples?",
                     "description": "",
                     "type": "text",
@@ -95,7 +78,7 @@
                     "max_chars": 1000
                 },
                 {
-                    "identifier": 3,
+                    "identifier": 1,
                     "title": "What's your email address?",
                     "description": "",
                     "type": "email",
@@ -104,7 +87,7 @@
                     "verify": true
                 },
                 {
-                    "identifier": 4,
+                    "identifier": 3,
                     "title": "What are your favorite pizza toppings?",
                     "description": "",
                     "type": "selection",
@@ -117,26 +100,12 @@
                     ],
                     "min_select": 2,
                     "max_select": 5
-                },
-                {
-                    "identifier": 7,
-                    "title": "What's your favorite letter of the alphabet?",
-                    "description": "",
-                    "type": "radio",
-                    "options": ["A", "B", "C"]
-                },
-                {
-                    "identifier": 5,
-                    "title": "I am a big fan of carrots.",
-                    "description": "",
-                    "type": "option",
-                    "required": true
                 }
             ]
         },
-        "UPDATED_MAX_IDENTIFIER": 7,
+        "UPDATED_NEXT_IDENTIFIER": 5,
         "DUPLICATE_SURVEY": {
-            "max_identifier": 4,
+            "next_identifier": 3,
             "survey_name": "a-different-kind-of-complex",
             "title": "Very Good Sample Title",
             "description": "Enneapuses are the new octopuses, and other wisdoms.",
@@ -175,20 +144,6 @@
                     ],
                     "min_select": 2,
                     "max_select": 5
-                },
-                {
-                    "identifier": 3,
-                    "title": "What's your favorite letter of the alphabet?",
-                    "description": "",
-                    "type": "radio",
-                    "options": ["A", "B", "C"]
-                },
-                {
-                    "identifier": 4,
-                    "title": "I am a big fan of carrots.",
-                    "description": "",
-                    "type": "option",
-                    "required": true
                 }
             ]
         }
@@ -236,7 +191,7 @@
                 }
             ]
         },
-        "INITIAL_MAX_IDENTIFIER": 2,
+        "INITIAL_NEXT_IDENTIFIER": 3,
         "TMP_SURVEY_NAME": "coding-dojo-mit-den-boys",
         "MODIFIED_SURVEY": {
             "survey_name": "just-another-randy-cowboy",
@@ -281,7 +236,7 @@
             ]
         },
         "COPY_PASTE_SURVEY": {
-            "max_identifier": 5,
+            "next_identifier": 6,
             "survey_name": "just-another-randy-bird",
             "title": "Very Good Sample Title",
             "description": "Enneapuses are the new octopuses, and other wisdoms.",

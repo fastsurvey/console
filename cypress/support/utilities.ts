@@ -19,7 +19,7 @@ export function login(username: string, password: string) {
     }).as('POSTauthentication');
     cy.get('button').contains('Login').click();
     cy.wait(['@POSTauthentication']);
-    cy.url().should('eq', 'http://localhost:3000/configurations');
+    cy.url().should('eq', 'http://localhost:3000/surveys');
 }
 
 export function getByDataCy(dataCyContains: string, props?: {count?: number}) {

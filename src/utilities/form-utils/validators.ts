@@ -23,9 +23,7 @@ const genericTitle =
     };
 
 export const validators = {
-    fieldOptions: (
-        fieldConfig: types.RadioField | types.SelectionField,
-    ): types.ValidationResult => {
+    fieldOptions: (fieldConfig: types.SelectionField): types.ValidationResult => {
         if (fieldConfig.options.length < 2) {
             return {
                 valid: false,
@@ -45,14 +43,10 @@ export const validators = {
     },
 
     authMode: (config: types.SurveyConfig): types.ValidationResult => {
-        if (
-            filter(config.fields, (f) => f.type === 'email' && f.verify)
-                .length > 1
-        ) {
+        if (filter(config.fields, (f) => f.type === 'email' && f.verify).length > 1) {
             return {
                 valid: false,
-                message:
-                    'Email authentication requires exactaly one email field',
+                message: 'Email authentication requires exactaly one email field',
             };
         } else {
             return {valid: true};
@@ -145,8 +139,7 @@ export const validators = {
         } else if (submission_limit > 1000) {
             return {
                 valid: false,
-                message:
-                    'Submission limit is currently limited to 1000 submissions',
+                message: 'Submission limit is currently limited to 1000 submissions',
             };
         } else {
             return {valid: true};
@@ -158,8 +151,7 @@ export const validators = {
             return {
                 valid: false,
                 message:
-                    'Hint too long (≤ 250 characters, ' +
-                    `currently: ${regex.length})`,
+                    'Hint too long (≤ 250 characters, ' + `currently: ${regex.length})`,
             };
         } else {
             return {valid: true};
@@ -170,8 +162,7 @@ export const validators = {
             return {
                 valid: false,
                 message:
-                    'Hint too long (≤ 120 characters, ' +
-                    `currently: ${hint.length})`,
+                    'Hint too long (≤ 120 characters, ' + `currently: ${hint.length})`,
             };
         } else {
             return {valid: true};
@@ -246,11 +237,13 @@ export const validators = {
                 valid: false,
                 message: 'username too long (≤ 32 characters)',
             };
-        } else if (!new RegExp('^[a-z0-9-]{1,32}$').test(newUserName)) {
+        } else if (
+            !new RegExp('^(?!-)(?!.*--)[a-z0-9-]{1,32}(?<!-)$').test(newUserName)
+        ) {
             return {
                 valid: false,
                 message:
-                    "only lowercase letters, numbers and hypens ('-') allowed in username",
+                    "only lowercase letters, numbers and single hyphens ('-', inbetween other characters) in username",
             };
         } else {
             return {valid: true};

@@ -65,11 +65,11 @@ describe('The Login Page', function () {
         elements.identifier().type(USERNAME);
         elements.password().type(PASSWORD);
         elements.submit().click();
-        cy.url().should('include', '/configurations');
+        cy.url().should('include', '/surveys');
 
         // refresh the page (test the api-key stored in a cookie)
         cy.visit('/login');
-        cy.url().should('include', '/configurations');
+        cy.url().should('include', '/surveys');
 
         // logging out
         logout();
@@ -94,6 +94,6 @@ describe('The Login Page', function () {
 
         // login should work after an unsuccessful attempt
         elements.submit().click();
-        cy.url().should('include', '/configurations');
+        cy.url().should('include', '/surveys');
     });
 });

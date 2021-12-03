@@ -45,7 +45,12 @@ function NavbarButton(props: {
             }
             data-cy={`button-${props.text.toLowerCase()}`}
         >
-            <div className={'h-10 w-10 p-2 icon-light-blue flex-shrink-0'}>
+            <div
+                className={
+                    'h-10 w-10 p-2 flex-shrink-0 ' +
+                    (props.active ? 'svg-navbar-active' : 'svg-navbar-passive')
+                }
+            >
                 {props.icon}
             </div>
             <div
@@ -70,22 +75,16 @@ function NavbarContent(props: {
         <React.Fragment>
             <NavbarLogo />
             <NavbarButton
-                onClick={() => props.openLink('/configurations')}
-                text='Editor'
-                icon={icons.survey}
-                active={props.location.pathname.startsWith('/configuration')}
-            />
-            <NavbarButton
-                onClick={() => props.openLink('/results')}
-                text='Results'
+                onClick={() => props.openLink('/surveys')}
+                text='Surveys'
                 icon={icons.collection}
-                active={props.location.pathname.startsWith('/result')}
+                active={!props.location.pathname.startsWith('/account')}
             />
             <NavbarButton
                 onClick={() => props.openLink('/account')}
                 text='Account'
-                icon={icons.user}
-                active={props.location.pathname === '/account'}
+                icon={icons.gear}
+                active={props.location.pathname.startsWith('/account')}
             />
 
             <div className={'flex-max'} />

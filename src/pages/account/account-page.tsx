@@ -3,8 +3,8 @@ import {connect} from 'react-redux';
 import {types} from '/src/types';
 import {backend, reduxUtils, formUtils} from '/src/utilities';
 import VisualAccountPage from './visual-account-page';
-import ChangeUsernamePopup from '/src/pages/account/change-username-popup';
-import DeleteUserPopup from './delete-user-popup';
+import ChangeUsernamePopup from './components/change-username-popup';
+import DeleteUserPopup from './components/delete-user-popup';
 
 function AccountPage(props: {
     account: types.Account;
@@ -106,10 +106,7 @@ function AccountPage(props: {
     function openDeleteUserModal() {
         props.openModal(
             'Delete your account forever?',
-            <DeleteUserPopup
-                cancel={props.closeModal}
-                submit={submitRemoveUser}
-            />,
+            <DeleteUserPopup cancel={props.closeModal} submit={submitRemoveUser} />,
         );
     }
 
