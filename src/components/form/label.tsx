@@ -5,15 +5,14 @@ export default function Label(props: {text: string; detail?: React.ReactNode}) {
     const [detailIsOpen, setDetailIsOpen] = useState(false);
     const toggleDetail = () => {
         setDetailIsOpen(!detailIsOpen);
-        console.log('TOGGLE');
     };
 
     return (
-        <label className='z-10 w-full px-1 text-sm text-left text-gray-500 flex-col-left font-weight-600 no-selection'>
+        <div className='z-10 w-full px-1 text-sm text-left text-gray-500 flex-col-left font-weight-600 no-selection'>
             <div className='flex-row-left'>
-                <span>{props.text}</span>
+                <label>{props.text}</label>
                 {props.detail !== undefined && (
-                    <div
+                    <button
                         className={
                             'w-9 h-7 px-2 py-1 md:w-6 md:h-6 md:p-1 ' +
                             'svg-label-info cursor-pointer ' +
@@ -22,7 +21,7 @@ export default function Label(props: {text: string; detail?: React.ReactNode}) {
                         onClick={toggleDetail}
                     >
                         {detailIsOpen ? icons.closeCircle : icons.information}
-                    </div>
+                    </button>
                 )}
             </div>
             {detailIsOpen && (
@@ -36,6 +35,6 @@ export default function Label(props: {text: string; detail?: React.ReactNode}) {
                     {props.detail}
                 </div>
             )}
-        </label>
+        </div>
     );
 }
