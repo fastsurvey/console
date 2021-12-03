@@ -103,7 +103,7 @@ const VisualEditorSettings = (props: {
             <div className='w-full px-4 py-4 space-y-6 flex-col-left'>
                 {tabIndex === 0 && (
                     <>
-                        <div className='w-full centering-col gap-y-0.5'>
+                        <div className='w-full flex-col-left gap-y-0.5'>
                             <Label text='Title' />
                             <TextInput
                                 value={props.config.title}
@@ -117,8 +117,22 @@ const VisualEditorSettings = (props: {
                                 data-cy='input-title'
                             />
                         </div>
-                        <div className='w-full centering-col gap-y-0.5'>
-                            <Label text='URL conform identifier' />
+                        <div className='w-full flex-col-left gap-y-0.5'>
+                            <Label
+                                text='Identifier'
+                                detail={
+                                    <>
+                                        This identifier is used in the URL that you can
+                                        share with your survey. The survey can be filled
+                                        out at{' '}
+                                        <span className='text-blue-100 underline break-all'>
+                                            https://fastsurvey.de/{'<'}your-username
+                                            {'>'}/{'<'}survey-identifier{'>'}
+                                        </span>
+                                        .
+                                    </>
+                                }
+                            />
                             <div className='w-full flex-row-center gap-x-1'>
                                 <TextInput
                                     value={props.config.survey_name}
@@ -156,7 +170,7 @@ const VisualEditorSettings = (props: {
                             </div>
                         </div>
 
-                        <div className='w-full centering-col gap-y-0.5'>
+                        <div className='w-full flex-col-left gap-y-0.5'>
                             <Label text='Description' />
                             <TextArea
                                 value={props.config.description}
