@@ -264,19 +264,6 @@ function VisualAccountPage(props: {
                         />
                     </div>
                 </section>
-                <section
-                    className='p-4 border-[2px] border-dashed border-gray-300 rounded w-full'
-                    data-cy='account-section-payment'
-                >
-                    <h2 className='text-base leading-6 text-blue-900 opacity-80 font-weight-600'>
-                        Payment Information
-                    </h2>
-                    <div className='mt-2 text-sm text-gray-900 opacity-60 font-weight-400'>
-                        Right now, our tool is still completely free to use. We want to
-                        see how people use it and implement important features before
-                        spending time on implementing payment logic.
-                    </div>
-                </section>
             </div>
         </div>
     );
