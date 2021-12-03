@@ -31,7 +31,7 @@ function SummaryHeader(props: {
         <div className={'w-full flex-col-left mb-1 z-10'} data-cy='summary-header'>
             <div className='relative w-full flex-row-top '>
                 <Link
-                    to='/results'
+                    to='/surveys'
                     className={
                         'w-10 h-10 m-1 p-2 ringable rounded icon-gray ' +
                         'absolute -left-14 top-50% transform -translate-y-50% '

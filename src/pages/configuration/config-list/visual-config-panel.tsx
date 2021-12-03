@@ -77,9 +77,9 @@ function VisualConfigPanel(props: Props) {
                     {usesAuthentication ? ', Email Verification' : ''}
                 </div>
             </div>
-            <div className='w-full space-x-1 bg-gray-100 rounded-b flex-row-center'>
+            <div className='w-full space-x-px bg-gray-300 border-t border-gray-300 rounded-b flex-row-center'>
                 <Link
-                    to={`/configuration/${survey_name}`}
+                    to={`/editor/${survey_name}`}
                     className='flex-grow rounded ringable group'
                     data-cy='link-to-editor'
                 >
@@ -92,7 +92,24 @@ function VisualConfigPanel(props: Props) {
                             'group-hover:text-black group-focus:text-black '
                         }
                     >
-                        edit
+                        Editor
+                    </div>
+                </Link>
+                <Link
+                    to={`/results/${survey_name}`}
+                    className='flex-grow rounded ringable group'
+                    data-cy='link-to-editor'
+                >
+                    <div
+                        className={
+                            'px-3 h-9 bg-gray-100 no-selection flex-row-center ' +
+                            'group-focus:rounded ' +
+                            'group-hover:bg-gray-200 group-focus:bg-gray-200 ' +
+                            'text-center text-sm text-gray-700 font-weight-600 ' +
+                            'group-hover:text-black group-focus:text-black '
+                        }
+                    >
+                        Results
                     </div>
                 </Link>
                 <div className={'relative h-9'}>

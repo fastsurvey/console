@@ -27,7 +27,7 @@ function ConfigList(props: Props) {
         const success = () => {
             props.addConfig(newConfig);
             props.closeModal();
-            history.push(`/configuration/${newConfig.survey_name}`);
+            history.push(`/editor/${newConfig.survey_name}`);
         };
         const error = (code: 400 | 401 | 422 | 500) => {};
 
@@ -44,7 +44,6 @@ function ConfigList(props: Props) {
         function success() {
             props.removeConfig(config.survey_name);
             props.closeModal();
-            history.push('/configurations');
             props.openMessage('success-survey-removed');
         }
 
@@ -62,31 +61,30 @@ function ConfigList(props: Props) {
         );
     };
 
-    const duplicateSurvey =
-        (config: types.SurveyConfig) => (newSurveyName: string) => {
-            const newConfig = localIdUtils.remove.survey({
-                ...config,
-                survey_name: newSurveyName,
-                draft: true,
-                fields: config.fields.map((f, i) => ({...f, identifier: i})),
-            });
+    const duplicateSurvey = (config: types.SurveyConfig) => (newSurveyName: string) => {
+        const newConfig = localIdUtils.remove.survey({
+            ...config,
+            survey_name: newSurveyName,
+            draft: true,
+            fields: config.fields.map((f, i) => ({...f, identifier: i})),
+        });
 
-            const success = () => {
-                props.addConfig(newConfig);
-                props.closeModal();
-                history.push(`/configuration/${newSurveyName}`);
-                props.openMessage('success-survey-duplicated');
-            };
-            const error = (code: 400 | 401 | 422 | 500) => {};
-
-            backend.createSurvey(
-                props.account,
-                props.accessToken,
-                newConfig,
-                success,
-                error,
-            );
+        const success = () => {
+            props.addConfig(newConfig);
+            props.closeModal();
+            history.push(`/editor/${newSurveyName}`);
+            props.openMessage('success-survey-duplicated');
         };
+        const error = (code: 400 | 401 | 422 | 500) => {};
+
+        backend.createSurvey(
+            props.account,
+            props.accessToken,
+            newConfig,
+            success,
+            error,
+        );
+    };
 
     const openRemoveModal = (config: types.SurveyConfig) => () => {
         props.openModal(

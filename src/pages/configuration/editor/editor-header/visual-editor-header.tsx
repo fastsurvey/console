@@ -80,7 +80,7 @@ function VisualEditorHeader(props: {
                 )}
                 {!props.configIsDiffering && (
                     <Link
-                        to='/configurations'
+                        to='/surveys'
                         className={
                             'w-10 h-10 m-1 p-2 ringable rounded icon-gray ' +
                             'absolute -left-14 top-50% transform -translate-y-50% '

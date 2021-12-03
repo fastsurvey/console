@@ -75,22 +75,16 @@ function NavbarContent(props: {
         <React.Fragment>
             <NavbarLogo />
             <NavbarButton
-                onClick={() => props.openLink('/configurations')}
-                text='Editor'
-                icon={icons.edit}
-                active={props.location.pathname.startsWith('/configuration')}
-            />
-            <NavbarButton
-                onClick={() => props.openLink('/results')}
-                text='Results'
-                icon={icons.pieChart}
-                active={props.location.pathname.startsWith('/result')}
+                onClick={() => props.openLink('/surveys')}
+                text='Surveys'
+                icon={icons.collection}
+                active={!props.location.pathname.startsWith('/account')}
             />
             <NavbarButton
                 onClick={() => props.openLink('/account')}
                 text='Account'
                 icon={icons.gear}
-                active={props.location.pathname === '/account'}
+                active={props.location.pathname.startsWith('/account')}
             />
 
             <div className={'flex-max'} />

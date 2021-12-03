@@ -4,15 +4,10 @@ import {Switch, Route, BrowserRouter, Redirect} from 'react-router-dom';
 import {types} from '/src/types';
 
 import {NotFoundPage, DashboardPage} from '/src/pages';
-import {
-    Login,
-    Register,
-    Verify,
-    ForgotPassword,
-} from '/src/pages/authentication';
+import {Login, Register, Verify, ForgotPassword} from '/src/pages/authentication';
 
 import {ConfigList, EditorRouter} from '/src/pages/configuration';
-import {ResultsList, SummaryRouter} from '/src/pages/results';
+import {SummaryRouter} from '/src/pages/results';
 import {AccountPage} from '/src/pages/account';
 
 import {MessageQueue, Modal, MainWrapper} from '/src/components';
@@ -32,21 +27,15 @@ function PageRouter(props: RouterProps) {
                     <Route exact strict path='/'>
                         <Redirect to='/login' />
                     </Route>
-                    <Route path='(/configurations|/results|/account|/configuration)'>
+                    <Route path='(/surveys|/editor|/results|/account)'>
                         {!props.loggingIn && props.loggedIn && (
                             <DashboardPage>
                                 <Switch>
-                                    <Route exact path='/configurations'>
+                                    <Route exact path='/surveys'>
                                         <ConfigList />
                                     </Route>
-                                    <Route
-                                        exact
-                                        path='/configuration/:survey_name'
-                                    >
+                                    <Route exact path='/editor/:survey_name'>
                                         <EditorRouter />
-                                    </Route>
-                                    <Route exact path='/results'>
-                                        <ResultsList />
                                     </Route>
                                     <Route exact path='/results/:survey_name'>
                                         <SummaryRouter />
@@ -78,7 +67,7 @@ function PageRouter(props: RouterProps) {
                             )}
                         </MainWrapper>
                         {!props.loggingIn && props.loggedIn && (
-                            <Redirect to='/configurations' />
+                            <Redirect to='/surveys' />
                         )}
                     </Route>
                     <Route path='/verify'>
