@@ -6,7 +6,7 @@ const {login, getCySelector} = utilities;
 const get = getCySelector;
 
 const warningMessage = () => get(['message-panel-warning'], {count: 1});
-const navbarButtonEditor = () => get(['navbar', 'button-editor'], {invisible: true});
+const navbarButtonSurveys = () => get(['navbar', 'button-surveys'], {invisible: true});
 
 const headerElements = {
     title: () => get(['editor-header', 'title'], {count: 1}),
@@ -105,7 +105,7 @@ describe('The Editor Page', () => {
                     .as('configsJSON')
                     .then((configsJSON) => {
                         const s = configsJSON.EDITOR.INITIAL_SURVEY['survey_name'];
-                        cy.visit(`/configuration/${s}`);
+                        cy.visit(`/editor/${s}`);
                     });
             });
     });
@@ -138,7 +138,7 @@ describe('The Editor Page', () => {
     };
 
     const assertEditorPath = (survey_name: string) =>
-        cy.url().should('eq', `http://localhost:3000/configuration/${survey_name}`);
+        cy.url().should('eq', `http://localhost:3000/editor/${survey_name}`);
 
     const assertSyncedHeaderState = () => {
         get(['editor-header', 'button-undo']).should('have.length', 0);
@@ -202,7 +202,7 @@ describe('The Editor Page', () => {
         settingsElements.endTime();
 
         headerElements.back().click();
-        cy.url().should('eq', 'http://localhost:3000/configurations');
+        cy.url().should('eq', 'http://localhost:3000/surveys');
     });
 
     it('start/end buttons', function () {
@@ -253,7 +253,7 @@ describe('The Editor Page', () => {
 
         // initial state
         settingsElements.inputIdentifier().should('have.value', SURVEY_NAME);
-        cy.url().should('eq', `http://localhost:3000/configuration/${SURVEY_NAME}`);
+        cy.url().should('eq', `http://localhost:3000/editor/${SURVEY_NAME}`);
 
         // refresh button
         settingsElements.refreshIdentifier().click();
@@ -263,18 +263,18 @@ describe('The Editor Page', () => {
         // changing survey name
         settingsElements.inputIdentifier().clear().type(TMP_SURVEY_NAME);
         headerElements.save().click();
-        cy.url().should('eq', `http://localhost:3000/configuration/${TMP_SURVEY_NAME}`);
+        cy.url().should('eq', `http://localhost:3000/editor/${TMP_SURVEY_NAME}`);
         cy.reload();
         settingsElements.inputIdentifier().should('have.value', TMP_SURVEY_NAME);
-        cy.url().should('eq', `http://localhost:3000/configuration/${TMP_SURVEY_NAME}`);
+        cy.url().should('eq', `http://localhost:3000/editor/${TMP_SURVEY_NAME}`);
 
         // changing it back
         settingsElements.inputIdentifier().clear().type(SURVEY_NAME);
         headerElements.save().click();
-        cy.url().should('eq', `http://localhost:3000/configuration/${SURVEY_NAME}`);
+        cy.url().should('eq', `http://localhost:3000/editor/${SURVEY_NAME}`);
         cy.reload();
         settingsElements.inputIdentifier().should('have.value', SURVEY_NAME);
-        cy.url().should('eq', `http://localhost:3000/configuration/${SURVEY_NAME}`);
+        cy.url().should('eq', `http://localhost:3000/editor/${SURVEY_NAME}`);
     });
 
     it('fields from fixture are present, undo functionality', function () {
@@ -414,7 +414,7 @@ describe('The Editor Page', () => {
         cy.reload();
         assertEditorPath(survey_name);
         settingsElements.inputTitle().clear();
-        navbarButtonEditor().click({force: true});
+        navbarButtonSurveys().click({force: true});
         assertEditorPath(survey_name);
         warningMessage().contains('save or undo');
     });

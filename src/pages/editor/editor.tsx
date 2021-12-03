@@ -135,7 +135,7 @@ function Editor(props: {
             setLocalConfigState(combinedConfig);
             props.setCentralConfig(combinedConfig);
             if (localConfig.survey_name !== props.centralConfig.survey_name) {
-                history.push(`/configuration/${localConfig.survey_name}`);
+                history.push(`/editor/${localConfig.survey_name}`);
             }
         }
 
