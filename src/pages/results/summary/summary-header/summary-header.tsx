@@ -52,8 +52,7 @@ function SummaryHeader(props: {
                 <div className='flex-max' />
                 <div className='relative'>
                     <Button
-                        text={showDownloadOptions ? undefined : 'download'}
-                        icon={showDownloadOptions ? icons.close : undefined}
+                        icon={showDownloadOptions ? icons.close : icons.cloudDownload}
                         loading={props.isDownloading}
                         onClick={() => setShowDownloadOptions(!showDownloadOptions)}
                         data-cy='button-toggle-download-dropdown'
@@ -89,7 +88,7 @@ function SummaryHeader(props: {
                 </div>
                 <div className='w-2' />
                 <Button
-                    text={'refresh'}
+                    icon={icons.refresh}
                     onClick={props.fetch}
                     loading={props.isFetching}
                     data-cy='button-refresh'

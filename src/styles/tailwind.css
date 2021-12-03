@@ -191,7 +191,7 @@
 }
 
 .svg-elevated-button-active .primary {
-    @apply fill-blue-50;
+    @apply fill-blue-100;
 }
 .svg-elevated-button-active .secondary {
     @apply fill-blue-700;
