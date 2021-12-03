@@ -69,10 +69,7 @@ function Field(props: Props) {
             );
             break;
         default:
-            FieldSettings = (
-                <div className='w-full my-4 text-center'>Nothing here yet ...</div>
-            );
-            break;
+            throw 'Invalid field';
     }
 
     return (

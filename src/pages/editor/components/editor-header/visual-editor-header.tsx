@@ -41,7 +41,7 @@ function VisualEditorHeader(props: {
     const {username} = props.account;
 
     const linkContent = (
-        <div className='text-sm text-blue-700 underline md:truncate font-weight-600'>
+        <div className='w-full text-sm text-blue-700 underline truncate font-weight-600'>
             {frontendUrl}/{username}/{survey_name}
         </div>
     );
@@ -132,7 +132,7 @@ function VisualEditorHeader(props: {
                 <div
                     className={
                         'px-1.5 py-0.5 transform -translate-x-1.5 ' +
-                        'cursor-not-allowed opacity-70'
+                        'cursor-not-allowed opacity-70 w-full'
                     }
                     data-cy='link-to-frontend isinactive'
                 >
@@ -142,7 +142,7 @@ function VisualEditorHeader(props: {
             {!(draft || props.configIsDiffering) && (
                 <a
                     href={`https://${frontendUrl}/${username}/${survey_name}`}
-                    className='px-1.5 py-0.5 transform -translate-x-1.5 rounded ringable'
+                    className='px-1.5 py-0.5 transform -translate-x-1.5 rounded ringable w-full'
                     target='_blank'
                     rel='noopener noreferrer'
                     data-cy='link-to-frontend isactive'

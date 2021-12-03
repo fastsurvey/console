@@ -37,21 +37,21 @@ function VisualConfigPanel(props: Props) {
                 <div
                     className={
                         'w-full flex md:h-6 ' +
-                        'flex-col-reverse items-center justify-center ' +
-                        'sm:flex-row sm:items-center sm:justify-center '
+                        'flex-row items-center justify-center ' +
+                        'sm:items-center sm:justify-center '
                     }
                 >
                     <div
                         className={
                             'pr-4 text-base text-gray-800 font-weight-600 ' +
-                            'mb-1 md:mb-0 md:truncate leading-tight ' +
-                            'w-full sm:w-auto sm:flex-grow'
+                            'mb-1 md:mb-0 truncate leading-tight ' +
+                            'w-auto flex-grow'
                         }
                     >
                         {title}
                     </div>
-                    <div className='flex-shrink-0 w-full pb-1.5 sm:w-auto flex-row-right sm:pb-0'>
-                        <TimePill config={props.config} flat />
+                    <div className='flex-shrink-0 pb-1.5 w-auto flex-row-right sm:pb-0'>
+                        <TimePill config={props.config} flat shrinkOnMobile />
                     </div>
                 </div>
                 <a
@@ -61,8 +61,8 @@ function VisualConfigPanel(props: Props) {
                             : `https://${baseUrl}/${username}/${survey_name}`
                     }
                     className={
-                        'text-sm underline md:h-5 md:truncate font-weight-600 ' +
-                        'text-blue-800 mt-1 break-all ' +
+                        'text-sm underline md:h-5 truncate font-weight-600 ' +
+                        'text-blue-800 mt-1 break-all max-w-full ' +
                         (props.config.draft
                             ? 'cursor-not-allowed opacity-70'
                             : 'hover:text-blue-500 focus:text-blue-500 px-1 -mx-1 ringable rounded-sm mt-1')

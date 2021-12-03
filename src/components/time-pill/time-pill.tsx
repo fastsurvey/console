@@ -22,7 +22,11 @@ const diffToPhrase = (diff: number): string => {
     return '1 second';
 };
 
-function TimePill(props: {config: types.SurveyConfig; flat: boolean}) {
+function TimePill(props: {
+    config: types.SurveyConfig;
+    flat: boolean;
+    shrinkOnMobile?: boolean;
+}) {
     const now: number = new Date().getTime() / 1000;
     const {start, end, draft} = props.config;
 
@@ -43,7 +47,13 @@ function TimePill(props: {config: types.SurveyConfig; flat: boolean}) {
         variant = 'finished';
     }
 
-    return <VisualTimePill {...{variant, phrase}} flat={props.flat} />;
+    return (
+        <VisualTimePill
+            {...{variant, phrase}}
+            flat={props.flat}
+            shrinkOnMobile={props.shrinkOnMobile}
+        />
+    );
 }
 
 export default TimePill;
