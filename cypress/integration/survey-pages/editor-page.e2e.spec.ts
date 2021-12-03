@@ -183,6 +183,69 @@ describe('The Editor Page', () => {
         });
     };
 
+    it('copy and paste', function () {
+        const {INITIAL_SURVEY, COPY_PASTE_SURVEY} = this.configsJSON.EDITOR;
+        const {USERNAME, PASSWORD} = this.accountJSON;
+
+        const copyPasteSequence = () => {
+            fieldButtons(0).copy().click();
+            fieldButtons(3).pasteBefore().click();
+            fieldButtons(2).copy().click();
+            fieldButtons(0).pasteBefore().click();
+            fieldButtons(2).copy().click();
+            fieldButtons(3).pasteBefore().click();
+        };
+
+        // undo works
+        copyPasteSequence();
+        range(6).map((i) => fieldButtons(i).collapse().click());
+        assertSurveyState(COPY_PASTE_SURVEY);
+        headerElements.undo().click();
+        assertSurveyState(INITIAL_SURVEY);
+        cy.reload();
+        range(3).map((i) => fieldButtons(i).collapse().click());
+        assertSurveyState(INITIAL_SURVEY);
+        range(3).map((i) => fieldButtons(i).collapse().click());
+
+        // save works
+        copyPasteSequence();
+        range(6).map((i) => fieldButtons(i).collapse().click());
+        assertSurveyState(COPY_PASTE_SURVEY);
+        headerElements.save().click();
+        assertSurveyState(COPY_PASTE_SURVEY);
+        cy.reload();
+        range(6).map((i) => fieldButtons(i).collapse().click());
+        assertSurveyState(COPY_PASTE_SURVEY);
+
+        // deepCompare the config-json in database
+        cy.request({
+            method: 'POST',
+            url: 'https://api.dev.fastsurvey.de/authentication',
+            body: {
+                identifier: USERNAME,
+                password: PASSWORD,
+            },
+        }).then((authResponse) => {
+            expect(authResponse.status).to.equal(200);
+            cy.request({
+                method: 'GET',
+                url: `https://api.dev.fastsurvey.de/users/${USERNAME}/surveys`,
+                headers: {
+                    Authorization: `Bearer ${authResponse.body['access_token']}`,
+                    'Content-Type': 'application/json',
+                },
+            }).then((getResponse) => {
+                expect(getResponse.status).to.equal(200);
+                const duplicateSurveyOnServer = first(
+                    getResponse.body.filter(
+                        (c: any) => c['survey_name'] === COPY_PASTE_SURVEY.survey_name,
+                    ),
+                );
+                expect(duplicateSurveyOnServer).to.deep.equal(COPY_PASTE_SURVEY);
+            });
+        });
+    });
+
     it('header look, back button, settings look, tab navigation', function () {
         headerElements.title();
         headerElements.link();
@@ -206,29 +269,29 @@ describe('The Editor Page', () => {
     });
 
     it('start/end buttons', function () {
-        // assert initial state
+        cy.log('assert initial state');
         assertPillState('finished');
 
-        // reopen survey
+        cy.log('reopen survey');
         headerElements.reopen().click();
         headerElements.end();
         assertPillState('running');
         cy.reload();
         assertPillState('running');
 
-        // close survey again
+        cy.log('close survey again');
         headerElements.end().click();
         headerElements.reopen();
         assertPillState('finished');
 
-        // assert initial state
+        cy.log('assert initial state');
         settingsElements.tabVisibility().click();
         settingsElements
             .toggleDraftYes()
             .should('have.attr', 'data-cy')
             .and('contain', 'isactive');
 
-        // switch to draft=true but don't save
+        cy.log("switch to draft=true but don't save");
         settingsElements.toggleDraftNo().click();
         assertPillState('draft');
         headerElements.save();
@@ -238,7 +301,7 @@ describe('The Editor Page', () => {
         settingsElements.tabVisibility().click();
         assertPillState('finished');
 
-        // switch to draft=true and save
+        cy.log('switch to draft=true and save');
         settingsElements.toggleDraftNo().click();
         headerElements.save().click();
         assertPillState('draft');
@@ -333,69 +396,6 @@ describe('The Editor Page', () => {
         // Whether a change in fields is made to the title, the description or
         // any other parameter, is transparent to the editor -> therefore the
         // other parameters can be tested with component testing on single fields
-    });
-
-    it('copy and paste', function () {
-        const {INITIAL_SURVEY, COPY_PASTE_SURVEY} = this.configsJSON.EDITOR;
-        const {USERNAME, PASSWORD} = this.accountJSON;
-
-        const copyPasteSequence = () => {
-            fieldButtons(0).copy().click();
-            fieldButtons(3).pasteBefore().click();
-            fieldButtons(2).copy().click();
-            fieldButtons(0).pasteBefore().click();
-            fieldButtons(2).copy().click();
-            fieldButtons(3).pasteBefore().click();
-        };
-
-        // undo works
-        copyPasteSequence();
-        range(6).map((i) => fieldButtons(i).collapse().click());
-        assertSurveyState(COPY_PASTE_SURVEY);
-        headerElements.undo().click();
-        assertSurveyState(INITIAL_SURVEY);
-        cy.reload();
-        range(3).map((i) => fieldButtons(i).collapse().click());
-        assertSurveyState(INITIAL_SURVEY);
-        range(3).map((i) => fieldButtons(i).collapse().click());
-
-        // save works
-        copyPasteSequence();
-        range(6).map((i) => fieldButtons(i).collapse().click());
-        assertSurveyState(COPY_PASTE_SURVEY);
-        headerElements.save().click();
-        assertSurveyState(COPY_PASTE_SURVEY);
-        cy.reload();
-        range(6).map((i) => fieldButtons(i).collapse().click());
-        assertSurveyState(COPY_PASTE_SURVEY);
-
-        // deepCompare the config-json in database
-        cy.request({
-            method: 'POST',
-            url: 'https://api.dev.fastsurvey.de/authentication',
-            body: {
-                identifier: USERNAME,
-                password: PASSWORD,
-            },
-        }).then((authResponse) => {
-            expect(authResponse.status).to.equal(200);
-            cy.request({
-                method: 'GET',
-                url: `https://api.dev.fastsurvey.de/users/${USERNAME}/surveys`,
-                headers: {
-                    Authorization: `Bearer ${authResponse.body['access_token']}`,
-                    'Content-Type': 'application/json',
-                },
-            }).then((getResponse) => {
-                expect(getResponse.status).to.equal(200);
-                const duplicateSurveyOnServer = first(
-                    getResponse.body.filter(
-                        (c: any) => c['survey_name'] === COPY_PASTE_SURVEY.survey_name,
-                    ),
-                );
-                expect(duplicateSurveyOnServer).to.deep.equal(COPY_PASTE_SURVEY);
-            });
-        });
     });
 
     it('page switch not possible with unsaved changes', function () {
