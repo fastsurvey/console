@@ -7,8 +7,8 @@ interface Props {
 }
 function RemoveSurveyPopup(props: Props) {
     return (
-        <div className='w-full p-3 pt-1 flex-col-center gap-y-2 '>
-            <div className='px-3 text-justify text-gray-800 text-md font-weight-500'>
+        <div className='w-full p-3 pt-1 flex-col-center gap-y-3 '>
+            <div className='px-3 text-sm text-justify text-gray-800 font-weight-500'>
                 All <strong>submissions will be removed as well</strong> and you will
                 not be able to restore this survey anymore.
             </div>

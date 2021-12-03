@@ -20,7 +20,7 @@ function DuplicateSurveyPopup(props: {
 
     if (props.configs) {
         return (
-            <div className='w-full p-3 pt-1 flex-col-center gap-y-2 '>
+            <div className='w-full p-3 pt-1 flex-col-center gap-y-3'>
                 <div className='w-full max-w-2xl centering-col gap-y-0.5'>
                     <Label text='New URL conform identifier' />
                     <TextInput
@@ -30,7 +30,7 @@ function DuplicateSurveyPopup(props: {
                     />
                 </div>
                 {!validationMessage.valid && (
-                    <div className='w-full px-3 mb-1 -mt-1 text-xs leading-tight text-red-500 font-weight-600'>
+                    <div className='w-full px-3 -mt-2 text-xs leading-tight text-red-500 font-weight-600'>
                         {validationMessage.message
                             .replace('URL conform identifier ', '')
                             .replace(' in URL conform identifier', '')}

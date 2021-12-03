@@ -9,6 +9,7 @@ function VisualSurveyList(props: {
     addSurvey(): void;
     account: types.Account;
     openRemoveModal(config: types.SurveyConfig): () => void;
+    openResetModal(config: types.SurveyConfig): () => void;
     openDuplicateModal(config: types.SurveyConfig): () => void;
 }) {
     const [value, setValue] = useState('');
@@ -44,6 +45,7 @@ function VisualSurveyList(props: {
                             config={config}
                             account={props.account}
                             openRemoveModal={props.openRemoveModal(config)}
+                            openResetModal={props.openResetModal(config)}
                             openDuplicateModal={props.openDuplicateModal(config)}
                         />
                     ))}

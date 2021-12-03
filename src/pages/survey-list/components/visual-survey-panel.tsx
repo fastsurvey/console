@@ -13,6 +13,7 @@ interface Props {
     account: types.Account;
     config: types.SurveyConfig;
     openRemoveModal(): void;
+    openResetModal(): void;
     openDuplicateModal(): void;
 }
 function VisualConfigPanel(props: Props) {
@@ -133,19 +134,31 @@ function VisualConfigPanel(props: Props) {
                             }
                             data-cy='actions-dropdown'
                         >
-                            {['duplicate', 'remove'].map((action: any) => (
+                            {[
+                                'duplicate survey',
+                                'remove survey',
+                                'reset submissions',
+                            ].map((action: string) => (
                                 <button
                                     key={action}
                                     className={
-                                        'w-full px-6 h-8 font-weight-600 ' +
+                                        'w-full px-6 h-8 font-weight-600 whitespace-nowrap ' +
                                         'hover:bg-gray-600 hover:text-white ' +
                                         'focus:bg-gray-600 focus:text-white focus:outline-none '
                                     }
-                                    onClick={
-                                        action === 'duplicate'
-                                            ? props.openDuplicateModal
-                                            : props.openRemoveModal
-                                    }
+                                    onClick={() => {
+                                        switch (action) {
+                                            case 'duplicate survey':
+                                                props.openDuplicateModal();
+                                                break;
+                                            case 'remove survey':
+                                                props.openRemoveModal();
+                                                break;
+                                            case 'reset submissions':
+                                                props.openResetModal();
+                                                break;
+                                        }
+                                    }}
                                     data-cy={`button-${action}`}
                                 >
                                     {action}

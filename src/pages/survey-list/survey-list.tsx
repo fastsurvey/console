@@ -6,6 +6,7 @@ import {types} from '/src/types';
 import VisualConfigList from './visual-survey-list';
 import RemoveSurveyPopup from './components/remove-survey-popup';
 import DuplicateSurveyPopup from './components/duplicate-survey-popup';
+import ResetSubmissionsPopup from './components/reset-submissions-popup';
 
 interface Props {
     account: types.Account;
@@ -61,6 +62,26 @@ function SurveyList(props: Props) {
         );
     };
 
+    const resetSubmissions = (config: types.SurveyConfig) => () => {
+        function success() {
+            props.closeModal();
+            props.openMessage('success-submissions-removed');
+        }
+
+        function error() {
+            props.closeModal();
+            props.openMessage('error-server');
+        }
+
+        backend.deleteSubmissions(
+            props.account,
+            props.accessToken,
+            config.survey_name,
+            success,
+            error,
+        );
+    };
+
     const duplicateSurvey = (config: types.SurveyConfig) => (newSurveyName: string) => {
         const newConfig = localIdUtils.remove.survey({
             ...config,
@@ -96,6 +117,16 @@ function SurveyList(props: Props) {
         );
     };
 
+    const openResetModal = (config: types.SurveyConfig) => () => {
+        props.openModal(
+            "Remove this survey's submissions?",
+            <ResetSubmissionsPopup
+                resetSubmissions={resetSubmissions(config)}
+                closeModal={props.closeModal}
+            />,
+        );
+    };
+
     const openDuplicateModal = (config: types.SurveyConfig) => () => {
         props.openModal(
             'Duplicate this survey?',
@@ -112,6 +143,7 @@ function SurveyList(props: Props) {
             addSurvey={addSurvey}
             account={props.account}
             openRemoveModal={openRemoveModal}
+            openResetModal={openResetModal}
             openDuplicateModal={openDuplicateModal}
         />
     );

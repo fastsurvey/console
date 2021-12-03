@@ -111,6 +111,7 @@ export declare namespace types {
         | 'editor-warning-field-count'
         | 'editor-warning-authentication'
         | 'success-survey-duplicated'
+        | 'success-submissions-removed'
         | 'success-survey-removed';
 
     export type ValidationResult =

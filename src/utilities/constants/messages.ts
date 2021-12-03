@@ -115,6 +115,12 @@ export const messages: {[key in types.MessageId]: types.Message} = {
         text: 'Success: You are now viewing the created copy',
         type: 'success',
     },
+    'success-submissions-removed': {
+        id: 'success-submissions-removed',
+        randomToken: 0,
+        text: 'Success: Submissions have been removed',
+        type: 'success',
+    },
     'success-survey-removed': {
         id: 'success-survey-removed',
         randomToken: 0,
