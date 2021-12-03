@@ -77,7 +77,7 @@ function VisualConfigPanel(props: Props) {
                     {usesAuthentication ? ', Email Verification' : ''}
                 </div>
             </div>
-            <div className='w-full space-x-px bg-gray-200 border-t border-gray-300 rounded-b flex-row-center'>
+            <div className='w-full space-x-px bg-gray-300 border-t border-gray-300 rounded-b flex-row-center'>
                 <Link
                     to={`/editor/${survey_name}`}
                     className='z-0 flex-grow rounded group ringable focus:z-10'
@@ -103,7 +103,7 @@ function VisualConfigPanel(props: Props) {
                     <div
                         className={
                             'px-3 h-9 bg-gray-100 no-selection flex-row-center ' +
-                            'rounded-bl group-focus:rounded ' +
+                            'group-focus:rounded ' +
                             'group-hover:bg-blue-50 group-focus:bg-blue-50 ' +
                             'text-center text-sm text-gray-700 font-weight-600 ' +
                             'group-hover:text-blue-900 group-focus:text-blue-900 '

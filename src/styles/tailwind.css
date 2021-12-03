@@ -226,6 +226,14 @@
 .svg-field-cyan .secondary {
     @apply fill-cyan-700;
 }
+
+.svg-search-bar .primary {
+    @apply fill-blue-100;
+}
+.svg-search-bar .secondary {
+    @apply fill-blue-500;
+}
+
 /* FLEX LAYOUTS */
 
 .flex-row-left {
