@@ -28,7 +28,7 @@ function ResultsHeader(props: {
     const [showDownloadOptions, setShowDownloadOptions] = useState(false);
 
     return (
-        <div className={'w-full flex-col-left mb-1 z-10'} data-cy='summary-header'>
+        <div className={'w-full pl-2 flex-col-left mb-1'} data-cy='summary-header'>
             <div className='relative w-full flex-row-top '>
                 <Link
                     to='/surveys'
