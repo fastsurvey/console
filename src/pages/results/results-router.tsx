@@ -24,7 +24,7 @@ function ResultsRouter(props: Props) {
                     404: Nothing here
                 </div>
 
-                <Link to='/configurations' className='rounded ringable'>
+                <Link to='/surveys' className='rounded ringable'>
                     <Button text='Back to survey list' variant='flat-light-blue' />
                 </Link>
             </div>
