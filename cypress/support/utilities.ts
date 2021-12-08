@@ -9,7 +9,7 @@ export function logout() {
 
 export function login(username: string, password: string) {
     cy.visit('/login');
-    cy.url().should('eq', 'http://localhost:3000/login');
+    cy.url().should('contain', '/login');
     getCySelector(['login-panel', 'input-identifier']).type(username);
     getCySelector(['login-panel', 'input-password']).type(password);
     cy.intercept({
@@ -19,7 +19,7 @@ export function login(username: string, password: string) {
     }).as('POSTauthentication');
     cy.get('button').contains('Login').click();
     cy.wait(['@POSTauthentication']);
-    cy.url().should('eq', 'http://localhost:3000/surveys');
+    cy.url().should('contain', '/surveys');
 }
 
 export function getByDataCy(dataCyContains: string, props?: {count?: number}) {

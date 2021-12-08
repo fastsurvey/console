@@ -141,9 +141,9 @@ describe('The Results Summary Page', () => {
         headerElements.downloadDropdown().should('have.length', 0);
 
         // back button
-        cy.url().should('eq', `http://localhost:3000/results/${SURVEY_NAME}`);
+        cy.url().should('contains', `/results/${SURVEY_NAME}`);
         headerElements.back().click();
-        cy.url().should('eq', 'http://localhost:3000/surveys');
+        cy.url().should('contains', '/surveys');
     });
 
     it('initial submissions, more submissions, refresh button', function () {

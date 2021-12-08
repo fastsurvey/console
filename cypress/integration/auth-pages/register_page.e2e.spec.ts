@@ -16,7 +16,7 @@ const errorMessage = () => get(['message-panel-error']);
 describe('Register Page', () => {
     beforeEach(() => {
         cy.visit('/register');
-        cy.url().should('eq', 'http://localhost:3000/register');
+        cy.url().should('contain', '/register');
         cy.fixture('account.json').as('accountJSON');
     });
 

@@ -1,5 +1,5 @@
 {
-    "baseUrl": "http://localhost:3000",
+    "baseUrl": "http://localhost:8080",
     "testFiles": "**/*.e2e.spec.{js,ts}",
     "component": {
         "testFiles": "**/*.ct.spec.{js,ts,jsx,tsx}",

@@ -138,7 +138,7 @@ describe('The Editor Page', () => {
     };
 
     const assertEditorPath = (survey_name: string) =>
-        cy.url().should('eq', `http://localhost:3000/editor/${survey_name}`);
+        cy.url().should('contains', `/editor/${survey_name}`);
 
     const assertSyncedHeaderState = () => {
         get(['editor-header', 'button-undo']).should('have.length', 0);
@@ -265,7 +265,7 @@ describe('The Editor Page', () => {
         settingsElements.endTime();
 
         headerElements.back().click();
-        cy.url().should('eq', 'http://localhost:3000/surveys');
+        cy.url().should('contains', '/surveys');
     });
 
     it('start/end buttons', function () {
@@ -316,7 +316,7 @@ describe('The Editor Page', () => {
 
         // initial state
         settingsElements.inputIdentifier().should('have.value', SURVEY_NAME);
-        cy.url().should('eq', `http://localhost:3000/editor/${SURVEY_NAME}`);
+        cy.url().should('contains', `/editor/${SURVEY_NAME}`);
 
         // refresh button
         settingsElements.refreshIdentifier().click();
@@ -326,18 +326,18 @@ describe('The Editor Page', () => {
         // changing survey name
         settingsElements.inputIdentifier().clear().type(TMP_SURVEY_NAME);
         headerElements.save().click();
-        cy.url().should('eq', `http://localhost:3000/editor/${TMP_SURVEY_NAME}`);
+        cy.url().should('contains', `/editor/${TMP_SURVEY_NAME}`);
         cy.reload();
         settingsElements.inputIdentifier().should('have.value', TMP_SURVEY_NAME);
-        cy.url().should('eq', `http://localhost:3000/editor/${TMP_SURVEY_NAME}`);
+        cy.url().should('contains', `/editor/${TMP_SURVEY_NAME}`);
 
         // changing it back
         settingsElements.inputIdentifier().clear().type(SURVEY_NAME);
         headerElements.save().click();
-        cy.url().should('eq', `http://localhost:3000/editor/${SURVEY_NAME}`);
+        cy.url().should('contains', `/editor/${SURVEY_NAME}`);
         cy.reload();
         settingsElements.inputIdentifier().should('have.value', SURVEY_NAME);
-        cy.url().should('eq', `http://localhost:3000/editor/${SURVEY_NAME}`);
+        cy.url().should('contains', `/editor/${SURVEY_NAME}`);
     });
 
     it('fields from fixture are present, undo functionality', function () {

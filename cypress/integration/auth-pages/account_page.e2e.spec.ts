@@ -83,7 +83,7 @@ describe('The Account Page', function () {
     it('account page looks as expected, navigation works', function () {
         // the sections exist
         cy.get('h1').should('have.length', 1);
-        cy.get('section:visible').should('have.length', 3);
+        cy.get('section:visible').should('have.length', 2);
         general.settings();
         general.delete();
 
