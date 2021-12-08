@@ -1,6 +1,6 @@
 {
     "name": "fastsurvey-console",
-    "version": "0.5.0",
+    "version": "0.6.1",
     "main": "server.js",
     "author": {
         "name": "Moritz Makowski",
@@ -16,8 +16,7 @@
         "analyze": "source-map-explorer 'dist/assets/*.js'",
         "cypress:integration": "cypress open",
         "cypress:component": "yarn tailwind:build && cypress open-ct",
-        "tailwind:build": "npx tailwindcss -i src/styles/tailwind.css -o src/styles/tailwind.out.css",
-        "cypress:run": "cypress run"
+        "tailwind:build": "npx tailwindcss -i src/styles/tailwind.css -o src/styles/tailwind.out.css"
     },
     "dependencies": {
         "express": "^4.17.1"
