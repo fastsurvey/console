@@ -47,8 +47,8 @@ describe('Verify Email Page', () => {
             .should('have.text', 'Invalid verification link');
         title().should('have.text', 'Verify your Email');
         cy.url({timeout: 10000}).should(
-            'eq',
-            `http://localhost:3000/verify?token=${repeat('abcd', 16)}`,
+            'contain',
+            `/verify?token=${repeat('abcd', 16)}`,
         );
     });
 
@@ -73,7 +73,7 @@ describe('Verify Email Page', () => {
                 .find('[data-cy="message"]')
                 .should('contain.text', 'Success! Redirect');
             title().should('have.text', 'Success!');
-            cy.url({timeout: 10000}).should('eq', 'http://localhost:3000/login');
+            cy.url({timeout: 10000}).should('contain', '/login');
         });
     });
 });

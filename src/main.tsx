@@ -21,16 +21,6 @@ if (import.meta.env.MODE === 'production') {
 
 ReactDOM.render(
     <React.StrictMode>
-        {import.meta.env.MODE === 'production' && (
-            <script
-                data-host='https://microanalytics.io'
-                data-dnt='false'
-                src='https://microanalytics.io/js/script.js'
-                id='ZwSg9rf6GA'
-                async
-                defer
-            ></script>
-        )}
         <ReduxStore>
             <PageRouter />
         </ReduxStore>

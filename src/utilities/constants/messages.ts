@@ -106,7 +106,7 @@ export const messages: {[key in types.MessageId]: types.Message} = {
     'editor-warning-authentication': {
         id: 'editor-warning-authentication',
         randomToken: 0,
-        text: 'Email-authentication requires unique email field',
+        text: 'There can only be one email-field with verify="Yes"',
         type: 'warning',
     },
     'success-survey-duplicated': {
