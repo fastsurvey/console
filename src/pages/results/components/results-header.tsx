@@ -18,6 +18,7 @@ function ResultsHeader(props: {
 }) {
     const {title, survey_name} = props.config;
     const {username} = props.account;
+    const [showDownloadOptions, setShowDownloadOptions] = useState(false);
 
     const linkContent = (
         <div className='text-sm text-blue-700 underline md:truncate font-weight-600'>
@@ -25,10 +26,58 @@ function ResultsHeader(props: {
         </div>
     );
 
-    const [showDownloadOptions, setShowDownloadOptions] = useState(false);
+    const buttonElements = (
+        <>
+            <Button
+                icon={showDownloadOptions ? icons.close : icons.cloudDownload}
+                loading={props.isDownloading}
+                onClick={() => setShowDownloadOptions(!showDownloadOptions)}
+                data-cy='button-toggle-download-dropdown'
+            />
+            {showDownloadOptions && (
+                <div
+                    className={
+                        'absolute right-0 -bottom-2 translate-y-full ' +
+                        'rounded shadow flex-col-center overflow-hidden ' +
+                        'bg-gray-900 text-gray-200 text-base '
+                    }
+                    data-cy='download-dropdown-panel'
+                >
+                    {['json', 'csv'].map((format: any) => (
+                        <button
+                            key={format}
+                            className={
+                                'w-full px-6 h-8 font-weight-600 ' +
+                                'hover:bg-gray-600 hover:text-white ' +
+                                'focus:bg-gray-600 focus:text-white focus:outline-none '
+                            }
+                            onClick={() => {
+                                props.download(format);
+                                setShowDownloadOptions(false);
+                            }}
+                            data-cy={`button-download-${format}`}
+                        >
+                            {format}
+                        </button>
+                    ))}
+                </div>
+            )}
+
+            <div className='w-2' />
+            <Button
+                icon={icons.refresh}
+                onClick={props.fetch}
+                loading={props.isFetching}
+                data-cy='button-refresh'
+            />
+        </>
+    );
 
     return (
         <div className={'w-full pl-2 flex-col-left mb-1'} data-cy='summary-header'>
+            <div className='relative block w-full mb-8 md:mb-2 flex-row-right md:hidden'>
+                {buttonElements}
+            </div>
             <div className='relative w-full flex-row-top '>
                 <Link
                     to='/surveys'
@@ -43,57 +92,23 @@ function ResultsHeader(props: {
 
                 <h1
                     className={
-                        'pr-4 text-xl text-gray-800 font-weight-700 ' + 'md:truncate'
+                        'pr-4 text-2xl md:text-xl ' +
+                        'text-gray-800 font-weight-700 truncate'
                     }
                     data-cy='title'
                 >
                     {title}
                 </h1>
                 <div className='flex-max' />
-                <div className='relative'>
-                    <Button
-                        icon={showDownloadOptions ? icons.close : icons.cloudDownload}
-                        loading={props.isDownloading}
-                        onClick={() => setShowDownloadOptions(!showDownloadOptions)}
-                        data-cy='button-toggle-download-dropdown'
-                    />
-                    {showDownloadOptions && (
-                        <div
-                            className={
-                                'absolute right-0 -bottom-2 translate-y-full ' +
-                                'rounded shadow flex-col-center overflow-hidden ' +
-                                'bg-gray-900 text-gray-200 text-base '
-                            }
-                            data-cy='download-dropdown-panel'
-                        >
-                            {['json', 'csv'].map((format: any) => (
-                                <button
-                                    key={format}
-                                    className={
-                                        'w-full px-6 h-8 font-weight-600 ' +
-                                        'hover:bg-gray-600 hover:text-white ' +
-                                        'focus:bg-gray-600 focus:text-white focus:outline-none '
-                                    }
-                                    onClick={() => {
-                                        props.download(format);
-                                        setShowDownloadOptions(false);
-                                    }}
-                                    data-cy={`button-download-${format}`}
-                                >
-                                    {format}
-                                </button>
-                            ))}
-                        </div>
-                    )}
+                <div
+                    className={
+                        'relative hidden md:flex flex-row items-start justify-start'
+                    }
+                >
+                    {buttonElements}
                 </div>
-                <div className='w-2' />
-                <Button
-                    icon={icons.refresh}
-                    onClick={props.fetch}
-                    loading={props.isFetching}
-                    data-cy='button-refresh'
-                />
             </div>
+
             <a
                 href={`https://${frontendUrl}/${username}/${survey_name}`}
                 className='px-1.5 py-0.5 transform -translate-x-1.5 rounded ringable'
