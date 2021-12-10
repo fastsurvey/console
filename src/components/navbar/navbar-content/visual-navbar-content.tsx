@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
 import {icons, RocketLogoLight} from '/src/assets';
 
-function NavbarLogo() {
+function NavbarLogo(props: {mouseOver?: boolean}) {
     return (
         <div className='mb-4 overflow-hidden flex-row-left'>
             <div className='w-12 md:w-10 h-12 md:h-10 p-0.5 flex-shrink-0'>
@@ -11,7 +11,8 @@ function NavbarLogo() {
                 className={
                     'text-2xl md:text-xl font-weight-600 md:font-weight-700 ' +
                     'text-blue-100 tracking-wide w-full ' +
-                    'md:w-0 md:group-hover:w-36 md:group-focus-within:w-36 ' +
+                    'lg:group-focus-within:w-36 ' +
+                    (props.mouseOver ? 'lg:w-36 ' : 'lg:w-0 ') +
                     'transform translate-x-2 ' +
                     'transition-width duration-150'
                 }
@@ -27,6 +28,7 @@ function NavbarButton(props: {
     active?: boolean;
     icon: React.ReactNode;
     onClick(): void;
+    mouseOver?: boolean;
 }) {
     const ref = useRef<HTMLButtonElement>(null);
     const handleMouseLeave = () => ref.current?.blur();
@@ -55,7 +57,8 @@ function NavbarButton(props: {
             </div>
             <div
                 className={
-                    'w-full lg:w-0 lg:group-hover:w-36 lg:group-focus-within:w-36 ' +
+                    'w-full lg:group-focus-within:w-36 ' +
+                    (props.mouseOver ? 'lg:w-36 ' : 'lg:w-0 ') +
                     'transform translate-x-2 text-left ' +
                     'transition-width duration-150 overflow-hidden'
                 }
@@ -66,31 +69,39 @@ function NavbarButton(props: {
     );
 }
 
-function NavbarContent(props: {
+function VisualNavbarContent(props: {
     logOut(): void;
     openLink(to: string): void;
     location: any;
+    mouseOver?: boolean;
 }) {
     return (
         <React.Fragment>
-            <NavbarLogo />
+            <NavbarLogo mouseOver={props.mouseOver} />
             <NavbarButton
                 onClick={() => props.openLink('/surveys')}
                 text='Surveys'
                 icon={icons.collection}
                 active={!props.location.pathname.startsWith('/account')}
+                mouseOver={props.mouseOver}
             />
             <NavbarButton
                 onClick={() => props.openLink('/account')}
                 text='Account'
                 icon={icons.gear}
                 active={props.location.pathname.startsWith('/account')}
+                mouseOver={props.mouseOver}
             />
 
             <div className={'flex-max'} />
 
-            <NavbarButton onClick={props.logOut} text='Logout' icon={icons.exit} />
+            <NavbarButton
+                onClick={props.logOut}
+                text='Logout'
+                icon={icons.exit}
+                mouseOver={props.mouseOver}
+            />
         </React.Fragment>
     );
 }
-export default NavbarContent;
+export default VisualNavbarContent;
