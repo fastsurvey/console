@@ -11,7 +11,7 @@
     "scripts": {
         "develop": "vite --host",
         "check-ts": "tsc --noEmit",
-        "build": "VITE_COMMIT_SHA=\"$(git rev-parse --short --verify HEAD)\" && tsc && vite build",
+        "build": "export VITE_COMMIT_SHA=\"$(git rev-parse --short --verify HEAD)\" && tsc && vite build",
         "serve": "vite preview",
         "analyze": "source-map-explorer 'dist/assets/*.js'",
         "cypress:integration": "cypress open",
