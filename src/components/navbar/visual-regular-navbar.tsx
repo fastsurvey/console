@@ -14,7 +14,7 @@ function VisualRegularNavbar(props: {logOut(): void}) {
                 data-cy='navbar'
                 onMouseEnter={() => {
                     setMouseOver(true);
-                    console.log('OPENING');
+                    console.debug('opening sidebar');
                 }}
                 onMouseLeave={(e) =>
                     e.clientX < 30 ? setMouseOver(true) : setMouseOver(false)

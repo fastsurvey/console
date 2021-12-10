@@ -59,9 +59,9 @@ describe('The Login Page', function () {
     });
 
     it('login and logout with blueberry test account works', function () {
-        const {USERNAME, PASSWORD} = this.accountJSON;
+        const {EMAIL, USERNAME, PASSWORD} = this.accountJSON;
 
-        // logging in
+        // logging in with username
         elements.identifier().type(USERNAME);
         elements.password().type(PASSWORD);
         elements.submit().click();
@@ -73,6 +73,25 @@ describe('The Login Page', function () {
 
         // logging out
         logout();
+        cy.url().should('include', '/login');
+        elements.identifier().should('have.value', '');
+        elements.password().should('have.value', '');
+        assertSubmitState(false);
+
+        // logging in with email
+        cy.reload();
+        elements.identifier().type(EMAIL);
+        elements.password().type(PASSWORD);
+        elements.submit().click();
+        cy.url().should('include', '/surveys');
+
+        // refresh the page (test the api-key stored in a cookie)
+        cy.visit('/login');
+        cy.url().should('include', '/surveys');
+
+        // logging out
+        logout();
+        cy.url().should('include', '/login');
         elements.identifier().should('have.value', '');
         elements.password().should('have.value', '');
         assertSubmitState(false);
