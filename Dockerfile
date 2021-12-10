@@ -1,6 +1,8 @@
 FROM node:12 as build
 WORKDIR /app
-COPY package.json yarn.lock server.js ./
+COPY package.json package.json
+COPY yarn.lock yarn.lock
+COPY server.js server.js
 RUN yarn install --production=true
 COPY dist dist
 
