@@ -48,7 +48,7 @@ export default function Button(props: {
             {icon && (
                 <div
                     className={
-                        'p-1 w-7 h-7 z-0  ' + (text !== undefined ? '-mr-1.5 ' : ' ')
+                        'p-2 w-9 h-9 z-0  ' + (text !== undefined ? '-mr-2.5 ' : ' ')
                     }
                 >
                     {icon}

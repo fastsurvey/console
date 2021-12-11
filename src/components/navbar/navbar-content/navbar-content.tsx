@@ -10,6 +10,7 @@ interface Props {
     closeNavbar(): void;
     configIsDiffering: boolean;
     openMessage(messageId: types.MessageId): void;
+    mouseOver?: boolean;
 }
 function NavbarContent(props: Props) {
     let location = useLocation();
@@ -32,6 +33,7 @@ function NavbarContent(props: Props) {
             location={location}
             openLink={openLink}
             logOut={props.logOut}
+            mouseOver={props.mouseOver}
         />
     );
 }

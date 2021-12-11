@@ -47,7 +47,7 @@ function VisualEditorHeader(props: {
     );
 
     return (
-        <div className={'w-full pl-2 flex-col-left mb-1'} data-cy='editor-header'>
+        <div className={'w-full pl-2 flex-col-left mb-7'} data-cy='editor-header'>
             <div className='relative block w-full mb-8 md:mb-2 flex-row-right md:hidden'>
                 {props.saveButtons.length > 0 && (
                     <>
@@ -90,7 +90,7 @@ function VisualEditorHeader(props: {
                         {icons.chevronLeftCircle}
                     </Link>
                 )}
-                <div
+                <h1
                     className={
                         'pr-4 text-2xl md:text-xl ' +
                         'text-gray-800 font-weight-700 truncate'
@@ -98,7 +98,7 @@ function VisualEditorHeader(props: {
                     data-cy='title'
                 >
                     {title}
-                </div>
+                </h1>
                 <div className='flex-max' />
                 <div
                     className={

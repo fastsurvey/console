@@ -26,7 +26,7 @@ function VisualEditor(props: {
     return (
         <div
             className={
-                'w-full px-2 pt-4 pb-8 md:py-16 min-h-screen bg-gray-100 flex-col-top'
+                'w-full px-2 pt-4 pb-20 md:py-16 min-h-screen bg-gray-100 flex-col-top'
             }
         >
             <div className={'w-full max-w-3xl '}>
