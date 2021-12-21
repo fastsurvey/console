@@ -10,6 +10,14 @@ export const icons = {
                 return iconAssets.textCursor;
             case 'selection':
                 return iconAssets.checkCircle;
+            case 'break':
+                // TODO: Choose icon
+                return iconAssets.checkCircle;
+            case 'markdown':
+                // TODO: Choose icon
+                return iconAssets.checkCircle;
+            default:
+                throw `Invalid field type: ${fieldType}`;
         }
     },
 };

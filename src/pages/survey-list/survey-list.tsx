@@ -86,7 +86,6 @@ function SurveyList(props: Props) {
         const newConfig = localIdUtils.remove.survey({
             ...config,
             survey_name: newSurveyName,
-            draft: true,
             fields: config.fields.map((f, i) => ({...f, identifier: i})),
         });
 

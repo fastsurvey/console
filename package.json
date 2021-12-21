@@ -1,6 +1,6 @@
 {
     "name": "fastsurvey-console",
-    "version": "0.6.1",
+    "version": "0.7.0",
     "main": "server.js",
     "author": {
         "name": "Moritz Makowski",

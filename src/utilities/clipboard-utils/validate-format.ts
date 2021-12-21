@@ -7,49 +7,64 @@ function assert(condition: boolean) {
     }
 }
 
-const checkTypes = (a: any, b: any) => {
+const assertTypeEquality = (a: any, b: any) => {
     assert(typeof a === typeof b);
-};
-
-const checkStringArrays = (a: string[], b: string[]) => {
-    assert(isEqual(a.sort(), b.sort()));
 };
 
 const validateFormat = {
     fieldConfig: (config: types.SurveyField) => {
         try {
-            checkTypes(config.title, 's');
-            checkTypes(config.description, 's');
+            assert(
+                ['email', 'selection', 'text', 'break', 'markdown'].includes(
+                    config.type,
+                ),
+            );
 
-            assert(['email', 'selection', 'text'].includes(config.type));
-
-            const commonKeys = ['type', 'title', 'description'];
-            const checkKeys = (specificKeys: string[]) => {
-                checkStringArrays(Object.keys(config), [
-                    ...commonKeys,
-                    ...specificKeys,
-                ]);
+            const assertFieldAttributes = (specificKeys: string[]) => {
+                assert(
+                    isEqual(
+                        Object.keys(config).sort(),
+                        ['type', ...specificKeys].sort(),
+                    ),
+                );
             };
 
             switch (config.type) {
                 case 'email':
-                    checkKeys(['regex', 'hint', 'verify']);
-                    checkTypes(config.regex, 's');
-                    checkTypes(config.hint, 's');
-                    checkTypes(config.verify, true);
+                    assertFieldAttributes(['description', 'regex', 'hint', 'verify']);
+                    assertTypeEquality(config.regex, 's');
+                    assertTypeEquality(config.hint, 's');
+                    assertTypeEquality(config.description, 's');
+                    assertTypeEquality(config.verify, true);
                     return true;
                 case 'selection':
-                    checkKeys(['options', 'min_select', 'max_select']);
-                    checkTypes(config.options, [{}]);
-                    checkTypes(config.min_select, 2);
-                    checkTypes(config.max_select, 2);
+                    assertFieldAttributes([
+                        'description',
+                        'options',
+                        'min_select',
+                        'max_select',
+                    ]);
+                    assertTypeEquality(config.options, [{}]);
+                    assertTypeEquality(config.description, 's');
+                    assertTypeEquality(config.min_select, 2);
+                    assertTypeEquality(config.max_select, 2);
                     assert(validateFormat.fieldOptionsList(config.options));
                     return true;
                 case 'text':
-                    checkKeys(['min_chars', 'max_chars']);
-                    checkTypes(config.min_chars, 2);
-                    checkTypes(config.max_chars, 2);
+                    assertFieldAttributes(['description', 'min_chars', 'max_chars']);
+                    assertTypeEquality(config.description, 's');
+                    assertTypeEquality(config.min_chars, 2);
+                    assertTypeEquality(config.max_chars, 2);
                     return true;
+                case 'break':
+                    assertFieldAttributes([]);
+                    return true;
+                case 'markdown':
+                    assertFieldAttributes(['description']);
+                    assertTypeEquality(config.description, 's');
+                    return true;
+                default:
+                    throw `Invalid field config: ${config}`;
             }
         } catch {
             return false;
@@ -58,7 +73,7 @@ const validateFormat = {
     fieldOptionsList: (fieldOptions: types.FieldOption[]) => {
         try {
             fieldOptions.forEach((fieldOption) => {
-                checkTypes(fieldOption, 's');
+                assertTypeEquality(fieldOption, 's');
             });
             return true;
         } catch {

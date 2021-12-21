@@ -19,6 +19,9 @@ function AddFieldPopup(props: Props) {
 
     useEffect(() => setSelectedIndex(-1), [props.modal.open]);
 
+    // TODO: Support break field
+    // TODO: Support markdown field
+
     return (
         <div className='w-full pt-1 flex-col-center gap-y-1.5 '>
             <div className='w-full p-3 flex-row-top gap-x-2'>

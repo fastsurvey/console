@@ -43,7 +43,9 @@ function Results(props: {
                 [key: string]: any;
             } = {};
             props.config.fields.forEach((f) => {
-                outputSubmission[f.title] = data[i][f.identifier];
+                if (f.type !== 'break' && f.type !== 'markdown') {
+                    outputSubmission[f.description] = data[i][f.identifier];
+                }
             });
             outputJSON.push(outputSubmission);
         }
@@ -64,19 +66,24 @@ function Results(props: {
         props.config.fields.forEach((f) => {
             switch (f.type) {
                 case 'email':
-                    headerRow.push(escapeQuotes(f.title));
+                    headerRow.push(escapeQuotes(f.description));
                     if (f.verify) {
-                        headerRow.push(escapeQuotes(`${f.title} (verified)`));
+                        headerRow.push(escapeQuotes(`${f.description} (verified)`));
                     }
                     break;
                 case 'text':
-                    headerRow.push(escapeQuotes(f.title));
+                    headerRow.push(escapeQuotes(f.description));
                     break;
                 case 'selection':
                     f.options.forEach((o) => {
-                        headerRow.push(escapeQuotes(`${f.title} (${o.title})`));
+                        headerRow.push(escapeQuotes(`${f.description} (${o.title})`));
                     });
                     break;
+                case 'break':
+                case 'markdown':
+                    break;
+                default:
+                    throw `Invalid field config: ${f}`;
             }
         });
 
@@ -164,6 +171,8 @@ function Results(props: {
             console.log,
         );
     }
+
+    // TODO: Pretty empty state (no fields)
 
     return (
         <div

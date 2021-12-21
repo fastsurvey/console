@@ -2,13 +2,19 @@ import React from 'react';
 import {types} from '/src/types';
 import SelectionResults from './field-results/selection-results';
 
-interface Props {
+function Field(props: {
     fieldIndex: number;
     fieldConfig: types.SurveyField;
     results: types.SurveyResults;
-}
-function Field(props: Props) {
+}) {
+    console.log({props});
     const {fieldIndex, fieldConfig, results} = props;
+    if (fieldConfig.type === 'break' || fieldConfig.type === 'markdown') {
+        // TODO: Implement break component
+        // TODO: Implement markdown component
+        return <div>{fieldConfig.type} field</div>;
+    }
+
     const fieldResults: any = results[fieldConfig.identifier].value;
     const fieldCount: any = results[fieldConfig.identifier].count;
 
@@ -29,7 +35,7 @@ function Field(props: Props) {
         >
             <div className='w-full md:w-50% flex-col-left space-y-0.5'>
                 <h2 className='text-base text-gray-900 font-weight-700' data-cy='title'>
-                    {fieldIndex + 1}. {fieldConfig.title}{' '}
+                    {fieldIndex + 1}. {fieldConfig.description}{' '}
                     <span className='font-weight-500 opacity-70 whitespace-nowrap'>
                         {`(${fieldCount} submission${fieldCount !== 1 ? 's' : ''})`}
                     </span>
@@ -70,7 +76,7 @@ function Field(props: Props) {
                         className='w-full text-base text-gray-600 font-weight-700'
                         data-cy='title'
                     >
-                        {fieldIndex + 1}. {fieldConfig.title}{' '}
+                        {fieldIndex + 1}. {fieldConfig.description}{' '}
                         <span className='font-weight-500 opacity-70 whitespace-nowrap'>
                             {`(${fieldCount} submission${fieldCount !== 1 ? 's' : ''})`}
                         </span>
@@ -89,6 +95,8 @@ function Field(props: Props) {
                     </div>
                 </section>
             );
+        default:
+            throw `Invalid field config: ${fieldConfig}`;
     }
 }
 

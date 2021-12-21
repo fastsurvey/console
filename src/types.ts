@@ -3,40 +3,45 @@ export declare namespace types {
         local_id: number;
         next_identifier: number;
         survey_name: string;
-        start: number;
-        end: number;
-        draft: boolean;
+        start: number | null;
+        end: number | null;
         title: string;
-        description: string;
         fields: SurveyField[];
     }
 
-    export type SurveyField = EmailField | SelectionField | TextField;
+    export type SurveyField =
+        | EmailField
+        | SelectionField
+        | TextField
+        | BreakField
+        | MarkdownField;
 
-    interface GeneralSurveyField {
+    export type FieldType = 'email' | 'text' | 'selection' | 'break' | 'markdown';
+
+    export interface EmailField {
+        type: 'email';
         identifier: number;
         local_id: number;
-        title: string;
         description: string;
-    }
-
-    export type FieldType = 'email' | 'text' | 'selection';
-
-    export interface EmailField extends GeneralSurveyField {
-        type: 'email';
         regex: string;
         verify: boolean;
         hint: string;
     }
 
-    export interface TextField extends GeneralSurveyField {
+    export interface TextField {
         type: 'text';
+        identifier: number;
+        local_id: number;
+        description: string;
         min_chars: number;
         max_chars: number;
     }
 
-    export interface SelectionField extends GeneralSurveyField {
+    export interface SelectionField {
         type: 'selection';
+        identifier: number;
+        local_id: number;
+        description: string;
         min_select: number;
         max_select: number;
         options: FieldOption[];
@@ -45,6 +50,19 @@ export declare namespace types {
     export interface FieldOption {
         title: string;
         local_id: number;
+    }
+
+    export interface BreakField {
+        type: 'break';
+        identifier: number;
+        local_id: number;
+    }
+
+    export interface MarkdownField {
+        type: 'markdown';
+        identifier: number;
+        local_id: number;
+        description: string;
     }
 
     export interface EmailRegexSetup {

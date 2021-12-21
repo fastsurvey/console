@@ -100,15 +100,7 @@ function updateState(state: types.ReduxState, action: types.ReduxAction) {
 
         case 'ADD_CONFIG':
             assert(newState.configs !== undefined);
-            const newSurvey = localIdUtils.initialize.survey(
-                action.config,
-                newState.configs.length,
-            );
-
-            newState.configs = [
-                ...newState.configs,
-                {...newSurvey, next_identifier: newSurvey.fields.length},
-            ];
+            newState.configs = [...newState.configs, action.config];
             break;
 
         case 'REMOVE_CONFIG':

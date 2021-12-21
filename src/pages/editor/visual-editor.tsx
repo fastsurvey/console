@@ -23,6 +23,8 @@ function VisualEditor(props: {
 
     submittingConfig: boolean;
 }) {
+    // TODO: Pretty empty state (no fields yet)
+
     return (
         <div
             className={

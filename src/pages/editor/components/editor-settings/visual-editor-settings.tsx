@@ -22,6 +22,9 @@ const VisualEditorSettings = (props: {
     useEffect(() => setTabIndex(0), [props.config.local_id]);
     const tabs = ['About', 'Visibility'];
 
+    // TODO: Implement optional start time
+    // TODO: Implement optional end time
+
     return (
         <div
             className='mt-4 bg-white rounded shadow-md flex-col-center'
@@ -169,67 +172,42 @@ const VisualEditorSettings = (props: {
                                 </button>
                             </div>
                         </div>
-
-                        <div className='w-full flex-col-left gap-y-0.5'>
-                            <Label text='Description' />
-                            <TextArea
-                                value={props.config.description}
-                                setValue={(newValue: string) => {
-                                    props.updateConfig({
-                                        ...props.config,
-                                        description: newValue,
-                                    });
-                                }}
-                                disabled={props.disabled}
-                                data-cy='input-description'
-                            />
-                        </div>
                     </>
                 )}
                 {tabIndex === 1 && (
                     <>
                         <div className='w-full flex-col-left gap-y-0.5'>
-                            <Label text='Publicly visible (survey link works)' />
-                            <Toggle
-                                value={!props.config.draft}
-                                setValue={(newValue: boolean) => {
-                                    props.updateConfig({
-                                        ...props.config,
-                                        draft: !newValue,
-                                    });
-                                }}
-                                disabled={props.disabled}
-                                data-cy='toggle-draft'
-                            />
-                        </div>
-                        <div className='w-full flex-col-left gap-y-0.5'>
                             <Label text='Start survey at' />
-                            <DatePicker
-                                timestamp={props.config.start}
-                                setTimestamp={(timestamp: number) => {
-                                    props.updateConfig({
-                                        ...props.config,
-                                        start: timestamp,
-                                    });
-                                }}
-                                disabled={props.disabled}
-                                data-cy='start'
-                            />
+                            {props.config.start !== null && (
+                                <DatePicker
+                                    timestamp={props.config.start}
+                                    setTimestamp={(timestamp: number) => {
+                                        props.updateConfig({
+                                            ...props.config,
+                                            start: timestamp,
+                                        });
+                                    }}
+                                    disabled={props.disabled}
+                                    data-cy='start'
+                                />
+                            )}
                         </div>
 
                         <div className='w-full flex-col-left gap-y-0.5'>
                             <Label text='End survey by' />
-                            <DatePicker
-                                timestamp={props.config.end}
-                                setTimestamp={(timestamp: number) => {
-                                    props.updateConfig({
-                                        ...props.config,
-                                        end: timestamp,
-                                    });
-                                }}
-                                disabled={props.disabled}
-                                data-cy='end'
-                            />
+                            {props.config.end !== null && (
+                                <DatePicker
+                                    timestamp={props.config.end}
+                                    setTimestamp={(timestamp: number) => {
+                                        props.updateConfig({
+                                            ...props.config,
+                                            end: timestamp,
+                                        });
+                                    }}
+                                    disabled={props.disabled}
+                                    data-cy='end'
+                                />
+                            )}
                         </div>
                     </>
                 )}

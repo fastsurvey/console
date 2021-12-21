@@ -17,7 +17,7 @@ interface Props {
     openDuplicateModal(): void;
 }
 function VisualConfigPanel(props: Props) {
-    const {title, survey_name, draft} = props.config;
+    const {title, survey_name} = props.config;
     const {username} = props.account;
 
     const usesAuthentication = !isEmpty(
@@ -29,9 +29,7 @@ function VisualConfigPanel(props: Props) {
     return (
         <section
             className={'w-full rounded shadow centering-col bg-white '}
-            data-cy={`survey-list-panel-${survey_name} ${
-                draft ? 'draft' : 'published'
-            }`}
+            data-cy='survey-list-panel'
         >
             <div className={'w-full p-3 bg-white rounded-t flex-col-left'}>
                 <div
@@ -55,17 +53,12 @@ function VisualConfigPanel(props: Props) {
                     </div>
                 </div>
                 <a
-                    href={
-                        props.config.draft
-                            ? undefined
-                            : `https://${baseUrl}/${username}/${survey_name}`
-                    }
+                    href={`https://${baseUrl}/${username}/${survey_name}`}
                     className={
                         'text-sm underline md:h-5 truncate font-weight-600 ' +
                         'text-blue-800 mt-1 break-all max-w-full ' +
-                        (props.config.draft
-                            ? 'cursor-not-allowed opacity-70'
-                            : 'hover:text-blue-500 focus:text-blue-500 px-1 -mx-1 ringable rounded-sm mt-1')
+                        'hover:text-blue-500 focus:text-blue-500 ' +
+                        'px-1 -mx-1 ringable rounded-sm mt-1'
                     }
                     target='_blank'
                     data-cy='link-to-frontend'

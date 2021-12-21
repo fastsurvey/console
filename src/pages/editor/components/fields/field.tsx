@@ -68,8 +68,14 @@ function Field(props: Props) {
                 />
             );
             break;
+        case 'break':
+            FieldSettings = 'break';
+            break;
+        case 'markdown':
+            FieldSettings = 'markdown';
+            break;
         default:
-            throw 'Invalid field';
+            throw `Invalid field: ${props.fieldConfig}`;
     }
 
     return (

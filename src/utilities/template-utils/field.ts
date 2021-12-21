@@ -8,47 +8,50 @@ export const field = (
 ): types.SurveyField => {
     const newFieldIdentifier: number = fieldIdentifier(config);
 
-    const commonAttributes: {
-        identifier: number;
-        local_id: number;
-        title: string;
-        description: '';
-    } = {
+    const idAttributes = {
         identifier: newFieldIdentifier,
         local_id: localIdUtils.newId.field(config),
-        title: '',
-        description: '',
     };
 
     switch (fieldType) {
         case 'email':
             return {
-                ...{
-                    type: 'email',
-                    regex: '.*',
-                    verify: false,
-                    hint: 'Any email address',
-                },
-                ...commonAttributes,
+                type: 'email',
+                description: '',
+                regex: '.*',
+                verify: false,
+                hint: 'Any email address',
+                ...idAttributes,
             };
         case 'selection':
             return {
-                ...{
-                    type: 'selection',
-                    min_select: 0,
-                    max_select: 0,
-                    options: [],
-                },
-                ...commonAttributes,
+                type: 'selection',
+                description: '',
+                min_select: 0,
+                max_select: 0,
+                options: [],
+                ...idAttributes,
             };
         case 'text':
             return {
-                ...{
-                    type: 'text',
-                    min_chars: 0,
-                    max_chars: 2000,
-                },
-                ...commonAttributes,
+                type: 'text',
+                description: '',
+                min_chars: 0,
+                max_chars: 2000,
+                ...idAttributes,
             };
+        case 'break':
+            return {
+                type: 'break',
+                ...idAttributes,
+            };
+        case 'markdown':
+            return {
+                type: 'markdown',
+                description: '',
+                ...idAttributes,
+            };
+        default:
+            throw `Invalid field type: ${fieldType}`;
     }
 };

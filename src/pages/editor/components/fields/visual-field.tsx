@@ -53,53 +53,45 @@ function VisualField(props: Props) {
         </>
     );
 
-    return (
-        <EditorFormCard
-            label={`field ${props.fieldIndex + 1} (${props.fieldConfig.type})`}
-            icon={styleUtils.icons.fieldTypeToIcon(props.fieldConfig.type)}
-            fieldType={props.fieldConfig.type}
-            collapse={collapse}
-            setCollapse={setCollapse}
-            longLabel={props.fieldConfig.title}
-            buttons={buttons}
-            actionLabel={actionLabel}
-            setActionLabel={setActionLabel}
-            validation={props.validation}
-            data-cy={`editor-field-panel-${props.fieldIndex}`}
-        >
-            <div className='w-full centering-col gap-y-0.5'>
-                <Label text='Title' />
-                <TextInput
-                    value={props.fieldConfig.title}
-                    setValue={(newValue: string) => {
-                        props.setLocalFieldConfig({
-                            title: newValue,
-                        });
-                    }}
-                    disabled={props.disabled || collapse}
-                    data-cy='input-title'
-                />
-            </div>
-            <div className='w-full centering-col gap-y-0.5'>
-                <Label text='Description' />
-                <TextArea
-                    value={props.fieldConfig.description}
-                    setValue={(newValue: string) => {
-                        props.setLocalFieldConfig({description: newValue});
-                    }}
-                    disabled={props.disabled || collapse}
-                    data-cy='input-description'
-                />
-            </div>
+    if (props.fieldConfig.type !== 'break') {
+        return (
+            <EditorFormCard
+                label={`field ${props.fieldIndex + 1} (${props.fieldConfig.type})`}
+                icon={styleUtils.icons.fieldTypeToIcon(props.fieldConfig.type)}
+                fieldType={props.fieldConfig.type}
+                collapse={collapse}
+                setCollapse={setCollapse}
+                longLabel={props.fieldConfig.description}
+                buttons={buttons}
+                actionLabel={actionLabel}
+                setActionLabel={setActionLabel}
+                validation={props.validation}
+                data-cy={`editor-field-panel-${props.fieldIndex}`}
+            >
+                <div className='w-full centering-col gap-y-0.5'>
+                    <Label text='Description' />
+                    <TextArea
+                        value={props.fieldConfig.description}
+                        setValue={(newValue: string) => {
+                            props.setLocalFieldConfig({description: newValue});
+                        }}
+                        disabled={props.disabled || collapse}
+                        data-cy='input-description'
+                    />
+                </div>
 
-            <div
-                className={'h-px bg-gray-300'}
-                style={{width: 'calc(100% + 1.5rem)'}}
-            />
+                <div
+                    className={'h-px bg-gray-300'}
+                    style={{width: 'calc(100% + 1.5rem)'}}
+                />
 
-            {props.children}
-        </EditorFormCard>
-    );
+                {props.children}
+            </EditorFormCard>
+        );
+    } else {
+        // TODO: Add proper component for page break
+        return <div>page break field</div>;
+    }
 }
 
 export default VisualField;

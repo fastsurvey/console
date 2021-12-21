@@ -54,7 +54,7 @@ export const validators = {
     },
 
     timing: (config: types.SurveyConfig): types.ValidationResult => {
-        if (config.start > config.end) {
+        if (config.start !== null && config.end !== null && config.start > config.end) {
             return {
                 valid: false,
                 message: 'Start time has to be before end time',

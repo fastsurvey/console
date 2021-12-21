@@ -30,14 +30,8 @@ function VisualEditorHeader(props: {
         onClick(): void;
         'data-cy': string;
     };
-    publishButton: {
-        icon: React.ReactNode;
-        text: string;
-        onClick(): void;
-        'data-cy': string;
-    };
 }) {
-    const {title, survey_name, draft} = props.localConfig;
+    const {title, survey_name} = props.localConfig;
     const {username} = props.account;
 
     const linkContent = (
@@ -55,15 +49,7 @@ function VisualEditorHeader(props: {
                         <div className='flex-shrink-0 w-2 md:w-4' />
                     </>
                 )}
-                {props.localConfig.draft && (
-                    <Button
-                        {...props.publishButton}
-                        disabled={props.configIsDiffering}
-                    />
-                )}
-                {!props.localConfig.draft && (
-                    <Button {...props.timeButton} disabled={props.configIsDiffering} />
-                )}
+                <Button {...props.timeButton} disabled={props.configIsDiffering} />
             </div>
             <div className={'relative w-full flex-row-top'}>
                 {props.configIsDiffering && (
@@ -114,21 +100,10 @@ function VisualEditorHeader(props: {
                             <div className='flex-shrink-0 w-2 md:w-4' />
                         </>
                     )}
-                    {props.localConfig.draft && (
-                        <Button
-                            {...props.publishButton}
-                            disabled={props.configIsDiffering}
-                        />
-                    )}
-                    {!props.localConfig.draft && (
-                        <Button
-                            {...props.timeButton}
-                            disabled={props.configIsDiffering}
-                        />
-                    )}
+                    <Button {...props.timeButton} disabled={props.configIsDiffering} />
                 </div>
             </div>
-            {(draft || props.configIsDiffering) && (
+            {props.configIsDiffering && (
                 <div
                     className={
                         'px-1.5 py-0.5 transform -translate-x-1.5 ' +
@@ -139,7 +114,7 @@ function VisualEditorHeader(props: {
                     {linkContent}
                 </div>
             )}
-            {!(draft || props.configIsDiffering) && (
+            {!props.configIsDiffering && (
                 <a
                     href={`https://${frontendUrl}/${username}/${survey_name}`}
                     className='px-1.5 py-0.5 transform -translate-x-1.5 rounded ringable w-full'

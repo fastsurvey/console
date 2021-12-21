@@ -16,7 +16,7 @@ function EditorHeader(props: {
     revertState(): void;
     openMessage(messageId: types.MessageId): void;
 }) {
-    const {draft, start, end} = props.localConfig;
+    const {start, end} = props.localConfig;
 
     function now() {
         return Math.floor(Date.now() / 1000);
@@ -25,6 +25,7 @@ function EditorHeader(props: {
     function startNow() {
         props.saveState({
             start: now() - 1,
+            end: null,
         });
     }
 
@@ -58,26 +59,8 @@ function EditorHeader(props: {
           ]
         : [];
 
-    const publishButton = {
-        icon: icons.uploadCloud,
-        text: 'publish',
-        onClick: () => {
-            props.saveState({
-                draft: !draft,
-            });
-        },
-        'data-cy': 'button-publish',
-    };
-
     let timeButton: any;
-    if (start < now() && now() < end) {
-        timeButton = {
-            icon: icons.pause,
-            text: 'end now',
-            onClick: endNow,
-            'data-cy': 'button-end',
-        };
-    } else if (now() < start) {
+    if (start === null || now() < start) {
         timeButton = {
             icon: icons.play,
             text: 'start now',
@@ -85,17 +68,24 @@ function EditorHeader(props: {
             'data-cy': 'button-start',
         };
     } else {
-        timeButton = {
-            icon: icons.play,
-            text: 'reopen now',
-            onClick: reopenNow,
-            'data-cy': 'button-reopen',
-        };
+        if (start < now() && (end === null || now() < end)) {
+            timeButton = {
+                icon: icons.pause,
+                text: 'end now',
+                onClick: endNow,
+                'data-cy': 'button-end',
+            };
+        } else {
+            timeButton = {
+                icon: icons.play,
+                text: 'reopen now',
+                onClick: reopenNow,
+                'data-cy': 'button-reopen',
+            };
+        }
     }
 
-    return (
-        <VisualEditorHeader {...props} {...{saveButtons, timeButton, publishButton}} />
-    );
+    return <VisualEditorHeader {...props} {...{saveButtons, timeButton}} />;
 }
 
 const mapStateToProps = (state: types.ReduxState) => ({
