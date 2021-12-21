@@ -70,19 +70,9 @@ describe('The Survey List Page', () => {
         panel(surveyName).linkToFrontend().should('have.text', frontentLink);
 
         panel(surveyName)
-            .container()
-            .then(($panel) => {
-                if ($panel.attr('data-cy')?.includes('published')) {
-                    // not a draft
-                    panel(surveyName)
-                        .linkToFrontend()
-                        .should('have.attr', 'href')
-                        .and('eq', `https://${frontentLink}`);
-                } else {
-                    // a draft
-                    panel(surveyName).linkToFrontend().should('not.have.attr', 'href');
-                }
-            });
+            .linkToFrontend()
+            .should('have.attr', 'href')
+            .and('eq', `https://${frontentLink}`);
 
         panel(surveyName)
             .linkToEditor()

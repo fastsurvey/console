@@ -1,26 +1,22 @@
 {
-    "SURVEYS_TO_KEEP": ["simple", "complex"],
+    "SURVEYS_TO_KEEP": [],
     "DUPLICATION": {
         "ORIGINAL_SURVEY": {
             "survey_name": "simply-complex",
             "title": "Very Good Sample Title",
-            "description": "Enneapuses are the new octopuses, and other wisdoms.",
             "start": 1636244487,
             "end": 1636330889,
-            "draft": false,
             "fields": [
                 {
                     "identifier": 0,
-                    "title": "How do you feel about apples?",
-                    "description": "",
+                    "description": "How do you feel about apples?",
                     "type": "text",
                     "min_chars": 10,
                     "max_chars": 1000
                 },
                 {
                     "identifier": 2,
-                    "title": "What's your email address???",
-                    "description": "",
+                    "description": "What's your email address???",
                     "type": "email",
                     "hint": "YOUR EMAIL ADDRESS HERE",
                     "regex": ".*",
@@ -28,8 +24,7 @@
                 },
                 {
                     "identifier": 1,
-                    "title": "What's your email address?",
-                    "description": "",
+                    "description": "What's your email address?",
                     "type": "email",
                     "hint": "YOUR EMAIL ADDRESS HERE",
                     "regex": ".*",
@@ -37,8 +32,7 @@
                 },
                 {
                     "identifier": 3,
-                    "title": "What are your favorite pizza toppings?",
-                    "description": "",
+                    "description": "What are your favorite pizza toppings?",
                     "type": "selection",
                     "options": [
                         "Quattro Stagioni",
@@ -52,8 +46,7 @@
                 },
                 {
                     "identifier": 4,
-                    "title": "What's your email address??????",
-                    "description": "",
+                    "description": "What's your email address??????",
                     "type": "email",
                     "hint": "YOUR EMAIL ADDRESS HERE",
                     "regex": ".*",
@@ -64,23 +57,19 @@
         "UPDATED_ORIGINAL": {
             "survey_name": "simply-complex",
             "title": "Very Good Sample Title",
-            "description": "Enneapuses are the new octopuses, and other wisdoms.",
             "start": 1636244487,
             "end": 1636330889,
-            "draft": false,
             "fields": [
                 {
                     "identifier": 0,
-                    "title": "How do you feel about apples?",
-                    "description": "",
+                    "description": "How do you feel about apples?",
                     "type": "text",
                     "min_chars": 10,
                     "max_chars": 1000
                 },
                 {
                     "identifier": 1,
-                    "title": "What's your email address?",
-                    "description": "",
+                    "description": "What's your email address?",
                     "type": "email",
                     "hint": "YOUR EMAIL ADDRESS HERE",
                     "regex": ".*",
@@ -88,8 +77,7 @@
                 },
                 {
                     "identifier": 3,
-                    "title": "What are your favorite pizza toppings?",
-                    "description": "",
+                    "description": "What are your favorite pizza toppings?",
                     "type": "selection",
                     "options": [
                         "Quattro Stagioni",
@@ -108,23 +96,19 @@
             "next_identifier": 3,
             "survey_name": "a-different-kind-of-complex",
             "title": "Very Good Sample Title",
-            "description": "Enneapuses are the new octopuses, and other wisdoms.",
             "start": 1636244487,
             "end": 1636330889,
-            "draft": true,
             "fields": [
                 {
                     "identifier": 0,
-                    "title": "How do you feel about apples?",
-                    "description": "",
+                    "description": "How do you feel about apples?",
                     "type": "text",
                     "min_chars": 10,
                     "max_chars": 1000
                 },
                 {
                     "identifier": 1,
-                    "title": "What's your email address?",
-                    "description": "",
+                    "description": "What's your email address?",
                     "type": "email",
                     "hint": "YOUR EMAIL ADDRESS HERE",
                     "regex": ".*",
@@ -132,8 +116,7 @@
                 },
                 {
                     "identifier": 2,
-                    "title": "What are your favorite pizza toppings?",
-                    "description": "",
+                    "description": "What are your favorite pizza toppings?",
                     "type": "selection",
                     "options": [
                         "Quattro Stagioni",
@@ -152,23 +135,19 @@
         "INITIAL_SURVEY": {
             "survey_name": "just-another-randy-bird",
             "title": "Very Good Sample Title",
-            "description": "Enneapuses are the new octopuses, and other wisdoms.",
             "start": 1436244487,
-            "end": 1436330889,
-            "draft": false,
+            "end": 2006330889,
             "fields": [
                 {
                     "identifier": 0,
-                    "title": "How do you feel about apples?",
-                    "description": "",
+                    "description": "How do you feel about apples?",
                     "type": "text",
                     "min_chars": 10,
                     "max_chars": 1000
                 },
                 {
                     "identifier": 1,
-                    "title": "What's your email address?",
-                    "description": "",
+                    "description": "What's your email address?",
                     "type": "email",
                     "hint": "YOUR EMAIL ADDRESS HERE",
                     "regex": ".*",
@@ -176,8 +155,7 @@
                 },
                 {
                     "identifier": 2,
-                    "title": "What are your favorite pizza toppings?",
-                    "description": "",
+                    "description": "What are your favorite pizza toppings?",
                     "type": "selection",
                     "options": [
                         "Quattro Stagioni",
@@ -196,23 +174,19 @@
         "MODIFIED_SURVEY": {
             "survey_name": "just-another-randy-cowboy",
             "title": "Trust me, it's good!",
-            "description": "Octopusses are not a thing, though!?",
             "start": 1436244487,
-            "end": 1436330889,
-            "draft": false,
+            "end": 2006330889,
             "fields": [
                 {
                     "identifier": 0,
-                    "title": "How do you feel about pampelmusis? buja!",
-                    "description": "cvbnm,cvbnm\"vh\"hj",
+                    "description": "How do you feel about pampelmusis? buja!",
                     "type": "text",
                     "min_chars": 10,
                     "max_chars": 1000
                 },
                 {
                     "identifier": 1,
-                    "title": "What's your email",
-                    "description": "asdaa",
+                    "description": "What's your email",
                     "type": "email",
                     "hint": "YOUR EMAIL ADDRESS HERE",
                     "regex": ".*",
@@ -220,8 +194,7 @@
                 },
                 {
                     "identifier": 2,
-                    "title": "What are your favorite pizza toppings",
-                    "description": "vghjk",
+                    "description": "What are your favorite pizza toppings",
                     "type": "selection",
                     "options": [
                         "Quattro Stagioni",
@@ -239,15 +212,12 @@
             "next_identifier": 6,
             "survey_name": "just-another-randy-bird",
             "title": "Very Good Sample Title",
-            "description": "Enneapuses are the new octopuses, and other wisdoms.",
             "start": 1436244487,
-            "end": 1436330889,
-            "draft": false,
+            "end": 2006330889,
             "fields": [
                 {
                     "identifier": 4,
-                    "title": "What are your favorite pizza toppings?",
-                    "description": "",
+                    "description": "What are your favorite pizza toppings?",
                     "type": "selection",
                     "options": [
                         "Quattro Stagioni",
@@ -261,16 +231,14 @@
                 },
                 {
                     "identifier": 0,
-                    "title": "How do you feel about apples?",
-                    "description": "",
+                    "description": "How do you feel about apples?",
                     "type": "text",
                     "min_chars": 10,
                     "max_chars": 1000
                 },
                 {
                     "identifier": 1,
-                    "title": "What's your email address?",
-                    "description": "",
+                    "description": "What's your email address?",
                     "type": "email",
                     "hint": "YOUR EMAIL ADDRESS HERE",
                     "regex": ".*",
@@ -278,8 +246,7 @@
                 },
                 {
                     "identifier": 5,
-                    "title": "What's your email address?",
-                    "description": "",
+                    "description": "What's your email address?",
                     "type": "email",
                     "hint": "YOUR EMAIL ADDRESS HERE",
                     "regex": ".*",
@@ -287,8 +254,7 @@
                 },
                 {
                     "identifier": 2,
-                    "title": "What are your favorite pizza toppings?",
-                    "description": "",
+                    "description": "What are your favorite pizza toppings?",
                     "type": "selection",
                     "options": [
                         "Quattro Stagioni",
@@ -302,8 +268,7 @@
                 },
                 {
                     "identifier": 3,
-                    "title": "How do you feel about apples?",
-                    "description": "",
+                    "description": "How do you feel about apples?",
                     "type": "text",
                     "min_chars": 10,
                     "max_chars": 1000
@@ -313,8 +278,7 @@
         "ADDED_FIELDS": {
             "EMAIL": {
                 "identifier": 3,
-                "title": "What's your email address?",
-                "description": "",
+                "description": "What's your email address?",
                 "type": "email",
                 "hint": "Any email address",
                 "regex": ".*",
@@ -322,16 +286,14 @@
             },
             "TEXT": {
                 "identifier": 3,
-                "title": "How do you feel about apples?",
-                "description": "",
+                "description": "How do you feel about apples?",
                 "type": "text",
                 "min_chars": 0,
                 "max_chars": 2000
             },
             "SELECTION": {
                 "identifier": 3,
-                "title": "What are your favorite pizza toppings?",
-                "description": "",
+                "description": "What are your favorite pizza toppings?",
                 "type": "selection",
                 "options": ["Quattro Stagioni", "Prosciutto"],
                 "min_select": 0,
@@ -343,23 +305,19 @@
         "SURVEY": {
             "survey_name": "penguins-are-awesome",
             "title": "Very Good Sample Title",
-            "description": "Enneapuses are the new octopuses, and other wisdoms.",
             "start": 1000000000,
             "end": 2000000000,
-            "draft": false,
             "fields": [
                 {
                     "identifier": 0,
-                    "title": "How do you feel about apples?",
-                    "description": "",
+                    "description": "How do you feel about apples?",
                     "type": "text",
                     "min_chars": 10,
                     "max_chars": 1000
                 },
                 {
                     "identifier": 1,
-                    "title": "What's your email address?",
-                    "description": "",
+                    "description": "What's your email address?",
                     "type": "email",
                     "hint": "YOUR EMAIL ADDRESS HERE",
                     "regex": ".*",
@@ -367,8 +325,7 @@
                 },
                 {
                     "identifier": 2,
-                    "title": "What are your favorite pizza toppings?",
-                    "description": "",
+                    "description": "What are your favorite pizza toppings?",
                     "type": "selection",
                     "options": [
                         "Quattro Stagioni",

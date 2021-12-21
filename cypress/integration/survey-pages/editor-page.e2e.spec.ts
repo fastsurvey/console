@@ -16,7 +16,6 @@ const headerElements = {
 
     undo: () => get(['editor-header', 'button-undo'], {count: 1}),
     save: () => get(['editor-header', 'button-save'], {count: 1}),
-    publish: () => get(['editor-header', 'button-publish'], {count: 1}),
     start: () => get(['editor-header', 'button-start'], {count: 1}),
     end: () => get(['editor-header', 'button-end'], {count: 1}),
     reopen: () => get(['editor-header', 'button-reopen'], {count: 1}),
@@ -29,10 +28,6 @@ const settingsElements = {
     inputTitle: () => get(['editor-settings', 'input-title'], {count: 1}),
     inputIdentifier: () => get(['editor-settings', 'input-identifier'], {count: 1}),
     refreshIdentifier: () => get(['editor-settings', 'refresh-identifier'], {count: 1}),
-    inputDescription: () => get(['editor-settings', 'input-description'], {count: 1}),
-
-    toggleDraftYes: () => get(['editor-settings', 'toggle-draft', 'yes'], {count: 1}),
-    toggleDraftNo: () => get(['editor-settings', 'toggle-draft', 'no'], {count: 1}),
 
     startDate: () => get(['editor-settings', 'datepicker-start'], {count: 1}),
     startTime: () => get(['editor-settings', 'timepicker-start'], {count: 1}),
@@ -54,7 +49,6 @@ const fieldButtons = (index: number) => ({
 });
 
 const fieldInputs = (index: number) => ({
-    title: getFromField(index, ['input-title'], {count: 1}),
     description: getFromField(index, ['input-description'], {count: 1}),
     regex: getFromField(index, ['input-regex'], {count: 1}),
     hint: getFromField(index, ['input-hint'], {count: 1}),
@@ -110,12 +104,8 @@ describe('The Editor Page', () => {
             });
     });
 
-    const assertPillState = (state: 'draft' | 'pending' | 'running' | 'finished') => {
+    const assertPillState = (state: 'pending' | 'running' | 'finished') => {
         headerElements.pill().should('have.attr', 'data-cy').and('contain', state);
-        headerElements
-            .link()
-            .should('have.attr', 'data-cy')
-            .and('contains', state === 'draft' ? 'isinactive' : 'isactive');
     };
 
     const assertSurveyState = (surveyConfig: types.SurveyConfig) => {
@@ -123,9 +113,6 @@ describe('The Editor Page', () => {
         settingsElements
             .inputIdentifier()
             .should('have.value', surveyConfig.survey_name);
-        settingsElements
-            .inputDescription()
-            .should('have.value', surveyConfig.description);
 
         surveyConfig.fields.forEach((fieldConfig, i) => {
             assertFieldState(fieldConfig, i);
@@ -133,8 +120,11 @@ describe('The Editor Page', () => {
     };
 
     const assertFieldState = (fieldConfig: types.SurveyField, index: number) => {
-        fieldInputs(index).title().should('have.value', fieldConfig.title);
-        fieldInputs(index).description().should('have.value', fieldConfig.description);
+        if (fieldConfig.type !== 'break') {
+            fieldInputs(index)
+                .description()
+                .should('have.value', fieldConfig.description);
+        }
     };
 
     const assertEditorPath = (survey_name: string) =>
@@ -143,7 +133,7 @@ describe('The Editor Page', () => {
     const assertSyncedHeaderState = () => {
         get(['editor-header', 'button-undo']).should('have.length', 0);
         get(['editor-header', 'button-save']).should('have.length', 0);
-        headerElements.reopen().should('not.be.disabled');
+        headerElements.end().should('not.be.disabled');
         get(['message-panel-warning']).should('have.length', 0);
         get(['message-panel-error']).should('have.length', 0);
     };
@@ -249,16 +239,13 @@ describe('The Editor Page', () => {
     it('header look, back button, settings look, tab navigation', function () {
         headerElements.title();
         headerElements.link();
-        headerElements.reopen();
+        headerElements.end();
 
         settingsElements.tabAbout();
         settingsElements.inputTitle();
         settingsElements.inputIdentifier();
-        settingsElements.inputDescription();
 
         settingsElements.tabVisibility().click();
-        settingsElements.toggleDraftYes();
-        settingsElements.toggleDraftNo();
         settingsElements.startDate();
         settingsElements.startTime();
         settingsElements.endDate();
@@ -270,44 +257,19 @@ describe('The Editor Page', () => {
 
     it('start/end buttons', function () {
         cy.log('assert initial state');
-        assertPillState('finished');
+        assertPillState('running');
 
         cy.log('reopen survey');
-        headerElements.reopen().click();
-        headerElements.end();
-        assertPillState('running');
-        cy.reload();
-        assertPillState('running');
-
-        cy.log('close survey again');
         headerElements.end().click();
         headerElements.reopen();
         assertPillState('finished');
-
-        cy.log('assert initial state');
-        settingsElements.tabVisibility().click();
-        settingsElements
-            .toggleDraftYes()
-            .should('have.attr', 'data-cy')
-            .and('contain', 'isactive');
-
-        cy.log("switch to draft=true but don't save");
-        settingsElements.toggleDraftNo().click();
-        assertPillState('draft');
-        headerElements.save();
-        headerElements.undo().click();
-        assertPillState('finished');
         cy.reload();
-        settingsElements.tabVisibility().click();
         assertPillState('finished');
 
-        cy.log('switch to draft=true and save');
-        settingsElements.toggleDraftNo().click();
-        headerElements.save().click();
-        assertPillState('draft');
-        cy.reload();
-        settingsElements.tabVisibility().click();
-        assertPillState('draft');
+        cy.log('close survey again');
+        headerElements.reopen().click();
+        headerElements.end();
+        assertPillState('running');
     });
 
     it('changing a survey name', function () {
@@ -361,11 +323,6 @@ describe('The Editor Page', () => {
             .clear()
             .type(MODIFIED_SURVEY.survey_name)
             .should('have.value', MODIFIED_SURVEY.survey_name);
-        settingsElements
-            .inputDescription()
-            .clear()
-            .type(MODIFIED_SURVEY.description)
-            .should('have.value', MODIFIED_SURVEY.description);
 
         headerElements.undo().click();
         assertSurveyState(INITIAL_SURVEY);
@@ -380,9 +337,17 @@ describe('The Editor Page', () => {
 
         MODIFIED_SURVEY.fields.forEach(
             (newFieldConfig: types.SurveyField, i: number) => {
-                fieldInputs(i).title().clear().type(newFieldConfig.title);
-                fieldInputs(i).description().clear().type(newFieldConfig.description);
-                assertFieldState(newFieldConfig, i);
+                if (
+                    newFieldConfig.type === 'email' ||
+                    newFieldConfig.type === 'text' ||
+                    newFieldConfig.type === 'selection'
+                ) {
+                    fieldInputs(i)
+                        .description()
+                        .clear()
+                        .type(newFieldConfig.description);
+                    assertFieldState(newFieldConfig, i);
+                }
             },
         );
 
@@ -421,21 +386,21 @@ describe('The Editor Page', () => {
 
     it('save not possible with invalid fields', () => {
         const assertInvalidFieldState = () => {
-            headerElements.reopen().should('be.disabled');
+            headerElements.end().should('be.disabled');
             headerElements.save().click();
             warningMessage().contains('Invalid fields');
             headerElements.undo().click();
-            headerElements.reopen().should('not.be.disabled');
+            headerElements.end().should('not.be.disabled');
         };
         settingsElements.inputTitle().clear();
         assertInvalidFieldState();
 
         fieldButtons(0).collapse().click();
-        fieldInputs(0).title().clear();
+        fieldInputs(0).description().clear();
         assertInvalidFieldState();
 
         fieldButtons(2).collapse().click();
-        fieldInputs(2).title().clear();
+        fieldInputs(2).description().clear();
         assertInvalidFieldState();
     });
 
@@ -485,7 +450,7 @@ describe('The Editor Page', () => {
         fieldButtons(0).collapse().click();
 
         // assert intial state after adding
-        fieldInputs(0).title().should('be.empty');
+        fieldInputs(0).description().should('be.empty');
         assertLocalField(0);
 
         // undo and assert state after save
@@ -502,12 +467,14 @@ describe('The Editor Page', () => {
         addFieldPopup.selectField('text').click();
         addFieldPopup.submitAdd().click();
         fieldButtons(1).collapse().click();
-        fieldInputs(1).title().type(ADDED_FIELDS.TEXT.title);
+        fieldInputs(1).description().type(ADDED_FIELDS.TEXT.description);
 
         // save and assert state after save
         headerElements.save().click();
         assertSyncedHeaderState();
-        fieldInputs(1).title().should('have.value', ADDED_FIELDS.TEXT.title);
+        fieldInputs(1)
+            .description()
+            .should('have.value', ADDED_FIELDS.TEXT.description);
         assertLocalField(1);
         assertConfigInDB(USERNAME, PASSWORD, {
             ...INITIAL_SURVEY,
@@ -539,16 +506,18 @@ describe('The Editor Page', () => {
         fieldButtons(2).collapse().click();
 
         // assert intial state after adding
-        fieldInputs(2).title().should('be.empty');
+        fieldInputs(2).description().should('be.empty');
         assertLocalField();
 
         // edit field to match fixture
-        fieldInputs(2).title().type(ADDED_FIELDS.EMAIL.title);
+        fieldInputs(2).description().type(ADDED_FIELDS.EMAIL.description);
 
         // save and assert state after save
         headerElements.save().click();
         assertSyncedHeaderState();
-        fieldInputs(2).title().should('have.value', ADDED_FIELDS.EMAIL.title);
+        fieldInputs(2)
+            .description()
+            .should('have.value', ADDED_FIELDS.EMAIL.description);
         assertLocalField();
         assertConfigInDB(USERNAME, PASSWORD, {
             ...INITIAL_SURVEY,
@@ -567,14 +536,14 @@ describe('The Editor Page', () => {
         addFieldPopup.selectField('selection').click();
         addFieldPopup.submitAdd().click();
         fieldButtons(3).collapse().click();
-        fieldInputs(3).title().should('be.empty');
+        fieldInputs(3).description().should('be.empty');
         fieldInputs(3).description().should('be.empty');
         fieldInputs(3).anyOptionInput().should('have.length', 0);
         fieldInputs(3).minSelect().should('have.value', '0');
         fieldInputs(3).maxSelect().should('have.value', '0');
 
         // edit field to match fixture
-        fieldInputs(3).title().type(ADDED_FIELDS.SELECTION.title);
+        fieldInputs(3).description().type(ADDED_FIELDS.SELECTION.description);
         ADDED_FIELDS.SELECTION.options.forEach((o: string, i: number) => {
             fieldInputs(3).addOption().click();
             fieldInputs(3).optionInput(i).type(o);
@@ -586,7 +555,9 @@ describe('The Editor Page', () => {
 
         // save and assert state after save
         assertSyncedHeaderState();
-        fieldInputs(3).title().should('have.value', ADDED_FIELDS.SELECTION.title);
+        fieldInputs(3)
+            .description()
+            .should('have.value', ADDED_FIELDS.SELECTION.description);
         fieldInputs(3).anyOptionInput().should('have.length', 2);
         ADDED_FIELDS.SELECTION.options.forEach((o: string, i: number) => {
             fieldInputs(3).optionInput(i).should('have.value', o);
@@ -628,7 +599,7 @@ describe('The Editor Page', () => {
         get([`editor-field-panel`], {count: 2});
         headerElements.save().click();
         get([`editor-field-panel`], {count: 2});
-        headerElements.reopen().should('not.be.disabled');
+        headerElements.end().should('not.be.disabled');
 
         cy.wait(['@PUTupdate1']);
         console.log({INITIAL_SURVEY});

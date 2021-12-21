@@ -103,7 +103,6 @@ Cypress.Commands.add('seedConfigData', () => {
 
                 requestConfigs(authResponse).then((configsResponse) => {
                     expect(configsResponse.status).to.equal(200);
-                    expect(configsResponse.body).to.have.length.gte(2);
 
                     const surveyToDelete = configsResponse.body
                         .map((c: any) => c['survey_name'])
