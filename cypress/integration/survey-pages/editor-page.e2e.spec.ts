@@ -173,6 +173,83 @@ describe('The Editor Page', () => {
         });
     };
 
+    it('removing a field', function () {
+        const {INITIAL_SURVEY, INITIAL_NEXT_IDENTIFIER} = this.configsJSON.EDITOR;
+        const {USERNAME, PASSWORD} = this.accountJSON;
+
+        // TODO: Wait for Felix to fix bug with max_identifier
+
+        // remove field 1 + undo
+        fieldButtons(1).remove().click();
+        get([`editor-field-panel`], {count: 2});
+        headerElements.undo().click();
+        get([`editor-field-panel`], {count: 3});
+        assertConfigInDB(USERNAME, PASSWORD, {
+            ...INITIAL_SURVEY,
+            next_identifier: INITIAL_NEXT_IDENTIFIER,
+        });
+
+        // remove field 2 + save
+        cy.intercept({
+            method: 'PUT',
+            url: `users/${USERNAME}/surveys/${INITIAL_SURVEY.survey_name}`,
+            hostname: 'api.dev.fastsurvey.de',
+        }).as('PUTupdate1');
+
+        fieldButtons(2).remove().click();
+        get([`editor-field-panel`], {count: 2});
+        headerElements.save().click();
+        get([`editor-field-panel`], {count: 2});
+        headerElements.end().should('not.be.disabled');
+
+        cy.wait(['@PUTupdate1']);
+        console.log({INITIAL_SURVEY});
+
+        assertConfigInDB(USERNAME, PASSWORD, {
+            ...INITIAL_SURVEY,
+            next_identifier: INITIAL_NEXT_IDENTIFIER,
+            fields: pullAllBy(
+                JSON.parse(JSON.stringify(INITIAL_SURVEY.fields)),
+                [{identifier: INITIAL_SURVEY.fields[2].identifier}],
+                'identifier',
+            ),
+        });
+
+        // remove field 0 + save
+        cy.intercept({
+            method: 'PUT',
+            url: `users/${USERNAME}/surveys/${INITIAL_SURVEY.survey_name}`,
+            hostname: 'api.dev.fastsurvey.de',
+        }).as('PUTupdate2');
+
+        fieldButtons(0).remove().click();
+        get([`editor-field-panel`], {count: 1});
+        headerElements.save().click();
+        get([`editor-field-panel`], {count: 1});
+
+        cy.wait(['@PUTupdate2']);
+
+        assertConfigInDB(USERNAME, PASSWORD, {
+            ...INITIAL_SURVEY,
+            next_identifier: INITIAL_NEXT_IDENTIFIER,
+            fields: pullAllBy(
+                JSON.parse(JSON.stringify(INITIAL_SURVEY.fields)),
+                [
+                    {identifier: INITIAL_SURVEY.fields[2].identifier},
+                    {identifier: INITIAL_SURVEY.fields[0].identifier},
+                ],
+                'identifier',
+            ),
+        });
+
+        // remove last field + save (unsuccessful)
+        fieldButtons(0).remove().click();
+        get([`editor-field-panel`], {count: 0});
+        headerElements.save().click();
+        get([`editor-field-panel`], {count: 0});
+        assertSyncedHeaderState();
+    });
+
     it('copy and paste', function () {
         const {INITIAL_SURVEY, COPY_PASTE_SURVEY} = this.configsJSON.EDITOR;
         const {USERNAME, PASSWORD} = this.accountJSON;
@@ -438,7 +515,6 @@ describe('The Editor Page', () => {
         const {USERNAME, PASSWORD} = this.accountJSON;
 
         const assertLocalField = (index: number) => {
-            fieldInputs(index).description().should('be.empty');
             fieldInputs(index).minChars().should('have.value', '0');
             fieldInputs(index).maxChars().should('have.value', '2000');
         };
@@ -489,7 +565,6 @@ describe('The Editor Page', () => {
         const {USERNAME, PASSWORD} = this.accountJSON;
 
         const assertLocalField = () => {
-            fieldInputs(2).description().should('be.empty');
             fieldInputs(2).regex().should('have.value', '.*');
             fieldInputs(2).hint().should('have.value', 'Any email address');
             fieldInputs(2)
@@ -570,86 +645,6 @@ describe('The Editor Page', () => {
             next_identifier: INITIAL_NEXT_IDENTIFIER + 1,
             fields: insertInArray(INITIAL_SURVEY.fields, 3, ADDED_FIELDS.SELECTION),
         });
-    });
-
-    it('removing a field', function () {
-        const {INITIAL_SURVEY, INITIAL_NEXT_IDENTIFIER} = this.configsJSON.EDITOR;
-        const {USERNAME, PASSWORD} = this.accountJSON;
-
-        // TODO: Wait for Felix to fix bug with max_identifier
-
-        // remove field 1 + undo
-        fieldButtons(1).remove().click();
-        get([`editor-field-panel`], {count: 2});
-        headerElements.undo().click();
-        get([`editor-field-panel`], {count: 3});
-        assertConfigInDB(USERNAME, PASSWORD, {
-            ...INITIAL_SURVEY,
-            next_identifier: INITIAL_NEXT_IDENTIFIER,
-        });
-
-        // remove field 2 + save
-        cy.intercept({
-            method: 'PUT',
-            url: `users/${USERNAME}/surveys/${INITIAL_SURVEY.survey_name}`,
-            hostname: 'api.dev.fastsurvey.de',
-        }).as('PUTupdate1');
-
-        fieldButtons(2).remove().click();
-        get([`editor-field-panel`], {count: 2});
-        headerElements.save().click();
-        get([`editor-field-panel`], {count: 2});
-        headerElements.end().should('not.be.disabled');
-
-        cy.wait(['@PUTupdate1']);
-        console.log({INITIAL_SURVEY});
-
-        assertConfigInDB(USERNAME, PASSWORD, {
-            ...INITIAL_SURVEY,
-            next_identifier: INITIAL_NEXT_IDENTIFIER,
-            fields: pullAllBy(
-                JSON.parse(JSON.stringify(INITIAL_SURVEY.fields)),
-                [{identifier: INITIAL_SURVEY.fields[2].identifier}],
-                'identifier',
-            ),
-        });
-
-        // remove field 0 + save
-        cy.intercept({
-            method: 'PUT',
-            url: `users/${USERNAME}/surveys/${INITIAL_SURVEY.survey_name}`,
-            hostname: 'api.dev.fastsurvey.de',
-        }).as('PUTupdate2');
-
-        fieldButtons(0).remove().click();
-        get([`editor-field-panel`], {count: 1});
-        headerElements.save().click();
-        get([`editor-field-panel`], {count: 1});
-
-        cy.wait(['@PUTupdate2']);
-
-        assertConfigInDB(USERNAME, PASSWORD, {
-            ...INITIAL_SURVEY,
-            next_identifier: INITIAL_NEXT_IDENTIFIER,
-            fields: pullAllBy(
-                JSON.parse(JSON.stringify(INITIAL_SURVEY.fields)),
-                [
-                    {identifier: INITIAL_SURVEY.fields[2].identifier},
-                    {identifier: INITIAL_SURVEY.fields[0].identifier},
-                ],
-                'identifier',
-            ),
-        });
-
-        // remove last field + save (unsuccessful)
-        fieldButtons(0).remove().click();
-        get([`editor-field-panel`], {count: 0});
-        headerElements.save().click();
-        get([`editor-field-panel`], {count: 0});
-        warningMessage().contains('at least one field');
-        headerElements.undo().click();
-        get([`editor-field-panel`], {count: 1});
-        assertSyncedHeaderState();
     });
 
     // Test with component test of fields:

@@ -97,12 +97,6 @@ export const messages: {[key in types.MessageId]: types.Message} = {
         text: 'Invalid fields: Please check all red hints',
         type: 'warning',
     },
-    'editor-warning-field-count': {
-        id: 'editor-warning-validators',
-        randomToken: 0,
-        text: 'There has to be at least one field',
-        type: 'warning',
-    },
     'editor-warning-authentication': {
         id: 'editor-warning-authentication',
         randomToken: 0,

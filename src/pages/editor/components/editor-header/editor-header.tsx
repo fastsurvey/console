@@ -5,6 +5,10 @@ import {types} from '/src/types';
 import {icons} from '/src/assets';
 import VisualEditorHeader from './visual-editor-header';
 
+function now() {
+    return Math.floor(Date.now() / 1000);
+}
+
 function EditorHeader(props: {
     configIsDiffering: boolean;
     account: types.Account;
@@ -17,10 +21,6 @@ function EditorHeader(props: {
     openMessage(messageId: types.MessageId): void;
 }) {
     const {start, end} = props.localConfig;
-
-    function now() {
-        return Math.floor(Date.now() / 1000);
-    }
 
     function startNow() {
         props.saveState({
@@ -59,7 +59,7 @@ function EditorHeader(props: {
           ]
         : [];
 
-    let timeButton: any;
+    let timeButton;
     if (start === null || now() < start) {
         timeButton = {
             icon: icons.play,
@@ -68,7 +68,7 @@ function EditorHeader(props: {
             'data-cy': 'button-start',
         };
     } else {
-        if (start < now() && (end === null || now() < end)) {
+        if (start <= now() && (end === null || end > now())) {
             timeButton = {
                 icon: icons.pause,
                 text: 'end now',

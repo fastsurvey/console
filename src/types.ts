@@ -126,7 +126,6 @@ export declare namespace types {
         | 'warning-clipboard'
         | 'warning-clipboard-support'
         | 'editor-warning-validators'
-        | 'editor-warning-field-count'
         | 'editor-warning-authentication'
         | 'success-survey-duplicated'
         | 'success-submissions-removed'

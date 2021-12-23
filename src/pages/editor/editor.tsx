@@ -47,18 +47,20 @@ function Editor(props: {
     }
 
     function updateValidation(newIndex: number, newState: types.ValidationResult) {
-        const newValidators = [...fieldValidation];
+        const newValidators = JSON.parse(JSON.stringify(fieldValidation));
         newValidators[newIndex] = newState;
         setFieldValidation(newValidators);
     }
 
     function insertField(index: number, fieldType: types.FieldType) {
-        setFieldValidation(dataUtils.array.insert(fieldValidation, index + 1, false));
-
-        const field: types.SurveyField = templateUtils.field(fieldType, localConfig);
+        const newFieldConfig = templateUtils.field(fieldType, localConfig);
+        const newFieldValidation = formUtils.validateField(newFieldConfig);
+        setFieldValidation(
+            dataUtils.array.insert(fieldValidation, index + 1, newFieldValidation),
+        );
         setLocalConfig({
             ...localConfig,
-            fields: dataUtils.array.insert(localConfig.fields, index, field),
+            fields: dataUtils.array.insert(localConfig.fields, index, newFieldConfig),
         });
     }
 
@@ -127,7 +129,6 @@ function Editor(props: {
         combinedConfig.next_identifier = combinedMaxId + 1;
 
         const fieldsAreValid = every(fieldValidation.map((r) => r.valid));
-        const fieldCountIsValid = localConfig.fields.length > 0;
         const authModeIsValid = formUtils.validators.authMode(localConfig).valid;
 
         function success() {
@@ -144,7 +145,7 @@ function Editor(props: {
             props.openMessage(message);
         }
 
-        if (fieldsAreValid && fieldCountIsValid && authModeIsValid) {
+        if (fieldsAreValid && authModeIsValid) {
             backend.updateSurvey(
                 props.account,
                 props.accessToken,
@@ -157,9 +158,6 @@ function Editor(props: {
         } else {
             if (!fieldsAreValid) {
                 props.openMessage('editor-warning-validators');
-            }
-            if (!fieldCountIsValid) {
-                props.openMessage('editor-warning-field-count');
             }
             if (!authModeIsValid) {
                 props.openMessage('editor-warning-authentication');

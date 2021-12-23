@@ -3,7 +3,7 @@ import {filter, uniq} from 'lodash';
 import {formUtils} from '/src/utilities';
 
 const genericTitle =
-    (variant: 'Title' | 'Field title' | 'Option name') =>
+    (variant: 'Title' | 'Field Title' | 'Option name') =>
     (title: string): types.ValidationResult => {
         if (title.length === 0) {
             return {
@@ -64,8 +64,7 @@ export const validators = {
         }
     },
 
-    title: genericTitle('Title'),
-    fieldTitle: genericTitle('Field title'),
+    surveyTitle: genericTitle('Title'),
     optionTitle: genericTitle('Option name'),
 
     surveyName: (survey_name: string): types.ValidationResult => {
@@ -117,8 +116,13 @@ export const validators = {
         }
     },
 
-    description: (description: string): types.ValidationResult => {
-        if (description.length > 2000) {
+    fieldDescription: (description: string): types.ValidationResult => {
+        if (description.length === 0) {
+            return {
+                valid: false,
+                message: 'Description is empty',
+            };
+        } else if (description.length > 2000) {
             return {
                 valid: false,
                 message:
