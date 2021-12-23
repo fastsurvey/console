@@ -20,7 +20,7 @@ const headerElements = {
 
 const field = (index: number) => ({
     container: () => get([`field-container-${index}`], {count: 1}),
-    title: () => get([`field-container-${index}`, 'title'], {count: 1}),
+    description: () => get([`field-container-${index}`, 'description'], {count: 1}),
     graphContainer: () =>
         get([`field-container-${index}`, 'graph-container'], {count: 1}),
     percentageBar: (optionIndex: number) =>
@@ -42,15 +42,6 @@ const field = (index: number) => ({
             ],
             {count: 1},
         ),
-});
-
-const resultsPanel = (surveyName: string) => ({
-    container: () => get([`results-panel-${surveyName}`], {count: 1}),
-    title: () => get([`results-panel-${surveyName}`, 'title'], {count: 1}),
-    linkToFrontend: () =>
-        get([`results-panel-${surveyName}`, 'link-to-frontend'], {count: 1}),
-    linkToSummary: () =>
-        get([`results-panel-${surveyName}`, 'link-to-summary'], {count: 1}),
 });
 
 describe('The Results Summary Page', () => {
@@ -84,10 +75,10 @@ describe('The Results Summary Page', () => {
         SUMMARY.forEach((fieldSummary, fieldIndex) => {
             field(fieldIndex).container();
             field(fieldIndex)
-                .title()
+                .description()
                 .should(
                     'contain.text',
-                    `${fieldIndex + 1}. ${FIELDS[fieldIndex].title}`,
+                    `${fieldIndex + 1}. ${FIELDS[fieldIndex].description}`,
                 );
             field(fieldIndex)
                 .container()

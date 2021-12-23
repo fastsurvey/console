@@ -24,6 +24,8 @@ function Field(props: {
         count: fieldCount,
     };
 
+    // TODO: Trucate field description accordingly (maybe show at most n lines)
+
     const VisualField = (props: {children: React.ReactNode; subtitle: string}) => (
         <section
             className={
@@ -34,7 +36,10 @@ function Field(props: {
             data-cy={`field-container-${fieldIndex} isaggregated`}
         >
             <div className='w-full md:w-50% flex-col-left space-y-0.5'>
-                <h2 className='text-base text-gray-900 font-weight-700' data-cy='title'>
+                <h2
+                    className='text-base text-gray-900 font-weight-700'
+                    data-cy='description'
+                >
                     {fieldIndex + 1}. {fieldConfig.description}{' '}
                     <span className='font-weight-500 opacity-70 whitespace-nowrap'>
                         {`(${fieldCount} submission${fieldCount !== 1 ? 's' : ''})`}
@@ -74,7 +79,7 @@ function Field(props: {
                 >
                     <h2
                         className='w-full text-base text-gray-600 font-weight-700'
-                        data-cy='title'
+                        data-cy='description'
                     >
                         {fieldIndex + 1}. {fieldConfig.description}{' '}
                         <span className='font-weight-500 opacity-70 whitespace-nowrap'>
