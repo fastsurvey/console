@@ -10,7 +10,10 @@ import '/src/styles/tailwind.css';
 import '/src/styles/fixes.css';
 
 // only use sentry when image was built with docker
-if (import.meta.env.MODE === 'production') {
+if (
+    import.meta.env.MODE === 'production' &&
+    import.meta.env.VITE_ENV === 'production'
+) {
     Sentry.init({
         dsn: `${import.meta.env.VITE_SENTRY_API}`,
         environment: `${import.meta.env.VITE_ENV}`,
