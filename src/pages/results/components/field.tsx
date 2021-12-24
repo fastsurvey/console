@@ -15,7 +15,9 @@ function Field(props: {
         return <div>{fieldConfig.type} field</div>;
     }
 
+    // @ts-ignore
     const fieldResults: any = results[fieldConfig.identifier].value;
+    // @ts-ignore
     const fieldCount: any = results[fieldConfig.identifier].count;
 
     const summaryProps: any = {

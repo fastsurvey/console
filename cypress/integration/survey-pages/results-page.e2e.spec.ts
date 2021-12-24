@@ -172,9 +172,9 @@ describe('The Results Summary Page', () => {
                 );
             };
             cy.readFile(filename, 'utf8').then((fileContent) => {
-                expect(sortSubmissions(fileContent)).to.deep.equal(
-                    sortSubmissions(INITIAL_DOWNLOAD),
-                );
+                expect(
+                    sortSubmissions(fileContent.map((s: any) => s.submission)),
+                ).to.deep.equal(sortSubmissions(INITIAL_DOWNLOAD));
             });
         });
     });

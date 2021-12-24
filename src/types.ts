@@ -72,12 +72,29 @@ export declare namespace types {
         hint: string;
     }
 
-    export interface SurveyResults {
-        [key: string]: {
-            count: number;
-            value: null | number | {[key: string]: number};
+    export type SurveyResults = {
+        count: number;
+        [key: string]:
+            | number
+            | {
+                  count: number;
+                  value?: null | {[key: string]: number};
+                  verified?: number;
+              };
+    };
+
+    export type SurveySubmission = {
+        submission_time: number;
+        submission: {
+            [key: string]:
+                | {
+                      email_address: string;
+                      verified: null | boolean;
+                  }
+                | string[]
+                | string;
         };
-    }
+    };
 
     export type Color = 'red' | 'orange' | 'yellow' | 'green' | 'teal' | 'gray';
     export type DownloadFormat = 'json' | 'csv';

@@ -36,33 +36,32 @@ function Results(props: {
         );
     }
 
-    function generateJSONuri(data: {[key: string]: any}[]) {
-        const outputJSON = [];
-        for (let i = 0; i < data.length; i++) {
+    function generateJSONuri(data: types.SurveySubmission[]) {
+        const outputJSON = data.map((s, i) => {
             let outputSubmission: {
                 [key: string]: any;
             } = {};
             props.config.fields.forEach((f) => {
                 if (f.type !== 'break' && f.type !== 'markdown') {
-                    outputSubmission[f.description] = data[i][f.identifier];
+                    outputSubmission[f.description] = s.submission[f.identifier];
                 }
             });
-            outputJSON.push(outputSubmission);
-        }
+            return {...s, submission: outputSubmission};
+        });
 
         return encodeURI(
             'data:text/json;charset=utf-8,' + JSON.stringify(outputJSON, null, '\t'),
         );
     }
 
-    function generateCSVuri(data: {[key: string]: any}[]) {
+    function generateCSVuri(data: types.SurveySubmission[]) {
         let outputRows: string[][] = [];
 
         function escapeQuotes(text: string | number) {
             return '"' + `${text}`.replaceAll('"', "'") + '"';
         }
 
-        let headerRow: string[] = [];
+        let headerRow = ['"submission_time"'];
         props.config.fields.forEach((f) => {
             switch (f.type) {
                 case 'email':
@@ -90,9 +89,9 @@ function Results(props: {
         outputRows.push(headerRow);
 
         for (let i = 0; i < data.length; i++) {
-            let outputRow: string[] = [];
+            let outputRow: string[] = [`${data[i].submission_time}`];
             props.config.fields.forEach((f) => {
-                const fieldData = data[i][f.identifier];
+                const fieldData: any = data[i].submission[f.identifier];
                 switch (f.type) {
                     case 'email':
                         if (fieldData.email_address !== null) {
@@ -109,6 +108,7 @@ function Results(props: {
                         }
                         break;
                     case 'text':
+                        // TODO: solve #156
                         if (fieldData !== null) {
                             outputRow.push(escapeQuotes(fieldData));
                         } else {
@@ -136,7 +136,7 @@ function Results(props: {
     }
 
     function download(format: types.DownloadFormat) {
-        function success(data: {[key: string]: any}[]) {
+        function success(data: types.SurveySubmission[]) {
             let encodedUri: string = '';
             switch (format) {
                 case 'json':
