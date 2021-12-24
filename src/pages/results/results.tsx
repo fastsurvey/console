@@ -3,6 +3,7 @@ import {types} from '/src/types';
 import SummaryHeader from './components/results-header';
 import {backend} from '/src/utilities';
 import Field from './components/field';
+import {reduce} from 'lodash';
 
 function Results(props: {
     config: types.SurveyConfig;
@@ -37,17 +38,21 @@ function Results(props: {
     }
 
     function generateJSONuri(data: types.SurveySubmission[]) {
-        const outputJSON = data.map((s, i) => {
-            let outputSubmission: {
-                [key: string]: any;
-            } = {};
-            props.config.fields.forEach((f) => {
-                if (f.type !== 'break' && f.type !== 'markdown') {
-                    outputSubmission[f.description] = s.submission[f.identifier];
-                }
-            });
-            return {...s, submission: outputSubmission};
-        });
+        const outputJSON = data.map((s, i) => ({
+            submission_time: s.submission_time,
+            submission: reduce(
+                props.config.fields.filter(
+                    (f) => f.type !== 'break' && f.type !== 'markdown',
+                ),
+                (a, f: any, i) => {
+                    return {
+                        ...a,
+                        [`${i + 1} - ${f.description}`]: s.submission[f.identifier],
+                    };
+                },
+                {},
+            ),
+        }));
 
         return encodeURI(
             'data:text/json;charset=utf-8,' + JSON.stringify(outputJSON, null, '\t'),
@@ -190,14 +195,16 @@ function Results(props: {
                 />
                 {results !== undefined && (
                     <>
-                        {props.config.fields.map((fieldConfig, index) => (
-                            <Field
-                                key={fieldConfig.local_id}
-                                fieldIndex={index}
-                                fieldConfig={fieldConfig}
-                                results={results}
-                            />
-                        ))}
+                        {props.config.fields
+                            .filter((f) => f.type !== 'break' && f.type !== 'markdown')
+                            .map((fieldConfig, index) => (
+                                <Field
+                                    key={fieldConfig.local_id}
+                                    fieldIndex={index}
+                                    fieldConfig={fieldConfig}
+                                    results={results}
+                                />
+                            ))}
                     </>
                 )}
                 {error && (
