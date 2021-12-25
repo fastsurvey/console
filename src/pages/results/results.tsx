@@ -63,7 +63,7 @@ function Results(props: {
         let outputRows: string[][] = [];
 
         function escapeQuotes(text: string | number) {
-            return '"' + `${text}`.replaceAll('"', "'") + '"';
+            return '"' + `${text}`.replaceAll('"', '""') + '"';
         }
 
         let headerRow = ['"submission_time"'];
