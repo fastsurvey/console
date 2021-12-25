@@ -2,7 +2,6 @@ import Cookies from 'js-cookie';
 import {cloneDeep, pullAllBy} from 'lodash';
 import {reduxUtils, localIdUtils} from '/src/utilities';
 import {types} from '/src/types';
-import logout from '../backend/authentication/logout';
 import constants from '../constants/index';
 
 function assert(condition: boolean) {
@@ -39,7 +38,6 @@ function updateState(state: types.ReduxState, action: types.ReduxAction) {
         case 'LOG_OUT':
             Cookies.remove('accessToken');
             Cookies.remove('username');
-            logout(newState.accessToken);
             return {...cloneDeep(reduxUtils.initialState), loggingIn: false};
 
         case 'OPEN_MESSAGE':

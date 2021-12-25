@@ -1,25 +1,29 @@
 import React from 'react';
-import {reduxUtils} from '/src/utilities';
+import {reduxUtils, backend} from '/src/utilities';
 import {connect} from 'react-redux';
 import {types} from '/src/types';
 import VisualRegularNavbar from './visual-regular-navbar';
 import VisualMobileNavbar from './visual-mobile-navbar';
 
-interface Props {
+function Navbar(props: {
     logOut(): void;
+    accessToken: types.AccessToken;
     navbarState: types.NavbarState;
     openNavbar(): void;
     closeNavbar(): void;
-}
-function Navbar(props: Props) {
+}) {
+    function handleLogout() {
+        backend.logout(props.accessToken, props.logOut);
+    }
+
     return (
         <React.Fragment>
             <div className='z-30 hidden lg:block'>
-                <VisualRegularNavbar logOut={props.logOut} />
+                <VisualRegularNavbar logOut={handleLogout} />
             </div>
             <div className='z-30 block lg:hidden'>
                 <VisualMobileNavbar
-                    logOut={props.logOut}
+                    logOut={handleLogout}
                     navbarState={props.navbarState}
                     openNavbar={props.openNavbar}
                     closeNavbar={props.closeNavbar}
@@ -31,6 +35,7 @@ function Navbar(props: Props) {
 
 const mapStateToProps = (state: types.ReduxState) => ({
     navbarState: state.navbarState,
+    accessToken: state.accessToken,
 });
 const mapDispatchToProps = (dispatch: any) => ({
     logOut: reduxUtils.dispatchers.logOut(dispatch),
