@@ -42,22 +42,22 @@ function EditorHeader(props: {
         });
     }
 
-    const saveButtons = props.configIsDiffering
-        ? [
-              {
-                  icon: icons.closeCircle,
-                  text: 'undo',
-                  onClick: () => props.revertState(),
-                  'data-cy': 'button-undo',
-              },
-              {
-                  icon: icons.checkCircle,
-                  text: 'save',
-                  onClick: () => props.saveState(),
-                  'data-cy': 'button-save',
-              },
-          ]
-        : [];
+    const saveButtons = [
+        {
+            icon: icons.closeCircle,
+            text: 'undo',
+            onClick: () => props.revertState(),
+            'data-cy': 'button-undo',
+            disabled: !props.configIsDiffering,
+        },
+        {
+            icon: icons.checkCircle,
+            text: 'save',
+            onClick: () => props.saveState(),
+            'data-cy': 'button-save',
+            disabled: !props.configIsDiffering,
+        },
+    ];
 
     let timeButton;
     if (start === null || now() < start) {

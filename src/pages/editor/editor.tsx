@@ -1,4 +1,4 @@
-import {constant, every, max, times} from 'lodash';
+import {cloneDeep, constant, every, max, times} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {
@@ -174,14 +174,18 @@ function Editor(props: {
     }
 
     function setLocalConfig(configChanges: object) {
-        // TODO: Add proper state comparison (localConfig === centralConfig)
+        // No proper state comparison since the config update should be really
+        // fast. A deep comparison of centralConfig and localConfig is too expensive
+        // in my opinion 10ms more input delay on an M1 Pro Chip..
         if (!props.configIsDiffering) {
             props.markDiffering(true);
         }
-        setLocalConfigState({
-            ...localConfig,
-            ...configChanges,
-        });
+        setLocalConfigState(
+            cloneDeep({
+                ...localConfig,
+                ...configChanges,
+            }),
+        );
     }
 
     function setLocalFieldConfig(fieldConfigChanges: object, newIndex: number) {

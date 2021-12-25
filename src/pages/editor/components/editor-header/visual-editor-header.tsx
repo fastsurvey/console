@@ -23,6 +23,7 @@ function VisualEditorHeader(props: {
         text: string;
         onClick(): void;
         'data-cy': string;
+        disabled: boolean;
     }[];
     timeButton: {
         icon: React.ReactNode;
@@ -91,15 +92,8 @@ function VisualEditorHeader(props: {
                         'relative hidden md:flex flex-row items-start justify-start'
                     }
                 >
-                    {props.saveButtons.length > 0 && (
-                        <>
-                            <ButtonGroup
-                                buttons={props.saveButtons}
-                                hideIconsOnMobile
-                            />
-                            <div className='flex-shrink-0 w-2 md:w-4' />
-                        </>
-                    )}
+                    <ButtonGroup buttons={props.saveButtons} hideIconsOnMobile />
+                    <div className='flex-shrink-0 w-2 md:w-4' />
                     <Button {...props.timeButton} disabled={props.configIsDiffering} />
                 </div>
             </div>
