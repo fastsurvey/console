@@ -4,25 +4,15 @@ import {types} from '/src/types';
 const VITE_ENV = import.meta.env.VITE_ENV;
 const VITE_API_URL = import.meta.env.VITE_API_URL;
 
-let baseUrl =
-    VITE_ENV === 'development' ? 'dev.fastsurvey.de' : 'fastsurvey.de';
+let baseUrl = VITE_ENV === 'development' ? 'dev.fastsurvey.de' : 'fastsurvey.de';
 
-let apiUrl =
-    VITE_API_URL !== undefined ? VITE_API_URL : `https://api.${baseUrl}`;
+let apiUrl = VITE_API_URL !== undefined ? VITE_API_URL : `https://api.${baseUrl}`;
 
-export function httpPost(
-    url: string,
-    data: any,
-    accessToken?: types.AccessToken,
-) {
+export function httpPost(url: string, data: any, accessToken?: types.AccessToken) {
     return axios.post(apiUrl + url, data, headers(accessToken));
 }
 
-export function httpPut(
-    url: string,
-    data: any,
-    accessToken: types.AccessToken,
-) {
+export function httpPut(url: string, data: any, accessToken?: types.AccessToken) {
     return axios.put(apiUrl + url, data, headers(accessToken));
 }
 

@@ -12,6 +12,8 @@ function SetPasswordForm(props: {
     ): void;
     openMessage(messageId: types.MessageId): void;
 }) {
+    const token = new URLSearchParams(window.location.search).get('token');
+
     const [password, setPassword] = useState<string>('');
     const [submissionState, setSubmissionState] = useState<
         | 'no-token'
@@ -20,13 +22,34 @@ function SetPasswordForm(props: {
         | 'success'
         | 'invalid-token'
         | 'server-error'
-    >('pending');
+    >(token !== null ? 'pending' : 'no-token');
 
     const submitIsPossible = formUtils.validators.password(password).valid;
 
-    // TODO: Get token from URL & set initial submissionState
     // TODO: Add visible validation bar
-    // TODO: Add set-password logic
+
+    function handleRequest() {
+        const success = (
+            authToken: types.AccessToken,
+            account: types.Account,
+            configs: types.SurveyConfig[],
+        ) => {
+            props.logIn(authToken, account, configs);
+            setSubmissionState('success');
+        };
+
+        if (token !== null && submissionState === 'pending') {
+            setSubmissionState('submitting');
+            backend.setNewPassword(
+                {
+                    verificationToken: token,
+                    newPassword: password,
+                },
+                success,
+                setSubmissionState,
+            );
+        }
+    }
 
     return (
         <VisualSetPassword
@@ -34,7 +57,7 @@ function SetPasswordForm(props: {
             setPassword={setPassword}
             submissionState={submissionState}
             submitIsPossible={submitIsPossible}
-            handleRequest={() => {}}
+            handleRequest={handleRequest}
         />
     );
 }

@@ -56,7 +56,7 @@ function PageRouter(props: RouterProps) {
                             <Redirect to='/login' />
                         )}
                     </Route>
-                    <Route path='(/login|/register|/request-password|/set-password)'>
+                    <Route path='(/login|/register|/request-password)'>
                         <MainWrapper>
                             {!props.loggingIn && !props.loggedIn && (
                                 <Switch>
@@ -69,15 +69,17 @@ function PageRouter(props: RouterProps) {
                                     <Route exact path='/request-password'>
                                         <RequestPasswordForm />
                                     </Route>
-                                    <Route exact path='/set-password'>
-                                        <SetPasswordForm />
-                                    </Route>
                                 </Switch>
                             )}
                         </MainWrapper>
                         {!props.loggingIn && props.loggedIn && (
                             <Redirect to='/surveys' />
                         )}
+                    </Route>
+                    <Route exact path='/set-password'>
+                        <MainWrapper>
+                            <SetPasswordForm />
+                        </MainWrapper>
                     </Route>
                     <Route path='/verify'>
                         <MainWrapper>

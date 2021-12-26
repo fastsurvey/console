@@ -36,7 +36,7 @@ const VisualSetPassword = (props: {
                         props.setPassword(newValue);
                     }}
                     disabled={props.submissionState === 'submitting'}
-                    autoComplete='current-password'
+                    autoComplete='new-password'
                     data-cy='input-password'
                 />
             </div>

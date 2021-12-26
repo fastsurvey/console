@@ -26,7 +26,7 @@ const VisualRequestPassword = (props: {
                             props.setIdentifier(newValue);
                         }}
                         disabled={props.submissionState === 'submitting'}
-                        autoComplete='current-password'
+                        autoComplete='username'
                         data-cy='input-password'
                     />
                 </div>
