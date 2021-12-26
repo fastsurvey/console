@@ -1,18 +1,18 @@
 import React, {useState} from 'react';
-import {validators} from '../../utilities/form-utils/validators';
-import {backend, reduxUtils} from '/src/utilities';
+import {backend, reduxUtils, formUtils} from '/src/utilities';
 import {types} from '/src/types';
 import {connect} from 'react-redux';
 import VisualRequestPassword from '/src/pages/authentication/components/visual-request-password';
 
-function RequestPassword(props: {openMessage(messageId: types.MessageId): void}) {
+function RequestPasswordForm(props: {openMessage(messageId: types.MessageId): void}) {
     const [identifier, setIdentifier] = useState('');
     const [submissionState, setSubmissionState] = useState<
         'pending' | 'submitting' | 'success' | 'failed'
     >('pending');
 
     const submitIsPossible =
-        validators.email(identifier).valid || validators.username(identifier).valid;
+        formUtils.validators.email(identifier).valid ||
+        formUtils.validators.username(identifier).valid;
 
     function handleRequest() {
         function handleError(code: 400 | 500): void {
@@ -55,4 +55,4 @@ const mapStateToProps = (state: types.ReduxState) => ({});
 const mapDispatchToProps = (dispatch: any) => ({
     openMessage: reduxUtils.dispatchers.openMessage(dispatch),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(RequestPassword);
+export default connect(mapStateToProps, mapDispatchToProps)(RequestPasswordForm);

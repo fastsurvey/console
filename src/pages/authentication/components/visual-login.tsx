@@ -68,7 +68,7 @@ export default function VisualLogin(props: {
                         Don't have an account yet?
                     </Link>
                     <Link
-                        to='/forgot-password'
+                        to='/request-password'
                         className='px-1.5 py-0.5 -mx-1.5 text-sm text-gray-400 rounded font-weight-600 ringable'
                         data-cy='link-to-forgot'
                     >

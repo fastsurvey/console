@@ -64,7 +64,10 @@ const VisualRequestPassword = (props: {
                         text='Request New Password'
                         variant='flat-light-blue'
                         onClick={props.handleRequest}
-                        disabled={!props.submitIsPossible}
+                        disabled={
+                            !props.submitIsPossible ||
+                            props.submissionState === 'submitting'
+                        }
                         loading={props.submissionState === 'submitting'}
                         data-cy='button-submit'
                     />{' '}
