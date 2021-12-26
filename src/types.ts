@@ -136,7 +136,7 @@ export declare namespace types {
         | 'error-email-taken'
         | 'error-email-invalid'
         | 'error-link-invalid'
-        | 'success-redirect-to-login'
+        | 'success-email-verification'
         | 'success-password-changed'
         | 'success-username-changed'
         | 'error-username-taken'

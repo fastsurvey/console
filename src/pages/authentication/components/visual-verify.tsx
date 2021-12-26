@@ -60,15 +60,20 @@ export default function VisualVerifyForm(props: {
                 </>
             )}
             {verificationState === 'successful' && (
-                <h1
-                    className={
-                        'w-full text-2xl text-center no-selection ' +
-                        'text-gray-800 font-weight-600'
-                    }
-                    data-cy='title'
-                >
-                    Success!
-                </h1>
+                <>
+                    <h1
+                        className={
+                            'w-full text-2xl text-center no-selection ' +
+                            'text-gray-800 font-weight-600'
+                        }
+                        data-cy='title'
+                    >
+                        Success!
+                    </h1>
+                    <Link to='/login' data-cy='link-to-login'>
+                        <Button text='Go to Login' variant='flat-light-blue' />
+                    </Link>
+                </>
             )}
         </div>
     );

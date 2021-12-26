@@ -1,8 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {reduxUtils, backend} from '/src/utilities';
 import {types} from '/src/types';
-import {useHistory} from 'react-router-dom';
 import VisualVerifyForm from './components/visual-verify';
 
 interface Props {
@@ -18,18 +17,12 @@ function VerifyForm(props: Props) {
     const [verificationState, setVerificationState] = useState<
         'not-started' | 'submitting' | 'successful' | 'failed'
     >('not-started');
-    let history = useHistory();
 
     const token = new URLSearchParams(window.location.search).get('token');
 
     function success() {
         setVerificationState('successful');
-
-        props.openMessage('success-redirect-to-login');
-        setTimeout(() => {
-            history.push('/login');
-            props.closeAllMessages();
-        }, 4000);
+        props.openMessage('success-email-verification');
     }
 
     function error(code: 400 | 401 | 500 | 422) {

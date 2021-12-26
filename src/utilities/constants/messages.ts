@@ -73,10 +73,10 @@ export const messages: {[key in types.MessageId]: types.Message} = {
         text: 'Invalid verification link',
         type: 'error',
     },
-    'success-redirect-to-login': {
-        id: 'success-redirect-to-login',
+    'success-email-verification': {
+        id: 'success-email-verification',
         randomToken: 0,
-        text: 'Success! Redirect to login in 4 seconds.',
+        text: 'Success, email verified!',
         type: 'success',
     },
     'warning-clipboard': {
