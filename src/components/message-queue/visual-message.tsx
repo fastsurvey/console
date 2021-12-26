@@ -34,7 +34,7 @@ function VisualMessage(props: Props) {
                 'font-weight-500 rounded shadow-lg flex-grow max-w-full ' +
                 `${colors} ${animate ? 'animate-pop' : ''}`
             }
-            data-cy={`message-panel-${props.message.type}`}
+            data-cy={`message-panel-${props.message.type} ${props.message.id}`}
         >
             <div className='py-2.5 text-base leading-6' data-cy='message'>
                 {props.message.text}

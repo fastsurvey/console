@@ -23,7 +23,6 @@ function RequestPasswordForm(props: {openMessage(messageId: types.MessageId): vo
                     break;
                 default:
                     setSubmissionState('failed');
-                    props.openMessage('error-server');
                     break;
             }
         }
