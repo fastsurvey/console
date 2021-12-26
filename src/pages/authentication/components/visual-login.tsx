@@ -16,7 +16,7 @@ export default function VisualLogin(props: {
 }) {
     return (
         <section
-            className='w-full max-w-sm p-4 bg-white rounded shadow centering-col gap-y-4'
+            className='w-full max-w-md p-4 bg-white rounded shadow centering-col gap-y-4'
             data-cy='login-panel'
         >
             <h1 className='text-2xl text-center text-gray-800 font-weight-600 no-selection'>

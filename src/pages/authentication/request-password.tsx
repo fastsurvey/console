@@ -7,31 +7,34 @@ import VisualRequestPassword from '/src/pages/authentication/components/visual-r
 
 function RequestPassword(props: {openMessage(messageId: types.MessageId): void}) {
     const [identifier, setIdentifier] = useState('');
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submissionState, setSubmissionState] = useState<
+        'pending' | 'submitting' | 'success' | 'failed'
+    >('pending');
 
     const submitIsPossible =
         validators.email(identifier).valid || validators.username(identifier).valid;
 
     function handleRequest() {
         function handleError(code: 400 | 500): void {
-            setIsSubmitting(false);
             switch (code) {
                 case 400:
+                    setSubmissionState('pending');
                     props.openMessage('error-credentials');
                     break;
                 default:
+                    setSubmissionState('failed');
                     props.openMessage('error-server');
                     break;
             }
         }
 
         function handleSuccess(): void {
-            setIsSubmitting(false);
+            setSubmissionState('success');
             console.log('SUCCESS');
         }
 
-        if (submitIsPossible && !isSubmitting) {
-            setIsSubmitting(true);
+        if (submitIsPossible && submissionState === 'pending') {
+            setSubmissionState('submitting');
             backend.requestNewPassword({identifier}, handleSuccess, handleError);
         }
     }
@@ -40,7 +43,8 @@ function RequestPassword(props: {openMessage(messageId: types.MessageId): void})
         <VisualRequestPassword
             identifier={identifier}
             setIdentifier={setIdentifier}
-            isSubmitting={isSubmitting}
+            submissionState={submissionState}
+            setSubmissionState={setSubmissionState}
             submitIsPossible={submitIsPossible}
             handleRequest={handleRequest}
         />
