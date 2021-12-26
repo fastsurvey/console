@@ -8,7 +8,7 @@ import {
     Login,
     Register,
     Verify,
-    ForgotPassword,
+    RequestPassword,
     SurveyList,
     EditorRouter,
     ResultsRouter,
@@ -66,7 +66,7 @@ function PageRouter(props: RouterProps) {
                                         <Register />
                                     </Route>
                                     <Route exact path='/forgot-password'>
-                                        <ForgotPassword />
+                                        <RequestPassword />
                                     </Route>
                                 </Switch>
                             )}
