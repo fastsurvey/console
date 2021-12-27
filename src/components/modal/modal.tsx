@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {hookUtils, reduxUtils} from '/src/utilities';
+import {helperUtils, reduxUtils} from '/src/utilities';
 import {connect} from 'react-redux';
 import {types} from '/src/types';
 
@@ -8,7 +8,7 @@ interface Props {
     closeModal(): void;
 }
 function Modal(props: Props) {
-    hookUtils.useEvent('keydown', keydown);
+    helperUtils.useEvent('keydown', keydown);
     function keydown(e: KeyboardEvent) {
         if (e.key === 'Escape' && props.modalState.open) {
             props.closeModal();
