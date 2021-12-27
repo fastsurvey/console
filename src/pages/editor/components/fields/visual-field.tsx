@@ -4,6 +4,7 @@ import {EditorFormCard, Label, TextArea} from '/src/components';
 import {types} from '/src/types';
 import {styleUtils} from '/src/utilities';
 import MarkdownFieldEditor from './markdown/markdown-field-editor';
+import PageBreakCard from '../../../../components/layout/page-break-card';
 
 interface Props {
     fieldIndex: number;
@@ -16,9 +17,9 @@ interface Props {
     children: React.ReactNode;
 }
 function VisualField(props: Props) {
-    const [collapse, setCollapse] = useState(false);
+    const [collapse, setCollapse] = useState(true);
     useEffect(() => {
-        setCollapse(false);
+        setCollapse(true);
     }, [props.fieldConfig.local_id]);
 
     const [actionLabel, setActionLabel] = useState('');
@@ -54,10 +55,20 @@ function VisualField(props: Props) {
         </>
     );
 
+    let fieldLabel: string = `Field ${props.fieldIndex + 1} (${
+        props.fieldConfig.type
+    })`;
+    if (props.fieldConfig.type === 'markdown') {
+        fieldLabel = 'Markdown Content';
+    }
+    if (props.fieldConfig.type === 'break') {
+        fieldLabel = 'Page Break';
+    }
+
     if (props.fieldConfig.type !== 'break') {
         return (
             <EditorFormCard
-                label={`field ${props.fieldIndex + 1} (${props.fieldConfig.type})`}
+                label={fieldLabel}
                 icon={styleUtils.icons.fieldTypeToIcon(props.fieldConfig.type)}
                 fieldType={props.fieldConfig.type}
                 collapse={collapse}
@@ -101,7 +112,6 @@ function VisualField(props: Props) {
                             className={'h-px bg-gray-300'}
                             style={{width: 'calc(100% + 1.5rem)'}}
                         />
-
                         {props.children}
                     </>
                 )}
@@ -109,7 +119,15 @@ function VisualField(props: Props) {
         );
     } else {
         // TODO: Add proper component for page break
-        return <div>page break field</div>;
+        return (
+            <PageBreakCard
+                label={fieldLabel}
+                removeField={props.removeField}
+                actionLabel={actionLabel}
+                setActionLabel={setActionLabel}
+                data-cy={`editor-field-panel-${props.fieldIndex}`}
+            />
+        );
     }
 }
 

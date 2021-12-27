@@ -10,9 +10,9 @@ export const color = {
             case 'text':
                 return 'bg-cyan-100 border-cyan-200 text-cyan-900 svg-field-cyan';
             case 'break':
+                return 'text-gray-700 svg-field-gray';
             case 'markdown':
-                // TODO: Choose color
-                return 'bg-yellow-100 border-yellow-200 text-yellow-900 svg-field-yellow';
+                return 'bg-yellow-100 border-yellow-400 text-yellow-900 svg-field-yellow';
             default:
                 throw `Invalid field type: ${fieldType}`;
         }

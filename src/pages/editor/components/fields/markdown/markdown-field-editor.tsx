@@ -10,13 +10,13 @@ function MarkdownFieldEditor(props: {
     setValue(v: string): void;
     disabled: boolean;
 }) {
-    const [tab, setTab] = useState<Tab>('split view');
+    const [tab, setTab] = useState<Tab>('plain text');
 
     // TODO: Add help box to explain markdown syntax
 
     return (
-        <div className='w-full -mt-1 space-y-3 flex-col-left'>
-            <div className='space-x-2 flex-row-left'>
+        <div className='w-full -mt-1 space-y-3 flex-col-center'>
+            <div className='w-full space-x-2 flex-row-left'>
                 {['plain text', 'split view', 'rendered'].map((t: any) => (
                     <button
                         key={t}
@@ -33,6 +33,10 @@ function MarkdownFieldEditor(props: {
                     </button>
                 ))}
             </div>
+            <div
+                className={'h-px bg-gray-300'}
+                style={{width: 'calc(100% + 1.5rem)'}}
+            />
             <div
                 className={
                     'w-full h-96 space-x-2 grid ' +
@@ -55,7 +59,7 @@ function MarkdownFieldEditor(props: {
                             }}
                             className={
                                 'w-full px-3 py-1.5 rounded h-full ringable font-weight-500 z-0 ' +
-                                'resize-none font-mono ' +
+                                'resize-none ' +
                                 (props.disabled
                                     ? 'bg-gray-200 text-gray-600 cursor-not-allowed '
                                     : 'bg-gray-100 text-gray-800 ')

@@ -209,28 +209,34 @@
 }
 
 .svg-field-red .primary {
-    @apply fill-red-300;
+    @apply fill-red-400;
 }
 .svg-field-red .secondary {
     @apply fill-red-700;
 }
 .svg-field-green .primary {
-    @apply fill-green-300;
+    @apply fill-green-400;
 }
 .svg-field-green .secondary {
     @apply fill-green-700;
 }
 .svg-field-cyan .primary {
-    @apply fill-cyan-300;
+    @apply fill-cyan-400;
 }
 .svg-field-cyan .secondary {
     @apply fill-cyan-700;
 }
 .svg-field-yellow .primary {
-    @apply fill-yellow-300;
+    @apply fill-yellow-400;
 }
 .svg-field-yellow .secondary {
     @apply fill-yellow-700;
+}
+.svg-field-gray .primary {
+    @apply fill-gray-400;
+}
+.svg-field-gray .secondary {
+    @apply fill-gray-800;
 }
 
 .svg-search-bar .primary {
