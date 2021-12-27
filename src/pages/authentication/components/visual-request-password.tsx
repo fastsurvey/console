@@ -72,7 +72,9 @@ const VisualRequestPassword = (props: {
             {props.submissionState === 'success' && (
                 <>
                     <Button
-                        text='Wrong email?'
+                        text={`Wrong ${
+                            props.identifier.includes('@') ? 'email' : 'username'
+                        }?`}
                         variant='flat-light-blue'
                         onClick={() => props.setSubmissionState('pending')}
                         data-cy='button-typo'
