@@ -8,6 +8,7 @@ import SelectionSettings from './selection/selection-settings';
 import EmailSettings from './email/email-settings';
 
 interface Props {
+    identifierToOrder: {[key: string]: number};
     fieldIndex: number;
     fieldConfig: types.SurveyField;
     setLocalFieldConfig(fieldConfigChanges: object): void;
@@ -77,6 +78,7 @@ function Field(props: Props) {
 
     return (
         <VisualField
+            identifierToOrder={props.identifierToOrder}
             fieldIndex={props.fieldIndex}
             fieldConfig={props.fieldConfig}
             setLocalFieldConfig={updateLocalFieldConfig}

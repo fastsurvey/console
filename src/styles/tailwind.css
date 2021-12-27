@@ -239,6 +239,13 @@
     @apply fill-gray-800;
 }
 
+.svg-add-field .primary {
+    @apply fill-gray-400;
+}
+.svg-add-field .secondary {
+    @apply fill-gray-700;
+}
+
 .svg-search-bar .primary {
     @apply fill-blue-100;
 }

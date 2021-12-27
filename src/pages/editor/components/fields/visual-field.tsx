@@ -7,6 +7,7 @@ import MarkdownFieldEditor from './markdown/markdown-field-editor';
 import PageBreakCard from '../../../../components/layout/page-break-card';
 
 interface Props {
+    identifierToOrder: {[key: string]: number};
     fieldIndex: number;
     fieldConfig: types.SurveyField;
     disabled: boolean;
@@ -55,9 +56,9 @@ function VisualField(props: Props) {
         </>
     );
 
-    let fieldLabel: string = `Field ${props.fieldIndex + 1} (${
-        props.fieldConfig.type
-    })`;
+    let fieldLabel: string = `Field ${
+        props.identifierToOrder[props.fieldConfig.identifier]
+    } (${props.fieldConfig.type})`;
     if (props.fieldConfig.type === 'markdown') {
         fieldLabel = 'Markdown Content';
     }

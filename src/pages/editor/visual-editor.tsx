@@ -4,6 +4,7 @@ import EditorSettings from './components/editor-settings/editor-settings';
 import Field from './components/fields/field';
 import AddFieldPanel from './components/add-field-panel/add-field-panel';
 import EditorHeader from './components/editor-header/editor-header';
+import {reduce} from 'lodash';
 
 function VisualEditor(props: {
     centralConfigName: string;
@@ -24,6 +25,14 @@ function VisualEditor(props: {
     submittingConfig: boolean;
 }) {
     // TODO: Pretty empty state (no fields yet)
+
+    const identifierToOrder = reduce(
+        props.localConfig.fields.filter((f) =>
+            ['email', 'selection', 'text'].includes(f.type),
+        ),
+        (acc, f, i) => ({...acc, [f.identifier]: i + 1}),
+        {},
+    );
 
     return (
         <div
@@ -59,6 +68,7 @@ function VisualEditor(props: {
                             index={index}
                         />
                         <Field
+                            identifierToOrder={identifierToOrder}
                             fieldIndex={index}
                             fieldConfig={fieldConfig}
                             setLocalFieldConfig={(newFieldConfig: object) =>
