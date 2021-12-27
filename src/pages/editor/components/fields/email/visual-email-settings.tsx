@@ -3,14 +3,13 @@ import {constants} from '/src/utilities';
 import {Label, DropDown, TextInput, Toggle} from '/src/components';
 import {types} from '/src/types';
 
-interface Props {
+function VisualEmailSettings(props: {
     setupValue: number;
     customSetup: types.EmailRegexSetup;
     fieldConfig: types.EmailField;
     setLocalFieldConfig(fieldConfigChanges: object): void;
     disabled: boolean;
-}
-function VisualEmailSettings(props: Props) {
+}) {
     return (
         <>
             <div className='w-full centering-col gap-y-0.5'>

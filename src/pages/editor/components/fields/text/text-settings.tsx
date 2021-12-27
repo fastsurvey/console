@@ -3,12 +3,11 @@ import {helperUtils} from '/src/utilities';
 import {Label, TextInput} from '/src/components';
 import {types} from '/src/types';
 
-interface Props {
+function TextSettings(props: {
     fieldConfig: types.TextField;
     setLocalFieldConfig(fieldConfigChanges: object): void;
     disabled: boolean;
-}
-function VisualTextSettings(props: Props) {
+}) {
     return (
         <>
             <div className='w-full centering-col gap-y-0.5'>
@@ -43,4 +42,4 @@ function VisualTextSettings(props: Props) {
     );
 }
 
-export default VisualTextSettings;
+export default TextSettings;

@@ -1,20 +1,38 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {icons} from '/src/assets';
+import {animateScroll} from 'react-scroll';
+import {templateUtils} from '/src/utilities';
 import {Label, TextInput} from '/src/components';
 import {types} from '/src/types';
 
-interface Props {
+function FieldOptionsList(props: {
     fieldConfig: types.SelectionField;
-    disabled: boolean;
     setLocalFieldConfig(fieldConfigChanges: object): void;
+    disabled: boolean;
+}) {
+    const [optionsVisible, setOptionsVisible] = useState(
+        props.fieldConfig.options.map(() => true),
+    );
+    useEffect(
+        () => setOptionsVisible(props.fieldConfig.options.map(() => true)),
+        [props.fieldConfig.options],
+    );
 
-    setOptionsVisible(optionsVisible: boolean[]): void;
-    optionsVisible: boolean[];
-    newOption: string;
-    setNewOption(newOption: string): void;
-    addFieldOption(): void;
-}
-const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
+    const nextRowRef: any = useRef(null);
+    const [newOption, setNewOption] = useState('');
+
+    function addFieldOption() {
+        nextRowRef.current?.blur();
+        optionsVisible.push(true);
+
+        props.setLocalFieldConfig(templateUtils.option(newOption, props.fieldConfig));
+
+        // Suitable for 1rem = 16px
+        animateScroll.scrollMore(56, {duration: 150});
+
+        setNewOption('');
+    }
+
     return (
         <div className='w-full flex-col-right gap-y-1' data-cy='options-list'>
             <Label text='Options to select' />
@@ -63,7 +81,7 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
             ))}
             <div className={'w-full pr-[2.375rem] h-9 mb-1'}>
                 <button
-                    onClick={props.addFieldOption}
+                    onClick={addFieldOption}
                     className={
                         'w-full h-full rounded flex-row-left px-3 ringable ' +
                         'text-sm font-weight-500 text-gray-700 cursor-pointer ' +
@@ -78,6 +96,6 @@ const VisualFieldOptionsList = React.forwardRef((props: Props, ref: any) => {
             </div>
         </div>
     );
-});
+}
 
-export default VisualFieldOptionsList;
+export default FieldOptionsList;

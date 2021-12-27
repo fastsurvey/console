@@ -1,15 +1,14 @@
 import React from 'react';
 import {helperUtils} from '/src/utilities';
 import {Label, TextInput} from '/src/components';
-import FieldOptionsList from '../field-options-list/field-options-list';
+import FieldOptionsList from './components/field-options-list';
 import {types} from '/src/types';
 
-interface Props {
+function SelectionSettings(props: {
     fieldConfig: types.SelectionField;
     setLocalFieldConfig(fieldConfigChanges: object): void;
     disabled: boolean;
-}
-function VisualSelectionSettings(props: Props) {
+}) {
     return (
         <>
             <FieldOptionsList
@@ -51,4 +50,4 @@ function VisualSelectionSettings(props: Props) {
     );
 }
 
-export default VisualSelectionSettings;
+export default SelectionSettings;

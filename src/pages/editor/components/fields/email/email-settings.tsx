@@ -3,12 +3,11 @@ import {constants} from '/src/utilities';
 import VisualEmailSettings from './visual-email-settings';
 import {types} from '/src/types';
 
-interface Props {
+function EmailSettings(props: {
     fieldConfig: types.EmailField;
     setLocalFieldConfig(fieldConfigChanges: object): void;
     disabled: boolean;
-}
-function EmailSettings(props: Props) {
+}) {
     const getCustomSetup = (regex: string, hint: string) => ({
         label: 'Custom Rule',
         value: constants.formOptions.EMAIL_REGEX.length,

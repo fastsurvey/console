@@ -3,9 +3,9 @@ import {clipboardUtils, formUtils, localIdUtils} from '/src/utilities';
 import {types} from '/src/types';
 
 import VisualField from './visual-field';
-import TextSettings from './text-settings/text-settings';
-import SelectionSettings from './selection-settings/selection-settings';
-import EmailSettings from './email-settings/email-settings';
+import TextSettings from './text/text-settings';
+import SelectionSettings from './selection/selection-settings';
+import EmailSettings from './email/email-settings';
 
 interface Props {
     fieldIndex: number;
@@ -69,10 +69,7 @@ function Field(props: Props) {
             );
             break;
         case 'break':
-            FieldSettings = 'break';
-            break;
         case 'markdown':
-            FieldSettings = 'markdown';
             break;
         default:
             throw `Invalid field: ${props.fieldConfig}`;

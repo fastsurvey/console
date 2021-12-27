@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {icons} from '/src/assets';
-import {EditorFormCard, Label, TextInput, TextArea} from '/src/components';
+import {EditorFormCard, Label, TextArea} from '/src/components';
 import {types} from '/src/types';
 import {styleUtils} from '/src/utilities';
+import MarkdownFieldEditor from './markdown/markdown-field-editor';
 
 interface Props {
     fieldIndex: number;
@@ -68,24 +69,38 @@ function VisualField(props: Props) {
                 validation={props.validation}
                 data-cy={`editor-field-panel-${props.fieldIndex}`}
             >
-                <div className='w-full centering-col gap-y-0.5'>
-                    <Label text='Description' />
-                    <TextArea
+                {['email', 'selection', 'text'].includes(props.fieldConfig.type) && (
+                    <div className='w-full centering-col gap-y-0.5'>
+                        <Label text='Description' />
+                        <TextArea
+                            value={props.fieldConfig.description}
+                            setValue={(newValue: string) => {
+                                props.setLocalFieldConfig({description: newValue});
+                            }}
+                            disabled={props.disabled || collapse}
+                            data-cy='input-description'
+                        />
+                    </div>
+                )}
+                {props.fieldConfig.type === 'markdown' && (
+                    <MarkdownFieldEditor
                         value={props.fieldConfig.description}
                         setValue={(newValue: string) => {
                             props.setLocalFieldConfig({description: newValue});
                         }}
                         disabled={props.disabled || collapse}
-                        data-cy='input-description'
                     />
-                </div>
+                )}
+                {props.children !== undefined && (
+                    <>
+                        <div
+                            className={'h-px bg-gray-300'}
+                            style={{width: 'calc(100% + 1.5rem)'}}
+                        />
 
-                <div
-                    className={'h-px bg-gray-300'}
-                    style={{width: 'calc(100% + 1.5rem)'}}
-                />
-
-                {props.children}
+                        {props.children}
+                    </>
+                )}
             </EditorFormCard>
         );
     } else {
