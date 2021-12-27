@@ -4,15 +4,15 @@ export const color = {
     fieldTypeToClasses: (fieldType: types.FieldType | undefined) => {
         switch (fieldType) {
             case 'email':
-                return 'bg-red-100 border-red-200 text-red-900 svg-field-red';
+                return 'bg-green-100 text-green-900 svg-field-green';
             case 'selection':
-                return 'bg-green-100 border-green-200 text-green-900 svg-field-green';
+                return 'bg-blue-100 text-blue-900 svg-field-blue';
             case 'text':
-                return 'bg-cyan-100 border-cyan-200 text-cyan-900 svg-field-cyan';
+                return 'bg-blue-100 text-blue-900 svg-field-blue';
             case 'break':
                 return 'text-gray-700 svg-field-gray';
             case 'markdown':
-                return 'bg-yellow-100 border-yellow-400 text-yellow-900 svg-field-yellow';
+                return 'bg-rose-100 border-rose-400 text-rose-900 svg-field-rose';
             default:
                 throw `Invalid field type: ${fieldType}`;
         }

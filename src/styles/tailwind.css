@@ -208,29 +208,23 @@
     @apply fill-gray-500;
 }
 
-.svg-field-red .primary {
-    @apply fill-red-400;
-}
-.svg-field-red .secondary {
-    @apply fill-red-700;
-}
 .svg-field-green .primary {
-    @apply fill-green-400;
+    @apply fill-green-300;
 }
 .svg-field-green .secondary {
     @apply fill-green-700;
 }
-.svg-field-cyan .primary {
-    @apply fill-cyan-400;
+.svg-field-blue .primary {
+    @apply fill-blue-300;
 }
-.svg-field-cyan .secondary {
-    @apply fill-cyan-700;
+.svg-field-blue .secondary {
+    @apply fill-blue-700;
 }
-.svg-field-yellow .primary {
-    @apply fill-yellow-400;
+.svg-field-rose .primary {
+    @apply fill-rose-300;
 }
-.svg-field-yellow .secondary {
-    @apply fill-yellow-700;
+.svg-field-rose .secondary {
+    @apply fill-rose-700;
 }
 .svg-field-gray .primary {
     @apply fill-gray-400;
