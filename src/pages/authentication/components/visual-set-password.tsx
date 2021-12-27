@@ -15,7 +15,10 @@ const VisualSetPassword = (props: {
     submitIsPossible: boolean;
     handleRequest(): void;
 }) => (
-    <div className='w-full max-w-md p-4 bg-white rounded shadow centering-col gap-y-4'>
+    <section
+        className='w-full max-w-md p-4 bg-white rounded shadow centering-col gap-y-4'
+        data-cy={`set-password-panel state-${props.submissionState}`}
+    >
         <h1 className='text-2xl text-center text-gray-800 font-weight-600 no-selection'>
             {props.submissionState === 'no-token' && 'Invalid Link'}
             {props.submissionState === 'pending' && 'Set a new password'}
@@ -80,7 +83,6 @@ const VisualSetPassword = (props: {
                             text='Use FastSurvey now'
                             variant='flat-light-blue'
                             onClick={props.handleRequest}
-                            data-cy='button-submit'
                         />
                     </Link>
                     <div className='flex-max' />
@@ -93,7 +95,6 @@ const VisualSetPassword = (props: {
                             text='Request password again'
                             variant='flat-light-blue'
                             onClick={props.handleRequest}
-                            data-cy='button-submit'
                         />
                     </Link>
                     <div className='flex-max' />
@@ -109,7 +110,7 @@ const VisualSetPassword = (props: {
                 </Link>
             )}
         </div>
-    </div>
+    </section>
 );
 
 export default VisualSetPassword;
