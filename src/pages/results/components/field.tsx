@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {types} from '/src/types';
 import SelectionResults from './field-results/selection-results';
 import {styleUtils} from '/src/utilities';
+import {MarkdownContent} from '/src/components/layout/markdown-content';
+import {icons} from '/src/assets';
 
 function Field(props: {
     identifierToOrder: {[key: string]: number};
@@ -9,11 +11,11 @@ function Field(props: {
     fieldConfig: types.SurveyField;
     results: types.SurveyResults;
 }) {
-    console.log({props});
     const {fieldIndex, fieldConfig, results} = props;
-    if (fieldConfig.type === 'break' || fieldConfig.type === 'markdown') {
-        // TODO: Implement break component
-        // TODO: Implement markdown component
+
+    const [markdownOpen, setMarkdownOpen] = useState(false);
+
+    if (fieldConfig.type === 'break') {
         return (
             <div
                 className={
@@ -31,12 +33,76 @@ function Field(props: {
                     }
                 >
                     <div className='flex-shrink-0 mb-2 mr-3 capitalize md:mb-0 font-weight-600 whitespace-nowrap'>
-                        {fieldConfig.type === 'markdown'
-                            ? 'Markdown Content'
-                            : 'Page Break'}
+                        Page Break
                     </div>
                 </div>
                 <div className='flex-grow h-0 translate-y-px border-b-2 border-gray-300 border-dashed' />
+            </div>
+        );
+    }
+
+    if (fieldConfig.type === 'markdown') {
+        return (
+            <div
+                className={
+                    'w-full flex-col-left ' +
+                    (markdownOpen ? 'bg-white rounded shadow ' : ' ')
+                }
+            >
+                <div
+                    className={
+                        'w-full flex-row-center no-selection rounded-t ' +
+                        'font-weight-600 text-base leading-10 group ' +
+                        (markdownOpen
+                            ? styleUtils.color.fieldTypeToClasses('markdown')
+                            : styleUtils.color.fieldTypeToClasses('break')) +
+                        ' cursor-pointer ' +
+                        (markdownOpen ? 'hover:text-rose-600 ' : 'hover:text-gray-900 ')
+                    }
+                    onClick={() => setMarkdownOpen(!markdownOpen)}
+                >
+                    <div className='w-6 h-6 p-0.5 ml-2 mr-2 flex-shrink-0'>
+                        {styleUtils.icons.fieldTypeToIcon(fieldConfig.type)}
+                    </div>
+                    <div
+                        className={
+                            'flex flex-col items-start justify-start md:flex-row md:items-center '
+                        }
+                    >
+                        <div className='flex-shrink-0 mb-2 mr-3 capitalize md:mb-0 font-weight-600 whitespace-nowrap'>
+                            {fieldConfig.type === 'markdown'
+                                ? 'Markdown Content'
+                                : 'Page Break'}
+                        </div>
+                    </div>
+                    <div
+                        className={
+                            'flex-grow h-0 translate-y-px ' +
+                            'border-gray-300 group-hover:border-gray-400 ' +
+                            (!markdownOpen ? 'border-b-2 border-dashed ' : '')
+                        }
+                    />
+                    <div
+                        className={
+                            'w-7 h-7 p-0.5 my-1.5 ml-1 transform cursor-pointer ' +
+                            'opacity-70 group-hover:opacity-100 rounded ringable-dark ' +
+                            (!markdownOpen ? ' ' : 'rotate-180 ')
+                        }
+                    >
+                        {icons.chevronDown}
+                    </div>
+                    <div
+                        className={
+                            'h-0 translate-y-px w-2 ' +
+                            (!markdownOpen
+                                ? 'border-b-2 border-gray-300 border-dashed'
+                                : '')
+                        }
+                    />
+                </div>
+                {markdownOpen && fieldConfig.type === 'markdown' && (
+                    <MarkdownContent content={fieldConfig.description} />
+                )}
             </div>
         );
     }
