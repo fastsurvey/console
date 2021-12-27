@@ -17,7 +17,7 @@ const customColors = {
     },  
   
     // Neutrals
-    gray: colors.blueGray,
+    gray: colors.slate,
   
     green: {
         50: "#F0FCF9",
@@ -65,11 +65,10 @@ const customColors = {
 };
 
 module.exports = {
-    mode: 'jit',
-    purge: [
+    content: [
         './public/**/*.html',
         './src/**/*.{js,jsx,ts,tsx}',
-      ],
+    ],
     theme: {
         extend: {
             colors: customColors,
