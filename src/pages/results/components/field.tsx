@@ -1,8 +1,10 @@
 import React from 'react';
 import {types} from '/src/types';
 import SelectionResults from './field-results/selection-results';
+import {styleUtils} from '/src/utilities';
 
 function Field(props: {
+    identifierToOrder: {[key: string]: number};
     fieldIndex: number;
     fieldConfig: types.SurveyField;
     results: types.SurveyResults;
@@ -12,7 +14,31 @@ function Field(props: {
     if (fieldConfig.type === 'break' || fieldConfig.type === 'markdown') {
         // TODO: Implement break component
         // TODO: Implement markdown component
-        return <div>{fieldConfig.type} field</div>;
+        return (
+            <div
+                className={
+                    'w-full flex-row-center no-selection ' +
+                    'font-weight-600 text-base leading-10 ' +
+                    styleUtils.color.fieldTypeToClasses('break')
+                }
+            >
+                <div className='w-6 h-6 p-0.5 ml-2 mr-2 flex-shrink-0'>
+                    {styleUtils.icons.fieldTypeToIcon(fieldConfig.type)}
+                </div>
+                <div
+                    className={
+                        'flex flex-col items-start justify-start md:flex-row md:items-center '
+                    }
+                >
+                    <div className='flex-shrink-0 mb-2 mr-3 capitalize md:mb-0 font-weight-600 whitespace-nowrap'>
+                        {fieldConfig.type === 'markdown'
+                            ? 'Markdown Content'
+                            : 'Page Break'}
+                    </div>
+                </div>
+                <div className='flex-grow h-0 translate-y-px border-b-2 border-gray-300 border-dashed' />
+            </div>
+        );
     }
 
     // @ts-ignore
@@ -28,6 +54,10 @@ function Field(props: {
 
     // TODO: Trucate field description accordingly (maybe show at most n lines)
 
+    const fieldLabel = `${props.identifierToOrder[fieldConfig.identifier]}. ${
+        fieldConfig.description
+    }`;
+
     const VisualField = (props: {children: React.ReactNode; subtitle: string}) => (
         <section
             className={
@@ -42,7 +72,7 @@ function Field(props: {
                     className='text-base text-gray-900 font-weight-700'
                     data-cy='description'
                 >
-                    {fieldIndex + 1}. {fieldConfig.description}{' '}
+                    {fieldLabel}{' '}
                     <span className='font-weight-500 opacity-70 whitespace-nowrap'>
                         {`(${fieldCount} submission${fieldCount !== 1 ? 's' : ''})`}
                     </span>
@@ -75,7 +105,7 @@ function Field(props: {
                 <section
                     className={
                         'w-full px-4 py-2.5 text-gray-800 rounded relative group cursor-not-allowed ' +
-                        'border-2 border-gray-200 border-dashed flex-col-left text-left'
+                        'border-2 border-gray-300 border-dashed flex-col-left text-left'
                     }
                     data-cy={`field-container-${fieldIndex} isnotaggregated`}
                 >
@@ -83,7 +113,7 @@ function Field(props: {
                         className='w-full text-base text-gray-600 font-weight-700'
                         data-cy='description'
                     >
-                        {fieldIndex + 1}. {fieldConfig.description}{' '}
+                        {fieldLabel}{' '}
                         <span className='font-weight-500 opacity-70 whitespace-nowrap'>
                             {`(${fieldCount} submission${fieldCount !== 1 ? 's' : ''})`}
                         </span>

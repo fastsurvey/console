@@ -179,6 +179,14 @@ function Results(props: {
 
     // TODO: Pretty empty state (no fields)
 
+    const identifierToOrder = reduce(
+        props.config.fields.filter((f) =>
+            ['email', 'selection', 'text'].includes(f.type),
+        ),
+        (acc, f, i) => ({...acc, [f.identifier]: i + 1}),
+        {},
+    );
+
     return (
         <div
             className={
@@ -195,16 +203,15 @@ function Results(props: {
                 />
                 {results !== undefined && (
                     <>
-                        {props.config.fields
-                            .filter((f) => f.type !== 'break' && f.type !== 'markdown')
-                            .map((fieldConfig, index) => (
-                                <Field
-                                    key={fieldConfig.local_id}
-                                    fieldIndex={index}
-                                    fieldConfig={fieldConfig}
-                                    results={results}
-                                />
-                            ))}
+                        {props.config.fields.map((fieldConfig, index) => (
+                            <Field
+                                identifierToOrder={identifierToOrder}
+                                key={fieldConfig.local_id}
+                                fieldIndex={index}
+                                fieldConfig={fieldConfig}
+                                results={results}
+                            />
+                        ))}
                     </>
                 )}
                 {error && (
