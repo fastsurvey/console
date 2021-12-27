@@ -1,5 +1,5 @@
 import React from 'react';
-import {formUtils} from '/src/utilities';
+import {helperUtils} from '/src/utilities';
 import {Label, TextInput} from '/src/components';
 import {types} from '/src/types';
 
@@ -17,7 +17,7 @@ function VisualTextSettings(props: Props) {
                     value={props.fieldConfig.min_chars.toString()}
                     setValue={(newValue: string) => {
                         props.setLocalFieldConfig({
-                            min_chars: formUtils.formatters.atoi(newValue),
+                            min_chars: helperUtils.formatAtoi(newValue),
                         });
                     }}
                     disabled={props.disabled}
@@ -31,7 +31,7 @@ function VisualTextSettings(props: Props) {
                     value={props.fieldConfig.max_chars.toString()}
                     setValue={(newValue: string) => {
                         props.setLocalFieldConfig({
-                            max_chars: formUtils.formatters.atoi(newValue),
+                            max_chars: helperUtils.formatAtoi(newValue),
                         });
                     }}
                     disabled={props.disabled}

@@ -1,5 +1,5 @@
 import React from 'react';
-import {formUtils} from '/src/utilities';
+import {helperUtils} from '/src/utilities';
 import {Label, TextInput} from '/src/components';
 import FieldOptionsList from '../field-options-list/field-options-list';
 import {types} from '/src/types';
@@ -27,7 +27,7 @@ function VisualSelectionSettings(props: Props) {
                     value={props.fieldConfig.min_select.toString()}
                     setValue={(newValue: string) => {
                         props.setLocalFieldConfig({
-                            min_select: formUtils.formatters.atoi(newValue),
+                            min_select: helperUtils.formatAtoi(newValue),
                         });
                     }}
                     disabled={props.disabled}
@@ -40,7 +40,7 @@ function VisualSelectionSettings(props: Props) {
                     value={props.fieldConfig.max_select.toString()}
                     setValue={(newValue: string) => {
                         props.setLocalFieldConfig({
-                            max_select: formUtils.formatters.atoi(newValue),
+                            max_select: helperUtils.formatAtoi(newValue),
                         });
                     }}
                     disabled={props.disabled}

@@ -1,5 +1,5 @@
 import {types} from '/src/types';
-import localIdUtils from '../local-id-utils/index';
+import localIdUtils from '../local-id-utils';
 
 export const option = (
     newTitle: string,

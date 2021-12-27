@@ -1,5 +1,6 @@
 import {types} from '/src/types';
 import {validators} from './validators';
+import {filter, first} from 'lodash';
 
 export function validateField(fieldConfig: types.SurveyField): types.ValidationResult {
     const results: types.ValidationResult[] = [];
@@ -37,6 +38,5 @@ export function validateField(fieldConfig: types.SurveyField): types.ValidationR
             throw `Invalid field config: ${fieldConfig}`;
     }
 
-    // @ts-ignore
-    return [...results.filter((r) => !r.valid), {valid: true}][0];
+    return first(filter(results, {valid: false})) || {valid: true};
 }

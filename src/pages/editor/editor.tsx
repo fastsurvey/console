@@ -6,8 +6,8 @@ import {
     templateUtils,
     localIdUtils,
     clipboardUtils,
-    dataUtils,
     backend,
+    helperUtils,
 } from '/src/utilities';
 import VisualEditor from './visual-editor';
 import {types} from '/src/types';
@@ -56,11 +56,15 @@ function Editor(props: {
         const newFieldConfig = templateUtils.field(fieldType, localConfig);
         const newFieldValidation = formUtils.validateField(newFieldConfig);
         setFieldValidation(
-            dataUtils.array.insert(fieldValidation, index + 1, newFieldValidation),
+            helperUtils.insertIntoArray(fieldValidation, index + 1, newFieldValidation),
         );
         setLocalConfig({
             ...localConfig,
-            fields: dataUtils.array.insert(localConfig.fields, index, newFieldConfig),
+            fields: helperUtils.insertIntoArray(
+                localConfig.fields,
+                index,
+                newFieldConfig,
+            ),
         });
     }
 
@@ -73,13 +77,13 @@ function Editor(props: {
             newFieldConfig.identifier = templateUtils.fieldIdentifier(localConfig);
 
             setFieldValidation(
-                dataUtils.array.insert(
+                helperUtils.insertIntoArray(
                     fieldValidation,
                     index + 1,
                     formUtils.validateField(newFieldConfig),
                 ),
             );
-            const newFields = dataUtils.array.insert(
+            const newFields = helperUtils.insertIntoArray(
                 localConfig.fields,
                 index,
                 newFieldConfig,
@@ -102,7 +106,7 @@ function Editor(props: {
 
     function removeField(index: number) {
         const fieldIdentifier = localConfig.fields[index].identifier;
-        let newFields: types.SurveyField[] = dataUtils.array.remove(
+        let newFields: types.SurveyField[] = helperUtils.removeFromArray(
             localConfig.fields,
             index,
         );
@@ -115,7 +119,7 @@ function Editor(props: {
             }));
         }
 
-        setFieldValidation(dataUtils.array.remove(fieldValidation, index + 1));
+        setFieldValidation(helperUtils.removeFromArray(fieldValidation, index + 1));
         setLocalConfig({...localConfig, fields: newFields});
     }
 

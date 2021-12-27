@@ -1,7 +1,7 @@
 import React from 'react';
 import {types} from '/src/types';
 
-const initialState: types.ReduxState = {
+export const initialReduxState: types.ReduxState = {
     loggingIn: true,
     loggedIn: false,
     accessToken: '',
@@ -23,5 +23,3 @@ const initialState: types.ReduxState = {
         children: React.Fragment,
     },
 };
-
-export default initialState;

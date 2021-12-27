@@ -1,17 +1,13 @@
 import {localIdUtils} from '/src/utilities';
 import {types} from '/src/types';
-import {fieldIdentifier} from './field-identifier';
+import {max} from 'lodash';
 
 export const field = (
     fieldType: types.FieldType,
     config: types.SurveyConfig,
 ): types.SurveyField => {
-    const newFieldIdentifier: number = fieldIdentifier(config);
-
-    const idAttributes = {
-        identifier: newFieldIdentifier,
-        local_id: localIdUtils.newId.field(config),
-    };
+    const identifier = fieldIdentifier(config);
+    const local_id = localIdUtils.newId.field(config);
 
     switch (fieldType) {
         case 'email':
@@ -21,7 +17,8 @@ export const field = (
                 regex: '.*',
                 verify: false,
                 hint: 'Any email address',
-                ...idAttributes,
+                identifier,
+                local_id,
             };
         case 'selection':
             return {
@@ -30,7 +27,8 @@ export const field = (
                 min_select: 0,
                 max_select: 0,
                 options: [],
-                ...idAttributes,
+                identifier,
+                local_id,
             };
         case 'text':
             return {
@@ -38,20 +36,34 @@ export const field = (
                 description: '',
                 min_chars: 0,
                 max_chars: 2000,
-                ...idAttributes,
+                identifier,
+                local_id,
             };
         case 'break':
             return {
                 type: 'break',
-                ...idAttributes,
+                identifier,
+                local_id,
             };
         case 'markdown':
             return {
                 type: 'markdown',
                 description: '',
-                ...idAttributes,
+                identifier,
+                local_id,
             };
         default:
             throw `Invalid field type: ${fieldType}`;
     }
+};
+
+export const fieldIdentifier = (config: types.SurveyConfig): number => {
+    // this is necessary in case the user adds fields, removes some and
+    // adds new ones again, all without saving the config
+
+    const nextBackendId: number = config.next_identifier;
+    const maxLocalId: number = max(config.fields.map((f) => f.identifier)) || -1;
+
+    // @ts-ignore
+    return max([nextBackendId, maxLocalId + 1]);
 };
