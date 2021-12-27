@@ -19,8 +19,12 @@
         "tailwind:build": "npx tailwindcss -i src/styles/tailwind.css -o src/styles/tailwind.out.css"
     },
     "dependencies": {
+        "@tailwindcss/typography": "^0.5.0",
         "express": "^4.17.1",
-        "postcss": "^8.4.5"
+        "postcss": "^8.4.5",
+        "react-markdown": "^7.1.1",
+        "remark-gfm": "^3.0.1",
+        "remark-math": "^5.1.1"
     },
     "devDependencies": {
         "@cypress/react": "^5.10.3",

@@ -16,9 +16,9 @@ interface Props {
     children: React.ReactNode;
 }
 function VisualField(props: Props) {
-    const [collapse, setCollapse] = useState(true);
+    const [collapse, setCollapse] = useState(false);
     useEffect(() => {
-        setCollapse(true);
+        setCollapse(false);
     }, [props.fieldConfig.local_id]);
 
     const [actionLabel, setActionLabel] = useState('');
@@ -62,7 +62,11 @@ function VisualField(props: Props) {
                 fieldType={props.fieldConfig.type}
                 collapse={collapse}
                 setCollapse={setCollapse}
-                longLabel={props.fieldConfig.description}
+                longLabel={
+                    props.fieldConfig.type !== 'markdown'
+                        ? props.fieldConfig.description
+                        : undefined
+                }
                 buttons={buttons}
                 actionLabel={actionLabel}
                 setActionLabel={setActionLabel}
