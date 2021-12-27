@@ -12,7 +12,7 @@ export const color = {
             case 'break':
             case 'markdown':
                 // TODO: Choose color
-                return 'bg-white text-gray-800 svg-field-cyan';
+                return 'bg-yellow-100 text-yellow-900 svg-field-yellow';
             default:
                 throw `Invalid field type: ${fieldType}`;
         }

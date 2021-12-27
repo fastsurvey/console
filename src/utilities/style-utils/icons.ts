@@ -11,11 +11,9 @@ export const icons = {
             case 'selection':
                 return iconAssets.checkCircle;
             case 'break':
-                // TODO: Choose icon
-                return iconAssets.checkCircle;
+                return iconAssets.pageSplit;
             case 'markdown':
-                // TODO: Choose icon
-                return iconAssets.checkCircle;
+                return iconAssets.paragraph;
             default:
                 throw `Invalid field type: ${fieldType}`;
         }

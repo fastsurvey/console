@@ -226,6 +226,12 @@
 .svg-field-cyan .secondary {
     @apply fill-cyan-700;
 }
+.svg-field-yellow .primary {
+    @apply fill-yellow-300;
+}
+.svg-field-yellow .secondary {
+    @apply fill-yellow-700;
+}
 
 .svg-search-bar .primary {
     @apply fill-blue-100;

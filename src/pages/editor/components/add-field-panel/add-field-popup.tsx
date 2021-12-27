@@ -7,7 +7,7 @@ import emailImage from '/src/assets/images/field-examples/field-example-email.pn
 import selectionImage from '/src/assets/images/field-examples/field-example-selection.png';
 import textImage from '/src/assets/images/field-examples/field-example-text.png';
 
-const fields: types.FieldType[] = ['email', 'selection', 'text'];
+const fields: types.FieldType[] = ['email', 'selection', 'text', 'break', 'markdown'];
 
 interface Props {
     insertField(fieldType: types.FieldType): void;
@@ -19,8 +19,10 @@ function AddFieldPopup(props: Props) {
 
     useEffect(() => setSelectedIndex(-1), [props.modal.open]);
 
-    // TODO: Support break field
     // TODO: Support markdown field
+
+    // TODO: Add image for break field
+    // TODO: Add image for markdown field
 
     return (
         <div className='w-full pt-1 flex-col-center gap-y-1.5 '>
@@ -159,6 +161,34 @@ function AddFieldPopup(props: Props) {
                                     src={textImage}
                                     alt='how a text field looks like'
                                 />
+                            </>
+                        )}
+                        {fields[selectedIndex] === 'break' && (
+                            <>
+                                <p className='mb-3'>
+                                    A{' '}
+                                    <strong className='text-gray-900'>
+                                        break field
+                                    </strong>{' '}
+                                    is not a question field, but gives you the
+                                    opportunity to split your form into multiple pages.
+                                    Just place a break field wherever you want to have a
+                                    page break in your form.
+                                </p>
+                            </>
+                        )}
+                        {fields[selectedIndex] === 'markdown' && (
+                            <>
+                                <p className='mb-3'>
+                                    A{' '}
+                                    <strong className='text-gray-900'>
+                                        markdown field
+                                    </strong>{' '}
+                                    is not a question field, but gives you the
+                                    opportunity to write text within your form. You can
+                                    use markdown syntax to format your text - i.e. using
+                                    headings, lists, links, tables, and so on.
+                                </p>
                             </>
                         )}
                     </div>
