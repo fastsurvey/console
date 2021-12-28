@@ -1,37 +1,43 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState, createRef} from 'react';
 import {icons} from '/src/assets';
 import {animateScroll} from 'react-scroll';
 import {templateUtils} from '/src/utilities';
-import {Label, TextInput} from '/src/components';
+import {Label} from '/src/components';
 import {types} from '/src/types';
+import {last} from 'lodash';
 
 function FieldOptionsList(props: {
     fieldConfig: types.SelectionField;
     setLocalFieldConfig(fieldConfigChanges: object): void;
     disabled: boolean;
 }) {
-    const [optionsVisible, setOptionsVisible] = useState(
-        props.fieldConfig.options.map(() => true),
-    );
-    useEffect(
-        () => setOptionsVisible(props.fieldConfig.options.map(() => true)),
-        [props.fieldConfig.options],
+    const optionRefs: any = useRef([]);
+    optionRefs.current = props.fieldConfig.options.map(
+        (_, i) => optionRefs.current[i] ?? createRef(),
     );
 
-    const nextRowRef: any = useRef(null);
-    const [newOption, setNewOption] = useState('');
+    const [focusLastIsDue, setFocusLastIsDue] = useState(false);
 
     function addFieldOption() {
-        nextRowRef.current?.blur();
-        optionsVisible.push(true);
-
-        props.setLocalFieldConfig(templateUtils.option(newOption, props.fieldConfig));
-
+        props.setLocalFieldConfig(templateUtils.option('', props.fieldConfig));
         // Suitable for 1rem = 16px
         animateScroll.scrollMore(56, {duration: 150});
 
-        setNewOption('');
+        setFocusLastIsDue(true);
     }
+
+    useEffect(() => {
+        if (focusLastIsDue) {
+            try {
+                optionRefs.current[
+                    props.fieldConfig.options.length - 1
+                ].current.focus();
+            } catch (e) {
+                console.log(e, optionRefs.current);
+            }
+            setFocusLastIsDue(false);
+        }
+    }, [focusLastIsDue]);
 
     return (
         <div className='w-full flex-col-right gap-y-1' data-cy='options-list'>
@@ -41,20 +47,33 @@ function FieldOptionsList(props: {
                     className='w-full text-sm flex-row-left gap-x-2'
                     key={optionConfig.local_id}
                 >
-                    <TextInput
+                    <input
+                        ref={optionRefs.current[optionIndex]}
                         value={optionConfig.title}
-                        setValue={(newValue: string) =>
+                        onChange={(e) =>
                             props.setLocalFieldConfig({
                                 options: props.fieldConfig.options.map(
                                     (oldOptionField, oldIndex) =>
                                         optionIndex === oldIndex
                                             ? {
                                                   ...oldOptionField,
-                                                  title: newValue,
+                                                  title: e.target.value,
                                               }
                                             : oldOptionField,
                                 ),
                             })
+                        }
+                        onKeyDown={(e) => {
+                            if (e.key === 'Escape' || e.key === 'Enter') {
+                                // @ts-ignore
+                                e.target.blur();
+                            }
+                        }}
+                        className={
+                            'w-full px-3 rounded h-9 ringable font-weight-500 ' +
+                            (props.disabled
+                                ? 'bg-gray-200 text-gray-600 cursor-not-allowed '
+                                : 'bg-gray-100 text-gray-800 ')
                         }
                         disabled={props.disabled}
                         data-cy={`input-option-${optionIndex}`}
@@ -64,14 +83,16 @@ function FieldOptionsList(props: {
                             'w-8 h-8 p-1.5 rounded icon-blue ringable ' +
                             (props.disabled ? 'opacity-60 cursor-not-allowed ' : ' ')
                         }
-                        onClick={() =>
+                        onClick={(e) => {
+                            // @ts-ignore
+                            e.target.blur();
                             props.setLocalFieldConfig({
                                 options: props.fieldConfig.options.filter(
                                     (oldOptionField, oldIndex) =>
                                         optionIndex !== oldIndex,
                                 ),
-                            })
-                        }
+                            });
+                        }}
                         disabled={props.disabled}
                         data-cy={`button-remove-${optionIndex}`}
                     >
