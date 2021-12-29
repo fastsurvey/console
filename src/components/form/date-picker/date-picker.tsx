@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import VisualDatePicker from './visual-date-picker';
-import VisualTimePicker from './visual-time-picker';
 import {Toggle} from '/src/components';
 
 interface Props {
@@ -80,31 +79,17 @@ function DatePicker(props: Props) {
             )}
             {((props.type === 'start' && props.timestamp !== 0) ||
                 (props.type === 'end' && props.timestamp !== null)) && (
-                <div
-                    className={
-                        'w-full flex items-start justify-start ' +
-                        'flex-col md:flex-row gap-y-1.5 md:gap-y-0 md:gap-x-2'
-                    }
-                >
-                    <VisualDatePicker
-                        disabled={props.disabled === true}
-                        {...{
-                            dateStore,
-                            getDaysInMonth,
-                            getFirstWeekday,
-                            setDateTimestamp,
-                        }}
-                        data-cy={`datepicker-${props['data-cy']}`}
-                    />
-                    <VisualTimePicker
-                        disabled={props.disabled === true}
-                        {...{
-                            dateStore,
-                            setHourTimestamp,
-                        }}
-                        data-cy={`timepicker-${props['data-cy']}`}
-                    />
-                </div>
+                <VisualDatePicker
+                    disabled={props.disabled === true}
+                    {...{
+                        dateStore,
+                        getDaysInMonth,
+                        getFirstWeekday,
+                        setDateTimestamp,
+                        setHourTimestamp,
+                    }}
+                    data-cy={props['data-cy']}
+                />
             )}
         </div>
     );
