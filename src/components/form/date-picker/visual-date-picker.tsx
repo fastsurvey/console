@@ -2,6 +2,7 @@ import React, {useState, useRef, useEffect} from 'react';
 import {icons} from '/src/assets';
 import {constants} from '/src/utilities';
 import {range} from 'lodash';
+import {DayButton} from './components/day-button';
 
 function VisualDatePicker(props: {
     disabled: boolean;
@@ -50,103 +51,13 @@ function VisualDatePicker(props: {
 
     const skippedDays = props.getFirstWeekday(visibleYear, visibleMonth);
     const dayCount = props.getDaysInMonth(visibleYear, visibleMonth);
-    function colSpan(n: number) {
-        return {
-            display: 'grid',
-            gridColumn: `span ${n} / span ${n}`,
-            gridTemplateColumns: `repeat(${n}, minmax(0, 1fr))`,
-        };
-    }
 
-    function DayButton(props: {day: number}) {
-        const selectedDay =
-            date.getFullYear() === visibleYear &&
-            date.getMonth() === visibleMonth &&
-            date.getDate() === props.day;
-
-        return (
-            <button
-                className={
-                    'py-1 md:py-0 w-7 md:w-6 -mx-0.5 px-0.5 text-center rounded-sm ringable ' +
-                    (selectedDay
-                        ? 'bg-red-500 text-red-50 z-0 font-weight-700 '
-                        : 'hover:text-white z-10 font-weight-600 ')
-                }
-                onClick={() => {
-                    if (open && !disabled) {
-                        setDateTimestamp({
-                            year: visibleYear,
-                            month: visibleMonth,
-                            day: props.day,
-                        });
-                        setOpen(false);
-                        ref.current?.focus();
-                    }
-                }}
-                onKeyDown={(e) => {
-                    if (e.key === 'Tab' && props.day === dayCount && !e.shiftKey) {
-                        setOpen(false);
-                    }
-                }}
-                disabled={!open}
-            >
-                {props.day}
-            </button>
-        );
-    }
-
-    // how many days in the first row?
-    const dayCount1 = 7 - skippedDays;
-
-    // how many days in the fully filled rows?
-    const dayCount2 = Math.floor((dayCount - dayCount1) / 7) * 7;
-
-    // how many days in the last not-filled row?
-    const dayCount3 = dayCount - dayCount1 - dayCount2;
-
-    const dayRows = [
-        <div className='grid w-full grid-cols-7 gap-x-2' key={`datepicker-row-${0}`}>
-            {range(skippedDays).map((i) => (
-                <div className='w-5 text-center' key={`skipped-day-${i + 1}`} />
-            ))}
-            <div
-                style={colSpan(dayCount1)}
-                className='px-0.5 -mx-0.5 bg-gray-700 rounded-sm gap-x-2'
-            >
-                {range(dayCount1).map((i) => (
-                    <DayButton day={i + 1} key={`day-button-${i + 1}`} />
-                ))}
-            </div>
-        </div>,
-        ...range(dayCount2 / 7).map((i) => (
-            <div
-                className='grid grid-cols-7 px-0.5 -mx-0.5 bg-gray-700 rounded-sm gap-x-2'
-                style={{width: 'calc(100% + 0.25rem'}}
-                key={`datepicker-row-${i + 1}`}
-            >
-                {range(7).map((j) => (
-                    <DayButton
-                        day={dayCount1 + i * 7 + j + 1}
-                        key={`day-button-${dayCount1 + i * 7 + j + 1}`}
-                    />
-                ))}
-            </div>
-        )),
-        dayCount3 > 0 && (
-            <div
-                style={colSpan(dayCount3)}
-                className='px-0.5 -mx-0.5 bg-gray-700 rounded-sm gap-x-2'
-                key={`datepicker-row-end`}
-            >
-                {range(dayCount3).map((i) => (
-                    <DayButton
-                        day={dayCount1 + dayCount2 + i + 1}
-                        key={`day-button-${dayCount1 + dayCount2 + i + 1}`}
-                    />
-                ))}
-            </div>
-        ),
-    ];
+    // 1. how many days in the first row?
+    // 2. how many days in the last not-filled row?
+    // 3. how many days fully filled rows?
+    const dayCountHead = 7 - skippedDays;
+    const dayCountLast = (dayCount - dayCountHead) % 7;
+    const dayCountFullRows = (dayCount - dayCountHead - dayCountLast) / 7;
 
     return (
         <div
@@ -157,13 +68,13 @@ function VisualDatePicker(props: {
                 ref={ref}
                 className={
                     'px-1 w-full flex-row-left rounded h-9 ringable font-weight-500 ' +
-                    (open || props.disabled
+                    (open || disabled
                         ? 'bg-gray-200 text-gray-600 '
                         : 'bg-gray-100 text-gray-800 ') +
-                    (props.disabled ? 'cursor-not-allowed ' : '')
+                    (disabled ? 'cursor-not-allowed ' : '')
                 }
                 onClick={() => setOpen(!open)}
-                disabled={props.disabled}
+                disabled={disabled}
             >
                 <div className='p-1 w-7 h-7 icon-dark-gray'>{icons.calendar}</div>
                 <div className='px-1'>
@@ -225,14 +136,75 @@ function VisualDatePicker(props: {
                         </button>
                     </div>
                     <div className='px-4 pb-2.5 text-sm text-gray-300 flex-col-left gap-y-2'>
-                        <div className='grid grid-cols-7 gap-x-2'>
+                        <div className='grid grid-cols-7 gap-x-2.5 gap-y-1.5 relative'>
                             {['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].map((w) => (
-                                <div key={w} className='w-5 text-center'>
+                                <div key={w} className='z-10 h-4 mb-1 text-center w-7'>
                                     {w}
                                 </div>
                             ))}
+                            <div
+                                className={
+                                    'absolute top-[1.625rem] right-0 opacity-70 ' +
+                                    '-ml-0.5 pl-0.5 ' +
+                                    'h-5 rounded-sm bg-gray-700 z-0 pointer-events-none'
+                                }
+                                style={{
+                                    left: `calc(${
+                                        7 - dayCountHead
+                                    } * (1.75rem + 0.625rem))`,
+                                }}
+                            />
+                            {range(dayCountFullRows).map((i) => (
+                                <div
+                                    className={
+                                        'absolute left-0 right-0 opacity-70 ' +
+                                        '-ml-0.5 pl-0.5 ' +
+                                        'h-5 rounded-sm bg-gray-700 z-0 pointer-events-none'
+                                    }
+                                    style={{
+                                        bottom: `calc(${
+                                            i + (dayCountLast === 0 ? 0 : 1)
+                                        } * (1.625rem))`,
+                                    }}
+                                />
+                            ))}
+                            <div
+                                className={
+                                    'absolute bottom-0 left-0 opacity-70 ' +
+                                    '-ml-0.5 pl-0.5 ' +
+                                    'h-5 rounded-sm bg-gray-700 z-0 pointer-events-none'
+                                }
+                                style={{
+                                    right: `calc(${
+                                        7 - dayCountLast
+                                    } * (1.75rem + 0.625rem))`,
+                                }}
+                            />
+                            {range(dayCount).map((i) => (
+                                <DayButton
+                                    style={
+                                        i === 0
+                                            ? {gridColumnStart: skippedDays + 1}
+                                            : {}
+                                    }
+                                    open={open}
+                                    disabled={disabled}
+                                    label={i + 1}
+                                    dayIsSelected={
+                                        date.getFullYear() === visibleYear &&
+                                        date.getMonth() === visibleMonth &&
+                                        date.getDate() === i + 1
+                                    }
+                                    onClick={() => {
+                                        setDateTimestamp({
+                                            year: visibleYear,
+                                            month: visibleMonth,
+                                            day: i + 1,
+                                        });
+                                    }}
+                                />
+                            ))}
                         </div>
-                        {dayRows.map((m) => m)}
                     </div>
                 </div>
                 <div
