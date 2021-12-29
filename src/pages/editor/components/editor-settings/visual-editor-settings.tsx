@@ -18,8 +18,8 @@ const VisualEditorSettings = (props: {
     disabled: boolean;
     validation: types.ValidationResult;
 }) => {
-    const [tabIndex, setTabIndex] = useState(0);
-    useEffect(() => setTabIndex(0), [props.config.local_id]);
+    const [tabIndex, setTabIndex] = useState(1);
+    useEffect(() => setTabIndex(1), [props.config.local_id]);
     const tabs = ['About', 'Visibility'];
 
     // TODO: Implement optional start time
@@ -177,38 +177,57 @@ const VisualEditorSettings = (props: {
                 {tabIndex === 1 && (
                     <>
                         <div className='w-full flex-col-left gap-y-0.5'>
-                            <Label text='Start survey at' />
-                            {props.config.start !== null && (
-                                <DatePicker
-                                    timestamp={props.config.start}
-                                    setTimestamp={(timestamp: number) => {
-                                        props.updateConfig({
-                                            ...props.config,
-                                            start: timestamp,
-                                        });
-                                    }}
-                                    disabled={props.disabled}
-                                    data-cy='start'
-                                />
-                            )}
+                            <Label text='Open for new submissions' />
+                            <Toggle
+                                value={props.config.start !== null}
+                                setValue={(v: boolean) => {
+                                    props.updateConfig({
+                                        ...props.config,
+                                        start: v ? 0 : null,
+                                        end: v ? props.config.end : null,
+                                    });
+                                }}
+                                disabled={props.disabled}
+                                data-cy='toggle-open-for-submissions'
+                            />
                         </div>
 
-                        <div className='w-full flex-col-left gap-y-0.5'>
-                            <Label text='End survey by' />
-                            {props.config.end !== null && (
-                                <DatePicker
-                                    timestamp={props.config.end}
-                                    setTimestamp={(timestamp: number) => {
-                                        props.updateConfig({
-                                            ...props.config,
-                                            end: timestamp,
-                                        });
-                                    }}
-                                    disabled={props.disabled}
-                                    data-cy='end'
-                                />
-                            )}
-                        </div>
+                        {props.config.start !== null && (
+                            <>
+                                <div className='w-full flex-col-left gap-y-0.5'>
+                                    <Label text='Start time' />
+
+                                    <DatePicker
+                                        timestamp={props.config.start}
+                                        setTimestamp={(timestamp: number | null) => {
+                                            props.updateConfig({
+                                                ...props.config,
+                                                start: timestamp,
+                                            });
+                                        }}
+                                        disabled={props.disabled}
+                                        data-cy='start'
+                                        type='start'
+                                    />
+                                </div>
+
+                                <div className='w-full flex-col-left gap-y-0.5'>
+                                    <Label text='End time' />
+                                    <DatePicker
+                                        timestamp={props.config.end}
+                                        setTimestamp={(timestamp: number | null) => {
+                                            props.updateConfig({
+                                                ...props.config,
+                                                end: timestamp,
+                                            });
+                                        }}
+                                        disabled={props.disabled}
+                                        data-cy='end'
+                                        type='end'
+                                    />
+                                </div>
+                            </>
+                        )}
                     </>
                 )}
             </div>

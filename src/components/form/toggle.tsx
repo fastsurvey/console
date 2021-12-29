@@ -5,11 +5,13 @@ export default function Toggle(props: {
     setValue(v: boolean): void;
     disabled?: boolean;
     'data-cy'?: string;
+    trueLabel?: string;
+    falseLabel?: string;
 }) {
     const {value, setValue} = props;
 
     const sharedClasses = (active: boolean = false) =>
-        'w-12 text-center h-7 ringable-dark font-weight-600 rounded ' +
+        'min-w-[3rem] px-3 text-center h-7 ringable-dark font-weight-600 rounded ' +
         (props.disabled
             ? active
                 ? 'text-blue-700 bg-blue-300 cursor-not-allowed '
@@ -29,7 +31,7 @@ export default function Toggle(props: {
                 disabled={props.disabled === true}
                 data-cy={`yes ${value ? 'isactive' : 'isinactive'}`}
             >
-                Yes
+                {props.trueLabel || 'Yes'}
             </button>
             <button
                 className={sharedClasses(!value)}
@@ -37,7 +39,7 @@ export default function Toggle(props: {
                 disabled={props.disabled === true}
                 data-cy={`no ${!value ? 'isactive' : 'isinactive'}`}
             >
-                No
+                {props.falseLabel || 'No'}
             </button>
         </div>
     );

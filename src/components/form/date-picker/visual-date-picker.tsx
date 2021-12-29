@@ -17,6 +17,11 @@ function VisualDatePicker(props: {
     const [visibleMonth, setVisibleMonth] = useState(date.getMonth());
     const [visibleYear, setVisibleYear] = useState(date.getFullYear());
 
+    useEffect(() => {
+        setVisibleMonth(date.getMonth());
+        setVisibleYear(date.getFullYear());
+    }, [date]);
+
     const ref = useRef<HTMLButtonElement>(null);
     useEffect(() => {
         if (props.disabled) {

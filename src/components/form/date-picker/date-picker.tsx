@@ -1,17 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import VisualDatePicker from './visual-date-picker';
 import VisualTimePicker from './visual-time-picker';
+import {Toggle} from '/src/components';
 
 interface Props {
-    timestamp: number;
-    setTimestamp(timestamp: number): void;
+    timestamp: number | null;
+    setTimestamp(timestamp: number | null): void;
     disabled?: boolean;
     'data-cy': string;
+    type: 'start' | 'end';
 }
 function DatePicker(props: Props) {
-    const [dateStore, setDateStore] = useState(new Date(props.timestamp * 1000));
+    const [dateStore, setDateStore] = useState(new Date((props.timestamp || 0) * 1000));
     useEffect(() => {
-        setDateStore(new Date(props.timestamp * 1000));
+        setDateStore(new Date((props.timestamp || 0) * 1000));
     }, [props.timestamp]);
 
     function getDaysInMonth(year: number, month: number) {
@@ -51,30 +53,59 @@ function DatePicker(props: Props) {
     }
 
     return (
-        <div
-            className={
-                'w-full flex items-start justify-start ' +
-                'flex-col md:flex-row gap-y-1.5 md:gap-y-0 md:gap-x-2'
-            }
-        >
-            <VisualDatePicker
-                disabled={props.disabled === true}
-                {...{
-                    dateStore,
-                    getDaysInMonth,
-                    getFirstWeekday,
-                    setDateTimestamp,
-                }}
-                data-cy={`datepicker-${props['data-cy']}`}
-            />
-            <VisualTimePicker
-                disabled={props.disabled === true}
-                {...{
-                    dateStore,
-                    setHourTimestamp,
-                }}
-                data-cy={`timepicker-${props['data-cy']}`}
-            />
+        <div className={'w-full flex items-start justify-start flex-col gap-y-1.5'}>
+            {props.type === 'start' && (
+                <Toggle
+                    trueLabel='Always open'
+                    falseLabel='Specific start time'
+                    value={props.timestamp === 0}
+                    setValue={(v: boolean) =>
+                        props.setTimestamp(
+                            v ? 0 : Math.round(new Date().getTime() / 1000),
+                        )
+                    }
+                />
+            )}
+            {props.type === 'end' && (
+                <Toggle
+                    trueLabel='Never ends'
+                    falseLabel='Specific end time'
+                    value={props.timestamp === null}
+                    setValue={(v: boolean) =>
+                        props.setTimestamp(
+                            v ? null : Math.round(new Date().getTime() / 1000) + 86400,
+                        )
+                    }
+                />
+            )}
+            {((props.type === 'start' && props.timestamp !== 0) ||
+                (props.type === 'end' && props.timestamp !== null)) && (
+                <div
+                    className={
+                        'w-full flex items-start justify-start ' +
+                        'flex-col md:flex-row gap-y-1.5 md:gap-y-0 md:gap-x-2'
+                    }
+                >
+                    <VisualDatePicker
+                        disabled={props.disabled === true}
+                        {...{
+                            dateStore,
+                            getDaysInMonth,
+                            getFirstWeekday,
+                            setDateTimestamp,
+                        }}
+                        data-cy={`datepicker-${props['data-cy']}`}
+                    />
+                    <VisualTimePicker
+                        disabled={props.disabled === true}
+                        {...{
+                            dateStore,
+                            setHourTimestamp,
+                        }}
+                        data-cy={`timepicker-${props['data-cy']}`}
+                    />
+                </div>
+            )}
         </div>
     );
 }
