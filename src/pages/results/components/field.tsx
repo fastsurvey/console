@@ -21,7 +21,7 @@ function Field(props: {
                 className={
                     'w-full flex-row-center no-selection ' +
                     'font-weight-600 text-base leading-10 ' +
-                    styleUtils.color.fieldTypeToClasses('break')
+                    'text-gray-700 svg-field-gray '
                 }
             >
                 <div className='w-6 h-6 p-0.5 ml-2 mr-2 flex-shrink-0'>
@@ -32,7 +32,7 @@ function Field(props: {
                         'flex flex-col items-start justify-start md:flex-row md:items-center '
                     }
                 >
-                    <div className='flex-shrink-0 mb-2 mr-3 capitalize md:mb-0 font-weight-600 whitespace-nowrap'>
+                    <div className='flex-shrink-0 mr-3 capitalize md:mb-0 font-weight-600 whitespace-nowrap'>
                         Page Break
                     </div>
                 </div>
@@ -55,7 +55,7 @@ function Field(props: {
                         'font-weight-600 text-base leading-10 group ' +
                         (markdownOpen
                             ? styleUtils.color.fieldTypeToClasses('markdown')
-                            : styleUtils.color.fieldTypeToClasses('break')) +
+                            : 'text-gray-700 svg-field-gray ') +
                         ' cursor-pointer ' +
                         (markdownOpen ? 'hover:text-rose-600 ' : 'hover:text-gray-900 ')
                     }
@@ -69,10 +69,8 @@ function Field(props: {
                             'flex flex-col items-start justify-start md:flex-row md:items-center '
                         }
                     >
-                        <div className='flex-shrink-0 mb-2 mr-3 capitalize md:mb-0 font-weight-600 whitespace-nowrap'>
-                            {fieldConfig.type === 'markdown'
-                                ? 'Markdown Content'
-                                : 'Page Break'}
+                        <div className='flex-shrink-0 mr-3 capitalize md:mb-0 font-weight-600'>
+                            Markdown<span className='hidden sm:block'>Content</span>
                         </div>
                     </div>
                     <div

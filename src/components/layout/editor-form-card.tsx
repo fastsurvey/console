@@ -63,10 +63,10 @@ function EditorFormCard(props: {
                             'flex-grow mr-4 md:mr-20 '
                         }
                     >
-                        <div className='flex-shrink-0 hidden my-0.5 mr-3 truncate md:mb-0 font-weight-600 sm:block'>
+                        <div className='flex-shrink-0 hidden my-0.5 mr-3 truncate md:mb-0 font-weight-600 sm:block capitalize'>
                             {props.label}
                         </div>
-                        <div className='flex-shrink-0 block my-0.5 mr-3 truncate md:mb-0 font-weight-600 sm:hidden'>
+                        <div className='flex-shrink-0 block my-0.5 mr-3 truncate md:mb-0 font-weight-600 sm:hidden capitalize'>
                             {props.mobileLabel}
                         </div>
                         {props.longLabel !== undefined && (

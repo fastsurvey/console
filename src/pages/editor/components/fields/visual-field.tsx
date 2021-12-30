@@ -66,10 +66,6 @@ function VisualField(props: Props) {
         fieldLabel = 'Markdown Content';
         mobileFieldLabel = 'Markdown';
     }
-    if (props.fieldConfig.type === 'break') {
-        fieldLabel = 'Page Break';
-        mobileFieldLabel = 'Page Break';
-    }
 
     if (props.fieldConfig.type !== 'break') {
         return (
@@ -128,7 +124,6 @@ function VisualField(props: Props) {
         // TODO: Add proper component for page break
         return (
             <PageBreakCard
-                label={fieldLabel}
                 removeField={props.removeField}
                 actionLabel={actionLabel}
                 setActionLabel={setActionLabel}

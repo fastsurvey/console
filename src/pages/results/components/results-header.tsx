@@ -74,7 +74,7 @@ function ResultsHeader(props: {
     );
 
     return (
-        <div className={'w-full pl-2 flex-col-left mb-1'} data-cy='summary-header'>
+        <div className={'w-full px-2 flex-col-left mb-1'} data-cy='summary-header'>
             <div className='relative block w-full mb-8 md:mb-2 flex-row-right md:hidden'>
                 {buttonElements}
             </div>
@@ -111,7 +111,7 @@ function ResultsHeader(props: {
 
             <a
                 href={`https://${frontendUrl}/${username}/${survey_name}`}
-                className='px-1.5 py-0.5 transform -translate-x-1.5 rounded ringable'
+                className='max-w-full px-1.5 py-0.5 transform -translate-x-1.5 rounded ringable break-all'
                 target='_blank'
                 rel='noopener noreferrer'
                 data-cy='link-to-frontend'

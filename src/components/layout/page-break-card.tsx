@@ -3,7 +3,6 @@ import {icons} from '/src/assets';
 import {styleUtils} from '/src/utilities';
 
 function PageBreakCard(props: {
-    label: string;
     removeField(): void;
     actionLabel: string;
     setActionLabel(newLabel: string): void;
@@ -25,8 +24,8 @@ function PageBreakCard(props: {
                     'flex flex-col items-start justify-start md:flex-row md:items-center '
                 }
             >
-                <div className='flex-shrink-0 mb-2 mr-3 capitalize md:mb-0 font-weight-600 whitespace-nowrap'>
-                    {props.label}
+                <div className='flex-shrink-0 mr-2 capitalize md:mb-0 font-weight-600 whitespace-nowrap'>
+                    Page Break
                 </div>
             </div>
             <div className='flex-grow h-0 translate-y-px border-b-2 border-gray-300 border-dashed' />

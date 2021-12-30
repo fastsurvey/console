@@ -18,8 +18,8 @@ const VisualEditorSettings = (props: {
     disabled: boolean;
     validation: types.ValidationResult;
 }) => {
-    const [tabIndex, setTabIndex] = useState(1);
-    useEffect(() => setTabIndex(1), [props.config.local_id]);
+    const [tabIndex, setTabIndex] = useState(0);
+    useEffect(() => setTabIndex(0), [props.config.local_id]);
     const tabs = ['About', 'Visibility'];
 
     // TODO: Implement optional start time
