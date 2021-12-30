@@ -59,17 +59,23 @@ function VisualField(props: Props) {
     let fieldLabel: string = `Field ${
         props.identifierToOrder[props.fieldConfig.identifier]
     } (${props.fieldConfig.type})`;
+    let mobileFieldLabel: string = `${
+        props.identifierToOrder[props.fieldConfig.identifier]
+    } (${props.fieldConfig.type})`;
     if (props.fieldConfig.type === 'markdown') {
         fieldLabel = 'Markdown Content';
+        mobileFieldLabel = 'Markdown';
     }
     if (props.fieldConfig.type === 'break') {
         fieldLabel = 'Page Break';
+        mobileFieldLabel = 'Page Break';
     }
 
     if (props.fieldConfig.type !== 'break') {
         return (
             <EditorFormCard
                 label={fieldLabel}
+                mobileLabel={mobileFieldLabel}
                 icon={styleUtils.icons.fieldTypeToIcon(props.fieldConfig.type)}
                 fieldType={props.fieldConfig.type}
                 collapse={collapse}

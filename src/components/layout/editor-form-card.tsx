@@ -6,6 +6,7 @@ import {ValidationBar} from '/src/components';
 
 function EditorFormCard(props: {
     label: string;
+    mobileLabel?: string;
     children: React.ReactNode;
     buttons?: React.ReactNode;
     icon: React.ReactNode;
@@ -62,10 +63,13 @@ function EditorFormCard(props: {
                             'flex-grow mr-4 md:mr-20 '
                         }
                     >
-                        <div className='flex-shrink-0 mb-2 mr-3 md:mb-0 font-weight-600 whitespace-nowrap'>
+                        <div className='flex-shrink-0 hidden my-0.5 mr-3 truncate md:mb-0 font-weight-600 sm:block'>
                             {props.label}
                         </div>
-                        {props.longLabel && (
+                        <div className='flex-shrink-0 block my-0.5 mr-3 truncate md:mb-0 font-weight-600 sm:hidden'>
+                            {props.mobileLabel}
+                        </div>
+                        {props.longLabel !== undefined && (
                             <div className='leading-tight opacity-70 font-weight-500'>
                                 {props.longLabel}
                             </div>

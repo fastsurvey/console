@@ -3,7 +3,6 @@ import {icons} from '/src/assets';
 import {constants} from '/src/utilities';
 import {range} from 'lodash';
 import {DayButton} from './components/day-button';
-import {remove} from '../../../utilities/local-id-utils/remove';
 
 function VisualDatePicker(props: {
     disabled: boolean;

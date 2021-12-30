@@ -23,7 +23,8 @@ function MarkdownFieldEditor(props: {
                             (t === tab
                                 ? 'bg-blue-50 text-blue-800 '
                                 : 'hover:bg-gray-100 text-gray-500 hover:text-gray-700 ') +
-                            'py-1 px-3 font-weight-600 text-base rounded ringable'
+                            'py-1 px-3 font-weight-600 text-base rounded ringable ' +
+                            (t === 'split view' ? 'hidden md:block ' : '')
                         }
                         data-cy={`tab-${t.toLowerCase()}`}
                     >
