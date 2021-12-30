@@ -49,7 +49,7 @@ function EditorFormCard(props: {
             >
                 <div
                     className={
-                        'flex-row-center cursor-pointer leading-tight py-2 ' +
+                        'w-full flex-row-center cursor-pointer leading-tight py-2 ' +
                         'pointer-events-none md:pointer-events-auto flex-grow'
                     }
                     onClick={toggle}
@@ -59,18 +59,18 @@ function EditorFormCard(props: {
                     </div>
                     <div
                         className={
-                            'flex flex-col items-start justify-start md:flex-row md:items-center ' +
-                            'flex-grow mr-4 md:mr-20 '
+                            'flex flex-col items-baseline justify-start md:flex-row flex-grow gap-y-1 md:gap-y-0 ' +
+                            ' mr-4 md:mr-20 '
                         }
                     >
-                        <div className='flex-shrink-0 hidden my-0.5 mr-3 truncate md:mb-0 font-weight-600 sm:block capitalize'>
+                        <div className='flex-shrink-0 hidden mr-3 capitalize truncate md:mb-0 font-weight-600 sm:block'>
                             {props.label}
                         </div>
-                        <div className='flex-shrink-0 block my-0.5 mr-3 truncate md:mb-0 font-weight-600 sm:hidden capitalize'>
+                        <div className='flex-shrink-0 block mr-3 capitalize truncate md:mb-0 font-weight-600 sm:hidden'>
                             {props.mobileLabel}
                         </div>
                         {props.longLabel !== undefined && (
-                            <div className='leading-tight opacity-70 font-weight-500'>
+                            <div className='text-sm leading-tight opacity-70 font-weight-500 hyphens line-clamp-3 md:line-clamp-1 sm:line-clamp-2'>
                                 {props.longLabel}
                             </div>
                         )}

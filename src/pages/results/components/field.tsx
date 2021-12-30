@@ -69,8 +69,9 @@ function Field(props: {
                             'flex flex-col items-start justify-start md:flex-row md:items-center '
                         }
                     >
-                        <div className='flex-shrink-0 mr-3 capitalize md:mb-0 font-weight-600'>
-                            Markdown<span className='hidden sm:block'>Content</span>
+                        <div className='flex flex-row items-baseline flex-shrink-0 mr-3 capitalize md:mb-0 font-weight-600'>
+                            Markdown
+                            <span className='hidden ml-[0.3rem] sm:block'>Content</span>
                         </div>
                     </div>
                     <div
@@ -131,13 +132,13 @@ function Field(props: {
             }
             data-cy={`field-container-${fieldIndex} isaggregated`}
         >
-            <div className='w-full md:w-50% flex-col-left space-y-0.5'>
+            <div className='w-full md:w-50% flex-col-left space-y-2'>
                 <h2
-                    className='text-base text-gray-900 font-weight-700'
+                    className='text-base leading-tight text-gray-900 font-weight-700'
                     data-cy='description'
                 >
-                    {fieldLabel}{' '}
-                    <span className='font-weight-500 opacity-70 whitespace-nowrap'>
+                    <span className='line-clamp-2 hyphens'>{fieldLabel}</span>{' '}
+                    <span className='text-sm text-gray-700 font-weight-500 whitespace-nowrap'>
                         {`(${fieldCount} submission${fieldCount !== 1 ? 's' : ''})`}
                     </span>
                 </h2>
@@ -174,11 +175,11 @@ function Field(props: {
                     data-cy={`field-container-${fieldIndex} isnotaggregated`}
                 >
                     <h2
-                        className='w-full text-base text-gray-600 font-weight-700'
+                        className='w-full text-base leading-tight text-gray-600 font-weight-700'
                         data-cy='description'
                     >
-                        {fieldLabel}{' '}
-                        <span className='font-weight-500 opacity-70 whitespace-nowrap'>
+                        <span className='line-clamp-2 hyphens'>{fieldLabel}</span>{' '}
+                        <span className='text-sm text-gray-500 font-weight-500 whitespace-nowrap'>
                             {`(${fieldCount} submission${fieldCount !== 1 ? 's' : ''})`}
                         </span>
                     </h2>

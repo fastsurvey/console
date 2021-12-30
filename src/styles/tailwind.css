@@ -379,3 +379,10 @@
         transform: scale(1);
     }
 }
+
+.hyphens {
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+}

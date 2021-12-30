@@ -221,5 +221,6 @@ module.exports = {
     plugins: [
         require('tailwindcss-interaction-variants'),
         require('@tailwindcss/typography'),
+        require('@tailwindcss/line-clamp')
     ],
 };

@@ -21,7 +21,7 @@ function ResultsHeader(props: {
     const [showDownloadOptions, setShowDownloadOptions] = useState(false);
 
     const linkContent = (
-        <div className='text-sm text-blue-700 underline md:truncate font-weight-600'>
+        <div className='w-full text-sm text-blue-700 underline truncate font-weight-600'>
             {frontendUrl}/{username}/{survey_name}
         </div>
     );
@@ -83,7 +83,7 @@ function ResultsHeader(props: {
                     to='/surveys'
                     className={
                         'w-10 h-10 m-1 p-2 ringable rounded icon-gray ' +
-                        'absolute -left-14 top-50% transform -translate-y-50% '
+                        'absolute -left-14 top-50% transform -translate-y-50% hidden lg:block'
                     }
                     data-cy='button-back'
                 >
@@ -111,10 +111,10 @@ function ResultsHeader(props: {
 
             <a
                 href={`https://${frontendUrl}/${username}/${survey_name}`}
-                className='max-w-full px-1.5 py-0.5 transform -translate-x-1.5 rounded ringable break-all'
+                className='px-1.5 py-0.5 transform -translate-x-1.5 rounded ringable w-full'
                 target='_blank'
                 rel='noopener noreferrer'
-                data-cy='link-to-frontend'
+                data-cy='link-to-frontend isactive'
             >
                 {linkContent}
             </a>
