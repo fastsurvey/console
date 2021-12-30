@@ -19,8 +19,8 @@ export default function ButtonGroup(props: {
                 <button
                     key={index}
                     className={
-                        'p-0.5 centering-row h-10 md:h-8 ' +
-                        ' no-selection ringable rounded-sm ' +
+                        'p-0.5 centering-row h-10 md:h-8 text-sm sm:text-base ' +
+                        'no-selection ringable rounded-sm ' +
                         (first(index) ? 'rounded-l ' : ' ') +
                         (last(index) ? 'rounded-r ' : ' ') +
                         (b.disabled
@@ -43,7 +43,7 @@ export default function ButtonGroup(props: {
                     {!props.hideIconsOnMobile && (
                         <>
                             <div className='p-1 w-7 h-7'>{b.icon}</div>
-                            <div className={'font-weight-600 pl-1 pr-2 '}>{b.text}</div>
+                            <div className={'font-weight-600 pl-1 pr-2'}>{b.text}</div>
                         </>
                     )}
                 </button>

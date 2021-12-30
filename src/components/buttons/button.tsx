@@ -48,7 +48,8 @@ export default function Button(props: {
             {icon && (
                 <div
                     className={
-                        'p-2 w-9 h-9 z-0  ' + (text !== undefined ? '-mr-2.5 ' : ' ')
+                        'p-2 w-9 h-9 z-0  ' +
+                        (text !== undefined ? '-mr-2.5 hidden sm:block' : ' ')
                     }
                 >
                     {icon}
@@ -67,7 +68,9 @@ export default function Button(props: {
                 </div>
             )}
             {text !== undefined && (
-                <div className={'font-weight-600 px-2.5 z-0'}>{text}</div>
+                <div className={'font-weight-600 px-2.5 z-0 text-sm sm:text-base'}>
+                    {text}
+                </div>
             )}
         </button>
     );

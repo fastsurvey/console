@@ -12,8 +12,9 @@ export default function Toggle(props: {
     const {value, setValue} = props;
 
     const sharedClasses = (active: boolean = false) =>
-        'min-w-[3rem] pl-1 pr-3 h-7 rounded flex-row-center ' +
+        'min-w-[3rem] pl-1 pr-3 rounded flex-row-center ' +
         'gap-x-1.5 ringable-dark font-weight-600 ' +
+        'leading-tight py-1.5 ' +
         (props.disabled
             ? active
                 ? 'text-blue-700 bg-blue-300 cursor-not-allowed '
@@ -34,7 +35,7 @@ export default function Toggle(props: {
                 data-cy={`yes ${value ? 'isactive' : 'isinactive'}`}
             >
                 <div
-                    className={`w-4.5 h-4.5 ${
+                    className={`w-4.5 h-4.5 flex-shrink-0 ${
                         value ? 'svg-toggle-true' : 'svg-toggle-false'
                     }`}
                 >
@@ -49,7 +50,7 @@ export default function Toggle(props: {
                 data-cy={`no ${!value ? 'isactive' : 'isinactive'}`}
             >
                 <div
-                    className={`w-4 h-4 ${
+                    className={`w-4 h-4 flex-shrink-0 ${
                         !value ? 'svg-toggle-true' : 'svg-toggle-false'
                     }`}
                 >

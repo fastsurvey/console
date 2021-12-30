@@ -12,7 +12,7 @@ export function DayButton(props: {
         <button
             style={props.style}
             className={
-                'py-1 md:py-0 w-7 h-5 -mx-0.5 px-0.5 text-center ' +
+                'w-8 h-7 sm:h-5 text-center ' +
                 'rounded-sm ringable z-20 ' +
                 (props.dayIsSelected
                     ? 'bg-red-500 text-red-50 z-0 font-weight-700 '
