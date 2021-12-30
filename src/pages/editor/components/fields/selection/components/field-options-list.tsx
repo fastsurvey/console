@@ -4,7 +4,6 @@ import {animateScroll} from 'react-scroll';
 import {templateUtils} from '/src/utilities';
 import {Label} from '/src/components';
 import {types} from '/src/types';
-import {last} from 'lodash';
 
 function FieldOptionsList(props: {
     fieldConfig: types.SelectionField;
@@ -16,28 +15,22 @@ function FieldOptionsList(props: {
         (_, i) => optionRefs.current[i] ?? createRef(),
     );
 
-    const [focusLastIsDue, setFocusLastIsDue] = useState(false);
+    const [fieldToFocus, setFieldToFocus] = useState(-1);
 
-    function addFieldOption() {
-        props.setLocalFieldConfig(templateUtils.option('', props.fieldConfig));
+    function addFieldOption(newIndex: number) {
+        props.setLocalFieldConfig(templateUtils.option(newIndex, props.fieldConfig));
         // Suitable for 1rem = 16px
         animateScroll.scrollMore(56, {duration: 150});
 
-        setFocusLastIsDue(true);
+        setFieldToFocus(newIndex);
     }
 
     useEffect(() => {
-        if (focusLastIsDue) {
-            try {
-                optionRefs.current[
-                    props.fieldConfig.options.length - 1
-                ].current.focus();
-            } catch (e) {
-                console.log(e, optionRefs.current);
-            }
-            setFocusLastIsDue(false);
+        if (fieldToFocus !== -1) {
+            optionRefs.current[fieldToFocus].current.focus();
+            setFieldToFocus(-1);
         }
-    }, [focusLastIsDue]);
+    }, [fieldToFocus]);
 
     return (
         <div className='w-full flex-col-right gap-y-1' data-cy='options-list'>
@@ -64,9 +57,12 @@ function FieldOptionsList(props: {
                             })
                         }
                         onKeyDown={(e) => {
-                            if (e.key === 'Escape' || e.key === 'Enter') {
+                            if (e.key === 'Escape') {
                                 // @ts-ignore
                                 e.target.blur();
+                            }
+                            if (e.key === 'Enter') {
+                                addFieldOption(optionIndex + 1);
                             }
                         }}
                         className={
@@ -102,7 +98,7 @@ function FieldOptionsList(props: {
             ))}
             <div className={'w-full pr-[2.375rem] h-9 mb-1'}>
                 <button
-                    onClick={addFieldOption}
+                    onClick={() => addFieldOption(props.fieldConfig.options.length)}
                     className={
                         'w-full h-full rounded flex-row-left px-3 ringable ' +
                         'text-sm font-weight-500 text-gray-700 cursor-pointer ' +

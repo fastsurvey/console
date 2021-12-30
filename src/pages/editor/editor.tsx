@@ -193,7 +193,6 @@ function Editor(props: {
     }
 
     function setLocalFieldConfig(fieldConfigChanges: object, newIndex: number) {
-        console.debug({fieldConfigChanges, newIndex});
         const newConfig = JSON.parse(JSON.stringify(localConfig));
 
         newConfig.fields[newIndex] = {
