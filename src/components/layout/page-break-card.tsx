@@ -14,7 +14,7 @@ function PageBreakCard(props: {
             className={
                 'w-full flex-row-center no-selection ' +
                 'font-weight-600 text-base leading-10 ' +
-                styleUtils.color.fieldTypeToClasses('break')
+                'text-gray-700 svg-field-gray'
             }
         >
             <div className='w-6 h-6 p-0.5 ml-2 mr-2 flex-shrink-0'>

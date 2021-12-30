@@ -6,6 +6,7 @@ const customColors = {
     blue: {
         50: "#DCEEFB",
         100: "#B6E0FE",
+        150: "#9DD2F9",
         200: "#84C5F4",
         300: "#62B0E8",
         400: "#4098D7",

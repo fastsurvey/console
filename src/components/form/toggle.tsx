@@ -1,4 +1,5 @@
 import React from 'react';
+import {icons} from '/src/assets';
 
 export default function Toggle(props: {
     value: boolean;
@@ -11,14 +12,15 @@ export default function Toggle(props: {
     const {value, setValue} = props;
 
     const sharedClasses = (active: boolean = false) =>
-        'min-w-[3rem] px-3 text-center h-7 ringable-dark font-weight-600 rounded ' +
+        'min-w-[3rem] pl-1 pr-3 h-7 rounded flex-row-center ' +
+        'gap-x-1.5 ringable-dark font-weight-600 ' +
         (props.disabled
             ? active
                 ? 'text-blue-700 bg-blue-300 cursor-not-allowed '
                 : ' text-gray-400 cursor-not-allowed '
             : active
-            ? 'text-blue-900 bg-blue-200 '
-            : ' text-gray-500');
+            ? 'text-blue-900 bg-blue-150 '
+            : ' text-gray-600');
 
     return (
         <div
@@ -31,7 +33,14 @@ export default function Toggle(props: {
                 disabled={props.disabled === true}
                 data-cy={`yes ${value ? 'isactive' : 'isinactive'}`}
             >
-                {props.trueLabel || 'Yes'}
+                <div
+                    className={`w-4.5 h-4.5 ${
+                        value ? 'svg-toggle-true' : 'svg-toggle-false'
+                    }`}
+                >
+                    {icons.checkCircle}
+                </div>
+                <div>{props.trueLabel || 'Yes'}</div>
             </button>
             <button
                 className={sharedClasses(!value)}
@@ -39,7 +48,14 @@ export default function Toggle(props: {
                 disabled={props.disabled === true}
                 data-cy={`no ${!value ? 'isactive' : 'isinactive'}`}
             >
-                {props.falseLabel || 'No'}
+                <div
+                    className={`w-4 h-4 ${
+                        !value ? 'svg-toggle-true' : 'svg-toggle-false'
+                    }`}
+                >
+                    {icons.checkCircle}
+                </div>
+                <div>{props.falseLabel || 'No'}</div>
             </button>
         </div>
     );
