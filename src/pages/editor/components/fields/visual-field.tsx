@@ -19,15 +19,17 @@ function VisualField(props: {
 }) {
     const [collapse, setCollapse] = useState(!props.configIsDiffering);
     const panelRef = useRef<HTMLDivElement>(null);
+    const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
     useEffect(() => {
         setCollapse(!props.configIsDiffering);
-        if (props.configIsDiffering && panelRef.current) {
+        if (props.configIsDiffering) {
             setTimeout(() => {
-                if (panelRef.current) {
-                    panelRef.current.scrollIntoView({behavior: 'smooth'});
-                }
+                panelRef.current?.scrollIntoView({behavior: 'smooth'});
             }, 50);
+            setTimeout(() => {
+                descriptionRef.current?.focus();
+            }, 450);
         }
     }, [props.fieldConfig.local_id]);
 
@@ -99,6 +101,7 @@ function VisualField(props: {
                     <div className='w-full centering-col gap-y-0.5'>
                         <Label text='Description' />
                         <TextArea
+                            ref={descriptionRef}
                             value={props.fieldConfig.description}
                             setValue={(newValue: string) => {
                                 props.setLocalFieldConfig({description: newValue});
