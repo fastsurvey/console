@@ -74,13 +74,13 @@ export declare namespace types {
 
     export type SurveyResults = {
         count: number;
-        [key: string]:
-            | number
-            | {
-                  count: number;
-                  value?: null | {[key: string]: number};
-                  verified?: number;
-              };
+        [key: string]: number | FieldResult;
+    };
+
+    export type FieldResult = {
+        count: number;
+        value?: null | {[key: string]: number};
+        verified?: number;
     };
 
     export type SurveySubmission = {

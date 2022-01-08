@@ -4,6 +4,7 @@ import SelectionResults from './field-results/selection-results';
 import {styleUtils} from '/src/utilities';
 import {MarkdownContent} from '/src/components/layout/markdown-content';
 import {icons} from '/src/assets';
+import EmailResults from './field-results/email-results';
 
 function Field(props: {
     identifierToOrder: {[key: string]: number};
@@ -17,27 +18,7 @@ function Field(props: {
 
     if (fieldConfig.type === 'break') {
         return (
-            <div
-                className={
-                    'w-full flex-row-center no-selection ' +
-                    'font-weight-600 text-base leading-10 ' +
-                    'text-gray-700 svg-field-gray '
-                }
-            >
-                <div className='w-6 h-6 p-0.5 ml-2 mr-2 flex-shrink-0'>
-                    {styleUtils.icons.fieldTypeToIcon(fieldConfig.type)}
-                </div>
-                <div
-                    className={
-                        'flex flex-col items-start justify-start md:flex-row md:items-center '
-                    }
-                >
-                    <div className='flex-shrink-0 mr-3 capitalize md:mb-0 font-weight-600 whitespace-nowrap'>
-                        Page Break
-                    </div>
-                </div>
-                <div className='flex-grow h-0 translate-y-px border-b-2 border-gray-300 border-dashed' />
-            </div>
+            <div className='w-full h-0 translate-y-px border-b-2 border-gray-300 border-dashed' />
         );
     }
 
@@ -61,19 +42,30 @@ function Field(props: {
                     }
                     onClick={() => setMarkdownOpen(!markdownOpen)}
                 >
-                    <div className='w-6 h-6 p-0.5 ml-2 mr-2 flex-shrink-0'>
-                        {styleUtils.icons.fieldTypeToIcon(fieldConfig.type)}
-                    </div>
                     <div
                         className={
-                            'flex flex-col items-start justify-start md:flex-row md:items-center '
+                            ' h-0 translate-y-px w-1.5 ' +
+                            'border-gray-300 group-hover:border-gray-400 ' +
+                            (!markdownOpen ? 'border-b-2 border-dashed ' : '')
                         }
-                    >
-                        <div className='flex flex-row items-baseline flex-shrink-0 mr-3 capitalize md:mb-0 font-weight-600'>
-                            Markdown
-                            <span className='hidden ml-[0.3rem] sm:block'>Content</span>
-                        </div>
+                    />
+                    <div className='w-6 h-6 p-0.5 mx-0.5 flex-shrink-0'>
+                        {styleUtils.icons.fieldTypeToIcon(fieldConfig.type)}
                     </div>
+                    {markdownOpen && (
+                        <div
+                            className={
+                                'flex flex-col items-start justify-start md:flex-row md:items-center ml-1.5 '
+                            }
+                        >
+                            <div className='flex flex-row items-baseline flex-shrink-0 mr-3 capitalize md:mb-0 font-weight-600'>
+                                Markdown
+                                <span className='hidden ml-[0.3rem] sm:block'>
+                                    Content
+                                </span>
+                            </div>
+                        </div>
+                    )}
                     <div
                         className={
                             'flex-grow h-0 translate-y-px ' +
@@ -83,7 +75,7 @@ function Field(props: {
                     />
                     <div
                         className={
-                            'w-7 h-7 p-0.5 my-1.5 ml-1 transform cursor-pointer ' +
+                            'w-7 h-7 p-0.5 my-1.5 transform cursor-pointer ' +
                             'opacity-70 group-hover:opacity-100 rounded ringable-dark ' +
                             (!markdownOpen ? ' ' : 'rotate-180 ')
                         }
@@ -94,7 +86,7 @@ function Field(props: {
                         className={
                             'h-0 translate-y-px w-2 ' +
                             (!markdownOpen
-                                ? 'border-b-2 border-gray-300 border-dashed'
+                                ? 'border-b-2 border-gray-300 group-hover:border-gray-400 border-dashed '
                                 : '')
                         }
                     />
@@ -107,14 +99,13 @@ function Field(props: {
     }
 
     // @ts-ignore
-    const fieldResults: any = results[fieldConfig.identifier].value;
+    const fieldResult: types.FieldResult = results[fieldConfig.identifier];
     // @ts-ignore
     const fieldCount: any = results[fieldConfig.identifier].count;
 
     const summaryProps: any = {
         fieldConfig: fieldConfig,
-        fieldResults: fieldResults,
-        count: fieldCount,
+        fieldResult: fieldResult,
     };
 
     // TODO: Trucate field description accordingly (maybe show at most n lines)
@@ -164,8 +155,19 @@ function Field(props: {
                     <SelectionResults {...summaryProps} />
                 </VisualField>
             );
-        case 'text':
         case 'email':
+            if (fieldConfig.verify) {
+                return (
+                    <VisualField
+                        subtitle={`verification ${
+                            fieldConfig.verify ? '' : 'not'
+                        } required`}
+                    >
+                        <EmailResults {...summaryProps} />
+                    </VisualField>
+                );
+            } // skips to case 'text' if verify=false
+        case 'text':
             return (
                 <section
                     className={

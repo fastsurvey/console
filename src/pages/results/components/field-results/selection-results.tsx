@@ -4,8 +4,7 @@ import PercentageBarRow from './percentage-bar-row';
 
 export default function SelectionResults(props: {
     fieldConfig: types.SelectionField;
-    fieldResults: any;
-    count: number;
+    fieldResult: types.FieldResult;
 }) {
     return (
         <>
@@ -13,8 +12,12 @@ export default function SelectionResults(props: {
                 <PercentageBarRow
                     key={index}
                     index={index}
-                    total={props.count}
-                    count={props.fieldResults[option.title]}
+                    total={props.fieldResult.count}
+                    count={
+                        props.fieldResult.value
+                            ? props.fieldResult.value[option.title]
+                            : 0
+                    }
                     title={option.title}
                 />
             ))}
