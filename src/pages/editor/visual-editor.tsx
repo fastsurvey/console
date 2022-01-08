@@ -19,6 +19,7 @@ function VisualEditor(props: {
     pasteField(index: number): void;
     removeField(index: number): void;
 
+    configIsDiffering: boolean;
     saveState(configChanges?: object): void;
     revertState(): void;
 
@@ -74,6 +75,7 @@ function VisualEditor(props: {
                             setLocalFieldConfig={(newFieldConfig: object) =>
                                 props.setLocalFieldConfig(newFieldConfig, index)
                             }
+                            configIsDiffering={props.configIsDiffering}
                             disabled={props.submittingConfig}
                             updateValidation={(newState: types.ValidationResult) =>
                                 props.updateValidation(index + 1, newState)

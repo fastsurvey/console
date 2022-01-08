@@ -1,5 +1,6 @@
 import {cloneDeep, constant, every, max, times} from 'lodash';
 import React, {useEffect, useState} from 'react';
+import {flushSync} from 'react-dom';
 import {useHistory} from 'react-router-dom';
 import {
     formUtils,
@@ -182,7 +183,7 @@ function Editor(props: {
         // fast. A deep comparison of centralConfig and localConfig is too expensive
         // in my opinion 10ms more input delay on an M1 Pro Chip..
         if (!props.configIsDiffering) {
-            props.markDiffering(true);
+            flushSync(() => props.markDiffering(true));
         }
         setLocalConfigState(
             cloneDeep({
@@ -205,6 +206,7 @@ function Editor(props: {
     return (
         <VisualEditor
             centralConfigName={props.centralConfig.survey_name}
+            configIsDiffering={props.configIsDiffering}
             {...{
                 localConfig,
                 updateValidation,

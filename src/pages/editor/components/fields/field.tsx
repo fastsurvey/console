@@ -11,6 +11,7 @@ interface Props {
     identifierToOrder: {[key: string]: number};
     fieldIndex: number;
     fieldConfig: types.SurveyField;
+    configIsDiffering: boolean;
     setLocalFieldConfig(fieldConfigChanges: object): void;
     disabled: boolean;
     updateValidation(newState: types.ValidationResult): void;
@@ -86,6 +87,7 @@ function Field(props: Props) {
             removeField={props.removeField}
             copyField={copyField}
             validation={props.validation}
+            configIsDiffering={props.configIsDiffering}
         >
             {FieldSettings}
         </VisualField>

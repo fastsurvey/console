@@ -1,12 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {icons} from '/src/assets';
-import {EditorFormCard, Label, TextArea} from '/src/components';
+import {EditorFormCard, PageBreakCard, Label, TextArea} from '/src/components';
 import {types} from '/src/types';
 import {styleUtils} from '/src/utilities';
 import MarkdownFieldEditor from './markdown/markdown-field-editor';
-import PageBreakCard from '../../../../components/layout/page-break-card';
 
-interface Props {
+function VisualField(props: {
     identifierToOrder: {[key: string]: number};
     fieldIndex: number;
     fieldConfig: types.SurveyField;
@@ -16,15 +15,23 @@ interface Props {
     removeField(): void;
     copyField(): void;
     children: React.ReactNode;
-}
-function VisualField(props: Props) {
-    const [collapse, setCollapse] = useState(true);
+    configIsDiffering: boolean;
+}) {
+    const [collapse, setCollapse] = useState(!props.configIsDiffering);
+    const panelRef = useRef<HTMLDivElement>(null);
+
     useEffect(() => {
-        setCollapse(true);
+        setCollapse(!props.configIsDiffering);
+        if (props.configIsDiffering && panelRef.current) {
+            setTimeout(() => {
+                if (panelRef.current) {
+                    panelRef.current.scrollIntoView({behavior: 'smooth'});
+                }
+            }, 50);
+        }
     }, [props.fieldConfig.local_id]);
 
     const [actionLabel, setActionLabel] = useState('');
-
     const buttonCSS =
         'w-7 h-7 p-0.5 m-1.5 opacity-70 hover:opacity-100 rounded ringable-dark ';
     const disabledButtonCSS =
@@ -70,6 +77,7 @@ function VisualField(props: Props) {
     if (props.fieldConfig.type !== 'break') {
         return (
             <EditorFormCard
+                ref={panelRef}
                 label={fieldLabel}
                 mobileLabel={mobileFieldLabel}
                 icon={styleUtils.icons.fieldTypeToIcon(props.fieldConfig.type)}
@@ -121,7 +129,6 @@ function VisualField(props: Props) {
             </EditorFormCard>
         );
     } else {
-        // TODO: Add proper component for page break
         return (
             <PageBreakCard
                 removeField={props.removeField}
