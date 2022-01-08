@@ -113,6 +113,7 @@ function VisualField(props: {
                 )}
                 {props.fieldConfig.type === 'markdown' && (
                     <MarkdownFieldEditor
+                        ref={descriptionRef}
                         value={props.fieldConfig.description}
                         setValue={(newValue: string) => {
                             props.setLocalFieldConfig({description: newValue});
