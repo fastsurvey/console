@@ -66,7 +66,7 @@ const VisualRequestPassword = (props: {
                         loading={props.submissionState === 'submitting'}
                         data-cy='button-submit'
                     />{' '}
-                    <div className='flex-max' />
+                    <div className='flex-grow' />
                 </>
             )}
             {props.submissionState === 'success' && (
@@ -79,7 +79,7 @@ const VisualRequestPassword = (props: {
                         onClick={() => props.setSubmissionState('pending')}
                         data-cy='button-typo'
                     />{' '}
-                    <div className='flex-max' />
+                    <div className='flex-grow' />
                 </>
             )}
             <Link

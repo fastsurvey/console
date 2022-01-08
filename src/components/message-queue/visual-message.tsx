@@ -39,7 +39,7 @@ function VisualMessage(props: Props) {
             <div className='py-2.5 text-base leading-6' data-cy='message'>
                 {props.message.text}
             </div>
-            <div className='flex-max' />
+            <div className='flex-grow' />
             <button
                 className={
                     'flex-shrink-0 w-7 h-7 p-0.5 m-1.5 cursor-pointer rounded ' +

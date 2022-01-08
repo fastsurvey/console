@@ -24,7 +24,7 @@ function MessageQueue(props: Props) {
                     onClick={props.closeAllMessages}
                 >
                     <div>close all</div>
-                    <div className='flex-shrink-0 w-10 h-10 p-2 icon-gray'>
+                    <div className='flex-shrink-0 w-10 h-10 p-2 svg-message-queue-close'>
                         {icons.closeCircle}
                     </div>
                 </button>

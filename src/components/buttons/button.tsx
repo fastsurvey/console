@@ -16,21 +16,22 @@ export default function Button(props: {
     switch (variant) {
         case 'flat-light-blue':
             variantClasses = disabled
-                ? 'bg-gray-200 text-gray-400 icon-dark-gray cursor-not-allowed '
-                : 'bg-blue-50 text-blue-900 icon-dark-blue hover:bg-blue-100';
-            loadingClasses = 'bg-blue-100 text-blue-900 icon-dark-blue';
+                ? 'bg-gray-200 text-gray-400 svg-button-flat-disabled cursor-not-allowed '
+                : 'bg-blue-50 text-blue-900 svg-button-flat-light-blue hover:bg-blue-100';
+            loadingClasses = 'bg-blue-100 text-blue-900 svg-button-flat-light-blue';
             break;
         case 'flat-light-red':
             variantClasses = disabled
-                ? 'bg-gray-200 text-gray-400 icon-dark-gray cursor-not-allowed '
-                : 'bg-red-50 text-red-900 icon-dark-red hover:bg-red-100';
-            loadingClasses = 'bg-red-100 text-red-900 icon-dark-red';
+                ? 'bg-gray-200 text-gray-400 svg-button-flat-disabled cursor-not-allowed '
+                : 'bg-red-50 text-red-900 svg-button-flat-light-red hover:bg-red-100';
+            loadingClasses = 'bg-red-100 text-red-900 svg-button-flat-light-red';
             break;
         default:
             variantClasses = disabled
                 ? 'bg-gray-50 shadow-sm text-gray-700 cursor-not-allowed svg-elevated-button-passive '
                 : 'bg-white hover:bg-gray-100 shadow-sm text-blue-900 svg-elevated-button-active ';
-            loadingClasses = 'bg-gray-50 shadow-sm text-blue-900 icon-blue';
+            loadingClasses =
+                'bg-gray-50 shadow-sm text-blue-900 svg-elevated-button-active';
             break;
     }
 

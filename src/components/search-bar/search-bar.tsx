@@ -11,7 +11,7 @@ function SearchBar(props: {value: string; setValue(v: string): void}) {
         }
     }
     return (
-        <div className='relative flex-max '>
+        <div className='relative flex-grow '>
             <input
                 ref={ref}
                 className={

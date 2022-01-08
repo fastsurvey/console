@@ -73,7 +73,7 @@ const VisualSetPassword = (props: {
                         loading={props.submissionState === 'submitting'}
                         data-cy='button-submit'
                     />{' '}
-                    <div className='flex-max' />
+                    <div className='flex-grow' />
                 </>
             )}
             {props.submissionState === 'success' && (
@@ -85,7 +85,7 @@ const VisualSetPassword = (props: {
                             onClick={props.handleRequest}
                         />
                     </Link>
-                    <div className='flex-max' />
+                    <div className='flex-grow' />
                 </>
             )}
             {props.submissionState === 'invalid-token' && (
@@ -97,7 +97,7 @@ const VisualSetPassword = (props: {
                             onClick={props.handleRequest}
                         />
                     </Link>
-                    <div className='flex-max' />
+                    <div className='flex-grow' />
                 </>
             )}
             {props.submissionState !== 'success' && (

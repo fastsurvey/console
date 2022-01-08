@@ -58,7 +58,7 @@ export default function VisualLogin(props: {
                     loading={props.submitting}
                     data-cy='button-submit'
                 />
-                <div className='flex-max' />
+                <div className='flex-grow' />
                 <div className='flex-col-left'>
                     <Link
                         to='/register'

@@ -76,7 +76,7 @@ function FieldOptionsList(props: {
                     />
                     <button
                         className={
-                            'w-8 h-8 p-1.5 rounded icon-blue ringable ' +
+                            'w-8 h-8 p-1.5 rounded svg-selection-option-remove ringable ' +
                             (props.disabled ? 'opacity-60 cursor-not-allowed ' : ' ')
                         }
                         onClick={(e) => {

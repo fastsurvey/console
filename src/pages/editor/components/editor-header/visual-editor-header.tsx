@@ -56,7 +56,7 @@ function VisualEditorHeader(props: {
                 {props.configIsDiffering && (
                     <button
                         className={
-                            'w-10 h-10 m-1 p-2 ringable rounded icon-gray ' +
+                            'w-10 h-10 m-1 p-2 ringable rounded svg-header-back ' +
                             'absolute -left-14 top-50% transform -translate-y-50% '
                         }
                         onClick={() => props.openMessage('warning-unsaved')}
@@ -69,7 +69,7 @@ function VisualEditorHeader(props: {
                     <Link
                         to='/surveys'
                         className={
-                            'w-10 h-10 m-1 p-2 ringable rounded icon-gray ' +
+                            'w-10 h-10 m-1 p-2 ringable rounded svg-header-back ' +
                             'absolute -left-14 top-50% transform -translate-y-50% hidden lg:block'
                         }
                         data-cy='button-back isactive'

@@ -78,7 +78,9 @@ function VisualDatePicker(props: {
                 onClick={() => setOpen(!open)}
                 disabled={disabled}
             >
-                <div className='p-1 w-7 h-7 icon-dark-gray'>{icons.calendar}</div>
+                <div className='p-1 w-7 h-7 svg-datepicker-calendar'>
+                    {icons.calendar}
+                </div>
                 <div className='px-1'>
                     {date.getDate().toString().padStart(2, '0')}.
                     {(date.getMonth() + 1).toString().padStart(2, '0')}.
@@ -108,8 +110,8 @@ function VisualDatePicker(props: {
                         <button
                             className={
                                 'w-10 h-10 p-1.5 md:w-7 md:h-7 md:p-0.5 ' +
-                                'transform rotate-90 icon-white ' +
-                                'rounded ringable cursor-pointer'
+                                'transform rotate-90 svg-datepicker-chevron ' +
+                                'rounded ringable cursor-pointer '
                             }
                             onClick={prevMonth}
                             disabled={!open}
@@ -132,8 +134,8 @@ function VisualDatePicker(props: {
                         <button
                             className={
                                 'w-10 h-10 p-1.5 md:w-7 md:h-7 md:p-0.5 ' +
-                                'transform -rotate-90 icon-white ' +
-                                'rounded ringable cursor-pointer'
+                                'transform -rotate-90 svg-datepicker-chevron ' +
+                                'rounded ringable cursor-pointer '
                             }
                             onClick={nextMonth}
                             disabled={!open}
@@ -251,9 +253,9 @@ function VisualDatePicker(props: {
                             <button
                                 className={
                                     'w-10 h-10 p-1.5 md:w-9 md:h-7 md:p-0.5 ' +
-                                    'transform rotate-180 icon-white ' +
+                                    'transform rotate-180 ' +
                                     'rounded ringable cursor-pointer ' +
-                                    'focus:bg-gray-600'
+                                    'focus:bg-gray-600 svg-datepicker-plus-minus'
                                 }
                                 onClick={() =>
                                     setHourTimestamp({
@@ -270,7 +272,7 @@ function VisualDatePicker(props: {
                             <button
                                 className={
                                     'w-10 h-10 p-1.5 md:w-9 md:h-7 md:p-0.5 ' +
-                                    'transform icon-white focus:bg-gray-600 ' +
+                                    'transform svg-datepicker-plus-minus focus:bg-gray-600 ' +
                                     'rounded ringable cursor-pointer'
                                 }
                                 onClick={() => {
@@ -291,9 +293,9 @@ function VisualDatePicker(props: {
                             <button
                                 className={
                                     'w-10 h-10 p-1.5 md:w-9 md:h-7 md:p-0.5 ' +
-                                    'transform rotate-180 icon-white ' +
+                                    'transform rotate-180 ' +
                                     'rounded ringable cursor-pointer ' +
-                                    'focus:bg-gray-600'
+                                    'focus:bg-gray-600 svg-datepicker-plus-minus'
                                 }
                                 onClick={() =>
                                     setHourTimestamp({
@@ -310,7 +312,7 @@ function VisualDatePicker(props: {
                             <button
                                 className={
                                     'w-10 h-10 p-1.5 md:w-9 md:h-7 md:p-0.5 ' +
-                                    'transform icon-white focus:bg-gray-600 ' +
+                                    'transform svg-datepicker-plus-minus focus:bg-gray-600 ' +
                                     'rounded ringable cursor-pointer'
                                 }
                                 onClick={() => {

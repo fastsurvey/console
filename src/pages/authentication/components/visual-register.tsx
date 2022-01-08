@@ -81,7 +81,7 @@ export default function VisualRegister(props: {
                         loading={props.submitting}
                         data-cy='button-submit'
                     />
-                    <div className='flex-max' />
+                    <div className='flex-grow' />
                     <Link
                         to='/login'
                         className='px-1.5 py-0.5 -mx-1.5 text-sm text-gray-400 rounded font-weight-600 ringable'

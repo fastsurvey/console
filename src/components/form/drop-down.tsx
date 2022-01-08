@@ -36,7 +36,7 @@ export default function DropDown(props: {
                 {label}
                 <div
                     className={
-                        'absolute top-0 right-0 p-1.5 h-9 w-9 icon-gray ' +
+                        'absolute top-0 right-0 p-1.5 h-9 w-9 svg-dropdown-chevron ' +
                         'transform transition-transform duration-150 ' +
                         (open ? 'rotate-180 ' : 'rotate-0 ')
                     }
@@ -76,8 +76,8 @@ export default function DropDown(props: {
                             }
                         }}
                     >
-                        <div className='w-7 h-7 p-1.5 icon-blue'>
-                            {option.value === value ? icons.checkCircle : ''}
+                        <div className='w-5 h-5 p-1.5 svg-dropdown-select'>
+                            {option.value === value && icons.circle}
                         </div>
                         {option.label}
                     </button>
