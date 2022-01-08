@@ -18,7 +18,7 @@ function VisualSurveyList(props: {
             className={
                 'px-4 lg:px-0 py-20 md:py-32 ' +
                 'min-h-screen w-full z-0 flex-col-top ' +
-                'overflow-y-scroll overflow-x-hidden bg-gray-100'
+                'overflow-y-scroll overflow-x-hidden bg-gray-150'
             }
         >
             <div className='w-full max-w-4xl flex-col-center'>
@@ -54,9 +54,9 @@ function VisualSurveyList(props: {
                         className={
                             'relative w-full px-2 py-6 flex-row-center min-h-[8.25rem] ' +
                             'border-2 border-gray-400 border-dashed rounded ' +
-                            'text-opacity-60 border-gray-300 ringable ' +
-                            'hover:text-opacity-100 hover:border-gray-400 ' +
-                            'focus:text-opacity-100 focus:hover:border-gray-400 ' +
+                            'text-opacity-70 border-gray-300 ringable ' +
+                            'hover:text-opacity-100 hover:border-gray-500 ' +
+                            'focus:text-opacity-100 focus:hover:border-gray-500 ' +
                             'text-base text-blue-900 font-weight-600'
                         }
                         onClick={props.addSurvey}

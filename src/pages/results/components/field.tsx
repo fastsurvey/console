@@ -126,7 +126,7 @@ function Field(props: {
     const VisualField = (props: {children: React.ReactNode; subtitle: string}) => (
         <section
             className={
-                'w-full bg-white rounded shadow px-4 py-3 ' +
+                'w-full bg-white rounded shadow-sm px-4 py-3 ' +
                 'flex flex-col md:flex-row items-start justify-start ' +
                 'space-y-4 md:space-y-0 md:space-x-4'
             }
@@ -169,13 +169,14 @@ function Field(props: {
             return (
                 <section
                     className={
-                        'w-full px-4 py-2.5 text-gray-800 rounded relative group cursor-not-allowed ' +
-                        'border-2 border-gray-300 border-dashed flex-col-left text-left'
+                        'w-full px-4 py-2.5 text-gray-800 rounded ' +
+                        'relative group cursor-not-allowed ' +
+                        'bg-gray-75 flex-col-left text-left'
                     }
                     data-cy={`field-container-${fieldIndex} isnotaggregated`}
                 >
                     <h2
-                        className='w-full text-base leading-tight text-gray-600 font-weight-700'
+                        className='w-full text-base leading-tight text-gray-700 font-weight-600'
                         data-cy='description'
                     >
                         <span className='line-clamp-2 hyphens'>{fieldLabel}</span>{' '}
@@ -187,8 +188,8 @@ function Field(props: {
                         className={
                             'flex-row-left px-4 text-transparent group-hover:text-gray-900 z-10 ' +
                             'absolute top-0 left-0 w-full h-full leading-tight ' +
-                            'bg-gray-100 bg-opacity-0 group-hover:bg-opacity-100 ' +
-                            'font-weight-500 text-sm rounded-sm'
+                            'bg-gray-75 bg-opacity-0 group-hover:bg-opacity-100 ' +
+                            'font-weight-500 text-sm rounded'
                         }
                     >
                         <div>

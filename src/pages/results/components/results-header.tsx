@@ -92,7 +92,8 @@ function ResultsHeader(props: {
 
                 <h1
                     className={
-                        'pr-4 text-2xl md:text-xl ' +
+                        'pr-4 text-2xl md:text-xl leading-8 ' +
+                        'min-h-[2rem] py-1 md:py-0 ' +
                         'text-gray-800 font-weight-700 truncate'
                     }
                     data-cy='title'
@@ -111,15 +112,15 @@ function ResultsHeader(props: {
 
             <a
                 href={`https://${frontendUrl}/${username}/${survey_name}`}
-                className='px-1.5 py-0.5 transform -translate-x-1.5 rounded ringable w-full'
+                className='px-1.5 py-0.5 transform -translate-x-1.5 rounded ringable max-w-full'
                 target='_blank'
                 rel='noopener noreferrer'
                 data-cy='link-to-frontend isactive'
             >
                 {linkContent}
             </a>
-            <div className='flex-shrink-0 mt-2 mb-2 md:mb-0'>
-                <TimePill config={props.config} flat />
+            <div className='flex-shrink-0 mt-1 mb-2 md:mb-0'>
+                <TimePill config={props.config} flat={false} />
             </div>
         </div>
     );

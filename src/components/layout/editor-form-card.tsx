@@ -36,7 +36,7 @@ function EditorFormCard(props: {
     return (
         <div
             className={
-                'relative centering-col w-full shadow-md rounded ' + props.className
+                'relative centering-col w-full shadow-sm rounded ' + props.className
             }
             data-cy={props['data-cy']}
         >

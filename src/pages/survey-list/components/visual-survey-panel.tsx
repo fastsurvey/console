@@ -28,7 +28,7 @@ function VisualConfigPanel(props: Props) {
 
     return (
         <section
-            className={'w-full rounded shadow centering-col bg-white '}
+            className={'w-full rounded shadow-sm centering-col bg-white '}
             data-cy='survey-list-panel'
         >
             <div className={'w-full p-3 bg-white rounded-t flex-col-left'}>
@@ -79,7 +79,7 @@ function VisualConfigPanel(props: Props) {
                 >
                     <div
                         className={
-                            'px-3 h-9 bg-gray-100 no-selection flex-row-center ' +
+                            'px-3 h-9 bg-gray-75 no-selection flex-row-center ' +
                             'rounded-bl group-focus:rounded ' +
                             'group-hover:bg-blue-50 group-focus:bg-blue-50 ' +
                             'text-center text-sm text-gray-700 font-weight-600 ' +
@@ -96,7 +96,7 @@ function VisualConfigPanel(props: Props) {
                 >
                     <div
                         className={
-                            'px-3 h-9 bg-gray-100 no-selection flex-row-center ' +
+                            'px-3 h-9 bg-gray-75 no-selection flex-row-center ' +
                             'group-focus:rounded ' +
                             'group-hover:bg-blue-50 group-focus:bg-blue-50 ' +
                             'text-center text-sm text-gray-700 font-weight-600 ' +
@@ -110,7 +110,7 @@ function VisualConfigPanel(props: Props) {
                     <button
                         className={
                             'p-2 h-9 rounded-br focus:rounded ringable fill-current ' +
-                            'bg-gray-100 hover:bg-blue-50 focus:bg-blue-50 ' +
+                            'bg-gray-75 hover:bg-blue-50 focus:bg-blue-50 ' +
                             'text-gray-700 hover:text-blue-900 focus:text-blue-900 '
                         }
                         onClick={() => setDropDownIsVisible(!dropDownIsVisible)}

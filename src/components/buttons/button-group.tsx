@@ -14,7 +14,7 @@ export default function ButtonGroup(props: {
     const last = (index: number) => index === props.buttons.length - 1;
 
     return (
-        <div className='flex-shrink-0 bg-gray-200 rounded shadow centering-row whitespace-nowrap gap-x-[2.6px]'>
+        <div className='flex-shrink-0 bg-gray-200 rounded shadow-sm centering-row whitespace-nowrap gap-x-[2.6px]'>
             {props.buttons.map((b, index: number) => (
                 <button
                     key={index}
@@ -24,7 +24,7 @@ export default function ButtonGroup(props: {
                         (first(index) ? 'rounded-l ' : ' ') +
                         (last(index) ? 'rounded-r ' : ' ') +
                         (b.disabled
-                            ? 'bg-gray-100 text-gray-700 cursor-default svg-elevated-button-passive '
+                            ? 'bg-gray-50 text-gray-500 cursor-default svg-elevated-button-passive '
                             : 'bg-white hover:bg-gray-100 text-blue-900 cursor-pointer svg-elevated-button-active ')
                     }
                     onClick={b.onClick && !b.disabled ? b.onClick : () => {}}

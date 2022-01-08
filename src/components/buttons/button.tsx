@@ -28,9 +28,9 @@ export default function Button(props: {
             break;
         default:
             variantClasses = disabled
-                ? 'bg-gray-50 shadow text-gray-700 cursor-not-allowed svg-elevated-button-passive '
-                : 'bg-white hover:bg-gray-100 shadow text-blue-900 svg-elevated-button-active ';
-            loadingClasses = 'bg-gray-50 shadow text-blue-900 icon-blue';
+                ? 'bg-gray-50 shadow-sm text-gray-700 cursor-not-allowed svg-elevated-button-passive '
+                : 'bg-white hover:bg-gray-100 shadow-sm text-blue-900 svg-elevated-button-active ';
+            loadingClasses = 'bg-gray-50 shadow-sm text-blue-900 icon-blue';
             break;
     }
 

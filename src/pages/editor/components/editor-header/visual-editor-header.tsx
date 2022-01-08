@@ -52,7 +52,7 @@ function VisualEditorHeader(props: {
                 )}
                 <Button {...props.timeButton} disabled={props.configIsDiffering} />
             </div>
-            <div className={'relative w-full flex-row-top'}>
+            <div className={'relative w-full flex-row-top mb-1.5'}>
                 {props.configIsDiffering && (
                     <button
                         className={
@@ -79,7 +79,8 @@ function VisualEditorHeader(props: {
                 )}
                 <h1
                     className={
-                        'pr-4 text-2xl md:text-xl ' +
+                        'pr-4 text-2xl md:text-xl leading-8 ' +
+                        'min-h-[2rem] py-1 md:py-0 ' +
                         'text-gray-800 font-weight-700 truncate'
                     }
                     data-cy='title'
@@ -111,7 +112,7 @@ function VisualEditorHeader(props: {
             {!props.configIsDiffering && (
                 <a
                     href={`https://${frontendUrl}/${username}/${survey_name}`}
-                    className='px-1.5 py-0.5 transform -translate-x-1.5 rounded ringable w-full'
+                    className='px-1.5 py-0.5 transform -translate-x-1.5 rounded ringable max-w-full'
                     target='_blank'
                     rel='noopener noreferrer'
                     data-cy='link-to-frontend isactive'
@@ -119,7 +120,7 @@ function VisualEditorHeader(props: {
                     {linkContent}
                 </a>
             )}
-            <div className='flex-shrink-0 mt-2'>
+            <div className='flex-shrink-0 mt-1'>
                 <TimePill config={props.localConfig} flat />
             </div>
         </div>

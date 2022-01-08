@@ -27,7 +27,7 @@ const VisualEditorSettings = (props: {
 
     return (
         <div
-            className='mt-4 bg-white rounded shadow-md flex-col-center'
+            className='mt-4 bg-white rounded shadow-sm flex-col-center'
             data-cy='editor-settings'
         >
             <div className='z-10 w-full px-4 py-1.5 border-b border-gray-300 md:hidden flex flex-row items-center justify-center'>
