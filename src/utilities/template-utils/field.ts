@@ -62,8 +62,9 @@ export const fieldIdentifier = (config: types.SurveyConfig): number => {
     // adds new ones again, all without saving the config
 
     const nextBackendId: number = config.next_identifier;
-    const maxLocalId: number = max(config.fields.map((f) => f.identifier)) || -1;
+    const maxLocalId: any = max(config.fields.map((f) => f.identifier));
+    const nextLocalId = maxLocalId === undefined ? 0 : maxLocalId + 1;
 
     // @ts-ignore
-    return max([nextBackendId, maxLocalId + 1]);
+    return max([nextBackendId, nextLocalId]);
 };
