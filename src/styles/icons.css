@@ -208,4 +208,11 @@
     .svg-selection-option-remove .secondary {
         @apply fill-gray-500;
     }
+
+    .svg-settings-generate-id .primary {
+        @apply fill-gray-200;
+    }
+    .svg-settings-generate-id .secondary {
+        @apply fill-gray-500;
+    }
 }

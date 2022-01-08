@@ -22,9 +22,6 @@ const VisualEditorSettings = (props: {
     useEffect(() => setTabIndex(0), [props.config.local_id]);
     const tabs = ['About', 'Visibility'];
 
-    // TODO: Implement optional start time
-    // TODO: Implement optional end time
-
     return (
         <div
             className='mt-4 bg-white rounded shadow-sm flex-col-center'
@@ -150,10 +147,8 @@ const VisualEditorSettings = (props: {
                                 />
                                 <button
                                     className={
-                                        'w-8 h-8 p-1 mx-0.5 rounded ringable ' +
-                                        (!props.disabled
-                                            ? 'svg-elevated-button-active '
-                                            : 'svg-elevated-button-passive cursor-not-allowed ')
+                                        'w-8 h-8 p-1 mx-0.5 rounded ringable svg-settings-generate-id ' +
+                                        (!props.disabled ? '' : 'cursor-not-allowed ')
                                     }
                                     onClick={() => {
                                         if (!props.disabled) {

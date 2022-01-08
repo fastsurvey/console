@@ -1,4 +1,6 @@
+import {join} from 'lodash';
 import React, {useState} from 'react';
+import {icons} from '/src/assets';
 import {MarkdownContent} from '/src/components/layout/markdown-content';
 
 type Tab = 'plain text' | 'split view' | 'rendered';
@@ -13,12 +15,48 @@ const MarkdownFieldEditor = React.forwardRef(
         ref: any,
     ) => {
         const [tab, setTab] = useState<Tab>('plain text');
+        const [detailIsOpen, setDetailIsOpen] = useState(false);
+        const toggleDetail = () => {
+            setDetailIsOpen(!detailIsOpen);
+        };
 
-        // TODO: Add help box to explain markdown syntax
+        function addDemoContent() {
+            props.setValue(
+                join(
+                    [
+                        '# Superbig Heading',
+                        '## Big Heading',
+                        '### Medium Heading',
+                        '#### ...',
+                        'You can also write plain text which will be displayed as regular paragraphs. This text can include **bold text**, *italicized text* or [links](https://www.example.com).',
+                        '[links can be standalone as well](https://www.example.com)',
+                        'You can use images from the internet:',
+                        '![text describing the image, will be displayed if URL invali](https://images.unsplash.com/photo-1641511277205-ae6393618996?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=928&q=80)',
+                        'Lists are fancy to (here is an ordered one):\n1. First item\n2. Second item\n3. Third item',
+                        'Lists are fancy to (here is an unordered one):\n- First item\n- Second item\n- Third item',
+                        '---',
+                        'Separate your content with a horizontal line like this one 👆.',
+                        'Or copy & paste emojis from [https://getemoji.com/](https://getemoji.com/)',
+                    ],
+                    '\n\n',
+                ),
+            );
+            setTab('split view');
+        }
 
         return (
-            <div className='w-full -mt-1 space-y-3 flex-col-center'>
+            <div className='w-full -mt-1 space-y-3 flex-col-left'>
                 <div className='w-full space-x-2 flex-row-left'>
+                    <button
+                        className={
+                            'w-9 h-7 px-2 py-1 md:w-6 md:h-6 md:p-1 ' +
+                            'svg-label-info cursor-pointer ' +
+                            'relative block ringable rounded z-50 ml-0.5'
+                        }
+                        onClick={toggleDetail}
+                    >
+                        {detailIsOpen ? icons.closeCircle : icons.information}
+                    </button>
                     {['plain text', 'split view', 'rendered'].map((t: any) => (
                         <button
                             key={t}
@@ -37,6 +75,41 @@ const MarkdownFieldEditor = React.forwardRef(
                         </button>
                     ))}
                 </div>
+                {detailIsOpen && (
+                    <div
+                        className={
+                            ' p-3 w-full mb-1 rounded ' +
+                            'bg-gray-800 text-gray-100 ' +
+                            'text-sm font-weight-500 text-justify'
+                        }
+                    >
+                        <p className='mb-2'>
+                            Markdown is a formatting language that can be used to
+                            structure blocks of text. We currently support: headings,
+                            bold/italic text, links, lists, tables and images from the
+                            internet.
+                        </p>
+                        <p className='mb-2'>
+                            You can find a documentation on markdown syntax here:{' '}
+                            <a
+                                className='text-blue-100 underline break-all'
+                                href='https://www.markdownguide.org/cheat-sheet/'
+                                target='_blank'
+                            >
+                                https://www.markdownguide.org/cheat-sheet/
+                            </a>
+                        </p>
+                        <p>
+                            You can also fill this field with some demo content:{' '}
+                            <button
+                                className='text-blue-100 underline break-all'
+                                onClick={addDemoContent}
+                            >
+                                click here
+                            </button>
+                        </p>
+                    </div>
+                )}
                 <div
                     className={'h-px bg-gray-300'}
                     style={{width: 'calc(100% + 1.5rem)'}}
