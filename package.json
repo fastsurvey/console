@@ -9,9 +9,11 @@
     },
     "license": "UNLICENSED",
     "scripts": {
-        "develop": "vite --host",
+        "develop": "export VITE_ENV=\"development\" && vite --host",
         "check-ts": "tsc --noEmit",
         "build": "export VITE_COMMIT_SHA=\"$(git rev-parse --short --verify HEAD)\" && tsc && vite build",
+        "build:development": "export VITE_ENV=\"development\" && yarn build",
+        "build:production": "export VITE_ENV=\"production\" && yarn build",
         "serve": "vite preview",
         "analyze": "source-map-explorer 'dist/assets/*.js'",
         "cypress:integration": "cypress open",
