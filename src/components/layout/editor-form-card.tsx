@@ -30,6 +30,7 @@ const EditorFormCard = React.forwardRef(
             props.setCollapse(!props.collapse);
             updateActionlabel(!props.collapse);
         };
+        console.log('collapse', props.collapse);
 
         const updateActionlabel = (collapse: boolean | undefined) => {
             props.setActionLabel(collapse ? 'expand' : 'collapse');
@@ -58,7 +59,14 @@ const EditorFormCard = React.forwardRef(
                             }
                             onClick={toggle}
                         >
-                            <div className='w-6 h-6 p-0.5 ml-2 mr-2 flex-shrink-0'>
+                            <div
+                                className={
+                                    'w-6 h-6 p-0.5 ml-2 mr-2 flex-shrink-0 ' +
+                                    styleUtils.color.fieldTypeToFieldIconClasses(
+                                        props.fieldType,
+                                    )
+                                }
+                            >
                                 {props.icon}
                             </div>
                             <div
@@ -81,7 +89,14 @@ const EditorFormCard = React.forwardRef(
                             </div>
                         </div>
 
-                        <div className={'relative flex flex-row group '}>
+                        <div
+                            className={
+                                'relative flex flex-row group ' +
+                                styleUtils.color.fieldTypeToActionIconClasses(
+                                    props.fieldType,
+                                )
+                            }
+                        >
                             <div
                                 className={
                                     'absolute top-0 left-0 transform -translate-x-full ' +
@@ -121,7 +136,9 @@ const EditorFormCard = React.forwardRef(
                         <div
                             className={
                                 'w-full flex-col-center gap-y-6 px-3 ' +
-                                (props.collapse ? 'h-0 overflow-hidden ' : 'pt-2 pb-3 ')
+                                (props.collapse
+                                    ? 'h-0 p-0 overflow-hidden '
+                                    : 'pt-2 pb-3 ')
                             }
                         >
                             {props.children}

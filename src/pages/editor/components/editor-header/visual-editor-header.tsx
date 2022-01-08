@@ -121,7 +121,7 @@ function VisualEditorHeader(props: {
                 </a>
             )}
             <div className='flex-shrink-0 mt-1'>
-                <TimePill config={props.localConfig} flat />
+                <TimePill config={props.localConfig} />
             </div>
         </div>
     );

@@ -92,6 +92,7 @@ function VisualEditor(props: {
                     pasteField={() => props.pasteField(props.localConfig.fields.length)}
                     disabled={props.submittingConfig}
                     index={props.localConfig.fields.length}
+                    fullDetail={props.localConfig.fields.length === 0}
                 />
             </div>
         </div>

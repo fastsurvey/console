@@ -31,6 +31,7 @@ const MarkdownFieldEditor = React.forwardRef(
                                 (t === 'split view' ? 'hidden md:block ' : '')
                             }
                             data-cy={`tab-${t.toLowerCase()}`}
+                            disabled={props.disabled}
                         >
                             {t}
                         </button>
@@ -68,7 +69,7 @@ const MarkdownFieldEditor = React.forwardRef(
                                         ? 'bg-gray-200 text-gray-600 cursor-not-allowed '
                                         : 'bg-gray-100 text-gray-800 ')
                                 }
-                                disabled={props.disabled === true}
+                                disabled={props.disabled}
                                 data-cy='input-description'
                             />
                         </div>

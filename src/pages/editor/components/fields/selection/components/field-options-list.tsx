@@ -107,6 +107,7 @@ function FieldOptionsList(props: {
                         'focus:border-transparent focus:bg-gray-100 focus:text-gray-500 '
                     }
                     data-cy='button-add'
+                    disabled={props.disabled}
                 >
                     add option
                 </button>

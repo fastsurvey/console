@@ -13,7 +13,6 @@ function AddFieldButton(props: {
         <button
             className={
                 'flex-row-center rounded px-1 ringable svg-add-field ' +
-                'svg-add-field   ' +
                 'focus:text-gray-600 focus:text-opacity-100 ' +
                 (props.disabled
                     ? 'cursor-not-allowed text-gray-600 '

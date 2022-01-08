@@ -146,30 +146,54 @@
     .svg-field-green .secondary {
         @apply fill-green-700;
     }
+    .svg-field-action-green .primary {
+        @apply fill-green-300;
+    }
+    .svg-field-action-green .secondary {
+        @apply fill-green-700;
+    }
     .svg-field-blue .primary {
-        @apply fill-blue-300;
+        @apply fill-blue-150;
     }
     .svg-field-blue .secondary {
         @apply fill-blue-700;
     }
+    .svg-field-action-blue .primary {
+        @apply fill-blue-300;
+    }
+    .svg-field-action-blue .secondary {
+        @apply fill-blue-700;
+    }
     .svg-field-rose .primary {
-        @apply fill-rose-300;
+        @apply fill-rose-200;
     }
     .svg-field-rose .secondary {
         @apply fill-rose-700;
     }
+    .svg-field-action-rose .primary {
+        @apply fill-rose-300;
+    }
+    .svg-field-action-rose .secondary {
+        @apply fill-rose-700;
+    }
     .svg-field-gray .primary {
-        @apply fill-gray-400;
+        @apply fill-gray-350;
     }
     .svg-field-gray .secondary {
         @apply fill-gray-800;
     }
-
-    .svg-add-field .primary {
+    .svg-field-action-gray .primary {
         @apply fill-gray-400;
     }
+    .svg-field-action-gray .secondary {
+        @apply fill-gray-800;
+    }
+
+    .svg-add-field .primary {
+        @apply fill-gray-350;
+    }
     .svg-add-field .secondary {
-        @apply fill-gray-700;
+        @apply fill-gray-500;
     }
 
     .svg-header-back .primary {

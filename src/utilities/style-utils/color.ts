@@ -4,15 +4,41 @@ export const color = {
     fieldTypeToClasses: (fieldType: types.FieldType | undefined) => {
         switch (fieldType) {
             case 'email':
-                return 'bg-green-75 text-green-900 svg-field-green';
+                return 'bg-green-75 text-green-900';
             case 'selection':
-                return 'bg-blue-75 text-blue-900 svg-field-blue';
             case 'text':
-                return 'bg-blue-75 text-blue-900 svg-field-blue';
+                return 'bg-blue-75 text-blue-900';
             case 'break':
-                return 'bg-rose-75 text-rose-900 svg-field-rose';
             case 'markdown':
-                return 'bg-rose-75 text-rose-900 svg-field-rose';
+                return 'bg-rose-75 text-rose-900';
+            default:
+                throw `Invalid field type: ${fieldType}`;
+        }
+    },
+    fieldTypeToFieldIconClasses: (fieldType: types.FieldType | undefined) => {
+        switch (fieldType) {
+            case 'email':
+                return 'svg-field-green';
+            case 'selection':
+            case 'text':
+                return 'svg-field-blue';
+            case 'break':
+            case 'markdown':
+                return 'svg-field-rose';
+            default:
+                throw `Invalid field type: ${fieldType}`;
+        }
+    },
+    fieldTypeToActionIconClasses: (fieldType: types.FieldType | undefined) => {
+        switch (fieldType) {
+            case 'email':
+                return 'svg-field-action-green';
+            case 'selection':
+            case 'text':
+                return 'svg-field-action-blue';
+            case 'break':
+            case 'markdown':
+                return 'svg-field-action-rose';
             default:
                 throw `Invalid field type: ${fieldType}`;
         }

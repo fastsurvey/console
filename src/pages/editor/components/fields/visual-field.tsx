@@ -16,13 +16,14 @@ function VisualField(props: {
     copyField(): void;
     children: React.ReactNode;
     configIsDiffering: boolean;
+    collapse: boolean;
+    setCollapse(c: boolean): void;
 }) {
-    const [collapse, setCollapse] = useState(!props.configIsDiffering);
+    const {collapse, setCollapse} = props;
     const panelRef = useRef<HTMLDivElement>(null);
     const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
     useEffect(() => {
-        setCollapse(!props.configIsDiffering);
         if (props.configIsDiffering) {
             setTimeout(() => {
                 panelRef.current?.scrollIntoView({behavior: 'smooth'});
@@ -35,9 +36,9 @@ function VisualField(props: {
 
     const [actionLabel, setActionLabel] = useState('');
     const buttonCSS =
-        'w-7 h-7 p-0.5 m-1.5 opacity-70 hover:opacity-100 rounded ringable-dark ';
+        'w-7 h-7 p-1 my-1.5 mx-0.5 opacity-60 hover:opacity-100 rounded ringable-dark ';
     const disabledButtonCSS =
-        'w-7 h-7 p-0.5 m-1.5 opacity-70 rounded cursor-not-allowed ';
+        'w-7 h-7 p-1 my-1.5 mx-0.5 opacity-60 rounded cursor-not-allowed ';
     const buttons = (
         <>
             <button

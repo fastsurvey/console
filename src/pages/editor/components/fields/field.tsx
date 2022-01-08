@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {clipboardUtils, formUtils, localIdUtils} from '/src/utilities';
 import {types} from '/src/types';
 
@@ -6,6 +6,7 @@ import VisualField from './visual-field';
 import TextSettings from './text/text-settings';
 import SelectionSettings from './selection/selection-settings';
 import EmailSettings from './email/email-settings';
+import MarkdownFieldEditor from './markdown/markdown-field-editor';
 
 interface Props {
     identifierToOrder: {[key: string]: number};
@@ -24,6 +25,7 @@ function Field(props: Props) {
         // eslint-disable-next-line
         [props.fieldConfig.local_id],
     );
+    const [collapse, setCollapse] = useState(!props.configIsDiffering);
 
     function updateLocalFieldConfig(fieldConfigChanges: object) {
         props.updateValidation(
@@ -46,7 +48,7 @@ function Field(props: Props) {
         case 'text':
             FieldSettings = (
                 <TextSettings
-                    disabled={props.disabled}
+                    disabled={props.disabled || collapse}
                     setLocalFieldConfig={updateLocalFieldConfig}
                     fieldConfig={props.fieldConfig}
                 />
@@ -55,7 +57,7 @@ function Field(props: Props) {
         case 'selection':
             FieldSettings = (
                 <SelectionSettings
-                    disabled={props.disabled}
+                    disabled={props.disabled || collapse}
                     setLocalFieldConfig={updateLocalFieldConfig}
                     fieldConfig={props.fieldConfig}
                 />
@@ -64,14 +66,14 @@ function Field(props: Props) {
         case 'email':
             FieldSettings = (
                 <EmailSettings
-                    disabled={props.disabled}
+                    disabled={props.disabled || collapse}
                     setLocalFieldConfig={updateLocalFieldConfig}
                     fieldConfig={props.fieldConfig}
                 />
             );
             break;
-        case 'break':
         case 'markdown':
+        case 'break':
             break;
         default:
             throw `Invalid field: ${props.fieldConfig}`;
@@ -88,6 +90,8 @@ function Field(props: Props) {
             copyField={copyField}
             validation={props.validation}
             configIsDiffering={props.configIsDiffering}
+            collapse={collapse}
+            setCollapse={setCollapse}
         >
             {FieldSettings}
         </VisualField>

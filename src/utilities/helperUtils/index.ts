@@ -1,4 +1,4 @@
-import {concat} from 'lodash';
+import {concat, parseInt} from 'lodash';
 import {useEffect} from 'react';
 
 function insertIntoArray<Type>(array: Type[], index: number, element: Type): Type[] {
@@ -10,7 +10,8 @@ function removeFromArray<Type>(array: Type[], index: number): Type[] {
 }
 
 function formatAtoi(text: string) {
-    return text.length > 0 ? parseInt(text) : 0;
+    const parsed = parseInt(text);
+    return parsed > 0 ? parsed : 0;
 }
 
 function useEvent(event: any, handler: any) {

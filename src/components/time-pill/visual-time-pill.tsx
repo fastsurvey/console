@@ -29,7 +29,7 @@ function VisualTimePill(props: {
     return (
         <div
             className={
-                'rounded-sm font-weight-600 text-sm no-selection ' +
+                'rounded font-weight-600 text-sm no-selection ' +
                 colorClasses +
                 (!props.flat ? 'shadow-sm ' : ' ') +
                 (props.shrinkOnMobile ? 'p-1.5 sm:px-2.5 sm:py-0.5 ' : 'px-2.5 py-0.5 ')
