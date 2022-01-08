@@ -1,28 +1,52 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {types} from '/src/types';
 import {TimePill} from '/src/components';
-import {filter, isEmpty} from 'lodash';
+import {filter, isEmpty, reduce, initial, last} from 'lodash';
 import {icons} from '/src/assets';
 import {Link} from 'react-router-dom';
+import {helperUtils} from '/src/utilities';
 
 const VITE_ENV = import.meta.env.VITE_ENV;
 
 let baseUrl = VITE_ENV === 'development' ? 'dev.fastsurvey.de' : 'fastsurvey.de';
 
-interface Props {
+function VisualConfigPanel(props: {
     account: types.Account;
     config: types.SurveyConfig;
     openRemoveModal(): void;
     openResetModal(): void;
     openDuplicateModal(): void;
-}
-function VisualConfigPanel(props: Props) {
+}) {
     const {title, survey_name} = props.config;
     const {username} = props.account;
 
-    const usesAuthentication = !isEmpty(
-        filter(props.config.fields, (f) => f.type === 'email' && f.verify),
-    );
+    const usesAuthentication = useMemo(() => {
+        return !isEmpty(
+            filter(props.config.fields, (f) => f.type === 'email' && f.verify),
+        );
+    }, [props.config]);
+
+    const pageCount = useMemo(() => {
+        return reduce(
+            props.config.fields,
+            (acc: types.SurveyField[][], f) =>
+                f.type === 'break'
+                    ? [...acc, []]
+                    : // @ts-ignore
+                      [...initial(acc), [...last(acc), f]],
+            [[]],
+        ).filter((g) => g.length > 0).length;
+    }, [props.config]);
+
+    const questionCount = useMemo(() => {
+        return filter(props.config.fields, (f) =>
+            ['text', 'email', 'selection'].includes(f.type),
+        ).length;
+    }, [props.config]);
+
+    const markdownCount = useMemo(() => {
+        return filter(props.config.fields, (f) => ['markdown'].includes(f.type)).length;
+    }, [props.config]);
 
     const [dropDownIsVisible, setDropDownIsVisible] = useState(false);
 
@@ -66,8 +90,8 @@ function VisualConfigPanel(props: Props) {
                     {baseUrl}/{username}/{survey_name}
                 </a>
                 <div className='mt-1 text-sm text-gray-600 md:h-5 md:truncate font-weight-500 no-selection'>
-                    {props.config.fields.length} Question
-                    {props.config.fields.length === 1 ? '' : 's'}
+                    {helperUtils.pluralizeCountLabel(questionCount, 'Question')},{' '}
+                    {helperUtils.pluralizeCountLabel(pageCount, 'Page')}
                     {usesAuthentication ? ', Email Verification' : ''}
                 </div>
             </div>

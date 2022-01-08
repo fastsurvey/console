@@ -24,11 +24,16 @@ function useEvent(event: any, handler: any) {
     });
 }
 
+function pluralizeCountLabel(count: number, label: string) {
+    return `${count} ${label}${count === 1 ? '' : 's'}`;
+}
+
 export const helperUtils = {
     insertIntoArray,
     removeFromArray,
     formatAtoi,
     useEvent,
+    pluralizeCountLabel,
 };
 
 export default helperUtils;
