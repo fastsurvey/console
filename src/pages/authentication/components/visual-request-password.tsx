@@ -11,7 +11,7 @@ const VisualRequestPassword = (props: {
     handleRequest(): void;
 }) => (
     <section
-        className='w-full max-w-md p-4 bg-white rounded shadow centering-col gap-y-4'
+        className='w-full max-w-md p-4 bg-white rounded shadow-sm centering-col gap-y-4'
         data-cy={`request-password-panel state-${props.submissionState}`}
     >
         <h1 className='text-2xl text-center text-gray-800 font-weight-600 no-selection'>

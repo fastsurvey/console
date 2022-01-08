@@ -11,7 +11,8 @@ export default function VisualVerifyForm(props: {
     return (
         <div
             className={
-                'w-full max-w-md p-4 bg-white rounded shadow ' + 'gap-y-4 centering-col'
+                'w-full max-w-md p-4 bg-white rounded shadow-sm ' +
+                'gap-y-4 centering-col'
             }
             data-cy='verify-email-panel'
         >

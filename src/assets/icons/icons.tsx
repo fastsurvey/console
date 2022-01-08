@@ -93,6 +93,11 @@ const icons = {
             />
         </SVG>
     ),
+    circle: (
+        <SVG>
+            <circle cx='12' cy='12' r='10' className='primary' />
+        </SVG>
+    ),
     close: (
         <SVG>
             <path

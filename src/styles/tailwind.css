@@ -386,3 +386,11 @@
     -ms-hyphens: auto;
     hyphens: auto;
 }
+
+.svg-validation-green .primary {
+    @apply fill-green-300;
+}
+
+.svg-validation-red .primary {
+    @apply fill-red-300;
+}

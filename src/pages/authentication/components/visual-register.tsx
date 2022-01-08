@@ -23,7 +23,7 @@ export default function VisualRegister(props: {
 
     return (
         <section
-            className='w-full max-w-md bg-white rounded shadow centering-col'
+            className='w-full max-w-md bg-white rounded shadow-sm centering-col'
             data-cy='register-panel'
         >
             <div className='w-full p-4 centering-col gap-y-4'>
