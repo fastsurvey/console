@@ -144,7 +144,7 @@ function VisualAccountPage(props: {
                         {tabIndex === 0 && (
                             <>
                                 <div className='w-full space-y-3 flex-col-left'>
-                                    <div className='w-full centering-col gap-y-0.5'>
+                                    <div className='w-full flex-col-center gap-y-0.5'>
                                         <Label text='Email (cannot be modified yet)' />
                                         <TextInput
                                             value={props.account.email}
@@ -155,7 +155,7 @@ function VisualAccountPage(props: {
                                         />
                                     </div>
 
-                                    <div className='w-full centering-col gap-y-0.5'>
+                                    <div className='w-full flex-col-center gap-y-0.5'>
                                         <Label text='Username' />
                                         <TextInput
                                             value={username}
@@ -197,7 +197,7 @@ function VisualAccountPage(props: {
                         {tabIndex === 1 && (
                             <>
                                 <div className='w-full space-y-3 flex-col-left'>
-                                    <div className='w-full centering-col gap-y-0.5'>
+                                    <div className='w-full flex-col-center gap-y-0.5'>
                                         <Label text='New Password' />
                                         <TextInput
                                             value={password}

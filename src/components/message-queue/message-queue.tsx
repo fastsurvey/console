@@ -16,7 +16,7 @@ function MessageQueue(props: Props) {
             {props.messages.length >= 2 && (
                 <button
                     className={
-                        'centering-row pl-3 pr-1 m-2 ' +
+                        'flex-row-center pl-3 pr-1 m-2 ' +
                         'font-weight-600 rounded group ' +
                         'text-gray-500 ' +
                         'focus:outline-none ring-[2.5px] ring-transparent focus:ring-blue-200'

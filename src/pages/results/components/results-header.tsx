@@ -74,11 +74,11 @@ function ResultsHeader(props: {
     );
 
     return (
-        <div className={'w-full px-2 flex-col-left mb-1'} data-cy='summary-header'>
+        <div className={'w-full pl-2 flex-col-left mb-1'} data-cy='summary-header'>
             <div className='relative block w-full mb-8 md:mb-2 flex-row-right md:hidden'>
                 {buttonElements}
             </div>
-            <div className='relative w-full flex-row-top '>
+            <div className='relative w-full flex-row-top mb-1.5'>
                 <Link
                     to='/surveys'
                     className={
@@ -100,7 +100,7 @@ function ResultsHeader(props: {
                 >
                     {title}
                 </h1>
-                <div className='flex-max' />
+                <div className='flex-grow' />
                 <div
                     className={
                         'relative hidden md:flex flex-row items-start justify-start'

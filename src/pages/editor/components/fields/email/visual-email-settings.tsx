@@ -12,7 +12,7 @@ function VisualEmailSettings(props: {
 }) {
     return (
         <>
-            <div className='w-full centering-col gap-y-0.5'>
+            <div className='w-full flex-col-center gap-y-0.5'>
                 <Label text='Allowed Email Formats' />
                 <DropDown
                     value={props.setupValue}
@@ -30,7 +30,7 @@ function VisualEmailSettings(props: {
                     disabled={props.disabled}
                 />
             </div>
-            <div className='w-full centering-col gap-y-0.5'>
+            <div className='w-full flex-col-center gap-y-0.5'>
                 <Label text='Regex' />
                 <TextInput
                     value={props.fieldConfig.regex}
@@ -43,7 +43,7 @@ function VisualEmailSettings(props: {
                     data-cy='input-regex'
                 />
             </div>
-            <div className='w-full centering-col gap-y-0.5'>
+            <div className='w-full flex-col-center gap-y-0.5'>
                 <Label text='Hint' />
                 <TextInput
                     value={props.fieldConfig.hint}

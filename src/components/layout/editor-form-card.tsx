@@ -39,14 +39,14 @@ const EditorFormCard = React.forwardRef(
             <div ref={ref} className='w-full py-12 -my-12'>
                 <div
                     className={
-                        'relative centering-col w-full shadow-sm rounded ' +
+                        'relative flex-col-center w-full shadow-sm rounded ' +
                         props.className
                     }
                     data-cy={props['data-cy']}
                 >
                     <div
                         className={
-                            'w-full rounded-t centering-row no-selection ' +
+                            'w-full rounded-t flex-row-center no-selection ' +
                             'font-weight-600 text-base leading-10 ' +
                             styleUtils.color.fieldTypeToClasses(props.fieldType)
                         }
@@ -120,7 +120,7 @@ const EditorFormCard = React.forwardRef(
                     >
                         <div
                             className={
-                                'w-full centering-col gap-y-6 px-3 ' +
+                                'w-full flex-col-center gap-y-6 px-3 ' +
                                 (props.collapse ? 'h-0 overflow-hidden ' : 'pt-2 pb-3 ')
                             }
                         >

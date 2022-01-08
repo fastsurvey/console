@@ -104,7 +104,7 @@ function VisualDatePicker(props: {
                         (open ? 'py-[5px] mt-2 ' : 'h-0 py-0 mt-0 ')
                     }
                 >
-                    <div className='mb-1.5 centering-row'>
+                    <div className='mb-1.5 flex-row-center'>
                         <button
                             className={
                                 'w-10 h-10 p-1.5 md:w-7 md:h-7 md:p-0.5 ' +
@@ -121,7 +121,7 @@ function VisualDatePicker(props: {
                         >
                             {icons.chevronDown}
                         </button>
-                        <div className='text-white w-22 centering-row'>
+                        <div className='text-white w-22 flex-row-center'>
                             <div className='flex-shrink-0 w-10 text-center'>
                                 {constants.formOptions.MONTHS[visibleMonth]}
                             </div>

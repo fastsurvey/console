@@ -10,7 +10,7 @@ function TextSettings(props: {
 }) {
     return (
         <>
-            <div className='w-full centering-col gap-y-0.5'>
+            <div className='w-full flex-col-center gap-y-0.5'>
                 <Label text='Minimum' />
                 <TextInput
                     value={props.fieldConfig.min_chars.toString()}
@@ -24,7 +24,7 @@ function TextSettings(props: {
                     data-cy='input-min-chars'
                 />
             </div>
-            <div className='w-full centering-col gap-y-0.5'>
+            <div className='w-full flex-col-center gap-y-0.5'>
                 <Label text='Maximum' />
                 <TextInput
                     value={props.fieldConfig.max_chars.toString()}

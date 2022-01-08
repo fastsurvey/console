@@ -9,7 +9,7 @@ function MainWrapper(props: {children: React.ReactNode; className?: string}) {
             </header>
             <div className='relative'>
                 <main
-                    className={`w-screen px-2 min-h-screen centering-col bg-gray-150 ${props.className}`}
+                    className={`w-screen px-2 min-h-screen flex-col-center bg-gray-150 ${props.className}`}
                 >
                     {props.children}
                 </main>

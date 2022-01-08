@@ -33,7 +33,7 @@ function Modal(props: Props) {
     return (
         <div
             className={
-                'fixed top-0 bottom-0 left-0 right-0 p-1 z-50 centering-row ' +
+                'fixed top-0 bottom-0 left-0 right-0 p-1 z-50 flex-row-center ' +
                 ' no-selection transition-opacity duration-300 ' +
                 (props.modalState.open
                     ? 'pointer-events-auto opacity-100'

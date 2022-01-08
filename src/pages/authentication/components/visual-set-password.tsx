@@ -16,7 +16,7 @@ const VisualSetPassword = (props: {
     handleRequest(): void;
 }) => (
     <section
-        className='w-full max-w-md p-4 bg-white rounded shadow-sm centering-col gap-y-4'
+        className='w-full max-w-md p-4 bg-white rounded shadow-sm flex-col-center gap-y-4'
         data-cy={`set-password-panel state-${props.submissionState}`}
     >
         <h1 className='text-2xl text-center text-gray-800 font-weight-600 no-selection'>
@@ -30,7 +30,7 @@ const VisualSetPassword = (props: {
 
         {(props.submissionState === 'pending' ||
             props.submissionState === 'submitting') && (
-            <div className='w-full centering-col gap-y-0.5'>
+            <div className='w-full flex-col-center gap-y-0.5'>
                 <Label text='New Password' />
                 <TextInput
                     type='password'

@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ICON COLORS */
+
+@layer base {
+    svg {
+        fill: currentColor;
+        height: 100%;
+        width: 100%;
+    }
+}
+
+@layer utilities {
+    .svg-transparent .primary,
+    .svg-transparent .secondary {
+        fill: transparent;
+    }
+
+    .svg-validation-green .primary {
+        @apply fill-green-300;
+    }
+
+    .svg-validation-red .primary {
+        @apply fill-red-300;
+    }
+
+    .svg-white .primary,
+    .svg-white .secondary {
+        fill: white;
+    }
+
+    .svg-search-bar .primary {
+        @apply fill-blue-100;
+    }
+    .svg-search-bar .secondary {
+        @apply fill-blue-500;
+    }
+
+    .svg-label-info .primary {
+        @apply fill-gray-300;
+    }
+    .svg-label-info .secondary {
+        @apply fill-gray-600;
+    }
+
+    .svg-toggle-true .primary {
+        @apply fill-blue-50;
+    }
+    .svg-toggle-true .secondary {
+        @apply fill-blue-900;
+    }
+    .svg-toggle-false .primary {
+        @apply fill-gray-200;
+    }
+    .svg-toggle-false .secondary {
+        @apply fill-transparent;
+    }
+
+    .svg-navbar-active .primary {
+        fill: white;
+    }
+    .svg-navbar-active .secondary {
+        @apply fill-blue-300;
+    }
+    .svg-navbar-passive .primary {
+        @apply fill-blue-50;
+    }
+    .svg-navbar-passive .secondary {
+        @apply fill-blue-200;
+    }
+
+    .svg-elevated-button-active .primary {
+        @apply fill-blue-100;
+    }
+    .svg-elevated-button-active .secondary {
+        @apply fill-blue-700;
+    }
+    .svg-elevated-button-passive .primary {
+        @apply fill-gray-200;
+    }
+    .svg-elevated-button-passive .secondary {
+        @apply fill-gray-500;
+    }
+
+    .svg-field-green .primary {
+        @apply fill-green-300;
+    }
+    .svg-field-green .secondary {
+        @apply fill-green-700;
+    }
+    .svg-field-blue .primary {
+        @apply fill-blue-300;
+    }
+    .svg-field-blue .secondary {
+        @apply fill-blue-700;
+    }
+    .svg-field-rose .primary {
+        @apply fill-rose-300;
+    }
+    .svg-field-rose .secondary {
+        @apply fill-rose-700;
+    }
+    .svg-field-gray .primary {
+        @apply fill-gray-400;
+    }
+    .svg-field-gray .secondary {
+        @apply fill-gray-800;
+    }
+
+    .svg-add-field .primary {
+        @apply fill-gray-400;
+    }
+    .svg-add-field .secondary {
+        @apply fill-gray-700;
+    }
+}

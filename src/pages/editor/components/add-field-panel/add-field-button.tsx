@@ -12,7 +12,7 @@ function AddFieldButton(props: {
     return (
         <button
             className={
-                'centering-row rounded px-1 ringable svg-add-field ' +
+                'flex-row-center rounded px-1 ringable svg-add-field ' +
                 'svg-add-field   ' +
                 'focus:text-gray-600 focus:text-opacity-100 ' +
                 (props.disabled

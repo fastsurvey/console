@@ -98,7 +98,7 @@ function VisualField(props: {
                 data-cy={`editor-field-panel-${props.fieldIndex}`}
             >
                 {['email', 'selection', 'text'].includes(props.fieldConfig.type) && (
-                    <div className='w-full centering-col gap-y-0.5'>
+                    <div className='w-full flex-col-center gap-y-0.5'>
                         <Label text='Description' />
                         <TextArea
                             ref={descriptionRef}
@@ -124,7 +124,7 @@ function VisualField(props: {
                 {props.children !== undefined && (
                     <>
                         <div
-                            className={'h-px bg-gray-300'}
+                            className={'h-px bg-gray-300 '}
                             style={{width: 'calc(100% + 1.5rem)'}}
                         />
                         {props.children}

@@ -87,7 +87,7 @@ function VisualEditorHeader(props: {
                 >
                     {title}
                 </h1>
-                <div className='flex-max' />
+                <div className='flex-grow' />
                 <div
                     className={
                         'relative hidden md:flex flex-row items-start justify-start'

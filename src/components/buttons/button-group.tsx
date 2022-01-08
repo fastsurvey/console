@@ -14,12 +14,12 @@ export default function ButtonGroup(props: {
     const last = (index: number) => index === props.buttons.length - 1;
 
     return (
-        <div className='flex-shrink-0 bg-gray-200 rounded shadow-sm centering-row whitespace-nowrap gap-x-[2.6px]'>
+        <div className='flex-shrink-0 bg-gray-200 rounded shadow-sm flex-row-center whitespace-nowrap gap-x-[2.6px]'>
             {props.buttons.map((b, index: number) => (
                 <button
                     key={index}
                     className={
-                        'p-0.5 centering-row h-10 md:h-8 text-sm sm:text-base ' +
+                        'p-0.5 flex-row-center h-10 md:h-8 text-sm sm:text-base ' +
                         'no-selection ringable rounded-sm ' +
                         (first(index) ? 'rounded-l ' : ' ') +
                         (last(index) ? 'rounded-r ' : ' ') +

@@ -20,7 +20,7 @@ function SelectionSettings(props: {
                 className={'h-px bg-gray-300'}
                 style={{width: 'calc(100% + 1.5rem)'}}
             />
-            <div className='w-full centering-col gap-y-0.5'>
+            <div className='w-full flex-col-center gap-y-0.5'>
                 <Label text='Minimum options selected' />
                 <TextInput
                     value={props.fieldConfig.min_select.toString()}
@@ -33,7 +33,7 @@ function SelectionSettings(props: {
                     data-cy='input-min-select'
                 />
             </div>
-            <div className='w-full centering-col gap-y-0.5'>
+            <div className='w-full flex-col-center gap-y-0.5'>
                 <Label text='Maximum options selected' />
                 <TextInput
                     value={props.fieldConfig.max_select.toString()}

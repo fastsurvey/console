@@ -19,7 +19,7 @@ export default function DropDown(props: {
     }, [props.disabled]);
 
     return (
-        <div className={'relative w-full centering-col z-50'}>
+        <div className={'relative w-full flex-col-center z-50'}>
             <button
                 ref={ref}
                 onClick={props.disabled ? () => {} : () => setOpen(!open)}
@@ -46,7 +46,7 @@ export default function DropDown(props: {
             </button>
             <div
                 className={
-                    'overflow-hidden z-40 w-full centering-col px-[5px] ' +
+                    'overflow-hidden z-40 w-full flex-col-center px-[5px] ' +
                     'bg-gray-800 rounded shadow-sm ' +
                     (open ? 'max-h-32 py-[5px] mt-2 ' : 'max-h-0 py-0 mt-0 ')
                 }
@@ -70,8 +70,7 @@ export default function DropDown(props: {
                             if (e.key === 'Tab') {
                                 if (
                                     (index === 0 && e.shiftKey) ||
-                                    (index === options.length - 1 &&
-                                        !e.shiftKey)
+                                    (index === options.length - 1 && !e.shiftKey)
                                 )
                                     setOpen(false);
                             }

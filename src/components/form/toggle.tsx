@@ -25,7 +25,7 @@ export default function Toggle(props: {
 
     return (
         <div
-            className='relative mt-1 bg-gray-100 rounded centering-row gap-x-1'
+            className='relative mt-1 bg-gray-100 rounded flex-row-center gap-x-1'
             data-cy={props['data-cy']}
         >
             <button
