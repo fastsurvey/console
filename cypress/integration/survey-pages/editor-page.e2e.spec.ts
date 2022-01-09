@@ -131,9 +131,9 @@ describe('The Editor Page', () => {
         cy.url().should('contains', `/editor/${survey_name}`);
 
     const assertSyncedHeaderState = () => {
-        get(['editor-header', 'button-undo']).should('have.length', 0);
-        get(['editor-header', 'button-save']).should('have.length', 0);
         headerElements.end().should('not.be.disabled');
+        headerElements.undo().should('be.disabled');
+        headerElements.save().should('be.disabled');
         get(['message-panel-warning']).should('have.length', 0);
         get(['message-panel-error']).should('have.length', 0);
     };
@@ -176,8 +176,6 @@ describe('The Editor Page', () => {
     it('removing a field', function () {
         const {INITIAL_SURVEY, INITIAL_NEXT_IDENTIFIER} = this.configsJSON.EDITOR;
         const {USERNAME, PASSWORD} = this.accountJSON;
-
-        // TODO: Wait for Felix to fix bug with max_identifier
 
         // remove field 1 + undo
         fieldButtons(1).remove().click();
