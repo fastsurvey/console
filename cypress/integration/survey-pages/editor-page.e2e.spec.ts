@@ -2,7 +2,7 @@ import {concat, first, pullAllBy, range} from 'lodash';
 import * as utilities from '../../support/utilities';
 import {types} from '/src/types';
 
-const {login, getCySelector} = utilities;
+const {login, getCySelector, assertDataCy} = utilities;
 const get = getCySelector;
 
 const warningMessage = () => get(['message-panel-warning'], {count: 1});
@@ -140,6 +140,13 @@ describe('The Editor Page', () => {
         get(['message-panel-error']).should('have.length', 0);
     };
 
+    const assertFieldCollapseState = (
+        index: number,
+        state: 'iscollapsed' | 'isnotcollapsed',
+    ) => {
+        assertDataCy(fieldElements(index).panel(), state);
+    };
+
     const assertConfigInDB = (
         username: string,
         password: string,
@@ -261,27 +268,39 @@ describe('The Editor Page', () => {
             fieldElements(0).buttons.pasteBefore().click();
             fieldElements(2).buttons.copy().click();
             fieldElements(3).buttons.pasteBefore().click();
+            [1, 2, 4].forEach((index) => {
+                fieldElements(index).buttons.collapse().click();
+            });
+            range(6).map((index) => assertFieldCollapseState(index, 'isnotcollapsed'));
         };
 
         // undo works
         copyPasteSequence();
-        range(6).map((i) => fieldElements(i).buttons.collapse().click());
+
         assertSurveyState(COPY_PASTE_SURVEY);
         headerElements.undo().click();
         assertSurveyState(INITIAL_SURVEY);
         cy.reload();
-        range(3).map((i) => fieldElements(i).buttons.collapse().click());
+        range(3).map((index) => {
+            fieldElements(index).buttons.collapse().click();
+            assertFieldCollapseState(index, 'isnotcollapsed');
+        });
         assertSurveyState(INITIAL_SURVEY);
-        range(3).map((i) => fieldElements(i).buttons.collapse().click());
+        range(3).map((index) => {
+            fieldElements(index).buttons.collapse().click();
+            assertFieldCollapseState(index, 'iscollapsed');
+        });
 
         // save works
         copyPasteSequence();
-        range(6).map((i) => fieldElements(i).buttons.collapse().click());
         assertSurveyState(COPY_PASTE_SURVEY);
         headerElements.save().click();
         assertSurveyState(COPY_PASTE_SURVEY);
         cy.reload();
-        range(6).map((i) => fieldElements(i).buttons.collapse().click());
+        range(6).map((index) => {
+            fieldElements(index).buttons.collapse().click();
+            assertFieldCollapseState(index, 'isnotcollapsed');
+        });
         assertSurveyState(COPY_PASTE_SURVEY);
 
         // deepCompare the config-json in database
@@ -382,9 +401,6 @@ describe('The Editor Page', () => {
     it('fields from fixture are present, undo functionality', function () {
         const {INITIAL_SURVEY, MODIFIED_SURVEY} = this.configsJSON.EDITOR;
 
-        [0, 1, 2].map((i) => fieldElements(i).buttons.collapse().click());
-        assertSurveyState(INITIAL_SURVEY);
-
         settingsElements
             .inputTitle()
             .clear()
@@ -392,7 +408,10 @@ describe('The Editor Page', () => {
             .should('have.value', MODIFIED_SURVEY.title);
 
         cy.reload();
-        [0, 1, 2].map((i) => fieldElements(i).buttons.collapse().click());
+        range(INITIAL_SURVEY.fields.length).forEach((index) => {
+            fieldElements(index).buttons.collapse().click();
+            assertFieldCollapseState(index, 'isnotcollapsed');
+        });
         assertSurveyState(INITIAL_SURVEY);
 
         settingsElements
@@ -405,7 +424,10 @@ describe('The Editor Page', () => {
         assertSurveyState(INITIAL_SURVEY);
 
         cy.reload();
-        [0, 1, 2].map((i) => fieldElements(i).buttons.collapse().click());
+        range(INITIAL_SURVEY.fields.length).forEach((index) => {
+            fieldElements(index).buttons.collapse().click();
+            assertFieldCollapseState(index, 'isnotcollapsed');
+        });
 
         // assert the correct order
         expect(INITIAL_SURVEY.fields[0].type).to.equal('text');
@@ -432,12 +454,16 @@ describe('The Editor Page', () => {
         assertSurveyState(INITIAL_SURVEY);
 
         cy.reload();
-        [0, 1, 2].map((i) => fieldElements(i).buttons.collapse().click());
+        range(INITIAL_SURVEY.fields.length).forEach((index) => {
+            fieldElements(index).buttons.collapse().click();
+            assertFieldCollapseState(index, 'isnotcollapsed');
+        });
         assertSurveyState(INITIAL_SURVEY);
 
-        // Whether a change in fields is made to the title, the description or
-        // any other parameter, is transparent to the editor -> therefore the
-        // other parameters can be tested with component testing on single fields
+        // Whether a change in fields is made to the description or
+        // any other parameter, is transparent to the editor ->
+        // therefore the other parameters can be tested via component
+        // testing on single fields
     });
 
     it('page switch not possible with unsaved changes', function () {
@@ -473,10 +499,12 @@ describe('The Editor Page', () => {
         assertInvalidFieldState();
 
         fieldElements(0).buttons.collapse().click();
+        assertFieldCollapseState(0, 'isnotcollapsed');
         fieldElements(0).inputs.description().clear();
         assertInvalidFieldState();
 
         fieldElements(2).buttons.collapse().click();
+        assertFieldCollapseState(2, 'isnotcollapsed');
         fieldElements(2).inputs.description().clear();
         assertInvalidFieldState();
     });
@@ -523,7 +551,7 @@ describe('The Editor Page', () => {
         fieldElements(0).buttons.addBefore().click();
         addFieldPopup.selectField('text').click();
         addFieldPopup.submitAdd().click();
-        fieldElements(0).buttons.collapse().click();
+        assertFieldCollapseState(0, 'isnotcollapsed');
 
         // assert intial state after adding
         fieldElements(0).inputs.description().should('be.empty');
@@ -542,7 +570,7 @@ describe('The Editor Page', () => {
         fieldElements(1).buttons.addBefore().click();
         addFieldPopup.selectField('text').click();
         addFieldPopup.submitAdd().click();
-        fieldElements(1).buttons.collapse().click();
+        assertFieldCollapseState(1, 'isnotcollapsed');
         fieldElements(1).inputs.description().type(ADDED_FIELDS.TEXT.description);
 
         // save and assert state after save
@@ -578,7 +606,7 @@ describe('The Editor Page', () => {
         fieldElements(2).buttons.addBefore().click();
         addFieldPopup.selectField('email').click();
         addFieldPopup.submitAdd().click();
-        fieldElements(2).buttons.collapse().click();
+        assertFieldCollapseState(2, 'isnotcollapsed');
 
         // assert intial state after adding
         fieldElements(2).inputs.description().should('be.empty');
@@ -610,7 +638,7 @@ describe('The Editor Page', () => {
         fieldElements(3).buttons.addBefore().click();
         addFieldPopup.selectField('selection').click();
         addFieldPopup.submitAdd().click();
-        fieldElements(3).buttons.collapse().click();
+        assertFieldCollapseState(3, 'isnotcollapsed');
         fieldElements(3).inputs.description().should('be.empty');
         fieldElements(3).inputs.description().should('be.empty');
         fieldElements(3).inputs.anyOptionInput().should('have.length', 0);
@@ -646,6 +674,8 @@ describe('The Editor Page', () => {
             fields: insertInArray(INITIAL_SURVEY.fields, 3, ADDED_FIELDS.SELECTION),
         });
     });
+
+    // TODO: Add test for newly adding a survey and adding multiple fields before saving the first time -> max_identifier, etc. working correctly
 
     // Test with component test of fields:
     // TODO: looks as expected
