@@ -40,32 +40,34 @@ const getFromField =
     () =>
         get([`editor-field-panel-${index}`, ...selectors], props);
 
-const fieldButtons = (index: number) => ({
-    collapse: getFromField(index, ['button-collapse'], {count: 1}),
-    copy: getFromField(index, ['button-copy'], {count: 1}),
-    remove: getFromField(index, ['button-remove'], {count: 1}),
-    addBefore: () => get([`add-field-before-${index}`], {count: 1}),
-    pasteBefore: () => get([`paste-field-before-${index}`], {count: 1}),
-});
-
-const fieldInputs = (index: number) => ({
-    description: getFromField(index, ['input-description'], {count: 1}),
-    regex: getFromField(index, ['input-regex'], {count: 1}),
-    hint: getFromField(index, ['input-hint'], {count: 1}),
-    toggleVerify: getFromField(index, ['toggle-verify'], {count: 1}),
-    minChars: getFromField(index, ['input-min-chars'], {count: 1}),
-    maxChars: getFromField(index, ['input-max-chars'], {count: 1}),
-    optionList: getFromField(index, ['options-list'], {count: 1}),
-    anyOptionInput: getFromField(index, ['options-list', 'input-option']),
-    optionInput: (optionIndex: number) =>
-        get([
-            `editor-field-panel-${index}`,
-            'options-list',
-            `input-option-${optionIndex}`,
-        ]),
-    addOption: getFromField(index, ['options-list', 'button-add'], {count: 1}),
-    minSelect: getFromField(index, ['input-min-select'], {count: 1}),
-    maxSelect: getFromField(index, ['input-max-select'], {count: 1}),
+const fieldElements = (index: number) => ({
+    panel: getFromField(index, [], {count: 1}),
+    buttons: {
+        collapse: getFromField(index, ['button-collapse'], {count: 1}),
+        copy: getFromField(index, ['button-copy'], {count: 1}),
+        remove: getFromField(index, ['button-remove'], {count: 1}),
+        addBefore: () => get([`add-field-before-${index}`], {count: 1}),
+        pasteBefore: () => get([`paste-field-before-${index}`], {count: 1}),
+    },
+    inputs: {
+        description: getFromField(index, ['input-description'], {count: 1}),
+        regex: getFromField(index, ['input-regex'], {count: 1}),
+        hint: getFromField(index, ['input-hint'], {count: 1}),
+        toggleVerify: getFromField(index, ['toggle-verify'], {count: 1}),
+        minChars: getFromField(index, ['input-min-chars'], {count: 1}),
+        maxChars: getFromField(index, ['input-max-chars'], {count: 1}),
+        optionList: getFromField(index, ['options-list'], {count: 1}),
+        anyOptionInput: getFromField(index, ['options-list', 'input-option']),
+        optionInput: (optionIndex: number) =>
+            get([
+                `editor-field-panel-${index}`,
+                'options-list',
+                `input-option-${optionIndex}`,
+            ]),
+        addOption: getFromField(index, ['options-list', 'button-add'], {count: 1}),
+        minSelect: getFromField(index, ['input-min-select'], {count: 1}),
+        maxSelect: getFromField(index, ['input-max-select'], {count: 1}),
+    },
 });
 
 const getFromPopup = (selectors: string[], props?: {count?: number}) =>
@@ -121,8 +123,8 @@ describe('The Editor Page', () => {
 
     const assertFieldState = (fieldConfig: types.SurveyField, index: number) => {
         if (fieldConfig.type !== 'break') {
-            fieldInputs(index)
-                .description()
+            fieldElements(index)
+                .inputs.description()
                 .should('have.value', fieldConfig.description);
         }
     };
@@ -178,7 +180,7 @@ describe('The Editor Page', () => {
         const {USERNAME, PASSWORD} = this.accountJSON;
 
         // remove field 1 + undo
-        fieldButtons(1).remove().click();
+        fieldElements(1).buttons.remove().click();
         get([`editor-field-panel`], {count: 2});
         headerElements.undo().click();
         get([`editor-field-panel`], {count: 3});
@@ -194,7 +196,7 @@ describe('The Editor Page', () => {
             hostname: 'api.dev.fastsurvey.de',
         }).as('PUTupdate1');
 
-        fieldButtons(2).remove().click();
+        fieldElements(2).buttons.remove().click();
         get([`editor-field-panel`], {count: 2});
         headerElements.save().click();
         get([`editor-field-panel`], {count: 2});
@@ -220,7 +222,7 @@ describe('The Editor Page', () => {
             hostname: 'api.dev.fastsurvey.de',
         }).as('PUTupdate2');
 
-        fieldButtons(0).remove().click();
+        fieldElements(0).buttons.remove().click();
         get([`editor-field-panel`], {count: 1});
         headerElements.save().click();
         get([`editor-field-panel`], {count: 1});
@@ -241,7 +243,7 @@ describe('The Editor Page', () => {
         });
 
         // remove last field + save (unsuccessful)
-        fieldButtons(0).remove().click();
+        fieldElements(0).buttons.remove().click();
         get([`editor-field-panel`], {count: 0});
         headerElements.save().click();
         get([`editor-field-panel`], {count: 0});
@@ -253,33 +255,33 @@ describe('The Editor Page', () => {
         const {USERNAME, PASSWORD} = this.accountJSON;
 
         const copyPasteSequence = () => {
-            fieldButtons(0).copy().click();
-            fieldButtons(3).pasteBefore().click();
-            fieldButtons(2).copy().click();
-            fieldButtons(0).pasteBefore().click();
-            fieldButtons(2).copy().click();
-            fieldButtons(3).pasteBefore().click();
+            fieldElements(0).buttons.copy().click();
+            fieldElements(3).buttons.pasteBefore().click();
+            fieldElements(2).buttons.copy().click();
+            fieldElements(0).buttons.pasteBefore().click();
+            fieldElements(2).buttons.copy().click();
+            fieldElements(3).buttons.pasteBefore().click();
         };
 
         // undo works
         copyPasteSequence();
-        range(6).map((i) => fieldButtons(i).collapse().click());
+        range(6).map((i) => fieldElements(i).buttons.collapse().click());
         assertSurveyState(COPY_PASTE_SURVEY);
         headerElements.undo().click();
         assertSurveyState(INITIAL_SURVEY);
         cy.reload();
-        range(3).map((i) => fieldButtons(i).collapse().click());
+        range(3).map((i) => fieldElements(i).buttons.collapse().click());
         assertSurveyState(INITIAL_SURVEY);
-        range(3).map((i) => fieldButtons(i).collapse().click());
+        range(3).map((i) => fieldElements(i).buttons.collapse().click());
 
         // save works
         copyPasteSequence();
-        range(6).map((i) => fieldButtons(i).collapse().click());
+        range(6).map((i) => fieldElements(i).buttons.collapse().click());
         assertSurveyState(COPY_PASTE_SURVEY);
         headerElements.save().click();
         assertSurveyState(COPY_PASTE_SURVEY);
         cy.reload();
-        range(6).map((i) => fieldButtons(i).collapse().click());
+        range(6).map((i) => fieldElements(i).buttons.collapse().click());
         assertSurveyState(COPY_PASTE_SURVEY);
 
         // deepCompare the config-json in database
@@ -380,7 +382,7 @@ describe('The Editor Page', () => {
     it('fields from fixture are present, undo functionality', function () {
         const {INITIAL_SURVEY, MODIFIED_SURVEY} = this.configsJSON.EDITOR;
 
-        [0, 1, 2].map((i) => fieldButtons(i).collapse().click());
+        [0, 1, 2].map((i) => fieldElements(i).buttons.collapse().click());
         assertSurveyState(INITIAL_SURVEY);
 
         settingsElements
@@ -390,7 +392,7 @@ describe('The Editor Page', () => {
             .should('have.value', MODIFIED_SURVEY.title);
 
         cy.reload();
-        [0, 1, 2].map((i) => fieldButtons(i).collapse().click());
+        [0, 1, 2].map((i) => fieldElements(i).buttons.collapse().click());
         assertSurveyState(INITIAL_SURVEY);
 
         settingsElements
@@ -403,7 +405,7 @@ describe('The Editor Page', () => {
         assertSurveyState(INITIAL_SURVEY);
 
         cy.reload();
-        [0, 1, 2].map((i) => fieldButtons(i).collapse().click());
+        [0, 1, 2].map((i) => fieldElements(i).buttons.collapse().click());
 
         // assert the correct order
         expect(INITIAL_SURVEY.fields[0].type).to.equal('text');
@@ -411,17 +413,17 @@ describe('The Editor Page', () => {
         expect(INITIAL_SURVEY.fields[2].type).to.equal('selection');
 
         MODIFIED_SURVEY.fields.forEach(
-            (newFieldConfig: types.SurveyField, i: number) => {
+            (newFieldConfig: types.SurveyField, index: number) => {
                 if (
                     newFieldConfig.type === 'email' ||
                     newFieldConfig.type === 'text' ||
                     newFieldConfig.type === 'selection'
                 ) {
-                    fieldInputs(i)
-                        .description()
+                    fieldElements(index)
+                        .inputs.description()
                         .clear()
                         .type(newFieldConfig.description);
-                    assertFieldState(newFieldConfig, i);
+                    assertFieldState(newFieldConfig, index);
                 }
             },
         );
@@ -430,7 +432,7 @@ describe('The Editor Page', () => {
         assertSurveyState(INITIAL_SURVEY);
 
         cy.reload();
-        [0, 1, 2].map((i) => fieldButtons(i).collapse().click());
+        [0, 1, 2].map((i) => fieldElements(i).buttons.collapse().click());
         assertSurveyState(INITIAL_SURVEY);
 
         // Whether a change in fields is made to the title, the description or
@@ -470,23 +472,23 @@ describe('The Editor Page', () => {
         settingsElements.inputTitle().clear();
         assertInvalidFieldState();
 
-        fieldButtons(0).collapse().click();
-        fieldInputs(0).description().clear();
+        fieldElements(0).buttons.collapse().click();
+        fieldElements(0).inputs.description().clear();
         assertInvalidFieldState();
 
-        fieldButtons(2).collapse().click();
-        fieldInputs(2).description().clear();
+        fieldElements(2).buttons.collapse().click();
+        fieldElements(2).inputs.description().clear();
         assertInvalidFieldState();
     });
 
     it('add field popup', function () {
         addFieldPopup.panel().should('not.be.visible');
-        fieldButtons(0).addBefore().click();
+        fieldElements(0).buttons.addBefore().click();
         addFieldPopup.panel().should('be.visible');
         addFieldPopup.cancelAdd().click();
         addFieldPopup.panel().should('not.be.visible');
 
-        fieldButtons(2).addBefore().click();
+        fieldElements(2).buttons.addBefore().click();
         addFieldPopup.panel().should('be.visible');
         addFieldPopup.activeSelect().should('have.length', 0);
         ['email', 'text', 'selection'].forEach((fieldType: any) => {
@@ -513,18 +515,18 @@ describe('The Editor Page', () => {
         const {USERNAME, PASSWORD} = this.accountJSON;
 
         const assertLocalField = (index: number) => {
-            fieldInputs(index).minChars().should('have.value', '0');
-            fieldInputs(index).maxChars().should('have.value', '2000');
+            fieldElements(index).inputs.minChars().should('have.value', '0');
+            fieldElements(index).inputs.maxChars().should('have.value', '2000');
         };
 
         // add text field at index 0
-        fieldButtons(0).addBefore().click();
+        fieldElements(0).buttons.addBefore().click();
         addFieldPopup.selectField('text').click();
         addFieldPopup.submitAdd().click();
-        fieldButtons(0).collapse().click();
+        fieldElements(0).buttons.collapse().click();
 
         // assert intial state after adding
-        fieldInputs(0).description().should('be.empty');
+        fieldElements(0).inputs.description().should('be.empty');
         assertLocalField(0);
 
         // undo and assert state after save
@@ -537,17 +539,17 @@ describe('The Editor Page', () => {
         });
 
         // edit field to match fixture
-        fieldButtons(1).addBefore().click();
+        fieldElements(1).buttons.addBefore().click();
         addFieldPopup.selectField('text').click();
         addFieldPopup.submitAdd().click();
-        fieldButtons(1).collapse().click();
-        fieldInputs(1).description().type(ADDED_FIELDS.TEXT.description);
+        fieldElements(1).buttons.collapse().click();
+        fieldElements(1).inputs.description().type(ADDED_FIELDS.TEXT.description);
 
         // save and assert state after save
         headerElements.save().click();
         assertSyncedHeaderState();
-        fieldInputs(1)
-            .description()
+        fieldElements(1)
+            .inputs.description()
             .should('have.value', ADDED_FIELDS.TEXT.description);
         assertLocalField(1);
         assertConfigInDB(USERNAME, PASSWORD, {
@@ -563,33 +565,33 @@ describe('The Editor Page', () => {
         const {USERNAME, PASSWORD} = this.accountJSON;
 
         const assertLocalField = () => {
-            fieldInputs(2).regex().should('have.value', '.*');
-            fieldInputs(2).hint().should('have.value', 'Any email address');
-            fieldInputs(2)
-                .toggleVerify()
+            fieldElements(2).inputs.regex().should('have.value', '.*');
+            fieldElements(2).inputs.hint().should('have.value', 'Any email address');
+            fieldElements(2)
+                .inputs.toggleVerify()
                 .find('[data-cy*="no"]')
                 .should('have.attr', 'data-cy')
                 .and('contain', 'isactive');
         };
 
         // add text field at index 2
-        fieldButtons(2).addBefore().click();
+        fieldElements(2).buttons.addBefore().click();
         addFieldPopup.selectField('email').click();
         addFieldPopup.submitAdd().click();
-        fieldButtons(2).collapse().click();
+        fieldElements(2).buttons.collapse().click();
 
         // assert intial state after adding
-        fieldInputs(2).description().should('be.empty');
+        fieldElements(2).inputs.description().should('be.empty');
         assertLocalField();
 
         // edit field to match fixture
-        fieldInputs(2).description().type(ADDED_FIELDS.EMAIL.description);
+        fieldElements(2).inputs.description().type(ADDED_FIELDS.EMAIL.description);
 
         // save and assert state after save
         headerElements.save().click();
         assertSyncedHeaderState();
-        fieldInputs(2)
-            .description()
+        fieldElements(2)
+            .inputs.description()
             .should('have.value', ADDED_FIELDS.EMAIL.description);
         assertLocalField();
         assertConfigInDB(USERNAME, PASSWORD, {
@@ -605,38 +607,38 @@ describe('The Editor Page', () => {
         const {USERNAME, PASSWORD} = this.accountJSON;
 
         // add selection field at index 3
-        fieldButtons(3).addBefore().click();
+        fieldElements(3).buttons.addBefore().click();
         addFieldPopup.selectField('selection').click();
         addFieldPopup.submitAdd().click();
-        fieldButtons(3).collapse().click();
-        fieldInputs(3).description().should('be.empty');
-        fieldInputs(3).description().should('be.empty');
-        fieldInputs(3).anyOptionInput().should('have.length', 0);
-        fieldInputs(3).minSelect().should('have.value', '0');
-        fieldInputs(3).maxSelect().should('have.value', '0');
+        fieldElements(3).buttons.collapse().click();
+        fieldElements(3).inputs.description().should('be.empty');
+        fieldElements(3).inputs.description().should('be.empty');
+        fieldElements(3).inputs.anyOptionInput().should('have.length', 0);
+        fieldElements(3).inputs.minSelect().should('have.value', '0');
+        fieldElements(3).inputs.maxSelect().should('have.value', '0');
 
         // edit field to match fixture
-        fieldInputs(3).description().type(ADDED_FIELDS.SELECTION.description);
+        fieldElements(3).inputs.description().type(ADDED_FIELDS.SELECTION.description);
         ADDED_FIELDS.SELECTION.options.forEach((o: string, i: number) => {
-            fieldInputs(3).addOption().click();
-            fieldInputs(3).optionInput(i).type(o);
+            fieldElements(3).inputs.addOption().click();
+            fieldElements(3).inputs.optionInput(i).type(o);
         });
-        fieldInputs(3).maxSelect().type(ADDED_FIELDS.SELECTION.max_select);
+        fieldElements(3).inputs.maxSelect().type(ADDED_FIELDS.SELECTION.max_select);
 
         // change max-select
         headerElements.save().click();
 
         // save and assert state after save
         assertSyncedHeaderState();
-        fieldInputs(3)
-            .description()
+        fieldElements(3)
+            .inputs.description()
             .should('have.value', ADDED_FIELDS.SELECTION.description);
-        fieldInputs(3).anyOptionInput().should('have.length', 2);
+        fieldElements(3).inputs.anyOptionInput().should('have.length', 2);
         ADDED_FIELDS.SELECTION.options.forEach((o: string, i: number) => {
-            fieldInputs(3).optionInput(i).should('have.value', o);
+            fieldElements(3).inputs.optionInput(i).should('have.value', o);
         });
-        fieldInputs(3)
-            .maxSelect()
+        fieldElements(3)
+            .inputs.maxSelect()
             .should('have.value', ADDED_FIELDS.SELECTION.max_select);
         assertConfigInDB(USERNAME, PASSWORD, {
             ...INITIAL_SURVEY,
