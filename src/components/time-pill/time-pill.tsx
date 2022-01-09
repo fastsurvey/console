@@ -24,7 +24,7 @@ const diffToPhrase = (diff: number): string => {
 
 function TimePill(props: {
     config: types.SurveyConfig;
-    flat: boolean;
+    flat?: boolean;
     shrinkOnMobile?: boolean;
 }) {
     const now: number = new Date().getTime() / 1000;
