@@ -13,7 +13,7 @@ function AddFieldButton(props: {
         <button
             className={
                 'flex-row-center rounded px-1 ringable svg-add-field ' +
-                'focus:text-gray-600 focus:text-opacity-100 ' +
+                'group ' +
                 (props.disabled
                     ? 'cursor-not-allowed text-gray-600 '
                     : 'cursor-pointer text-gray-800')
@@ -26,7 +26,7 @@ function AddFieldButton(props: {
             <div
                 className={
                     'px-1 text-sm font-weight-600 leading-8 ' +
-                    'opacity-50 hover:opacity-100'
+                    'opacity-50 hover:opacity-100 group-focus:opacity-100'
                 }
             >
                 {props.label}
