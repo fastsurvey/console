@@ -19,6 +19,7 @@ const MarkdownFieldEditor = React.forwardRef(
         const toggleDetail = () => {
             setDetailIsOpen(!detailIsOpen);
         };
+        const [animateDemo, setAnimateDemo] = useState(false);
 
         function addDemoContent() {
             props.setValue(
@@ -37,10 +38,12 @@ const MarkdownFieldEditor = React.forwardRef(
                         '---',
                         'Separate your content with a horizontal line like this one 👆.',
                         'Or copy & paste emojis from [https://getemoji.com/](https://getemoji.com/)',
+                        '| tables | are | nice | too |\n| :--- | :--- | :---: | ---: |\n| align stuff to the | left | center | right |\n| Lorem ipsum | dolor sit amet | consectetur | adipisicing |',
                     ],
                     '\n\n',
                 ),
             );
+            setAnimateDemo(true);
             setTab('split view');
         }
 
@@ -66,7 +69,10 @@ const MarkdownFieldEditor = React.forwardRef(
                                     ? 'bg-blue-50 text-blue-800 '
                                     : 'hover:bg-gray-100 text-gray-500 hover:text-gray-700 ') +
                                 'py-1 px-3 font-weight-600 text-base rounded ringable ' +
-                                (t === 'split view' ? 'hidden md:block ' : '')
+                                (t === 'split view' ? 'hidden md:block ' : ' ') +
+                                (t === 'split view' && animateDemo
+                                    ? 'animate-pop '
+                                    : ' ')
                             }
                             data-cy={`tab-${t.toLowerCase()}`}
                             disabled={props.disabled}
