@@ -147,6 +147,7 @@ function VisualField(props: {
                 actionLabel={actionLabel}
                 setActionLabel={setActionLabel}
                 data-cy={`editor-field-panel-${props.fieldIndex} iscollapsed isnotcollapsed`}
+                disabled={props.disabled}
             />
         );
     }

@@ -6,6 +6,7 @@ function PageBreakCard(props: {
     removeField(): void;
     actionLabel: string;
     setActionLabel(newLabel: string): void;
+    disabled: boolean;
     'data-cy': string;
 }) {
     return (
@@ -33,8 +34,9 @@ function PageBreakCard(props: {
 
                 <button
                     className='w-7 h-7 p-1 my-1.5 mx-0.5 opacity-60 hover:opacity-100 rounded ringable-dark svg-field-action-gray '
-                    onClick={props.removeField}
+                    onClick={props.disabled ? () => {} : props.removeField}
                     data-cy='button-remove'
+                    disabled={props.disabled}
                 >
                     {icons.trash}
                 </button>
