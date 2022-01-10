@@ -344,7 +344,7 @@
         "ADDED_FIELDS": {
             "EMAIL": {
                 "identifier": 5,
-                "description": "What's your email address?",
+                "description": "What's your email address???",
                 "type": "email",
                 "hint": "Any email address",
                 "regex": ".*",
@@ -352,18 +352,27 @@
             },
             "TEXT": {
                 "identifier": 5,
-                "description": "How do you feel about apples?",
+                "description": "How do you feel about apples???",
                 "type": "text",
                 "min_chars": 0,
                 "max_chars": 2000
             },
             "SELECTION": {
                 "identifier": 5,
-                "description": "What are your favorite pizza toppings?",
+                "description": "What are your favorite pizza toppings???",
                 "type": "selection",
                 "options": ["Quattro Stagioni", "Prosciutto"],
                 "min_select": 0,
                 "max_select": 2
+            },
+            "MARKDOWN": {
+                "identifier": 5,
+                "description": "Do you like markdown???",
+                "type": "markdown"
+            },
+            "BREAK": {
+                "identifier": 5,
+                "type": "break"
             }
         }
     },

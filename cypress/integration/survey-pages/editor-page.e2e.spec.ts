@@ -668,6 +668,60 @@ describe('The Editor Page', () => {
         });
     });
 
+    it('adding a markdown field', function () {
+        const {INITIAL_SURVEY, INITIAL_NEXT_IDENTIFIER, ADDED_FIELDS} =
+            this.configsJSON.EDITOR;
+        const {USERNAME, PASSWORD} = this.accountJSON;
+
+        // add email field at index 2
+        fieldElements(4).buttons.addBefore().click();
+        addFieldPopup.selectField('markdown').click();
+        addFieldPopup.submitAdd().click();
+
+        // assert intial state after adding
+        assertFieldCollapseState(4, 'isnotcollapsed');
+        assertDataCy(cy.focused(), 'input-description');
+        cy.focused()
+            .parents('[data-cy*="editor-field-panel-4 "]')
+            .should('have.length', 1);
+        fieldElements(4).inputs.description().should('be.empty');
+
+        // edit field to match fixture
+        fieldElements(4).inputs.description().type(ADDED_FIELDS.MARKDOWN.description);
+
+        // save and assert state after save
+        headerElements.save().click();
+        assertHeaderState('synced');
+        fieldElements(4)
+            .inputs.description()
+            .should('have.value', ADDED_FIELDS.MARKDOWN.description);
+        assertConfigInDB(USERNAME, PASSWORD, {
+            ...INITIAL_SURVEY,
+            next_identifier: INITIAL_NEXT_IDENTIFIER + 1,
+            fields: insertInArray(INITIAL_SURVEY.fields, 4, ADDED_FIELDS.MARKDOWN),
+        });
+    });
+
+    it('adding a break field', function () {
+        const {INITIAL_SURVEY, INITIAL_NEXT_IDENTIFIER, ADDED_FIELDS} =
+            this.configsJSON.EDITOR;
+        const {USERNAME, PASSWORD} = this.accountJSON;
+
+        // add email field at index 2
+        fieldElements(3).buttons.addBefore().click();
+        addFieldPopup.selectField('break').click();
+        addFieldPopup.submitAdd().click();
+
+        // save and assert state after save
+        headerElements.save().click();
+        assertHeaderState('synced');
+        assertConfigInDB(USERNAME, PASSWORD, {
+            ...INITIAL_SURVEY,
+            next_identifier: INITIAL_NEXT_IDENTIFIER + 1,
+            fields: insertInArray(INITIAL_SURVEY.fields, 3, ADDED_FIELDS.BREAK),
+        });
+    });
+
     // TODO: Add test for newly adding a survey and adding multiple fields before saving the first time -> max_identifier, etc. working correctly
 
     it('copy and paste', function () {
