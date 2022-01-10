@@ -74,6 +74,14 @@ export const assertCommonRemove = (fieldConfig: any) => {
     getFieldElements(0).noPanel();
 };
 
+export const assertCommonDisabled = () => {
+    getFieldElements(0).panel();
+    getFieldElements(0).buttons.remove().should('be.disabled');
+    getFieldElements(0).buttons.remove().click({force: true});
+    getFieldElements(0).panel();
+    getFieldElements(0).inputs.description().should('be.disabled');
+};
+
 export const assertCommonValidation = (fieldConfig: any) => {
     mount(
         <FieldStateWrapper
