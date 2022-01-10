@@ -530,16 +530,20 @@ describe('The Editor Page', () => {
         fieldElements(0).buttons.addBefore().click();
         addFieldPopup.selectField('text').click();
         addFieldPopup.submitAdd().click();
-        assertFieldCollapseState(0, 'isnotcollapsed');
 
         // assert intial state after adding
+        assertFieldCollapseState(0, 'isnotcollapsed');
+        assertDataCy(cy.focused(), 'input-description');
+        cy.focused()
+            .parents('[data-cy*="editor-field-panel-0 "]')
+            .should('have.length', 1);
         fieldElements(0).inputs.description().should('be.empty');
         assertLocalField(0);
 
         // undo and assert state after save
         headerElements.undo().click();
         assertHeaderState('synced');
-        get([`editor-field-panel`], {count: 3});
+        get([`editor-field-panel`], {count: 5});
         assertConfigInDB(USERNAME, PASSWORD, {
             ...INITIAL_SURVEY,
             next_identifier: INITIAL_NEXT_IDENTIFIER,
@@ -581,13 +585,17 @@ describe('The Editor Page', () => {
                 .and('contain', 'isactive');
         };
 
-        // add text field at index 2
+        // add email field at index 2
         fieldElements(2).buttons.addBefore().click();
         addFieldPopup.selectField('email').click();
         addFieldPopup.submitAdd().click();
-        assertFieldCollapseState(2, 'isnotcollapsed');
 
         // assert intial state after adding
+        assertFieldCollapseState(2, 'isnotcollapsed');
+        assertDataCy(cy.focused(), 'input-description');
+        cy.focused()
+            .parents('[data-cy*="editor-field-panel-2 "]')
+            .should('have.length', 1);
         fieldElements(2).inputs.description().should('be.empty');
         assertLocalField();
 
@@ -617,7 +625,13 @@ describe('The Editor Page', () => {
         fieldElements(3).buttons.addBefore().click();
         addFieldPopup.selectField('selection').click();
         addFieldPopup.submitAdd().click();
+
+        // assert intial state after adding
         assertFieldCollapseState(3, 'isnotcollapsed');
+        assertDataCy(cy.focused(), 'input-description');
+        cy.focused()
+            .parents('[data-cy*="editor-field-panel-3 "]')
+            .should('have.length', 1);
         fieldElements(3).inputs.description().should('be.empty');
         fieldElements(3).inputs.description().should('be.empty');
         fieldElements(3).inputs.anyOptionInput().should('have.length', 0);

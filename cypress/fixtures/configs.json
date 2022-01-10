@@ -343,7 +343,7 @@
         },
         "ADDED_FIELDS": {
             "EMAIL": {
-                "identifier": 3,
+                "identifier": 5,
                 "description": "What's your email address?",
                 "type": "email",
                 "hint": "Any email address",
@@ -351,14 +351,14 @@
                 "verify": false
             },
             "TEXT": {
-                "identifier": 3,
+                "identifier": 5,
                 "description": "How do you feel about apples?",
                 "type": "text",
                 "min_chars": 0,
                 "max_chars": 2000
             },
             "SELECTION": {
-                "identifier": 3,
+                "identifier": 5,
                 "description": "What are your favorite pizza toppings?",
                 "type": "selection",
                 "options": ["Quattro Stagioni", "Prosciutto"],
