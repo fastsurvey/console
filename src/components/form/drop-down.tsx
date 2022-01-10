@@ -6,6 +6,7 @@ export default function DropDown(props: {
     value: number;
     setValue(v: number): void;
     disabled?: boolean;
+    'data-cy'?: string;
 }) {
     const {options, value, setValue, disabled} = props;
     const [open, setOpen] = useState(false);
@@ -13,25 +14,29 @@ export default function DropDown(props: {
 
     const label = options.filter((o) => o.value === value)[0]?.label;
     useEffect(() => {
-        if (props.disabled) {
+        if (disabled) {
             setOpen(false);
         }
-    }, [props.disabled]);
+    }, [disabled]);
 
     return (
-        <div className={'relative w-full flex-col-center z-50'}>
+        <div
+            className={'relative w-full flex-col-center z-50'}
+            data-cy={`${props['data-cy']} ${open ? 'isopen' : 'isnotopen'}`}
+        >
             <button
                 ref={ref}
-                onClick={props.disabled ? () => {} : () => setOpen(!open)}
+                onClick={disabled ? () => {} : () => setOpen(!open)}
                 className={
                     'w-full px-3 h-9 text-left relative rounded ' +
                     'font-weight-500 z-50 ringable ' +
-                    (open || props.disabled
+                    (open || disabled
                         ? 'bg-gray-200 text-gray-600 '
                         : 'bg-gray-100 text-gray-800 ') +
-                    (props.disabled ? 'cursor-not-allowed ' : '')
+                    (disabled ? 'cursor-not-allowed ' : '')
                 }
-                disabled={disabled === true}
+                disabled={disabled}
+                data-cy='button-toggle'
             >
                 {label}
                 <div
@@ -75,6 +80,9 @@ export default function DropDown(props: {
                                     setOpen(false);
                             }
                         }}
+                        data-cy={`button-option-${index} ${
+                            option.value === value ? 'isselected' : 'isnotselected'
+                        }`}
                     >
                         <div className='w-5 h-5 p-1.5 svg-dropdown-select'>
                             {option.value === value && icons.circle}

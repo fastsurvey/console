@@ -31,7 +31,24 @@ export const getFieldElements = (index: number) => ({
         description: getFromField(index, ['input-description'], {count: 1}),
         regex: getFromField(index, ['input-regex'], {count: 1}),
         hint: getFromField(index, ['input-hint'], {count: 1}),
+
         toggleVerify: getFromField(index, ['toggle-verify'], {count: 1}),
+        toggleVerifyYes: getFromField(index, ['toggle-verify', 'yes'], {count: 1}),
+        toggleVerifyNo: getFromField(index, ['toggle-verify', 'no'], {count: 1}),
+
+        dropDownEmailFormat: getFromField(index, ['dropdown-email-format'], {count: 1}),
+        dropDownEmailFormatToggle: getFromField(
+            index,
+            ['dropdown-email-format', 'button-toggle'],
+            {count: 1},
+        ),
+        dropDownEmailFormatOption: (optionIndex: number) =>
+            get([
+                `editor-field-panel-${index}`,
+                'dropdown-email-format',
+                `button-option-${optionIndex} `,
+            ]),
+
         minChars: getFromField(index, ['input-min-chars'], {count: 1}),
         maxChars: getFromField(index, ['input-max-chars'], {count: 1}),
         optionList: getFromField(index, ['options-list'], {count: 1}),

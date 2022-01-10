@@ -28,6 +28,7 @@ function VisualEmailSettings(props: {
                     }}
                     options={[...constants.formOptions.EMAIL_REGEX, props.customSetup]}
                     disabled={props.disabled}
+                    data-cy='dropdown-email-format'
                 />
             </div>
             <div className='w-full flex-col-center gap-y-0.5'>
