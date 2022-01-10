@@ -30,9 +30,7 @@ const settingsElements = {
     refreshIdentifier: () => get(['editor-settings', 'refresh-identifier'], {count: 1}),
 
     startDate: () => get(['editor-settings', 'datepicker-start'], {count: 1}),
-    startTime: () => get(['editor-settings', 'timepicker-start'], {count: 1}),
     endDate: () => get(['editor-settings', 'datepicker-end'], {count: 1}),
-    endTime: () => get(['editor-settings', 'timepicker-end'], {count: 1}),
 };
 
 const getFromField =
@@ -343,9 +341,7 @@ describe('The Editor Page', () => {
 
         settingsElements.tabVisibility().click();
         settingsElements.startDate();
-        settingsElements.startTime();
         settingsElements.endDate();
-        settingsElements.endTime();
 
         headerElements.back().click();
         cy.url().should('contains', '/surveys');
@@ -495,7 +491,7 @@ describe('The Editor Page', () => {
             headerElements.undo().click();
             headerElements.end().should('not.be.disabled');
         };
-        settingsElements.inputTitle().clear();
+        settingsElements.inputTitle().clear().should('be.empty');
         assertInvalidFieldState();
 
         fieldElements(0).buttons.collapse().click();
