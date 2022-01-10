@@ -2,14 +2,13 @@ import React, {useEffect, useState} from 'react';
 import VisualDatePicker from './visual-date-picker';
 import {Toggle} from '/src/components';
 
-interface Props {
+function DatePicker(props: {
     timestamp: number | null;
     setTimestamp(timestamp: number | null): void;
-    disabled?: boolean;
+    disabled: boolean;
     'data-cy': string;
     type: 'start' | 'end';
-}
-function DatePicker(props: Props) {
+}) {
     const [dateStore, setDateStore] = useState(new Date((props.timestamp || 0) * 1000));
     useEffect(() => {
         setDateStore(new Date((props.timestamp || 0) * 1000));
