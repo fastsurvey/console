@@ -4,7 +4,7 @@ import {Label, TextInput} from '/src/components';
 import {types} from '/src/types';
 
 function TextSettings(props: {
-    fieldConfig: types.TextField;
+    localFieldConfig: types.TextField;
     setLocalFieldConfig(fieldConfigChanges: object): void;
     disabled: boolean;
 }) {
@@ -13,7 +13,7 @@ function TextSettings(props: {
             <div className='w-full flex-col-center gap-y-0.5'>
                 <Label text='Minimum' />
                 <TextInput
-                    value={props.fieldConfig.min_chars.toString()}
+                    value={props.localFieldConfig.min_chars.toString()}
                     setValue={(newValue: string) => {
                         props.setLocalFieldConfig({
                             min_chars: helperUtils.formatAtoi(newValue),
@@ -27,7 +27,7 @@ function TextSettings(props: {
             <div className='w-full flex-col-center gap-y-0.5'>
                 <Label text='Maximum' />
                 <TextInput
-                    value={props.fieldConfig.max_chars.toString()}
+                    value={props.localFieldConfig.max_chars.toString()}
                     setValue={(newValue: string) => {
                         props.setLocalFieldConfig({
                             max_chars: helperUtils.formatAtoi(newValue),

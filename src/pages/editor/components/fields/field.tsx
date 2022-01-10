@@ -1,40 +1,42 @@
-import React, {useEffect, useState} from 'react';
-import {clipboardUtils, formUtils, localIdUtils} from '/src/utilities';
+import React, {useState} from 'react';
+import {clipboardUtils, localIdUtils} from '/src/utilities';
 import {types} from '/src/types';
 
 import VisualField from './visual-field';
 import TextSettings from './text/text-settings';
 import SelectionSettings from './selection/selection-settings';
 import EmailSettings from './email/email-settings';
-import MarkdownFieldEditor from './markdown/markdown-field-editor';
 
-interface Props {
+function Field(props: {
     identifierToOrder: {[key: string]: number};
     fieldIndex: number;
-    fieldConfig: types.SurveyField;
-    configIsDiffering: boolean;
+
+    localFieldConfig: types.SurveyField;
     setLocalFieldConfig(fieldConfigChanges: object): void;
-    disabled: boolean;
-    validation: types.ValidationResult;
     removeField(): void;
-}
-function Field(props: Props) {
+    validation: types.ValidationResult;
+
+    configIsDiffering: boolean;
+    disabled: boolean;
+}) {
     const [collapse, setCollapse] = useState(!props.configIsDiffering);
 
     function copyField() {
         clipboardUtils.copy(
-            JSON.stringify(localIdUtils.remove.fieldForClipboard(props.fieldConfig)),
+            JSON.stringify(
+                localIdUtils.remove.fieldForClipboard(props.localFieldConfig),
+            ),
         );
     }
 
     let FieldSettings: React.ReactNode;
-    switch (props.fieldConfig.type) {
+    switch (props.localFieldConfig.type) {
         case 'text':
             FieldSettings = (
                 <TextSettings
                     disabled={props.disabled || collapse}
                     setLocalFieldConfig={props.setLocalFieldConfig}
-                    fieldConfig={props.fieldConfig}
+                    localFieldConfig={props.localFieldConfig}
                 />
             );
             break;
@@ -43,7 +45,7 @@ function Field(props: Props) {
                 <SelectionSettings
                     disabled={props.disabled || collapse}
                     setLocalFieldConfig={props.setLocalFieldConfig}
-                    fieldConfig={props.fieldConfig}
+                    localFieldConfig={props.localFieldConfig}
                 />
             );
             break;
@@ -52,7 +54,7 @@ function Field(props: Props) {
                 <EmailSettings
                     disabled={props.disabled || collapse}
                     setLocalFieldConfig={props.setLocalFieldConfig}
-                    fieldConfig={props.fieldConfig}
+                    localFieldConfig={props.localFieldConfig}
                 />
             );
             break;
@@ -60,14 +62,14 @@ function Field(props: Props) {
         case 'break':
             break;
         default:
-            throw `Invalid field: ${props.fieldConfig}`;
+            throw `Invalid field: ${props.localFieldConfig}`;
     }
 
     return (
         <VisualField
             identifierToOrder={props.identifierToOrder}
             fieldIndex={props.fieldIndex}
-            fieldConfig={props.fieldConfig}
+            localFieldConfig={props.localFieldConfig}
             setLocalFieldConfig={props.setLocalFieldConfig}
             disabled={props.disabled}
             removeField={props.removeField}

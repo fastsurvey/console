@@ -6,19 +6,21 @@ import {Label} from '/src/components';
 import {types} from '/src/types';
 
 function FieldOptionsList(props: {
-    fieldConfig: types.SelectionField;
+    localFieldConfig: types.SelectionField;
     setLocalFieldConfig(fieldConfigChanges: object): void;
     disabled: boolean;
 }) {
     const optionRefs: any = useRef([]);
-    optionRefs.current = props.fieldConfig.options.map(
+    optionRefs.current = props.localFieldConfig.options.map(
         (_, i) => optionRefs.current[i] ?? createRef(),
     );
 
     const [fieldToFocus, setFieldToFocus] = useState(-1);
 
     function addFieldOption(newIndex: number) {
-        props.setLocalFieldConfig(templateUtils.option(newIndex, props.fieldConfig));
+        props.setLocalFieldConfig(
+            templateUtils.option(newIndex, props.localFieldConfig),
+        );
         // Suitable for 1rem = 16px
         animateScroll.scrollMore(56, {duration: 150});
 
@@ -35,7 +37,7 @@ function FieldOptionsList(props: {
     return (
         <div className='w-full flex-col-right gap-y-1' data-cy='options-list'>
             <Label text='Options to select' />
-            {props.fieldConfig.options.map((optionConfig, optionIndex) => (
+            {props.localFieldConfig.options.map((optionConfig, optionIndex) => (
                 <div
                     className='w-full text-sm flex-row-left gap-x-2'
                     key={optionConfig.local_id}
@@ -45,7 +47,7 @@ function FieldOptionsList(props: {
                         value={optionConfig.title}
                         onChange={(e) =>
                             props.setLocalFieldConfig({
-                                options: props.fieldConfig.options.map(
+                                options: props.localFieldConfig.options.map(
                                     (oldOptionField, oldIndex) =>
                                         optionIndex === oldIndex
                                             ? {
@@ -83,7 +85,7 @@ function FieldOptionsList(props: {
                             // @ts-ignore
                             e.target.blur();
                             props.setLocalFieldConfig({
-                                options: props.fieldConfig.options.filter(
+                                options: props.localFieldConfig.options.filter(
                                     (oldOptionField, oldIndex) =>
                                         optionIndex !== oldIndex,
                                 ),
@@ -98,7 +100,9 @@ function FieldOptionsList(props: {
             ))}
             <div className={'w-full pr-[2.375rem] h-9 mb-1'}>
                 <button
-                    onClick={() => addFieldOption(props.fieldConfig.options.length)}
+                    onClick={() =>
+                        addFieldOption(props.localFieldConfig.options.length)
+                    }
                     className={
                         'w-full h-full rounded flex-row-left px-3 ringable ' +
                         'text-sm font-weight-500 text-gray-700 cursor-pointer ' +

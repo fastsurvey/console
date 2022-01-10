@@ -5,15 +5,15 @@ import FieldOptionsList from './components/field-options-list';
 import {types} from '/src/types';
 
 function SelectionSettings(props: {
-    fieldConfig: types.SelectionField;
+    localFieldConfig: types.SelectionField;
     setLocalFieldConfig(fieldConfigChanges: object): void;
     disabled: boolean;
 }) {
     return (
         <>
             <FieldOptionsList
-                fieldConfig={props.fieldConfig}
                 disabled={props.disabled}
+                localFieldConfig={props.localFieldConfig}
                 setLocalFieldConfig={props.setLocalFieldConfig}
             />
             <div
@@ -23,7 +23,7 @@ function SelectionSettings(props: {
             <div className='w-full flex-col-center gap-y-0.5'>
                 <Label text='Minimum options selected' />
                 <TextInput
-                    value={props.fieldConfig.min_select.toString()}
+                    value={props.localFieldConfig.min_select.toString()}
                     setValue={(newValue: string) => {
                         props.setLocalFieldConfig({
                             min_select: helperUtils.formatAtoi(newValue),
@@ -36,7 +36,7 @@ function SelectionSettings(props: {
             <div className='w-full flex-col-center gap-y-0.5'>
                 <Label text='Maximum options selected' />
                 <TextInput
-                    value={props.fieldConfig.max_select.toString()}
+                    value={props.localFieldConfig.max_select.toString()}
                     setValue={(newValue: string) => {
                         props.setLocalFieldConfig({
                             max_select: helperUtils.formatAtoi(newValue),

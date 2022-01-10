@@ -6,7 +6,7 @@ import {types} from '/src/types';
 function VisualEmailSettings(props: {
     setupValue: number;
     customSetup: types.EmailRegexSetup;
-    fieldConfig: types.EmailField;
+    localFieldConfig: types.EmailField;
     setLocalFieldConfig(fieldConfigChanges: object): void;
     disabled: boolean;
 }) {
@@ -33,7 +33,7 @@ function VisualEmailSettings(props: {
             <div className='w-full flex-col-center gap-y-0.5'>
                 <Label text='Regex' />
                 <TextInput
-                    value={props.fieldConfig.regex}
+                    value={props.localFieldConfig.regex}
                     setValue={(newValue: string) =>
                         props.setLocalFieldConfig({
                             regex: newValue,
@@ -46,7 +46,7 @@ function VisualEmailSettings(props: {
             <div className='w-full flex-col-center gap-y-0.5'>
                 <Label text='Hint' />
                 <TextInput
-                    value={props.fieldConfig.hint}
+                    value={props.localFieldConfig.hint}
                     setValue={(newValue: string) =>
                         props.setLocalFieldConfig({
                             hint: newValue,
@@ -60,7 +60,7 @@ function VisualEmailSettings(props: {
             <div className='w-full flex-col-left gap-y-0.5 mt-2'>
                 <Label text='Verify Email Address (email with confirmation link sent out)' />
                 <Toggle
-                    value={props.fieldConfig.verify}
+                    value={props.localFieldConfig.verify}
                     setValue={(newValue: boolean) =>
                         props.setLocalFieldConfig({
                             verify: newValue,

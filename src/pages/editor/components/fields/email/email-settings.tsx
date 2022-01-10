@@ -4,7 +4,7 @@ import VisualEmailSettings from './visual-email-settings';
 import {types} from '/src/types';
 
 function EmailSettings(props: {
-    fieldConfig: types.EmailField;
+    localFieldConfig: types.EmailField;
     setLocalFieldConfig(fieldConfigChanges: object): void;
     disabled: boolean;
 }) {
@@ -20,30 +20,33 @@ function EmailSettings(props: {
         constants.formOptions.EMAIL_REGEX.length,
     );
     const [customSetup, setCustomSetup] = useState(
-        getCustomSetup(props.fieldConfig.regex, props.fieldConfig.hint),
+        getCustomSetup(props.localFieldConfig.regex, props.localFieldConfig.hint),
     );
 
     useEffect(() => {
         const newSetup: types.EmailRegexSetup[] =
             constants.formOptions.EMAIL_REGEX.filter(
                 (setup) =>
-                    setup.regex === props.fieldConfig.regex &&
-                    setup.hint === props.fieldConfig.hint,
+                    setup.regex === props.localFieldConfig.regex &&
+                    setup.hint === props.localFieldConfig.hint,
             );
 
         if (newSetup.length === 0) {
             setSetupValue(constants.formOptions.EMAIL_REGEX.length);
             setCustomSetup(
-                getCustomSetup(props.fieldConfig.regex, props.fieldConfig.hint),
+                getCustomSetup(
+                    props.localFieldConfig.regex,
+                    props.localFieldConfig.hint,
+                ),
             );
         } else {
             setSetupValue(newSetup[0].value);
         }
-    }, [props.fieldConfig.regex, props.fieldConfig.hint]);
+    }, [props.localFieldConfig.regex, props.localFieldConfig.hint]);
 
     return (
         <VisualEmailSettings
-            fieldConfig={props.fieldConfig}
+            localFieldConfig={props.localFieldConfig}
             setupValue={setupValue}
             customSetup={customSetup}
             disabled={props.disabled}

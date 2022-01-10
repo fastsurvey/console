@@ -8,16 +8,19 @@ import MarkdownFieldEditor from './markdown/markdown-field-editor';
 function VisualField(props: {
     identifierToOrder: {[key: string]: number};
     fieldIndex: number;
-    fieldConfig: types.SurveyField;
-    disabled: boolean;
+
+    localFieldConfig: types.SurveyField;
     setLocalFieldConfig(fieldConfigChanges: object): void;
-    validation: types.ValidationResult;
     removeField(): void;
     copyField(): void;
-    children: React.ReactNode;
+    validation: types.ValidationResult;
+
     configIsDiffering: boolean;
+    disabled: boolean;
+
     collapse: boolean;
     setCollapse(c: boolean): void;
+    children: React.ReactNode;
 }) {
     const {collapse, setCollapse} = props;
     const panelRef = useRef<HTMLDivElement>(null);
@@ -32,7 +35,7 @@ function VisualField(props: {
                 descriptionRef.current?.focus();
             }, 450);
         }
-    }, [props.fieldConfig.local_id]);
+    }, [props.localFieldConfig.local_id]);
 
     const [actionLabel, setActionLabel] = useState('');
     const buttonCSS =
@@ -67,29 +70,29 @@ function VisualField(props: {
     );
 
     let fieldLabel: string = `Field ${
-        props.identifierToOrder[props.fieldConfig.identifier]
-    } (${props.fieldConfig.type})`;
+        props.identifierToOrder[props.localFieldConfig.identifier]
+    } (${props.localFieldConfig.type})`;
     let mobileFieldLabel: string = `${
-        props.identifierToOrder[props.fieldConfig.identifier]
-    } (${props.fieldConfig.type})`;
-    if (props.fieldConfig.type === 'markdown') {
+        props.identifierToOrder[props.localFieldConfig.identifier]
+    } (${props.localFieldConfig.type})`;
+    if (props.localFieldConfig.type === 'markdown') {
         fieldLabel = 'Markdown Content';
         mobileFieldLabel = 'Markdown';
     }
 
-    if (props.fieldConfig.type !== 'break') {
+    if (props.localFieldConfig.type !== 'break') {
         return (
             <EditorFormCard
                 ref={panelRef}
                 label={fieldLabel}
                 mobileLabel={mobileFieldLabel}
-                icon={styleUtils.icons.fieldTypeToIcon(props.fieldConfig.type)}
-                fieldType={props.fieldConfig.type}
+                icon={styleUtils.icons.fieldTypeToIcon(props.localFieldConfig.type)}
+                fieldType={props.localFieldConfig.type}
                 collapse={collapse}
                 setCollapse={setCollapse}
                 longLabel={
-                    props.fieldConfig.type !== 'markdown'
-                        ? props.fieldConfig.description
+                    props.localFieldConfig.type !== 'markdown'
+                        ? props.localFieldConfig.description
                         : undefined
                 }
                 buttons={buttons}
@@ -100,12 +103,14 @@ function VisualField(props: {
                     collapse ? 'iscollapsed' : 'isnotcollapsed'
                 }`}
             >
-                {['email', 'selection', 'text'].includes(props.fieldConfig.type) && (
+                {['email', 'selection', 'text'].includes(
+                    props.localFieldConfig.type,
+                ) && (
                     <div className='w-full flex-col-center gap-y-0.5'>
                         <Label text='Description' />
                         <TextArea
                             ref={descriptionRef}
-                            value={props.fieldConfig.description}
+                            value={props.localFieldConfig.description}
                             setValue={(newValue: string) => {
                                 props.setLocalFieldConfig({description: newValue});
                             }}
@@ -114,10 +119,10 @@ function VisualField(props: {
                         />
                     </div>
                 )}
-                {props.fieldConfig.type === 'markdown' && (
+                {props.localFieldConfig.type === 'markdown' && (
                     <MarkdownFieldEditor
                         ref={descriptionRef}
-                        value={props.fieldConfig.description}
+                        value={props.localFieldConfig.description}
                         setValue={(newValue: string) => {
                             props.setLocalFieldConfig({description: newValue});
                         }}

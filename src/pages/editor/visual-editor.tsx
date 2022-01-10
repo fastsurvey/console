@@ -53,8 +53,8 @@ function VisualEditor(props: {
                     settingsValidation={props.settingsValidation}
                     disabled={props.submittingConfig}
                 />
-                {props.localConfig.fields.map((fieldConfig, index) => (
-                    <div className='w-full' key={fieldConfig.local_id}>
+                {props.localConfig.fields.map((localFieldConfig, index) => (
+                    <div className='w-full' key={localFieldConfig.local_id}>
                         <AddFieldPanel
                             insertField={(fieldType: types.FieldType) =>
                                 props.insertField(index, fieldType)
@@ -66,7 +66,7 @@ function VisualEditor(props: {
                         <Field
                             identifierToOrder={identifierToOrder}
                             fieldIndex={index}
-                            fieldConfig={fieldConfig}
+                            localFieldConfig={localFieldConfig}
                             setLocalFieldConfig={(newFieldConfig: object) =>
                                 props.setLocalFieldConfig(newFieldConfig, index)
                             }
