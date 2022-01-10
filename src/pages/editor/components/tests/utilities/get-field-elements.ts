@@ -17,9 +17,9 @@ export const getFieldElements = (index: number) => ({
     noPanelMarkdownHelp: getFromField(index, ['panel-markdown-help'], {count: 0}),
     markdownContent: getFromField(index, ['markdown-content'], {count: 1}),
     buttons: {
-        collapse: getFromField(index, ['button-collapse'], {count: 1}),
-        copy: getFromField(index, ['button-copy'], {count: 1}),
-        remove: getFromField(index, ['button-remove'], {count: 1}),
+        collapse: getFromField(index, ['button-collapse '], {count: 1}),
+        copy: getFromField(index, ['button-copy '], {count: 1}),
+        remove: getFromField(index, ['button-remove '], {count: 1}),
         addBefore: () => get([`add-field-before-${index}`], {count: 1}),
         pasteBefore: () => get([`paste-field-before-${index}`], {count: 1}),
         markdownTab: (tab: 'plain-text' | 'split-view' | 'rendered') =>
@@ -55,9 +55,15 @@ export const getFieldElements = (index: number) => ({
         anyOptionInput: getFromField(index, ['options-list', 'input-option']),
         optionInput: (optionIndex: number) =>
             get([
-                `editor-field-panel-${index}`,
+                `editor-field-panel-${index} `,
                 'options-list',
-                `input-option-${optionIndex}`,
+                `input-option-${optionIndex} `,
+            ]),
+        deleteOption: (optionIndex: number) =>
+            get([
+                `editor-field-panel-${index} `,
+                'options-list',
+                `button-remove-${optionIndex} `,
             ]),
         addOption: getFromField(index, ['options-list', 'button-add'], {count: 1}),
         minSelect: getFromField(index, ['input-min-select'], {count: 1}),

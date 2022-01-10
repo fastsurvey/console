@@ -74,7 +74,7 @@ function FieldOptionsList(props: {
                                 : 'bg-gray-100 text-gray-800 ')
                         }
                         disabled={props.disabled}
-                        data-cy={`input-option-${optionIndex}`}
+                        data-cy={`input-option-${optionIndex} `}
                     />
                     <button
                         className={
@@ -92,7 +92,7 @@ function FieldOptionsList(props: {
                             });
                         }}
                         disabled={props.disabled}
-                        data-cy={`button-remove-${optionIndex}`}
+                        data-cy={`button-remove-${optionIndex} `}
                     >
                         {icons.trash}
                     </button>
