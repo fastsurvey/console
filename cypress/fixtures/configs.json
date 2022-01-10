@@ -218,7 +218,7 @@
             ]
         },
         "COPY_PASTE_SURVEY": {
-            "next_identifier": 9,
+            "next_identifier": 13,
             "survey_name": "just-another-randy-bird",
             "title": "Very Good Sample Title",
             "start": 1436244487,
@@ -285,6 +285,40 @@
                 {
                     "type": "selection",
                     "identifier": 5,
+                    "description": "What are your favorite pizza toppings?",
+                    "options": [
+                        "Quattro Stagioni",
+                        "Prosciutto",
+                        "Margherita",
+                        "Quattro Formaggi",
+                        "Capricciosa"
+                    ],
+                    "min_select": 2,
+                    "max_select": 5
+                },
+                {
+                    "type": "markdown",
+                    "identifier": 9,
+                    "description": "Do you like markdown?"
+                },
+                {
+                    "type": "text",
+                    "identifier": 10,
+                    "description": "How do you feel about apples?",
+                    "min_chars": 10,
+                    "max_chars": 1000
+                },
+                {
+                    "type": "email",
+                    "identifier": 11,
+                    "description": "What's your email address?",
+                    "hint": "YOUR EMAIL ADDRESS HERE",
+                    "regex": ".*",
+                    "verify": false
+                },
+                {
+                    "type": "selection",
+                    "identifier": 12,
                     "description": "What are your favorite pizza toppings?",
                     "options": [
                         "Quattro Stagioni",

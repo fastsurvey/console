@@ -1,4 +1,4 @@
-import {concat, first, pullAllBy, range} from 'lodash';
+import {concat, first, range} from 'lodash';
 import * as utilities from '../../support/utilities';
 import {types} from '/src/types';
 
@@ -36,7 +36,7 @@ const settingsElements = {
 const getFromField =
     (index: number, selectors: string[], props?: {count?: number; invisible?: true}) =>
     () =>
-        get([`editor-field-panel-${index}`, ...selectors], props);
+        get([`editor-field-panel-${index} `, ...selectors], props);
 
 const fieldElements = (index: number) => ({
     panel: getFromField(index, [], {count: 1}),
@@ -304,99 +304,6 @@ describe('The Editor Page', () => {
             ...INITIAL_SURVEY,
             next_identifier: INITIAL_NEXT_IDENTIFIER,
             fields: [],
-        });
-    });
-
-    it('copy and paste', function () {
-        const {INITIAL_SURVEY, COPY_PASTE_SURVEY} = this.configsJSON.EDITOR;
-        const {USERNAME, PASSWORD} = this.accountJSON;
-
-        /*
-        break field not included in this config
-
-        INITIAL_SURVEY: 0 1 2 3 4
-        COPY_PASTE_SURVEY:
-        0->8
-        0
-        1
-        2->7
-        1->6
-        2
-        3
-        4
-        3->5
-        */
-
-        const copyPasteSequence = () => {
-            const copyAndPaste = (fromIndex: number, toIndex: number) => {
-                fieldElements(fromIndex).buttons.copy().click();
-                fieldElements(toIndex).buttons.pasteBefore().click();
-            };
-            range(4).map((index) => {
-                fieldElements(index).buttons.collapse().click();
-            });
-            copyAndPaste(3, 5); //  3->5
-            copyAndPaste(1, 2); //  1->6
-            copyAndPaste(3, 2); //  2->7
-            copyAndPaste(0, 0); //  0->8
-            range(9).map((index) => assertFieldCollapseState(index, 'isnotcollapsed'));
-        };
-
-        // undo works
-        copyPasteSequence();
-
-        assertSurveyState(COPY_PASTE_SURVEY);
-        headerElements.undo().click();
-        assertSurveyState(INITIAL_SURVEY);
-        cy.reload();
-        range(4).forEach((index) => {
-            fieldElements(index).buttons.collapse().click();
-            assertFieldCollapseState(index, 'isnotcollapsed');
-        });
-        assertSurveyState(INITIAL_SURVEY);
-        range(4).forEach((index) => {
-            fieldElements(index).buttons.collapse().click();
-            assertFieldCollapseState(index, 'iscollapsed');
-        });
-
-        // save works
-        copyPasteSequence();
-        assertSurveyState(COPY_PASTE_SURVEY);
-        headerElements.save().click();
-        assertSurveyState(COPY_PASTE_SURVEY);
-        cy.reload();
-        [0, 1, 2, 3, 4, 5, 6, 8].forEach((index) => {
-            fieldElements(index).buttons.collapse().click();
-            assertFieldCollapseState(index, 'isnotcollapsed');
-        });
-        assertSurveyState(COPY_PASTE_SURVEY);
-
-        // deepCompare the config-json in database
-        cy.request({
-            method: 'POST',
-            url: 'https://api.dev.fastsurvey.de/authentication',
-            body: {
-                identifier: USERNAME,
-                password: PASSWORD,
-            },
-        }).then((authResponse) => {
-            expect(authResponse.status).to.equal(200);
-            cy.request({
-                method: 'GET',
-                url: `https://api.dev.fastsurvey.de/users/${USERNAME}/surveys`,
-                headers: {
-                    Authorization: `Bearer ${authResponse.body['access_token']}`,
-                    'Content-Type': 'application/json',
-                },
-            }).then((getResponse) => {
-                expect(getResponse.status).to.equal(200);
-                const duplicateSurveyOnServer = first(
-                    getResponse.body.filter(
-                        (c: any) => c['survey_name'] === COPY_PASTE_SURVEY.survey_name,
-                    ),
-                );
-                expect(duplicateSurveyOnServer).to.deep.equal(COPY_PASTE_SURVEY);
-            });
         });
     });
 
@@ -742,6 +649,107 @@ describe('The Editor Page', () => {
     });
 
     // TODO: Add test for newly adding a survey and adding multiple fields before saving the first time -> max_identifier, etc. working correctly
+
+    it('copy and paste', function () {
+        const {INITIAL_SURVEY, COPY_PASTE_SURVEY} = this.configsJSON.EDITOR;
+        const {USERNAME, PASSWORD} = this.accountJSON;
+
+        /*
+        break field not included in this config
+
+        INITIAL_SURVEY: 0 1 2 3 4
+        COPY_PASTE_SURVEY:
+        0->8
+        0
+        1
+        2->7
+        1->6
+        2
+        3
+        4
+        3->5
+        0->8->9
+        1->6->10
+        2->7->11
+        3->5->12
+        */
+
+        const copyPasteSequence = () => {
+            const copyAndPaste = (fromIndex: number, toIndex: number) => {
+                fieldElements(fromIndex).buttons.copy().click();
+                fieldElements(toIndex).buttons.pasteBefore().click();
+            };
+            range(4).map((index) => {
+                fieldElements(index).buttons.collapse().click();
+            });
+            copyAndPaste(3, 5); // 3->5
+            copyAndPaste(1, 2); // 1->6
+            copyAndPaste(3, 2); // 2->7
+            copyAndPaste(0, 0); // 0->8
+            copyAndPaste(0, 9); // 0->8->9
+            copyAndPaste(4, 10); // 1->6->10
+            copyAndPaste(3, 11); // 2->7->11
+            copyAndPaste(8, 12); // 3->5->12
+            range(13).map((index) => assertFieldCollapseState(index, 'isnotcollapsed'));
+        };
+
+        // undo works
+        copyPasteSequence();
+
+        assertSurveyState(COPY_PASTE_SURVEY);
+        headerElements.undo().click();
+        assertSurveyState(INITIAL_SURVEY);
+        cy.reload();
+        range(4).forEach((index) => {
+            fieldElements(index).buttons.collapse().click();
+            assertFieldCollapseState(index, 'isnotcollapsed');
+        });
+        assertSurveyState(INITIAL_SURVEY);
+        range(4).forEach((index) => {
+            fieldElements(index).buttons.collapse().click();
+            assertFieldCollapseState(index, 'iscollapsed');
+        });
+
+        // save works
+        copyPasteSequence();
+        assertSurveyState(COPY_PASTE_SURVEY);
+        headerElements.save().click();
+        assertSurveyState(COPY_PASTE_SURVEY);
+        cy.reload();
+        [0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12].forEach((index) => {
+            fieldElements(index).buttons.collapse().click();
+            assertFieldCollapseState(index, 'isnotcollapsed');
+        });
+        assertSurveyState(COPY_PASTE_SURVEY);
+
+        // deepCompare the config-json in database
+        cy.request({
+            method: 'POST',
+            url: 'https://api.dev.fastsurvey.de/authentication',
+            body: {
+                identifier: USERNAME,
+                password: PASSWORD,
+            },
+        }).then((authResponse) => {
+            expect(authResponse.status).to.equal(200);
+            cy.request({
+                method: 'GET',
+                url: `https://api.dev.fastsurvey.de/users/${USERNAME}/surveys`,
+                headers: {
+                    Authorization: `Bearer ${authResponse.body['access_token']}`,
+                    'Content-Type': 'application/json',
+                },
+            }).then((getResponse) => {
+                expect(getResponse.status).to.equal(200);
+                const duplicateSurveyOnServer = first(
+                    getResponse.body.filter(
+                        (c: any) => c['survey_name'] === COPY_PASTE_SURVEY.survey_name,
+                    ),
+                );
+                expect(duplicateSurveyOnServer).to.deep.equal(COPY_PASTE_SURVEY);
+            });
+        });
+    });
 
     // Test with component test of fields:
     // TODO: looks as expected
