@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {Label, DatePicker, TextInput, Toggle, ValidationBar} from '/src/components';
-import {icons} from '/src/assets';
+import {ValidationBar} from '/src/components';
 import {types} from '/src/types';
 import {Menu, Transition} from '@headlessui/react';
 import {ChevronDownIcon} from '@heroicons/react/solid';
-import {reduxUtils, templateUtils} from '/src/utilities';
+import {reduxUtils} from '/src/utilities';
 import {connect} from 'react-redux';
+import AboutTab from './components/about-tab';
+import TimingTab from '/src/pages/editor/components/editor-settings/components/timing-tab';
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ');
@@ -101,124 +102,8 @@ const EditorSettings = (props: {
                 </div>
             </div>
             <div className='w-full px-4 py-4 space-y-6 flex-col-left'>
-                {tabIndex === 0 && (
-                    <>
-                        <div className='w-full flex-col-left gap-y-0.5'>
-                            <Label text='Title' />
-                            <TextInput
-                                value={props.localConfig.title}
-                                setValue={(newValue: string) => {
-                                    props.setLocalSettingsConfig({
-                                        title: newValue,
-                                    });
-                                }}
-                                disabled={props.disabled}
-                                data-cy='input-title'
-                            />
-                        </div>
-                        <div className='w-full flex-col-left gap-y-0.5'>
-                            <Label
-                                text='Identifier'
-                                detail={
-                                    <>
-                                        This identifier is used in the URL that you can
-                                        share with your survey. The survey can be filled
-                                        out at{' '}
-                                        <span className='text-blue-100 underline break-all'>
-                                            https://fastsurvey.de/{'<'}your-username
-                                            {'>'}/{'<'}survey-identifier{'>'}
-                                        </span>
-                                        .
-                                    </>
-                                }
-                            />
-                            <div className='w-full flex-row-center gap-x-1'>
-                                <TextInput
-                                    value={props.localConfig.survey_name}
-                                    setValue={(newValue: string) => {
-                                        props.setLocalSettingsConfig({
-                                            survey_name: newValue,
-                                        });
-                                    }}
-                                    disabled={props.disabled}
-                                    data-cy='input-identifier'
-                                />
-                                <button
-                                    className={
-                                        'w-8 h-8 p-1 mx-0.5 rounded ringable svg-settings-generate-id ' +
-                                        (!props.disabled ? '' : 'cursor-not-allowed ')
-                                    }
-                                    onClick={() => {
-                                        if (!props.disabled) {
-                                            props.setLocalSettingsConfig({
-                                                survey_name: templateUtils.surveyName(
-                                                    props.configs,
-                                                ),
-                                            });
-                                        }
-                                    }}
-                                    disabled={props.disabled}
-                                    data-cy='refresh-identifier'
-                                >
-                                    {icons.refresh}
-                                </button>
-                            </div>
-                        </div>
-                    </>
-                )}
-                {tabIndex === 1 && (
-                    <>
-                        <div className='w-full flex-col-left gap-y-0.5'>
-                            <Label text='Open for new submissions' />
-                            <Toggle
-                                value={props.localConfig.start !== null}
-                                setValue={(v: boolean) => {
-                                    props.setLocalSettingsConfig({
-                                        start: v ? 0 : null,
-                                        end: v ? props.localConfig.end : null,
-                                    });
-                                }}
-                                disabled={props.disabled}
-                                data-cy='toggle-open-for-submissions'
-                            />
-                        </div>
-
-                        {props.localConfig.start !== null && (
-                            <>
-                                <div className='w-full flex-col-left gap-y-0.5'>
-                                    <Label text='Start time' />
-
-                                    <DatePicker
-                                        timestamp={props.localConfig.start}
-                                        setTimestamp={(timestamp: number | null) => {
-                                            props.setLocalSettingsConfig({
-                                                start: timestamp,
-                                            });
-                                        }}
-                                        disabled={props.disabled}
-                                        data-cy='datepicker-start'
-                                        type='start'
-                                    />
-                                </div>
-
-                                <div className='w-full flex-col-left gap-y-0.5'>
-                                    <Label text='End time' />
-                                    <DatePicker
-                                        timestamp={props.localConfig.end}
-                                        setTimestamp={(timestamp: number | null) => {
-                                            props.setLocalSettingsConfig({
-                                                end: timestamp,
-                                            });
-                                        }}
-                                        disabled={props.disabled}
-                                        data-cy='datepicker-end'
-                                        type='end'
-                                    />
-                                </div>
-                            </>
-                        )}
-                    </>
-                )}
+                {tabIndex === 0 && <AboutTab {...props} />}
+                {tabIndex === 1 && <TimingTab {...props} />}
             </div>
             <ValidationBar
                 validation={props.settingsValidation}

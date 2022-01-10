@@ -210,9 +210,9 @@
     }
 
     .svg-settings-generate-id .primary {
-        @apply fill-gray-200;
+        @apply fill-transparent;
     }
     .svg-settings-generate-id .secondary {
-        @apply fill-gray-500;
+        @apply fill-gray-600;
     }
 }
