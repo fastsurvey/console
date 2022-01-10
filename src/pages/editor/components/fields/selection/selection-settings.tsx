@@ -6,7 +6,7 @@ import {types} from '/src/types';
 
 function SelectionSettings(props: {
     localFieldConfig: types.SelectionField;
-    setLocalFieldConfig(fieldConfigChanges: object): void;
+    setLocalFieldConfig(fieldConfigChanges: types.SurveyFieldChange): void;
     disabled: boolean;
 }) {
     return (

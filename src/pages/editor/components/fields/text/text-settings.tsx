@@ -5,7 +5,7 @@ import {types} from '/src/types';
 
 function TextSettings(props: {
     localFieldConfig: types.TextField;
-    setLocalFieldConfig(fieldConfigChanges: object): void;
+    setLocalFieldConfig(fieldConfigChanges: types.SurveyFieldChange): void;
     disabled: boolean;
 }) {
     return (

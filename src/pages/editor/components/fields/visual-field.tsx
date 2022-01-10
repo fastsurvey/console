@@ -10,7 +10,7 @@ function VisualField(props: {
     fieldIndex: number;
 
     localFieldConfig: types.SurveyField;
-    setLocalFieldConfig(fieldConfigChanges: object): void;
+    setLocalFieldConfig(fieldConfigChanges: types.SurveyFieldChange): void;
     removeField(): void;
     copyField(): void;
     validation: types.ValidationResult;

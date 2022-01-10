@@ -9,8 +9,11 @@ import {reduce} from 'lodash';
 function VisualEditor(props: {
     centralConfigName: string;
     localConfig: types.SurveyConfig;
-    setLocalSettingsConfig(configChanges: object): void;
-    setLocalFieldConfig(fieldConfigChanges: object, index: number): void;
+    setLocalSettingsConfig(configChanges: types.SurveyConfigChange): void;
+    setLocalFieldConfig(
+        fieldConfigChanges: types.SurveyFieldChange,
+        index: number,
+    ): void;
 
     settingsValidation: types.ValidationResult;
     fieldValidations: types.ValidationResult[];

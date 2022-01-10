@@ -182,24 +182,19 @@ function Editor(props: {
         initValidators(props.centralConfig);
     }
 
-    function setLocalConfig(configChanges: object) {
+    function setLocalConfig(newLocalConfig: types.SurveyConfig) {
         // No proper state comparison since the config update should be really
         // fast. A deep comparison of centralConfig and localConfig is too expensive
         // in my opinion 10ms more input delay on an M1 Pro Chip..
         if (!props.configIsDiffering) {
             flushSync(() => props.markDiffering(true));
         }
-        setLocalConfigState(
-            cloneDeep({
-                ...localConfig,
-                ...configChanges,
-            }),
-        );
+        setLocalConfigState(cloneDeep(newLocalConfig));
     }
 
-    function setLocalSettingsConfig(configChanges: object) {
+    function setLocalSettingsConfig(configChanges: types.SurveyConfigChange) {
         const newConfig: types.SurveyConfig = {
-            ...JSON.parse(JSON.stringify(localConfig)),
+            ...cloneDeep(localConfig),
             ...configChanges,
         };
 
@@ -207,7 +202,10 @@ function Editor(props: {
         updateValidation(formUtils.validateSettings(props.configs, newConfig), 0);
     }
 
-    function setLocalFieldConfig(fieldConfigChanges: object, index: number) {
+    function setLocalFieldConfig(
+        fieldConfigChanges: types.SurveyFieldChange,
+        index: number,
+    ) {
         const newConfig = JSON.parse(JSON.stringify(localConfig));
 
         newConfig.fields[index] = {

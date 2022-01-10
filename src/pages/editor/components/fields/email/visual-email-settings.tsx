@@ -7,7 +7,7 @@ function VisualEmailSettings(props: {
     setupValue: number;
     customSetup: types.EmailRegexSetup;
     localFieldConfig: types.EmailField;
-    setLocalFieldConfig(fieldConfigChanges: object): void;
+    setLocalFieldConfig(fieldConfigChanges: types.SurveyFieldChange): void;
     disabled: boolean;
 }) {
     return (

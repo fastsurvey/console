@@ -7,7 +7,7 @@ import {types} from '/src/types';
 
 function FieldOptionsList(props: {
     localFieldConfig: types.SelectionField;
-    setLocalFieldConfig(fieldConfigChanges: object): void;
+    setLocalFieldConfig(fieldConfigChanges: types.SurveyFieldChange): void;
     disabled: boolean;
 }) {
     const optionRefs: any = useRef([]);

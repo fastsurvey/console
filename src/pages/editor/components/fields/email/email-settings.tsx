@@ -5,7 +5,7 @@ import {types} from '/src/types';
 
 function EmailSettings(props: {
     localFieldConfig: types.EmailField;
-    setLocalFieldConfig(fieldConfigChanges: object): void;
+    setLocalFieldConfig(fieldConfigChanges: types.SurveyFieldChange): void;
     disabled: boolean;
 }) {
     const getCustomSetup = (regex: string, hint: string) => ({

@@ -14,7 +14,6 @@ export declare namespace types {
         start?: number | null;
         end?: number | null;
         title?: string;
-        fields?: SurveyFieldChange[];
     }
 
     export type SurveyFieldChange =

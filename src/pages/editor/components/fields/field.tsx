@@ -12,7 +12,7 @@ function Field(props: {
     fieldIndex: number;
 
     localFieldConfig: types.SurveyField;
-    setLocalFieldConfig(fieldConfigChanges: object): void;
+    setLocalFieldConfig(fieldConfigChanges: types.SurveyFieldChange): void;
     removeField(): void;
     validation: types.ValidationResult;
 
