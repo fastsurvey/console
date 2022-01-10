@@ -19,7 +19,11 @@ export const assertCommonNumbering = (fieldConfig: any) => {
         />,
     );
     getFieldElements(7).panel();
-    getFieldElements(7).label().should('have.text', 'Field 8 (text)');
+    if (fieldConfig.type !== 'markdown') {
+        getFieldElements(7).label().should('have.text', 'Field 8 (text)');
+    } else {
+        getFieldElements(7).label().should('have.text', 'Markdown Content');
+    }
     unmount();
 
     mount(
@@ -35,7 +39,9 @@ export const assertCommonNumbering = (fieldConfig: any) => {
         />,
     );
     getFieldElements(13).panel();
-    getFieldElements(13).label().should('have.text', 'Field 14 (text)');
+    if (fieldConfig.type !== 'markdown') {
+        getFieldElements(13).label().should('have.text', 'Field 14 (text)');
+    }
 };
 
 export const assertCommonCollapsing = (fieldConfig: any) => {

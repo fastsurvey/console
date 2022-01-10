@@ -13,12 +13,19 @@ export const getFieldElements = (index: number) => ({
     longLabel: getFromField(index, ['card-long-label'], {count: 1}),
     validationBar: getFromField(index, ['validation-bar'], {count: 1, invisible: true}),
     validationMessage: getFromField(index, ['validation-bar', 'message'], {count: 1}),
+    panelMarkdownHelp: getFromField(index, ['panel-markdown-help'], {count: 1}),
+    noPanelMarkdownHelp: getFromField(index, ['panel-markdown-help'], {count: 0}),
+    markdownContent: getFromField(index, ['markdown-content'], {count: 1}),
     buttons: {
         collapse: getFromField(index, ['button-collapse'], {count: 1}),
         copy: getFromField(index, ['button-copy'], {count: 1}),
         remove: getFromField(index, ['button-remove'], {count: 1}),
         addBefore: () => get([`add-field-before-${index}`], {count: 1}),
         pasteBefore: () => get([`paste-field-before-${index}`], {count: 1}),
+        markdownTab: (tab: 'plain-text' | 'split-view' | 'rendered') =>
+            get([`editor-field-panel-${index} `, `tab-${tab}`], {count: 1}),
+        markdownHelp: getFromField(index, [`button-markdown-help`], {count: 1}),
+        markdownDemo: getFromField(index, [`button-markdown-demo`], {count: 1}),
     },
     inputs: {
         description: getFromField(index, ['input-description'], {count: 1}),

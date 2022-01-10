@@ -822,9 +822,4 @@ describe('The Editor Page', () => {
             });
         });
     });
-
-    // Test with component test of fields:
-    // TODO: looks as expected
-    // TODO: collapsing fields
-    // TODO: all possible error messages
 });

@@ -44,7 +44,7 @@ const MarkdownFieldEditor = React.forwardRef(
                 ),
             );
             setAnimateDemo(true);
-            setTab('split view');
+            setTab('plain text');
         }
 
         return (
@@ -57,6 +57,7 @@ const MarkdownFieldEditor = React.forwardRef(
                             'relative block ringable rounded z-50 ml-0.5'
                         }
                         onClick={toggleDetail}
+                        data-cy='button-markdown-help'
                     >
                         {detailIsOpen ? icons.closeCircle : icons.information}
                     </button>
@@ -70,12 +71,13 @@ const MarkdownFieldEditor = React.forwardRef(
                                     : 'hover:bg-gray-100 text-gray-500 hover:text-gray-700 ') +
                                 'py-1 px-3 font-weight-600 text-base rounded ringable ' +
                                 (t === 'split view' ? 'hidden md:block ' : ' ') +
-                                (t === 'split view' && animateDemo
+                                (t === 'plain text' && animateDemo
                                     ? 'animate-pop '
                                     : ' ')
                             }
-                            data-cy={`tab-${t.toLowerCase()}`}
-                            disabled={props.disabled}
+                            data-cy={`tab-${t.replace(' ', '-').toLowerCase()} ${
+                                t === tab ? 'isactive' : 'isinactive'
+                            }`}
                         >
                             {t}
                         </button>
@@ -88,6 +90,7 @@ const MarkdownFieldEditor = React.forwardRef(
                             'bg-gray-800 text-gray-100 ' +
                             'text-sm font-weight-500 text-justify'
                         }
+                        data-cy='panel-markdown-help'
                     >
                         <p className='mb-2'>
                             Markdown is a formatting language that can be used to
@@ -110,6 +113,8 @@ const MarkdownFieldEditor = React.forwardRef(
                             <button
                                 className='text-blue-100 underline break-all'
                                 onClick={addDemoContent}
+                                data-cy='button-markdown-demo'
+                                disabled={props.disabled}
                             >
                                 click here
                             </button>
