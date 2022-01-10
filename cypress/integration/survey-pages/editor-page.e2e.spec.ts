@@ -186,9 +186,10 @@ describe('The Editor Page', () => {
 
         // remove field 1 + undo
         fieldElements(1).buttons.remove().click();
-        get([`editor-field-panel`], {count: 2});
+        get([`editor-field-panel`], {count: 4});
         headerElements.undo().click();
-        get([`editor-field-panel`], {count: 3});
+        assertSyncedHeaderState();
+        get([`editor-field-panel`], {count: 5});
         assertConfigInDB(USERNAME, PASSWORD, {
             ...INITIAL_SURVEY,
             next_identifier: INITIAL_NEXT_IDENTIFIER,
@@ -202,22 +203,23 @@ describe('The Editor Page', () => {
         }).as('PUTupdate1');
 
         fieldElements(2).buttons.remove().click();
-        get([`editor-field-panel`], {count: 2});
+        get([`editor-field-panel`], {count: 4});
         headerElements.save().click();
-        get([`editor-field-panel`], {count: 2});
+        assertSyncedHeaderState();
+        get([`editor-field-panel`], {count: 4});
         headerElements.end().should('not.be.disabled');
 
         cy.wait(['@PUTupdate1']);
-        console.log({INITIAL_SURVEY});
 
         assertConfigInDB(USERNAME, PASSWORD, {
             ...INITIAL_SURVEY,
             next_identifier: INITIAL_NEXT_IDENTIFIER,
-            fields: pullAllBy(
-                JSON.parse(JSON.stringify(INITIAL_SURVEY.fields)),
-                [{identifier: INITIAL_SURVEY.fields[2].identifier}],
-                'identifier',
-            ),
+            fields: [
+                INITIAL_SURVEY.fields[0],
+                INITIAL_SURVEY.fields[1],
+                INITIAL_SURVEY.fields[3],
+                INITIAL_SURVEY.fields[4],
+            ],
         });
 
         // remove field 0 + save
@@ -228,48 +230,116 @@ describe('The Editor Page', () => {
         }).as('PUTupdate2');
 
         fieldElements(0).buttons.remove().click();
-        get([`editor-field-panel`], {count: 1});
+        get([`editor-field-panel`], {count: 3});
         headerElements.save().click();
-        get([`editor-field-panel`], {count: 1});
+        assertSyncedHeaderState();
+        get([`editor-field-panel`], {count: 3});
 
         cy.wait(['@PUTupdate2']);
-
         assertConfigInDB(USERNAME, PASSWORD, {
             ...INITIAL_SURVEY,
             next_identifier: INITIAL_NEXT_IDENTIFIER,
-            fields: pullAllBy(
-                JSON.parse(JSON.stringify(INITIAL_SURVEY.fields)),
-                [
-                    {identifier: INITIAL_SURVEY.fields[2].identifier},
-                    {identifier: INITIAL_SURVEY.fields[0].identifier},
-                ],
-                'identifier',
-            ),
+            fields: [
+                INITIAL_SURVEY.fields[1],
+                INITIAL_SURVEY.fields[3],
+                INITIAL_SURVEY.fields[4],
+            ],
         });
 
-        // remove last field + save (unsuccessful)
+        // remove field 2 + save
+        cy.intercept({
+            method: 'PUT',
+            url: `users/${USERNAME}/surveys/${INITIAL_SURVEY.survey_name}`,
+            hostname: 'api.dev.fastsurvey.de',
+        }).as('PUTupdate3');
+
+        fieldElements(2).buttons.remove().click();
+        get([`editor-field-panel`], {count: 2});
+        headerElements.save().click();
+        assertSyncedHeaderState();
+        get([`editor-field-panel`], {count: 2});
+
+        cy.wait(['@PUTupdate3']);
+        assertConfigInDB(USERNAME, PASSWORD, {
+            ...INITIAL_SURVEY,
+            next_identifier: INITIAL_NEXT_IDENTIFIER,
+            fields: [INITIAL_SURVEY.fields[1], INITIAL_SURVEY.fields[3]],
+        });
+
+        // remove field 1 + save
+        cy.intercept({
+            method: 'PUT',
+            url: `users/${USERNAME}/surveys/${INITIAL_SURVEY.survey_name}`,
+            hostname: 'api.dev.fastsurvey.de',
+        }).as('PUTupdate4');
+
+        fieldElements(1).buttons.remove().click();
+        get([`editor-field-panel`], {count: 1});
+        headerElements.save().click();
+        assertSyncedHeaderState();
+        get([`editor-field-panel`], {count: 1});
+
+        cy.wait(['@PUTupdate4']);
+        assertConfigInDB(USERNAME, PASSWORD, {
+            ...INITIAL_SURVEY,
+            next_identifier: INITIAL_NEXT_IDENTIFIER,
+            fields: [INITIAL_SURVEY.fields[1]],
+        });
+
+        // remove field 0 + save
+        cy.intercept({
+            method: 'PUT',
+            url: `users/${USERNAME}/surveys/${INITIAL_SURVEY.survey_name}`,
+            hostname: 'api.dev.fastsurvey.de',
+        }).as('PUTupdate5');
+
         fieldElements(0).buttons.remove().click();
         get([`editor-field-panel`], {count: 0});
         headerElements.save().click();
-        get([`editor-field-panel`], {count: 0});
         assertSyncedHeaderState();
+        get([`editor-field-panel`], {count: 0});
+
+        cy.wait(['@PUTupdate5']);
+        assertConfigInDB(USERNAME, PASSWORD, {
+            ...INITIAL_SURVEY,
+            next_identifier: INITIAL_NEXT_IDENTIFIER,
+            fields: [],
+        });
     });
 
     it('copy and paste', function () {
         const {INITIAL_SURVEY, COPY_PASTE_SURVEY} = this.configsJSON.EDITOR;
         const {USERNAME, PASSWORD} = this.accountJSON;
 
+        /*
+        break field not included in this config
+
+        INITIAL_SURVEY: 0 1 2 3 4
+        COPY_PASTE_SURVEY:
+        0->8
+        0
+        1
+        2->7
+        1->6
+        2
+        3
+        4
+        3->5
+        */
+
         const copyPasteSequence = () => {
-            fieldElements(0).buttons.copy().click();
-            fieldElements(3).buttons.pasteBefore().click();
-            fieldElements(2).buttons.copy().click();
-            fieldElements(0).buttons.pasteBefore().click();
-            fieldElements(2).buttons.copy().click();
-            fieldElements(3).buttons.pasteBefore().click();
-            [1, 2, 4].forEach((index) => {
+            const copyAndPaste = (fromIndex: number, toIndex: number) => {
+                fieldElements(fromIndex).buttons.copy().click();
+                fieldElements(toIndex).buttons.pasteBefore().click();
+            };
+            range(4).map((index) => {
                 fieldElements(index).buttons.collapse().click();
             });
-            range(6).map((index) => assertFieldCollapseState(index, 'isnotcollapsed'));
+            copyAndPaste(3, 5); //  3->5
+            copyAndPaste(1, 2); //  1->6
+            copyAndPaste(3, 2); //  2->7
+            copyAndPaste(0, 0); //  0->8
+            range(9).map((index) => assertFieldCollapseState(index, 'isnotcollapsed'));
         };
 
         // undo works
@@ -279,12 +349,12 @@ describe('The Editor Page', () => {
         headerElements.undo().click();
         assertSurveyState(INITIAL_SURVEY);
         cy.reload();
-        range(3).map((index) => {
+        range(4).forEach((index) => {
             fieldElements(index).buttons.collapse().click();
             assertFieldCollapseState(index, 'isnotcollapsed');
         });
         assertSurveyState(INITIAL_SURVEY);
-        range(3).map((index) => {
+        range(4).forEach((index) => {
             fieldElements(index).buttons.collapse().click();
             assertFieldCollapseState(index, 'iscollapsed');
         });
@@ -295,7 +365,7 @@ describe('The Editor Page', () => {
         headerElements.save().click();
         assertSurveyState(COPY_PASTE_SURVEY);
         cy.reload();
-        range(6).map((index) => {
+        [0, 1, 2, 3, 4, 5, 6, 8].forEach((index) => {
             fieldElements(index).buttons.collapse().click();
             assertFieldCollapseState(index, 'isnotcollapsed');
         });

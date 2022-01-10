@@ -141,7 +141,7 @@ function VisualField(props: {
                 removeField={props.removeField}
                 actionLabel={actionLabel}
                 setActionLabel={setActionLabel}
-                data-cy={`editor-field-panel-${props.fieldIndex}`}
+                data-cy={`editor-field-panel-${props.fieldIndex} iscollapsed isnotcollapsed`}
             />
         );
     }

@@ -139,24 +139,29 @@
             "end": 2006330889,
             "fields": [
                 {
+                    "type": "markdown",
                     "identifier": 0,
-                    "description": "How do you feel about apples?",
+                    "description": "Do you like markdown?"
+                },
+                {
                     "type": "text",
+                    "identifier": 1,
+                    "description": "How do you feel about apples?",
                     "min_chars": 10,
                     "max_chars": 1000
                 },
                 {
-                    "identifier": 1,
-                    "description": "What's your email address?",
                     "type": "email",
+                    "identifier": 2,
+                    "description": "What's your email address?",
                     "hint": "YOUR EMAIL ADDRESS HERE",
                     "regex": ".*",
                     "verify": false
                 },
                 {
-                    "identifier": 2,
-                    "description": "What are your favorite pizza toppings?",
                     "type": "selection",
+                    "identifier": 3,
+                    "description": "What are your favorite pizza toppings?",
                     "options": [
                         "Quattro Stagioni",
                         "Prosciutto",
@@ -166,10 +171,14 @@
                     ],
                     "min_select": 2,
                     "max_select": 5
+                },
+                {
+                    "identifier": 4,
+                    "type": "break"
                 }
             ]
         },
-        "INITIAL_NEXT_IDENTIFIER": 3,
+        "INITIAL_NEXT_IDENTIFIER": 5,
         "TMP_SURVEY_NAME": "coding-dojo-mit-den-boys",
         "MODIFIED_SURVEY": {
             "survey_name": "just-another-randy-cowboy",
@@ -209,53 +218,56 @@
             ]
         },
         "COPY_PASTE_SURVEY": {
-            "next_identifier": 6,
+            "next_identifier": 9,
             "survey_name": "just-another-randy-bird",
             "title": "Very Good Sample Title",
             "start": 1436244487,
             "end": 2006330889,
             "fields": [
                 {
-                    "identifier": 4,
-                    "description": "What are your favorite pizza toppings?",
-                    "type": "selection",
-                    "options": [
-                        "Quattro Stagioni",
-                        "Prosciutto",
-                        "Margherita",
-                        "Quattro Formaggi",
-                        "Capricciosa"
-                    ],
-                    "min_select": 2,
-                    "max_select": 5
+                    "type": "markdown",
+                    "identifier": 8,
+                    "description": "Do you like markdown?"
                 },
                 {
+                    "type": "markdown",
                     "identifier": 0,
-                    "description": "How do you feel about apples?",
+                    "description": "Do you like markdown?"
+                },
+                {
                     "type": "text",
+                    "identifier": 1,
+                    "description": "How do you feel about apples?",
                     "min_chars": 10,
                     "max_chars": 1000
                 },
                 {
-                    "identifier": 1,
-                    "description": "What's your email address?",
                     "type": "email",
+                    "identifier": 7,
+                    "description": "What's your email address?",
                     "hint": "YOUR EMAIL ADDRESS HERE",
                     "regex": ".*",
                     "verify": false
                 },
                 {
-                    "identifier": 5,
-                    "description": "What's your email address?",
-                    "type": "email",
-                    "hint": "YOUR EMAIL ADDRESS HERE",
-                    "regex": ".*",
-                    "verify": false
+                    "type": "text",
+                    "identifier": 6,
+                    "description": "How do you feel about apples?",
+                    "min_chars": 10,
+                    "max_chars": 1000
                 },
                 {
+                    "type": "email",
                     "identifier": 2,
-                    "description": "What are your favorite pizza toppings?",
+                    "description": "What's your email address?",
+                    "hint": "YOUR EMAIL ADDRESS HERE",
+                    "regex": ".*",
+                    "verify": false
+                },
+                {
                     "type": "selection",
+                    "identifier": 3,
+                    "description": "What are your favorite pizza toppings?",
                     "options": [
                         "Quattro Stagioni",
                         "Prosciutto",
@@ -267,11 +279,22 @@
                     "max_select": 5
                 },
                 {
-                    "identifier": 3,
-                    "description": "How do you feel about apples?",
-                    "type": "text",
-                    "min_chars": 10,
-                    "max_chars": 1000
+                    "identifier": 4,
+                    "type": "break"
+                },
+                {
+                    "type": "selection",
+                    "identifier": 5,
+                    "description": "What are your favorite pizza toppings?",
+                    "options": [
+                        "Quattro Stagioni",
+                        "Prosciutto",
+                        "Margherita",
+                        "Quattro Formaggi",
+                        "Capricciosa"
+                    ],
+                    "min_select": 2,
+                    "max_select": 5
                 }
             ]
         },

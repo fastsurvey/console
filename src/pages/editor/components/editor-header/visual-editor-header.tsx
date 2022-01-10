@@ -37,7 +37,7 @@ function VisualEditorHeader(props: {
     );
 
     return (
-        <div className={'w-full pl-2 flex-col-left mb-7'} data-cy='editor-header'>
+        <div className='w-full pl-2 flex-col-left mb-7' data-cy='editor-header'>
             <div className='relative block w-full mb-8 md:mb-2 flex-row-right md:hidden'>
                 {props.saveButtons.length > 0 && (
                     <>
@@ -75,21 +75,20 @@ function VisualEditorHeader(props: {
                 <h1
                     className={
                         'pr-4 text-2xl md:text-xl leading-8 ' +
-                        'min-h-[2rem] py-1 md:py-0 ' +
+                        'min-h-[2rem] py-1 md:py-0 flex-grow ' +
                         'text-gray-800 font-weight-700 truncate'
                     }
                     data-cy='title'
                 >
                     {title}
                 </h1>
-                <div className='flex-grow' />
                 <div
                     className={
-                        'relative hidden md:flex flex-row items-start justify-start'
+                        'relative hidden md:flex flex-row items-start justify-start flex-shrink-0'
                     }
                 >
                     <ButtonGroup buttons={props.saveButtons} hideIconsOnMobile />
-                    <div className='flex-shrink-0 w-2 md:w-4' />
+                    <div className='flex-shrink-0 w-2' />
                     <Button {...props.timeButton} disabled={props.configIsDiffering} />
                 </div>
             </div>

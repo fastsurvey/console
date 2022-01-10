@@ -22,7 +22,7 @@ const EditorFormCard = React.forwardRef(
             setActionLabel(newLabel: string): void;
 
             validation?: types.ValidationResult;
-            'data-cy'?: string;
+            'data-cy': string;
         },
         ref: any,
     ) => {
