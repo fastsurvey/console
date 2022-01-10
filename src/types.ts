@@ -9,6 +9,20 @@ export declare namespace types {
         fields: SurveyField[];
     }
 
+    export interface SurveyConfigChange {
+        survey_name?: string;
+        start?: number | null;
+        end?: number | null;
+        title?: string;
+        fields?: SurveyFieldChange[];
+    }
+
+    export type SurveyFieldChange =
+        | EmailFieldChange
+        | SelectionFieldChange
+        | TextFieldChange
+        | MarkdownFieldChange;
+
     export type SurveyField =
         | EmailField
         | SelectionField
@@ -28,6 +42,13 @@ export declare namespace types {
         hint: string;
     }
 
+    export interface EmailFieldChange {
+        description?: string;
+        regex?: string;
+        verify?: boolean;
+        hint?: string;
+    }
+
     export interface TextField {
         type: 'text';
         identifier: number;
@@ -35,6 +56,12 @@ export declare namespace types {
         description: string;
         min_chars: number;
         max_chars: number;
+    }
+
+    export interface TextFieldChange {
+        description?: string;
+        min_chars?: number;
+        max_chars?: number;
     }
 
     export interface SelectionField {
@@ -45,6 +72,13 @@ export declare namespace types {
         min_select: number;
         max_select: number;
         options: FieldOption[];
+    }
+
+    export interface SelectionFieldChange {
+        description?: string;
+        min_select?: number;
+        max_select?: number;
+        options?: FieldOption[];
     }
 
     export interface FieldOption {
@@ -63,6 +97,10 @@ export declare namespace types {
         identifier: number;
         local_id: number;
         description: string;
+    }
+
+    export interface MarkdownFieldChange {
+        description?: string;
     }
 
     export interface EmailRegexSetup {

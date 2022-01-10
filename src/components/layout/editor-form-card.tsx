@@ -30,7 +30,6 @@ const EditorFormCard = React.forwardRef(
             props.setCollapse(!props.collapse);
             updateActionlabel(!props.collapse);
         };
-        console.log('collapse', props.collapse);
 
         const updateActionlabel = (collapse: boolean | undefined) => {
             props.setActionLabel(collapse ? 'expand' : 'collapse');

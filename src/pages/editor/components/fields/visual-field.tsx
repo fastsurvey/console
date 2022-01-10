@@ -96,7 +96,9 @@ function VisualField(props: {
                 actionLabel={actionLabel}
                 setActionLabel={setActionLabel}
                 validation={props.validation}
-                data-cy={`editor-field-panel-${props.fieldIndex}`}
+                data-cy={`editor-field-panel-${props.fieldIndex} ${
+                    collapse ? 'iscollapsed' : 'isnotcollapsed'
+                }`}
             >
                 {['email', 'selection', 'text'].includes(props.fieldConfig.type) && (
                     <div className='w-full flex-col-center gap-y-0.5'>

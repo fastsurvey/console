@@ -15,27 +15,11 @@ interface Props {
     configIsDiffering: boolean;
     setLocalFieldConfig(fieldConfigChanges: object): void;
     disabled: boolean;
-    updateValidation(newState: types.ValidationResult): void;
     validation: types.ValidationResult;
     removeField(): void;
 }
 function Field(props: Props) {
-    useEffect(
-        () => props.updateValidation(formUtils.validateField(props.fieldConfig)),
-        // eslint-disable-next-line
-        [props.fieldConfig.local_id],
-    );
     const [collapse, setCollapse] = useState(!props.configIsDiffering);
-
-    function updateLocalFieldConfig(fieldConfigChanges: object) {
-        props.updateValidation(
-            formUtils.validateField({
-                ...props.fieldConfig,
-                ...fieldConfigChanges,
-            }),
-        );
-        props.setLocalFieldConfig(fieldConfigChanges);
-    }
 
     function copyField() {
         clipboardUtils.copy(
@@ -49,7 +33,7 @@ function Field(props: Props) {
             FieldSettings = (
                 <TextSettings
                     disabled={props.disabled || collapse}
-                    setLocalFieldConfig={updateLocalFieldConfig}
+                    setLocalFieldConfig={props.setLocalFieldConfig}
                     fieldConfig={props.fieldConfig}
                 />
             );
@@ -58,7 +42,7 @@ function Field(props: Props) {
             FieldSettings = (
                 <SelectionSettings
                     disabled={props.disabled || collapse}
-                    setLocalFieldConfig={updateLocalFieldConfig}
+                    setLocalFieldConfig={props.setLocalFieldConfig}
                     fieldConfig={props.fieldConfig}
                 />
             );
@@ -67,7 +51,7 @@ function Field(props: Props) {
             FieldSettings = (
                 <EmailSettings
                     disabled={props.disabled || collapse}
-                    setLocalFieldConfig={updateLocalFieldConfig}
+                    setLocalFieldConfig={props.setLocalFieldConfig}
                     fieldConfig={props.fieldConfig}
                 />
             );
@@ -84,7 +68,7 @@ function Field(props: Props) {
             identifierToOrder={props.identifierToOrder}
             fieldIndex={props.fieldIndex}
             fieldConfig={props.fieldConfig}
-            setLocalFieldConfig={updateLocalFieldConfig}
+            setLocalFieldConfig={props.setLocalFieldConfig}
             disabled={props.disabled}
             removeField={props.removeField}
             copyField={copyField}

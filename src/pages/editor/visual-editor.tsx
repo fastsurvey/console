@@ -9,11 +9,11 @@ import {reduce} from 'lodash';
 function VisualEditor(props: {
     centralConfigName: string;
     localConfig: types.SurveyConfig;
-    setLocalConfig(configChanges: object): void;
-    setLocalFieldConfig(fieldConfigChanges: object, newIndex: number): void;
+    setLocalSettingsConfig(configChanges: object): void;
+    setLocalFieldConfig(fieldConfigChanges: object, index: number): void;
 
-    updateValidation(newIndex: number, newState: types.ValidationResult): void;
-    fieldValidation: types.ValidationResult[];
+    settingsValidation: types.ValidationResult;
+    fieldValidations: types.ValidationResult[];
 
     insertField(index: number, fieldType: types.FieldType): void;
     pasteField(index: number): void;
@@ -46,16 +46,11 @@ function VisualEditor(props: {
                     localConfig={props.localConfig}
                     saveState={props.saveState}
                     revertState={props.revertState}
-                    setLocalConfig={props.setLocalConfig}
                 />
                 <EditorSettings
-                    centralConfigName={props.centralConfigName}
-                    config={props.localConfig}
-                    setLocalConfig={props.setLocalConfig}
-                    updateValidation={(newState: types.ValidationResult) =>
-                        props.updateValidation(0, newState)
-                    }
-                    validation={props.fieldValidation[0]}
+                    localConfig={props.localConfig}
+                    setLocalSettingsConfig={props.setLocalSettingsConfig}
+                    settingsValidation={props.settingsValidation}
                     disabled={props.submittingConfig}
                 />
                 {props.localConfig.fields.map((fieldConfig, index) => (
@@ -77,11 +72,8 @@ function VisualEditor(props: {
                             }
                             configIsDiffering={props.configIsDiffering}
                             disabled={props.submittingConfig}
-                            updateValidation={(newState: types.ValidationResult) =>
-                                props.updateValidation(index + 1, newState)
-                            }
                             removeField={() => props.removeField(index)}
-                            validation={props.fieldValidation[index + 1]}
+                            validation={props.fieldValidations[index]}
                         />
                     </div>
                 ))}

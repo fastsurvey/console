@@ -29,8 +29,8 @@ function Editor(props: {
 }) {
     const [submittingConfig, setSubmittingConfig] = useState(false);
     const [localConfig, setLocalConfigState] = useState(props.centralConfig);
-    const [fieldValidation, setFieldValidation] = useState<types.ValidationResult[]>(
-        [],
+    const [localValidations, setLocalValidations] = useState<types.ValidationResult[]>(
+        times(props.centralConfig.fields.length + 1, constant({valid: true})),
     );
 
     // Used for: survey_name is changed when editing, new survey
@@ -44,20 +44,24 @@ function Editor(props: {
     }, [props.centralConfig.survey_name]);
 
     function initValidators(config: types.SurveyConfig) {
-        setFieldValidation(times(config.fields.length + 1, constant({valid: true})));
+        setLocalValidations(times(config.fields.length + 1, constant({valid: true})));
     }
 
-    function updateValidation(newIndex: number, newState: types.ValidationResult) {
-        const newValidators = JSON.parse(JSON.stringify(fieldValidation));
-        newValidators[newIndex] = newState;
-        setFieldValidation(newValidators);
+    function updateValidation(validation: types.ValidationResult, index: number) {
+        const newValidators = JSON.parse(JSON.stringify(localValidations));
+        newValidators[index] = validation;
+        setLocalValidations(newValidators);
     }
 
     function insertField(index: number, fieldType: types.FieldType) {
         const newFieldConfig = templateUtils.field(fieldType, localConfig);
         const newFieldValidation = formUtils.validateField(newFieldConfig);
-        setFieldValidation(
-            helperUtils.insertIntoArray(fieldValidation, index + 1, newFieldValidation),
+        setLocalValidations(
+            helperUtils.insertIntoArray(
+                localValidations,
+                index + 1,
+                newFieldValidation,
+            ),
         );
         setLocalConfig({
             ...localConfig,
@@ -77,9 +81,9 @@ function Editor(props: {
             );
             newFieldConfig.identifier = templateUtils.fieldIdentifier(localConfig);
 
-            setFieldValidation(
+            setLocalValidations(
                 helperUtils.insertIntoArray(
-                    fieldValidation,
+                    localValidations,
                     index + 1,
                     formUtils.validateField(newFieldConfig),
                 ),
@@ -120,7 +124,7 @@ function Editor(props: {
             }));
         }
 
-        setFieldValidation(helperUtils.removeFromArray(fieldValidation, index + 1));
+        setLocalValidations(helperUtils.removeFromArray(localValidations, index + 1));
         setLocalConfig({...localConfig, fields: newFields});
     }
 
@@ -133,7 +137,7 @@ function Editor(props: {
         const combinedMaxId: any = max(combinedConfig.fields.map((f) => f.identifier));
         combinedConfig.next_identifier = combinedMaxId + 1;
 
-        const fieldsAreValid = every(fieldValidation.map((r) => r.valid));
+        const fieldsAreValid = every(localValidations.map((r) => r.valid));
         const authModeIsValid = formUtils.validators.authMode(localConfig).valid;
 
         function success() {
@@ -193,25 +197,37 @@ function Editor(props: {
         );
     }
 
-    function setLocalFieldConfig(fieldConfigChanges: object, newIndex: number) {
+    function setLocalSettingsConfig(configChanges: object) {
+        const newConfig: types.SurveyConfig = {
+            ...JSON.parse(JSON.stringify(localConfig)),
+            ...configChanges,
+        };
+
+        setLocalConfig(newConfig);
+        updateValidation(formUtils.validateSettings(props.configs, newConfig), 0);
+    }
+
+    function setLocalFieldConfig(fieldConfigChanges: object, index: number) {
         const newConfig = JSON.parse(JSON.stringify(localConfig));
 
-        newConfig.fields[newIndex] = {
-            ...newConfig.fields[newIndex],
+        newConfig.fields[index] = {
+            ...newConfig.fields[index],
             ...fieldConfigChanges,
         };
+
         setLocalConfig(newConfig);
+        updateValidation(formUtils.validateField(newConfig.fields[index]), index + 1);
     }
 
     return (
         <VisualEditor
             centralConfigName={props.centralConfig.survey_name}
             configIsDiffering={props.configIsDiffering}
+            settingsValidation={localValidations[0]}
+            fieldValidations={localValidations.slice(1)}
             {...{
                 localConfig,
-                updateValidation,
-                fieldValidation,
-                setLocalConfig,
+                setLocalSettingsConfig,
                 setLocalFieldConfig,
                 insertField,
                 pasteField,

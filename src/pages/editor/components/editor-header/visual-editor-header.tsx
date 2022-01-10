@@ -10,12 +10,7 @@ const frontendUrl =
 function VisualEditorHeader(props: {
     configIsDiffering: boolean;
     account: types.Account;
-
     localConfig: types.SurveyConfig;
-    setLocalConfig(configChanges: object): void;
-
-    saveState(configChanges?: object): void;
-    revertState(): void;
     openMessage(messageId: types.MessageId): void;
 
     saveButtons: {
