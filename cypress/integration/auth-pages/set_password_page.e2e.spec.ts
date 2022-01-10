@@ -1,5 +1,4 @@
-import * as utilities from '../../support/utilities';
-const {getCySelector, assertDataCy} = utilities;
+import {getCySelector, assertDataCy} from '../../support/utilities';
 const get = getCySelector;
 
 const EMAIL_TOKEN = 'some-email-token';

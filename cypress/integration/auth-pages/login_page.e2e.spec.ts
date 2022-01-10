@@ -1,6 +1,4 @@
-import * as utilities from '../../support/utilities';
-
-const {getCySelector, logout} = utilities;
+import {getCySelector, logout} from '../../support/utilities';
 
 const get = (selectors: string[]) =>
     getCySelector(['login-panel', ...selectors], {count: 1});

@@ -1,7 +1,5 @@
 import {first, last} from 'lodash';
-import * as utilities from '../../support/utilities';
-
-const {login, getCySelector} = utilities;
+import {login, getCySelector} from '../../support/utilities';
 const get = getCySelector;
 
 const buttonNew = () => get(['config-list-button-new'], {count: 1});

@@ -1,7 +1,5 @@
 import {repeat} from 'lodash';
-import * as utilities from '../../support/utilities';
-
-const {getCySelector} = utilities;
+import {getCySelector} from '../../support/utilities';
 const get = getCySelector;
 
 const title = () => get(['verify-email-panel', 'title'], {count: 1});

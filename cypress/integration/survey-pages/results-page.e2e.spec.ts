@@ -1,8 +1,6 @@
-import * as utilities from '../../support/utilities';
 import path from 'path';
 import {sortBy} from 'lodash';
-
-const {login, getCySelector} = utilities;
+import {login, getCySelector} from '../../support/utilities';
 const get = getCySelector;
 
 const headerElements = {

@@ -1,8 +1,6 @@
 import {concat, first, range} from 'lodash';
-import * as utilities from '../../support/utilities';
 import {types} from '/src/types';
-
-const {login, getCySelector, assertDataCy} = utilities;
+import {login, getCySelector, assertDataCy} from '../../support/utilities';
 const get = getCySelector;
 
 const warningMessage = () => get(['message-panel-warning'], {count: 1});

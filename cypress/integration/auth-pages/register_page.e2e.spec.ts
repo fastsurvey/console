@@ -1,7 +1,5 @@
 import {repeat} from 'lodash';
-import * as utilities from '../../support/utilities';
-
-const {getCySelector, assertDataCy} = utilities;
+import {getCySelector, assertDataCy} from '../../support/utilities';
 const get = getCySelector;
 
 const inputEmail = () => get(['register-panel', 'input-email'], {count: 1});
