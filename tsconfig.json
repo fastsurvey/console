@@ -12,7 +12,7 @@
         "module": "esnext",
         "moduleResolution": "node",
         "resolveJsonModule": true,
-        "isolatedModules": false,
+        "isolatedModules": true,
         "noEmit": true,
         "jsx": "react",
         "downlevelIteration": true,
@@ -30,6 +30,6 @@
             "/src/pages/*": ["pages/*"]
         }
     },
-    "include": ["**/*.ts", "**/*.tsx"],
+    "include": ["**/*.ts", "**/*.tsx", "vite.config.js"],
     "exclude": ["node_modules", "dist", "scripts"]
 }

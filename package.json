@@ -17,8 +17,8 @@
         "serve": "vite preview",
         "analyze": "source-map-explorer 'dist/assets/*.js'",
         "cypress:integration": "cypress open",
-        "cypress:component": "yarn tailwind:build && cypress open-ct",
-        "tailwind:build": "npx tailwindcss -i src/styles/tailwind.css -o src/styles/tailwind.out.css"
+        "cypress:component": "yarn build:tailwind && cypress open-ct",
+        "build:tailwind": "cat ./src/styles/tailwind.css >> tmp.css && cat ./src/styles/special.css >> tmp.css && cat ./src/styles/layout.css >> tmp.css && cat ./src/styles/icons.css >> tmp.css && npx tailwindcss build -i tmp.css -o ./src/styles/tailwind.out.css && rm tmp.css"
     },
     "dependencies": {
         "express": "^4.17.1"
@@ -50,19 +50,20 @@
         "js-cookie": "^2.2.1",
         "lodash": "^4.17.21",
         "postcss": "^8.4.5",
-        "react-markdown": "^7.1.1",
-        "remark-gfm": "^3.0.1",
-        "remark-math": "^5.1.1",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
+        "react-markdown": "^7.1.1",
         "react-redux": "^7.2.4",
         "react-router-dom": "^5.2.0",
         "react-scroll": "^1.8.1",
+        "remark-gfm": "^3.0.1",
+        "remark-math": "^5.1.1",
         "source-map-explorer": "^2.5.2",
-        "tailwindcss": "^3.0.7",
+        "tailwindcss": "^3.0.12",
         "tailwindcss-interaction-variants": "^5.0.0",
         "typeface-quicksand": "^1.1.13",
         "typescript": "^4.3.5",
-        "vite": "^2.4.1"
+        "vite": "^2.4.1",
+        "webpack-dev-server": "^4.7.2"
     }
 }
