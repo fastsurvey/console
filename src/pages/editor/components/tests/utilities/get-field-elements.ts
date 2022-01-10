@@ -1,46 +1,18 @@
-import React, {useState} from 'react';
-import {types} from '/src/types';
-import Field from '../fields/field';
-import '/src/styles/tailwind.out.css';
-import {getCySelector} from '../../../../../cypress/support/utilities';
+import {getCySelector} from '../../../../../../cypress/support/utilities';
 const get = getCySelector;
-
-export function FieldStateWrapper(props: {
-    initialFieldConfig: types.SurveyField;
-    validation: types.ValidationResult;
-    fieldIndex: number;
-    disabled: boolean;
-}) {
-    const [fieldConfig, setFieldConfig] = useState(props.initialFieldConfig);
-    const [mounted, setMounted] = useState(true);
-
-    return (
-        <div className='w-full h-full px-6 py-12 bg-gray-100'>
-            {mounted && (
-                <Field
-                    configIsDiffering={true}
-                    disabled={true}
-                    identifierToOrder={{'0': props.fieldIndex + 1}}
-                    fieldIndex={props.fieldIndex}
-                    localFieldConfig={fieldConfig}
-                    setLocalFieldConfig={(
-                        fieldConfigChanges: types.SurveyFieldChange,
-                    ) => setFieldConfig({...fieldConfig, ...fieldConfigChanges})}
-                    validation={props.validation}
-                    removeField={() => setMounted(false)}
-                />
-            )}
-        </div>
-    );
-}
 
 const getFromField =
     (index: number, selectors: string[], props?: {count?: number; invisible?: true}) =>
     () =>
         get([`editor-field-panel-${index} `, ...selectors], props);
 
-export const fieldElements = (index: number) => ({
+export const getFieldElements = (index: number) => ({
     panel: getFromField(index, [], {count: 1}),
+    noPanel: getFromField(index, [], {count: 0}),
+    label: getFromField(index, ['card-label'], {count: 1}),
+    longLabel: getFromField(index, ['card-long-label'], {count: 1}),
+    validationBar: getFromField(index, ['validation-bar'], {count: 1, invisible: true}),
+    validationMessage: getFromField(index, ['validation-bar', 'message'], {count: 1}),
     buttons: {
         collapse: getFromField(index, ['button-collapse'], {count: 1}),
         copy: getFromField(index, ['button-copy'], {count: 1}),

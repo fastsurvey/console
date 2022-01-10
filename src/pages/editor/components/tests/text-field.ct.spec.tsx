@@ -1,43 +1,23 @@
-import React from 'react';
-import {mount, unmount} from '@cypress/react';
-import {FieldStateWrapper, fieldElements} from './field-state-wrapper';
+import {types} from '/src/types';
 
-const DESCRIPTION =
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+import {
+    assertCommonNumbering,
+    assertCommonCollapsing,
+    assertCommonValidation,
+} from './utilities/common-asserts';
 
-it('index is working', () => {
-    mount(
-        <FieldStateWrapper
-            initialFieldConfig={{
-                identifier: 4,
-                local_id: 0,
-                type: 'text',
-                description: DESCRIPTION,
-                min_chars: 274,
-                max_chars: 813,
-            }}
-            fieldIndex={7}
-            validation={{valid: true}}
-            disabled={false}
-        />,
-    );
-    fieldElements(7).panel();
-    unmount();
+const INITIAL_STATE: types.TextField = {
+    identifier: 0,
+    local_id: 0,
+    type: 'text',
+    description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    min_chars: 274,
+    max_chars: 813,
+};
 
-    mount(
-        <FieldStateWrapper
-            initialFieldConfig={{
-                identifier: 4,
-                local_id: 0,
-                type: 'text',
-                description: DESCRIPTION,
-                min_chars: 274,
-                max_chars: 813,
-            }}
-            fieldIndex={13}
-            validation={{valid: true}}
-            disabled={false}
-        />,
-    );
-    fieldElements(13).panel();
+it('numbering, collapsing, validation', () => {
+    assertCommonNumbering(INITIAL_STATE);
+    assertCommonCollapsing(INITIAL_STATE);
+    assertCommonValidation(INITIAL_STATE);
 });

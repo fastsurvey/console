@@ -74,14 +74,20 @@ const EditorFormCard = React.forwardRef(
                                     ' mr-4 md:mr-20 '
                                 }
                             >
-                                <div className='flex-shrink-0 hidden mr-3 capitalize truncate md:mb-0 font-weight-600 sm:block'>
+                                <div
+                                    className='flex-shrink-0 hidden mr-3 capitalize truncate md:mb-0 font-weight-600 sm:block'
+                                    data-cy='card-label'
+                                >
                                     {props.label}
                                 </div>
                                 <div className='flex-shrink-0 block mr-3 capitalize truncate md:mb-0 font-weight-600 sm:hidden'>
                                     {props.mobileLabel}
                                 </div>
                                 {props.longLabel !== undefined && (
-                                    <div className='text-sm leading-tight opacity-70 font-weight-500 hyphens line-clamp-3 md:line-clamp-1 sm:line-clamp-2'>
+                                    <div
+                                        className='text-sm leading-tight opacity-70 font-weight-500 hyphens line-clamp-3 md:line-clamp-1 sm:line-clamp-2'
+                                        data-cy='card-long-label'
+                                    >
                                         {props.longLabel}
                                     </div>
                                 )}
