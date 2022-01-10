@@ -130,12 +130,14 @@ describe('The Editor Page', () => {
     const assertEditorPath = (survey_name: string) =>
         cy.url().should('contains', `/editor/${survey_name}`);
 
-    const assertSyncedHeaderState = () => {
-        headerElements.end().should('not.be.disabled');
-        headerElements.undo().should('be.disabled');
-        headerElements.save().should('be.disabled');
-        get(['message-panel-warning']).should('have.length', 0);
-        get(['message-panel-error']).should('have.length', 0);
+    const assertHeaderState = (state: 'synced' | 'unsynced') => {
+        headerElements.end().should((state === 'synced' ? 'not.' : '') + 'be.disabled');
+        headerElements
+            .undo()
+            .should((state === 'unsynced' ? 'not.' : '') + 'be.disabled');
+        headerElements
+            .save()
+            .should((state === 'unsynced' ? 'not.' : '') + 'be.disabled');
     };
 
     const assertFieldCollapseState = (
@@ -188,7 +190,7 @@ describe('The Editor Page', () => {
         fieldElements(1).buttons.remove().click();
         get([`editor-field-panel`], {count: 4});
         headerElements.undo().click();
-        assertSyncedHeaderState();
+        assertHeaderState('synced');
         get([`editor-field-panel`], {count: 5});
         assertConfigInDB(USERNAME, PASSWORD, {
             ...INITIAL_SURVEY,
@@ -205,7 +207,7 @@ describe('The Editor Page', () => {
         fieldElements(2).buttons.remove().click();
         get([`editor-field-panel`], {count: 4});
         headerElements.save().click();
-        assertSyncedHeaderState();
+        assertHeaderState('synced');
         get([`editor-field-panel`], {count: 4});
         headerElements.end().should('not.be.disabled');
 
@@ -232,7 +234,7 @@ describe('The Editor Page', () => {
         fieldElements(0).buttons.remove().click();
         get([`editor-field-panel`], {count: 3});
         headerElements.save().click();
-        assertSyncedHeaderState();
+        assertHeaderState('synced');
         get([`editor-field-panel`], {count: 3});
 
         cy.wait(['@PUTupdate2']);
@@ -256,7 +258,7 @@ describe('The Editor Page', () => {
         fieldElements(2).buttons.remove().click();
         get([`editor-field-panel`], {count: 2});
         headerElements.save().click();
-        assertSyncedHeaderState();
+        assertHeaderState('synced');
         get([`editor-field-panel`], {count: 2});
 
         cy.wait(['@PUTupdate3']);
@@ -276,7 +278,7 @@ describe('The Editor Page', () => {
         fieldElements(1).buttons.remove().click();
         get([`editor-field-panel`], {count: 1});
         headerElements.save().click();
-        assertSyncedHeaderState();
+        assertHeaderState('synced');
         get([`editor-field-panel`], {count: 1});
 
         cy.wait(['@PUTupdate4']);
@@ -296,7 +298,7 @@ describe('The Editor Page', () => {
         fieldElements(0).buttons.remove().click();
         get([`editor-field-panel`], {count: 0});
         headerElements.save().click();
-        assertSyncedHeaderState();
+        assertHeaderState('synced');
         get([`editor-field-panel`], {count: 0});
 
         cy.wait(['@PUTupdate5']);
@@ -381,7 +383,7 @@ describe('The Editor Page', () => {
             .should('have.value', MODIFIED_SURVEY.title);
 
         cy.reload();
-        range(INITIAL_SURVEY.fields.length).forEach((index) => {
+        range(4).forEach((index) => {
             fieldElements(index).buttons.collapse().click();
             assertFieldCollapseState(index, 'isnotcollapsed');
         });
@@ -397,23 +399,20 @@ describe('The Editor Page', () => {
         assertSurveyState(INITIAL_SURVEY);
 
         cy.reload();
-        range(INITIAL_SURVEY.fields.length).forEach((index) => {
+        range(4).forEach((index) => {
             fieldElements(index).buttons.collapse().click();
             assertFieldCollapseState(index, 'isnotcollapsed');
         });
 
         // assert the correct order
-        expect(INITIAL_SURVEY.fields[0].type).to.equal('text');
-        expect(INITIAL_SURVEY.fields[1].type).to.equal('email');
-        expect(INITIAL_SURVEY.fields[2].type).to.equal('selection');
+        expect(INITIAL_SURVEY.fields[0].type).to.equal('markdown');
+        expect(INITIAL_SURVEY.fields[1].type).to.equal('text');
+        expect(INITIAL_SURVEY.fields[2].type).to.equal('email');
+        expect(INITIAL_SURVEY.fields[3].type).to.equal('selection');
 
         MODIFIED_SURVEY.fields.forEach(
             (newFieldConfig: types.SurveyField, index: number) => {
-                if (
-                    newFieldConfig.type === 'email' ||
-                    newFieldConfig.type === 'text' ||
-                    newFieldConfig.type === 'selection'
-                ) {
+                if (newFieldConfig.type !== 'break') {
                     fieldElements(index)
                         .inputs.description()
                         .clear()
@@ -427,7 +426,7 @@ describe('The Editor Page', () => {
         assertSurveyState(INITIAL_SURVEY);
 
         cy.reload();
-        range(INITIAL_SURVEY.fields.length).forEach((index) => {
+        range(4).forEach((index) => {
             fieldElements(index).buttons.collapse().click();
             assertFieldCollapseState(index, 'isnotcollapsed');
         });
@@ -462,23 +461,28 @@ describe('The Editor Page', () => {
 
     it('save not possible with invalid fields', () => {
         const assertInvalidFieldState = () => {
-            headerElements.end().should('be.disabled');
+            assertHeaderState('unsynced');
             headerElements.save().click();
             warningMessage().contains('Invalid fields');
             headerElements.undo().click();
-            headerElements.end().should('not.be.disabled');
+            assertHeaderState('synced');
         };
+
         settingsElements.inputTitle().clear().should('be.empty');
         assertInvalidFieldState();
 
-        fieldElements(0).buttons.collapse().click();
-        assertFieldCollapseState(0, 'isnotcollapsed');
-        fieldElements(0).inputs.description().clear();
-        assertInvalidFieldState();
+        cy.reload();
 
+        settingsElements.inputTitle().clear().should('be.empty');
+
+        fieldElements(0).buttons.collapse().click();
         fieldElements(2).buttons.collapse().click();
+        assertFieldCollapseState(0, 'isnotcollapsed');
         assertFieldCollapseState(2, 'isnotcollapsed');
+
+        fieldElements(0).inputs.description().clear();
         fieldElements(2).inputs.description().clear();
+
         assertInvalidFieldState();
     });
 
@@ -492,20 +496,22 @@ describe('The Editor Page', () => {
         fieldElements(2).buttons.addBefore().click();
         addFieldPopup.panel().should('be.visible');
         addFieldPopup.activeSelect().should('have.length', 0);
-        ['email', 'text', 'selection'].forEach((fieldType: any) => {
-            addFieldPopup
-                .selectField(fieldType)
-                .click()
-                .should('have.attr', 'data-cy')
-                .and('contain', 'isactive');
-            addFieldPopup.submitAdd().should('not.be.disabled');
-            addFieldPopup
-                .selectField(fieldType)
-                .click()
-                .should('have.attr', 'data-cy')
-                .and('contain', 'isinactive');
-            addFieldPopup.submitAdd().should('be.disabled');
-        });
+        ['email', 'text', 'selection', 'break', 'markdown'].forEach(
+            (fieldType: any) => {
+                addFieldPopup
+                    .selectField(fieldType)
+                    .click()
+                    .should('have.attr', 'data-cy')
+                    .and('contain', 'isactive');
+                addFieldPopup.submitAdd().should('not.be.disabled');
+                addFieldPopup
+                    .selectField(fieldType)
+                    .click()
+                    .should('have.attr', 'data-cy')
+                    .and('contain', 'isinactive');
+                addFieldPopup.submitAdd().should('be.disabled');
+            },
+        );
         addFieldPopup.cancelAdd().click();
         addFieldPopup.panel().should('not.be.visible');
     });
@@ -532,7 +538,7 @@ describe('The Editor Page', () => {
 
         // undo and assert state after save
         headerElements.undo().click();
-        assertSyncedHeaderState();
+        assertHeaderState('synced');
         get([`editor-field-panel`], {count: 3});
         assertConfigInDB(USERNAME, PASSWORD, {
             ...INITIAL_SURVEY,
@@ -548,7 +554,7 @@ describe('The Editor Page', () => {
 
         // save and assert state after save
         headerElements.save().click();
-        assertSyncedHeaderState();
+        assertHeaderState('synced');
         fieldElements(1)
             .inputs.description()
             .should('have.value', ADDED_FIELDS.TEXT.description);
@@ -590,7 +596,7 @@ describe('The Editor Page', () => {
 
         // save and assert state after save
         headerElements.save().click();
-        assertSyncedHeaderState();
+        assertHeaderState('synced');
         fieldElements(2)
             .inputs.description()
             .should('have.value', ADDED_FIELDS.EMAIL.description);
@@ -630,7 +636,7 @@ describe('The Editor Page', () => {
         headerElements.save().click();
 
         // save and assert state after save
-        assertSyncedHeaderState();
+        assertHeaderState('synced');
         fieldElements(3)
             .inputs.description()
             .should('have.value', ADDED_FIELDS.SELECTION.description);

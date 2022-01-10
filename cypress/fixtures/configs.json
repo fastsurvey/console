@@ -187,24 +187,29 @@
             "end": 2006330889,
             "fields": [
                 {
+                    "type": "markdown",
                     "identifier": 0,
-                    "description": "How do you feel about pampelmusis? buja!",
+                    "description": "Do you nowow like markdown?"
+                },
+                {
                     "type": "text",
+                    "identifier": 1,
+                    "description": "How do you feel about apples? bujah!",
                     "min_chars": 10,
                     "max_chars": 1000
                 },
                 {
-                    "identifier": 1,
-                    "description": "What's your email",
                     "type": "email",
+                    "identifier": 2,
+                    "description": "What's your email address",
                     "hint": "YOUR EMAIL ADDRESS HERE",
                     "regex": ".*",
-                    "verify": true
+                    "verify": false
                 },
                 {
-                    "identifier": 2,
-                    "description": "What are your favorite pizza toppings",
                     "type": "selection",
+                    "identifier": 3,
+                    "description": "hat are your favorite pizza toppings?",
                     "options": [
                         "Quattro Stagioni",
                         "Prosciutto",
@@ -214,6 +219,10 @@
                     ],
                     "min_select": 2,
                     "max_select": 5
+                },
+                {
+                    "identifier": 4,
+                    "type": "break"
                 }
             ]
         },
