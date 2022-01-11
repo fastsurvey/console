@@ -4,11 +4,13 @@ import {useParams, Link} from 'react-router-dom';
 import {types} from '/src/types';
 import {Button} from '/src/components';
 import Results from './results';
+import reduxUtils from '../../utilities/redux-utils/index';
 
 interface Props {
     account: types.Account;
     accessToken: types.AccessToken;
     configs: types.SurveyConfig[];
+    openMessage(id: types.MessageId): void;
 }
 function ResultsRouter(props: Props) {
     let params: any = useParams();
@@ -39,5 +41,7 @@ const mapStateToProps = (state: types.ReduxState) => ({
     accessToken: state.accessToken,
     configs: state.configs,
 });
-const mapDispatchToProps = (dispatch: any) => ({});
+const mapDispatchToProps = (dispatch: any) => ({
+    openMessage: reduxUtils.dispatchers.openMessage(dispatch),
+});
 export default connect(mapStateToProps, mapDispatchToProps)(ResultsRouter);

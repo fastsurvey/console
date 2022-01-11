@@ -9,6 +9,7 @@ function Results(props: {
     config: types.SurveyConfig;
     account: types.Account;
     accessToken: types.AccessToken;
+    openMessage(id: types.MessageId): void;
 }) {
     const [results, setResults] = useState<types.SurveyResults | undefined>(undefined);
     const [isFetching, setIsFetching] = useState(true);
@@ -18,22 +19,30 @@ function Results(props: {
     useEffect(fetch, []);
 
     function fetch() {
-        const successCallback = (r: any) => {
-            setResults(r);
+        function success(results: any) {
+            setResults(results);
             setIsFetching(false);
-        };
-        const errorCallback = () => {
+        }
+        function error(reason: 'authentication' | 'server') {
             setError(true);
             setIsFetching(false);
-        };
+            switch (reason) {
+                case 'authentication':
+                    props.openMessage('error-access-token');
+                    break;
+                case 'server':
+                    props.openMessage('error-server');
+                    break;
+            }
+        }
 
         setIsFetching(true);
         backend.fetchResults(
             props.account,
             props.accessToken,
             props.config.survey_name,
-            successCallback,
-            errorCallback,
+            success,
+            error,
         );
     }
 
@@ -167,13 +176,26 @@ function Results(props: {
             setIsDownloading(false);
         }
 
+        function error(reason: 'authentication' | 'server') {
+            setError(true);
+            setIsFetching(false);
+            switch (reason) {
+                case 'authentication':
+                    props.openMessage('error-access-token');
+                    break;
+                case 'server':
+                    props.openMessage('error-server');
+                    break;
+            }
+        }
+
         setIsDownloading(true);
         backend.fetchSubmissions(
             props.account,
             props.accessToken,
             props.config.survey_name,
             success,
-            console.log,
+            error,
         );
     }
 
