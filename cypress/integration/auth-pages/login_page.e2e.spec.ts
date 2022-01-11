@@ -35,7 +35,7 @@ describe('The Login Page', function () {
 
         cy.visit('/login');
         elements.linkToForgot().click();
-        cy.url().should('include', '/forgot-password');
+        cy.url().should('include', '/request-password');
     });
 
     it('has expected inputs/labels and working password-visibility toggle', function () {
