@@ -7,9 +7,7 @@ import PageRouter from './page-router';
 
 import 'typeface-quicksand';
 import '/src/styles/tailwind.css';
-import '/src/styles/special.css';
-import '/src/styles/layout.css';
-import '/src/styles/icons.css';
+import '/src/styles/fixes.css';
 
 // only use sentry when image was built with docker AND
 // when code uses production backend

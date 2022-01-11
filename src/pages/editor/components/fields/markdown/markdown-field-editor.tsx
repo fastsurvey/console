@@ -48,7 +48,7 @@ const MarkdownFieldEditor = React.forwardRef(
         }
 
         return (
-            <div className='w-full -mt-1 space-y-3 flex-col-left'>
+            <div className='w-full -mt-1 space-y-3 flex-col-center'>
                 <div className='w-full space-x-2 flex-row-left'>
                     <button
                         className={
@@ -128,7 +128,6 @@ const MarkdownFieldEditor = React.forwardRef(
                 <div
                     className={
                         'w-full h-96 space-x-2 grid ' +
-                        'divide-x divide-dashed divide-gray-300 ' +
                         (tab === 'split view'
                             ? 'grid-cols-1 md:grid-cols-2 '
                             : 'grid-cols-1 ')
