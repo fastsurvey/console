@@ -101,11 +101,11 @@ describe('The Survey List Page', () => {
         getCySelector([`survey-list-panel-${surveyName}`], {count: 0});
     };
 
-    it('seed surveys are present', function () {
+    /*it('seed surveys are present', function () {
         const {USERNAME} = this.accountJSON;
         const {SURVEYS_TO_KEEP} = this.configsJSON;
         SURVEYS_TO_KEEP.forEach((s: string) => configListPanelIsWorking(USERNAME, s));
-    });
+    });*/
 
     it('creating a survey works', function () {
         const {USERNAME} = this.accountJSON;

@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import {reduxUtils, templateUtils, localIdUtils, backend} from '/src/utilities';
+import {cloneDeep} from 'lodash';
 import {types} from '/src/types';
 import VisualConfigList from './visual-survey-list';
 import RemoveSurveyPopup from './components/remove-survey-popup';
@@ -106,11 +107,11 @@ function SurveyList(props: Props) {
     };
 
     const duplicateSurvey = (config: types.SurveyConfig) => (newSurveyName: string) => {
-        const newConfig = localIdUtils.remove.survey({
+        const newConfig = {
             ...config,
             survey_name: newSurveyName,
-            fields: config.fields.map((f, i) => ({...f, identifier: i})),
-        });
+            fields: config.fields.map((f, i) => ({...cloneDeep(f), identifier: i})),
+        };
 
         const success = () => {
             props.addConfig(newConfig);

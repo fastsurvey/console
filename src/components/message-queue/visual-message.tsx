@@ -21,6 +21,7 @@ export function VisualMessage(props: {message: types.Message; close(): void}) {
                 (props.message.type === 'warning' ? 'border-yellow-300 ' : '') +
                 (props.message.type === 'success' ? 'border-green-300 ' : '')
             }
+            data-cy={`message-panel-${props.message.type} ${props.message.id}`}
         >
             <div
                 className={
@@ -28,6 +29,7 @@ export function VisualMessage(props: {message: types.Message; close(): void}) {
                     'px-3 py-2 min-h-12 md:min-h-[2.5rem] ' +
                     'text-sm leading-normal'
                 }
+                data-cy='message'
             >
                 {props.message.text}
             </div>
@@ -39,6 +41,7 @@ export function VisualMessage(props: {message: types.Message; close(): void}) {
                     'ringable hover:bg-gray-700 focus:bg-gray-700 '
                 }
                 onClick={props.close}
+                data-cy='button-close'
             >
                 <div
                     className={

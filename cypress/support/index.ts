@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 
+import {first} from 'lodash';
+
 export const requestAuthentication = (identifier: string, password: string) =>
     cy.request({
         method: 'POST',
@@ -160,10 +162,10 @@ Cypress.Commands.add('seedDuplicationData', () => {
                         authResponse,
                     );
 
-                const getConfig = () =>
+                const getConfigs = () =>
                     request(
                         'GET',
-                        `https://api.dev.fastsurvey.de/users/${USERNAME}/surveys/${UPDATED_ORIGINAL['survey_name']}`,
+                        `https://api.dev.fastsurvey.de/users/${USERNAME}/surveys`,
                         undefined,
                         authResponse,
                     );
@@ -171,9 +173,18 @@ Cypress.Commands.add('seedDuplicationData', () => {
                 postInitialConfig().then((r1) => {
                     expect(r1.status).to.equal(200);
 
-                    getConfig().then((r2) => {
+                    getConfigs().then((r2) => {
                         expect(r2.status).to.equal(200);
-                        expect(r2.body).to.deep.equal({
+
+                        expect(
+                            first(
+                                r2.body.filter(
+                                    (c: any) =>
+                                        c['survey_name'] ===
+                                        ORIGINAL_SURVEY.survey_name,
+                                ),
+                            ),
+                        ).to.deep.equal({
                             ...ORIGINAL_SURVEY,
                             next_identifier: UPDATED_NEXT_IDENTIFIER,
                         });
@@ -181,9 +192,17 @@ Cypress.Commands.add('seedDuplicationData', () => {
                         putUpdatedConfig().then((r3) => {
                             expect(r3.status).to.equal(200);
 
-                            getConfig().then((r4) => {
+                            getConfigs().then((r4) => {
                                 expect(r4.status).to.equal(200);
-                                expect(r4.body).to.deep.equal({
+                                expect(
+                                    first(
+                                        r4.body.filter(
+                                            (c: any) =>
+                                                c['survey_name'] ===
+                                                UPDATED_ORIGINAL.survey_name,
+                                        ),
+                                    ),
+                                ).to.deep.equal({
                                     ...UPDATED_ORIGINAL,
                                     next_identifier: UPDATED_NEXT_IDENTIFIER,
                                 });

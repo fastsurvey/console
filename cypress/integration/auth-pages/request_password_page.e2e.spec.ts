@@ -38,12 +38,21 @@ describe('The Request Password Page', () => {
         assertDataCy(panel(), 'state-failed');
     });
 
-    it('works for 400s', () => {
+    it('works for 401s', () => {
         inputIdentifier().type(IDENTIFIER).should('have.value', IDENTIFIER);
-        cy.intercept('POST', '/authentication', (req) => req.reply({statusCode: 400}));
+        cy.intercept('POST', '/authentication', (req) => req.reply({statusCode: 401}));
         buttonSubmit().click();
         assertDataCy(panel(), 'state-pending');
-        assertDataCy(errorMessage(), 'error-credentials');
+        assertDataCy(errorMessage(), 'error-login-credentials');
+        inputIdentifier().should('have.value', IDENTIFIER);
+    });
+
+    it('works for 404s', () => {
+        inputIdentifier().type(IDENTIFIER).should('have.value', IDENTIFIER);
+        cy.intercept('POST', '/authentication', (req) => req.reply({statusCode: 404}));
+        buttonSubmit().click();
+        assertDataCy(panel(), 'state-pending');
+        assertDataCy(errorMessage(), 'error-login-credentials');
         inputIdentifier().should('have.value', IDENTIFIER);
     });
 

@@ -166,12 +166,12 @@ describe('The Results Summary Page', () => {
                 cy.log(JSON.stringify({xs}));
                 return sortBy(
                     xs,
-                    (x) => x["What's your email address?"]['email_address'],
+                    (x) => x["2 - What's your email address?"]['email_address'],
                 );
             };
             cy.readFile(filename, 'utf8').then((fileContent) => {
                 expect(
-                    sortSubmissions(fileContent.map((s: any) => s.submission)),
+                    sortSubmissions(fileContent.map((x: any) => x['submission'])),
                 ).to.deep.equal(sortSubmissions(INITIAL_DOWNLOAD));
             });
         });

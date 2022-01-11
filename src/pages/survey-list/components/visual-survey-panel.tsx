@@ -53,7 +53,7 @@ function VisualConfigPanel(props: {
     return (
         <section
             className={'w-full rounded shadow-sm flex-col-center bg-white '}
-            data-cy='survey-list-panel'
+            data-cy={`survey-list-panel-${props.config.survey_name}`}
         >
             <div className={'w-full p-3 bg-white rounded-t flex-col-left'}>
                 <div
