@@ -45,5 +45,7 @@ class ServerError extends Error {
 }
 
 export function throwServerError(context: {response: any; [key: string]: any}) {
-    throw new ServerError(context);
+    if (import.meta.env.VITE_ENV === 'production') {
+        throw new ServerError(context);
+    }
 }
