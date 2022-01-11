@@ -110,6 +110,64 @@ it('end: disabled, open and close dropdown', () => {
     assertDataCy(getElements.endToggleYes(), 'isinactive');
 });
 
+// TODO: Adjust hour/minute to system timezone
+const assertCalendarState = (params: {
+    month: string;
+    year: string;
+    length: Number;
+    selected?: number;
+    columnStart: number;
+}) => {
+    getElements.calendarMonthLabel().should('have.text', params.month);
+    getElements.calendarYearLabel().should('have.text', params.year);
+    getElements.calendarAnyDayButton().should('have.length', params.length);
+    if (params.selected !== undefined) {
+        getElements.calendarSelectedDayButton().should('have.text', params.selected);
+    } else {
+        getElements.calendarNoSelectedDayButton();
+    }
+    getElements
+        .calendarDayButton(1)
+        .should('have.css', 'grid-column-start', `${params.columnStart}`);
+};
+const assertTimewheelState = (params: {hour: string; minute: string}) => {
+    getElements.calendarHourLabel().should('have.text', params.hour);
+    getElements.calendarMinuteLabel().should('have.text', params.minute);
+};
+
+const CALENDAR_PAGES = {
+    dec: {
+        month: 'Dec',
+        year: '2018',
+        length: 31,
+        columnStart: 6,
+    },
+    jan: {
+        month: 'Jan',
+        year: '2019',
+        length: 31,
+        columnStart: 2,
+    },
+    feb: {
+        month: 'Feb',
+        year: '2019',
+        length: 28,
+        columnStart: 5,
+    },
+    mar: {
+        month: 'Mar',
+        year: '2019',
+        length: 31,
+        columnStart: 5,
+    },
+    apr: {
+        month: 'Apr',
+        year: '2019',
+        length: 30,
+        columnStart: 1,
+    },
+};
+
 it('calendar picker', () => {
     // test three random dates
     // forEach:
@@ -130,96 +188,37 @@ it('calendar picker', () => {
         />,
     );
 
-    // TODO: Adjust hour/minute to system timezone
-
-    const assertCalendarState = (params: {
-        month: string;
-        year: string;
-        length: Number;
-        selected?: number;
-        columnStart: number;
-    }) => {
-        getElements.calendarMonthLabel().should('have.text', params.month);
-        getElements.calendarYearLabel().should('have.text', params.year);
-        getElements.calendarHourLabel().should('have.text', '20');
-        getElements.calendarMinuteLabel().should('have.text', '33');
-        getElements.calendarAnyDayButton().should('have.length', params.length);
-        if (params.selected !== undefined) {
-            getElements
-                .calendarSelectedDayButton()
-                .should('have.text', params.selected);
-        } else {
-            getElements.calendarNoSelectedDayButton();
-        }
-        getElements
-            .calendarDayButton(1)
-            .should('have.css', 'grid-column-start', `${params.columnStart}`);
-    };
-
     getElements.datepickerDropdownToggle().click();
     assertDataCy(getElements.datepickerDropdown(), 'isopen');
-
-    assertCalendarState({
-        month: 'Feb',
-        year: '2019',
-        length: 28,
-        selected: 12,
-        columnStart: 5,
-    });
+    assertCalendarState({...CALENDAR_PAGES.feb, selected: 12});
+    assertTimewheelState({hour: '20', minute: '33'});
 
     getElements.calendarButtonPrevMonth().click().click();
-    assertCalendarState({
-        month: 'Dec',
-        year: '2018',
-        length: 31,
-        selected: undefined,
-        columnStart: 6,
-    });
+    assertCalendarState({...CALENDAR_PAGES.dec, selected: undefined});
+    assertTimewheelState({hour: '20', minute: '33'});
 
     getElements.calendarButtonNextMonth().click();
-    assertCalendarState({
-        month: 'Jan',
-        year: '2019',
-        length: 31,
-        selected: undefined,
-        columnStart: 2,
-    });
+    assertCalendarState({...CALENDAR_PAGES.jan, selected: undefined});
+    assertTimewheelState({hour: '20', minute: '33'});
 
     getElements.calendarButtonNextMonth().click();
-    assertCalendarState({
-        month: 'Feb',
-        year: '2019',
-        length: 28,
-        selected: 12,
-        columnStart: 5,
-    });
+    assertCalendarState({...CALENDAR_PAGES.feb, selected: 12});
+    assertTimewheelState({hour: '20', minute: '33'});
 
     getElements.calendarButtonNextMonth().click().click();
-    assertCalendarState({
-        month: 'Apr',
-        year: '2019',
-        length: 30,
-        selected: undefined,
-        columnStart: 1,
-    });
+    assertCalendarState({...CALENDAR_PAGES.apr, selected: undefined});
+    assertTimewheelState({hour: '20', minute: '33'});
 
     getElements.calendarDayButton(18).click();
-    assertCalendarState({
-        month: 'Apr',
-        year: '2019',
-        length: 30,
-        selected: 18,
-        columnStart: 1,
-    });
+    assertCalendarState({...CALENDAR_PAGES.apr, selected: 18});
+    assertTimewheelState({hour: '20', minute: '33'});
 
     getElements.calendarButtonPrevMonth().click().click();
-    assertCalendarState({
-        month: 'Feb',
-        year: '2019',
-        length: 28,
-        selected: undefined,
-        columnStart: 5,
-    });
+    assertCalendarState({...CALENDAR_PAGES.feb, selected: undefined});
+    assertTimewheelState({hour: '20', minute: '33'});
+
+    getElements.datepickerDropdownToggle().click();
+    assertDataCy(getElements.datepickerDropdown(), 'isnotopen');
 });
 
 it('hour picker', () => {
@@ -228,8 +227,40 @@ it('hour picker', () => {
     mount(
         <DatepickerStateWrapper
             initialTimestamp={1550000000}
-            disabled={true}
-            type={'start'}
+            disabled={false}
+            type='start'
         />,
     );
+
+    getElements.datepickerDropdownToggle().click();
+    assertDataCy(getElements.datepickerDropdown(), 'isopen');
+    assertCalendarState({...CALENDAR_PAGES.feb, selected: 12});
+    assertTimewheelState({hour: '20', minute: '33'});
+
+    getElements.calendarButtonIncrementHour().click();
+    assertCalendarState({...CALENDAR_PAGES.feb, selected: 12});
+    assertTimewheelState({hour: '21', minute: '33'});
+
+    getElements.calendarButtonDecrementHour().click().click();
+    assertCalendarState({...CALENDAR_PAGES.feb, selected: 12});
+    assertTimewheelState({hour: '19', minute: '33'});
+
+    getElements.calendarButtonIncrementMinute().click().click();
+    assertCalendarState({...CALENDAR_PAGES.feb, selected: 12});
+    assertTimewheelState({hour: '19', minute: '35'});
+
+    getElements.calendarButtonDecrementMinute().click().click().click();
+    assertCalendarState({...CALENDAR_PAGES.feb, selected: 12});
+    assertTimewheelState({hour: '19', minute: '32'});
+
+    getElements.calendarButtonNextMonth().click();
+    assertCalendarState({...CALENDAR_PAGES.mar, selected: undefined});
+    assertTimewheelState({hour: '19', minute: '32'});
+
+    getElements.calendarButtonPrevMonth().click().click().click();
+    assertCalendarState({...CALENDAR_PAGES.dec, selected: undefined});
+    assertTimewheelState({hour: '19', minute: '32'});
+
+    getElements.datepickerDropdownToggle().click();
+    assertDataCy(getElements.datepickerDropdown(), 'isnotopen');
 });
