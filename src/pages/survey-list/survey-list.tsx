@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import {reduxUtils, templateUtils, localIdUtils, backend} from '/src/utilities';
+import {cloneDeep} from 'lodash';
 import {types} from '/src/types';
 import VisualConfigList from './visual-survey-list';
 import RemoveSurveyPopup from './components/remove-survey-popup';
@@ -30,7 +31,16 @@ function SurveyList(props: Props) {
             props.closeModal();
             history.push(`/editor/${newConfig.survey_name}`);
         };
-        const error = (code: 400 | 401 | 422 | 500) => {};
+        function error(reason: 'authentication' | 'server') {
+            switch (reason) {
+                case 'authentication':
+                    props.openMessage('error-access-token');
+                    break;
+                case 'server':
+                    props.openMessage('error-server');
+                    break;
+            }
+        }
 
         backend.createSurvey(
             props.account,
@@ -45,12 +55,19 @@ function SurveyList(props: Props) {
         function success() {
             props.removeConfig(config.survey_name);
             props.closeModal();
-            props.openMessage('success-survey-removed');
+            props.openMessage('success-survey-list-survey-removed');
         }
 
-        function error() {
+        function error(reason: 'authentication' | 'server') {
             props.closeModal();
-            props.openMessage('error-server');
+            switch (reason) {
+                case 'authentication':
+                    props.openMessage('error-access-token');
+                    break;
+                case 'server':
+                    props.openMessage('error-server');
+                    break;
+            }
         }
 
         backend.deleteSurvey(
@@ -65,12 +82,19 @@ function SurveyList(props: Props) {
     const resetSubmissions = (config: types.SurveyConfig) => () => {
         function success() {
             props.closeModal();
-            props.openMessage('success-submissions-removed');
+            props.openMessage('success-survey-list-submissions-removed');
         }
 
-        function error() {
+        function error(reason: 'authentication' | 'server') {
             props.closeModal();
-            props.openMessage('error-server');
+            switch (reason) {
+                case 'authentication':
+                    props.openMessage('error-access-token');
+                    break;
+                case 'server':
+                    props.openMessage('error-server');
+                    break;
+            }
         }
 
         backend.deleteSubmissions(
@@ -83,20 +107,28 @@ function SurveyList(props: Props) {
     };
 
     const duplicateSurvey = (config: types.SurveyConfig) => (newSurveyName: string) => {
-        const newConfig = localIdUtils.remove.survey({
+        const newConfig = {
             ...config,
             survey_name: newSurveyName,
-            draft: true,
-            fields: config.fields.map((f, i) => ({...f, identifier: i})),
-        });
+            fields: config.fields.map((f, i) => ({...cloneDeep(f), identifier: i})),
+        };
 
         const success = () => {
             props.addConfig(newConfig);
             props.closeModal();
             history.push(`/editor/${newSurveyName}`);
-            props.openMessage('success-survey-duplicated');
+            props.openMessage('success-survey-list-duplication');
         };
-        const error = (code: 400 | 401 | 422 | 500) => {};
+        function error(reason: 'authentication' | 'server') {
+            switch (reason) {
+                case 'authentication':
+                    props.openMessage('error-access-token');
+                    break;
+                case 'server':
+                    props.openMessage('error-server');
+                    break;
+            }
+        }
 
         backend.createSurvey(
             props.account,

@@ -1,11 +1,12 @@
 {
     "baseUrl": "http://localhost:8080",
     "testFiles": "**/*.e2e.spec.{js,ts}",
+    "viewportWidth": 1440,
+    "viewportHeight": 1000,
     "component": {
         "testFiles": "**/*.ct.spec.{js,ts,jsx,tsx}",
         "componentFolder": "src",
-        "viewportHeight": 500,
-        "viewportWidth": 700
-    },
-    "projectId": "rcusaj"
+        "viewportHeight": 800,
+        "viewportWidth": 900
+    }
 }

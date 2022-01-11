@@ -1,17 +1,17 @@
 import Cookies from 'js-cookie';
 import {cloneDeep, pullAllBy} from 'lodash';
-import {reduxUtils, localIdUtils} from '/src/utilities';
+import {localIdUtils, constants} from '/src/utilities';
 import {types} from '/src/types';
-import logout from '../backend/authentication/logout';
-import constants from '../constants/index';
-
 function assert(condition: boolean) {
     if (!condition) {
         throw Error;
     }
 }
 
-function updateState(state: types.ReduxState, action: types.ReduxAction) {
+export function updateState(
+    state: types.ReduxState,
+    action: types.ReduxAction,
+): types.ReduxState {
     const newState = cloneDeep(state);
     console.debug(action.type, action);
 
@@ -39,8 +39,7 @@ function updateState(state: types.ReduxState, action: types.ReduxAction) {
         case 'LOG_OUT':
             Cookies.remove('accessToken');
             Cookies.remove('username');
-            logout(newState.accessToken);
-            return {...cloneDeep(reduxUtils.initialState), loggingIn: false};
+            return {...cloneDeep(constants.initialReduxState), loggingIn: false};
 
         case 'OPEN_MESSAGE':
             // do not have mutliple messages with the same text
@@ -100,15 +99,7 @@ function updateState(state: types.ReduxState, action: types.ReduxAction) {
 
         case 'ADD_CONFIG':
             assert(newState.configs !== undefined);
-            const newSurvey = localIdUtils.initialize.survey(
-                action.config,
-                newState.configs.length,
-            );
-
-            newState.configs = [
-                ...newState.configs,
-                {...newSurvey, next_identifier: newSurvey.fields.length},
-            ];
+            newState.configs = [...newState.configs, action.config];
             break;
 
         case 'REMOVE_CONFIG':
@@ -130,7 +121,7 @@ function updateState(state: types.ReduxState, action: types.ReduxAction) {
         case 'MARK_DIFFERING':
             newState.configIsDiffering = action.differing;
             newState.messages = newState.messages.filter(
-                (m) => m.id !== 'warning-unsaved',
+                (m) => m.id !== 'warning-editor-unsaved',
             );
             break;
 
@@ -140,5 +131,3 @@ function updateState(state: types.ReduxState, action: types.ReduxAction) {
 
     return newState;
 }
-
-export default updateState;

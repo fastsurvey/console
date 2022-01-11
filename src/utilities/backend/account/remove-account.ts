@@ -1,18 +1,25 @@
 import {types} from '/src/types';
-import {httpDelete} from '../http-clients';
+import {httpDelete, throwServerError} from '../http-clients';
 
 async function removeAccount(
     account: types.Account,
     accessToken: types.AccessToken,
     success: () => void,
-    error: () => void,
+    error: (reason: 'authentication' | 'server') => void,
 ) {
     try {
-        await httpDelete(`/users/${account.username}`, accessToken);
+        await httpDelete(`/users/${account.username}`, accessToken).catch((error) => {
+            throw error.response !== undefined ? error.response : error;
+        });
 
         success();
-    } catch {
-        error();
+    } catch (response: any) {
+        if (response.status === 401) {
+            error('authentication');
+        } else {
+            error('server');
+            throwServerError({response, account});
+        }
     }
 }
 

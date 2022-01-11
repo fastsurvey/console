@@ -20,7 +20,7 @@ function NavbarContent(props: Props) {
         props.closeNavbar();
 
         if (props.configIsDiffering) {
-            props.openMessage('warning-unsaved');
+            props.openMessage('warning-editor-unsaved');
         } else {
             history.push(target);
         }

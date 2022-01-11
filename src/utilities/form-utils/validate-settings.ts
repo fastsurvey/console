@@ -6,9 +6,8 @@ export function validateSettings(
     thisConfig: types.SurveyConfig,
 ): types.ValidationResult {
     const results: types.ValidationResult[] = [
-        validators.title(thisConfig.title),
+        validators.surveyTitle(thisConfig.title),
         validators.newSurveyName(configs, thisConfig),
-        validators.description(thisConfig.description),
         validators.timing(thisConfig),
     ];
 

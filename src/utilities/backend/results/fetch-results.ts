@@ -1,24 +1,29 @@
 import {types} from '/src/types';
-import {httpGet} from '../http-clients';
+import {httpGet, throwServerError} from '../http-clients';
 
 async function fetchResults(
     account: types.Account,
     accessToken: types.AccessToken,
-    centralConfigName: string,
+    configName: string,
     success: (results: any) => void,
-    error: (code: any) => void,
+    error: (reason: 'authentication' | 'server') => void,
 ) {
     try {
         const response = await httpGet(
-            `/users/${account.username}/surveys/${centralConfigName}/results`,
+            `/users/${account.username}/surveys/${configName}/results`,
             accessToken,
         ).catch((error: any) => {
-            throw error.response;
+            throw error.response !== undefined ? error.response : error;
         });
 
         success(response.data);
     } catch (response: any) {
-        error(response?.status ? response.status : 500);
+        if (response.status === 401) {
+            error('authentication');
+        } else {
+            error('server');
+            throwServerError({response, account, configName});
+        }
     }
 }
 

@@ -5,26 +5,25 @@ import {types} from '/src/types';
 import {icons} from '/src/assets';
 import VisualEditorHeader from './visual-editor-header';
 
+function now() {
+    return Math.floor(Date.now() / 1000);
+}
+
 function EditorHeader(props: {
     configIsDiffering: boolean;
     account: types.Account;
 
     localConfig: types.SurveyConfig;
-    setLocalConfig(configChanges: object): void;
-
     saveState(configChanges?: object): void;
     revertState(): void;
     openMessage(messageId: types.MessageId): void;
 }) {
-    const {draft, start, end} = props.localConfig;
-
-    function now() {
-        return Math.floor(Date.now() / 1000);
-    }
+    const {start, end} = props.localConfig;
 
     function startNow() {
         props.saveState({
             start: now() - 1,
+            end: null,
         });
     }
 
@@ -41,43 +40,25 @@ function EditorHeader(props: {
         });
     }
 
-    const saveButtons = props.configIsDiffering
-        ? [
-              {
-                  icon: icons.closeCircle,
-                  text: 'undo',
-                  onClick: () => props.revertState(),
-                  'data-cy': 'button-undo',
-              },
-              {
-                  icon: icons.checkCircle,
-                  text: 'save',
-                  onClick: () => props.saveState(),
-                  'data-cy': 'button-save',
-              },
-          ]
-        : [];
-
-    const publishButton = {
-        icon: icons.uploadCloud,
-        text: 'publish',
-        onClick: () => {
-            props.saveState({
-                draft: !draft,
-            });
+    const saveButtons = [
+        {
+            icon: icons.closeCircle,
+            text: 'undo',
+            onClick: () => props.revertState(),
+            'data-cy': 'button-undo',
+            disabled: !props.configIsDiffering,
         },
-        'data-cy': 'button-publish',
-    };
+        {
+            icon: icons.checkCircle,
+            text: 'save',
+            onClick: () => props.saveState(),
+            'data-cy': 'button-save',
+            disabled: !props.configIsDiffering,
+        },
+    ];
 
-    let timeButton: any;
-    if (start < now() && now() < end) {
-        timeButton = {
-            icon: icons.pause,
-            text: 'end now',
-            onClick: endNow,
-            'data-cy': 'button-end',
-        };
-    } else if (now() < start) {
+    let timeButton;
+    if (start === null || now() < start) {
         timeButton = {
             icon: icons.play,
             text: 'start now',
@@ -85,17 +66,24 @@ function EditorHeader(props: {
             'data-cy': 'button-start',
         };
     } else {
-        timeButton = {
-            icon: icons.play,
-            text: 'reopen now',
-            onClick: reopenNow,
-            'data-cy': 'button-reopen',
-        };
+        if (start <= now() && (end === null || end > now())) {
+            timeButton = {
+                icon: icons.pause,
+                text: 'end now',
+                onClick: endNow,
+                'data-cy': 'button-end',
+            };
+        } else {
+            timeButton = {
+                icon: icons.play,
+                text: 'reopen now',
+                onClick: reopenNow,
+                'data-cy': 'button-reopen',
+            };
+        }
     }
 
-    return (
-        <VisualEditorHeader {...props} {...{saveButtons, timeButton, publishButton}} />
-    );
+    return <VisualEditorHeader {...props} {...{saveButtons, timeButton}} />;
 }
 
 const mapStateToProps = (state: types.ReduxState) => ({

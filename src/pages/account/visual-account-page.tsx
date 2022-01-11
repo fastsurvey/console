@@ -52,7 +52,7 @@ function VisualAccountPage(props: {
             className={
                 'px-4 lg:px-0 py-20 md:py-32 ' +
                 'min-h-screen w-full z-0 flex-col-top ' +
-                'overflow-y-scroll overflow-x-hidden bg-gray-100'
+                'overflow-y-scroll overflow-x-hidden bg-gray-150'
             }
         >
             <div className='w-full max-w-4xl space-y-4 flex-col-center'>
@@ -60,7 +60,7 @@ function VisualAccountPage(props: {
                     Modify your Account
                 </h1>
                 <section
-                    className='w-full bg-white rounded shadow flex-col-left'
+                    className='w-full bg-white rounded shadow-sm flex-col-left'
                     data-cy='account-section-settings'
                 >
                     <div className='z-10 w-full px-4 py-1.5 border-b border-gray-300 md:hidden flex flex-row items-center justify-center'>
@@ -144,7 +144,7 @@ function VisualAccountPage(props: {
                         {tabIndex === 0 && (
                             <>
                                 <div className='w-full space-y-3 flex-col-left'>
-                                    <div className='w-full centering-col gap-y-0.5'>
+                                    <div className='w-full flex-col-center gap-y-0.5'>
                                         <Label text='Email (cannot be modified yet)' />
                                         <TextInput
                                             value={props.account.email}
@@ -155,7 +155,7 @@ function VisualAccountPage(props: {
                                         />
                                     </div>
 
-                                    <div className='w-full centering-col gap-y-0.5'>
+                                    <div className='w-full flex-col-center gap-y-0.5'>
                                         <Label text='Username' />
                                         <TextInput
                                             value={username}
@@ -197,7 +197,7 @@ function VisualAccountPage(props: {
                         {tabIndex === 1 && (
                             <>
                                 <div className='w-full space-y-3 flex-col-left'>
-                                    <div className='w-full centering-col gap-y-0.5'>
+                                    <div className='w-full flex-col-center gap-y-0.5'>
                                         <Label text='New Password' />
                                         <TextInput
                                             value={password}
@@ -244,7 +244,7 @@ function VisualAccountPage(props: {
                     )}
                 </section>
                 <section
-                    className='w-full bg-white rounded shadow flex-col-left'
+                    className='w-full bg-white rounded shadow-sm flex-col-left'
                     data-cy='account-section-delete'
                 >
                     <div className='w-full border-b border-gray-300'>

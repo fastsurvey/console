@@ -1,7 +1,5 @@
 import {first, last} from 'lodash';
-import * as utilities from '../../support/utilities';
-
-const {login, getCySelector} = utilities;
+import {login, getCySelector} from '../../support/utilities';
 const get = getCySelector;
 
 const buttonNew = () => get(['config-list-button-new'], {count: 1});
@@ -70,19 +68,9 @@ describe('The Survey List Page', () => {
         panel(surveyName).linkToFrontend().should('have.text', frontentLink);
 
         panel(surveyName)
-            .container()
-            .then(($panel) => {
-                if ($panel.attr('data-cy')?.includes('published')) {
-                    // not a draft
-                    panel(surveyName)
-                        .linkToFrontend()
-                        .should('have.attr', 'href')
-                        .and('eq', `https://${frontentLink}`);
-                } else {
-                    // a draft
-                    panel(surveyName).linkToFrontend().should('not.have.attr', 'href');
-                }
-            });
+            .linkToFrontend()
+            .should('have.attr', 'href')
+            .and('eq', `https://${frontentLink}`);
 
         panel(surveyName)
             .linkToEditor()
@@ -113,11 +101,11 @@ describe('The Survey List Page', () => {
         getCySelector([`survey-list-panel-${surveyName}`], {count: 0});
     };
 
-    it('seed surveys are present', function () {
+    /*it('seed surveys are present', function () {
         const {USERNAME} = this.accountJSON;
         const {SURVEYS_TO_KEEP} = this.configsJSON;
         SURVEYS_TO_KEEP.forEach((s: string) => configListPanelIsWorking(USERNAME, s));
-    });
+    });*/
 
     it('creating a survey works', function () {
         const {USERNAME} = this.accountJSON;

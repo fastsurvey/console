@@ -1,4 +1,4 @@
-import {httpPost} from '../http-clients';
+import {httpPost, throwServerError} from '../http-clients';
 
 async function createAccount(
     account: {
@@ -7,23 +7,22 @@ async function createAccount(
         password: string;
     },
     success: () => void,
-    error: (reason: 'email' | 'username' | 'format' | 'server') => void,
+    error: (reason: 'email' | 'username' | 'server') => void,
 ) {
     try {
         await httpPost('/users', account).catch((error) => {
-            throw error.response;
+            throw error.response !== undefined ? error.response : error;
         });
 
         success();
     } catch (response: any) {
-        if (response.status === 500) {
-            error('server');
-        } else if (response.status === 422) {
-            error('format');
-        } else if (response.data.detail === 'username already taken') {
+        if (response?.data?.detail === 'username already taken') {
             error('username');
-        } else {
+        } else if (response?.data?.detail === 'email already taken') {
             error('email');
+        } else {
+            error('server');
+            throwServerError({response, account});
         }
     }
 }

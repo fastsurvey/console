@@ -1,37 +1,59 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {types} from '/src/types';
 import {TimePill} from '/src/components';
-import {filter, isEmpty} from 'lodash';
+import {filter, isEmpty, reduce, initial, last} from 'lodash';
 import {icons} from '/src/assets';
 import {Link} from 'react-router-dom';
+import {helperUtils} from '/src/utilities';
 
 const VITE_ENV = import.meta.env.VITE_ENV;
 
 let baseUrl = VITE_ENV === 'development' ? 'dev.fastsurvey.de' : 'fastsurvey.de';
 
-interface Props {
+function VisualConfigPanel(props: {
     account: types.Account;
     config: types.SurveyConfig;
     openRemoveModal(): void;
     openResetModal(): void;
     openDuplicateModal(): void;
-}
-function VisualConfigPanel(props: Props) {
-    const {title, survey_name, draft} = props.config;
+}) {
+    const {title, survey_name} = props.config;
     const {username} = props.account;
 
-    const usesAuthentication = !isEmpty(
-        filter(props.config.fields, (f) => f.type === 'email' && f.verify),
-    );
+    const usesAuthentication = useMemo(() => {
+        return !isEmpty(
+            filter(props.config.fields, (f) => f.type === 'email' && f.verify),
+        );
+    }, [props.config]);
+
+    const pageCount = useMemo(() => {
+        return reduce(
+            props.config.fields,
+            (acc: types.SurveyField[][], f) =>
+                f.type === 'break'
+                    ? [...acc, []]
+                    : // @ts-ignore
+                      [...initial(acc), [...last(acc), f]],
+            [[]],
+        ).filter((g) => g.length > 0).length;
+    }, [props.config]);
+
+    const questionCount = useMemo(() => {
+        return filter(props.config.fields, (f) =>
+            ['text', 'email', 'selection'].includes(f.type),
+        ).length;
+    }, [props.config]);
+
+    const markdownCount = useMemo(() => {
+        return filter(props.config.fields, (f) => ['markdown'].includes(f.type)).length;
+    }, [props.config]);
 
     const [dropDownIsVisible, setDropDownIsVisible] = useState(false);
 
     return (
         <section
-            className={'w-full rounded shadow centering-col bg-white '}
-            data-cy={`survey-list-panel-${survey_name} ${
-                draft ? 'draft' : 'published'
-            }`}
+            className={'w-full rounded shadow-sm flex-col-center bg-white '}
+            data-cy={`survey-list-panel-${props.config.survey_name}`}
         >
             <div className={'w-full p-3 bg-white rounded-t flex-col-left'}>
                 <div
@@ -55,17 +77,12 @@ function VisualConfigPanel(props: Props) {
                     </div>
                 </div>
                 <a
-                    href={
-                        props.config.draft
-                            ? undefined
-                            : `https://${baseUrl}/${username}/${survey_name}`
-                    }
+                    href={`https://${baseUrl}/${username}/${survey_name}`}
                     className={
                         'text-sm underline md:h-5 truncate font-weight-600 ' +
                         'text-blue-800 mt-1 break-all max-w-full ' +
-                        (props.config.draft
-                            ? 'cursor-not-allowed opacity-70'
-                            : 'hover:text-blue-500 focus:text-blue-500 px-1 -mx-1 ringable rounded-sm mt-1')
+                        'hover:text-blue-500 focus:text-blue-500 ' +
+                        'px-1 -mx-1 ringable rounded-sm mt-1'
                     }
                     target='_blank'
                     data-cy='link-to-frontend'
@@ -73,8 +90,8 @@ function VisualConfigPanel(props: Props) {
                     {baseUrl}/{username}/{survey_name}
                 </a>
                 <div className='mt-1 text-sm text-gray-600 md:h-5 md:truncate font-weight-500 no-selection'>
-                    {props.config.fields.length} Question
-                    {props.config.fields.length === 1 ? '' : 's'}
+                    {helperUtils.pluralizeCountLabel(questionCount, 'Question')},{' '}
+                    {helperUtils.pluralizeCountLabel(pageCount, 'Page')}
                     {usesAuthentication ? ', Email Verification' : ''}
                 </div>
             </div>
@@ -86,7 +103,7 @@ function VisualConfigPanel(props: Props) {
                 >
                     <div
                         className={
-                            'px-3 h-9 bg-gray-100 no-selection flex-row-center ' +
+                            'px-3 h-9 bg-gray-75 no-selection flex-row-center ' +
                             'rounded-bl group-focus:rounded ' +
                             'group-hover:bg-blue-50 group-focus:bg-blue-50 ' +
                             'text-center text-sm text-gray-700 font-weight-600 ' +
@@ -103,7 +120,7 @@ function VisualConfigPanel(props: Props) {
                 >
                     <div
                         className={
-                            'px-3 h-9 bg-gray-100 no-selection flex-row-center ' +
+                            'px-3 h-9 bg-gray-75 no-selection flex-row-center ' +
                             'group-focus:rounded ' +
                             'group-hover:bg-blue-50 group-focus:bg-blue-50 ' +
                             'text-center text-sm text-gray-700 font-weight-600 ' +
@@ -117,7 +134,7 @@ function VisualConfigPanel(props: Props) {
                     <button
                         className={
                             'p-2 h-9 rounded-br focus:rounded ringable fill-current ' +
-                            'bg-gray-100 hover:bg-blue-50 focus:bg-blue-50 ' +
+                            'bg-gray-75 hover:bg-blue-50 focus:bg-blue-50 ' +
                             'text-gray-700 hover:text-blue-900 focus:text-blue-900 '
                         }
                         onClick={() => setDropDownIsVisible(!dropDownIsVisible)}

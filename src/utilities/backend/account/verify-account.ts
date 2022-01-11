@@ -1,23 +1,27 @@
-import {httpPost} from '../http-clients';
+import {httpPost, throwServerError} from '../http-clients';
 
 async function verifyAccount(
     verificationObject: {
         verification_token: string;
     },
     success: () => void,
-    error: (code: 400 | 401 | 500 | 422) => void,
+    error: (reason: 'link-invalid' | 'server') => void,
 ) {
     try {
-        await httpPost(
-            `/verification`,
-            JSON.stringify(verificationObject),
-        ).catch((error) => {
-            throw error.response.status;
-        });
+        await httpPost(`/verification`, JSON.stringify(verificationObject)).catch(
+            (error) => {
+                throw error.response !== undefined ? error.response : error;
+            },
+        );
 
         success();
-    } catch (code: any) {
-        error(code);
+    } catch (response: any) {
+        if (response.status === 401) {
+            error('link-invalid');
+        } else {
+            error('server');
+            throwServerError({response, verificationObject});
+        }
     }
 }
 

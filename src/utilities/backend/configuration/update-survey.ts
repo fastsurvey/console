@@ -1,6 +1,6 @@
 import {types} from '/src/types';
 import {localIdUtils} from '/src/utilities';
-import {httpPut} from '../http-clients';
+import {httpPut, throwServerError} from '../http-clients';
 
 async function updateSurvey(
     account: types.Account,
@@ -8,24 +8,25 @@ async function updateSurvey(
     centralConfigName: string,
     config: types.SurveyConfig,
     success: () => void,
-    error: (message: 'error-submissions-exist' | 'error-server') => void,
+    error: (reason: 'authentication' | 'server') => void,
 ) {
     try {
         await httpPut(
             `/users/${account.username}/surveys/${centralConfigName}`,
             JSON.stringify(localIdUtils.remove.survey(config)),
             accessToken,
-        ).catch((response) => {
-            if (response.response.data.detail === 'submissions exist') {
-                throw 'error-submissions-exist';
-            } else {
-                throw 'error-server';
-            }
+        ).catch((error) => {
+            throw error.response !== undefined ? error.response : error;
         });
 
         success();
-    } catch (m: any) {
-        error(m);
+    } catch (response: any) {
+        if (response.status === 401) {
+            error('authentication');
+        } else {
+            error('server');
+            throwServerError({response, account, config, centralConfigName});
+        }
     }
 }
 

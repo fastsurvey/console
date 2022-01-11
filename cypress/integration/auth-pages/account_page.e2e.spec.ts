@@ -1,6 +1,4 @@
-import * as utilities from '../../support/utilities';
-
-const {logout, getCySelector, assertDataCy} = utilities;
+import {login, logout, getCySelector, assertDataCy} from '../../support/utilities';
 const get = getCySelector;
 
 const general = {
@@ -43,7 +41,7 @@ describe('The Account Page', function () {
     after(cy.seedAccountData);
 
     function loginAndGoToAccountPage(id: string, pw: string) {
-        utilities.login(id, pw);
+        login(id, pw);
         general.accountButton().click({force: true});
         cy.url().should('include', '/account');
     }

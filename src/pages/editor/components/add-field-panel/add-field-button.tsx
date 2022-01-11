@@ -12,20 +12,23 @@ function AddFieldButton(props: {
     return (
         <button
             className={
-                'centering-row rounded px-1 ringable ' +
-                'icon-dark-gray md:text-gray-400  ' +
-                'text-opacity-60 hover:text-opacity-100 ' +
-                'focus:text-gray-600 focus:text-opacity-100 ' +
+                'flex-row-center rounded px-1 ringable svg-add-field ' +
+                'group ' +
                 (props.disabled
-                    ? 'cursor-not-allowed text-gray-400 '
-                    : 'cursor-pointer md:hover:text-gray-600 text-gray-600')
+                    ? 'cursor-not-allowed text-gray-600 '
+                    : 'cursor-pointer text-gray-800')
             }
             onClick={!props.disabled ? props.onClick : () => {}}
             disabled={props.disabled}
             data-cy={props['data-cy']}
         >
             {props.leftIcon && icon}
-            <div className={'px-1 text-sm font-weight-600 leading-8 '}>
+            <div
+                className={
+                    'px-1 text-sm font-weight-600 leading-8 ' +
+                    'opacity-50 hover:opacity-100 group-focus:opacity-100'
+                }
+            >
                 {props.label}
             </div>
             {!props.leftIcon && icon}

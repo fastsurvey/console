@@ -1,8 +1,6 @@
-import * as utilities from '../../support/utilities';
 import path from 'path';
 import {sortBy} from 'lodash';
-
-const {login, getCySelector} = utilities;
+import {login, getCySelector} from '../../support/utilities';
 const get = getCySelector;
 
 const headerElements = {
@@ -20,7 +18,7 @@ const headerElements = {
 
 const field = (index: number) => ({
     container: () => get([`field-container-${index}`], {count: 1}),
-    title: () => get([`field-container-${index}`, 'title'], {count: 1}),
+    description: () => get([`field-container-${index}`, 'description'], {count: 1}),
     graphContainer: () =>
         get([`field-container-${index}`, 'graph-container'], {count: 1}),
     percentageBar: (optionIndex: number) =>
@@ -42,15 +40,6 @@ const field = (index: number) => ({
             ],
             {count: 1},
         ),
-});
-
-const resultsPanel = (surveyName: string) => ({
-    container: () => get([`results-panel-${surveyName}`], {count: 1}),
-    title: () => get([`results-panel-${surveyName}`, 'title'], {count: 1}),
-    linkToFrontend: () =>
-        get([`results-panel-${surveyName}`, 'link-to-frontend'], {count: 1}),
-    linkToSummary: () =>
-        get([`results-panel-${surveyName}`, 'link-to-summary'], {count: 1}),
 });
 
 describe('The Results Summary Page', () => {
@@ -84,10 +73,10 @@ describe('The Results Summary Page', () => {
         SUMMARY.forEach((fieldSummary, fieldIndex) => {
             field(fieldIndex).container();
             field(fieldIndex)
-                .title()
+                .description()
                 .should(
                     'contain.text',
-                    `${fieldIndex + 1}. ${FIELDS[fieldIndex].title}`,
+                    `${fieldIndex + 1}. ${FIELDS[fieldIndex].description}`,
                 );
             field(fieldIndex)
                 .container()
@@ -177,13 +166,13 @@ describe('The Results Summary Page', () => {
                 cy.log(JSON.stringify({xs}));
                 return sortBy(
                     xs,
-                    (x) => x["What's your email address?"]['email_address'],
+                    (x) => x["2 - What's your email address?"]['email_address'],
                 );
             };
             cy.readFile(filename, 'utf8').then((fileContent) => {
-                expect(sortSubmissions(fileContent)).to.deep.equal(
-                    sortSubmissions(INITIAL_DOWNLOAD),
-                );
+                expect(
+                    sortSubmissions(fileContent.map((x: any) => x['submission'])),
+                ).to.deep.equal(sortSubmissions(INITIAL_DOWNLOAD));
             });
         });
     });

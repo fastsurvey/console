@@ -28,12 +28,19 @@ function AccountPage(props: {
 
     function submitPassword() {
         function success() {
-            props.openMessage('success-password-changed');
+            props.openMessage('success-account-password-changed');
             setPassword('');
             setPasswordPending(false);
         }
-        function error() {
-            props.openMessage('error-server');
+        function error(reason: 'username-taken' | 'authentication' | 'server') {
+            switch (reason) {
+                case 'authentication':
+                    props.openMessage('error-access-token');
+                    break;
+                case 'server':
+                    props.openMessage('error-server');
+                    break;
+            }
             setPasswordPending(false);
         }
 
@@ -49,16 +56,23 @@ function AccountPage(props: {
 
     function submitUsername() {
         function success() {
-            props.openMessage('success-username-changed');
+            props.openMessage('success-account-username-changed');
             props.updateUsername(username);
             props.closeModal();
             setUsernamePending(false);
         }
-        function error(code: number) {
-            if (code === 400) {
-                props.openMessage('error-username-taken');
-            } else {
-                props.openMessage('error-server');
+        function error(reason: 'username-taken' | 'authentication' | 'server') {
+            // TODO: What code, when username is already taken?
+            switch (reason) {
+                case 'username-taken':
+                    props.openMessage('warning-register-username-taken');
+                    break;
+                case 'authentication':
+                    props.openMessage('error-access-token');
+                    break;
+                case 'server':
+                    props.openMessage('error-server');
+                    break;
             }
             props.closeModal();
             setUsernamePending(false);
@@ -80,8 +94,15 @@ function AccountPage(props: {
         function success() {
             props.logOut();
         }
-        function error() {
-            props.openMessage('error-server');
+        function error(reason: 'authentication' | 'server') {
+            switch (reason) {
+                case 'authentication':
+                    props.openMessage('error-access-token');
+                    break;
+                case 'server':
+                    props.openMessage('error-server');
+                    break;
+            }
         }
 
         setRemoveUserPending(true);

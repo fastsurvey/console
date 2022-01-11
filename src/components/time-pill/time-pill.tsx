@@ -24,27 +24,31 @@ const diffToPhrase = (diff: number): string => {
 
 function TimePill(props: {
     config: types.SurveyConfig;
-    flat: boolean;
+    flat?: boolean;
     shrinkOnMobile?: boolean;
 }) {
     const now: number = new Date().getTime() / 1000;
-    const {start, end, draft} = props.config;
+    const {start, end} = props.config;
 
     let phrase: string;
-    let variant: 'draft' | 'pending' | 'running' | 'finished';
-
-    if (draft) {
-        phrase = 'Draft';
-        variant = 'draft';
-    } else if (start > now) {
-        phrase = `Starting in ${diffToPhrase(start - now)}`;
-        variant = 'pending';
-    } else if (end > now) {
-        phrase = `Ending in ${diffToPhrase(end - now)}`;
-        variant = 'running';
-    } else {
-        phrase = `Ended ${diffToPhrase(now - end)} ago`;
+    let variant: 'pending' | 'running' | 'finished';
+    if (start === null) {
+        phrase = `always closed`;
         variant = 'finished';
+    } else {
+        if (start > now) {
+            phrase = `Starting in ${diffToPhrase(start - now)}`;
+            variant = 'pending';
+        } else if (end === null) {
+            phrase = `open end`;
+            variant = 'running';
+        } else if (end > now) {
+            phrase = `Ending in ${diffToPhrase(end - now)}`;
+            variant = 'running';
+        } else {
+            phrase = `Ended ${diffToPhrase(now - end)} ago`;
+            variant = 'finished';
+        }
     }
 
     return (

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {hookUtils, reduxUtils} from '/src/utilities';
+import {helperUtils, reduxUtils} from '/src/utilities';
 import {connect} from 'react-redux';
 import {types} from '/src/types';
 
@@ -8,7 +8,7 @@ interface Props {
     closeModal(): void;
 }
 function Modal(props: Props) {
-    hookUtils.useEvent('keydown', keydown);
+    helperUtils.useEvent('keydown', keydown);
     function keydown(e: KeyboardEvent) {
         if (e.key === 'Escape' && props.modalState.open) {
             props.closeModal();
@@ -33,7 +33,7 @@ function Modal(props: Props) {
     return (
         <div
             className={
-                'fixed top-0 bottom-0 left-0 right-0 p-1 z-50 centering-row ' +
+                'fixed top-0 bottom-0 left-0 right-0 p-1 z-50 flex-row-center ' +
                 ' no-selection transition-opacity duration-300 ' +
                 (props.modalState.open
                     ? 'pointer-events-auto opacity-100'

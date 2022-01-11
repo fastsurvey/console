@@ -2,6 +2,7 @@ import React, {useState, useRef, useEffect} from 'react';
 import {icons} from '/src/assets';
 import {constants} from '/src/utilities';
 import {range} from 'lodash';
+import {DayButton} from './components/day-button';
 
 function VisualDatePicker(props: {
     disabled: boolean;
@@ -9,13 +10,19 @@ function VisualDatePicker(props: {
     getDaysInMonth(year: number, month: number): number;
     getFirstWeekday(year: number, month: number): number;
     setDateTimestamp(t: {year: number; month: number; day: number}): void;
+    setHourTimestamp(t: {hour?: number; minute?: number}): void;
     'data-cy'?: string;
 }) {
-    const {dateStore: date, setDateTimestamp, disabled} = props;
+    const {dateStore: date, setDateTimestamp, setHourTimestamp, disabled} = props;
 
     const [open, setOpen] = useState(false);
     const [visibleMonth, setVisibleMonth] = useState(date.getMonth());
     const [visibleYear, setVisibleYear] = useState(date.getFullYear());
+
+    useEffect(() => {
+        setVisibleMonth(date.getMonth());
+        setVisibleYear(date.getFullYear());
+    }, [date]);
 
     const ref = useRef<HTMLButtonElement>(null);
     useEffect(() => {
@@ -44,104 +51,16 @@ function VisualDatePicker(props: {
 
     const skippedDays = props.getFirstWeekday(visibleYear, visibleMonth);
     const dayCount = props.getDaysInMonth(visibleYear, visibleMonth);
-    function colSpan(n: number) {
-        return {
-            display: 'grid',
-            gridColumn: `span ${n} / span ${n}`,
-            gridTemplateColumns: `repeat(${n}, minmax(0, 1fr))`,
-        };
-    }
 
-    function DayButton(props: {day: number}) {
-        const selectedDay =
-            date.getFullYear() === visibleYear &&
-            date.getMonth() === visibleMonth &&
-            date.getDate() === props.day;
+    // 1. how many days in the first row?
+    // 2. how many days in the last not-filled row?
+    // 3. how many days fully filled rows?
+    const dayCountHead = 7 - skippedDays;
+    const dayCountLast = (dayCount - dayCountHead) % 7;
+    const dayCountFullRows = (dayCount - dayCountHead - dayCountLast) / 7;
 
-        return (
-            <button
-                className={
-                    'py-1 md:py-0 w-7 md:w-6 -mx-0.5 px-0.5 text-center rounded-sm ringable ' +
-                    (selectedDay
-                        ? 'bg-red-500 text-red-50 z-0 font-weight-700 '
-                        : 'hover:text-white z-10 font-weight-600 ')
-                }
-                onClick={() => {
-                    if (open && !disabled) {
-                        setDateTimestamp({
-                            year: visibleYear,
-                            month: visibleMonth,
-                            day: props.day,
-                        });
-                        setOpen(false);
-                        ref.current?.focus();
-                    }
-                }}
-                onKeyDown={(e) => {
-                    if (e.key === 'Tab' && props.day === dayCount && !e.shiftKey) {
-                        setOpen(false);
-                    }
-                }}
-                disabled={!open}
-            >
-                {props.day}
-            </button>
-        );
-    }
-
-    // how many days in the first row?
-    const dayCount1 = 7 - skippedDays;
-
-    // how many days in the fully filled rows?
-    const dayCount2 = Math.floor((dayCount - dayCount1) / 7) * 7;
-
-    // how many days in the last not-filled row?
-    const dayCount3 = dayCount - dayCount1 - dayCount2;
-
-    const dayRows = [
-        <div className='grid w-full grid-cols-7 gap-x-2' key={`datepicker-row-${0}`}>
-            {range(skippedDays).map((i) => (
-                <div className='w-5 text-center' key={`skipped-day-${i + 1}`} />
-            ))}
-            <div
-                style={colSpan(dayCount1)}
-                className='px-0.5 -mx-0.5 bg-gray-700 rounded-sm gap-x-2'
-            >
-                {range(dayCount1).map((i) => (
-                    <DayButton day={i + 1} key={`day-button-${i + 1}`} />
-                ))}
-            </div>
-        </div>,
-        ...range(dayCount2 / 7).map((i) => (
-            <div
-                className='grid grid-cols-7 px-0.5 -mx-0.5 bg-gray-700 rounded-sm gap-x-2'
-                style={{width: 'calc(100% + 0.25rem'}}
-                key={`datepicker-row-${i + 1}`}
-            >
-                {range(7).map((j) => (
-                    <DayButton
-                        day={dayCount1 + i * 7 + j + 1}
-                        key={`day-button-${dayCount1 + i * 7 + j + 1}`}
-                    />
-                ))}
-            </div>
-        )),
-        dayCount3 > 0 && (
-            <div
-                style={colSpan(dayCount3)}
-                className='px-0.5 -mx-0.5 bg-gray-700 rounded-sm gap-x-2'
-                key={`datepicker-row-end`}
-            >
-                {range(dayCount3).map((i) => (
-                    <DayButton
-                        day={dayCount1 + dayCount2 + i + 1}
-                        key={`day-button-${dayCount1 + dayCount2 + i + 1}`}
-                    />
-                ))}
-            </div>
-        ),
-    ];
-
+    const sharedCalendarRowClasses =
+        'h-7 sm:h-5 rounded-sm bg-gray-700 z-0 pointer-events-none absolute opacity-70 ';
     return (
         <div
             className={'flex-col-left ' + (!open ? 'h-9 ' : ' ')}
@@ -151,74 +70,287 @@ function VisualDatePicker(props: {
                 ref={ref}
                 className={
                     'px-1 w-full flex-row-left rounded h-9 ringable font-weight-500 ' +
-                    (open || props.disabled
+                    (open || disabled
                         ? 'bg-gray-200 text-gray-600 '
                         : 'bg-gray-100 text-gray-800 ') +
-                    (props.disabled ? 'cursor-not-allowed ' : '')
+                    (disabled ? 'cursor-not-allowed ' : '')
                 }
                 onClick={() => setOpen(!open)}
-                disabled={props.disabled}
+                disabled={disabled}
+                data-cy='dropdown-toggle '
             >
-                <div className='p-1 w-7 h-7 icon-dark-gray'>{icons.calendar}</div>
+                <div className='p-1 w-7 h-7 svg-datepicker-calendar'>
+                    {icons.calendar}
+                </div>
                 <div className='px-1'>
                     {date.getDate().toString().padStart(2, '0')}.
                     {(date.getMonth() + 1).toString().padStart(2, '0')}.
-                    {date.getFullYear().toString().padStart(2, '0')}
+                    {date.getFullYear().toString().padStart(2, '0')},
+                </div>
+                <div className='flex-shrink-0 w-5 text-center'>
+                    {date.getHours().toString().padStart(2, '0')}
+                </div>
+                :
+                <div className='flex-shrink-0 w-5 text-center'>
+                    {date.getMinutes().toString().padStart(2, '0')}
                 </div>
             </button>
             <div
                 className={
-                    'overflow-hidden z-40 w-full centering-col px-[5px] ' +
-                    'bg-gray-800 rounded shadow-sm no-selection ' +
-                    (open ? 'py-[5px] mt-2 ' : 'h-0 py-0 mt-0 ')
+                    'flex flex-col sm:flex-row items-start justify-start gap-x-2'
                 }
+                data-cy={`dropdown ${open ? 'isopen' : 'isnotopen'}`}
             >
-                <div className='mb-1.5 centering-row'>
-                    <button
-                        className={
-                            'w-10 h-10 p-1.5 md:w-7 md:h-7 md:p-0.5 ' +
-                            'transform rotate-90 icon-white ' +
-                            'rounded ringable cursor-pointer'
-                        }
-                        onClick={prevMonth}
-                        disabled={!open}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Tab' && e.shiftKey) {
-                                setOpen(false);
+                <div
+                    className={
+                        'overflow-hidden z-40 px-[5px] flex-col-center ' +
+                        'bg-gray-800 rounded shadow-sm no-selection ' +
+                        (open ? 'py-[5px] mt-2 ' : 'h-0 py-0 mt-0 ')
+                    }
+                >
+                    <div className='mb-1.5 flex-row-center'>
+                        <button
+                            className={
+                                'w-10 h-10 p-1.5 md:w-7 md:h-7 md:p-0.5 ' +
+                                'transform rotate-90 svg-datepicker-chevron ' +
+                                'rounded ringable cursor-pointer '
                             }
-                        }}
-                    >
-                        {icons.chevronDown}
-                    </button>
-                    <div className='text-white w-22 centering-row'>
-                        <div className='flex-shrink-0 w-10 text-center'>
-                            {constants.formOptions.MONTHS[visibleMonth]}
-                        </div>
-                        <div className='flex-shrink-0 w-10 text-center'>
-                            {visibleYear}
-                        </div>
-                    </div>
-                    <button
-                        className={
-                            'w-10 h-10 p-1.5 md:w-7 md:h-7 md:p-0.5 ' +
-                            'transform -rotate-90 icon-white ' +
-                            'rounded ringable cursor-pointer'
-                        }
-                        onClick={nextMonth}
-                        disabled={!open}
-                    >
-                        {icons.chevronDown}
-                    </button>
-                </div>
-                <div className='px-4 pb-2.5 text-sm text-gray-300 flex-col-left gap-y-2'>
-                    <div className='grid grid-cols-7 gap-x-2'>
-                        {['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].map((w) => (
-                            <div key={w} className='w-5 text-center'>
-                                {w}
+                            onClick={prevMonth}
+                            disabled={!open}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Tab' && e.shiftKey) {
+                                    setOpen(false);
+                                }
+                            }}
+                            data-cy='button-prev-month '
+                        >
+                            {icons.chevronDown}
+                        </button>
+                        <div className='text-white w-22 flex-row-center'>
+                            <div
+                                className='flex-shrink-0 w-10 text-center'
+                                data-cy='month-label '
+                            >
+                                {constants.formOptions.MONTHS[visibleMonth]}
                             </div>
-                        ))}
+                            <div
+                                className='flex-shrink-0 w-10 text-center'
+                                data-cy='year-label '
+                            >
+                                {visibleYear}
+                            </div>
+                        </div>
+                        <button
+                            className={
+                                'w-10 h-10 p-1.5 md:w-7 md:h-7 md:p-0.5 ' +
+                                'transform -rotate-90 svg-datepicker-chevron ' +
+                                'rounded ringable cursor-pointer '
+                            }
+                            onClick={nextMonth}
+                            disabled={!open}
+                            data-cy='button-next-month '
+                        >
+                            {icons.chevronDown}
+                        </button>
                     </div>
-                    {dayRows.map((m) => m)}
+                    <div className='px-2 pb-2 text-sm text-gray-300 sm:px-4 sm:pb-4 flex-col-left gap-y-2'>
+                        <div className='grid grid-cols-7 gap-x-1 gap-y-1.5 relative'>
+                            {['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].map((w) => (
+                                <div key={w} className='z-10 h-4 mb-1 text-center w-7'>
+                                    {w}
+                                </div>
+                            ))}
+                            <div
+                                className={
+                                    'top-[1.625rem] right-0 ' + sharedCalendarRowClasses
+                                }
+                                style={{
+                                    left: `calc(${
+                                        7 - dayCountHead
+                                    } * (2rem + 0.225rem))`,
+                                }}
+                            />
+                            {range(dayCountFullRows).map((i) => (
+                                <>
+                                    <div
+                                        className={
+                                            'hidden sm:block left-0 right-0 ' +
+                                            sharedCalendarRowClasses
+                                        }
+                                        style={{
+                                            bottom: `calc(${
+                                                i + (dayCountLast === 0 ? 0 : 1)
+                                            } * (1.625rem))`,
+                                        }}
+                                    />
+                                    <div
+                                        className={
+                                            'block sm:hidden left-0 right-0 ' +
+                                            sharedCalendarRowClasses
+                                        }
+                                        style={{
+                                            bottom: `calc(${
+                                                i + (dayCountLast === 0 ? 0 : 1)
+                                            } * (2.125rem))`,
+                                        }}
+                                    />
+                                </>
+                            ))}
+                            <div
+                                className={
+                                    'bottom-0 left-0 ' + sharedCalendarRowClasses
+                                }
+                                style={{
+                                    right: `calc(${
+                                        7 - dayCountLast
+                                    } * (2rem + 0.225rem))`,
+                                }}
+                            />
+                            {range(dayCount).map((i) => (
+                                <DayButton
+                                    style={
+                                        i === 0
+                                            ? {gridColumnStart: skippedDays + 1}
+                                            : {}
+                                    }
+                                    open={open}
+                                    disabled={disabled}
+                                    label={i + 1}
+                                    dayIsSelected={
+                                        date.getFullYear() === visibleYear &&
+                                        date.getMonth() === visibleMonth &&
+                                        date.getDate() === i + 1
+                                    }
+                                    onClick={() => {
+                                        setDateTimestamp({
+                                            year: visibleYear,
+                                            month: visibleMonth,
+                                            day: i + 1,
+                                        });
+                                    }}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                </div>
+                <div
+                    className={
+                        'overflow-hidden z-40 px-[5px] ' +
+                        'flex-row-center sm:flex-col ' +
+                        'bg-gray-800 rounded shadow-sm no-selection ' +
+                        (open ? 'py-[5px] mt-2 ' : 'h-0 py-0 mt-0 ')
+                    }
+                >
+                    <div
+                        className={
+                            'p-2.5 text-sm text-gray-300 ' +
+                            'grid gap-x-2 gap-y-2 ' +
+                            'grid-flow-col grid-rows-2 sm:grid-rows-none ' +
+                            'sm:grid-flow-row sm:grid-cols-2'
+                        }
+                    >
+                        <div className='w-10 h-10 flex-row-center font-weight-600'>
+                            H
+                        </div>
+                        <div className='w-10 h-10 flex-row-center font-weight-600'>
+                            M
+                        </div>
+                        <div
+                            className={
+                                'bg-gray-700 rounded flex flex-row-reverse items-center justify-center sm:flex-col'
+                            }
+                        >
+                            <button
+                                className={
+                                    'w-10 h-10 p-1.5 md:w-9 md:h-7 md:p-0.5 ' +
+                                    'transform rotate-180 ' +
+                                    'rounded ringable cursor-pointer ' +
+                                    'focus:bg-gray-600 svg-datepicker-plus-minus'
+                                }
+                                onClick={() =>
+                                    setHourTimestamp({
+                                        hour: date.getHours() + 1,
+                                    })
+                                }
+                                disabled={!open}
+                                data-cy='button-increment-hour '
+                            >
+                                {icons.add}
+                            </button>
+                            <div
+                                className='h-6 my-0.5 text-base text-white font-weight-600 w-7 text-center'
+                                data-cy='hour-label '
+                            >
+                                {date.getHours()}
+                            </div>
+                            <button
+                                className={
+                                    'w-10 h-10 p-1.5 md:w-9 md:h-7 md:p-0.5 ' +
+                                    'transform svg-datepicker-plus-minus focus:bg-gray-600 ' +
+                                    'rounded ringable cursor-pointer'
+                                }
+                                onClick={() => {
+                                    setHourTimestamp({
+                                        hour: date.getHours() - 1,
+                                    });
+                                }}
+                                disabled={!open}
+                                data-cy='button-decrement-hour '
+                            >
+                                {icons.remove}
+                            </button>
+                        </div>
+                        <div
+                            className={
+                                'bg-gray-700 rounded flex flex-row-reverse items-center justify-center sm:flex-col'
+                            }
+                        >
+                            <button
+                                className={
+                                    'w-10 h-10 p-1.5 md:w-9 md:h-7 md:p-0.5 ' +
+                                    'transform rotate-180 ' +
+                                    'rounded ringable cursor-pointer ' +
+                                    'focus:bg-gray-600 svg-datepicker-plus-minus'
+                                }
+                                onClick={() =>
+                                    setHourTimestamp({
+                                        minute: date.getMinutes() + 1,
+                                    })
+                                }
+                                disabled={!open}
+                                data-cy='button-increment-minute '
+                            >
+                                {icons.add}
+                            </button>
+                            <div
+                                className='h-6 my-0.5 text-base text-white font-weight-600 w-7 text-center'
+                                data-cy='minute-label '
+                            >
+                                {date.getMinutes()}
+                            </div>
+                            <button
+                                className={
+                                    'w-10 h-10 p-1.5 md:w-9 md:h-7 md:p-0.5 ' +
+                                    'transform svg-datepicker-plus-minus focus:bg-gray-600 ' +
+                                    'rounded ringable cursor-pointer'
+                                }
+                                onClick={() => {
+                                    setHourTimestamp({
+                                        minute: date.getMinutes() - 1,
+                                    });
+                                }}
+                                disabled={!open}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Tab' && !e.shiftKey) {
+                                        setOpen(false);
+                                    }
+                                }}
+                                data-cy='button-decrement-minute '
+                            >
+                                {icons.remove}
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

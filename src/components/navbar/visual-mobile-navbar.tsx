@@ -37,7 +37,7 @@ function VisualMobileNavbar(props: Props) {
             <div
                 onClick={props.openNavbar}
                 className={
-                    'fixed top-0 left-0 z-30 w-16 h-16 p-4 icon-white ' +
+                    'fixed top-0 left-0 z-30 w-16 h-16 p-4 svg-white ' +
                     'text-gray-900 pointer-events-auto ' +
                     'rounded-br bg-gray-900 shadow '
                 }
@@ -52,10 +52,7 @@ function VisualMobileNavbar(props: Props) {
                     (props.navbarState.open ? 'w-64 px-2' : 'w-0')
                 }
             >
-                <NavbarContent
-                    closeNavbar={props.closeNavbar}
-                    logOut={props.logOut}
-                />
+                <NavbarContent closeNavbar={props.closeNavbar} logOut={props.logOut} />
             </div>
         </React.Fragment>
     );

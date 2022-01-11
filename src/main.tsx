@@ -7,10 +7,16 @@ import PageRouter from './page-router';
 
 import 'typeface-quicksand';
 import '/src/styles/tailwind.css';
-import '/src/styles/fixes.css';
+import '/src/styles/special.css';
+import '/src/styles/layout.css';
+import '/src/styles/icons.css';
 
-// only use sentry when image was built with docker
-if (import.meta.env.MODE === 'production') {
+// only use sentry when image was built with docker AND
+// when code uses production backend
+if (
+    import.meta.env.MODE === 'production' &&
+    import.meta.env.VITE_ENV === 'production'
+) {
     Sentry.init({
         dsn: `${import.meta.env.VITE_SENTRY_API}`,
         environment: `${import.meta.env.VITE_ENV}`,
@@ -27,13 +33,3 @@ ReactDOM.render(
     </React.StrictMode>,
     document.getElementById('root'),
 );
-
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.ready
-        .then((registration) => {
-            registration.unregister();
-        })
-        .catch((error) => {
-            console.error(error.message);
-        });
-}

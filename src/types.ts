@@ -3,48 +3,103 @@ export declare namespace types {
         local_id: number;
         next_identifier: number;
         survey_name: string;
-        start: number;
-        end: number;
-        draft: boolean;
+        start: number | null;
+        end: number | null;
         title: string;
-        description: string;
         fields: SurveyField[];
     }
 
-    export type SurveyField = EmailField | SelectionField | TextField;
-
-    interface GeneralSurveyField {
-        identifier: number;
-        local_id: number;
-        title: string;
-        description: string;
+    export interface SurveyConfigChange {
+        survey_name?: string;
+        start?: number | null;
+        end?: number | null;
+        title?: string;
     }
 
-    export type FieldType = 'email' | 'text' | 'selection';
+    export type SurveyFieldChange =
+        | EmailFieldChange
+        | SelectionFieldChange
+        | TextFieldChange
+        | MarkdownFieldChange;
 
-    export interface EmailField extends GeneralSurveyField {
+    export type SurveyField =
+        | EmailField
+        | SelectionField
+        | TextField
+        | BreakField
+        | MarkdownField;
+
+    export type FieldType = 'email' | 'text' | 'selection' | 'break' | 'markdown';
+
+    export interface EmailField {
         type: 'email';
+        identifier: number;
+        local_id: number;
+        description: string;
         regex: string;
         verify: boolean;
         hint: string;
     }
 
-    export interface TextField extends GeneralSurveyField {
+    export interface EmailFieldChange {
+        description?: string;
+        regex?: string;
+        verify?: boolean;
+        hint?: string;
+    }
+
+    export interface TextField {
         type: 'text';
+        identifier: number;
+        local_id: number;
+        description: string;
         min_chars: number;
         max_chars: number;
     }
 
-    export interface SelectionField extends GeneralSurveyField {
+    export interface TextFieldChange {
+        description?: string;
+        min_chars?: number;
+        max_chars?: number;
+    }
+
+    export interface SelectionField {
         type: 'selection';
+        identifier: number;
+        local_id: number;
+        description: string;
         min_select: number;
         max_select: number;
         options: FieldOption[];
     }
 
+    export interface SelectionFieldChange {
+        description?: string;
+        min_select?: number;
+        max_select?: number;
+        options?: FieldOption[];
+    }
+
     export interface FieldOption {
         title: string;
         local_id: number;
+    }
+
+    export interface BreakField {
+        type: 'break';
+        identifier: number;
+        local_id: number;
+    }
+
+    export interface MarkdownField {
+        type: 'markdown';
+        identifier: number;
+        local_id: number;
+        description: string;
+    }
+
+    export interface MarkdownFieldChange {
+        description?: string;
     }
 
     export interface EmailRegexSetup {
@@ -54,12 +109,29 @@ export declare namespace types {
         hint: string;
     }
 
-    export interface SurveyResults {
-        [key: string]: {
-            count: number;
-            value: null | number | {[key: string]: number};
+    export type SurveyResults = {
+        count: number;
+        [key: string]: number | FieldResult;
+    };
+
+    export type FieldResult = {
+        count: number;
+        value?: null | {[key: string]: number};
+        verified?: number;
+    };
+
+    export type SurveySubmission = {
+        submission_time: number;
+        submission: {
+            [key: string]:
+                | {
+                      email_address: string;
+                      verified: null | boolean;
+                  }
+                | string[]
+                | string;
         };
-    }
+    };
 
     export type Color = 'red' | 'orange' | 'yellow' | 'green' | 'teal' | 'gray';
     export type DownloadFormat = 'json' | 'csv';
@@ -92,27 +164,25 @@ export declare namespace types {
     };
 
     export type MessageId =
-        | 'warning-unsaved'
-        | 'error-credentials'
-        | 'warning-account-not-verified'
-        | 'error-submissions-exist'
+        | 'error-access-token'
         | 'error-server'
-        | 'success-account-created'
-        | 'error-email-taken'
-        | 'error-email-invalid'
+        | 'error-login-credentials'
         | 'error-link-invalid'
-        | 'success-redirect-to-login'
-        | 'success-password-changed'
-        | 'success-username-changed'
-        | 'error-username-taken'
-        | 'warning-clipboard'
-        | 'warning-clipboard-support'
-        | 'editor-warning-validators'
-        | 'editor-warning-field-count'
-        | 'editor-warning-authentication'
-        | 'success-survey-duplicated'
-        | 'success-submissions-removed'
-        | 'success-survey-removed';
+        | 'warning-register-email-taken'
+        | 'warning-register-username-taken'
+        | 'warning-login-not-verified'
+        | 'warning-editor-clipboard'
+        | 'warning-editor-clipboard-support'
+        | 'warning-editor-unsaved'
+        | 'warning-editor-validators'
+        | 'warning-editor-authentication'
+        | 'success-register-creation'
+        | 'success-register-verification'
+        | 'success-account-password-changed'
+        | 'success-account-username-changed'
+        | 'success-survey-list-duplication'
+        | 'success-survey-list-submissions-removed'
+        | 'success-survey-list-survey-removed';
 
     export type ValidationResult =
         | {

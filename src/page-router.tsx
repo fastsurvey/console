@@ -8,7 +8,8 @@ import {
     Login,
     Register,
     Verify,
-    ForgotPassword,
+    RequestPasswordForm,
+    SetPasswordForm,
     SurveyList,
     EditorRouter,
     ResultsRouter,
@@ -55,7 +56,7 @@ function PageRouter(props: RouterProps) {
                             <Redirect to='/login' />
                         )}
                     </Route>
-                    <Route path='(/login|/register|/forgot-password)'>
+                    <Route path='(/login|/register|/request-password)'>
                         <MainWrapper>
                             {!props.loggingIn && !props.loggedIn && (
                                 <Switch>
@@ -65,8 +66,8 @@ function PageRouter(props: RouterProps) {
                                     <Route exact path='/register'>
                                         <Register />
                                     </Route>
-                                    <Route exact path='/forgot-password'>
-                                        <ForgotPassword />
+                                    <Route exact path='/request-password'>
+                                        <RequestPasswordForm />
                                     </Route>
                                 </Switch>
                             )}
@@ -74,6 +75,11 @@ function PageRouter(props: RouterProps) {
                         {!props.loggingIn && props.loggedIn && (
                             <Redirect to='/surveys' />
                         )}
+                    </Route>
+                    <Route exact path='/set-password'>
+                        <MainWrapper>
+                            <SetPasswordForm />
+                        </MainWrapper>
                     </Route>
                     <Route path='/verify'>
                         <MainWrapper>

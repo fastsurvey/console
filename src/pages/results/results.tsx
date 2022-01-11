@@ -3,11 +3,13 @@ import {types} from '/src/types';
 import SummaryHeader from './components/results-header';
 import {backend} from '/src/utilities';
 import Field from './components/field';
+import {reduce} from 'lodash';
 
 function Results(props: {
     config: types.SurveyConfig;
     account: types.Account;
     accessToken: types.AccessToken;
+    openMessage(id: types.MessageId): void;
 }) {
     const [results, setResults] = useState<types.SurveyResults | undefined>(undefined);
     const [isFetching, setIsFetching] = useState(true);
@@ -17,75 +19,93 @@ function Results(props: {
     useEffect(fetch, []);
 
     function fetch() {
-        const successCallback = (r: any) => {
-            setResults(r);
+        function success(results: any) {
+            setResults(results);
             setIsFetching(false);
-        };
-        const errorCallback = () => {
+        }
+        function error(reason: 'authentication' | 'server') {
             setError(true);
             setIsFetching(false);
-        };
+            switch (reason) {
+                case 'authentication':
+                    props.openMessage('error-access-token');
+                    break;
+                case 'server':
+                    props.openMessage('error-server');
+                    break;
+            }
+        }
 
         setIsFetching(true);
         backend.fetchResults(
             props.account,
             props.accessToken,
             props.config.survey_name,
-            successCallback,
-            errorCallback,
+            success,
+            error,
         );
     }
 
-    function generateJSONuri(data: {[key: string]: any}[]) {
-        const outputJSON = [];
-        for (let i = 0; i < data.length; i++) {
-            let outputSubmission: {
-                [key: string]: any;
-            } = {};
-            props.config.fields.forEach((f) => {
-                outputSubmission[f.title] = data[i][f.identifier];
-            });
-            outputJSON.push(outputSubmission);
-        }
+    function generateJSONuri(data: types.SurveySubmission[]) {
+        const outputJSON = data.map((s, i) => ({
+            submission_time: s.submission_time,
+            submission: reduce(
+                props.config.fields.filter(
+                    (f) => f.type !== 'break' && f.type !== 'markdown',
+                ),
+                (a, f: any, i) => {
+                    return {
+                        ...a,
+                        [`${i + 1} - ${f.description}`]: s.submission[f.identifier],
+                    };
+                },
+                {},
+            ),
+        }));
 
         return encodeURI(
             'data:text/json;charset=utf-8,' + JSON.stringify(outputJSON, null, '\t'),
         );
     }
 
-    function generateCSVuri(data: {[key: string]: any}[]) {
+    function generateCSVuri(data: types.SurveySubmission[]) {
         let outputRows: string[][] = [];
 
         function escapeQuotes(text: string | number) {
-            return '"' + `${text}`.replaceAll('"', "'") + '"';
+            return '"' + `${text}`.replaceAll('"', '""') + '"';
         }
 
-        let headerRow: string[] = [];
+        let headerRow = ['"submission_time"'];
         props.config.fields.forEach((f) => {
             switch (f.type) {
                 case 'email':
-                    headerRow.push(escapeQuotes(f.title));
+                    headerRow.push(escapeQuotes(f.description));
                     if (f.verify) {
-                        headerRow.push(escapeQuotes(`${f.title} (verified)`));
+                        headerRow.push(escapeQuotes(`${f.description} (verified)`));
                     }
                     break;
                 case 'text':
-                    headerRow.push(escapeQuotes(f.title));
+                    headerRow.push(escapeQuotes(f.description));
                     break;
                 case 'selection':
                     f.options.forEach((o) => {
-                        headerRow.push(escapeQuotes(`${f.title} (${o.title})`));
+                        headerRow.push(escapeQuotes(`${f.description} (${o.title})`));
                     });
                     break;
+                case 'break':
+                case 'markdown':
+                    break;
+                default:
+                    throw `Invalid field config: ${f}`;
             }
         });
 
         outputRows.push(headerRow);
 
         for (let i = 0; i < data.length; i++) {
-            let outputRow: string[] = [];
+            let outputRow: string[] = [`${data[i].submission_time}`];
             props.config.fields.forEach((f) => {
-                const fieldData = data[i][f.identifier];
+                const fieldData: any = data[i].submission[f.identifier];
                 switch (f.type) {
                     case 'email':
                         if (fieldData.email_address !== null) {
@@ -102,6 +122,7 @@ function Results(props: {
                         }
                         break;
                     case 'text':
+                        // TODO: solve #156
                         if (fieldData !== null) {
                             outputRow.push(escapeQuotes(fieldData));
                         } else {
@@ -129,7 +150,7 @@ function Results(props: {
     }
 
     function download(format: types.DownloadFormat) {
-        function success(data: {[key: string]: any}[]) {
+        function success(data: types.SurveySubmission[]) {
             let encodedUri: string = '';
             switch (format) {
                 case 'json':
@@ -155,20 +176,43 @@ function Results(props: {
             setIsDownloading(false);
         }
 
+        function error(reason: 'authentication' | 'server') {
+            setError(true);
+            setIsFetching(false);
+            switch (reason) {
+                case 'authentication':
+                    props.openMessage('error-access-token');
+                    break;
+                case 'server':
+                    props.openMessage('error-server');
+                    break;
+            }
+        }
+
         setIsDownloading(true);
         backend.fetchSubmissions(
             props.account,
             props.accessToken,
             props.config.survey_name,
             success,
-            console.log,
+            error,
         );
     }
+
+    // TODO: Pretty empty state (no fields)
+
+    const identifierToOrder = reduce(
+        props.config.fields.filter((f) =>
+            ['email', 'selection', 'text'].includes(f.type),
+        ),
+        (acc, f, i) => ({...acc, [f.identifier]: i + 1}),
+        {},
+    );
 
     return (
         <div
             className={
-                'w-full px-2 pt-4 pb-20 md:py-16 min-h-screen bg-gray-100 flex-col-top'
+                'w-full px-2 pt-4 pb-20 md:py-16 min-h-screen bg-gray-150 flex-col-top'
             }
         >
             <div className={'w-full max-w-3xl flex-col-center space-y-4'}>
@@ -183,6 +227,7 @@ function Results(props: {
                     <>
                         {props.config.fields.map((fieldConfig, index) => (
                             <Field
+                                identifierToOrder={identifierToOrder}
                                 key={fieldConfig.local_id}
                                 fieldIndex={index}
                                 fieldConfig={fieldConfig}

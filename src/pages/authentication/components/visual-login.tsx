@@ -16,13 +16,13 @@ export default function VisualLogin(props: {
 }) {
     return (
         <section
-            className='w-full max-w-sm p-4 bg-white rounded shadow centering-col gap-y-4'
+            className='w-full max-w-md p-4 bg-white rounded shadow-sm flex-col-center gap-y-4'
             data-cy='login-panel'
         >
             <h1 className='text-2xl text-center text-gray-800 font-weight-600 no-selection'>
                 Login
             </h1>
-            <div className='w-full centering-col gap-y-0.5'>
+            <div className='w-full flex-col-center gap-y-0.5'>
                 <Label text='Email or Username' />
                 <TextInput
                     autoFocus
@@ -35,7 +35,7 @@ export default function VisualLogin(props: {
                     data-cy='input-identifier'
                 />
             </div>
-            <div className='w-full centering-col gap-y-0.5'>
+            <div className='w-full flex-col-center gap-y-0.5'>
                 <Label text='Password' />
                 <TextInput
                     type='password'
@@ -58,7 +58,7 @@ export default function VisualLogin(props: {
                     loading={props.submitting}
                     data-cy='button-submit'
                 />
-                <div className='flex-max' />
+                <div className='flex-grow' />
                 <div className='flex-col-left'>
                     <Link
                         to='/register'
@@ -68,7 +68,7 @@ export default function VisualLogin(props: {
                         Don't have an account yet?
                     </Link>
                     <Link
-                        to='/forgot-password'
+                        to='/request-password'
                         className='px-1.5 py-0.5 -mx-1.5 text-sm text-gray-400 rounded font-weight-600 ringable'
                         data-cy='link-to-forgot'
                     >

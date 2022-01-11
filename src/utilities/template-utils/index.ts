@@ -1,15 +1,13 @@
-import {survey} from './survey';
-import {field} from './field';
+import {survey, surveyName} from './survey';
+import {field, fieldIdentifier} from './field';
 import {option} from './option';
-import {surveyName} from './survey-name';
-import {fieldIdentifier} from './field-identifier';
 
 const templateUtils = {
     survey,
-    field,
-    option,
     surveyName,
+    field,
     fieldIdentifier,
+    option,
 };
 
 export default templateUtils;

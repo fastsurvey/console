@@ -54,7 +54,7 @@ export default function TextInput(props: {
             {type === 'password' && (
                 <button
                     className={
-                        'absolute top-0 h-6 w-6 p-1 m-1.5 right-0 icon-dark-gray ringable rounded'
+                        'absolute top-0 h-6 w-6 p-1 m-1.5 right-0 svg-password-eye ringable rounded'
                     }
                     onClick={() => setPlainText(!plainText)}
                 >

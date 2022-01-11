@@ -9,29 +9,32 @@ export default function ValidationBar(props: {
     return (
         <div
             className={
-                'w-full px-2.5 text-justify flex-row-left space-x-3 md:space-x-2 ' +
-                'rounded-b bg-gray-50 border-gray-200 overflow-hidden ' +
-                (props.validation.valid
-                    ? 'text-green-900 '
-                    : 'text-red-900 min-h-12 md:min-h-[2.5rem] border-t-2 py-2 ') +
-                (props.showValidState !== true
+                'w-full flex flex-row items-stretch space-x-1.5 ' +
+                'px-3 text-justify rounded-b overflow-hidden ' +
+                'bg-gray-75 border-gray-150 ' +
+                (props.validation.valid ? 'text-green-800 ' : 'text-red-800 ') +
+                (props.validation.valid && !props.showValidState
                     ? 'h-0 border-0 '
-                    : 'min-h-12 md:min-h-[2.5rem] border-t-2 py-2 ')
+                    : 'min-h-[2.5rem] border-t ')
             }
             data-cy={`validation-bar ${
                 props.validation.valid ? 'isvalid' : 'isinvalid'
             }`}
         >
-            <div
-                className={
-                    'flex-shrink-0 w-5 h-5 ' +
-                    (props.validation.valid ? 'icon-dark-green ' : 'icon-dark-red ')
-                }
-            >
-                {props.validation.valid ? icons.checkCircle : icons.closeCircle}
+            <div className='flex flex-row items-center'>
+                <div
+                    className={
+                        'flex-shrink-0 w-2.5 h-2.5 ' +
+                        (props.validation.valid
+                            ? 'svg-validation-green '
+                            : 'svg-validation-red ')
+                    }
+                >
+                    {icons.circle}
+                </div>
             </div>
             <div
-                className='text-base text-left md:text-sm font-weight-600'
+                className='flex items-center py-1.5 text-base leading-tight text-left md:text-sm font-weight-600'
                 data-cy='message'
             >
                 {props.validation.valid ? 'Valid' : props.validation.message}

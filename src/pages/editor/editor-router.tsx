@@ -28,7 +28,7 @@ function EditorRouter(props: Props) {
 
     if (filteredConfigs.length === 0) {
         return (
-            <div className='box-border w-screen h-screen px-8 centering-col'>
+            <div className='box-border w-screen h-screen px-8 flex-col-center'>
                 <div className='mb-2 text-lg text-gray-900 font-weight-600'>
                     404: Nothing here
                 </div>

@@ -1,5 +1,5 @@
 import {types} from '/src/types';
-import {httpGet, httpPost} from '../http-clients';
+import {httpGet, httpPost, throwServerError} from '../http-clients';
 
 async function loginWithForm(
     data: {
@@ -11,12 +11,12 @@ async function loginWithForm(
         account: types.Account,
         configs: types.SurveyConfig[],
     ) => void,
-    abort: (statusCode: 401 | 403 | 404 | 500) => void,
+    error: (reason: 'credentials' | 'not-verified' | 'server') => void,
 ) {
     try {
         const {username, access_token: accessToken}: any = (
             await httpPost('/authentication', data).catch((error) => {
-                throw error.response.status;
+                throw error.response !== undefined ? error.response : error;
             })
         ).data;
 
@@ -38,8 +38,15 @@ async function loginWithForm(
         ).data;
 
         login(accessToken, account, configs);
-    } catch (code: any) {
-        abort([401, 403, 404, 500].includes(code) ? code : 500);
+    } catch (response: any) {
+        if (response.status === 401 || response.status === 404) {
+            error('credentials');
+        } else if (response.status === 403) {
+            error('not-verified');
+        } else {
+            error('server');
+            throwServerError({response, identifier: data.identifier});
+        }
     }
 }
 

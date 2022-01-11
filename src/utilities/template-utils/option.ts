@@ -1,18 +1,15 @@
 import {types} from '/src/types';
-import localIdUtils from '../local-id-utils/index';
+import {helperUtils, localIdUtils} from '/src/utilities';
 
 export const option = (
-    newTitle: string,
+    newIndex: number,
     fieldConfig: types.SelectionField,
 ): types.SelectionField => {
     return {
         ...fieldConfig,
-        options: [
-            ...fieldConfig.options,
-            {
-                local_id: localIdUtils.newId.fieldOption(fieldConfig),
-                title: newTitle,
-            },
-        ],
+        options: helperUtils.insertIntoArray(fieldConfig.options, newIndex, {
+            local_id: localIdUtils.newId.fieldOption(fieldConfig),
+            title: '',
+        }),
     };
 };

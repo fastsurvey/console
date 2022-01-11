@@ -12,6 +12,7 @@ function AddFieldPanel(props: {
     openModal(title: string, children: React.ReactNode): void;
     disabled: boolean;
     index: number;
+    fullDetail?: boolean;
 }) {
     function openAddFieldModal() {
         props.openModal('Add a new field', <AddFieldPopup {...props} />);
@@ -27,14 +28,14 @@ function AddFieldPanel(props: {
             }
         >
             <AddFieldButton
-                label='add field'
+                label={props.fullDetail ? 'add field' : 'add'}
                 icon={icons.widgetAdd}
                 onClick={openAddFieldModal}
                 disabled={props.disabled}
                 data-cy={`add-field-before-${props.index}`}
             />
             <AddFieldButton
-                label='paste field'
+                label={props.fullDetail ? 'paste field' : 'paste'}
                 icon={icons.duplicate}
                 onClick={props.pasteField}
                 leftIcon

@@ -2,12 +2,14 @@ import React from 'react';
 
 export default function PercentageBarRow(props: {
     title: string;
-    count: number;
+    count?: number;
     total: number;
     variant?: 'green' | 'red';
     index: number;
 }) {
-    const {title, count, total} = props;
+    const {title, total} = props;
+    const count = props.count === undefined ? 0 : props.count;
+
     let barColor: string;
     let textColor: string;
     switch (props.variant) {

@@ -41,7 +41,7 @@ function NavbarButton(props: {
             }}
             onMouseLeave={handleMouseLeave}
             className={
-                'relative h-10 py-0 centering-row my-1 ringable ' +
+                'relative h-10 py-0 flex-row-left my-1 ringable ' +
                 'font-weight-700 md:font-weight-600 text-base rounded cursor-pointer ' +
                 (props.active ? 'text-white bg-gray-700' : 'text-gray-200')
             }
@@ -93,7 +93,7 @@ function VisualNavbarContent(props: {
                 mouseOver={props.mouseOver}
             />
 
-            <div className={'flex-max'} />
+            <div className='flex-grow' />
 
             <NavbarButton
                 onClick={props.logOut}

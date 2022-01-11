@@ -8,13 +8,12 @@ function VisualRegularNavbar(props: {logOut(): void}) {
         <React.Fragment>
             <div
                 className={
-                    'fixed -left-2 top-0 pl-4 pr-2 pt-3 pb-1 h-100vh group ' +
+                    'fixed -left-2 top-0 pl-4 pr-2 pt-3 pb-1 h-screen group ' +
                     'bg-gray-900 flex-col-left shadow no-selection'
                 }
                 data-cy='navbar'
                 onMouseEnter={() => {
                     setMouseOver(true);
-                    console.debug('opening sidebar');
                 }}
                 onMouseLeave={(e) =>
                     e.clientX < 30 ? setMouseOver(true) : setMouseOver(false)

@@ -6,8 +6,10 @@ import {connect} from 'react-redux';
 import emailImage from '/src/assets/images/field-examples/field-example-email.png';
 import selectionImage from '/src/assets/images/field-examples/field-example-selection.png';
 import textImage from '/src/assets/images/field-examples/field-example-text.png';
+import breakImage from '/src/assets/images/field-examples/field-example-break.png';
+import markdownImage from '/src/assets/images/field-examples/field-example-markdown.png';
 
-const fields: types.FieldType[] = ['email', 'selection', 'text'];
+const fields: types.FieldType[] = ['email', 'selection', 'text', 'break', 'markdown'];
 
 interface Props {
     insertField(fieldType: types.FieldType): void;
@@ -19,6 +21,9 @@ function AddFieldPopup(props: Props) {
 
     useEffect(() => setSelectedIndex(-1), [props.modal.open]);
 
+    // TODO: Add image for break field
+    // TODO: Add image for markdown field
+
     return (
         <div className='w-full pt-1 flex-col-center gap-y-1.5 '>
             <div className='w-full p-3 flex-row-top gap-x-2'>
@@ -27,14 +32,14 @@ function AddFieldPopup(props: Props) {
                         <button
                             key={fieldType}
                             className={
-                                'w-full rounded outline-none ' +
-                                'h-10 md:h-8 px-2 md:px-6 ' +
+                                'w-full rounded outline-none ring-2 ' +
+                                'h-10 md:h-8 pl-2 pr-4 flex-row-left ' +
                                 'font-weight-600 text-base text-center ' +
-                                'border border-dashed ' +
                                 (selectedIndex === i
                                     ? styleUtils.color.fieldTypeToClasses(fieldType) +
-                                      ' border-transparent '
+                                      ' border-transparent ring-gray-500 '
                                     : 'bg-gray-100 border-gray-400 text-gray-500 ' +
+                                      'ring-transparent ' +
                                       'focus:bg-gray-200 focus:border-gray-500 focus:text-gray-900 ' +
                                       'hover:bg-gray-200 hover:border-gray-500 hover:text-gray-900 ')
                             }
@@ -45,6 +50,16 @@ function AddFieldPopup(props: Props) {
                                 selectedIndex === i ? 'isactive' : 'isinactive'
                             }`}
                         >
+                            <div
+                                className={
+                                    'w-4 h-4 mr-2 ' +
+                                    styleUtils.color.fieldTypeToFieldIconClasses(
+                                        fieldType,
+                                    )
+                                }
+                            >
+                                {styleUtils.icons.fieldTypeToIcon(fieldType)}
+                            </div>
                             {fieldType}
                         </button>
                     ))}
@@ -155,6 +170,44 @@ function AddFieldPopup(props: Props) {
                                     className='w-full mb-3'
                                     src={textImage}
                                     alt='how a text field looks like'
+                                />
+                            </>
+                        )}
+                        {fields[selectedIndex] === 'break' && (
+                            <>
+                                <p className='mb-3'>
+                                    A{' '}
+                                    <strong className='text-gray-900'>
+                                        break field
+                                    </strong>{' '}
+                                    is not a question field, but gives you the
+                                    opportunity to split your form into multiple pages.
+                                    Just place a break field wherever you want to have a
+                                    page break in your form.
+                                </p>
+                                <img
+                                    className='w-full mb-3'
+                                    src={breakImage}
+                                    alt='how a selection field looks like'
+                                />
+                            </>
+                        )}
+                        {fields[selectedIndex] === 'markdown' && (
+                            <>
+                                <p className='mb-3'>
+                                    A{' '}
+                                    <strong className='text-gray-900'>
+                                        markdown field
+                                    </strong>{' '}
+                                    is not a question field, but gives you the
+                                    opportunity to write text within your form. You can
+                                    use markdown syntax to format your text - i.e. using
+                                    headings, lists, links, tables, and so on.
+                                </p>
+                                <img
+                                    className='w-full mb-3'
+                                    src={markdownImage}
+                                    alt='how a selection field looks like'
                                 />
                             </>
                         )}

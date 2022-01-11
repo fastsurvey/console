@@ -1,8 +1,6 @@
-import {concat, first, pullAllBy, range} from 'lodash';
-import * as utilities from '../../support/utilities';
+import {concat, first, range} from 'lodash';
 import {types} from '/src/types';
-
-const {login, getCySelector} = utilities;
+import {login, getCySelector, assertDataCy} from '../../support/utilities';
 const get = getCySelector;
 
 const warningMessage = () => get(['message-panel-warning'], {count: 1});
@@ -16,7 +14,6 @@ const headerElements = {
 
     undo: () => get(['editor-header', 'button-undo'], {count: 1}),
     save: () => get(['editor-header', 'button-save'], {count: 1}),
-    publish: () => get(['editor-header', 'button-publish'], {count: 1}),
     start: () => get(['editor-header', 'button-start'], {count: 1}),
     end: () => get(['editor-header', 'button-end'], {count: 1}),
     reopen: () => get(['editor-header', 'button-reopen'], {count: 1}),
@@ -29,49 +26,44 @@ const settingsElements = {
     inputTitle: () => get(['editor-settings', 'input-title'], {count: 1}),
     inputIdentifier: () => get(['editor-settings', 'input-identifier'], {count: 1}),
     refreshIdentifier: () => get(['editor-settings', 'refresh-identifier'], {count: 1}),
-    inputDescription: () => get(['editor-settings', 'input-description'], {count: 1}),
-
-    toggleDraftYes: () => get(['editor-settings', 'toggle-draft', 'yes'], {count: 1}),
-    toggleDraftNo: () => get(['editor-settings', 'toggle-draft', 'no'], {count: 1}),
 
     startDate: () => get(['editor-settings', 'datepicker-start'], {count: 1}),
-    startTime: () => get(['editor-settings', 'timepicker-start'], {count: 1}),
     endDate: () => get(['editor-settings', 'datepicker-end'], {count: 1}),
-    endTime: () => get(['editor-settings', 'timepicker-end'], {count: 1}),
 };
 
 const getFromField =
     (index: number, selectors: string[], props?: {count?: number; invisible?: true}) =>
     () =>
-        get([`editor-field-panel-${index}`, ...selectors], props);
+        get([`editor-field-panel-${index} `, ...selectors], props);
 
-const fieldButtons = (index: number) => ({
-    collapse: getFromField(index, ['button-collapse'], {count: 1}),
-    copy: getFromField(index, ['button-copy'], {count: 1}),
-    remove: getFromField(index, ['button-remove'], {count: 1}),
-    addBefore: () => get([`add-field-before-${index}`], {count: 1}),
-    pasteBefore: () => get([`paste-field-before-${index}`], {count: 1}),
-});
-
-const fieldInputs = (index: number) => ({
-    title: getFromField(index, ['input-title'], {count: 1}),
-    description: getFromField(index, ['input-description'], {count: 1}),
-    regex: getFromField(index, ['input-regex'], {count: 1}),
-    hint: getFromField(index, ['input-hint'], {count: 1}),
-    toggleVerify: getFromField(index, ['toggle-verify'], {count: 1}),
-    minChars: getFromField(index, ['input-min-chars'], {count: 1}),
-    maxChars: getFromField(index, ['input-max-chars'], {count: 1}),
-    optionList: getFromField(index, ['options-list'], {count: 1}),
-    anyOptionInput: getFromField(index, ['options-list', 'input-option']),
-    optionInput: (optionIndex: number) =>
-        get([
-            `editor-field-panel-${index}`,
-            'options-list',
-            `input-option-${optionIndex}`,
-        ]),
-    addOption: getFromField(index, ['options-list', 'button-add'], {count: 1}),
-    minSelect: getFromField(index, ['input-min-select'], {count: 1}),
-    maxSelect: getFromField(index, ['input-max-select'], {count: 1}),
+const fieldElements = (index: number) => ({
+    panel: getFromField(index, [], {count: 1}),
+    buttons: {
+        collapse: getFromField(index, ['button-collapse'], {count: 1}),
+        copy: getFromField(index, ['button-copy'], {count: 1}),
+        remove: getFromField(index, ['button-remove'], {count: 1}),
+        addBefore: () => get([`add-field-before-${index}`], {count: 1}),
+        pasteBefore: () => get([`paste-field-before-${index}`], {count: 1}),
+    },
+    inputs: {
+        description: getFromField(index, ['input-description'], {count: 1}),
+        regex: getFromField(index, ['input-regex'], {count: 1}),
+        hint: getFromField(index, ['input-hint'], {count: 1}),
+        toggleVerify: getFromField(index, ['toggle-verify'], {count: 1}),
+        minChars: getFromField(index, ['input-min-chars'], {count: 1}),
+        maxChars: getFromField(index, ['input-max-chars'], {count: 1}),
+        optionList: getFromField(index, ['options-list'], {count: 1}),
+        anyOptionInput: getFromField(index, ['options-list', 'input-option']),
+        optionInput: (optionIndex: number) =>
+            get([
+                `editor-field-panel-${index}`,
+                'options-list',
+                `input-option-${optionIndex}`,
+            ]),
+        addOption: getFromField(index, ['options-list', 'button-add'], {count: 1}),
+        minSelect: getFromField(index, ['input-min-select'], {count: 1}),
+        maxSelect: getFromField(index, ['input-max-select'], {count: 1}),
+    },
 });
 
 const getFromPopup = (selectors: string[], props?: {count?: number}) =>
@@ -110,12 +102,8 @@ describe('The Editor Page', () => {
             });
     });
 
-    const assertPillState = (state: 'draft' | 'pending' | 'running' | 'finished') => {
+    const assertPillState = (state: 'pending' | 'running' | 'finished') => {
         headerElements.pill().should('have.attr', 'data-cy').and('contain', state);
-        headerElements
-            .link()
-            .should('have.attr', 'data-cy')
-            .and('contains', state === 'draft' ? 'isinactive' : 'isactive');
     };
 
     const assertSurveyState = (surveyConfig: types.SurveyConfig) => {
@@ -123,9 +111,6 @@ describe('The Editor Page', () => {
         settingsElements
             .inputIdentifier()
             .should('have.value', surveyConfig.survey_name);
-        settingsElements
-            .inputDescription()
-            .should('have.value', surveyConfig.description);
 
         surveyConfig.fields.forEach((fieldConfig, i) => {
             assertFieldState(fieldConfig, i);
@@ -133,19 +118,31 @@ describe('The Editor Page', () => {
     };
 
     const assertFieldState = (fieldConfig: types.SurveyField, index: number) => {
-        fieldInputs(index).title().should('have.value', fieldConfig.title);
-        fieldInputs(index).description().should('have.value', fieldConfig.description);
+        if (fieldConfig.type !== 'break') {
+            fieldElements(index)
+                .inputs.description()
+                .should('have.value', fieldConfig.description);
+        }
     };
 
     const assertEditorPath = (survey_name: string) =>
         cy.url().should('contains', `/editor/${survey_name}`);
 
-    const assertSyncedHeaderState = () => {
-        get(['editor-header', 'button-undo']).should('have.length', 0);
-        get(['editor-header', 'button-save']).should('have.length', 0);
-        headerElements.reopen().should('not.be.disabled');
-        get(['message-panel-warning']).should('have.length', 0);
-        get(['message-panel-error']).should('have.length', 0);
+    const assertHeaderState = (state: 'synced' | 'unsynced') => {
+        headerElements.end().should((state === 'synced' ? 'not.' : '') + 'be.disabled');
+        headerElements
+            .undo()
+            .should((state === 'unsynced' ? 'not.' : '') + 'be.disabled');
+        headerElements
+            .save()
+            .should((state === 'unsynced' ? 'not.' : '') + 'be.disabled');
+    };
+
+    const assertFieldCollapseState = (
+        index: number,
+        state: 'iscollapsed' | 'isnotcollapsed',
+    ) => {
+        assertDataCy(fieldElements(index).panel(), state);
     };
 
     const assertConfigInDB = (
@@ -183,86 +180,145 @@ describe('The Editor Page', () => {
         });
     };
 
-    it('copy and paste', function () {
-        const {INITIAL_SURVEY, COPY_PASTE_SURVEY} = this.configsJSON.EDITOR;
+    it('removing a field', function () {
+        const {INITIAL_SURVEY, INITIAL_NEXT_IDENTIFIER} = this.configsJSON.EDITOR;
         const {USERNAME, PASSWORD} = this.accountJSON;
 
-        const copyPasteSequence = () => {
-            fieldButtons(0).copy().click();
-            fieldButtons(3).pasteBefore().click();
-            fieldButtons(2).copy().click();
-            fieldButtons(0).pasteBefore().click();
-            fieldButtons(2).copy().click();
-            fieldButtons(3).pasteBefore().click();
-        };
-
-        // undo works
-        copyPasteSequence();
-        range(6).map((i) => fieldButtons(i).collapse().click());
-        assertSurveyState(COPY_PASTE_SURVEY);
+        // remove field 1 + undo
+        fieldElements(1).buttons.remove().click();
+        get([`editor-field-panel`], {count: 4});
         headerElements.undo().click();
-        assertSurveyState(INITIAL_SURVEY);
-        cy.reload();
-        range(3).map((i) => fieldButtons(i).collapse().click());
-        assertSurveyState(INITIAL_SURVEY);
-        range(3).map((i) => fieldButtons(i).collapse().click());
+        assertHeaderState('synced');
+        get([`editor-field-panel`], {count: 5});
+        assertConfigInDB(USERNAME, PASSWORD, {
+            ...INITIAL_SURVEY,
+            next_identifier: INITIAL_NEXT_IDENTIFIER,
+        });
 
-        // save works
-        copyPasteSequence();
-        range(6).map((i) => fieldButtons(i).collapse().click());
-        assertSurveyState(COPY_PASTE_SURVEY);
+        // remove field 2 + save
+        cy.intercept({
+            method: 'PUT',
+            url: `users/${USERNAME}/surveys/${INITIAL_SURVEY.survey_name}`,
+            hostname: 'api.dev.fastsurvey.de',
+        }).as('PUTupdate1');
+
+        fieldElements(2).buttons.remove().click();
+        get([`editor-field-panel`], {count: 4});
         headerElements.save().click();
-        assertSurveyState(COPY_PASTE_SURVEY);
-        cy.reload();
-        range(6).map((i) => fieldButtons(i).collapse().click());
-        assertSurveyState(COPY_PASTE_SURVEY);
+        assertHeaderState('synced');
+        get([`editor-field-panel`], {count: 4});
+        headerElements.end().should('not.be.disabled');
 
-        // deepCompare the config-json in database
-        cy.request({
-            method: 'POST',
-            url: 'https://api.dev.fastsurvey.de/authentication',
-            body: {
-                identifier: USERNAME,
-                password: PASSWORD,
-            },
-        }).then((authResponse) => {
-            expect(authResponse.status).to.equal(200);
-            cy.request({
-                method: 'GET',
-                url: `https://api.dev.fastsurvey.de/users/${USERNAME}/surveys`,
-                headers: {
-                    Authorization: `Bearer ${authResponse.body['access_token']}`,
-                    'Content-Type': 'application/json',
-                },
-            }).then((getResponse) => {
-                expect(getResponse.status).to.equal(200);
-                const duplicateSurveyOnServer = first(
-                    getResponse.body.filter(
-                        (c: any) => c['survey_name'] === COPY_PASTE_SURVEY.survey_name,
-                    ),
-                );
-                expect(duplicateSurveyOnServer).to.deep.equal(COPY_PASTE_SURVEY);
-            });
+        cy.wait(['@PUTupdate1']);
+
+        assertConfigInDB(USERNAME, PASSWORD, {
+            ...INITIAL_SURVEY,
+            next_identifier: INITIAL_NEXT_IDENTIFIER,
+            fields: [
+                INITIAL_SURVEY.fields[0],
+                INITIAL_SURVEY.fields[1],
+                INITIAL_SURVEY.fields[3],
+                INITIAL_SURVEY.fields[4],
+            ],
+        });
+
+        // remove field 0 + save
+        cy.intercept({
+            method: 'PUT',
+            url: `users/${USERNAME}/surveys/${INITIAL_SURVEY.survey_name}`,
+            hostname: 'api.dev.fastsurvey.de',
+        }).as('PUTupdate2');
+
+        fieldElements(0).buttons.remove().click();
+        get([`editor-field-panel`], {count: 3});
+        headerElements.save().click();
+        assertHeaderState('synced');
+        get([`editor-field-panel`], {count: 3});
+
+        cy.wait(['@PUTupdate2']);
+        assertConfigInDB(USERNAME, PASSWORD, {
+            ...INITIAL_SURVEY,
+            next_identifier: INITIAL_NEXT_IDENTIFIER,
+            fields: [
+                INITIAL_SURVEY.fields[1],
+                INITIAL_SURVEY.fields[3],
+                INITIAL_SURVEY.fields[4],
+            ],
+        });
+
+        // remove field 2 + save
+        cy.intercept({
+            method: 'PUT',
+            url: `users/${USERNAME}/surveys/${INITIAL_SURVEY.survey_name}`,
+            hostname: 'api.dev.fastsurvey.de',
+        }).as('PUTupdate3');
+
+        fieldElements(2).buttons.remove().click();
+        get([`editor-field-panel`], {count: 2});
+        headerElements.save().click();
+        assertHeaderState('synced');
+        get([`editor-field-panel`], {count: 2});
+
+        cy.wait(['@PUTupdate3']);
+        assertConfigInDB(USERNAME, PASSWORD, {
+            ...INITIAL_SURVEY,
+            next_identifier: INITIAL_NEXT_IDENTIFIER,
+            fields: [INITIAL_SURVEY.fields[1], INITIAL_SURVEY.fields[3]],
+        });
+
+        // remove field 1 + save
+        cy.intercept({
+            method: 'PUT',
+            url: `users/${USERNAME}/surveys/${INITIAL_SURVEY.survey_name}`,
+            hostname: 'api.dev.fastsurvey.de',
+        }).as('PUTupdate4');
+
+        fieldElements(1).buttons.remove().click();
+        get([`editor-field-panel`], {count: 1});
+        headerElements.save().click();
+        assertHeaderState('synced');
+        get([`editor-field-panel`], {count: 1});
+
+        cy.wait(['@PUTupdate4']);
+        assertConfigInDB(USERNAME, PASSWORD, {
+            ...INITIAL_SURVEY,
+            next_identifier: INITIAL_NEXT_IDENTIFIER,
+            fields: [INITIAL_SURVEY.fields[1]],
+        });
+
+        // remove field 0 + save
+        cy.intercept({
+            method: 'PUT',
+            url: `users/${USERNAME}/surveys/${INITIAL_SURVEY.survey_name}`,
+            hostname: 'api.dev.fastsurvey.de',
+        }).as('PUTupdate5');
+
+        fieldElements(0).buttons.remove().click();
+        get([`editor-field-panel`], {count: 0});
+        headerElements.save().click();
+        assertHeaderState('synced');
+        get([`editor-field-panel`], {count: 0});
+
+        cy.wait(['@PUTupdate5']);
+        assertConfigInDB(USERNAME, PASSWORD, {
+            ...INITIAL_SURVEY,
+            next_identifier: INITIAL_NEXT_IDENTIFIER,
+            fields: [],
         });
     });
 
     it('header look, back button, settings look, tab navigation', function () {
         headerElements.title();
         headerElements.link();
-        headerElements.reopen();
+        headerElements.end();
 
         settingsElements.tabAbout();
         settingsElements.inputTitle();
         settingsElements.inputIdentifier();
-        settingsElements.inputDescription();
 
         settingsElements.tabVisibility().click();
-        settingsElements.toggleDraftYes();
-        settingsElements.toggleDraftNo();
         settingsElements.startDate();
-        settingsElements.startTime();
         settingsElements.endDate();
-        settingsElements.endTime();
 
         headerElements.back().click();
         cy.url().should('contains', '/surveys');
@@ -270,44 +326,19 @@ describe('The Editor Page', () => {
 
     it('start/end buttons', function () {
         cy.log('assert initial state');
-        assertPillState('finished');
+        assertPillState('running');
 
         cy.log('reopen survey');
-        headerElements.reopen().click();
-        headerElements.end();
-        assertPillState('running');
-        cy.reload();
-        assertPillState('running');
-
-        cy.log('close survey again');
         headerElements.end().click();
         headerElements.reopen();
         assertPillState('finished');
-
-        cy.log('assert initial state');
-        settingsElements.tabVisibility().click();
-        settingsElements
-            .toggleDraftYes()
-            .should('have.attr', 'data-cy')
-            .and('contain', 'isactive');
-
-        cy.log("switch to draft=true but don't save");
-        settingsElements.toggleDraftNo().click();
-        assertPillState('draft');
-        headerElements.save();
-        headerElements.undo().click();
-        assertPillState('finished');
         cy.reload();
-        settingsElements.tabVisibility().click();
         assertPillState('finished');
 
-        cy.log('switch to draft=true and save');
-        settingsElements.toggleDraftNo().click();
-        headerElements.save().click();
-        assertPillState('draft');
-        cy.reload();
-        settingsElements.tabVisibility().click();
-        assertPillState('draft');
+        cy.log('close survey again');
+        headerElements.reopen().click();
+        headerElements.end();
+        assertPillState('running');
     });
 
     it('changing a survey name', function () {
@@ -343,9 +374,6 @@ describe('The Editor Page', () => {
     it('fields from fixture are present, undo functionality', function () {
         const {INITIAL_SURVEY, MODIFIED_SURVEY} = this.configsJSON.EDITOR;
 
-        [0, 1, 2].map((i) => fieldButtons(i).collapse().click());
-        assertSurveyState(INITIAL_SURVEY);
-
         settingsElements
             .inputTitle()
             .clear()
@@ -353,7 +381,10 @@ describe('The Editor Page', () => {
             .should('have.value', MODIFIED_SURVEY.title);
 
         cy.reload();
-        [0, 1, 2].map((i) => fieldButtons(i).collapse().click());
+        range(4).forEach((index) => {
+            fieldElements(index).buttons.collapse().click();
+            assertFieldCollapseState(index, 'isnotcollapsed');
+        });
         assertSurveyState(INITIAL_SURVEY);
 
         settingsElements
@@ -361,28 +392,31 @@ describe('The Editor Page', () => {
             .clear()
             .type(MODIFIED_SURVEY.survey_name)
             .should('have.value', MODIFIED_SURVEY.survey_name);
-        settingsElements
-            .inputDescription()
-            .clear()
-            .type(MODIFIED_SURVEY.description)
-            .should('have.value', MODIFIED_SURVEY.description);
 
         headerElements.undo().click();
         assertSurveyState(INITIAL_SURVEY);
 
         cy.reload();
-        [0, 1, 2].map((i) => fieldButtons(i).collapse().click());
+        range(4).forEach((index) => {
+            fieldElements(index).buttons.collapse().click();
+            assertFieldCollapseState(index, 'isnotcollapsed');
+        });
 
         // assert the correct order
-        expect(INITIAL_SURVEY.fields[0].type).to.equal('text');
-        expect(INITIAL_SURVEY.fields[1].type).to.equal('email');
-        expect(INITIAL_SURVEY.fields[2].type).to.equal('selection');
+        expect(INITIAL_SURVEY.fields[0].type).to.equal('markdown');
+        expect(INITIAL_SURVEY.fields[1].type).to.equal('text');
+        expect(INITIAL_SURVEY.fields[2].type).to.equal('email');
+        expect(INITIAL_SURVEY.fields[3].type).to.equal('selection');
 
         MODIFIED_SURVEY.fields.forEach(
-            (newFieldConfig: types.SurveyField, i: number) => {
-                fieldInputs(i).title().clear().type(newFieldConfig.title);
-                fieldInputs(i).description().clear().type(newFieldConfig.description);
-                assertFieldState(newFieldConfig, i);
+            (newFieldConfig: types.SurveyField, index: number) => {
+                if (newFieldConfig.type !== 'break') {
+                    fieldElements(index)
+                        .inputs.description()
+                        .clear()
+                        .type(newFieldConfig.description);
+                    assertFieldState(newFieldConfig, index);
+                }
             },
         );
 
@@ -390,12 +424,16 @@ describe('The Editor Page', () => {
         assertSurveyState(INITIAL_SURVEY);
 
         cy.reload();
-        [0, 1, 2].map((i) => fieldButtons(i).collapse().click());
+        range(4).forEach((index) => {
+            fieldElements(index).buttons.collapse().click();
+            assertFieldCollapseState(index, 'isnotcollapsed');
+        });
         assertSurveyState(INITIAL_SURVEY);
 
-        // Whether a change in fields is made to the title, the description or
-        // any other parameter, is transparent to the editor -> therefore the
-        // other parameters can be tested with component testing on single fields
+        // Whether a change in fields is made to the description or
+        // any other parameter, is transparent to the editor ->
+        // therefore the other parameters can be tested via component
+        // testing on single fields
     });
 
     it('page switch not possible with unsaved changes', function () {
@@ -421,48 +459,57 @@ describe('The Editor Page', () => {
 
     it('save not possible with invalid fields', () => {
         const assertInvalidFieldState = () => {
-            headerElements.reopen().should('be.disabled');
+            assertHeaderState('unsynced');
             headerElements.save().click();
             warningMessage().contains('Invalid fields');
             headerElements.undo().click();
-            headerElements.reopen().should('not.be.disabled');
+            assertHeaderState('synced');
         };
-        settingsElements.inputTitle().clear();
+
+        settingsElements.inputTitle().clear().should('be.empty');
         assertInvalidFieldState();
 
-        fieldButtons(0).collapse().click();
-        fieldInputs(0).title().clear();
-        assertInvalidFieldState();
+        cy.reload();
 
-        fieldButtons(2).collapse().click();
-        fieldInputs(2).title().clear();
+        settingsElements.inputTitle().clear().should('be.empty');
+
+        fieldElements(0).buttons.collapse().click();
+        fieldElements(2).buttons.collapse().click();
+        assertFieldCollapseState(0, 'isnotcollapsed');
+        assertFieldCollapseState(2, 'isnotcollapsed');
+
+        fieldElements(0).inputs.description().clear();
+        fieldElements(2).inputs.description().clear();
+
         assertInvalidFieldState();
     });
 
     it('add field popup', function () {
         addFieldPopup.panel().should('not.be.visible');
-        fieldButtons(0).addBefore().click();
+        fieldElements(0).buttons.addBefore().click();
         addFieldPopup.panel().should('be.visible');
         addFieldPopup.cancelAdd().click();
         addFieldPopup.panel().should('not.be.visible');
 
-        fieldButtons(2).addBefore().click();
+        fieldElements(2).buttons.addBefore().click();
         addFieldPopup.panel().should('be.visible');
         addFieldPopup.activeSelect().should('have.length', 0);
-        ['email', 'text', 'selection'].forEach((fieldType: any) => {
-            addFieldPopup
-                .selectField(fieldType)
-                .click()
-                .should('have.attr', 'data-cy')
-                .and('contain', 'isactive');
-            addFieldPopup.submitAdd().should('not.be.disabled');
-            addFieldPopup
-                .selectField(fieldType)
-                .click()
-                .should('have.attr', 'data-cy')
-                .and('contain', 'isinactive');
-            addFieldPopup.submitAdd().should('be.disabled');
-        });
+        ['email', 'text', 'selection', 'break', 'markdown'].forEach(
+            (fieldType: any) => {
+                addFieldPopup
+                    .selectField(fieldType)
+                    .click()
+                    .should('have.attr', 'data-cy')
+                    .and('contain', 'isactive');
+                addFieldPopup.submitAdd().should('not.be.disabled');
+                addFieldPopup
+                    .selectField(fieldType)
+                    .click()
+                    .should('have.attr', 'data-cy')
+                    .and('contain', 'isinactive');
+                addFieldPopup.submitAdd().should('be.disabled');
+            },
+        );
         addFieldPopup.cancelAdd().click();
         addFieldPopup.panel().should('not.be.visible');
     });
@@ -473,41 +520,46 @@ describe('The Editor Page', () => {
         const {USERNAME, PASSWORD} = this.accountJSON;
 
         const assertLocalField = (index: number) => {
-            fieldInputs(index).description().should('be.empty');
-            fieldInputs(index).minChars().should('have.value', '0');
-            fieldInputs(index).maxChars().should('have.value', '2000');
+            fieldElements(index).inputs.minChars().should('have.value', '0');
+            fieldElements(index).inputs.maxChars().should('have.value', '2000');
         };
 
         // add text field at index 0
-        fieldButtons(0).addBefore().click();
+        fieldElements(0).buttons.addBefore().click();
         addFieldPopup.selectField('text').click();
         addFieldPopup.submitAdd().click();
-        fieldButtons(0).collapse().click();
 
         // assert intial state after adding
-        fieldInputs(0).title().should('be.empty');
+        assertFieldCollapseState(0, 'isnotcollapsed');
+        assertDataCy(cy.focused(), 'input-description');
+        cy.focused()
+            .parents('[data-cy*="editor-field-panel-0 "]')
+            .should('have.length', 1);
+        fieldElements(0).inputs.description().should('be.empty');
         assertLocalField(0);
 
         // undo and assert state after save
         headerElements.undo().click();
-        assertSyncedHeaderState();
-        get([`editor-field-panel`], {count: 3});
+        assertHeaderState('synced');
+        get([`editor-field-panel`], {count: 5});
         assertConfigInDB(USERNAME, PASSWORD, {
             ...INITIAL_SURVEY,
             next_identifier: INITIAL_NEXT_IDENTIFIER,
         });
 
         // edit field to match fixture
-        fieldButtons(1).addBefore().click();
+        fieldElements(1).buttons.addBefore().click();
         addFieldPopup.selectField('text').click();
         addFieldPopup.submitAdd().click();
-        fieldButtons(1).collapse().click();
-        fieldInputs(1).title().type(ADDED_FIELDS.TEXT.title);
+        assertFieldCollapseState(1, 'isnotcollapsed');
+        fieldElements(1).inputs.description().type(ADDED_FIELDS.TEXT.description);
 
         // save and assert state after save
         headerElements.save().click();
-        assertSyncedHeaderState();
-        fieldInputs(1).title().should('have.value', ADDED_FIELDS.TEXT.title);
+        assertHeaderState('synced');
+        fieldElements(1)
+            .inputs.description()
+            .should('have.value', ADDED_FIELDS.TEXT.description);
         assertLocalField(1);
         assertConfigInDB(USERNAME, PASSWORD, {
             ...INITIAL_SURVEY,
@@ -522,33 +574,38 @@ describe('The Editor Page', () => {
         const {USERNAME, PASSWORD} = this.accountJSON;
 
         const assertLocalField = () => {
-            fieldInputs(2).description().should('be.empty');
-            fieldInputs(2).regex().should('have.value', '.*');
-            fieldInputs(2).hint().should('have.value', 'Any email address');
-            fieldInputs(2)
-                .toggleVerify()
+            fieldElements(2).inputs.regex().should('have.value', '.*');
+            fieldElements(2).inputs.hint().should('have.value', 'Any email address');
+            fieldElements(2)
+                .inputs.toggleVerify()
                 .find('[data-cy*="no"]')
                 .should('have.attr', 'data-cy')
                 .and('contain', 'isactive');
         };
 
-        // add text field at index 2
-        fieldButtons(2).addBefore().click();
+        // add email field at index 2
+        fieldElements(2).buttons.addBefore().click();
         addFieldPopup.selectField('email').click();
         addFieldPopup.submitAdd().click();
-        fieldButtons(2).collapse().click();
 
         // assert intial state after adding
-        fieldInputs(2).title().should('be.empty');
+        assertFieldCollapseState(2, 'isnotcollapsed');
+        assertDataCy(cy.focused(), 'input-description');
+        cy.focused()
+            .parents('[data-cy*="editor-field-panel-2 "]')
+            .should('have.length', 1);
+        fieldElements(2).inputs.description().should('be.empty');
         assertLocalField();
 
         // edit field to match fixture
-        fieldInputs(2).title().type(ADDED_FIELDS.EMAIL.title);
+        fieldElements(2).inputs.description().type(ADDED_FIELDS.EMAIL.description);
 
         // save and assert state after save
         headerElements.save().click();
-        assertSyncedHeaderState();
-        fieldInputs(2).title().should('have.value', ADDED_FIELDS.EMAIL.title);
+        assertHeaderState('synced');
+        fieldElements(2)
+            .inputs.description()
+            .should('have.value', ADDED_FIELDS.EMAIL.description);
         assertLocalField();
         assertConfigInDB(USERNAME, PASSWORD, {
             ...INITIAL_SURVEY,
@@ -563,36 +620,44 @@ describe('The Editor Page', () => {
         const {USERNAME, PASSWORD} = this.accountJSON;
 
         // add selection field at index 3
-        fieldButtons(3).addBefore().click();
+        fieldElements(3).buttons.addBefore().click();
         addFieldPopup.selectField('selection').click();
         addFieldPopup.submitAdd().click();
-        fieldButtons(3).collapse().click();
-        fieldInputs(3).title().should('be.empty');
-        fieldInputs(3).description().should('be.empty');
-        fieldInputs(3).anyOptionInput().should('have.length', 0);
-        fieldInputs(3).minSelect().should('have.value', '0');
-        fieldInputs(3).maxSelect().should('have.value', '0');
+
+        // assert intial state after adding
+        assertFieldCollapseState(3, 'isnotcollapsed');
+        assertDataCy(cy.focused(), 'input-description');
+        cy.focused()
+            .parents('[data-cy*="editor-field-panel-3 "]')
+            .should('have.length', 1);
+        fieldElements(3).inputs.description().should('be.empty');
+        fieldElements(3).inputs.description().should('be.empty');
+        fieldElements(3).inputs.anyOptionInput().should('have.length', 0);
+        fieldElements(3).inputs.minSelect().should('have.value', '0');
+        fieldElements(3).inputs.maxSelect().should('have.value', '0');
 
         // edit field to match fixture
-        fieldInputs(3).title().type(ADDED_FIELDS.SELECTION.title);
+        fieldElements(3).inputs.description().type(ADDED_FIELDS.SELECTION.description);
         ADDED_FIELDS.SELECTION.options.forEach((o: string, i: number) => {
-            fieldInputs(3).addOption().click();
-            fieldInputs(3).optionInput(i).type(o);
+            fieldElements(3).inputs.addOption().click();
+            fieldElements(3).inputs.optionInput(i).type(o);
         });
-        fieldInputs(3).maxSelect().type(ADDED_FIELDS.SELECTION.max_select);
+        fieldElements(3).inputs.maxSelect().type(ADDED_FIELDS.SELECTION.max_select);
 
         // change max-select
         headerElements.save().click();
 
         // save and assert state after save
-        assertSyncedHeaderState();
-        fieldInputs(3).title().should('have.value', ADDED_FIELDS.SELECTION.title);
-        fieldInputs(3).anyOptionInput().should('have.length', 2);
+        assertHeaderState('synced');
+        fieldElements(3)
+            .inputs.description()
+            .should('have.value', ADDED_FIELDS.SELECTION.description);
+        fieldElements(3).inputs.anyOptionInput().should('have.length', 2);
         ADDED_FIELDS.SELECTION.options.forEach((o: string, i: number) => {
-            fieldInputs(3).optionInput(i).should('have.value', o);
+            fieldElements(3).inputs.optionInput(i).should('have.value', o);
         });
-        fieldInputs(3)
-            .maxSelect()
+        fieldElements(3)
+            .inputs.maxSelect()
             .should('have.value', ADDED_FIELDS.SELECTION.max_select);
         assertConfigInDB(USERNAME, PASSWORD, {
             ...INITIAL_SURVEY,
@@ -601,88 +666,160 @@ describe('The Editor Page', () => {
         });
     });
 
-    it('removing a field', function () {
-        const {INITIAL_SURVEY, INITIAL_NEXT_IDENTIFIER} = this.configsJSON.EDITOR;
+    it('adding a markdown field', function () {
+        const {INITIAL_SURVEY, INITIAL_NEXT_IDENTIFIER, ADDED_FIELDS} =
+            this.configsJSON.EDITOR;
         const {USERNAME, PASSWORD} = this.accountJSON;
 
-        // TODO: Wait for Felix to fix bug with max_identifier
+        // add email field at index 2
+        fieldElements(4).buttons.addBefore().click();
+        addFieldPopup.selectField('markdown').click();
+        addFieldPopup.submitAdd().click();
 
-        // remove field 1 + undo
-        fieldButtons(1).remove().click();
-        get([`editor-field-panel`], {count: 2});
-        headerElements.undo().click();
-        get([`editor-field-panel`], {count: 3});
+        // assert intial state after adding
+        assertFieldCollapseState(4, 'isnotcollapsed');
+        assertDataCy(cy.focused(), 'input-description');
+        cy.focused()
+            .parents('[data-cy*="editor-field-panel-4 "]')
+            .should('have.length', 1);
+        fieldElements(4).inputs.description().should('be.empty');
+
+        // edit field to match fixture
+        fieldElements(4).inputs.description().type(ADDED_FIELDS.MARKDOWN.description);
+
+        // save and assert state after save
+        headerElements.save().click();
+        assertHeaderState('synced');
+        fieldElements(4)
+            .inputs.description()
+            .should('have.value', ADDED_FIELDS.MARKDOWN.description);
         assertConfigInDB(USERNAME, PASSWORD, {
             ...INITIAL_SURVEY,
-            next_identifier: INITIAL_NEXT_IDENTIFIER,
+            next_identifier: INITIAL_NEXT_IDENTIFIER + 1,
+            fields: insertInArray(INITIAL_SURVEY.fields, 4, ADDED_FIELDS.MARKDOWN),
         });
-
-        // remove field 2 + save
-        cy.intercept({
-            method: 'PUT',
-            url: `users/${USERNAME}/surveys/${INITIAL_SURVEY.survey_name}`,
-            hostname: 'api.dev.fastsurvey.de',
-        }).as('PUTupdate1');
-
-        fieldButtons(2).remove().click();
-        get([`editor-field-panel`], {count: 2});
-        headerElements.save().click();
-        get([`editor-field-panel`], {count: 2});
-        headerElements.reopen().should('not.be.disabled');
-
-        cy.wait(['@PUTupdate1']);
-        console.log({INITIAL_SURVEY});
-
-        assertConfigInDB(USERNAME, PASSWORD, {
-            ...INITIAL_SURVEY,
-            next_identifier: INITIAL_NEXT_IDENTIFIER,
-            fields: pullAllBy(
-                JSON.parse(JSON.stringify(INITIAL_SURVEY.fields)),
-                [{identifier: INITIAL_SURVEY.fields[2].identifier}],
-                'identifier',
-            ),
-        });
-
-        // remove field 0 + save
-        cy.intercept({
-            method: 'PUT',
-            url: `users/${USERNAME}/surveys/${INITIAL_SURVEY.survey_name}`,
-            hostname: 'api.dev.fastsurvey.de',
-        }).as('PUTupdate2');
-
-        fieldButtons(0).remove().click();
-        get([`editor-field-panel`], {count: 1});
-        headerElements.save().click();
-        get([`editor-field-panel`], {count: 1});
-
-        cy.wait(['@PUTupdate2']);
-
-        assertConfigInDB(USERNAME, PASSWORD, {
-            ...INITIAL_SURVEY,
-            next_identifier: INITIAL_NEXT_IDENTIFIER,
-            fields: pullAllBy(
-                JSON.parse(JSON.stringify(INITIAL_SURVEY.fields)),
-                [
-                    {identifier: INITIAL_SURVEY.fields[2].identifier},
-                    {identifier: INITIAL_SURVEY.fields[0].identifier},
-                ],
-                'identifier',
-            ),
-        });
-
-        // remove last field + save (unsuccessful)
-        fieldButtons(0).remove().click();
-        get([`editor-field-panel`], {count: 0});
-        headerElements.save().click();
-        get([`editor-field-panel`], {count: 0});
-        warningMessage().contains('at least one field');
-        headerElements.undo().click();
-        get([`editor-field-panel`], {count: 1});
-        assertSyncedHeaderState();
     });
 
-    // Test with component test of fields:
-    // TODO: looks as expected
-    // TODO: collapsing fields
-    // TODO: all possible error messages
+    it('adding a break field', function () {
+        const {INITIAL_SURVEY, INITIAL_NEXT_IDENTIFIER, ADDED_FIELDS} =
+            this.configsJSON.EDITOR;
+        const {USERNAME, PASSWORD} = this.accountJSON;
+
+        // add email field at index 2
+        fieldElements(3).buttons.addBefore().click();
+        addFieldPopup.selectField('break').click();
+        addFieldPopup.submitAdd().click();
+
+        // save and assert state after save
+        headerElements.save().click();
+        assertHeaderState('synced');
+        assertConfigInDB(USERNAME, PASSWORD, {
+            ...INITIAL_SURVEY,
+            next_identifier: INITIAL_NEXT_IDENTIFIER + 1,
+            fields: insertInArray(INITIAL_SURVEY.fields, 3, ADDED_FIELDS.BREAK),
+        });
+    });
+
+    // TODO: Add test for newly adding a survey and adding multiple fields before saving the first time -> max_identifier, etc. working correctly
+
+    it('copy and paste', function () {
+        const {INITIAL_SURVEY, COPY_PASTE_SURVEY} = this.configsJSON.EDITOR;
+        const {USERNAME, PASSWORD} = this.accountJSON;
+
+        /*
+        break field not included in this config
+
+        INITIAL_SURVEY: 0 1 2 3 4
+        COPY_PASTE_SURVEY:
+        0->8
+        0
+        1
+        2->7
+        1->6
+        2
+        3
+        4
+        3->5
+        0->8->9
+        1->6->10
+        2->7->11
+        3->5->12
+        */
+
+        const copyPasteSequence = () => {
+            const copyAndPaste = (fromIndex: number, toIndex: number) => {
+                fieldElements(fromIndex).buttons.copy().click();
+                fieldElements(toIndex).buttons.pasteBefore().click();
+            };
+            range(4).map((index) => {
+                fieldElements(index).buttons.collapse().click();
+            });
+            copyAndPaste(3, 5); // 3->5
+            copyAndPaste(1, 2); // 1->6
+            copyAndPaste(3, 2); // 2->7
+            copyAndPaste(0, 0); // 0->8
+            copyAndPaste(0, 9); // 0->8->9
+            copyAndPaste(4, 10); // 1->6->10
+            copyAndPaste(3, 11); // 2->7->11
+            copyAndPaste(8, 12); // 3->5->12
+            range(13).map((index) => assertFieldCollapseState(index, 'isnotcollapsed'));
+        };
+
+        // undo works
+        copyPasteSequence();
+
+        assertSurveyState(COPY_PASTE_SURVEY);
+        headerElements.undo().click();
+        assertSurveyState(INITIAL_SURVEY);
+        cy.reload();
+        range(4).forEach((index) => {
+            fieldElements(index).buttons.collapse().click();
+            assertFieldCollapseState(index, 'isnotcollapsed');
+        });
+        assertSurveyState(INITIAL_SURVEY);
+        range(4).forEach((index) => {
+            fieldElements(index).buttons.collapse().click();
+            assertFieldCollapseState(index, 'iscollapsed');
+        });
+
+        // save works
+        copyPasteSequence();
+        assertSurveyState(COPY_PASTE_SURVEY);
+        headerElements.save().click();
+        assertSurveyState(COPY_PASTE_SURVEY);
+        cy.reload();
+        [0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12].forEach((index) => {
+            fieldElements(index).buttons.collapse().click();
+            assertFieldCollapseState(index, 'isnotcollapsed');
+        });
+        assertSurveyState(COPY_PASTE_SURVEY);
+
+        // deepCompare the config-json in database
+        cy.request({
+            method: 'POST',
+            url: 'https://api.dev.fastsurvey.de/authentication',
+            body: {
+                identifier: USERNAME,
+                password: PASSWORD,
+            },
+        }).then((authResponse) => {
+            expect(authResponse.status).to.equal(200);
+            cy.request({
+                method: 'GET',
+                url: `https://api.dev.fastsurvey.de/users/${USERNAME}/surveys`,
+                headers: {
+                    Authorization: `Bearer ${authResponse.body['access_token']}`,
+                    'Content-Type': 'application/json',
+                },
+            }).then((getResponse) => {
+                expect(getResponse.status).to.equal(200);
+                const duplicateSurveyOnServer = first(
+                    getResponse.body.filter(
+                        (c: any) => c['survey_name'] === COPY_PASTE_SURVEY.survey_name,
+                    ),
+                );
+                expect(duplicateSurveyOnServer).to.deep.equal(COPY_PASTE_SURVEY);
+            });
+        });
+    });
 });

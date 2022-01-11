@@ -1,6 +1,4 @@
-import * as utilities from '../../support/utilities';
-
-const {getCySelector, logout} = utilities;
+import {getCySelector, logout} from '../../support/utilities';
 
 const get = (selectors: string[]) =>
     getCySelector(['login-panel', ...selectors], {count: 1});
@@ -37,7 +35,7 @@ describe('The Login Page', function () {
 
         cy.visit('/login');
         elements.linkToForgot().click();
-        cy.url().should('include', '/forgot-password');
+        cy.url().should('include', '/request-password');
     });
 
     it('has expected inputs/labels and working password-visibility toggle', function () {

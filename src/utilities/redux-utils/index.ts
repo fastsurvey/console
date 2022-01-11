@@ -1,10 +1,8 @@
-import dispatchers from './dispatchers';
-import updateState from './update-state';
-import initialState from './initial-state';
+import {dispatchers} from './dispatchers';
+import {updateState} from './update-state';
 
 const reduxUtils = {
     dispatchers,
-    initialState,
     updateState,
 };
 

@@ -9,7 +9,7 @@ function NotFoundPage() {
         <MainWrapper>
             <h1
                 className={
-                    'centering-row font-weight-600 text-lg text-gray-900 dark:text-gray-100 ' +
+                    'flex-row-center font-weight-600 text-lg text-gray-900 dark:text-gray-100 ' +
                     'no-selection mb-3'
                 }
             >

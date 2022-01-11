@@ -1,6 +1,6 @@
 import {types} from '/src/types';
 
-const dispatchers = {
+export const dispatchers = {
     logIn:
         (dispatch: any) =>
         (
@@ -99,5 +99,3 @@ const dispatchers = {
                 surveyName,
             }),
 };
-
-export default dispatchers;

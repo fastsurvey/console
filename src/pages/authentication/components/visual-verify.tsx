@@ -11,7 +11,8 @@ export default function VisualVerifyForm(props: {
     return (
         <div
             className={
-                'w-full max-w-sm p-4 bg-white rounded shadow ' + 'gap-y-4 centering-col'
+                'w-full max-w-md p-4 bg-white rounded shadow-sm ' +
+                'gap-y-4 flex-col-center'
             }
             data-cy='verify-email-panel'
         >
@@ -38,7 +39,7 @@ export default function VisualVerifyForm(props: {
                     {!tokenExists && (
                         <>
                             <p
-                                className='text-left text-gray-800 font-weight-500'
+                                className='text-center text-gray-800 font-weight-500'
                                 data-cy='paragraph-no-token'
                             >
                                 Sorry, we couldn't find any email token in the url.
@@ -48,7 +49,7 @@ export default function VisualVerifyForm(props: {
                                 to='/login'
                                 className={
                                     'px-1.5 py-0.5 -mx-1.5 text-sm ' +
-                                    'rounded ringable text-gray-500 ' +
+                                    'rounded ringable text-gray-400 ' +
                                     'font-weight-600'
                                 }
                                 data-cy='link-to-login'
@@ -60,15 +61,20 @@ export default function VisualVerifyForm(props: {
                 </>
             )}
             {verificationState === 'successful' && (
-                <h1
-                    className={
-                        'w-full text-2xl text-center no-selection ' +
-                        'text-gray-800 font-weight-600'
-                    }
-                    data-cy='title'
-                >
-                    Success!
-                </h1>
+                <>
+                    <h1
+                        className={
+                            'w-full text-2xl text-center no-selection ' +
+                            'text-gray-800 font-weight-600'
+                        }
+                        data-cy='title'
+                    >
+                        Success!
+                    </h1>
+                    <Link to='/login' data-cy='link-to-login'>
+                        <Button text='Go to Login' variant='flat-light-blue' />
+                    </Link>
+                </>
             )}
         </div>
     );

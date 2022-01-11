@@ -27,12 +27,7 @@ module.exports = (on, config) => {
         return startDevServer({
             options,
             viteConfig: {
-                configFile: path.resolve(
-                    __dirname,
-                    '..',
-                    '..',
-                    'vite.config.js',
-                ),
+                configFile: path.resolve(__dirname, '..', '..', 'vite.config.js'),
             },
         });
     });

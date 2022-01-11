@@ -16,7 +16,7 @@ function MessageQueue(props: Props) {
             {props.messages.length >= 2 && (
                 <button
                     className={
-                        'centering-row pl-3 pr-1 m-2 ' +
+                        'flex-row-center pl-3 pr-1 m-2 ' +
                         'font-weight-600 rounded group ' +
                         'text-gray-500 ' +
                         'focus:outline-none ring-[2.5px] ring-transparent focus:ring-blue-200'
@@ -24,7 +24,7 @@ function MessageQueue(props: Props) {
                     onClick={props.closeAllMessages}
                 >
                     <div>close all</div>
-                    <div className='flex-shrink-0 w-10 h-10 p-2 icon-gray'>
+                    <div className='flex-shrink-0 w-10 h-10 p-2 svg-message-queue-close'>
                         {icons.closeCircle}
                     </div>
                 </button>

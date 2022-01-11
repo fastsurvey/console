@@ -10,6 +10,12 @@ export const icons = {
                 return iconAssets.textCursor;
             case 'selection':
                 return iconAssets.checkCircle;
+            case 'break':
+                return iconAssets.pageSplit;
+            case 'markdown':
+                return iconAssets.paragraph;
+            default:
+                throw `Invalid field type: ${fieldType}`;
         }
     },
 };

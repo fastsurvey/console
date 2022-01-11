@@ -14,17 +14,17 @@ export default function ButtonGroup(props: {
     const last = (index: number) => index === props.buttons.length - 1;
 
     return (
-        <div className='flex-shrink-0 bg-gray-200 rounded shadow centering-row whitespace-nowrap gap-x-[2.6px]'>
+        <div className='flex-shrink-0 bg-gray-200 rounded shadow-sm flex-row-center whitespace-nowrap gap-x-[2.6px]'>
             {props.buttons.map((b, index: number) => (
                 <button
                     key={index}
                     className={
-                        'p-0.5 centering-row h-10 md:h-8 ' +
-                        ' no-selection ringable rounded-sm ' +
+                        'p-0.5 flex-row-center h-10 md:h-8 text-sm sm:text-base ' +
+                        'no-selection ringable rounded-sm ' +
                         (first(index) ? 'rounded-l ' : ' ') +
                         (last(index) ? 'rounded-r ' : ' ') +
                         (b.disabled
-                            ? 'bg-gray-100 text-gray-700 cursor-default svg-elevated-button-passive '
+                            ? 'bg-gray-50 text-gray-500 cursor-default svg-elevated-button-passive '
                             : 'bg-white hover:bg-gray-100 text-blue-900 cursor-pointer svg-elevated-button-active ')
                     }
                     onClick={b.onClick && !b.disabled ? b.onClick : () => {}}
@@ -43,7 +43,7 @@ export default function ButtonGroup(props: {
                     {!props.hideIconsOnMobile && (
                         <>
                             <div className='p-1 w-7 h-7'>{b.icon}</div>
-                            <div className={'font-weight-600 pl-1 pr-2 '}>{b.text}</div>
+                            <div className={'font-weight-600 pl-1 pr-2'}>{b.text}</div>
                         </>
                     )}
                 </button>
