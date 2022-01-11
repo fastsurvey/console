@@ -13,7 +13,7 @@ async function deleteSubmissions(
             `/users/${account.username}/surveys/${configName}/submissions`,
             accessToken,
         ).catch((error: any) => {
-            throw error.response.status;
+            throw error.response !== undefined ? error.response : error;
         });
 
         success();

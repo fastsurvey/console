@@ -21,7 +21,7 @@ async function updateAccount(
             }),
             accessToken,
         ).catch((error) => {
-            throw error.response;
+            throw error.response !== undefined ? error.response : error;
         });
 
         success();

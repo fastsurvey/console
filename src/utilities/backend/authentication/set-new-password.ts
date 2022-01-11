@@ -18,7 +18,7 @@ async function setNewPassword(
             await httpPut('/authentication', {
                 verification_token: data.verificationToken,
             }).catch((error) => {
-                throw error;
+                throw error.response !== undefined ? error.response : error;
             })
         ).data;
 

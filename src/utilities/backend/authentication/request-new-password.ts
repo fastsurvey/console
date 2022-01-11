@@ -9,13 +9,13 @@ async function requestNewPassword(
 ) {
     try {
         await httpPost('/authentication', data).catch((error) => {
-            throw error;
+            throw error.response !== undefined ? error.response : error;
         });
         success();
     } catch (response: any) {
-        if (response.status === 401 || response.status === 404) {
+        if (response?.status === 401 || response?.status === 404) {
             error('credentials');
-        } else if (response.status === 403) {
+        } else if (response?.status === 403) {
             error('not-verified');
         } else {
             error('server');

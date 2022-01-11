@@ -9,7 +9,7 @@ async function removeAccount(
 ) {
     try {
         await httpDelete(`/users/${account.username}`, accessToken).catch((error) => {
-            throw error.response;
+            throw error.response !== undefined ? error.response : error;
         });
 
         success();

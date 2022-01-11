@@ -16,7 +16,7 @@ async function loginWithForm(
     try {
         const {username, access_token: accessToken}: any = (
             await httpPost('/authentication', data).catch((error) => {
-                throw error.response;
+                throw error.response !== undefined ? error.response : error;
             })
         ).data;
 

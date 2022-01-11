@@ -52,20 +52,14 @@ export const messages: {[key in types.MessageId]: types.Message} = {
     'warning-register-username-taken': {
         id: 'warning-register-username-taken',
         randomToken: 0,
-        text: 'Username already taken',
-        type: 'error',
+        text: 'Username is already taken',
+        type: 'warning',
     },
     'warning-register-email-taken': {
         id: 'warning-register-email-taken',
         randomToken: 0,
         text: 'Email is already taken',
-        type: 'error',
-    },
-    'error-email-invalid': {
-        id: 'error-email-invalid',
-        randomToken: 0,
-        text: 'Invalid email address',
-        type: 'error',
+        type: 'warning',
     },
     'error-link-invalid': {
         id: 'error-link-invalid',

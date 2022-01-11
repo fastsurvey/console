@@ -167,7 +167,6 @@ export declare namespace types {
         | 'error-access-token'
         | 'error-server'
         | 'error-login-credentials'
-        | 'error-email-invalid'
         | 'error-link-invalid'
         | 'warning-register-email-taken'
         | 'warning-register-username-taken'

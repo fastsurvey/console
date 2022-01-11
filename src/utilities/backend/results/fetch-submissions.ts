@@ -13,7 +13,7 @@ async function fetchSubmissions(
             `/users/${account.username}/surveys/${configName}/submissions`,
             accessToken,
         ).catch((error: any) => {
-            throw error;
+            throw error.response !== undefined ? error.response : error;
         });
 
         success(response.data);

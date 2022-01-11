@@ -16,7 +16,7 @@ async function updateSurvey(
             JSON.stringify(localIdUtils.remove.survey(config)),
             accessToken,
         ).catch((error) => {
-            throw error;
+            throw error.response !== undefined ? error.response : error;
         });
 
         success();

@@ -10,7 +10,7 @@ async function verifyAccount(
     try {
         await httpPost(`/verification`, JSON.stringify(verificationObject)).catch(
             (error) => {
-                throw error;
+                throw error.response !== undefined ? error.response : error;
             },
         );
 

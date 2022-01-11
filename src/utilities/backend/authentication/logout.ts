@@ -11,7 +11,7 @@ async function logout(accessToken: types.AccessToken, success: () => void) {
         .then(success)
         .catch((error) => {
             success();
-            throwServerError({response: error});
+            throwServerError({response: error, accessToken});
         });
 }
 

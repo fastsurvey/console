@@ -13,7 +13,7 @@ async function fetchResults(
             `/users/${account.username}/surveys/${configName}/results`,
             accessToken,
         ).catch((error: any) => {
-            throw error;
+            throw error.response !== undefined ? error.response : error;
         });
 
         success(response.data);

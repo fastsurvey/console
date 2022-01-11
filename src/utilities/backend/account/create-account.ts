@@ -11,14 +11,14 @@ async function createAccount(
 ) {
     try {
         await httpPost('/users', account).catch((error) => {
-            throw error.response;
+            throw error.response !== undefined ? error.response : error;
         });
 
         success();
     } catch (response: any) {
-        if (response.data.detail === 'username already taken') {
+        if (response?.data?.detail === 'username already taken') {
             error('username');
-        } else if (response.data.detail === 'email already taken') {
+        } else if (response?.data?.detail === 'email already taken') {
             error('email');
         } else {
             error('server');
