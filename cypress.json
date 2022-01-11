@@ -6,7 +6,7 @@
     "component": {
         "testFiles": "**/*.ct.spec.{js,ts,jsx,tsx}",
         "componentFolder": "src",
-        "viewportHeight": 1350,
+        "viewportHeight": 800,
         "viewportWidth": 900
     }
 }

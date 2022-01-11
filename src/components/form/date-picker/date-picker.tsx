@@ -62,6 +62,8 @@ function DatePicker(props: {
                             v ? 0 : Math.round(new Date().getTime() / 1000),
                         )
                     }
+                    disabled={props.disabled}
+                    data-cy='start-toggle '
                 />
             )}
             {props.type === 'end' && (
@@ -74,12 +76,14 @@ function DatePicker(props: {
                             v ? null : Math.round(new Date().getTime() / 1000) + 86400,
                         )
                     }
+                    disabled={props.disabled}
+                    data-cy='end-toggle '
                 />
             )}
             {((props.type === 'start' && props.timestamp !== 0) ||
                 (props.type === 'end' && props.timestamp !== null)) && (
                 <VisualDatePicker
-                    disabled={props.disabled === true}
+                    disabled={props.disabled}
                     {...{
                         dateStore,
                         getDaysInMonth,
@@ -87,7 +91,7 @@ function DatePicker(props: {
                         setDateTimestamp,
                         setHourTimestamp,
                     }}
-                    data-cy={props['data-cy']}
+                    data-cy={props['data-cy'] + ' '}
                 />
             )}
         </div>

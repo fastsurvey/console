@@ -1,29 +1,9 @@
-import React, {useState} from 'react';
-import {mount} from '@cypress/react';
-import Datepicker from '../form/date-picker/date-picker';
-import '/src/styles/tailwind.out.css';
+import React from 'react';
+import {mount, unmount} from '@cypress/react';
+import {DatepickerStateWrapper} from './utilities/datepicker-state-wrapper';
+import {getElements, assertDataCy} from './utilities/get-field-elements';
 
-export function DatepickerStateWrapper(props: {
-    initialTimestamp: number | null;
-    disabled: boolean;
-    type: 'start' | 'end';
-}) {
-    const [timestamp, setTimestamp] = useState<number | null>(props.initialTimestamp);
-
-    return (
-        <div className='w-full h-full px-6 py-12 bg-gray-100'>
-            <Datepicker
-                timestamp={timestamp}
-                setTimestamp={setTimestamp}
-                disabled={props.disabled}
-                data-cy='some-value-for-data-cy'
-                type={props.type}
-            />
-        </div>
-    );
-}
-
-it('open and close dropdown', () => {
+it('start: disabled, open and close dropdown', () => {
     mount(
         <DatepickerStateWrapper
             initialTimestamp={1550000000}
@@ -31,29 +11,113 @@ it('open and close dropdown', () => {
             type={'start'}
         />,
     );
+    getElements.startToggle();
+    getElements.noEndToggle();
+    getElements.startToggleYes().should('be.disabled');
+    getElements.startToggleNo().should('be.disabled');
+    getElements.startDatepicker();
+    getElements.datepickerDropdownToggle().should('be.disabled');
+    assertDataCy(getElements.datepickerDropdown(), 'isnotopen');
+    assertDataCy(getElements.startToggleNo(), 'isactive');
+    assertDataCy(getElements.startToggleYes(), 'isinactive');
+    unmount();
+
+    mount(
+        <DatepickerStateWrapper initialTimestamp={0} disabled={false} type={'start'} />,
+    );
+    getElements.startToggle();
+    getElements.noEndToggle();
+    getElements.startToggleYes().should('not.be.disabled');
+    getElements.startToggleNo().should('not.be.disabled');
+    getElements.noStartDatepicker();
+    assertDataCy(getElements.startToggleNo(), 'isinactive');
+    assertDataCy(getElements.startToggleYes(), 'isactive');
+    unmount();
+
+    mount(
+        <DatepickerStateWrapper
+            initialTimestamp={1550000000}
+            disabled={false}
+            type={'start'}
+        />,
+    );
+    getElements.startToggle();
+    getElements.noEndToggle();
+    getElements.startToggleYes().should('not.be.disabled');
+    getElements.startToggleNo().should('not.be.disabled');
+    getElements.startDatepicker();
+    getElements.datepickerDropdownToggle().should('not.be.disabled');
+    assertDataCy(getElements.datepickerDropdown(), 'isnotopen');
+    getElements.datepickerDropdownToggle().click();
+    assertDataCy(getElements.datepickerDropdown(), 'isopen');
+    getElements.datepickerDropdownToggle().click();
+    assertDataCy(getElements.datepickerDropdown(), 'isnotopen');
+    assertDataCy(getElements.startToggleNo(), 'isactive');
+    assertDataCy(getElements.startToggleYes(), 'isinactive');
 });
 
-it('toggle buttons on start datepicker', () => {
+it('end: disabled, open and close dropdown', () => {
     mount(
         <DatepickerStateWrapper
             initialTimestamp={1550000000}
             disabled={true}
-            type={'start'}
+            type='end'
         />,
     );
-});
+    getElements.endToggle();
+    getElements.noStartToggle();
+    getElements.endToggleYes().should('be.disabled');
+    getElements.endToggleNo().should('be.disabled');
+    getElements.endDatepicker();
+    getElements.datepickerDropdownToggle().should('be.disabled');
+    assertDataCy(getElements.datepickerDropdown(), 'isnotopen');
+    assertDataCy(getElements.endToggleNo(), 'isactive');
+    assertDataCy(getElements.endToggleYes(), 'isinactive');
+    unmount();
 
-it('toggle buttons on end datepicker', () => {
+    mount(
+        <DatepickerStateWrapper initialTimestamp={null} disabled={false} type='end' />,
+    );
+    getElements.endToggle();
+    getElements.noStartToggle();
+    getElements.endToggleYes().should('not.be.disabled');
+    getElements.endToggleNo().should('not.be.disabled');
+    getElements.noEndDatepicker();
+    assertDataCy(getElements.endToggleNo(), 'isinactive');
+    assertDataCy(getElements.endToggleYes(), 'isactive');
+    unmount();
+
     mount(
         <DatepickerStateWrapper
             initialTimestamp={1550000000}
-            disabled={true}
-            type={'start'}
+            disabled={false}
+            type='end'
         />,
     );
+    getElements.endToggle();
+    getElements.noStartToggle();
+    getElements.endToggleYes().should('not.be.disabled');
+    getElements.endToggleNo().should('not.be.disabled');
+    getElements.endDatepicker();
+    getElements.datepickerDropdownToggle().should('not.be.disabled');
+    assertDataCy(getElements.datepickerDropdown(), 'isnotopen');
+    getElements.datepickerDropdownToggle().click();
+    assertDataCy(getElements.datepickerDropdown(), 'isopen');
+    getElements.datepickerDropdownToggle().click();
+    assertDataCy(getElements.datepickerDropdown(), 'isnotopen');
+    assertDataCy(getElements.endToggleNo(), 'isactive');
+    assertDataCy(getElements.endToggleYes(), 'isinactive');
 });
 
 it('calendar picker', () => {
+    // test three random dates
+    // forEach:
+    // * test month label
+    // * test day count
+    // * test start day
+    // * test selected day
+    // * test previous/next month
+
     mount(
         <DatepickerStateWrapper
             initialTimestamp={1550000000}
@@ -64,6 +128,8 @@ it('calendar picker', () => {
 });
 
 it('hour picker', () => {
+    // test three random times
+
     mount(
         <DatepickerStateWrapper
             initialTimestamp={1550000000}

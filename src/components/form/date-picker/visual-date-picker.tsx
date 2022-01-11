@@ -77,6 +77,7 @@ function VisualDatePicker(props: {
                 }
                 onClick={() => setOpen(!open)}
                 disabled={disabled}
+                data-cy='dropdown-toggle '
             >
                 <div className='p-1 w-7 h-7 svg-datepicker-calendar'>
                     {icons.calendar}
@@ -98,6 +99,7 @@ function VisualDatePicker(props: {
                 className={
                     'flex flex-col sm:flex-row items-start justify-start gap-x-2'
                 }
+                data-cy={`dropdown ${open ? 'isopen' : 'isnotopen'}`}
             >
                 <div
                     className={
