@@ -45,7 +45,7 @@ function SurveyList(props: Props) {
         function success() {
             props.removeConfig(config.survey_name);
             props.closeModal();
-            props.openMessage('success-survey-removed');
+            props.openMessage('success-survey-list-survey-removed');
         }
 
         function error() {
@@ -65,7 +65,7 @@ function SurveyList(props: Props) {
     const resetSubmissions = (config: types.SurveyConfig) => () => {
         function success() {
             props.closeModal();
-            props.openMessage('success-submissions-removed');
+            props.openMessage('success-survey-list-submissions-removed');
         }
 
         function error() {
@@ -93,7 +93,7 @@ function SurveyList(props: Props) {
             props.addConfig(newConfig);
             props.closeModal();
             history.push(`/editor/${newSurveyName}`);
-            props.openMessage('success-survey-duplicated');
+            props.openMessage('success-survey-list-duplication');
         };
         const error = (code: 400 | 401 | 422 | 500) => {};
 

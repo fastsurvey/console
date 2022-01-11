@@ -35,19 +35,16 @@ function RegisterForm(props: Props) {
         function success() {
             setSubmitting(false);
             setOpenMessages(true);
-            props.openMessage('success-account-created');
+            props.openMessage('success-register-creation');
         }
 
-        function error(reason: 'email' | 'username' | 'format' | 'server') {
+        function error(reason: 'email' | 'username' | 'server') {
             switch (reason) {
                 case 'email':
-                    props.openMessage('error-email-taken');
+                    props.openMessage('warning-register-email-taken');
                     break;
                 case 'username':
-                    props.openMessage('error-username-taken');
-                    break;
-                case 'format':
-                    props.openMessage('error-email-invalid');
+                    props.openMessage('warning-register-username-taken');
                     break;
                 case 'server':
                     props.openMessage('error-server');

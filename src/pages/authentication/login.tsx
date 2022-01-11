@@ -21,17 +21,16 @@ function LoginForm(props: {
         return identifier.length < 3 || password.length < 8;
     }
 
-    function abortLogin(code: 401 | 403 | 404 | 500) {
+    function error(reason: 'credentials' | 'not-verified' | 'server') {
         setSubmitting(false);
-        switch (code) {
-            case 401:
-            case 404:
-                props.openMessage('error-credentials');
+        switch (reason) {
+            case 'credentials':
+                props.openMessage('error-login-credentials');
                 break;
-            case 403:
-                props.openMessage('warning-account-not-verified');
+            case 'not-verified':
+                props.openMessage('warning-login-not-verified');
                 break;
-            default:
+            case 'server':
                 props.openMessage('error-server');
                 break;
         }
@@ -46,7 +45,7 @@ function LoginForm(props: {
                     password,
                 },
                 props.logIn,
-                abortLogin,
+                error,
             );
         }
     }

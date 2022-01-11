@@ -28,7 +28,7 @@ function AccountPage(props: {
 
     function submitPassword() {
         function success() {
-            props.openMessage('success-password-changed');
+            props.openMessage('success-account-password-changed');
             setPassword('');
             setPasswordPending(false);
         }
@@ -49,14 +49,14 @@ function AccountPage(props: {
 
     function submitUsername() {
         function success() {
-            props.openMessage('success-username-changed');
+            props.openMessage('success-account-username-changed');
             props.updateUsername(username);
             props.closeModal();
             setUsernamePending(false);
         }
         function error(code: number) {
             if (code === 400) {
-                props.openMessage('error-username-taken');
+                props.openMessage('warning-register-username-taken');
             } else {
                 props.openMessage('error-server');
             }

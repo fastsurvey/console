@@ -19,7 +19,7 @@ function RequestPasswordForm(props: {openMessage(messageId: types.MessageId): vo
             switch (code) {
                 case 400:
                     setSubmissionState('pending');
-                    props.openMessage('error-credentials');
+                    props.openMessage('error-login-credentials');
                     break;
                 default:
                     setSubmissionState('failed');

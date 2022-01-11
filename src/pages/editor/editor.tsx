@@ -101,9 +101,9 @@ function Editor(props: {
 
         function error(code: 'format' | 'support') {
             if (code === 'support') {
-                props.openMessage('warning-clipboard-support');
+                props.openMessage('warning-editor-clipboard-support');
             } else {
-                props.openMessage('warning-clipboard');
+                props.openMessage('warning-editor-clipboard');
             }
         }
         clipboardUtils.paste(success, error);
@@ -149,7 +149,7 @@ function Editor(props: {
             }
         }
 
-        function error(message: 'error-submissions-exist' | 'error-server') {
+        function error(message: any) {
             console.log({message});
             props.openMessage(message);
         }
@@ -166,10 +166,10 @@ function Editor(props: {
             setSubmittingConfig(false);
         } else {
             if (!fieldsAreValid) {
-                props.openMessage('editor-warning-validators');
+                props.openMessage('warning-editor-validators');
             }
             if (!authModeIsValid) {
-                props.openMessage('editor-warning-authentication');
+                props.openMessage('warning-editor-authentication');
             }
             setSubmittingConfig(false);
         }

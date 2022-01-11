@@ -164,26 +164,26 @@ export declare namespace types {
     };
 
     export type MessageId =
-        | 'warning-unsaved'
-        | 'error-credentials'
-        | 'warning-account-not-verified'
-        | 'error-submissions-exist'
+        | 'error-access-token'
         | 'error-server'
-        | 'success-account-created'
-        | 'error-email-taken'
+        | 'error-login-credentials'
         | 'error-email-invalid'
         | 'error-link-invalid'
-        | 'success-email-verification'
-        | 'success-password-changed'
-        | 'success-username-changed'
-        | 'error-username-taken'
-        | 'warning-clipboard'
-        | 'warning-clipboard-support'
-        | 'editor-warning-validators'
-        | 'editor-warning-authentication'
-        | 'success-survey-duplicated'
-        | 'success-submissions-removed'
-        | 'success-survey-removed';
+        | 'warning-register-email-taken'
+        | 'warning-register-username-taken'
+        | 'warning-login-not-verified'
+        | 'warning-editor-clipboard'
+        | 'warning-editor-clipboard-support'
+        | 'warning-editor-unsaved'
+        | 'warning-editor-validators'
+        | 'warning-editor-authentication'
+        | 'success-register-creation'
+        | 'success-register-verification'
+        | 'success-account-password-changed'
+        | 'success-account-username-changed'
+        | 'success-survey-list-duplication'
+        | 'success-survey-list-submissions-removed'
+        | 'success-survey-list-survey-removed';
 
     export type ValidationResult =
         | {

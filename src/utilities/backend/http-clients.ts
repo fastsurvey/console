@@ -35,3 +35,15 @@ export function httpGet(url: string, accessToken?: types.AccessToken) {
 export function httpDelete(url: string, accessToken: types.AccessToken) {
     return axios.delete(apiUrl + url, headers(accessToken));
 }
+
+class ServerError extends Error {
+    constructor(context: any) {
+        super('Server Error');
+        this.name = 'SERVER_ERROR';
+        this.message = JSON.stringify({context});
+    }
+}
+
+export function throwServerError(context: any) {
+    throw new ServerError(context);
+}

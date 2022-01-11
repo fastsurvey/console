@@ -121,7 +121,7 @@ export function updateState(
         case 'MARK_DIFFERING':
             newState.configIsDiffering = action.differing;
             newState.messages = newState.messages.filter(
-                (m) => m.id !== 'warning-unsaved',
+                (m) => m.id !== 'warning-editor-unsaved',
             );
             break;
 

@@ -54,7 +54,7 @@ function VisualEditorHeader(props: {
                             'w-10 h-10 m-1 p-2 ringable rounded svg-header-back ' +
                             'absolute -left-14 top-50% transform -translate-y-50% '
                         }
-                        onClick={() => props.openMessage('warning-unsaved')}
+                        onClick={() => props.openMessage('warning-editor-unsaved')}
                         data-cy='button-back isinactive'
                     >
                         {icons.chevronLeftCircle}

@@ -22,7 +22,7 @@ function VerifyForm(props: Props) {
 
     function success() {
         setVerificationState('successful');
-        props.openMessage('success-email-verification');
+        props.openMessage('success-register-verification');
     }
 
     function error(code: 400 | 401 | 500 | 422) {
