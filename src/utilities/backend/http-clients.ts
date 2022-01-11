@@ -44,6 +44,6 @@ class ServerError extends Error {
     }
 }
 
-export function throwServerError(context: any) {
+export function throwServerError(context: {response: any; [key: string]: any}) {
     throw new ServerError(context);
 }

@@ -149,9 +149,15 @@ function Editor(props: {
             }
         }
 
-        function error(message: any) {
-            console.log({message});
-            props.openMessage(message);
+        function error(reason: 'authentication' | 'server') {
+            switch (reason) {
+                case 'authentication':
+                    props.openMessage('error-access-token');
+                    break;
+                case 'server':
+                    props.openMessage('error-server');
+                    break;
+            }
         }
 
         if (fieldsAreValid && authModeIsValid) {
