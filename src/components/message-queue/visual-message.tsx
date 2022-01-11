@@ -1,53 +1,57 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
+import {types} from 'types';
 import {icons} from '/src/assets';
-import {types} from '/src/types';
 
-interface Props {
-    message: types.Message;
-    close(): void;
-}
-function VisualMessage(props: Props) {
+export function VisualMessage(props: {message: types.Message; close(): void}) {
     const [animate, setAnimate] = useState(false);
 
     useEffect(() => {
         setAnimate(true);
-        setTimeout(() => setAnimate(false), 450);
+        setTimeout(() => setAnimate(false), 400);
     }, [props.message.randomToken]);
-
-    let colors: string;
-    switch (props.message.type) {
-        case 'error':
-            colors = 'text-red-200';
-            break;
-        case 'warning':
-            colors = 'text-yellow-200';
-            break;
-        case 'success':
-            colors = 'text-green-200';
-            break;
-    }
 
     return (
         <div
             className={
-                'flex-row-center pl-3 pr-1 m-2 bg-gray-900 ' +
-                'font-weight-500 rounded shadow-lg flex-grow max-w-full ' +
-                `${colors} ${animate ? 'animate-pop' : ''}`
+                'flex flex-row items-stretch ' +
+                'border-l-[6px] text-gray-200 m-2 shadow rounded ' +
+                (animate ? 'animate-pop ' : ' ') +
+                'text-lg font-weight-500 bg-gray-900 ' +
+                (props.message.type === 'error' ? 'border-red-300 ' : '') +
+                (props.message.type === 'warning' ? 'border-yellow-300 ' : '') +
+                (props.message.type === 'success' ? 'border-green-300 ' : '')
             }
-            data-cy={`message-panel-${props.message.type} ${props.message.id}`}
         >
-            <div className='py-2.5 text-base leading-6' data-cy='message'>
+            <div
+                className={
+                    'flex items-center ' +
+                    'px-3 py-2 min-h-12 md:min-h-[2.5rem] ' +
+                    'text-sm leading-normal'
+                }
+            >
                 {props.message.text}
             </div>
             <div className='flex-grow' />
             <button
                 className={
-                    'flex-shrink-0 w-7 h-7 p-0.5 m-1.5 cursor-pointer rounded ' +
-                    'focus:outline-none ring-[2.5px] ring-transparent focus:ring-blue-200'
+                    'flex items-center relative ' +
+                    'cursor-pointer rounded-r focus:rounded ' +
+                    'ringable hover:bg-gray-700 focus:bg-gray-700 '
                 }
                 onClick={props.close}
             >
-                {icons.close}
+                <div
+                    className={
+                        'w-12 h-12 p-3 md:w-10 md:h-10 md:p-2 ' +
+                        (props.message.type === 'error' ? 'svg-message-error ' : '') +
+                        (props.message.type === 'warning'
+                            ? 'svg-message-warning '
+                            : '') +
+                        (props.message.type === 'success' ? 'svg-message-success ' : '')
+                    }
+                >
+                    {icons.close}
+                </div>
             </button>
         </div>
     );

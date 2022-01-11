@@ -215,4 +215,16 @@
     .svg-settings-generate-id .secondary {
         @apply fill-gray-600;
     }
+
+    .svg-message-error .secondary {
+        @apply fill-red-300;
+    }
+
+    .svg-message-warning .secondary {
+        @apply fill-yellow-300;
+    }
+
+    .svg-message-success .secondary {
+        @apply fill-green-300;
+    }
 }
