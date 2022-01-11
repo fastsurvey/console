@@ -273,10 +273,14 @@ function VisualDatePicker(props: {
                                     })
                                 }
                                 disabled={!open}
+                                data-cy='button-increment-hour '
                             >
                                 {icons.add}
                             </button>
-                            <div className='h-6 my-0.5 text-base text-white font-weight-600 w-7 text-center'>
+                            <div
+                                className='h-6 my-0.5 text-base text-white font-weight-600 w-7 text-center'
+                                data-cy='hour-label '
+                            >
                                 {date.getHours()}
                             </div>
                             <button
@@ -291,6 +295,7 @@ function VisualDatePicker(props: {
                                     });
                                 }}
                                 disabled={!open}
+                                data-cy='button-decrement-hour '
                             >
                                 {icons.remove}
                             </button>
@@ -313,10 +318,14 @@ function VisualDatePicker(props: {
                                     })
                                 }
                                 disabled={!open}
+                                data-cy='button-increment-minute '
                             >
                                 {icons.add}
                             </button>
-                            <div className='h-6 my-0.5 text-base text-white font-weight-600 w-7 text-center'>
+                            <div
+                                className='h-6 my-0.5 text-base text-white font-weight-600 w-7 text-center'
+                                data-cy='minute-label '
+                            >
                                 {date.getMinutes()}
                             </div>
                             <button
@@ -336,6 +345,7 @@ function VisualDatePicker(props: {
                                         setOpen(false);
                                     }
                                 }}
+                                data-cy='button-decrement-minute '
                             >
                                 {icons.remove}
                             </button>

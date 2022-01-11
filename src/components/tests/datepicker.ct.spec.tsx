@@ -130,6 +130,8 @@ it('calendar picker', () => {
         />,
     );
 
+    // TODO: Adjust hour/minute to system timezone
+
     const assertCalendarState = (params: {
         month: string;
         year: string;
@@ -139,6 +141,8 @@ it('calendar picker', () => {
     }) => {
         getElements.calendarMonthLabel().should('have.text', params.month);
         getElements.calendarYearLabel().should('have.text', params.year);
+        getElements.calendarHourLabel().should('have.text', '20');
+        getElements.calendarMinuteLabel().should('have.text', '33');
         getElements.calendarAnyDayButton().should('have.length', params.length);
         if (params.selected !== undefined) {
             getElements

@@ -37,4 +37,15 @@ export const getElements = {
         get(['datepicker ', `selected-day-button-`], {count: 1}),
     calendarNoSelectedDayButton: () =>
         get(['datepicker ', `selected-day-button-`], {count: 0}),
+
+    calendarHourLabel: () => get(['datepicker ', 'hour-label '], {count: 1}),
+    calendarMinuteLabel: () => get(['datepicker ', 'minute-label '], {count: 1}),
+    calendarButtonIncrementHour: () =>
+        get(['datepicker ', 'button-increment-hour '], {count: 1}),
+    calendarButtonDecrementHour: () =>
+        get(['datepicker ', 'button-decrement-hour '], {count: 1}),
+    calendarButtonIncrementMinute: () =>
+        get(['datepicker ', 'button-increment-minute '], {count: 1}),
+    calendarButtonDecrementMinute: () =>
+        get(['datepicker ', 'button-decrement-minute '], {count: 1}),
 };
