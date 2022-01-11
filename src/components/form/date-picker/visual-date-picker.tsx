@@ -122,14 +122,21 @@ function VisualDatePicker(props: {
                                     setOpen(false);
                                 }
                             }}
+                            data-cy='button-prev-month '
                         >
                             {icons.chevronDown}
                         </button>
                         <div className='text-white w-22 flex-row-center'>
-                            <div className='flex-shrink-0 w-10 text-center'>
+                            <div
+                                className='flex-shrink-0 w-10 text-center'
+                                data-cy='month-label '
+                            >
                                 {constants.formOptions.MONTHS[visibleMonth]}
                             </div>
-                            <div className='flex-shrink-0 w-10 text-center'>
+                            <div
+                                className='flex-shrink-0 w-10 text-center'
+                                data-cy='year-label '
+                            >
                                 {visibleYear}
                             </div>
                         </div>
@@ -141,6 +148,7 @@ function VisualDatePicker(props: {
                             }
                             onClick={nextMonth}
                             disabled={!open}
+                            data-cy='button-next-month '
                         >
                             {icons.chevronDown}
                         </button>

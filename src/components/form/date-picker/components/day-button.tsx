@@ -24,6 +24,9 @@ export function DayButton(props: {
                 }
             }}
             disabled={!props.open}
+            data-cy={`${props.dayIsSelected ? 'selected-' : ''}day-button-${
+                props.label
+            } `}
         >
             {props.label}
         </button>
