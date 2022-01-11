@@ -29,14 +29,27 @@ function SetPasswordForm(props: {
     // TODO: Add visible validation bar
 
     function handleRequest() {
-        const success = (
+        function success(
             authToken: types.AccessToken,
             account: types.Account,
             configs: types.SurveyConfig[],
-        ) => {
+        ) {
             props.logIn(authToken, account, configs);
             setSubmissionState('success');
-        };
+        }
+
+        function error(reason: 'invalid-token' | 'server'): void {
+            switch (reason) {
+                case 'invalid-token':
+                    setSubmissionState('invalid-token');
+                    props.openMessage('error-link-invalid');
+                    break;
+                case 'server':
+                    props.openMessage('error-server');
+                    setSubmissionState('server-error');
+                    break;
+            }
+        }
 
         if (token !== null && submissionState === 'pending') {
             setSubmissionState('submitting');
@@ -46,7 +59,7 @@ function SetPasswordForm(props: {
                     newPassword: password,
                 },
                 success,
-                setSubmissionState,
+                error,
             );
         }
     }

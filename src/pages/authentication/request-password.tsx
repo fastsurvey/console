@@ -15,26 +15,31 @@ function RequestPasswordForm(props: {openMessage(messageId: types.MessageId): vo
         formUtils.validators.username(identifier).valid;
 
     function handleRequest() {
-        function handleError(code: 400 | 500): void {
-            switch (code) {
-                case 400:
+        function error(reason: 'credentials' | 'not-verified' | 'server'): void {
+            switch (reason) {
+                case 'credentials':
                     setSubmissionState('pending');
                     props.openMessage('error-login-credentials');
                     break;
-                default:
+                case 'not-verified':
+                    setSubmissionState('pending');
+                    props.openMessage('warning-login-not-verified');
+                    break;
+                case 'server':
+                    props.openMessage('error-server');
                     setSubmissionState('failed');
                     break;
             }
         }
 
-        function handleSuccess(): void {
+        function success(): void {
             setSubmissionState('success');
             console.log('SUCCESS');
         }
 
         if (submitIsPossible && submissionState === 'pending') {
             setSubmissionState('submitting');
-            backend.requestNewPassword({identifier}, handleSuccess, handleError);
+            backend.requestNewPassword({identifier}, success, error);
         }
     }
 

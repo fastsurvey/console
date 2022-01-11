@@ -45,7 +45,7 @@ async function loginWithForm(
             error('not-verified');
         } else {
             error('server');
-            throwServerError(response);
+            throwServerError({response, identifier: data.identifier});
         }
     }
 }

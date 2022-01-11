@@ -1,5 +1,5 @@
 import {types} from '/src/types';
-import {httpGet, httpPut} from '../http-clients';
+import {httpGet, httpPut, throwServerError} from '../http-clients';
 
 async function setNewPassword(
     data: {
@@ -11,18 +11,14 @@ async function setNewPassword(
         account: types.Account,
         configs: types.SurveyConfig[],
     ) => void,
-    abort: (error: 'invalid-token' | 'server-error') => void,
+    error: (reason: 'invalid-token' | 'server') => void,
 ) {
     try {
         const {username, access_token: accessToken}: any = (
             await httpPut('/authentication', {
                 verification_token: data.verificationToken,
             }).catch((error) => {
-                if (error.response.status === 401) {
-                    throw 'invalid-token';
-                } else {
-                    throw error;
-                }
+                throw error;
             })
         ).data;
 
@@ -47,8 +43,13 @@ async function setNewPassword(
         ).data;
 
         success(accessToken, account, configs);
-    } catch (error: any) {
-        abort(error === 'invalid-token' ? error : 'server-error');
+    } catch (response: any) {
+        if (response.status === 401 || response.status === 422) {
+            error('invalid-token');
+        } else {
+            error('server');
+            throwServerError({response, verificationToken: data.verificationToken});
+        }
     }
 }
 
