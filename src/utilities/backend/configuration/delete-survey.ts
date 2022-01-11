@@ -1,24 +1,29 @@
 import {types} from '/src/types';
-import {httpDelete} from '../http-clients';
+import {httpDelete, throwServerError} from '../http-clients';
 
 async function deleteSurvey(
     account: types.Account,
     accessToken: types.AccessToken,
-    centralConfigName: string,
+    configName: string,
     success: () => void,
-    error: (code: any) => void,
+    error: (reason: 'authentication' | 'server') => void,
 ) {
     try {
         await httpDelete(
-            `/users/${account.username}/surveys/${centralConfigName}`,
+            `/users/${account.username}/surveys/${configName}`,
             accessToken,
         ).catch((error) => {
-            throw error.response.status;
+            throw error;
         });
 
         success();
-    } catch (code) {
-        error(code);
+    } catch (response: any) {
+        if (response.status === 401) {
+            error('authentication');
+        } else {
+            error('server');
+            throwServerError({response, account, configName});
+        }
     }
 }
 

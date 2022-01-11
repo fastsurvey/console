@@ -1,5 +1,5 @@
 import {types} from '/src/types';
-import {httpPost} from '../http-clients';
+import {httpPost, throwServerError} from '../http-clients';
 import {localIdUtils} from '/src/utilities';
 
 async function createSurvey(
@@ -7,7 +7,7 @@ async function createSurvey(
     accessToken: types.AccessToken,
     config: types.SurveyConfig,
     success: () => void,
-    error: (code: any) => void,
+    error: (reason: 'authentication' | 'server') => void,
 ) {
     try {
         await httpPost(
@@ -15,12 +15,17 @@ async function createSurvey(
             JSON.stringify(localIdUtils.remove.survey(config)),
             accessToken,
         ).catch((error) => {
-            throw error.response.status;
+            throw error;
         });
 
         success();
-    } catch (code) {
-        error(code);
+    } catch (response: any) {
+        if (response.status === 401) {
+            error('authentication');
+        } else {
+            error('server');
+            throwServerError({response, account, config});
+        }
     }
 }
 

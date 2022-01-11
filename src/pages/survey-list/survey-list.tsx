@@ -30,7 +30,16 @@ function SurveyList(props: Props) {
             props.closeModal();
             history.push(`/editor/${newConfig.survey_name}`);
         };
-        const error = (code: 400 | 401 | 422 | 500) => {};
+        function error(reason: 'authentication' | 'server') {
+            switch (reason) {
+                case 'authentication':
+                    props.openMessage('error-access-token');
+                    break;
+                case 'server':
+                    props.openMessage('error-server');
+                    break;
+            }
+        }
 
         backend.createSurvey(
             props.account,
@@ -48,9 +57,16 @@ function SurveyList(props: Props) {
             props.openMessage('success-survey-list-survey-removed');
         }
 
-        function error() {
+        function error(reason: 'authentication' | 'server') {
             props.closeModal();
-            props.openMessage('error-server');
+            switch (reason) {
+                case 'authentication':
+                    props.openMessage('error-access-token');
+                    break;
+                case 'server':
+                    props.openMessage('error-server');
+                    break;
+            }
         }
 
         backend.deleteSurvey(
@@ -68,9 +84,16 @@ function SurveyList(props: Props) {
             props.openMessage('success-survey-list-submissions-removed');
         }
 
-        function error() {
+        function error(reason: 'authentication' | 'server') {
             props.closeModal();
-            props.openMessage('error-server');
+            switch (reason) {
+                case 'authentication':
+                    props.openMessage('error-access-token');
+                    break;
+                case 'server':
+                    props.openMessage('error-server');
+                    break;
+            }
         }
 
         backend.deleteSubmissions(
@@ -95,7 +118,16 @@ function SurveyList(props: Props) {
             history.push(`/editor/${newSurveyName}`);
             props.openMessage('success-survey-list-duplication');
         };
-        const error = (code: 400 | 401 | 422 | 500) => {};
+        function error(reason: 'authentication' | 'server') {
+            switch (reason) {
+                case 'authentication':
+                    props.openMessage('error-access-token');
+                    break;
+                case 'server':
+                    props.openMessage('error-server');
+                    break;
+            }
+        }
 
         backend.createSurvey(
             props.account,
