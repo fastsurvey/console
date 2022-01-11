@@ -1,5 +1,5 @@
 import {types} from '/src/types';
-import {httpPut} from '../http-clients';
+import {httpPut, throwServerError} from '../http-clients';
 
 async function updateAccount(
     account: types.Account,
@@ -9,7 +9,7 @@ async function updateAccount(
         username?: string;
     },
     success: () => void,
-    error: (code: 400 | 401 | 422 | 500) => void,
+    error: (reason: 'username-taken' | 'authentication' | 'server') => void,
 ) {
     try {
         await httpPut(
@@ -20,14 +20,20 @@ async function updateAccount(
                 ...accountUpdate,
             }),
             accessToken,
-        ).catch((response: {response: {status: 400 | 401 | 422 | 500}}) => {
-            throw response.response.status;
+        ).catch((error) => {
+            throw error.response;
         });
 
         success();
-    } catch (code) {
-        // @ts-ignore
-        error(code);
+    } catch (response: any) {
+        if (response.status === 401) {
+            error('authentication');
+        } else if (accountUpdate.username !== undefined && response.status === 400) {
+            error('username-taken');
+        } else {
+            error('server');
+            throwServerError({response, account, newUsername: accountUpdate.username});
+        }
     }
 }
 

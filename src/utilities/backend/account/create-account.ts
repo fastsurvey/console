@@ -22,7 +22,7 @@ async function createAccount(
             error('email');
         } else {
             error('server');
-            throwServerError(account);
+            throwServerError({response, account});
         }
     }
 }
